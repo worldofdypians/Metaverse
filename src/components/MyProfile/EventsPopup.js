@@ -2,7 +2,7 @@ import React from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink } from "react-router-dom";
 import Countdown from "react-countdown";
-import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number"; 
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -66,9 +66,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             </div>
           </div>
           <img
-            src={
-              'https://cdn.worldofdypians.com/wod/popupXmark.svg'
-            }
+            src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
             alt=""
             style={{ cursor: "pointer" }}
             onClick={() => {
@@ -83,48 +81,50 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
               <img
                 src={
                   dummyEvent.popupInfo?.id === "event5"
-                    ? 'https://cdn.worldofdypians.com/wod/dypEventImage.png'
+                    ? "https://cdn.worldofdypians.com/wod/dypEventImage.png"
                     : dummyEvent.popupInfo?.id === "event9"
-                    ? 'https://cdn.worldofdypians.com/wod/dypiuspopup2.png'
+                    ? "https://cdn.worldofdypians.com/wod/dypiuspopup2.png"
                     : dummyEvent.popupInfo?.linkState === "coingecko"
-                    ? 'https://cdn.worldofdypians.com/wod/eventPopupImageGecko.png'
+                    ? "https://cdn.worldofdypians.com/wod/eventPopupImageGecko.png"
                     : dummyEvent.popupInfo.linkState === "gate"
-                    ? 'https://cdn.worldofdypians.com/wod/gatePopupImage.png'
+                    ? "https://cdn.worldofdypians.com/wod/gatePopupImage.png"
                     : dummyEvent.popupInfo.linkState === "base"
-                    ? 'https://cdn.worldofdypians.com/wod/eventPopupImageBase.png'
+                    ? "https://cdn.worldofdypians.com/wod/eventPopupImageBase.png"
                     : dummyEvent.popupInfo.linkState === "doge"
-                    ? 'https://cdn.worldofdypians.com/wod/dogePopupImage.png'
+                    ? "https://cdn.worldofdypians.com/wod/dogePopupImage.png"
                     : dummyEvent.popupInfo.linkState === "coinmarketcap"
-                    ? 'https://cdn.worldofdypians.com/wod/cmcPopupImage.png'
+                    ? "https://cdn.worldofdypians.com/wod/cmcPopupImage.png"
                     : dummyEvent.popupInfo.linkState === "skale"
-                    ? 'https://cdn.worldofdypians.com/wod/skalePopupImage.png'
+                    ? "https://cdn.worldofdypians.com/wod/skalePopupImage.png"
                     : dummyEvent.popupInfo.linkState === "core"
-                    ? 'https://cdn.worldofdypians.com/wod/coreThumb.png'
+                    ? "https://cdn.worldofdypians.com/wod/coreThumb.png"
                     : dummyEvent.popupInfo.linkState === "sei"
-                    ? 'https://cdn.worldofdypians.com/wod/seiThumb.png'
+                    ? "https://cdn.worldofdypians.com/wod/seiThumb.png"
                     : dummyEvent.popupInfo.linkState === "immutable"
-                    ? 'https://cdn.worldofdypians.com/wod/immutableThumb.png'
+                    ? "https://cdn.worldofdypians.com/wod/immutableThumb.png"
                     : dummyEvent.popupInfo.linkState === "viction"
-                    ? 'https://cdn.worldofdypians.com/wod/victionThumb.png'
+                    ? "https://cdn.worldofdypians.com/wod/victionThumb.png"
                     : dummyEvent.popupInfo.linkState === "multiversx"
-                    ? 'https://cdn.worldofdypians.com/wod/multiversThumb.png'
+                    ? "https://cdn.worldofdypians.com/wod/multiversThumb.png"
                     : dummyEvent.popupInfo.linkState === "bnb"
-                    ? 'https://cdn.worldofdypians.com/wod/bnbPopupImage.png'
+                    ? "https://cdn.worldofdypians.com/wod/bnbPopupImage.png"
                     : dummyEvent.popupInfo.linkState === "manta"
-                    ? 'https://cdn.worldofdypians.com/wod/mantaThumb.png'
+                    ? "https://cdn.worldofdypians.com/wod/mantaThumb.png"
                     : dummyEvent.popupInfo.linkState === "taiko"
-                    ? 'https://cdn.worldofdypians.com/wod/taikoThumb.webp'
+                    ? "https://cdn.worldofdypians.com/wod/taikoThumb.webp"
                     : dummyEvent.popupInfo.linkState === "cookie3"
-                    ? 'https://cdn.worldofdypians.com/wod/cookie3Thumb.png'
+                    ? "https://cdn.worldofdypians.com/wod/cookie3Thumb.png"
                     : dummyEvent.popupInfo.linkState === "chainlink"
-                    ? 'https://cdn.worldofdypians.com/wod/chainlinkThumb.webp'
+                    ? "https://cdn.worldofdypians.com/wod/chainlinkThumb.webp"
                     : dummyEvent.popupInfo.linkState === "matchain"
-                    ? 'https://cdn.worldofdypians.com/wod/eventPopupImageMatchain.webp'
+                    ? "https://cdn.worldofdypians.com/wod/eventPopupImageMatchain.webp"
                     : dummyEvent.popupInfo.linkState === "easy2stake"
-                    ? 'https://cdn.worldofdypians.com/wod/easy2stakeThumb.webp'
+                    ? "https://cdn.worldofdypians.com/wod/easy2stakeThumb.webp"
                     : dummyEvent.popupInfo.linkState === "midle"
-                    ? 'https://cdn.worldofdypians.com/wod/midleThumb.webp'
-                    : 'https://cdn.worldofdypians.com/wod/eventPopupImage.png'
+                    ? "https://cdn.worldofdypians.com/wod/midleThumb.webp"
+                    : dummyEvent.popupInfo.linkState === "kucoin"
+                    ? "https://cdn.worldofdypians.com/wod/kucoinThumb.png"
+                    : "https://cdn.worldofdypians.com/wod/eventPopupImage.png"
                 }
                 alt=""
                 style={{
@@ -164,10 +164,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <span className="live-on">Live on</span>
                 <div className="d-flex align-items-center gap-2">
                   <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/greenCalendar.svg"
-                        .default
-                    }
+                    src={"https://cdn.worldofdypians.com/wod/greenCalendar.svg"}
                     className="green-calendar"
                     alt=""
                   />
@@ -189,7 +186,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 className="events-page-details d-flex align-items-center gap-2"
               >
                 Learn more
-                <img src={'https://cdn.worldofdypians.com/wod/eventsArrow.svg'} alt="" />
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/eventsArrow.svg"}
+                  alt=""
+                />
               </NavLink>
             )}
           {dummyEvent.popupInfo.status === "Live" &&
@@ -202,7 +202,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 className="events-page-details d-flex align-items-center gap-2"
               >
                 Learn more
-                <img src={'https://cdn.worldofdypians.com/wod/eventsArrow.svg'} alt="" />
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/eventsArrow.svg"}
+                  alt=""
+                />
               </a>
             )}
         </div>
@@ -214,25 +217,25 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Conflux Beta Pass NFT</b>. You can get the Conflux
-                  Beta Pass NFT from the World of Dypians Shop. By
-                  engaging in the game on a daily basis and exploring the
-                  Conflux area, players not only stand a chance to secure daily
-                  rewards in CFX, but also earn points for their placement on
-                  the global leaderboard. Remember to log in to the game daily
-                  and venture into the Conflux area to uncover hidden treasures.
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the Conflux area,
+                  players not only stand a chance to secure daily rewards in
+                  CFX, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Conflux area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event2" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
-                  Beta Pass NFT from the World of Dypians Shop. By
-                  engaging in the game on a daily basis and exploring the Coin98
-                  area, players not only stand a chance to secure daily rewards
-                  in C98, but also earn points for their placement on the global
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the Coin98 area,
+                  players not only stand a chance to secure daily rewards in
+                  C98, but also earn points for their placement on the global
                   leaderboard. Remember to log in to the game daily and venture
                   into the Coin98 area to uncover hidden treasures.
                 </p>
-              ) : (dummyEvent.popupInfo.id === "event20") ? (
+              ) : dummyEvent.popupInfo.id === "event20" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
@@ -244,38 +247,37 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   and venture into the BNB Chain area to uncover hidden
                   treasures.
                 </p>
-              ): (dummyEvent.popupInfo.id === "event26") ? (
+              ) : dummyEvent.popupInfo.id === "event26" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
                   Chain Beta Pass NFT from the World of Dypians Shop. By
-                  engaging in the game on a daily basis and exploring the Easy2Stake
-                   area, players not only stand a chance to secure daily
-                  rewards in BNB, but also earn points for their placement on
-                  the global leaderboard. Remember to log in to the game daily
-                  and venture into the Easy2Stake area to uncover hidden
+                  engaging in the game on a daily basis and exploring the
+                  Easy2Stake area, players not only stand a chance to secure
+                  daily rewards in BNB, but also earn points for their placement
+                  on the global leaderboard. Remember to log in to the game
+                  daily and venture into the Easy2Stake area to uncover hidden
                   treasures.
                 </p>
-              ) : (dummyEvent.popupInfo.id === "event27") ? (
+              ) : dummyEvent.popupInfo.id === "event27" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
                   Chain Beta Pass NFT from the World of Dypians Shop. By
                   engaging in the game on a daily basis and exploring the Midle
-                   area, players not only stand a chance to secure daily
-                  rewards in BNB, but also earn points for their placement on
-                  the global leaderboard. Remember to log in to the game daily
-                  and venture into the Midle area to uncover hidden
-                  treasures.
+                  area, players not only stand a chance to secure daily rewards
+                  in BNB, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Midle area to uncover hidden treasures.
                 </p>
-              ): dummyEvent.popupInfo.id === "event21" ? (
+              ) : dummyEvent.popupInfo.id === "event21" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Manta Beta Pass NFT</b>. You can get the Manta Beta
-                  Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the Manta area,
-                  players not only stand a chance to secure daily rewards in
-                  MANTA, but also earn points for their placement on the global
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the Manta area, players
+                  not only stand a chance to secure daily rewards in MANTA, but
+                  also earn points for their placement on the global
                   leaderboard. Remember to log in to the game daily and venture
                   into the Manta area to uncover hidden treasures.
                 </p>
@@ -283,10 +285,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Taiko Beta Pass NFT</b>. You can get the Taiko Beta
-                  Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the Taiko area,
-                  players not only stand a chance to secure daily rewards in
-                  ETH, but also earn points for their placement on the global
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the Taiko area, players
+                  not only stand a chance to secure daily rewards in ETH, but
+                  also earn points for their placement on the global
                   leaderboard. Remember to log in to the game daily and venture
                   into the Taiko area to uncover hidden treasures.
                 </p>
@@ -294,8 +296,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a CoinGecko Beta Pass NFT</b>. You can get the
-                  CoinGecko Beta Pass NFT from the World of Dypians Shop.
-                  By engaging in the game on a daily basis and exploring the
+                  CoinGecko Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the
                   CoinGecko area, players not only stand a chance to secure
                   daily rewards in BNB, but also earn points for their placement
                   on the global leaderboard. Remember to log in to the game
@@ -316,10 +318,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Gate Beta Pass NFT</b>. You can get the Gate Beta
-                  Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the Gate.io area,
-                  players not only stand a chance to secure daily rewards in
-                  BNB, but also earn points for their placement on the global
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the Gate.io area, players
+                  not only stand a chance to secure daily rewards in BNB, but
+                  also earn points for their placement on the global
                   leaderboard. Remember to log in to the game daily and venture
                   into the Gate.io area to uncover hidden treasures.
                 </p>
@@ -327,43 +329,42 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Dogecoin Beta Pass NFT</b>. You can get the Dogecoin
-                  Beta Pass NFT from the World of Dypians Shop. By
-                  engaging in the game on a daily basis and exploring the
-                  Dogecoin area, players not only stand a chance to secure daily
-                  rewards in DOGE, but also earn points for their placement on
-                  the global leaderboard. Remember to log in to the game daily
-                  and venture into the Dogecoin area to uncover hidden
-                  treasures.
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the Dogecoin area,
+                  players not only stand a chance to secure daily rewards in
+                  DOGE, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Dogecoin area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event8" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
-                  CoinMarketCap Beta Pass NFT from the World of Dypians
-                  Shop. By engaging in the game on a daily basis and
-                  exploring the CoinMarketCap area, players not only stand a
-                  chance to secure daily rewards in BNB, but also earn points
-                  for their placement on the global leaderboard. Remember to log
-                  in to the game daily and venture into the CoinMarketCap area
-                  to uncover hidden treasures.
+                  CoinMarketCap Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the
+                  CoinMarketCap area, players not only stand a chance to secure
+                  daily rewards in BNB, but also earn points for their placement
+                  on the global leaderboard. Remember to log in to the game
+                  daily and venture into the CoinMarketCap area to uncover
+                  hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event9" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to be{" "}
-                  <b>Prime Users.</b> By actively participating in the
-                  game on a daily basis and exploring the downtown area, players
-                  have the opportunity to secure daily rewards in BNB. Remember
-                  to log in to the game daily and venture into the downtown area
-                  to uncover hidden treasures.
+                  <b>Prime Users.</b> By actively participating in the game on a
+                  daily basis and exploring the downtown area, players have the
+                  opportunity to secure daily rewards in BNB. Remember to log in
+                  to the game daily and venture into the downtown area to
+                  uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event11" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a SKALE Beta Pass NFT</b>. You can get the SKALE Beta
-                  Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the SKALE area,
-                  players not only stand a chance to secure daily rewards in
-                  SKL, but also earn points for their placement on the global
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the SKALE area, players
+                  not only stand a chance to secure daily rewards in SKL, but
+                  also earn points for their placement on the global
                   leaderboard. Remember to log in to the game daily and venture
                   into the SKALE area to uncover hidden treasures.
                 </p>
@@ -371,19 +372,19 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Viction Beta Pass NFT</b>. You can get the Viction
-                  Beta Pass NFT from the World of Dypians Shop. By
-                  engaging in the game on a daily basis and exploring the
-                  Viction area, players not only stand a chance to secure daily
-                  rewards in VIC, but also earn points for their placement on
-                  the global leaderboard. Remember to log in to the game daily
-                  and venture into the Viction area to uncover hidden treasures.
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the Viction area,
+                  players not only stand a chance to secure daily rewards in
+                  VIC, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Viction area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event15" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Immutable Beta Pass NFT</b>. You can get the
-                  Immutable Beta Pass NFT from the World of Dypians Shop.
-                  By engaging in the game on a daily basis and exploring the
+                  Immutable Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the
                   Immutable area, players not only stand a chance to secure
                   daily rewards in IMX, but also earn points for their placement
                   on the global leaderboard. Remember to log in to the game
@@ -394,79 +395,89 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a SEI Beta Pass NFT</b>. You can get the SEI Beta Pass
-                  NFT from the World of Dypians Shop. By engaging in the
-                  game on a daily basis and exploring the SEI area, players not
-                  only stand a chance to secure daily rewards in SEI, but also
-                  earn points for their placement on the global leaderboard.
-                  Remember to log in to the game daily and venture into the SEI
-                  area to uncover hidden treasures.
+                  NFT from the World of Dypians Shop. By engaging in the game on
+                  a daily basis and exploring the SEI area, players not only
+                  stand a chance to secure daily rewards in SEI, but also earn
+                  points for their placement on the global leaderboard. Remember
+                  to log in to the game daily and venture into the SEI area to
+                  uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event12" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a CORE Beta Pass NFT</b>. You can get the CORE Beta
-                  Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the CORE area, players
-                  not only stand a chance to secure daily rewards in CORE, but
-                  also earn points for their placement on the global
-                  leaderboard. Remember to log in to the game daily and venture
-                  into the CORE area to uncover hidden treasures.
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the CORE area, players not
+                  only stand a chance to secure daily rewards in CORE, but also
+                  earn points for their placement on the global leaderboard.
+                  Remember to log in to the game daily and venture into the CORE
+                  area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event16" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a MultiversX Beta Pass NFT</b>. You can get the
-                  MultiversX Beta Pass NFT from the World of Dypians
-                  Shop. By engaging in the game on a daily basis and
-                  exploring the MultiversX area, players not only stand a chance
-                  to secure daily rewards in EGLD, but also earn points for
-                  their placement on the global leaderboard. Remember to log in
-                  to the game daily and venture into the MultiversX area to
-                  uncover hidden treasures.
+                  MultiversX Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the
+                  MultiversX area, players not only stand a chance to secure
+                  daily rewards in EGLD, but also earn points for their
+                  placement on the global leaderboard. Remember to log in to the
+                  game daily and venture into the MultiversX area to uncover
+                  hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event23" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Cookie3 Beta Pass NFT</b>. You can get the Cookie3
-                  Beta Pass NFT from the World of Dypians Shop. By
-                  engaging in the game on a daily basis and exploring the
-                  Cookie3 area, players not only stand a chance to secure daily
-                  rewards in COOKIE, but also earn points for their placement on
-                  the global leaderboard. Remember to log in to the game daily
-                  and venture into the Cookie3 area to uncover hidden treasures.
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the Cookie3 area,
+                  players not only stand a chance to secure daily rewards in
+                  COOKIE, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Cookie3 area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event25" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Matchain Beta Pass NFT</b>. You can get the Matchain
-                  Beta Pass NFT from the World of Dypians Shop. By
-                  engaging in the game on a daily basis and exploring the
-                  Matchain area, players not only stand a chance to secure
-                  daily rewards in MAT, but also earn points for their
-                  placement on the global leaderboard. Remember to log in to
-                  the game daily and venture into the Matchain area to uncover
-                  hidden treasures.
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the Matchain area,
+                  players not only stand a chance to secure daily rewards in
+                  MAT, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Matchain area to uncover hidden treasures.
                 </p>
-              ):  dummyEvent.popupInfo.id === "event28" ? (
+              ) : dummyEvent.popupInfo.id === "event28" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
-                  <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB Chain
-                  Beta Pass NFT from the World of Dypians Shop. By
+                  <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
+                  Chain Beta Pass NFT from the World of Dypians Shop. By
                   engaging in the game on a daily basis and exploring the
                   Chainlink area, players not only stand a chance to secure
-                  daily rewards in BNB, but also earn points for their
-                  placement on the global leaderboard. Remember to log in to
-                  the game daily and venture into the Chainlink area to uncover
-                  hidden treasures.
+                  daily rewards in BNB, but also earn points for their placement
+                  on the global leaderboard. Remember to log in to the game
+                  daily and venture into the Chainlink area to uncover hidden
+                  treasures.
                 </p>
-              ): (
+              ) : dummyEvent.popupInfo.id === "event29" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a KuCoin Beta Pass NFT</b>. You can get the KuCoin
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the KuCoin area,
+                  players not only stand a chance to secure daily rewards in
+                  KCS, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the KuCoin area to uncover hidden treasures.
+                </p>
+              ) : (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Base Beta Pass NFT</b>. You can get the Base Beta
-                  Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the downtown area,
-                  players not only stand a chance to secure daily rewards in
-                  ETH, but also earn points for their placement on the global
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the downtown area, players
+                  not only stand a chance to secure daily rewards in ETH, but
+                  also earn points for their placement on the global
                   leaderboard. Remember to log in to the game daily and venture
                   into the downtown area to uncover hidden treasures.
                 </p>
@@ -497,9 +508,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 </>
                 {dummyEvent.popupInfo.id !== "event5" && (
                   <li className="popup-event-desc">
-                    Earn{" "}
-                    {dummyEvent.popupInfo.rewards}{" "}
-                    rewards
+                    Earn {dummyEvent.popupInfo.rewards} rewards
                   </li>
                 )}
                 {dummyEvent.popupInfo.id !== "event5" &&
@@ -520,51 +529,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
           </div>
         </div>
         <h6 className="how-it-works">
-          Learn more about{" "}
-          {dummyEvent.popupInfo.id === "event1"
-            ? "Conflux Network"
-            : dummyEvent.popupInfo.id === "event2"
-            ? "Coin98"
-            : dummyEvent.popupInfo.id === "event20"
-            ? "BNB Chain"
-            : dummyEvent.popupInfo.id === "event3"
-            ? "CoinGecko"
-            : dummyEvent.popupInfo.id === "event5" ||
-              dummyEvent.popupInfo.id === "event9"
-            ? "Dypius"
-            : dummyEvent.popupInfo.id === "event6"
-            ? "Gate.io"
-            : dummyEvent.popupInfo.id === "event7"
-            ? "Dogecoin"
-            : dummyEvent.popupInfo.id === "event8"
-            ? "CoinMarketCap"
-            : dummyEvent.popupInfo.id === "event11"
-            ? "SKALE"
-            : dummyEvent.popupInfo.id === "event14"
-            ? "VIction"
-            : dummyEvent.popupInfo.id === "event15"
-            ? "Immutable"
-            : dummyEvent.popupInfo.id === "event13"
-            ? "SEI"
-            : dummyEvent.popupInfo.id === "event12"
-            ? "CORE"
-            : dummyEvent.popupInfo.id === "event16"
-            ? "MultiversX"
-            : dummyEvent.popupInfo.id === "event21"
-            ? "Manta"
-            : dummyEvent.popupInfo.id === "event22"
-            ? "Taiko"
-            : dummyEvent.popupInfo.id === "event23"
-            ? "Cookie3"
-            : dummyEvent.popupInfo.id === "event25"
-            ? "Matchain"
-            : dummyEvent.popupInfo.id === "event26"
-            ? "Easy2Stake"
-            : dummyEvent.popupInfo.id === "event27"
-            ? "Midle"
-            : dummyEvent.popupInfo.id === "event28"
-            ? "Chainlink"
-            : "Base Network"}
+          Learn more about {dummyEvent.popupInfo.title}
         </h6>
         {dummyEvent.popupInfo.id === "event1" ? (
           <p
@@ -619,26 +584,39 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             next generation of web3 users and usher in a new chapter of web3
             zkApp applications.
           </p>
-        ): dummyEvent.popupInfo.id === "event26" ? (
+        ) : dummyEvent.popupInfo.id === "event26" ? (
           <p
             className="popup-event-desc"
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
-           Easy2Stake is a trusted staking service provider that enables secure and efficient staking for multiple blockchains, ensuring users can earn rewards while supporting web3 ecosystems. 
+            Easy2Stake is a trusted staking service provider that enables secure
+            and efficient staking for multiple blockchains, ensuring users can
+            earn rewards while supporting web3 ecosystems.
           </p>
-        ): dummyEvent.popupInfo.id === "event27" ? (
+        ) : dummyEvent.popupInfo.id === "event27" ? (
           <p
             className="popup-event-desc"
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
-           Midle is the web and mobile app that boosts user acquisition, retention and engagement.  
+            Midle is the web and mobile app that boosts user acquisition,
+            retention and engagement.
           </p>
         ) : dummyEvent.popupInfo.id === "event28" ? (
           <p
             className="popup-event-desc"
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
-          Chainlink connects existing systems to any public or private blockchain and enables secure cross-chain communication. World-class developer experience.
+            Chainlink connects existing systems to any public or private
+            blockchain and enables secure cross-chain communication. World-class
+            developer experience.
+          </p>
+        ) : dummyEvent.popupInfo.id === "event29" ? (
+          <p className="popup-event-desc">
+            Kucoin is a Seychelles-based cryptocurrency exchange. It was founded
+            in China in 2017, but was later moved to Singapore following the
+            Chinese government's restrictions on cryptocurrency companies, and
+            subsequently to the Seychelles. Kucoin also operates its own crypto
+            token known as Kucoin Shares.
           </p>
         ) : dummyEvent.popupInfo.id === "event22" ? (
           <p
@@ -768,7 +746,9 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             className="popup-event-desc"
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
-           Sei is at the pinnacle of high-speed blockchain platforms, ideal for web2 like experiences, high-frequency trading and real-time digital exchanges.
+            Sei is at the pinnacle of high-speed blockchain platforms, ideal for
+            web2 like experiences, high-frequency trading and real-time digital
+            exchanges.
           </p>
         ) : dummyEvent.popupInfo.id === "event12" ? (
           <p
@@ -787,7 +767,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             className="popup-event-desc"
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
-            Matchain is a decentralized AI blockchain focused on data and identity sovereignty, utilizing advanced AI for data aggregation, analytics, and user profiling to enhance decentralized identity solutions and data management.
+            Matchain is a decentralized AI blockchain focused on data and
+            identity sovereignty, utilizing advanced AI for data aggregation,
+            analytics, and user profiling to enhance decentralized identity
+            solutions and data management.
           </p>
         ) : (
           <p
@@ -837,7 +820,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 : dummyEvent.popupInfo.id === "event22"
                 ? "https://x.com/taikoxyz"
                 : dummyEvent.popupInfo.id === "event25"
-                    ? "https://x.com/matchain_io"
+                ? "https://x.com/matchain_io"
                 : dummyEvent.popupInfo.id === "event23"
                 ? "https://x.com/cookie3_com"
                 : dummyEvent.popupInfo.id === "event13"
@@ -848,13 +831,21 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://x.com/midle_official"
                 : dummyEvent.popupInfo.id === "event28"
                 ? "https://x.com/chainlink"
+                : dummyEvent.popupInfo.id === "event29"
+                ? "https://x.com/KuCoinCom"
                 : "https://twitter.com/buildonbase"
             }
             target="_blank"
             rel="noreferrer"
             className="d-flex gap-1 align-items-center greensocial"
           >
-            <img alt="" width={16} height={16} src={'https://cdn.worldofdypians.com/wod/greenTwitter.svg'} /> Twitter
+            <img
+              alt=""
+              width={16}
+              height={16}
+              src={"https://cdn.worldofdypians.com/wod/greenTwitter.svg"}
+            />{" "}
+            Twitter
           </a>
 
           <a
@@ -894,12 +885,14 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://t.me/cookie3_co"
                 : dummyEvent.popupInfo.id === "event25"
                 ? "https://t.me/matchain_fam"
-               : dummyEvent.popupInfo.id === "event26"
+                : dummyEvent.popupInfo.id === "event26"
                 ? "https://t.me/easy2stake"
                 : dummyEvent.popupInfo.id === "event27"
                 ? "https://t.me/midlecommunity"
                 : dummyEvent.popupInfo.id === "event28"
                 ? "https://t.me/chainlinkofficial"
+                : dummyEvent.popupInfo.id === "event29"
+                ? "https://t.me/Kucoin_Exchange"
                 : "https://base.org/discord"
             }
             target="_blank"
@@ -913,13 +906,13 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 dummyEvent.popupInfo.id !== "event24" &&
                 dummyEvent.popupInfo.id !== "event7" &&
                 dummyEvent.popupInfo.id !== "event15"
-                  ? 'https://cdn.worldofdypians.com/wod/greentg.svg'
-                  : 'https://cdn.worldofdypians.com/wod/greenDiscord.svg'
+                  ? "https://cdn.worldofdypians.com/wod/greentg.svg"
+                  : "https://cdn.worldofdypians.com/wod/greenDiscord.svg"
               }
             />
             {dummyEvent.popupInfo.id !== "event4" &&
             dummyEvent.popupInfo.id !== "event24" &&
-            dummyEvent.popupInfo.id !== "event7"&&
+            dummyEvent.popupInfo.id !== "event7" &&
             dummyEvent.popupInfo.id !== "event15"
               ? "Telegram"
               : "Discord"}
@@ -967,20 +960,30 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://app.midle.io/"
                 : dummyEvent.popupInfo.id === "event28"
                 ? "https://chain.link/"
+                : dummyEvent.popupInfo.id === "event29"
+                ? "https://www.kucoin.com/"
                 : "https://base.org/"
             }
             target="_blank"
             rel="noreferrer"
             className="d-flex gap-1 align-items-center greensocial"
           >
-            <img alt="" src={'https://cdn.worldofdypians.com/wod/greenWebsite.svg'} />
+            <img
+              alt=""
+              src={"https://cdn.worldofdypians.com/wod/greenWebsite.svg"}
+            />
             Website
           </a>
         </div>
         <div className="summaryseparator mt-3"></div>
         <div className="popup-red-wrapper mt-3 p-3 d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row align-items-xxl-center align-items-xl-center align-items-lg-center align-items-md-center justify-content-between">
           <div className="d-flex align-items-center gap-2">
-            <img src={'https://cdn.worldofdypians.com/wod/grayDollar.svg'} width={36} height={36} alt="" />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/grayDollar.svg"}
+              width={36}
+              height={36}
+              alt=""
+            />
             <span className="event-my-earnings2 mb-0">My earnings</span>
           </div>
           <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
@@ -1018,12 +1021,12 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
           </div>
         </div>
         <div className="d-flex align-items-center gap-2 mt-2">
-          <img src={'https://cdn.worldofdypians.com/wod/tooltip.svg'} alt="" />
+          <img src={"https://cdn.worldofdypians.com/wod/tooltip.svg"} alt="" />
           <span className="popup-event-desc">
             The rewards will be distributed 2-3 days after the event ends.
           </span>
         </div>
-        {dummyEvent.status === "Coming Soon" &&
+        {/* {dummyEvent.status === "Coming Soon" &&
           dummyEvent.popupInfo.id !== "event15" &&
           dummyEvent.popupInfo.id !== "event22" && (
             <div className="w-100 d-flex justify-content-end mt-3">
@@ -1031,7 +1034,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <button className="btn get-beta-btn">Get Beta Pass</button>
               </NavLink>
             </div>
-          )}
+          )} */}
       </div>
     </OutsideClickHandler>
   );

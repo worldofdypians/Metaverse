@@ -600,7 +600,7 @@ const chainAreas = [
     marker: markers.kucoinMarker,
     activeMarker: activeMarkers.kucoinMarker,
 
-    icon: "https://cdn.worldofdypians.com/wod/kucoinIcon.svg",
+    icon: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
     location: [-0.06778661442929296, 0.08464515209198],
     banner: "kucoinBanner.png",
     area: [
