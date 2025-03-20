@@ -20,7 +20,7 @@ const TermsConditions = () => {
               https://www.worldofdypians.com/ (the “Website”), the World of
               Dypians game (the “Game”), and all content and functionalities
               accessible via our Website and the Game (the “Services”), in each
-              case operated by or on behalf of Dypius (“Company,” “we,” or
+              case operated by or on behalf of World of Dypians (“Company,” “we,” or
               “us”).
             </p>
             <p className="text-white m-0">
@@ -69,12 +69,10 @@ const TermsConditions = () => {
               metaverse gaming experience via the Game and other related
               experiences through the combination of traditional core game and
               blockchain mechanics (the “World of Dypians”). The World of
-              Dypians is driven by a dual token system — “DYP” and “iDYP”. DYP
+              Dypians is driven by WOD tokens. WOD
               serves as the native in-Game currency used for in-Game economic
               interactions, such as purchasing resources, items, gear, skins,
-              and other in-Game assets. iDYP is a multifunctional token, which
-              has in-Game applications used for energy, stamina, and other
-              in-Game functionalities. You acknowledge and agree that we cannot
+              and other in-Game assets. You acknowledge and agree that we cannot
               be held liable or responsible in any way for any damages or losses
               incurred by any person in connection with with any acts or
               omissions of the World of Dypians.
@@ -165,7 +163,7 @@ const TermsConditions = () => {
               such as on the Website. Linking a Digital Wallet to the Services
               is required to be able to purchase, store, and engage in
               transactions using the Services, such as to connect your Game NFTs
-              and DYP and iDYP tokens with the Services. We may not be able to
+              and WOD tokens with the Services. We may not be able to
               help you recover assets associated with your Digital Wallet, as
               these are non-custodial wallets in your control. We do not own or
               control the assets associated with your Digital Wallet. We accept

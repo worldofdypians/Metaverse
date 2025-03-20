@@ -7,7 +7,7 @@ import getFormattedNumber from "../Caws/functions/get-formatted-number";
 const JoinBeta = ({ coinbase, handleRegister }) => {
   const requirements = [
     "Access to a PC that meets minimum system requirements",
-    "Member of Dypius Discord Server",
+    "Member of World of Dypians Discord Server",
     "Must own an active Twitter account ",
     "Able to provide an Email Address",
     "Supported Web 3 Wallet available",

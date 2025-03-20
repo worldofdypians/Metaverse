@@ -525,8 +525,8 @@ const PartnerForm = () => {
                     }
                   />
                   <span className="ways-to-amplify-desc">
-                    I agree to share my email address with Dypius for use in
-                    accordance with the World of Dypians privacy policy,
+                    I agree to share my email address with World of Dypians for use in
+                    accordance with the privacy policy,
                     including to receive communications.
                   </span>
                 </div>
