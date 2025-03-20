@@ -34,7 +34,7 @@ const getListedNftResult = async () => {
   const result = await getListedNFTS(0, "", "", "", "").catch((e) => {
     console.log(e);
   });
-  console.log("resultresultresultresult", result);
+
   if (result && result.length > 0) {
     let result2 = result.filter((item) => {
       return item.payment_priceType === 0;

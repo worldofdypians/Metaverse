@@ -10,7 +10,7 @@ const Campaigns = () => {
   const dummyData = [
     {
       title: "$25,000 WOD Trading Competition",
-      status: "Live",
+      status: "Expired",
       start_date: "Mar 13, 2025",
       end_date: "Mar 20, 2025",
       image: "https://cdn.worldofdypians.com/wod/trading-competition.webp",
