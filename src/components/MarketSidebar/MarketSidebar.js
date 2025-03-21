@@ -192,16 +192,16 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/shop/mint/timepiece"
+            to="/shop/mint/kucoin"
             end
             className={({ isActive }) =>
-              isActive || location.pathname.includes("mint/timepiece")
+              isActive || location.pathname.includes("mint")
                 ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
                 : "d-flex p-2 align-items-center gap-2 sidebar-item"
             }
             children={({ isActive }) => {
               const icon =
-                isActive || location.pathname.includes("mint/timepiece")
+                isActive || location.pathname.includes("mint")
                   ? "mintIconActive"
                   : "mintIcon";
               return (

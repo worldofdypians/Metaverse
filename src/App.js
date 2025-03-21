@@ -6308,7 +6308,7 @@ function App() {
               />
             }
           />
-          {/* <Route
+          <Route
             exact
             path="/shop/mint/kucoin"
             element={
@@ -6347,7 +6347,7 @@ function App() {
                 myKucoinNfts={mykucoinNFTs}
               />
             }
-          /> */}
+          />
           {/* <Route
             exact
             path="/shop/mint/matchain"

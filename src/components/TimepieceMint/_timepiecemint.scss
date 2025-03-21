@@ -489,6 +489,18 @@
   }
 }
 
+.market-mint-kucoin {
+  background-image: url("https://cdn.worldofdypians.com/wod/kucoinShopMintBanner.webp");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px !important;
+
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
+}
+
 .market-mint-opbnb {
   background-image: url("https://cdn.worldofdypians.com/wod/opbnbMarketMint.webp");
   background-size: 100% 100%;
