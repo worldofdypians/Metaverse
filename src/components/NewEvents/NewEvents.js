@@ -3899,11 +3899,11 @@ const NewEvents = ({
                                               {dragonBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light dragon-button"
+                                                  className="spinner-border spinner-border-sm text-light dragon-button"
                                                   role="status"
                                                   style={{ color: "#2b353e" }}
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3936,10 +3936,10 @@ const NewEvents = ({
                                               {dragonDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light dragon-button"
+                                                  className="spinner-border spinner-border-sm text-light dragon-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3991,10 +3991,10 @@ const NewEvents = ({
                                             >
                                               {bearBundleState === "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light bear-button"
+                                                  className="spinner-border spinner-border-sm text-light bear-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4027,10 +4027,10 @@ const NewEvents = ({
                                               {bearDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light bear-button"
+                                                  className="spinner-border spinner-border-sm text-light bear-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4086,10 +4086,10 @@ const NewEvents = ({
                                               {beastBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light beast-button"
+                                                  className="spinner-border spinner-border-sm text-light beast-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4122,10 +4122,10 @@ const NewEvents = ({
                                               {beastDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light beast-button"
+                                                  className="spinner-border spinner-border-sm text-light beast-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4181,10 +4181,10 @@ const NewEvents = ({
                                               {eagleBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light eagle-button"
+                                                  className="spinner-border spinner-border-sm text-light eagle-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4217,10 +4217,10 @@ const NewEvents = ({
                                               {eagleDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light eagle-button"
+                                                  className="spinner-border spinner-border-sm text-light eagle-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4276,10 +4276,10 @@ const NewEvents = ({
                                               {scorpionBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light scorpion-button"
+                                                  className="spinner-border spinner-border-sm text-light scorpion-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4312,10 +4312,10 @@ const NewEvents = ({
                                               {scorpionDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light scorpion-button"
+                                                  className="spinner-border spinner-border-sm text-light scorpion-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4371,10 +4371,10 @@ const NewEvents = ({
                                               {cyclopsBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light cyclops-button"
+                                                  className="spinner-border spinner-border-sm text-light cyclops-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4407,10 +4407,10 @@ const NewEvents = ({
                                               {cyclopsDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light cyclops-button"
+                                                  className="spinner-border spinner-border-sm text-light cyclops-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4830,10 +4830,10 @@ const NewEvents = ({
                                                   {puzzleMadnessBundleState ===
                                                   "loading" ? (
                                                     <div
-                                                      class="spinner-border spinner-border-sm text-light"
+                                                      className="spinner-border spinner-border-sm text-light"
                                                       role="status"
                                                     >
-                                                      <span class="visually-hidden">
+                                                      <span className="visually-hidden">
                                                         Loading...
                                                       </span>
                                                     </div>
@@ -4867,10 +4867,10 @@ const NewEvents = ({
                                                   {puzzleMadnessDepositState ===
                                                   "loading-deposit" ? (
                                                     <div
-                                                      class="spinner-border spinner-border-sm text-light"
+                                                      className="spinner-border spinner-border-sm text-light"
                                                       role="status"
                                                     >
-                                                      <span class="visually-hidden">
+                                                      <span className="visually-hidden">
                                                         Loading...
                                                       </span>
                                                     </div>
@@ -5067,10 +5067,10 @@ const NewEvents = ({
                           //             {puzzleMadnessBundleState ===
                           //             "loading" ? (
                           //               <div
-                          //                 class="spinner-border spinner-border-sm text-light"
+                          //                 className="spinner-border spinner-border-sm text-light"
                           //                 role="status"
                           //               >
-                          //                 <span class="visually-hidden">
+                          //                 <span className="visually-hidden">
                           //                   Loading...
                           //                 </span>
                           //               </div>
@@ -5100,10 +5100,10 @@ const NewEvents = ({
                           //             {puzzleMadnessDepositState ===
                           //             "loading-deposit" ? (
                           //               <div
-                          //                 class="spinner-border spinner-border-sm text-light"
+                          //                 className="spinner-border spinner-border-sm text-light"
                           //                 role="status"
                           //               >
-                          //                 <span class="visually-hidden">
+                          //                 <span className="visually-hidden">
                           //                   Loading...
                           //                 </span>
                           //               </div>

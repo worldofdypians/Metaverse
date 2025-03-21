@@ -175,15 +175,16 @@ const WhitelistContent = ({
                 </div>
               </div>
             )}
-            {selectedRound?.cliff &&
-            <div className="whitelist-input-wrapper p-3">
-              <div className="d-flex flex-column">
-                <span className="whitelist-green-txt">Cliff Period</span>
-                <span className="whitelist-white-txt">
-                  {selectedRound?.cliff}
-                </span>
+            {selectedRound?.cliff && (
+              <div className="whitelist-input-wrapper p-3">
+                <div className="d-flex flex-column">
+                  <span className="whitelist-green-txt">Cliff Period</span>
+                  <span className="whitelist-white-txt">
+                    {selectedRound?.cliff}
+                  </span>
+                </div>
               </div>
-            </div> }
+            )}
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Vesting Period</span>
@@ -362,7 +363,7 @@ const WhitelistContent = ({
               >
                 {claimLoading ? (
                   <div
-                    class="spinner-border spinner-border-sm text-light"
+                    className="spinner-border spinner-border-sm text-light"
                     role="status"
                   ></div>
                 ) : claimStatus === "failed" ? (
@@ -402,7 +403,7 @@ const WhitelistContent = ({
               >
                 {claimLoading ? (
                   <div
-                    class="spinner-border spinner-border-sm text-light"
+                    className="spinner-border spinner-border-sm text-light"
                     role="status"
                   ></div>
                 ) : claimStatus === "failed" ? (
@@ -444,7 +445,7 @@ const WhitelistContent = ({
                 >
                   {claimLoading ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     ></div>
                   ) : claimStatus === "failed" ? (
@@ -484,7 +485,7 @@ const WhitelistContent = ({
               >
                 {claimLoading ? (
                   <div
-                    class="spinner-border spinner-border-sm text-light"
+                    className="spinner-border spinner-border-sm text-light"
                     role="status"
                   ></div>
                 ) : claimStatus === "failed" ? (
@@ -526,7 +527,7 @@ const WhitelistContent = ({
                 >
                   {claimLoading ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     ></div>
                   ) : claimStatus === "failed" ? (

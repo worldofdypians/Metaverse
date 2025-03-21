@@ -884,10 +884,10 @@ const GovernanceInner = ({
                                 <>Switch to BNB Chain</>
                               ) : depositLoading ? (
                                 <div
-                                  class="spinner-border spinner-border-sm text-light"
+                                  className="spinner-border spinner-border-sm text-light"
                                   role="status"
                                 >
-                                  <span class="visually-hidden">
+                                  <span className="visually-hidden">
                                     Loading...
                                   </span>
                                 </div>
@@ -963,10 +963,10 @@ const GovernanceInner = ({
                               >
                                 {withdrawLoading ? (
                                   <div
-                                    class="spinner-border spinner-border-sm text-light"
+                                    className="spinner-border spinner-border-sm text-light"
                                     role="status"
                                   >
-                                    <span class="visually-hidden">
+                                    <span className="visually-hidden">
                                       Loading...
                                     </span>
                                   </div>

@@ -18,7 +18,6 @@ import ForgotPasswordBNB from "../ForgotPassword/ForgotPasswordBNB";
 import { GENERATE_NONCE, VERIFY_WALLET } from "../Dashboard/Dashboard.schema";
 import axios from "axios";
 
-
 const StyledTabs = styled((props) => (
   <Tabs
     {...props}
@@ -264,20 +263,22 @@ function AuthBNB({
                           <h4 className="listtext"> Register </h4>
                         </div>
                       </li>
-                      <li class={`col-3 li ${showVerify && "complete"} `}>
+                      <li className={`col-3 li ${showVerify && "complete"} `}>
                         <div className="status">
                           <span className="text-white statusIndex">2</span>
                           <h4 className="listtext"> Verify </h4>
                         </div>
                       </li>
-                      <li class={`col-3 li ${playerCreation && "complete"} `}>
+                      <li
+                        className={`col-3 li ${playerCreation && "complete"} `}
+                      >
                         <div className="status">
                           <span className="text-white statusIndex">3</span>
                           <h4 className="listtext"> Profile </h4>
                         </div>
                       </li>
                       <li
-                        class={`col-2 li ${linkWallet && "complete"}`}
+                        className={`col-2 li ${linkWallet && "complete"}`}
                         style={{ width: 0 }}
                       >
                         <div className="status">
@@ -362,7 +363,11 @@ function AuthBNB({
                   rel="noreferrer"
                   className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
                 >
-                  <img src={"https://cdn.worldofdypians.com/wod/mediumLogo.svg"} alt="" /> Create Account Tutorial
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/mediumLogo.svg"}
+                    alt=""
+                  />{" "}
+                  Create Account Tutorial
                 </a>
               </div>
               <ErrorAlert error={loginError} />

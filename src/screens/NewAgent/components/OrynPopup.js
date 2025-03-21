@@ -38,7 +38,8 @@ const OrynPopup = ({
   checkTimer,
   getWithdrawTimer,
   unlockLoading,
-  unlockStatus
+  unlockStatus,
+  network_matchain
 }) => {
   const benefits = [
     "No chat restrictions",
@@ -50,6 +51,9 @@ const OrynPopup = ({
   ];
 
   const handleEthPool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else {
     await handleSwitchNetworkhook("0x38")
       .then(() => {
         handleSwitchNetwork(56);
@@ -57,17 +61,16 @@ const OrynPopup = ({
       .catch((e) => {
         console.log(e);
       });
+    }
   };
 
   const [timer, setTimer] = useState(false);
 
   useEffect(() => {
-    if(Number(withdrawTimer) !== Number(0)){
-      setTimer(true)
+    if (Number(withdrawTimer) !== Number(0)) {
+      setTimer(true);
     }
-  }, [withdrawTimer])
-    
-  
+  }, [withdrawTimer]);
 
   return (
     <div className="oryn-popup-wrapper popup-active p-3">
@@ -114,31 +117,33 @@ const OrynPopup = ({
         </h6>
       </div>
       <div className="d-flex mt-3 w-100 justify-content-center">
-        {premiumOryn && Number(withdrawTimer) === Number(0) && !hasStartedTimer ? (
+        {premiumOryn &&
+        Number(withdrawTimer) === Number(0) &&
+        !hasStartedTimer ? (
           <button
-          className={`${
-            unlockStatus === "fail"
-              ? "reverse-btn"
-              : unlockStatus === "success"
-              ? "action-btn"
-              : "explore-btn"
-          } px-3 py-2`}
-          disabled={
-            unlockLoading ||
-            unlockStatus === "fail" ||
-            unlockStatus === "success"
-          }
+            className={`${
+              unlockStatus === "fail"
+                ? "reverse-btn"
+                : unlockStatus === "success"
+                ? "action-btn"
+                : "explore-btn"
+            } px-3 py-2`}
+            disabled={
+              unlockLoading ||
+              unlockStatus === "fail" ||
+              unlockStatus === "success"
+            }
             onClick={() => {
               startWithdrawTimer();
               checkTimer();
             }}
           >
-             {unlockLoading ? (
+            {unlockLoading ? (
               <div
-                class="spinner-border spinner-border-sm text-light"
+                className="spinner-border spinner-border-sm text-light"
                 role="status"
               >
-                <span class="visually-hidden">Loading...</span>
+                <span className="visually-hidden">Loading...</span>
               </div>
             ) : unlockStatus === "fail" ? (
               <>
@@ -151,8 +156,9 @@ const OrynPopup = ({
               <>Unlock</>
             )}
           </button>
-        )
-        : premiumOryn && Number(withdrawTimer) === Number(0) && hasStartedTimer ? (
+        ) : premiumOryn &&
+          Number(withdrawTimer) === Number(0) &&
+          hasStartedTimer ? (
           <button
             className={`${
               withdrawStatus === "failed"
@@ -172,10 +178,10 @@ const OrynPopup = ({
           >
             {withdrawLoading ? (
               <div
-                class="spinner-border spinner-border-sm text-light"
+                className="spinner-border spinner-border-sm text-light"
                 role="status"
               >
-                <span class="visually-hidden">Loading...</span>
+                <span className="visually-hidden">Loading...</span>
               </div>
             ) : withdrawStatus === "failed" ? (
               <>
@@ -188,8 +194,8 @@ const OrynPopup = ({
               <>Withdraw</>
             )}
           </button>
-        )
-        : premiumOryn && Number(withdrawTimer) !== Number(0) || hasStartedTimer ? (
+        ) : (premiumOryn && Number(withdrawTimer) !== Number(0)) ||
+          hasStartedTimer ? (
           <div
             className="oryn-lock-wrapper  p-3 d-flex align-items-center justify-content-between w-100"
             style={{ background: "rgba(113, 127, 255, 0.1)" }}
@@ -204,7 +210,7 @@ const OrynPopup = ({
               }}
             />
           </div>
-        )  : (
+        ) : (
           <button
             className={`${
               !isConnected || chainId !== 56 || depositStatus === "fail"
@@ -224,7 +230,11 @@ const OrynPopup = ({
                 ? handleApprove()
                 : console.log("");
             }}
-            disabled={depositLoading || depositStatus === "fail" || depositStatus === "success"}
+            disabled={
+              depositLoading ||
+              depositStatus === "fail" ||
+              depositStatus === "success"
+            }
           >
             {!isConnected ? (
               <>Connect Wallet</>
@@ -232,10 +242,10 @@ const OrynPopup = ({
               <>Switch to BNB Chain</>
             ) : depositLoading ? (
               <div
-                class="spinner-border spinner-border-sm text-light"
+                className="spinner-border spinner-border-sm text-light"
                 role="status"
               >
-                <span class="visually-hidden">Loading...</span>
+                <span className="visually-hidden">Loading...</span>
               </div>
             ) : depositStatus === "initial" ? (
               <>Approve</>

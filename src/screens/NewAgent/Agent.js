@@ -826,6 +826,7 @@ const Agent = ({
             getWithdrawTimer={getWithdrawTimer}
             unlockLoading={unlockLoading}
             unlockStatus={unlockStatus}
+            network_matchain={network_matchain}
           />
         </OutsideClickHandler>
       )}

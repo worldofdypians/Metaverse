@@ -611,10 +611,10 @@ const GoldenPassPopup = ({
                 >
                   {bundleState === "loading" ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : (
                     "Approve"
@@ -637,10 +637,10 @@ const GoldenPassPopup = ({
                 >
                   {depositState === "loading-deposit" ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : (
                     "Buy"

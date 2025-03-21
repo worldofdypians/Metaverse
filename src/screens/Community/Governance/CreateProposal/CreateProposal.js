@@ -105,7 +105,7 @@ const CreateProposal = ({
           {/* <div className="d-flex flex-column gap-2">
             <div className="dropdown position relative">
               <button
-                class={`btn w-100 launchpad-dropdown gap-2 d-flex justify-content-between align-items-center dropdown-toggle`}
+                className={`btn w-100 launchpad-dropdown gap-2 d-flex justify-content-between align-items-center dropdown-toggle`}
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -213,10 +213,10 @@ const CreateProposal = ({
                   <div className="d-flex align-items-center gap-2">
                     Processing
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   </div>
                 ) : govStatus === "initial" ? (

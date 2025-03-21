@@ -94,6 +94,7 @@ import "@matchain/matchid-sdk-react/index.css";
 import { Hooks } from "@matchain/matchid-sdk-react";
 import { useMatchChain } from "@matchain/matchid-sdk-react/hooks";
 import { http, createPublicClient } from "viem";
+import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -481,6 +482,8 @@ function App() {
   const [totalVolumeNew, setTotalVolumeNew] = useState(0);
   const [wodHolders, setWodHolders] = useState(0);
   const [coinbase, setCoinbase] = useState();
+  const [gameAccount, setGameAccount] = useState();
+
   const [networkId, setChainId] = useState();
   const [currencyAmount, setCurrencyAmount] = useState(0);
   const [showForms, setShowForms] = useState(false);
@@ -585,7 +588,7 @@ function App() {
 
   const [domainPopup, setDomainPopup] = useState(false);
   const [showSync, setshowSync] = useState(false);
-
+  const [syncStatus, setsyncStatus] = useState("initial");
   const [availableDomain, setAvailableDomain] = useState("initial");
   const [domainPrice, setDomainPrice] = useState(0);
   const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
@@ -850,6 +853,25 @@ function App() {
       if (result2 && result2.status === 200) {
         console.log(result2);
       }
+    }
+  };
+
+  const handleSync = async () => {
+    setsyncStatus("loading");
+
+    try {
+      await generateNonce({
+        variables: {
+          publicAddress: coinbase,
+        },
+      });
+    } catch (error) {
+      setsyncStatus("error");
+      setTimeout(() => {
+        setsyncStatus("initial");
+        setshowSync(false);
+      }, 3000);
+      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
   };
 
@@ -3267,36 +3289,80 @@ function App() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(coinbase);
         let signatureData = "";
+
         await signer
           .signMessage(
             `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
           )
           .then((data) => {
+            verifyWallet({
+              variables: {
+                publicAddress: coinbase,
+                signature: data,
+              },
+            });
+            setsyncStatus("success");
+            setTimeout(() => {
+              setsyncStatus("initial");
+              setshowSync(false);
+            }, 1000);
+            refreshSubscription(coinbase);
             signatureData = data;
-
             handleManageLogin(
               signatureData,
               `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
             );
           });
+
+        handleFirstTask(userWallet);
       } catch (error) {
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+          setshowSync(false);
+        }, 3000);
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
       }
     } else if (window.WALLET_TYPE === "matchId" && address) {
       try {
         let signatureData = "";
-        await signMessage({
-          message: `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`,
-        }).then((data) => {
-          signatureData = data;
+        if (walletClient) {
+          setshowSync(false);
+          const res = await signMessage({
+            message: `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`,
+            account: address,
+          });
 
-          handleManageLogin(
-            signatureData,
-            `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-          );
-        });
+          if (res) {
+            signatureData = res;
+
+            verifyWallet({
+              variables: {
+                publicAddress: address,
+                signature: signatureData,
+              },
+            });
+
+            handleManageLogin(
+              signatureData,
+              `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+            );
+
+            setsyncStatus("success");
+            setTimeout(() => {
+              setsyncStatus("initial");
+              setshowSync(false);
+            }, 3000);
+            handleFirstTask(address);
+          }
+        }
       } catch (error) {
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+          setshowSync(false);
+        }, 3000);
       }
     } else if (coinbase && library) {
       try {
@@ -3311,12 +3377,20 @@ function App() {
             signature: signature,
           },
         }).then(() => {
-          // if (isonlink) {
-          //   handleFirstTask(binanceWallet);
-          // }
+          setsyncStatus("success");
+          setTimeout(() => {
+            setsyncStatus("initial");
+            setshowSync(false);
+          }, 1000);
+          handleFirstTask(coinbase);
         });
       } catch (error) {
         console.log("🚀 ~ file: App.js:2248 ~ getTokens ~ error", error);
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+          setshowSync(false);
+        }, 3000);
       }
     }
   };
@@ -3650,6 +3724,26 @@ function App() {
     mantaPrice,
     victionPrice,
   ]);
+
+  useEffect(() => {
+    if (
+      email &&
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress
+    ) {
+      setGameAccount(data.getPlayer.wallet.publicAddress);
+    }
+  }, [data, email]);
+
+  useEffect(() => {
+    if (dataVerify?.verifyWallet) {
+      refetchPlayer();
+    }
+  }, [dataVerify]);
 
   const dummyBetaPassData2 = [
     // {
@@ -4578,10 +4672,10 @@ function App() {
       window.config.daily_bonus_viction_address
     );
 
-    const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
-      window.DAILY_BONUS_MANTA_ABI,
-      window.config.daily_bonus_manta_address
-    );
+    // const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
+    //   window.DAILY_BONUS_MANTA_ABI,
+    //   window.config.daily_bonus_manta_address
+    // );
 
     const daily_bonus_contract_taiko = new window.taikoWeb3.eth.Contract(
       window.DAILY_BONUS_TAIKO_ABI,
@@ -4649,51 +4743,37 @@ function App() {
               if (isPremium_skale === true) {
                 setIsPremium(true);
               } else {
-                const isPremium_manta = await daily_bonus_contract_manta.methods
+                const isPremium_taiko = await daily_bonus_contract_taiko.methods
                   .isPremiumUser(addr)
                   .call()
                   .catch((e) => {
                     console.error(e);
                     return false;
                   });
-                if (isPremium_manta === true) {
+                if (isPremium_taiko === true) {
                   setIsPremium(true);
                 } else {
-                  const isPremium_taiko =
-                    await daily_bonus_contract_taiko.methods
+                  const isPremium_base = await daily_bonus_contract_base.methods
+                    .isPremiumUser(addr)
+                    .call()
+                    .catch((e) => {
+                      console.error(e);
+                      return false;
+                    });
+                  if (isPremium_base === true) {
+                    setIsPremium(true);
+                  } else {
+                    const isPremium_mat = await daily_bonus_contract_mat.methods
                       .isPremiumUser(addr)
                       .call()
                       .catch((e) => {
                         console.error(e);
                         return false;
                       });
-                  if (isPremium_taiko === true) {
-                    setIsPremium(true);
-                  } else {
-                    const isPremium_base =
-                      await daily_bonus_contract_base.methods
-                        .isPremiumUser(addr)
-                        .call()
-                        .catch((e) => {
-                          console.error(e);
-                          return false;
-                        });
-                    if (isPremium_base === true) {
+                    if (isPremium_mat === true) {
                       setIsPremium(true);
                     } else {
-                      const isPremium_mat =
-                        await daily_bonus_contract_mat.methods
-                          .isPremiumUser(addr)
-                          .call()
-                          .catch((e) => {
-                            console.error(e);
-                            return false;
-                          });
-                      if (isPremium_mat === true) {
-                        setIsPremium(true);
-                      } else {
-                        setIsPremium(false);
-                      }
+                      setIsPremium(false);
                     }
                   }
                 }
@@ -5130,13 +5210,20 @@ function App() {
   }, [coinbase, nftCount]);
 
   useEffect(() => {
-    if (coinbase && isConnected && authToken && email)
+    if (
+      coinbase &&
+      isConnected &&
+      authToken &&
+      email &&
+      userWallet &&
+      userWallet.toLowerCase() === coinbase.toLowerCase()
+    )
       addNewUserIfNotExists(
         coinbase,
         "Welcome",
         "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
       );
-  }, [coinbase, isConnected, authToken, email]);
+  }, [coinbase, isConnected, authToken, email, userWallet]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -5240,7 +5327,7 @@ function App() {
             setCount55(count55 + 1);
           }}
           onSigninClick={checkData}
-          gameAccount={data?.getPlayer?.wallet?.publicAddress}
+          gameAccount={gameAccount}
           email={email}
           username={data?.getPlayer?.displayName}
           loginListener={loginListener}
@@ -5539,6 +5626,7 @@ function App() {
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 binanceWallet={coinbase}
                 binanceW3WProvider={library}
+                network_matchain={chain}
               />
             }
           />
@@ -5608,6 +5696,10 @@ function App() {
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
+                onSyncClick={() => {
+                  setshowSync(true);
+                }}
+                syncStatus={syncStatus}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -5686,6 +5778,7 @@ function App() {
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
+                syncStatus={syncStatus}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}
@@ -5722,6 +5815,9 @@ function App() {
                 }}
                 handleConnectionMatchId={handleConnectionMatchId}
                 onSigninClick={checkData}
+                onSyncClick={() => {
+                  setshowSync(true);
+                }}
                 success={success}
                 availableTime={availTime}
                 handleSwitchNetwork={handleSwitchNetwork}
@@ -6206,6 +6302,7 @@ function App() {
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
+                syncStatus={syncStatus}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}
@@ -6239,6 +6336,9 @@ function App() {
                 chainId={networkId}
                 handleConnect={() => {
                   setwalletModal(true);
+                }}
+                onSyncClick={() => {
+                  setshowSync(true);
                 }}
                 handleConnectionMatchId={handleConnectionMatchId}
                 onSigninClick={checkData}
@@ -7095,6 +7195,20 @@ function App() {
           handleConnectionPassport={handleConnectPassport}
           handleConnectBinance={handleConnectBinance}
           handleConnectionMatchId={handleConnectionMatchId}
+        />
+      )}
+
+      {showSync === true && (
+        <SyncModal
+          onCancel={() => {
+            setshowSync(false);
+          }}
+          onclose={() => {
+            setshowSync(false);
+          }}
+          open={showSync === true}
+          onConfirm={handleSync}
+          syncStatus={syncStatus}
         />
       )}
 

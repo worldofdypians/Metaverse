@@ -414,29 +414,6 @@ const MarketMint = ({
     }
   };
 
-  const handleMatPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x2ba")
-            .then(() => {
-              handleSwitchNetwork(698);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
 
   const handleSeiPool = async () => {
     if (window.WALLET_TYPE !== "binance") {

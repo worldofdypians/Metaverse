@@ -249,7 +249,7 @@ const LandDetails = ({
 
   useEffect(() => {
     if (window.WALLET_TYPE !== "matchId") {
-    totalStakedNft()
+      totalStakedNft();
     }
   }, [window.WALLET_TYPE]);
 
@@ -578,10 +578,10 @@ const LandDetails = ({
                     >
                       {claimLoading ? (
                         <div
-                          class="spinner-border spinner-border-sm text-light"
+                          className="spinner-border spinner-border-sm text-light"
                           role="status"
                         >
-                          <span class="visually-hidden">Loading...</span>
+                          <span className="visually-hidden">Loading...</span>
                         </div>
                       ) : claimStatus === "failed" ? (
                         <>Failed</>

@@ -1493,10 +1493,10 @@ const StakeWodDetails2 = ({
                     <>Switch to BNB Chain</>
                   ) : depositLoading ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : depositStatus === "initial" ? (
                     <>Approve</>
@@ -1601,10 +1601,10 @@ const StakeWodDetails2 = ({
                       >
                         {claimLoading ? (
                           <div
-                            class="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                           </div>
                         ) : claimStatus === "failed" ? (
                           <>
@@ -1638,10 +1638,10 @@ const StakeWodDetails2 = ({
                       >
                         {reInvestLoading ? (
                           <div
-                            class="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                           </div>
                         ) : reInvestStatus === "failed" ? (
                           <>
@@ -1944,10 +1944,10 @@ const StakeWodDetails2 = ({
                     >
                       {withdrawLoading ? (
                         <div
-                          class="spinner-border spinner-border-sm text-light"
+                          className="spinner-border spinner-border-sm text-light"
                           role="status"
                         >
-                          <span class="visually-hidden">Loading...</span>
+                          <span className="visually-hidden">Loading...</span>
                         </div>
                       ) : withdrawStatus === "failed" ? (
                         <>
@@ -2316,10 +2316,10 @@ const StakeWodDetails2 = ({
     //               >
     //                 {depositLoading ? (
     //                   <div
-    //                     class="spinner-border spinner-border-sm text-light"
+    //                     className="spinner-border spinner-border-sm text-light"
     //                     role="status"
     //                   >
-    //                     <span class="visually-hidden">Loading...</span>
+    //                     <span className="visually-hidden">Loading...</span>
     //                   </div>
     //                 ) : depositStatus === "initial" ? (
     //                   <>Approve</>
@@ -2437,10 +2437,10 @@ const StakeWodDetails2 = ({
     //                 >
     //                   {claimLoading ? (
     //                     <div
-    //                       class="spinner-border spinner-border-sm text-light"
+    //                       className="spinner-border spinner-border-sm text-light"
     //                       role="status"
     //                     >
-    //                       <span class="visually-hidden">Loading...</span>
+    //                       <span className="visually-hidden">Loading...</span>
     //                     </div>
     //                   ) : claimStatus === "failed" ? (
     //                     <>
@@ -2470,10 +2470,10 @@ const StakeWodDetails2 = ({
     //                   >
     //                     {reInvestLoading ? (
     //                       <div
-    //                         class="spinner-border spinner-border-sm text-light"
+    //                         className="spinner-border spinner-border-sm text-light"
     //                         role="status"
     //                       >
-    //                         <span class="visually-hidden">Loading...</span>
+    //                         <span className="visually-hidden">Loading...</span>
     //                       </div>
     //                     ) : reInvestStatus === "failed" ? (
     //                       <>
@@ -2891,10 +2891,10 @@ const StakeWodDetails2 = ({
     //                 >
     //                   {withdrawLoading ? (
     //                     <div
-    //                       class="spinner-border spinner-border-sm text-light"
+    //                       className="spinner-border spinner-border-sm text-light"
     //                       role="status"
     //                     >
-    //                       <span class="visually-hidden">Loading...</span>
+    //                       <span className="visually-hidden">Loading...</span>
     //                     </div>
     //                   ) : withdrawStatus === "failed" ? (
     //                     <>
