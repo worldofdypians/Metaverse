@@ -5591,9 +5591,10 @@ function App() {
                 handleOpenDomains={() => setDomainPopup(true)}
                 domainName={domainName}
                 dogePrice={dogePrice}
-                onSubscribeSuccess={() => {
-                  refetchPlayer();
-                  setCount55(count55 + 1);
+                onSubscribeSuccess={(account) => {
+                  // refetchPlayer();
+                  // setCount55(count55 + 1);
+                  refreshSubscription(account);
                 }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
@@ -5670,9 +5671,10 @@ function App() {
                 handleOpenDomains={() => setDomainPopup(true)}
                 domainName={domainName}
                 dogePrice={dogePrice}
-                onSubscribeSuccess={() => {
-                  refetchPlayer();
-                  setCount55(count55 + 1);
+                onSubscribeSuccess={(account) => {
+                  // refetchPlayer();
+                  // setCount55(count55 + 1);
+                  refreshSubscription(account);
                 }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
@@ -6184,9 +6186,10 @@ function App() {
                 handleOpenDomains={() => setDomainPopup(true)}
                 domainName={domainName}
                 dogePrice={dogePrice}
-                onSubscribeSuccess={() => {
-                  refetchPlayer();
-                  setCount55(count55 + 1);
+                onSubscribeSuccess={(account) => {
+                  // refetchPlayer();
+                  // setCount55(count55 + 1);
+                  refreshSubscription(account);
                 }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
