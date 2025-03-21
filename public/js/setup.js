@@ -39,6 +39,8 @@ window.config = {
   nft_taiko_address: "0xCb2Eb4ba62346751F36bA652010b553759141AEE",
   nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
   nft_mat_address: "0x8e4917c1ba9598fbbf66934cb17ac28c3b5849ab",
+  nft_kucoin_address: "0x6dE32bb9F7bfEf596e7767F2DA9Fb62FEb91c1E2",
+
 
   nft_dypius_premium_address: "0xA3e62c82410fF6697B68CABE90a8b1B6e3CEC8CD",
   nft_dypius_premium_viction_address:
@@ -1758,6 +1760,111 @@ class MAT_NFT {
 
 window.mat_nft = new MAT_NFT();
 
+
+
+
+
+/**
+ *
+ * @param {"TOKEN" | "KUCOIN_NFT" } key
+ */
+
+async function getContractKucoinNFT(key) {
+  let ABI = window[key + "_ABI"];
+  let address = window.config[key.toLowerCase() + "_address"];
+  if (!window.cached_contracts[key]) {
+    window.web3 = new Web3(window.ethereum);
+    window.cached_contracts[key] = new window.web3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_kucoin_address,
+      {
+        from: await getCoinbase(),
+      }
+    );
+  }
+
+  return window.cached_contracts[key];
+}
+
+class KUCOIN_NFT {
+  constructor(key = "KUCOIN_NFT") {
+    this.key = key;
+    [
+      "REVEAL_TIMESTAMP",
+      "balanceOf",
+      "baseURI",
+      "ownerOf",
+      "betaPassPrice",
+      "costSaleIsActive",
+      "getApproved",
+      "isApprovedForAll",
+      "maxBetaPassPurchase",
+      "name",
+      "nextOwnerToExplicitlySet",
+      "owner",
+      "ownerOf",
+      "saleIsActive",
+      "startingIndex",
+      "startingIndexBlock",
+      "supportsInterface",
+      "symbol",
+      "tokenByIndex",
+      "tokenOfOwnerByIndex",
+      "tokenURI",
+      "totalSupply",
+    ].forEach((fn_name) => {
+      this[fn_name] = async function (...args) {
+        let contract = new window.opBnbWeb3.eth.Contract(
+          window.OPBNB_NFT_ABI,
+          window.config.nft_kucoin_address,
+          {
+            from: await getCoinbase(),
+          }
+        );
+        return await contract.methods[fn_name](...args).call();
+      };
+    });
+
+    // ["approve, costSaleState, flipSaleState, mintBetaPass, mintBetaPassCost, renounceOwnership, reserveBetaPass, safeTransferFrom, setApprovalForAll, setBaseURI, setBetaPassPrice, setProvernanceHash, setRevealTimestamp, transferFrom, withdraw "].forEach((fn_name) => {
+    //   this[fn_name] = async function (...args) {
+    //     let contract = await getContractCoingeckoNFT(this.key);
+    //     return await contract.methods[fn_name](...args).send({
+    //       from: await getCoinbase(),
+    //     });
+    //   };
+    // });
+  }
+  async mintKucoinNFT() {
+    let nft_contract = await getContractKucoinNFT("KUCOIN_NFT");
+
+    let second = nft_contract.methods
+      .mintBetaPass()
+      .send({ from: await getCoinbase() });
+    // batch.execute()
+    let result = await second;
+    let sizeResult = Object.keys(result.events["Transfer"]).length;
+    if (result.events["Transfer"].blockNumber > 0) sizeResult = 101;
+    if (result.status == true) {
+      let nftId = 0;
+      if (sizeResult != 101) {
+        nftId = window.web3.utils
+          .toBN(result.events["Transfer"][sizeResult - 1].raw.topics[3])
+          .toString(10);
+      } else {
+        nftId = window.web3.utils
+          .toBN(result.events["Transfer"].raw.topics[3])
+          .toString(10);
+      }
+      return nftId;
+    } else {
+      throw new Error("Minting failed!");
+    }
+  }
+}
+
+window.kucoin_nft = new KUCOIN_NFT();
+
+
 /**
  *
  * @param {"TOKEN" | "SEI_NFT" } key
@@ -3298,26 +3405,9 @@ window.updateOffer = async (
 window.approveOffer = async (amount, priceType, tokenType) => {
   console.log(amount, priceType, tokenType);
   const web3 = new Web3(window.ethereum);
-  // if (priceType === 1) {
-  //   const contract = new web3.eth.Contract(
-  //     window.DYP_ABI,
-  //     tokenType === "dypv2"
-  //       ? window.config.token_dypius_new_address
-  //       : window.config.dyp_token_address
-  //   );
 
-  //   console.log("amount", amount);
-  //   console.log(
-  //     "window.config.nft_marketplace_address",
-  //     window.config.nft_marketplace_address
-  //   );
-
-  //   await contract.methods
-  //     .approve(window.config.nft_marketplace_address, amount)
-  //     .send({ from: await getCoinbase() });
-  // } else
   if (priceType === 0) {
-    const contract = new window.web3.eth.Contract(
+    const contract = new web3.eth.Contract(
       window.TOKEN_ABI,
       window.config.weth2_address
     );
@@ -3367,28 +3457,7 @@ window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
 window.isApprovedOffer = async (amount, priceType, tokenType) => {
   window.web3 = new Web3(window.config.infura_endpoint);
   console.log(amount, priceType, tokenType);
-  // if (priceType === 1) {
-  //   const contract = new window.web3.eth.Contract(
-  //     window.DYP_ABI,
-  //     tokenType === "dypv2"
-  //       ? window.config.token_dypius_new_address
-  //       : window.config.dyp_token_address
-  //   );
-
-  //   const coinbase = await getCoinbase();
-
-  //   const allowance = await contract.methods
-  //     .allowance(coinbase, window.config.nft_marketplace_address)
-  //     .call({ from: await getCoinbase() });
-  //   console.log(
-  //     "appr makeoffer",
-  //     Number(allowance) >= Number(amount),
-  //     Number(allowance),
-  //     Number(amount)
-  //   );
-
-  //   return Number(allowance) >= Number(amount);
-  // } else
+   
   if (priceType === 0) {
     const contract = new window.web3.eth.Contract(
       window.TOKEN_ABI,
@@ -3649,7 +3718,22 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
-  } else if (type === "skale") {
+  } else if (type === "kucoin") {
+    contract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_kucoin_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  }  else if (type === "skale") {
     contract = new window.skaleWeb3.eth.Contract(
       window.SKALE_NFT_ABI,
       window.config.nft_skale_address

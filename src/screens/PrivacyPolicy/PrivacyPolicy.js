@@ -26,7 +26,7 @@ const PrivacyPolicy = () => {
                 (the “Website”), the World of Dypians game (the “Game”), and all
                 content and functionalities accessible via our Website and the
                 Game (the “Services”), in each case operated by or on behalf of
-                Dypius (“Company,” “we,” or “us”). Please read this Privacy
+                World of Dypians (“Company,” “we,” or “us”). Please read this Privacy
                 Policy carefully. If you do not agree with this Privacy Policy
                 in general or any part of it, you should not access the Website,
                 use our Services, or otherwise provide your information to us
@@ -254,7 +254,7 @@ const PrivacyPolicy = () => {
                 below.
               </p>
               <p className="text-white m-0">World of Dypians Support</p>
-              <p className="text-white m-0">Email: helpcenter@dypius.com</p>
+              <p className="text-white m-0">Email: contact@worldofdypians.com</p>
               <p className="text-white m-0">
                 Complaints: If you believe that we have breached a relevant data
                 protection law and wish to make a complaint, please contact us
@@ -307,7 +307,7 @@ const PrivacyPolicy = () => {
               <p className="text-white m-0">Contact Us</p>
               <p className="text-white m-0">
                 Should you have any questions about our privacy practices or
-                this Privacy Policy, please email us at helpcenter@dypius.com.
+                this Privacy Policy, please email us at contact@worldofdypians.com.
               </p>
             </div>
           </div>

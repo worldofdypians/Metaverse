@@ -9,6 +9,22 @@ const Campaigns = () => {
 
   const dummyData = [
     {
+      title: "$25,000 WOD Trading Competition",
+      status: "Expired",
+      start_date: "Mar 13, 2025",
+      end_date: "Mar 20, 2025",
+      image: "https://cdn.worldofdypians.com/wod/trading-competition.webp",
+      link: "https://pancakeswap.finance/?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+    },
+    {
+      title: "World of Dypians x Binance Wallet",
+      status: "Expired",
+      start_date: "Jan 23, 2025",
+      end_date: "Feb 06, 2025",
+      image: "https://cdn.worldofdypians.com/wod/wodxbinanceBanner.webp",
+      link: "https://www.binance.com/en/web3-campaign/airdrop/4343337326001918209",
+    },
+    {
       title: "BNB Chain Red Envelope Carnival!",
       status: "Expired",
       start_date: "January 27, 2025",
@@ -109,16 +125,17 @@ const Campaigns = () => {
   ];
 
   const dummyBanner = {
-    title: "World of Dypians x Binance Wallet",
-    status: "Expired",
-    start_date: "Jan 23, 2025",
-    end_date: "Feb 06, 2025",
-    image: "https://cdn.worldofdypians.com/wod/wodxbinanceBanner.webp",
-    desc: `Win $50,000 in WOD Token Rewards with World of Dypians. <br/>
-
-Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on BNB Chain as outlined in the campaign rules. 2,000 winners will share $50,000 worth of WOD tokens, each receiving $25 in a raffle-based selection.
+    title: "The Grand Battle Challenge",
+    status: "Live",
+    start_date: "Mar 17, 2025",
+    end_date: "Mar 31, 2025",
+    image: "https://cdn.worldofdypians.com/wod/grand_battle_challenge.webp",
+    desc: `Prepare for an unforgettable showdown! The Grand Battle Challenge is here, bringing players together to compete, strategize, and claim victory to share $30,000 Rewards<br/>
+    <ul><li>Login or Create a Game Account</li>
+    <li>Stake min 100 WOD tokens </li>
+    <li>Open at least 10 Daily Bonus Chests </li>  </ul>
    `,
-    link: "https://www.binance.com/en/web3-campaign/airdrop/4343337326001918209",
+    link: "https://dappbay.bnbchain.org/campaign/377-join-world-of-dypians-grand-battle-challenge-to-share-30-000-rewards",
   };
 
   useEffect(() => {
@@ -143,7 +160,7 @@ Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on B
                 <h6 className="campaign-banner-title mb-0">
                   {dummyBanner.title}
                 </h6>
-                {/* <div
+                <div
                   className={`position-relative py-1 ${
                     dummyBanner.status === "Live"
                       ? "events-page-status-tag-live"
@@ -165,7 +182,7 @@ Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on B
                   )}
 
                   <span>{dummyBanner.status}</span>
-                </div> */}
+                </div>
               </div>
               <hr className="campaign-banner-divider" />
               <div className="d-flex align-items-center gap-2">
@@ -189,8 +206,7 @@ Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on B
                   className="explore-btn px-4 py-2 mt-4"
                   style={{ width: "fit-content" }}
                 >
-                  {/* Explore */}
-                  Expired
+                  Explore
                 </NavLink>
               </div>
             </div>

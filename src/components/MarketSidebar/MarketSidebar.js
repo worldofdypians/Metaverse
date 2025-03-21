@@ -93,24 +93,7 @@ const MarketSidebar = () => {
                         isActive
                           ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
                           : `d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item ${
-                              location.pathname.includes("beta-pass/conflux") ||
-                              location.pathname.includes("beta-pass/coin98") ||
-                              location.pathname.includes(
-                                "beta-pass/coingecko"
-                              ) ||
-                              location.pathname.includes("beta-pass/base") ||
-                              location.pathname.includes(
-                                "beta-pass/coinmarketcap"
-                              ) ||
-                              location.pathname.includes("beta-pass/doge") ||
-                              location.pathname.includes("beta-pass/skale") ||
-                              location.pathname.includes("beta-pass/gate") ||
-                              location.pathname.includes("beta-pass/skale") ||
-                              location.pathname.includes("beta-pass/core") ||
-                              location.pathname.includes("beta-pass/viction") ||
-                              location.pathname.includes("beta-pass/sei") ||
-                              location.pathname.includes("beta-pass/bnb") ||
-                              location.pathname.includes("beta-pass/multivers")
+                              location.pathname.includes("beta-pass")
                                 ? "sidebar-item-active nft-active"
                                 : null
                             }`

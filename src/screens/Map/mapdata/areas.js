@@ -1,8 +1,5 @@
 import { activeMarkers, markers } from "./markers";
 
-
-
-
 const chainAreas = [
   {
     title: "BNB Chain Area",
@@ -286,13 +283,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-     
-    ],
-    pastEvents: [ {
+      {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
-      },],
+      },
+    ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/base",
@@ -600,7 +597,7 @@ const chainAreas = [
     marker: markers.kucoinMarker,
     activeMarker: activeMarkers.kucoinMarker,
 
-    icon: "https://cdn.worldofdypians.com/wod/kucoinIcon.svg",
+    icon: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
     location: [-0.06778661442929296, 0.08464515209198],
     banner: "kucoinBanner.png",
     area: [
@@ -4235,8 +4232,6 @@ const leaderboards = [
     location: [-0.06696937943514361, 0.08530497550964355],
   },
 ];
-
-
 
 // const dummyBetaPassData2 = [
 //   {

@@ -66,6 +66,7 @@ const Portfolio = ({
   myCookieNfts,
   wodBalance,
   mySeiNfts,
+  mykucoinNFTs
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -408,6 +409,8 @@ const Portfolio = ({
     let seiNftsArray = [];
 
     let matNftsArray = [];
+    let kucoinNftsArray = [];
+
     // console.log(allListed, "allListed");
 
     //bought [latestBoughtNFTS]
@@ -778,6 +781,23 @@ const Portfolio = ({
           })
         );
       }
+
+      if (mykucoinNFTs && mykucoinNFTs.length > 0) {
+        await Promise.all(
+          mykucoinNFTs.map(async (i) => {
+            kucoinNftsArray.push({
+              nftAddress: window.config.nft_kucoin_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "kucoin",
+              chain: 204,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
       if (myTaikoNfts && myTaikoNfts.length > 0) {
         await Promise.all(
           myTaikoNfts.map(async (i) => {
@@ -995,6 +1015,7 @@ const Portfolio = ({
       setmyNftsOffer(recievedOffers);
 
       finalCollection = [
+        ...kucoinNftsArray,
         ...baseNftsArray,
         ...bnbNftsArray,
         ...matNftsArray,
@@ -1143,6 +1164,9 @@ const Portfolio = ({
       let coingeckoFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_coingecko_address
       );
+      let kucoinFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_kucoin_address
+      );
       let gateFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_gate_address
       );
@@ -1216,7 +1240,7 @@ const Portfolio = ({
         ...taikoFilter,
         ...cookie3Filter,
         ...seiFilter,
-
+        ...kucoinFilter,
         ...cmcFilter,
         ...matFilter,
         ...baseFilter,
@@ -1827,6 +1851,8 @@ const Portfolio = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
+                                  : item.type === "kucoin"
+                                  ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
@@ -1862,6 +1888,8 @@ const Portfolio = ({
                                   ? "COBP"
                                   : item.type === "viction"
                                   ? "VCBP"
+                                  : item.type === "kucoin"
+                                  ? "KCBP"
                                   : item.type === "immutable"
                                   ? "IMXBP"
                                   : item.type === "multivers"
@@ -2609,6 +2637,9 @@ const Portfolio = ({
                                   window.config.nft_viction_address
                                 ? "viction"
                                 : nft.nftAddress ===
+                                  window.config.nft_kucoin_address
+                                ? "kucoin"
+                                : nft.nftAddress ===
                                   window.config.nft_immutable_address
                                 ? "immutable"
                                 : nft.nftAddress ===
@@ -2726,6 +2757,9 @@ const Portfolio = ({
                                       window.config.nft_viction_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_kucoin_address
+                                    ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_immutable_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
@@ -2792,6 +2826,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_viction_address
                                     ? "VCBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_kucoin_address
+                                    ? "KCBP"
                                     : nft.nftAddress ===
                                       window.config.nft_immutable_address
                                     ? "IMXBP"
@@ -2986,6 +3023,9 @@ const Portfolio = ({
                                   window.config.nft_viction_address
                                 ? "viction"
                                 : nft.nftAddress ===
+                                  window.config.nft_kucoin_address
+                                ? "kucoin"
+                                : nft.nftAddress ===
                                   window.config.nft_immutable_address
                                 ? "immutable"
                                 : nft.nftAddress ===
@@ -3087,6 +3127,9 @@ const Portfolio = ({
                                       window.config.nft_viction_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_kucoin_address
+                                    ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_immutable_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
@@ -3170,6 +3213,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_viction_address
                                     ? "VCBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_kucoin_address
+                                    ? "KCBP"
                                     : nft.nftAddress ===
                                       window.config.nft_immutable_address
                                     ? "IMXBP"

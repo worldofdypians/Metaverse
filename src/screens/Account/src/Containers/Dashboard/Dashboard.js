@@ -163,6 +163,7 @@ function Dashboard({
   chainlinkEarnUsd,
   isTokenExpired,
   listedNFTS,
+  mykucoinNFTs,
   walletClient,
   publicClient,
   network_matchain,
@@ -8529,6 +8530,8 @@ function Dashboard({
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     setDummyPremiumChests(shuffle(dummyPremiums));
+    document.title = "WOD Account";
+
     window.scrollTo(0, 0);
     // if (username !== undefined && userId !== undefined) {
 
@@ -9934,6 +9937,7 @@ function Dashboard({
                 myCmcNfts={myCmcNfts}
                 myCoreNfts={myCoreNfts}
                 myVictionNfts={myVictionNfts}
+                mykucoinNFTs={mykucoinNFTs}
                 myMultiversNfts={myMultiversNfts}
                 myImmutableNfts={myImmutableNfts}
                 myMantaNfts={myMantaNfts}

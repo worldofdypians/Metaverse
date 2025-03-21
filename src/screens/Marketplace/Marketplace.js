@@ -46,11 +46,29 @@ const Marketplace = ({
     borderColor: "#554fd8",
   };
 
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+    return array;
+  }
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeSlide2, setActiveSlide2] = useState(0);
-  const [recentListed, setRecentListed] = useState(latest20RecentListedNFTS);
-  const [recentSold, setRecentSold] = useState(recentSales ?? []);
-  const [topSold, setTopSold] = useState(recentSales ?? []);
+  const [recentListed, setRecentListed] = useState([]);
+  const [recentSold, setRecentSold] = useState([]);
+  // const [topSold, setTopSold] = useState(shuffle(recentSales) ?? []);
   const [topSalesFilter, setTopSalesFilter] = useState("all");
   const [recentListingsFilter, setRecentListingsFilter] = useState("all");
   const [recentSalesFilter, setRecentSalesFilter] = useState("all");
@@ -502,7 +520,7 @@ const Marketplace = ({
 
     if (result2.data && result2.data !== "NaN") {
       setTotalVolume(result2.data.totalVolume);
-        localStorage.setItem("cachedVolume", result2.data.totalVolume);
+      localStorage.setItem("cachedVolume", result2.data.totalVolume);
     }
   };
 
@@ -548,9 +566,14 @@ const Marketplace = ({
   };
 
   useEffect(() => {
-    initialSales();
-    setRecentListed(latest20RecentListedNFTS);
-    setRecentSalesFilter('all');
+    // initialSales();
+    if (latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0) {
+      const result = shuffle(latest20RecentListedNFTS);
+      if (result && result.length === latest20RecentListedNFTS.length) {
+        setRecentListed(result);
+      }
+    }
+    setRecentSalesFilter("all");
 
     // if (recentSales && recentSales.length === 0) {
     //   setLoadingRecentSales(true);
@@ -605,16 +628,20 @@ const Marketplace = ({
   ];
 
   const initialSales = () => {
-    if(recentSales){
-    let datedSales = recentSales.map((item) => {
-      return { ...item, date: new Date(parseInt(item.blockTimestamp * 1000)) };
-    });
+    if (recentSales) {
+      let datedSales = recentSales.map((item) => {
+        return {
+          ...item,
+          date: new Date(parseInt(item.blockTimestamp * 1000)),
+        };
+      });
 
-    const filteredDateSales = datedSales.filter(function (item) {
-      return item.date > week._d && item.date < today._d;
-    });
+      const filteredDateSales = datedSales.filter(function (item) {
+        return item.date > week._d && item.date < today._d;
+      });
 
-    setTopSold(filteredDateSales);}
+      // setTopSold(filteredDateSales);
+    }
   };
 
   const filterTopSales = () => {
@@ -645,35 +672,35 @@ const Marketplace = ({
           item.nftAddress === window.config.nft_caws_address ||
           item.nftAddress === window.config.nft_cawsold_address
       );
-      setTopSold(cawsFilter);
+      // setTopSold(cawsFilter);
     } else if (topSalesFilter === "land") {
       setTopSalesFilter("land");
 
       let wodFilter = filteredDateSales.filter(
         (item) => item.nftAddress === window.config.nft_land_address
       );
-      setTopSold(wodFilter);
+      // setTopSold(wodFilter);
     } else if (topSalesFilter === "timepiece") {
       setTopSalesFilter("timepiece");
 
       let timepieceFilter = filteredDateSales.filter(
         (item) => item.nftAddress === window.config.nft_timepiece_address
       );
-      setTopSold(timepieceFilter);
+      // setTopSold(timepieceFilter);
     } else if (topSalesFilter === "all") {
       setTopSalesFilter("all");
 
-      setTopSold(filteredDateSales);
+      // setTopSold(shuffle(filteredDateSales));
     }
     // setTimeout => {
     setLoadingTopSales(false);
     // }, 1000);
   };
 
-  useEffect(() => {
-    filterTopSales();
-  }, [topSalesFilter, topSalesDate]);
-  
+  // useEffect(() => {
+  //   filterTopSales();
+  // }, [topSalesFilter, topSalesDate]);
+
   const filterRecentListings = (filter) => {
     // setLoadingRecentListings(true);
     if (latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0) {
@@ -699,7 +726,7 @@ const Marketplace = ({
         setRecentListed(timepieceFilter);
       } else if (filter === "all") {
         setRecentListingsFilter("all");
-        setRecentListed(latest20RecentListedNFTS);
+        setRecentListed(shuffle(latest20RecentListedNFTS));
       }
     } else {
       if (filter === "caws") {
@@ -724,7 +751,7 @@ const Marketplace = ({
         setRecentListed(timepieceFilter);
       } else if (filter === "all") {
         setRecentListingsFilter("all");
-        setRecentListed(dummyData);
+        setRecentListed(shuffle(dummyData));
       }
     }
     // setTimeout(() => {
@@ -735,7 +762,6 @@ const Marketplace = ({
   const filterRecentSales = (filter) => {
     // setLoadingRecentSales(true);dummyDataSales
     if (recentSales && recentSales.length > 0) {
-      
       if (filter === "caws") {
         setRecentSalesFilter("caws");
         let cawsFilter = recentSales.filter(
@@ -758,10 +784,9 @@ const Marketplace = ({
         setRecentSold(timepieceFilter);
       } else if (filter === "all") {
         setRecentSalesFilter("all");
-        setRecentSold(recentSales);
+        setRecentSold(shuffle(recentSales));
       }
     } else {
-      
       if (filter === "caws") {
         setRecentSalesFilter("caws");
         let cawsFilter = dummyDataSales.filter(
@@ -784,7 +809,7 @@ const Marketplace = ({
         setRecentSold(timepieceFilter);
       } else if (filter === "all") {
         setRecentSalesFilter("all");
-        setRecentSold(dummyDataSales);
+        setRecentSold(shuffle(dummyDataSales));
       }
     }
     // setTimeout(() => {
@@ -812,7 +837,12 @@ const Marketplace = ({
 
   useEffect(() => {
     setRecentSalesFilter("all");
-    setRecentSold(recentSales ?? []);
+    if (recentSales && recentSales.length > 0) {
+      const result = shuffle(recentSales);
+      if (result && result.length === recentSales.length) {
+        setRecentSold(result);
+      }
+    }
   }, [recentSales]);
 
   const cutLength = () => {

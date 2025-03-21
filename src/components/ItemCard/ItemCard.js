@@ -658,14 +658,14 @@ const ItemCard = ({
             </div>
           )}
       </div>
-      {isListed && !location.pathname.includes("/account") && (
+      {/* {isListed && !location.pathname.includes("/account") && (
         <span
           className="position-relative top-sale-time"
           style={{ bottom: "-8%" }}
         >
           {getRelativeTime(nft.blockTimestamp)}
         </span>
-      )}
+      )} */}
     </div>
   );
 };

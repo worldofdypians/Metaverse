@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const URL =
-`https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
+`https://graphql.worldofdypians.com/subgraphs/name/wod`;
 
 const itemListedQuery = (
   sort = "",
