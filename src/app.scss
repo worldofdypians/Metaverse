@@ -102,6 +102,9 @@ html {
   text-decoration-line: line-through;
 }
 
+ #match-wallet {
+  pointer-events: auto !important;
+ }
 .old-price-text-profile {
   color: #F3BF09;
   font-size: 10px;
@@ -109,6 +112,24 @@ html {
   font-weight: 500;
   // line-height: 32px;
   text-decoration-line: line-through;
+}
+
+.matchid-btn span::after {
+  content: "MatchID";
+  visibility: visible;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.matchid-btn span {
+  visibility: hidden;
+  font-size: 14px;
+  // position: relative;
+}
+
+.matchid-btn svg {
+  display: none;
 }
 
 .premiumRedTag {
@@ -163,6 +184,12 @@ html {
   line-height: 12px;
 }
 
+.matchid-overlay {
+  pointer-events: auto !important;
+}
+.h-screen {
+  height: auto !important;
+}
 #root {
   height: 100vh;
   width: 100vw;

@@ -15,7 +15,6 @@ import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { ethers } from "ethers";
 import Modal from "../../../../../components/General/Modal";
 
-
 const CawsDetails = ({
   coinbase,
   isConnected,
@@ -62,7 +61,7 @@ const CawsDetails = ({
     const address = coinbase;
     const stakeApr50 = await window.config.nftstaking_address50;
 
-    if (address !== null) {
+    if (address !== null && window.WALLET_TYPE !== "matchId") {
       const result = await window.nft
         .checkapproveStake(address, stakeApr50)
         .then((data) => {
@@ -148,7 +147,7 @@ const CawsDetails = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let myStakes = await getStakesIds();
       let staking_contract = await window.getContractNFT("NFTSTAKING");
       // setclaimAllStatus("Claiming all rewards, please wait...");
@@ -202,6 +201,8 @@ const CawsDetails = ({
           setclaimStatus("initial");
         }, 5000);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     }
   };
 
@@ -251,7 +252,7 @@ const CawsDetails = ({
   };
 
   const handleUnstakeAll = async () => {
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let myStakes = await getStakesIds();
       let stake_contract = await window.getContractNFT("NFTSTAKING");
       // setunstakeAllStatus("Unstaking all please wait...");
@@ -286,17 +287,23 @@ const CawsDetails = ({
       if (txReceipt) {
         window.alertify.message("*Unstaked successfully");
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     }
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x1")
-      .then(() => {
-        handleSwitchNetwork("1");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.WALLET_TYPE !== "matchId") {
+      await handleSwitchNetworkhook("0x1")
+        .then(() => {
+          handleSwitchNetwork("1");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    }
   };
 
   const totalStakedNft = async () => {
@@ -319,18 +326,20 @@ const CawsDetails = ({
   };
 
   useEffect(() => {
-    totalStakedNft().then();
-  }, []);
+    if (window.WALLET_TYPE !== "matchId") {
+      totalStakedNft();
+    }
+  }, [window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
       myNft().then();
       myStakes().then();
       checkApproval().then();
       handleClaimAll();
       calculateCountdown().then();
     }
-  }, [isConnected, chainId]);
+  }, [isConnected, chainId, window.WALLET_TYPE, coinbase]);
 
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);
@@ -531,7 +540,6 @@ const CawsDetails = ({
               <div className="d-flex justify-content-between align-items-center gap-2">
                 <h6 className="m-0 deposit-txt">Deposit</h6>
                 <div className="d-flex align-items-center gap-1">
-                  
                   <div className="info-pool-wrapper p-2">
                     <h6 className="m-0 mybalance-text">
                       Balance:{" "}
@@ -563,7 +571,7 @@ const CawsDetails = ({
                 Connect Wallet
               </button>
             )}
-            {isConnected && chainId !=='1' && (
+            {isConnected && chainId !== "1" && (
               <button
                 className={`btn w-100 fail-button  d-flex justify-content-center align-items-center`}
                 onClick={() => {
@@ -573,9 +581,7 @@ const CawsDetails = ({
                 Switch to Ethereum
               </button>
             )}
-            {mystakes.length > 0 &&
-             <div className="stake-separator"></div>
-             }
+            {mystakes.length > 0 && <div className="stake-separator"></div>}
             {mystakes.length > 0 && (
               <div
                 className={`otherside-border ${
@@ -611,7 +617,10 @@ const CawsDetails = ({
                         </div>
                       }
                     >
-                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/more-info.svg"}
+                        alt=""
+                      />
                     </Tooltip>
                   </h6>
                 </div>
@@ -652,9 +661,7 @@ const CawsDetails = ({
                 </div>
               </div>
             )}
-            {mystakes.length > 0 && 
-            <div className="stake-separator"></div>
-            }
+            {mystakes.length > 0 && <div className="stake-separator"></div>}
 
             {mystakes.length > 0 && (
               <div
@@ -688,10 +695,14 @@ const CawsDetails = ({
               </div>
             )}
             <div
-              className={`info-pool-wrapper2 mt-2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+              className={`info-pool-wrapper2 mt-2 p-1 d-flex ${
+                mystakes.length > 0
+                  ? "justify-content-center"
+                  : "justify-content-center"
+              } `}
               style={{
                 cursor: "pointer",
-                width: mystakes.length > 0 ? 'auto' : 'fit-content'
+                width: mystakes.length > 0 ? "auto" : "fit-content",
               }}
               onClick={() => {
                 showPopup();
@@ -701,7 +712,11 @@ const CawsDetails = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                  alt=""
+                />{" "}
+                Details
               </h6>
             </div>
           </div>

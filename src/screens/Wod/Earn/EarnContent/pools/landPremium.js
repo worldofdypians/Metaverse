@@ -5,7 +5,6 @@ import "../top-pools.css";
 import "./_stakingWod.scss";
 import Modal from "../../../../../components/General/Modal";
 
-
 import { Tooltip } from "@mui/material";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
@@ -58,9 +57,9 @@ const LandDetailsPremium = ({
 
   const checkApproval = async () => {
     const address = coinbase;
-    const stakeAdr = await window.config.nft_land_premiumstake_address;
+    const stakeAdr = window.config.nft_land_premiumstake_address;
 
-    if (address !== null) {
+    if (address !== null && window.WALLET_TYPE !== "matchId") {
       const result = await window.landnft
         .checkapproveStake(address, stakeAdr)
         .then((data) => {
@@ -102,7 +101,7 @@ const LandDetailsPremium = ({
   };
 
   const refreshStakes = () => {
-    handleSecondTask(coinbase)
+    handleSecondTask(coinbase);
 
     setnewStakes(newStakes + 1);
   };
@@ -166,7 +165,7 @@ const LandDetailsPremium = ({
 
   const claimRewards = async () => {
     setclaimLoading(true);
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let myStakes = await getStakesIds();
       let staking_contract = await window.getContractLandPremiumNFT(
         "LANDPREMIUM"
@@ -216,6 +215,8 @@ const LandDetailsPremium = ({
           setclaimStatus("initial");
         }, 5000);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     }
   };
 
@@ -267,13 +268,17 @@ const LandDetailsPremium = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x1")
-      .then(() => {
-        handleSwitchNetwork("1");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.WALLET_TYPE !== "matchId") {
+      await handleSwitchNetworkhook("0x1")
+        .then(() => {
+          handleSwitchNetwork("1");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    }
   };
 
   const handleNavigateToPlans = () => {
@@ -307,32 +312,34 @@ const LandDetailsPremium = ({
       setHide("staked");
     } else if (!isConnected) {
       handleConnection();
-    } else if (isConnected && chainId !== "1") {
-      handleEthPool();
     } else if (isConnected && !isPremium && chainId === "1") {
       handleNavigateToPlans();
+    } else if (isConnected && chainId !== "1") {
+      handleEthPool();
     }
   };
 
   useEffect(() => {
-    totalStakedNft();
-  }, [count, newStakes]);
+    if (window.WALLET_TYPE !== "matchId") {
+      totalStakedNft();
+    }
+  }, [count, newStakes, window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
       myNft();
       myStakes();
       checkApproval();
       handleClaimAll();
     }
-  }, [isConnected, chainId, count, newStakes]);
+  }, [isConnected, chainId, count, newStakes, window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
       checkApproval();
       calculateCountdown();
     }
-  }, [isConnected, chainId, count2]);
+  }, [isConnected, chainId, count2, window.WALLET_TYPE]);
 
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);
@@ -486,11 +493,10 @@ const LandDetailsPremium = ({
               listType === "list" ? "row" : "d-flex flex-column"
             } w-100 justify-content-between gap-4 gap-lg-0`}
           >
-           
             <div
               className={`otherside-border  ${
                 listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-              }  ${(expired === true) && "blurrypool"} `}
+              }  ${expired === true && "blurrypool"} `}
             >
               <div className="d-flex justify-content-between align-items-center gap-2">
                 <h6 className="m-0 deposit-txt">Deposit</h6>
@@ -534,7 +540,7 @@ const LandDetailsPremium = ({
                       ? "Select NFTs"
                       : !isConnected
                       ? "Connect Wallet"
-                      : isConnected && isPremium && chainId !== "1"
+                      : isConnected && chainId !== "1"
                       ? "Switch to Ethereum"
                       : "Become Prime"}
                   </button>
@@ -582,7 +588,10 @@ const LandDetailsPremium = ({
                         </div>
                       }
                     >
-                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/more-info.svg"}
+                        alt=""
+                      />
                     </Tooltip>
                   </h6>
                 </div>
@@ -648,12 +657,14 @@ const LandDetailsPremium = ({
                     My Deposit
                   </h6>
                   <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
-                    <div className="d-flex align-items-center gap-2 justify-content-between" >
-                    <div className="d-flex flex-column w-100">
-                    <h6 className={"m-0 mybalance-text d-flex"}>Unlocks in</h6>
-                      <h6 className="m-0 rewardstxtwod text-white d-flex align-items-center gap-2">
-                        Anytime
-                      </h6>
+                    <div className="d-flex align-items-center gap-2 justify-content-between">
+                      <div className="d-flex flex-column w-100">
+                        <h6 className={"m-0 mybalance-text d-flex"}>
+                          Unlocks in
+                        </h6>
+                        <h6 className="m-0 rewardstxtwod text-white d-flex align-items-center gap-2">
+                          Anytime
+                        </h6>
                       </div>
                       <button
                         disabled={false}
@@ -666,16 +677,20 @@ const LandDetailsPremium = ({
                       >
                         Withdraw
                       </button>
-                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
-              <div
-              className={`info-pool-wrapper2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+            <div
+              className={`info-pool-wrapper2 p-1 d-flex ${
+                mystakes.length > 0
+                  ? "justify-content-center"
+                  : "justify-content-center"
+              } `}
               style={{
                 cursor: "pointer",
-                width: mystakes.length > 0 ? 'auto' : 'fit-content'
+                width: mystakes.length > 0 ? "auto" : "fit-content",
               }}
               onClick={() => {
                 showPopup();
@@ -685,7 +700,11 @@ const LandDetailsPremium = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                  alt=""
+                />{" "}
+                Details
               </h6>
             </div>
           </div>

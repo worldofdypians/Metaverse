@@ -366,6 +366,9 @@ const MarketMint = ({
   };
 
   const handleEthPool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
     if (window.ethereum) {
       if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x1")
@@ -385,6 +388,8 @@ const MarketMint = ({
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+  }
+
   };
 
   const handleOpBnbPool = async () => {
