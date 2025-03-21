@@ -1544,6 +1544,11 @@ function App() {
       window.config.nft_opbnb_address
     );
 
+    const kucoinbContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_kucoin_address
+    );
+
     const victionContract = new window.victionWeb3.eth.Contract(
       window.VICTION_NFT_ABI,
       window.config.nft_viction_address.toLowerCase()
@@ -1636,6 +1641,14 @@ function App() {
         return 0;
       });
 
+    const kucoinresult = await kucoinbContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     const coreresult = await coreContract.methods
       .totalSupply()
       .call()
@@ -1720,6 +1733,7 @@ function App() {
         parseInt(cookieresult) +
         parseInt(matresult) +
         parseInt(seiresult) +
+        parseInt(kucoinresult) +
         20002
     );
   };
