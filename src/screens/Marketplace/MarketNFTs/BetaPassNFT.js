@@ -313,7 +313,6 @@ const BetaPassNFT = ({
       eventStartDate: "Nov. 29, 2024",
       eventEndDate: "Mar. 29, 2025",
     },
-
     {
       id: "skale",
       mainTitle: "Skale Beta Pass",
@@ -454,9 +453,9 @@ const BetaPassNFT = ({
       logo: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
       buttonTitle: "KuCoin",
       isComingSoon: false,
-      giveawayButton: false,
-      giveawayButtonTitle: "",
-      giveawayLink: "",
+      giveawayButton: true,
+      giveawayButtonTitle: "Mint your NFT",
+      giveawayLink: "/shop/mint/kucoin",
       areaImage: undefined,
       cardClassName: "kucoin-mint-bg2",
       wrapperClassName: "kucoin-eventwrapper",
@@ -1060,16 +1059,17 @@ const BetaPassNFT = ({
                         )}
                       </div>
                       {selectedMint?.giveawayButton === true && (
-                        <span
+                        <NavLink
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
+                          to={selectedMint?.giveawayLink}
                         >
                           <img
                             src={selectedMint?.logo}
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
-                          Coming Soon
-                        </span>
+                         {selectedMint?.giveawayButtonTitle}
+                        </NavLink>
                       )}
                     </div>
                   </div>
