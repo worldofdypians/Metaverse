@@ -519,28 +519,36 @@ const LandDetailsPremium = ({
               </div>
               <div className="d-flex flex-column gap-2 justify-content-between">
                 <div className="d-flex align-items-center justify-content-between gap-2">
-                  <button
-                    className={`btn w-100 connectbtn ${
-                      (!isPremium || chainId !== "1") && isConnected
-                        ? "fail-button"
-                        : "connectbtn"
-                    } d-flex justify-content-center align-items-center`}
-                    disabled={totalStakes === 100}
-                    onClick={() => {
-                      manageState();
-                    }}
+                <button
+                    className={`btn w-100 disabled-btn 
+                     d-flex justify-content-center align-items-center`}
+                    disabled={true}
                   >
-                    {isConnected && chainId === "1" && isPremium
-                      ? "Select NFTs"
-                      : !isConnected
-                      ? "Connect Wallet"
-                      : isConnected && isPremium && chainId !== "1"
-                      ? "Switch to Ethereum"
-                      : "Become Prime"}
+                    Select NFTs
                   </button>
                 </div>
               </div>
             </div>
+            {!isConnected && (
+              <button
+                className={`btn w-100 connectbtn  d-flex justify-content-center align-items-center`}
+                onClick={() => {
+                  handleConnection();
+                }}
+              >
+                Connect Wallet
+              </button>
+            )}
+{isConnected && chainId !== "1" && (
+              <button
+                className={`btn w-100 fail-button  d-flex justify-content-center align-items-center`}
+                onClick={() => {
+                  handleEthPool();
+                }}
+              >
+                Switch to Ethereum
+              </button>
+            )}
             {mystakes.length > 0 && <div className="stake-separator"></div>}
             {mystakes.length > 0 && (
               <div
@@ -672,7 +680,7 @@ const LandDetailsPremium = ({
               </div>
             )}
               <div
-              className={`info-pool-wrapper2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+              className={`info-pool-wrapper2 mt-2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
               style={{
                 cursor: "pointer",
                 width: mystakes.length > 0 ? 'auto' : 'fit-content'
