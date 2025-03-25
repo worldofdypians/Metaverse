@@ -1291,8 +1291,8 @@ const MarketMint = ({
                           </h6>
                           <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
                             <div className="mint-benefits-grid">
-                              {benefits.map((item) => (
-                                <div className="d-flex align-items-center gap-2">
+                              {benefits.map((item, index) => (
+                                <div className="d-flex align-items-center gap-2" key={index}>
                                   <img
                                     src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                                     alt=""

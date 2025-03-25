@@ -470,7 +470,7 @@ function App() {
   const [monthlyPlayers, setMonthlyPlayers] = useState(0);
   const [percent, setPercent] = useState(0);
   const authToken = localStorage.getItem("authToken");
-
+  const [orynPop, setOrynPop] = useState(true);
   const [showWalletModal, setShowWalletModal] = useState(false);
 
   const [betaModal, setBetaModal] = useState(false);
@@ -5279,7 +5279,7 @@ function App() {
     }
   }, [loginListener, userWallet]);
 
-  const [orynPop, setOrynPop] = useState(true);
+  
 
   // useEffect(() => {
   //   if (address && address.length > 0) {

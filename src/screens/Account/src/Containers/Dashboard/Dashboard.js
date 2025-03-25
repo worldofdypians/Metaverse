@@ -8208,160 +8208,125 @@ function Dashboard({
         selectedSubscriptionToken.toLowerCase() ===
           "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
       ) {
-        await subscriptionContract
+        const txResponse = await subscriptionContract
           .subscribeWithBNB({ from: coinbase, value: price })
-          .then(async (data) => {
-            if (dailyBonusPopup === true) {
-              setPremiumTxHash(data.hash);
-              const selectedchain =
-                chainId === 1
-                  ? "eth"
-                  : chainId === 56
-                  ? "bnb"
-                  : chainId === 43114
-                  ? "avax"
-                  : chainId === 1030
-                  ? "cfx"
-                  : chainId === 8453
-                  ? "base"
-                  : chainId === 1482601649
-                  ? "skale"
-                  : chainId === 88
-                  ? "viction"
-                  : chainId === 169
-                  ? "manta"
-                  : chainId === 167000
-                  ? "taiko"
-                  : chainId === 1116
-                  ? "core"
-                  : chainId === 1329
-                  ? "sei"
-                  : "";
-              setselectedChainforPremium(selectedchain);
-            }
+          .catch((e) => {
             setloadspinnerSub(false);
-            onSubscribeSuccess();
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            // await axios
-            //   .patch(
-            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            //     {
-            //       multiplier: "yes",
-            //       chain: "bnb subscribeBNB BinanceWallet",
-            //       premiumTimestamp: today.toString(),
-            //     },
-            //     {
-            //       headers: { Authorization: `Bearer ${authToken}` },
-            //     }
-            //   )
-            //   .then(() => {
-            //     getRankData();
-            //   })
-            //   .catch((e) => {
-            //     console.error(e);
-            //   });
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
+            }, 5000);
+          });
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          if (dailyBonusPopup === true) {
+            setPremiumTxHash(data.hash);
+            const selectedchain =
+              chainId === 1
+                ? "eth"
+                : chainId === 56
+                ? "bnb"
+                : chainId === 43114
+                ? "avax"
+                : chainId === 1030
+                ? "cfx"
+                : chainId === 8453
+                ? "base"
+                : chainId === 1482601649
+                ? "skale"
+                : chainId === 88
+                ? "viction"
+                : chainId === 169
+                ? "manta"
+                : chainId === 167000
+                ? "taiko"
+                : chainId === 1116
+                ? "core"
+                : chainId === 1329
+                ? "sei"
+                : "";
+            setselectedChainforPremium(selectedchain);
+          }
+          setloadspinnerSub(false);
+          onSubscribeSuccess();
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+            setgetPremiumPopup(false);
+            onSubscribeSuccess();
+          }, 5000);
+        }
+      } else {
+        const txResponse = await subscriptionContract
+          .subscribe(selectedSubscriptionToken, price, { from: coinbase })
+
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          if (dailyBonusPopup === true) {
+            setPremiumTxHash(data.hash);
+            const selectedchain =
+              chainId === 1
+                ? "eth"
+                : chainId === 56
+                ? "bnb"
+                : chainId === 43114
+                ? "avax"
+                : chainId === 1030
+                ? "cfx"
+                : chainId === 8453
+                ? "base"
+                : chainId === 1482601649
+                ? "skale"
+                : chainId === 88
+                ? "viction"
+                : chainId === 169
+                ? "manta"
+                : chainId === 167000
+                ? "taiko"
+                : chainId === 1116
+                ? "core"
+                : chainId === 1329
+                ? "sei"
+                : "";
+            setselectedChainforPremium(selectedchain);
+            setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
-            }, 5000);
-            // this.props.onSubscribe();
-            // window.location.href = "https://app.dypius.com/account";
-          })
-          .catch((e) => {
+            }, 2000);
+          }
+          setloadspinnerSub(false);
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+
+          setTimeout(() => {
             setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
-      } else {
-        await subscriptionContract
-          .subscribe(selectedSubscriptionToken, price, { from: coinbase })
-          .then(async (data) => {
-            if (dailyBonusPopup === true) {
-              setPremiumTxHash(data.hash);
-              const selectedchain =
-                chainId === 1
-                  ? "eth"
-                  : chainId === 56
-                  ? "bnb"
-                  : chainId === 43114
-                  ? "avax"
-                  : chainId === 1030
-                  ? "cfx"
-                  : chainId === 8453
-                  ? "base"
-                  : chainId === 1482601649
-                  ? "skale"
-                  : chainId === 88
-                  ? "viction"
-                  : chainId === 169
-                  ? "manta"
-                  : chainId === 167000
-                  ? "taiko"
-                  : chainId === 1116
-                  ? "core"
-                  : chainId === 1329
-                  ? "sei"
-                  : "";
-              setselectedChainforPremium(selectedchain);
-              setTimeout(() => {
-                setgetPremiumPopup(false);
-                onSubscribeSuccess();
-              }, 2000);
-            }
-            setloadspinnerSub(false);
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            // await axios
-            //   .patch(
-            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            //     {
-            //       multiplier: "yes",
-            //       chain: chainId.toString(),
-            //       premiumTimestamp: today.toString(),
-            //     },
-            //     {
-            //       headers: { Authorization: `Bearer ${authToken}` },
-            //     }
-            //   )
-            //   .then(() => {
-            //     getRankData();
-            //   })
-            //   .catch((e) => {
-            //     console.error(e);
-            //   });
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-            // this.props.onSubscribe();
-            // window.location.href = "https://app.dypius.com/account";
-          })
-          .catch((e) => {
-            setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        }
       }
     }
   };

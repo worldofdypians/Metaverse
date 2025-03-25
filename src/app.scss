@@ -104,6 +104,9 @@ html {
 
  #match-wallet {
   pointer-events: auto !important;
+  .h-screen {
+    height: auto !important;
+  }
  }
 .old-price-text-profile {
   color: #F3BF09;
