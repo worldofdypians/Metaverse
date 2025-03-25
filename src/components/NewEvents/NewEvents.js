@@ -81,6 +81,9 @@ const NewEvents = ({
   onConnectWallet,
   wodBalance,
   genesisUsd,
+  walletClient,
+  publicClient,
+  network_matchain,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -293,20 +296,42 @@ const NewEvents = ({
 
   const checkApprovalPuzzle = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await wod_token_abi.methods
-        .allowance(wallet, puzzleMadnessAddress)
-        .call()
-        .then((data) => {
-          if (data === "0" || data < 150000000000000000000) {
-            setpuzzleMadnessShowApproval(true);
-          } else {
-            setpuzzleMadnessShowApproval(false);
-            setpuzzleMadnessBundleState("deposit");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (window.WALLET_TYPE === "matchId") {
+        await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: window.config.wod_token_address,
+            functionName: "allowance",
+            args: [wallet, puzzleMadnessAddress],
+          })
+          .then((data) => {
+            if (Number(data) === 0 || Number(data) < 150000000000000000000) {
+              setpuzzleMadnessShowApproval(true);
+            } else {
+              setpuzzleMadnessShowApproval(false);
+              setpuzzleMadnessBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      } else {
+        await wod_token_abi.methods
+          .allowance(wallet, puzzleMadnessAddress)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 150000000000000000000) {
+              setpuzzleMadnessShowApproval(true);
+            } else {
+              setpuzzleMadnessShowApproval(false);
+              setpuzzleMadnessBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   };
 
@@ -315,34 +340,88 @@ const NewEvents = ({
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      await wod_token_abi.methods
+        .approve(puzzleMadnessAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setpuzzleMadnessBundleState("deposit");
+          setStatusColor("#00FECF");
+          setpuzzleMadnessShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setpuzzleMadnessBundleState("fail");
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        window.config.wod_token_address,
+        window.TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    await wod_token_abi.methods
-      .approve(puzzleMadnessAddress, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
+      const txResponse = await tokenSc
+        .approve(puzzleMadnessAddress, "500000000000000000000000000")
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setpuzzleMadnessBundleState("fail");
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setStatus("Succesfully approved!");
         setpuzzleMadnessBundleState("deposit");
         setStatusColor("#00FECF");
         setpuzzleMadnessShowApproval(false);
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setpuzzleMadnessBundleState("fail");
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [puzzleMadnessAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setpuzzleMadnessBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setpuzzleMadnessBundleState("deposit");
+            setStatusColor("#00FECF");
+            setpuzzleMadnessShowApproval(false);
+          }
+        }
+      }
+    }
   };
 
   const handleDepositPuzzle = async () => {
-    let web3 = new Web3(window.ethereum);
-    const puzzleContract = new web3.eth.Contract(
-      PUZZLE_MADNESS_ABI,
-      puzzleMadnessAddress
-    );
-
     setpuzzleMadnessDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      let web3 = new Web3(window.ethereum);
+      const puzzleContract = new web3.eth.Contract(
+        PUZZLE_MADNESS_ABI,
+        puzzleMadnessAddress
+      );
       await puzzleContract.methods
         .deposit()
         .send({ from: coinbase })
@@ -412,6 +491,42 @@ const NewEvents = ({
       }
 
       handleRefreshCountdownPuzzle();
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: puzzleMadnessAddress,
+            abi: PUZZLE_MADNESS_ABI,
+            functionName: "deposit",
+            args: [],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setpuzzleMadnessDepositState("failDeposit");
+            console.log(e);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Bundle successfully purchased!");
+            setpuzzleMadnessDepositState("success");
+            setStatusColor("#00FECF");
+
+            handleRefreshCountdownPuzzle();
+            checkApprovalPuzzle();
+          }
+        }
+        handleRefreshCountdownPuzzle();
+      }
     }
   };
 
@@ -474,13 +589,12 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedPurchaseDate =
-        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
-          ? purchaseDate.getUTCDate()
-          : utcHours === 0
-          ? purchaseDate.getUTCDate() -1
-          :purchaseDate.getUTCDate();
-  
+    const adjustedPurchaseDate =
+      purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? purchaseDate.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate.getUTCDate() - 1
+        : purchaseDate.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -499,19 +613,18 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedCurrentDate =
-        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
-          ? currentUTCDate.getUTCDate()
-          : utcHours === 0
-          ? currentUTCDate.getUTCDate() -1
-          :currentUTCDate.getUTCDate();
+    const adjustedCurrentDate =
+      currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+        ? currentUTCDate.getUTCDate()
+        : utcHours === 0
+        ? currentUTCDate.getUTCDate() - 1
+        : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay
-      &&
+      adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtDragon(isToday);
     setBeastSiegeStatus((prevStatus) => ({
@@ -522,20 +635,42 @@ const NewEvents = ({
 
   const checkApprovalDragon = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await wod_token_abi.methods
-        .allowance(wallet, dragonRuinsAddress)
-        .call()
-        .then((data) => {
-          if (data === "0" || data < 150000000000000000000) {
-            setDragonShowApproval(true);
-          } else {
-            setDragonShowApproval(false);
-            setDragonBundleState("deposit");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (window.WALLET_TYPE === "matchId") {
+        await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: window.config.wod_token_address,
+            functionName: "allowance",
+            args: [wallet, dragonRuinsAddress],
+          })
+          .then((data) => {
+            if (Number(data) === 0 || Number(data) < 150000000000000000000) {
+              setDragonShowApproval(true);
+            } else {
+              setDragonShowApproval(false);
+              setDragonBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      } else {
+        await wod_token_abi.methods
+          .allowance(wallet, dragonRuinsAddress)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 150000000000000000000) {
+              setDragonShowApproval(true);
+            } else {
+              setDragonShowApproval(false);
+              setDragonBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   };
 
@@ -544,34 +679,88 @@ const NewEvents = ({
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      await wod_token_abi.methods
+        .approve(dragonRuinsAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setDragonBundleState("deposit");
+          setStatusColor("#00FECF");
+          setDragonShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setDragonBundleState("fail");
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        window.config.wod_token_address,
+        window.TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    await wod_token_abi.methods
-      .approve(dragonRuinsAddress, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
+      const txResponse = await tokenSc
+        .approve(dragonRuinsAddress, "500000000000000000000000000")
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setDragonBundleState("fail");
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setStatus("Succesfully approved!");
         setDragonBundleState("deposit");
         setStatusColor("#00FECF");
         setDragonShowApproval(false);
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setDragonBundleState("fail");
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [dragonRuinsAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setDragonBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setDragonBundleState("deposit");
+            setStatusColor("#00FECF");
+            setDragonShowApproval(false);
+          }
+        }
+      }
+    }
   };
 
   const handleDepositDragon = async () => {
-    let web3 = new Web3(window.ethereum);
-    const dragonRuinsContract = new web3.eth.Contract(
-      DRAGON_RUINS_ABI,
-      dragon_ruins_address
-    );
-
     setDragonDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      let web3 = new Web3(window.ethereum);
+      const dragonRuinsContract = new web3.eth.Contract(
+        DRAGON_RUINS_ABI,
+        dragon_ruins_address
+      );
       await dragonRuinsContract.methods
         .deposit()
         .send({ from: coinbase })
@@ -641,6 +830,42 @@ const NewEvents = ({
       }
 
       handleRefreshCountdownDragon();
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: dragon_ruins_address,
+            abi: DRAGON_RUINS_ABI,
+            functionName: "deposit",
+            args: [],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setDragonDepositState("failDeposit");
+            console.log(e);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Bundle successfully purchased!");
+            setDragonDepositState("success");
+            setStatusColor("#00FECF");
+
+            handleRefreshCountdownDragon();
+            checkApprovalDragon();
+          }
+        }
+        handleRefreshCountdownDragon();
+      }
     }
   };
 
@@ -703,12 +928,12 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedPurchaseDate =
-        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
-          ? purchaseDate.getUTCDate()
-          : utcHours === 0
-          ? purchaseDate.getUTCDate() -1
-          :purchaseDate.getUTCDate();
+    const adjustedPurchaseDate =
+      purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? purchaseDate.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate.getUTCDate() - 1
+        : purchaseDate.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -727,19 +952,18 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedCurrentDate =
-        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
-          ? currentUTCDate.getUTCDate()
-          : utcHours === 0
-          ? currentUTCDate.getUTCDate() -1
-          :currentUTCDate.getUTCDate();
+    const adjustedCurrentDate =
+      currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+        ? currentUTCDate.getUTCDate()
+        : utcHours === 0
+        ? currentUTCDate.getUTCDate() - 1
+        : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay
-      &&
+      adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtBear(isToday);
     setBeastSiegeStatus((prevStatus) => ({
@@ -750,20 +974,42 @@ const NewEvents = ({
 
   const checkApprovalBear = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await wod_token_abi.methods
-        .allowance(wallet, coldBiteAddress)
-        .call()
-        .then((data) => {
-          if (data === "0" || data < 150000000000000000000) {
-            setBearShowApproval(true);
-          } else {
-            setBearShowApproval(false);
-            setBearBundleState("deposit");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (window.WALLET_TYPE === "matchId") {
+        await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: window.config.wod_token_address,
+            functionName: "allowance",
+            args: [wallet, coldBiteAddress],
+          })
+          .then((data) => {
+            if (Number(data) === 0 || Number(data) < 150000000000000000000) {
+              setBearShowApproval(true);
+            } else {
+              setBearShowApproval(false);
+              setBearBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      } else {
+        await wod_token_abi.methods
+          .allowance(wallet, coldBiteAddress)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 150000000000000000000) {
+              setBearShowApproval(true);
+            } else {
+              setBearShowApproval(false);
+              setBearBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   };
 
@@ -772,7 +1018,7 @@ const NewEvents = ({
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       await wod_token_abi.methods
         .approve(coldBiteAddress, "500000000000000000000000000")
         .send({ from: coinbase })
@@ -789,38 +1035,71 @@ const NewEvents = ({
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
-        cold_bite_address,
-        COLD_BITE_ABI,
+        window.config.wod_token_address,
+        window.TOKEN_ABI,
         binanceW3WProvider.getSigner()
       );
 
-      await wod_token_abi.methods
+      const txResponse = await tokenSc
         .approve(coldBiteAddress, "500000000000000000000000000")
-        .send({ from: coinbase })
-        .then(() => {
-          setStatus("Succesfully approved!");
-          setBearBundleState("deposit");
-          setStatusColor("#00FECF");
-          setBearShowApproval(false);
-        })
         .catch((e) => {
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBearBundleState("fail");
         });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Succesfully approved!");
+        setBearBundleState("deposit");
+        setStatusColor("#00FECF");
+        setBearShowApproval(false);
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [coldBiteAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBearBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setBearBundleState("deposit");
+            setStatusColor("#00FECF");
+            setBearShowApproval(false);
+          }
+        }
+      }
     }
   };
 
   const handleDepositBear = async () => {
-    let web3 = new Web3(window.ethereum);
-    const coldBiteContract = new web3.eth.Contract(
-      COLD_BITE_ABI,
-      cold_bite_address
-    );
     setBearDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      let web3 = new Web3(window.ethereum);
+      const coldBiteContract = new web3.eth.Contract(
+        COLD_BITE_ABI,
+        cold_bite_address
+      );
       await coldBiteContract.methods
         .deposit()
         .send({ from: coinbase })
@@ -889,6 +1168,42 @@ const NewEvents = ({
         checkApprovalBear();
       }
       handleRefreshCountdownBear();
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: cold_bite_address,
+            abi: COLD_BITE_ABI,
+            functionName: "deposit",
+            args: [],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBearDepositState("failDeposit");
+            console.log(e);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Bundle successfully purchased!");
+            setBearDepositState("success");
+            setStatusColor("#00FECF");
+
+            handleRefreshCountdownBear();
+            checkApprovalBear();
+          }
+        }
+        handleRefreshCountdownBear();
+      }
     }
   };
 
@@ -949,13 +1264,12 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedPurchaseDate =
-        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
-          ? purchaseDate.getUTCDate()
-          : utcHours === 0
-          ? purchaseDate.getUTCDate() -1
-          :purchaseDate.getUTCDate();
-
+    const adjustedPurchaseDate =
+      purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? purchaseDate.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate.getUTCDate() - 1
+        : purchaseDate.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -973,20 +1287,18 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedCurrentDate =
-        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
-          ? currentUTCDate.getUTCDate()
-          : utcHours === 0
-          ? currentUTCDate.getUTCDate() -1
-          :currentUTCDate.getUTCDate();
-
+    const adjustedCurrentDate =
+      currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+        ? currentUTCDate.getUTCDate()
+        : utcHours === 0
+        ? currentUTCDate.getUTCDate() - 1
+        : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay
-      &&
+      adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtBeast(isToday);
     setBeastSiegeStatus((prevStatus) => ({
@@ -997,21 +1309,44 @@ const NewEvents = ({
 
   const checkApprovalBeast = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await wod_token_abi.methods
-        .allowance(wallet, furyBeastAddress)
-        .call()
-        .then((data) => {
-          if (data === "0" || data < 150000000000000000000) {
-            setBeastShowApproval(true);
-            setBeastBundleState("initial");
-          } else {
-            setBeastShowApproval(false);
-            setBeastBundleState("deposit");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (window.WALLET_TYPE === "matchId") {
+        await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: window.config.wod_token_address,
+            functionName: "allowance",
+            args: [wallet, furyBeastAddress],
+          })
+          .then((data) => {
+            if (Number(data) === 0 || Number(data) < 150000000000000000000) {
+              setBeastShowApproval(true);
+              setBeastBundleState("initial");
+            } else {
+              setBeastShowApproval(false);
+              setBeastBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      } else {
+        await wod_token_abi.methods
+          .allowance(wallet, furyBeastAddress)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 150000000000000000000) {
+              setBeastShowApproval(true);
+              setBeastBundleState("initial");
+            } else {
+              setBeastShowApproval(false);
+              setBeastBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   };
 
@@ -1020,34 +1355,88 @@ const NewEvents = ({
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      await wod_token_abi.methods
+        .approve(furyBeastAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setBeastBundleState("deposit");
+          setStatusColor("#00FECF");
+          setBeastShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBeastBundleState("fail");
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        window.config.wod_token_address,
+        window.TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    await wod_token_abi.methods
-      .approve(furyBeastAddress, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
+      const txResponse = await tokenSc
+        .approve(furyBeastAddress, "500000000000000000000000000")
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBeastBundleState("fail");
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setStatus("Succesfully approved!");
         setBeastBundleState("deposit");
         setStatusColor("#00FECF");
         setBeastShowApproval(false);
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setBeastBundleState("fail");
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [furyBeastAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBeastBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setBeastBundleState("deposit");
+            setStatusColor("#00FECF");
+            setBeastShowApproval(false);
+          }
+        }
+      }
+    }
   };
 
   const handleDepositBeast = async () => {
-    let web3 = new Web3(window.ethereum);
-    const furyBeastContract = new web3.eth.Contract(
-      FURY_BEAST_ABI,
-      fury_beast_address
-    );
-
     setBeastDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      let web3 = new Web3(window.ethereum);
+      const furyBeastContract = new web3.eth.Contract(
+        FURY_BEAST_ABI,
+        fury_beast_address
+      );
       await furyBeastContract.methods
         .deposit()
         .send({ from: coinbase })
@@ -1116,6 +1505,42 @@ const NewEvents = ({
         checkApprovalBeast();
       }
       handleRefreshCountdownBeast();
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: fury_beast_address,
+            abi: FURY_BEAST_ABI,
+            functionName: "deposit",
+            args: [],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBeastDepositState("failDeposit");
+            console.log(e);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Bundle successfully purchased!");
+            setBeastDepositState("success");
+            setStatusColor("#00FECF");
+
+            handleRefreshCountdownBeast();
+            checkApprovalBeast();
+          }
+        }
+        handleRefreshCountdownBeast();
+      }
     }
   };
 
@@ -1178,12 +1603,12 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedPurchaseDate =
-        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
-          ? purchaseDate.getUTCDate()
-          : utcHours === 0
-          ? purchaseDate.getUTCDate() -1
-          :purchaseDate.getUTCDate();
+    const adjustedPurchaseDate =
+      purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? purchaseDate.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate.getUTCDate() - 1
+        : purchaseDate.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -1201,21 +1626,18 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-
-        const adjustedCurrentDate =
-        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
-          ? currentUTCDate.getUTCDate()
-          : utcHours === 0
-          ? currentUTCDate.getUTCDate() -1
-          :currentUTCDate.getUTCDate();
-
+    const adjustedCurrentDate =
+      currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+        ? currentUTCDate.getUTCDate()
+        : utcHours === 0
+        ? currentUTCDate.getUTCDate() - 1
+        : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay
-      &&
+      adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtEagle(isToday);
     setBeastSiegeStatus((prevStatus) => ({
@@ -1226,20 +1648,42 @@ const NewEvents = ({
 
   const checkApprovalEagle = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await wod_token_abi.methods
-        .allowance(wallet, wingStormAddress)
-        .call()
-        .then((data) => {
-          if (data === "0" || data < 150000000000000000000) {
-            setEagleShowApproval(true);
-          } else {
-            setEagleShowApproval(false);
-            setEagleBundleState("deposit");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (window.WALLET_TYPE === "matchId") {
+        await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: window.config.wod_token_address,
+            functionName: "allowance",
+            args: [wallet, wingStormAddress],
+          })
+          .then((data) => {
+            if (Number(data) === 0 || Number(data) < 150000000000000000000) {
+              setEagleShowApproval(true);
+            } else {
+              setEagleShowApproval(false);
+              setEagleBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      } else {
+        await wod_token_abi.methods
+          .allowance(wallet, wingStormAddress)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 150000000000000000000) {
+              setEagleShowApproval(true);
+            } else {
+              setEagleShowApproval(false);
+              setEagleBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   };
 
@@ -1248,34 +1692,88 @@ const NewEvents = ({
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      await wod_token_abi.methods
+        .approve(wingStormAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setEagleBundleState("deposit");
+          setStatusColor("#00FECF");
+          setEagleShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setEagleBundleState("fail");
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        window.config.wod_token_address,
+        window.TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    await wod_token_abi.methods
-      .approve(wingStormAddress, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
+      const txResponse = await tokenSc
+        .approve(wingStormAddress, "500000000000000000000000000")
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setEagleBundleState("fail");
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setStatus("Succesfully approved!");
         setEagleBundleState("deposit");
         setStatusColor("#00FECF");
         setEagleShowApproval(false);
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setEagleBundleState("fail");
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [wingStormAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setEagleBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setEagleBundleState("deposit");
+            setStatusColor("#00FECF");
+            setEagleShowApproval(false);
+          }
+        }
+      }
+    }
   };
 
   const handleDepositEagle = async () => {
-    let web3 = new Web3(window.ethereum);
-    const wingStormContract = new web3.eth.Contract(
-      WING_STORM_ABI,
-      wing_storm_address
-    );
-
     setEagleDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      let web3 = new Web3(window.ethereum);
+      const wingStormContract = new web3.eth.Contract(
+        WING_STORM_ABI,
+        wing_storm_address
+      );
       await wingStormContract.methods
         .deposit()
         .send({ from: coinbase })
@@ -1344,6 +1842,42 @@ const NewEvents = ({
         checkApprovalEagle();
       }
       handleRefreshCountdownEagle();
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: wing_storm_address,
+            abi: WING_STORM_ABI,
+            functionName: "deposit",
+            args: [],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setEagleDepositState("failDeposit");
+            console.log(e);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Bundle successfully purchased!");
+            setEagleDepositState("success");
+            setStatusColor("#00FECF");
+
+            handleRefreshCountdownEagle();
+            checkApprovalEagle();
+          }
+        }
+        handleRefreshCountdownEagle();
+      }
     }
   };
 
@@ -1406,13 +1940,12 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedPurchaseDate =
-        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
-          ? purchaseDate.getUTCDate()
-          : utcHours === 0
-          ? purchaseDate.getUTCDate() -1
-          :purchaseDate.getUTCDate();
-
+    const adjustedPurchaseDate =
+      purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? purchaseDate.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate.getUTCDate() - 1
+        : purchaseDate.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -1431,20 +1964,19 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedCurrentDate =
-        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
-          ? currentUTCDate.getUTCDate()
-          : utcHours === 0
-          ? currentUTCDate.getUTCDate() -1
-          :currentUTCDate.getUTCDate();
+    const adjustedCurrentDate =
+      currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+        ? currentUTCDate.getUTCDate()
+        : utcHours === 0
+        ? currentUTCDate.getUTCDate() - 1
+        : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
-    
+
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay
-      &&
+      adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtScorpion(isToday);
     setBeastSiegeStatus((prevStatus) => ({
@@ -1455,20 +1987,42 @@ const NewEvents = ({
 
   const checkApprovalScorpion = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await wod_token_abi.methods
-        .allowance(wallet, scorpionKingAddress)
-        .call()
-        .then((data) => {
-          if (data === "0" || data < 150000000000000000000) {
-            setScorpionShowApproval(true);
-          } else {
-            setScorpionShowApproval(false);
-            setScorpionBundleState("deposit");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (window.WALLET_TYPE === "matchId") {
+        await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: window.config.wod_token_address,
+            functionName: "allowance",
+            args: [wallet, scorpionKingAddress],
+          })
+          .then((data) => {
+            if (Number(data) === 0 || Number(data) < 150000000000000000000) {
+              setScorpionShowApproval(true);
+            } else {
+              setScorpionShowApproval(false);
+              setScorpionBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      } else {
+        await wod_token_abi.methods
+          .allowance(wallet, scorpionKingAddress)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 150000000000000000000) {
+              setScorpionShowApproval(true);
+            } else {
+              setScorpionShowApproval(false);
+              setScorpionBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   };
 
@@ -1477,33 +2031,89 @@ const NewEvents = ({
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      await wod_token_abi.methods
+        .approve(scorpionKingAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setScorpionBundleState("deposit");
+          setStatusColor("#00FECF");
+          setScorpionShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setScorpionBundleState("fail");
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        window.config.wod_token_address,
+        window.TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    await wod_token_abi.methods
-      .approve(scorpionKingAddress, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
+      const txResponse = await tokenSc
+        .approve(scorpionKingAddress, "500000000000000000000000000")
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setScorpionBundleState("fail");
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setStatus("Succesfully approved!");
         setScorpionBundleState("deposit");
         setStatusColor("#00FECF");
         setScorpionShowApproval(false);
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setScorpionBundleState("fail");
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [scorpionKingAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setScorpionBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setScorpionBundleState("deposit");
+            setStatusColor("#00FECF");
+            setScorpionShowApproval(false);
+          }
+        }
+      }
+    }
   };
 
   const handleDepositScorpion = async () => {
-    let web3 = new Web3(window.ethereum);
-    const scorpionKingContract = new web3.eth.Contract(
-      SCORPION_KING_ABI,
-      scorpion_king_address
-    );
     setScorpionDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      let web3 = new Web3(window.ethereum);
+      const scorpionKingContract = new web3.eth.Contract(
+        SCORPION_KING_ABI,
+        scorpion_king_address
+      );
+
       await scorpionKingContract.methods
         .deposit()
         .send({ from: coinbase })
@@ -1523,8 +2133,6 @@ const NewEvents = ({
         });
       handleRefreshCountdownScorpion();
     } else if (window.WALLET_TYPE === "binance") {
-      const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
-
       const scorpionsc = new ethers.Contract(
         scorpion_king_address,
         SCORPION_KING_ABI,
@@ -1574,6 +2182,42 @@ const NewEvents = ({
         checkApprovalScorpion();
       }
       handleRefreshCountdownScorpion();
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: scorpion_king_address,
+            abi: SCORPION_KING_ABI,
+            functionName: "deposit",
+            args: [],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setScorpionDepositState("failDeposit");
+            console.log(e);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Bundle successfully purchased!");
+            setScorpionDepositState("success");
+            setStatusColor("#00FECF");
+
+            handleRefreshCountdownScorpion();
+            checkApprovalScorpion();
+          }
+        }
+        handleRefreshCountdownScorpion();
+      }
     }
   };
 
@@ -1636,14 +2280,12 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedPurchaseDate =
-        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
-          ? purchaseDate.getUTCDate()
-          : utcHours === 0
-          ? purchaseDate.getUTCDate() -1
-          :purchaseDate.getUTCDate();
-
-
+    const adjustedPurchaseDate =
+      purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? purchaseDate.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate.getUTCDate() - 1
+        : purchaseDate.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -1662,20 +2304,18 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
-        const adjustedCurrentDate =
-        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
-          ? currentUTCDate.getUTCDate()
-          : utcHours === 0
-          ? currentUTCDate.getUTCDate() -1
-          :currentUTCDate.getUTCDate();
-
+    const adjustedCurrentDate =
+      currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+        ? currentUTCDate.getUTCDate()
+        : utcHours === 0
+        ? currentUTCDate.getUTCDate() - 1
+        : currentUTCDate.getUTCDate();
 
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay
-      &&
+      adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtCyclops(isToday);
     setBeastSiegeStatus((prevStatus) => ({
@@ -1686,58 +2326,133 @@ const NewEvents = ({
 
   const checkApprovalCyclops = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await wod_token_abi.methods
-        .allowance(wallet, stoneEyeAddress)
-        .call()
-        .then((data) => {
-          if (data === "0" || data < 150000000000000000000) {
-            setCyclopsShowApproval(true);
-          } else {
-            setCyclopsShowApproval(false);
-            setCyclopsBundleState("deposit");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (window.WALLET_TYPE === "matchId") {
+        await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: window.config.wod_token_address,
+            functionName: "allowance",
+            args: [wallet, stoneEyeAddress],
+          })
+          .then((data) => {
+            if (Number(data) === 0 || Number(data) < 150000000000000000000) {
+              setCyclopsShowApproval(true);
+            } else {
+              setCyclopsShowApproval(false);
+              setCyclopsBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      } else {
+        await wod_token_abi.methods
+          .allowance(wallet, stoneEyeAddress)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 150000000000000000000) {
+              setCyclopsShowApproval(true);
+            } else {
+              setCyclopsShowApproval(false);
+              setCyclopsBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   };
 
   const handleApprovalCyclops = async () => {
-    console.log("herllo");
-
     setCyclopsBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      await wod_token_abi.methods
+        .approve(stoneEyeAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setCyclopsBundleState("deposit");
+          setStatusColor("#00FECF");
+          setCyclopsShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setCyclopsBundleState("fail");
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        window.config.wod_token_address,
+        window.TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    await wod_token_abi.methods
-      .approve(stoneEyeAddress, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
+      const txResponse = await tokenSc
+        .approve(stoneEyeAddress, "500000000000000000000000000")
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setCyclopsBundleState("fail");
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setStatus("Succesfully approved!");
         setCyclopsBundleState("deposit");
         setStatusColor("#00FECF");
         setCyclopsShowApproval(false);
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setCyclopsBundleState("fail");
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [stoneEyeAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setCyclopsBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setCyclopsBundleState("deposit");
+            setStatusColor("#00FECF");
+            setCyclopsShowApproval(false);
+          }
+        }
+      }
+    }
   };
 
   const handleDepositCyclops = async () => {
-    let web3 = new Web3(window.ethereum);
-    const stoneEyeContract = new web3.eth.Contract(
-      STONE_EYE_ABI,
-      stone_eye_address
-    );
-
     setCyclopsDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      let web3 = new Web3(window.ethereum);
+      const stoneEyeContract = new web3.eth.Contract(
+        STONE_EYE_ABI,
+        stone_eye_address
+      );
+
       await stoneEyeContract.methods
         .deposit()
         .send({ from: coinbase })
@@ -1806,6 +2521,42 @@ const NewEvents = ({
         checkApprovalCyclops();
       }
       handleRefreshCountdownCyclops();
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: stone_eye_address,
+            abi: STONE_EYE_ABI,
+            functionName: "deposit",
+            args: [],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setCyclopsDepositState("failDeposit");
+            console.log(e);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Bundle successfully purchased!");
+            setCyclopsDepositState("success");
+            setStatusColor("#00FECF");
+
+            handleRefreshCountdownCyclops();
+            checkApprovalCyclops();
+          }
+        }
+        handleRefreshCountdownCyclops();
+      }
     }
   };
 
@@ -3148,11 +3899,11 @@ const NewEvents = ({
                                               {dragonBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light dragon-button"
+                                                  className="spinner-border spinner-border-sm text-light dragon-button"
                                                   role="status"
                                                   style={{ color: "#2b353e" }}
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3185,10 +3936,10 @@ const NewEvents = ({
                                               {dragonDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light dragon-button"
+                                                  className="spinner-border spinner-border-sm text-light dragon-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3240,10 +3991,10 @@ const NewEvents = ({
                                             >
                                               {bearBundleState === "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light bear-button"
+                                                  className="spinner-border spinner-border-sm text-light bear-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3276,10 +4027,10 @@ const NewEvents = ({
                                               {bearDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light bear-button"
+                                                  className="spinner-border spinner-border-sm text-light bear-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3335,10 +4086,10 @@ const NewEvents = ({
                                               {beastBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light beast-button"
+                                                  className="spinner-border spinner-border-sm text-light beast-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3371,10 +4122,10 @@ const NewEvents = ({
                                               {beastDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light beast-button"
+                                                  className="spinner-border spinner-border-sm text-light beast-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3430,10 +4181,10 @@ const NewEvents = ({
                                               {eagleBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light eagle-button"
+                                                  className="spinner-border spinner-border-sm text-light eagle-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3466,10 +4217,10 @@ const NewEvents = ({
                                               {eagleDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light eagle-button"
+                                                  className="spinner-border spinner-border-sm text-light eagle-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3525,10 +4276,10 @@ const NewEvents = ({
                                               {scorpionBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light scorpion-button"
+                                                  className="spinner-border spinner-border-sm text-light scorpion-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3561,10 +4312,10 @@ const NewEvents = ({
                                               {scorpionDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light scorpion-button"
+                                                  className="spinner-border spinner-border-sm text-light scorpion-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3620,10 +4371,10 @@ const NewEvents = ({
                                               {cyclopsBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light cyclops-button"
+                                                  className="spinner-border spinner-border-sm text-light cyclops-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -3656,10 +4407,10 @@ const NewEvents = ({
                                               {cyclopsDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light cyclops-button"
+                                                  className="spinner-border spinner-border-sm text-light cyclops-button"
                                                   role="status"
                                                 >
-                                                  <span class="visually-hidden">
+                                                  <span className="visually-hidden">
                                                     Loading...
                                                   </span>
                                                 </div>
@@ -4079,10 +4830,10 @@ const NewEvents = ({
                                                   {puzzleMadnessBundleState ===
                                                   "loading" ? (
                                                     <div
-                                                      class="spinner-border spinner-border-sm text-light"
+                                                      className="spinner-border spinner-border-sm text-light"
                                                       role="status"
                                                     >
-                                                      <span class="visually-hidden">
+                                                      <span className="visually-hidden">
                                                         Loading...
                                                       </span>
                                                     </div>
@@ -4116,10 +4867,10 @@ const NewEvents = ({
                                                   {puzzleMadnessDepositState ===
                                                   "loading-deposit" ? (
                                                     <div
-                                                      class="spinner-border spinner-border-sm text-light"
+                                                      className="spinner-border spinner-border-sm text-light"
                                                       role="status"
                                                     >
-                                                      <span class="visually-hidden">
+                                                      <span className="visually-hidden">
                                                         Loading...
                                                       </span>
                                                     </div>
@@ -4316,10 +5067,10 @@ const NewEvents = ({
                           //             {puzzleMadnessBundleState ===
                           //             "loading" ? (
                           //               <div
-                          //                 class="spinner-border spinner-border-sm text-light"
+                          //                 className="spinner-border spinner-border-sm text-light"
                           //                 role="status"
                           //               >
-                          //                 <span class="visually-hidden">
+                          //                 <span className="visually-hidden">
                           //                   Loading...
                           //                 </span>
                           //               </div>
@@ -4349,10 +5100,10 @@ const NewEvents = ({
                           //             {puzzleMadnessDepositState ===
                           //             "loading-deposit" ? (
                           //               <div
-                          //                 class="spinner-border spinner-border-sm text-light"
+                          //                 className="spinner-border spinner-border-sm text-light"
                           //                 role="status"
                           //               >
-                          //                 <span class="visually-hidden">
+                          //                 <span className="visually-hidden">
                           //                   Loading...
                           //                 </span>
                           //               </div>

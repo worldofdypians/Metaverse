@@ -90,6 +90,11 @@ import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
 import NFTBridge from "./screens/NFTBridge/NftBridge";
 import Agent from "./screens/NewAgent/Agent.js";
 import OrynFly from "./components/OrynFly/OrynFly.js";
+import "@matchain/matchid-sdk-react/index.css";
+import { Hooks } from "@matchain/matchid-sdk-react";
+import { useMatchChain } from "@matchain/matchid-sdk-react/hooks";
+import { http, createPublicClient } from "viem";
+import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -451,6 +456,9 @@ function App() {
     },
   };
 
+  const { useUserInfo, useWallet } = Hooks;
+  const { login, address, username, logout: logoutUser } = useUserInfo();
+  const { signMessage, createWalletClient } = useWallet();
   const {
     data,
     refetch: refetchPlayer,
@@ -462,11 +470,11 @@ function App() {
   const [monthlyPlayers, setMonthlyPlayers] = useState(0);
   const [percent, setPercent] = useState(0);
   const authToken = localStorage.getItem("authToken");
-
+  const [orynPop, setOrynPop] = useState(true);
   const [showWalletModal, setShowWalletModal] = useState(false);
 
   const [betaModal, setBetaModal] = useState(false);
-  const [donwloadSelected, setdownloadSelected] = useState(false);
+
   const [totalSupply, setTotalSupply] = useState(0);
 
   const [isConnected, setIsConnected] = useState(false);
@@ -474,6 +482,8 @@ function App() {
   const [totalVolumeNew, setTotalVolumeNew] = useState(0);
   const [wodHolders, setWodHolders] = useState(0);
   const [coinbase, setCoinbase] = useState();
+  const [gameAccount, setGameAccount] = useState();
+
   const [networkId, setChainId] = useState();
   const [currencyAmount, setCurrencyAmount] = useState(0);
   const [showForms, setShowForms] = useState(false);
@@ -509,7 +519,7 @@ function App() {
   const [limit, setLimit] = useState(0);
   const [allCawsForTimepieceMint, setAllCawsForTimepieceMint] = useState([]);
   const [timepieceMetadata, settimepieceMetadata] = useState([]);
-  const [username, setUsername] = useState("");
+
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
   const [totalBaseNft, settotalBaseNft] = useState(0);
   const [totalMantaNft, setTotalMantaNft] = useState(0);
@@ -521,15 +531,13 @@ function App() {
   const [mantaMintAllowed, setMantaMintAllowed] = useState(1);
 
   const [fireAppcontent, setFireAppContent] = useState(false);
-  const [activeUser, setactiveUser] = useState(false);
+
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [socials, setSocials] = useState([]);
 
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
-
-  const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
 
   const [availTime, setavailTime] = useState();
 
@@ -580,7 +588,7 @@ function App() {
 
   const [domainPopup, setDomainPopup] = useState(false);
   const [showSync, setshowSync] = useState(false);
-
+  const [syncStatus, setsyncStatus] = useState("initial");
   const [availableDomain, setAvailableDomain] = useState("initial");
   const [domainPrice, setDomainPrice] = useState(0);
   const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
@@ -823,6 +831,17 @@ function App() {
 
   const userId = data?.getPlayer?.playerId;
   const userWallet = data?.getPlayer?.wallet?.publicAddress;
+  const chain = useMatchChain();
+
+  const walletClient = createWalletClient({
+    chain: chain?.chain,
+    transport: http(`${chain?.chain?.rpcUrls?.default?.http[0]}`),
+  });
+
+  const publicClient = createPublicClient({
+    chain: chain?.chain,
+    transport: http(`${chain?.chain?.rpcUrls?.default?.http[0]}`),
+  });
 
   const handleFirstTask = async (wallet) => {
     if (wallet) {
@@ -834,6 +853,25 @@ function App() {
       if (result2 && result2.status === 200) {
         console.log(result2);
       }
+    }
+  };
+
+  const handleSync = async () => {
+    setsyncStatus("loading");
+
+    try {
+      await generateNonce({
+        variables: {
+          publicAddress: coinbase,
+        },
+      });
+    } catch (error) {
+      setsyncStatus("error");
+      setTimeout(() => {
+        setsyncStatus("initial");
+        setshowSync(false);
+      }, 3000);
+      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
   };
 
@@ -2051,21 +2089,30 @@ function App() {
   };
 
   const checkNetworkId = async () => {
-    if (
+    if (window.WALLET_TYPE === "matchId") {
+      if (chain && chain?.chainId !== null) {
+        setChainId(chain.chainId);
+      }
+    } else if (
       window.ethereum &&
       !window.gatewallet &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId" &&
+      window.WALLET_TYPE !== ""
     ) {
       window.ethereum
         .request({ method: "net_version" })
         .then((data) => {
           setChainId(parseInt(data));
         })
-        .catch(console.error);
+        .catch((e) => {
+          console.log(e);
+        });
     } else if (
       window.ethereum &&
       window.gatewallet &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId"
     ) {
       await provider
         ?.detectNetwork()
@@ -2088,6 +2135,7 @@ function App() {
       setChainId(1);
     }
   };
+
   // console.log(account, isInBinance(), library);
   const handleConnectWallet = async () => {
     try {
@@ -2210,36 +2258,16 @@ function App() {
     // const accounts = await provider.request({ method: "eth_requestAccounts" });
   };
 
-  const handleConnectWalletPassport = async () => {
-    setwalletModal(true);
-
-    const checkoutSDK_simple = new checkout.Checkout();
-
-    const widgets_simple = await checkoutSDK_simple.widgets({
-      config: { theme: checkout.WidgetTheme.DARK },
+  const handleConnectionMatchId = async (method) => {
+    await login(method).then(() => {
+      localStorage.setItem("logout", "false");
+      setwalletModal(false);
+      console.log("Logged in with method:", method);
+      window.WALLET_TYPE = "matchId";
+      setIsConnected(true);
+      setCoinbase(address);
     });
-
-    const connect_simple = widgets_simple.create(checkout.WidgetType.CONNECT, {
-      config: { theme: checkout.WidgetTheme.DARK },
-    });
-
-    if (!connect_simple) return;
-
-    connect_simple.mount("connect_simple");
-
-    connect_simple.addListener(checkout.ConnectEventType.SUCCESS, (data) => {
-      console.log("success_simple", data);
-      handleConnectWallet();
-    });
-    connect_simple.addListener(checkout.ConnectEventType.FAILURE, (data) => {
-      console.log("failure_simple", data);
-    });
-    connect_simple.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
-      connect_simple.unmount();
-    });
-    setSuccess(true);
   };
-
   const myNft = async () => {
     if (coinbase !== null && coinbase !== undefined) {
       const infura_web3 = window.infuraWeb3;
@@ -2595,80 +2623,84 @@ function App() {
   };
 
   const handleTimepieceMint = async (data) => {
-    if (isConnected) {
-      try {
-        //Check Whitelist
-        let whitelist = 1;
-
-        if (parseInt(whitelist) === 1) {
-          setmintloading("mint");
-          setmintStatus("Minting in progress...");
-          settextColor("rgb(123, 216, 176)");
-          // console.log(data,finalCaws, totalCawsDiscount);
-          let tokenId = await window.caws_timepiece
-            .claimTimepiece(finalCaws)
-            .then(() => {
-              setmintStatus("Success! Your Nft was minted successfully!");
-              setmintloading("success");
-              settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
-                setmintStatus("");
-                setmintloading("initial");
-              }, 5000);
-              checkCawsToUse();
-            })
-            .catch((e) => {
-              console.error(e);
-              setmintloading("error");
-              settextColor("#d87b7b");
-
-              if (typeof e == "object" && e.message) {
-                setmintStatus(e.message);
-              } else {
-                setmintStatus(
-                  "Oops, something went wrong! Refresh the page and try again!"
-                );
-              }
-              setTimeout(() => {
-                setmintloading("initial");
-                setmintStatus("");
-              }, 5000);
-            });
-
-          if (tokenId) {
-            let getNftData = await window.getNft(tokenId);
-            setMyNFTsCreated(getNftData);
-          }
-        } else {
-          // setShowWhitelistLoadingModal(true);
-        }
-      } catch (e) {
-        setmintloading("error");
-
-        if (typeof e == "object" && e.message) {
-          setmintStatus(e.message);
-        } else {
-          setmintStatus(
-            "Oops, something went wrong! Refresh the page and try again!"
-          );
-        }
-        window.alertify.error(
-          typeof e == "object" && e.message
-            ? e.message
-            : typeof e == "string"
-            ? String(e)
-            : "Oops, something went wrong! Refresh the page and try again!"
-        );
-        setTimeout(() => {
-          setmintloading("initial");
-          setmintStatus("");
-        }, 5000);
-      }
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     } else {
-      try {
-        handleConnectWallet();
-      } catch (e) {
-        window.alertify.error("No web3 detected! Please Install MetaMask!");
+      if (isConnected) {
+        try {
+          //Check Whitelist
+          let whitelist = 1;
+
+          if (parseInt(whitelist) === 1) {
+            setmintloading("mint");
+            setmintStatus("Minting in progress...");
+            settextColor("rgb(123, 216, 176)");
+            // console.log(data,finalCaws, totalCawsDiscount);
+            let tokenId = await window.caws_timepiece
+              .claimTimepiece(finalCaws)
+              .then(() => {
+                setmintStatus("Success! Your Nft was minted successfully!");
+                setmintloading("success");
+                settextColor("rgb(123, 216, 176)");
+                setTimeout(() => {
+                  setmintStatus("");
+                  setmintloading("initial");
+                }, 5000);
+                checkCawsToUse();
+              })
+              .catch((e) => {
+                console.error(e);
+                setmintloading("error");
+                settextColor("#d87b7b");
+
+                if (typeof e == "object" && e.message) {
+                  setmintStatus(e.message);
+                } else {
+                  setmintStatus(
+                    "Oops, something went wrong! Refresh the page and try again!"
+                  );
+                }
+                setTimeout(() => {
+                  setmintloading("initial");
+                  setmintStatus("");
+                }, 5000);
+              });
+
+            if (tokenId) {
+              let getNftData = await window.getNft(tokenId);
+              setMyNFTsCreated(getNftData);
+            }
+          } else {
+            // setShowWhitelistLoadingModal(true);
+          }
+        } catch (e) {
+          setmintloading("error");
+
+          if (typeof e == "object" && e.message) {
+            setmintStatus(e.message);
+          } else {
+            setmintStatus(
+              "Oops, something went wrong! Refresh the page and try again!"
+            );
+          }
+          window.alertify.error(
+            typeof e == "object" && e.message
+              ? e.message
+              : typeof e == "string"
+              ? String(e)
+              : "Oops, something went wrong! Refresh the page and try again!"
+          );
+          setTimeout(() => {
+            setmintloading("initial");
+            setmintStatus("");
+          }, 5000);
+        }
+      } else {
+        try {
+          handleConnectWallet();
+        } catch (e) {
+          window.alertify.error("No web3 detected! Please Install MetaMask!");
+        }
       }
     }
   };
@@ -3262,25 +3294,89 @@ function App() {
   };
 
   const signWalletPublicAddress = async () => {
-    if (window.ethereum && window.WALLET_TYPE !== "binance") {
+    if (
+      window.ethereum &&
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId"
+    ) {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(coinbase);
         let signatureData = "";
+
         await signer
           .signMessage(
             `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
           )
           .then((data) => {
+            verifyWallet({
+              variables: {
+                publicAddress: coinbase,
+                signature: data,
+              },
+            });
+            setsyncStatus("success");
+            setTimeout(() => {
+              setsyncStatus("initial");
+              setshowSync(false);
+            }, 1000);
+            refreshSubscription(coinbase);
             signatureData = data;
-
             handleManageLogin(
               signatureData,
               `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
             );
           });
+
+        handleFirstTask(userWallet);
+      } catch (error) {
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+          setshowSync(false);
+        }, 3000);
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      }
+    } else if (window.WALLET_TYPE === "matchId" && address) {
+      try {
+        let signatureData = "";
+        if (walletClient) {
+          setshowSync(false);
+          const res = await signMessage({
+            message: `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`,
+            account: address,
+          });
+
+          if (res) {
+            signatureData = res;
+
+            verifyWallet({
+              variables: {
+                publicAddress: address,
+                signature: signatureData,
+              },
+            });
+
+            handleManageLogin(
+              signatureData,
+              `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+            );
+
+            setsyncStatus("success");
+            setTimeout(() => {
+              setsyncStatus("initial");
+              setshowSync(false);
+            }, 3000);
+            handleFirstTask(address);
+          }
+        }
       } catch (error) {
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+          setshowSync(false);
+        }, 3000);
       }
     } else if (coinbase && library) {
       try {
@@ -3295,12 +3391,20 @@ function App() {
             signature: signature,
           },
         }).then(() => {
-          // if (isonlink) {
-          //   handleFirstTask(binanceWallet);
-          // }
+          setsyncStatus("success");
+          setTimeout(() => {
+            setsyncStatus("initial");
+            setshowSync(false);
+          }, 1000);
+          handleFirstTask(coinbase);
         });
       } catch (error) {
         console.log("🚀 ~ file: App.js:2248 ~ getTokens ~ error", error);
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+          setshowSync(false);
+        }, 3000);
       }
     }
   };
@@ -3330,7 +3434,7 @@ function App() {
     if (dataNonce?.generateWalletNonce) {
       signWalletPublicAddress();
     }
-  }, [dataNonce]);
+  }, [dataNonce, address]);
 
   useEffect(() => {
     if (ethereum && !window.gatewallet) {
@@ -3350,7 +3454,9 @@ function App() {
       (window.ethereum.isMetaMask === true ||
         window.ethereum.isTrust === true) &&
       !window.gatewallet &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId" &&
+      !address
     ) {
       window.WALLET_TYPE = "metamask";
       if (
@@ -3368,7 +3474,9 @@ function App() {
         window.coinbase_address ===
           "0x0000000000000000000000000000000000000000" ||
         window.coin98) &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId" &&
+      window.WALLET_TYPE !== ""
     ) {
       checkConnection2();
     } else if (
@@ -3378,9 +3486,12 @@ function App() {
     ) {
       setIsConnected(isActive);
       if (account) {
-        // fetchAvatar(account);
         setCoinbase(account);
       }
+    } else if (address) {
+      setIsConnected(true);
+      setCoinbase(address);
+      window.WALLET_TYPE = "matchId";
     } else if (window.WALLET_TYPE !== "binance") {
       setIsConnected(false);
       setCoinbase();
@@ -3392,7 +3503,6 @@ function App() {
       logout === "false"
     ) {
       if (account) {
-        // fetchAvatar(account);
         setCoinbase(account);
         setIsConnected(true);
       } else {
@@ -3400,12 +3510,7 @@ function App() {
         setIsConnected(false);
       }
     }
-    // checkNetworkId();
-  }, [coinbase, networkId, active, account]);
-
-  // useEffect(() => {
-  //   checkNetworkId();
-  // }, [isConnected, coinbase, networkId, provider]);
+  }, [coinbase, networkId, active, account, address]);
 
   useEffect(() => {
     if (isConnected === true && coinbase && networkId === 1) {
@@ -3633,6 +3738,26 @@ function App() {
     mantaPrice,
     victionPrice,
   ]);
+
+  useEffect(() => {
+    if (
+      email &&
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress
+    ) {
+      setGameAccount(data.getPlayer.wallet.publicAddress);
+    }
+  }, [data, email]);
+
+  useEffect(() => {
+    if (dataVerify?.verifyWallet) {
+      refetchPlayer();
+    }
+  }, [dataVerify]);
 
   const dummyBetaPassData2 = [
     // {
@@ -4561,10 +4686,10 @@ function App() {
       window.config.daily_bonus_viction_address
     );
 
-    const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
-      window.DAILY_BONUS_MANTA_ABI,
-      window.config.daily_bonus_manta_address
-    );
+    // const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
+    //   window.DAILY_BONUS_MANTA_ABI,
+    //   window.config.daily_bonus_manta_address
+    // );
 
     const daily_bonus_contract_taiko = new window.taikoWeb3.eth.Contract(
       window.DAILY_BONUS_TAIKO_ABI,
@@ -4632,51 +4757,37 @@ function App() {
               if (isPremium_skale === true) {
                 setIsPremium(true);
               } else {
-                const isPremium_manta = await daily_bonus_contract_manta.methods
+                const isPremium_taiko = await daily_bonus_contract_taiko.methods
                   .isPremiumUser(addr)
                   .call()
                   .catch((e) => {
                     console.error(e);
                     return false;
                   });
-                if (isPremium_manta === true) {
+                if (isPremium_taiko === true) {
                   setIsPremium(true);
                 } else {
-                  const isPremium_taiko =
-                    await daily_bonus_contract_taiko.methods
+                  const isPremium_base = await daily_bonus_contract_base.methods
+                    .isPremiumUser(addr)
+                    .call()
+                    .catch((e) => {
+                      console.error(e);
+                      return false;
+                    });
+                  if (isPremium_base === true) {
+                    setIsPremium(true);
+                  } else {
+                    const isPremium_mat = await daily_bonus_contract_mat.methods
                       .isPremiumUser(addr)
                       .call()
                       .catch((e) => {
                         console.error(e);
                         return false;
                       });
-                  if (isPremium_taiko === true) {
-                    setIsPremium(true);
-                  } else {
-                    const isPremium_base =
-                      await daily_bonus_contract_base.methods
-                        .isPremiumUser(addr)
-                        .call()
-                        .catch((e) => {
-                          console.error(e);
-                          return false;
-                        });
-                    if (isPremium_base === true) {
+                    if (isPremium_mat === true) {
                       setIsPremium(true);
                     } else {
-                      const isPremium_mat =
-                        await daily_bonus_contract_mat.methods
-                          .isPremiumUser(addr)
-                          .call()
-                          .catch((e) => {
-                            console.error(e);
-                            return false;
-                          });
-                      if (isPremium_mat === true) {
-                        setIsPremium(true);
-                      } else {
-                        setIsPremium(false);
-                      }
+                      setIsPremium(false);
                     }
                   }
                 }
@@ -4883,7 +4994,7 @@ function App() {
   const handleDisconnect = async () => {
     if (!window.gatewallet) {
       localStorage.removeItem("connect-session");
-
+      await logoutUser();
       setTimeout(() => {
         checkBinanceData();
         window.disconnectWallet();
@@ -4978,10 +5089,14 @@ function App() {
 
   const getDomains = async () => {
     if (coinbase) {
-      const name = await web3Name.getDomainName({
-        address: coinbase,
-        queryChainIdList: [56],
-      });
+      const name = await web3Name
+        .getDomainName({
+          address: coinbase,
+          queryChainIdList: [56],
+        })
+        .catch((e) => {
+          console.error(e);
+        });
 
       if (name && name !== null) {
         setDomainName(name);
@@ -5109,13 +5224,20 @@ function App() {
   }, [coinbase, nftCount]);
 
   useEffect(() => {
-    if (coinbase && isConnected && authToken && email)
+    if (
+      coinbase &&
+      isConnected &&
+      authToken &&
+      email &&
+      userWallet &&
+      userWallet.toLowerCase() === coinbase.toLowerCase()
+    )
       addNewUserIfNotExists(
         coinbase,
         "Welcome",
         "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
       );
-  }, [coinbase, isConnected, authToken, email]);
+  }, [coinbase, isConnected, authToken, email, userWallet]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -5137,9 +5259,11 @@ function App() {
     getPriceDYP();
     fetchDogeCoinPrice();
     fetchWodPrice();
-
-    checkNetworkId();
   }, []);
+
+  useEffect(() => {
+    checkNetworkId();
+  }, [chain?.chainId, window.WALLET_TYPE]);
 
   useEffect(() => {
     fetchEthStaking();
@@ -5169,7 +5293,19 @@ function App() {
     }
   }, [loginListener, userWallet]);
 
-  const [orynPop, setOrynPop] = useState(true);
+  
+
+  // useEffect(() => {
+  //   if (address && address.length > 0) {
+  //     if (window.WALLET_TYPE === "matchId") {
+  //       setIsConnected(true);
+  //       setCoinbase(address);
+  //     }
+  //   } else {
+  //     setIsConnected(false);
+  //     setCoinbase();
+  //   }
+  // }, [address, window.WALLET_TYPE]);
 
   return (
     <>
@@ -5205,13 +5341,14 @@ function App() {
             setCount55(count55 + 1);
           }}
           onSigninClick={checkData}
-          gameAccount={data?.getPlayer?.wallet?.publicAddress}
+          gameAccount={gameAccount}
           email={email}
           username={data?.getPlayer?.displayName}
           loginListener={loginListener}
           onSyncClick={() => {
             setshowSync(true);
           }}
+          network_matchain={chain}
         />
         <MobileNavbar
           isConnected={isConnected}
@@ -5235,6 +5372,7 @@ function App() {
           handleSwitchChainBinanceWallet={handleSwitchNetwork}
           binanceWallet={coinbase}
           username={data?.getPlayer?.displayName}
+          network_matchain={chain}
         />
 
         <Routes>
@@ -5336,6 +5474,10 @@ function App() {
                 chainId={networkId}
                 handleSwitchNetwork={handleSwitchNetwork}
                 checkPremiumOryn={checkPremiumOryn}
+                walletClient={walletClient}
+                publicClient={publicClient}
+                network_matchain={chain}
+                binanceW3WProvider={library}
               />
             }
           />
@@ -5363,8 +5505,10 @@ function App() {
                   setwalletModal(true);
                 }}
                 coinbase={coinbase}
-                isPremium={isPremium}
-                // userPools={userPools}
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
               />
             }
           />
@@ -5380,8 +5524,11 @@ function App() {
                   setwalletModal(true);
                 }}
                 coinbase={coinbase}
-                isPremium={isPremium}
                 type="pool"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
               />
             }
           />
@@ -5397,8 +5544,11 @@ function App() {
                   setwalletModal(true);
                 }}
                 coinbase={coinbase}
-                isPremium={isPremium}
-                // userPools={userPools}
+                handleSwitchNetwork={handleSwitchNetwork}
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
               />
             }
           />
@@ -5490,6 +5640,7 @@ function App() {
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 binanceWallet={coinbase}
                 binanceW3WProvider={library}
+                network_matchain={chain}
               />
             }
           />
@@ -5559,6 +5710,10 @@ function App() {
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
+                onSyncClick={() => {
+                  setshowSync(true);
+                }}
+                syncStatus={syncStatus}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -5583,7 +5738,9 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={handleConnectWallet}
+                handleConnect={() => {
+                  setwalletModal(true);
+                }}
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
@@ -5598,6 +5755,7 @@ function App() {
                 }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
+                handleConnectionMatchId={handleConnectionMatchId}
                 handleConnectBinance={handleConnectBinance}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
@@ -5620,6 +5778,9 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                walletClient={walletClient}
+                publicClient={publicClient}
+                network_matchain={chain}
               />
             }
           />
@@ -5632,6 +5793,7 @@ function App() {
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
+                syncStatus={syncStatus}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}
@@ -5663,8 +5825,14 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={handleConnectWallet}
+                handleConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleConnectionMatchId={handleConnectionMatchId}
                 onSigninClick={checkData}
+                onSyncClick={() => {
+                  setshowSync(true);
+                }}
                 success={success}
                 availableTime={availTime}
                 handleSwitchNetwork={handleSwitchNetwork}
@@ -5697,6 +5865,9 @@ function App() {
                 coingeckoEarnUsd={userEarnUsd}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                walletClient={walletClient}
+                publicClient={publicClient}
+                network_matchain={chain}
               />
             }
           />
@@ -6147,6 +6318,7 @@ function App() {
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
+                syncStatus={syncStatus}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}
@@ -6178,7 +6350,13 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={handleConnectWallet}
+                handleConnect={() => {
+                  setwalletModal(true);
+                }}
+                onSyncClick={() => {
+                  setshowSync(true);
+                }}
+                handleConnectionMatchId={handleConnectionMatchId}
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
@@ -6212,6 +6390,9 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                walletClient={walletClient}
+                publicClient={publicClient}
+                network_matchain={chain}
               />
             }
           />
@@ -6442,6 +6623,9 @@ function App() {
                 onSuccessfulStake={() => {
                   setstakeCount(stakeCount + 1);
                 }}
+                walletClient={walletClient}
+                publicClient={publicClient}
+                network_matchain={chain}
               />
             }
           />
@@ -6462,6 +6646,9 @@ function App() {
                 handleConnection={() => {
                   setwalletModal(true);
                 }}
+                walletClient={walletClient}
+                publicClient={publicClient}
+                network_matchain={chain}
               />
             }
           />
@@ -6481,6 +6668,10 @@ function App() {
                 refreshBalance={() => {
                   setcountBalance(countBalance + 1);
                 }}
+                walletClient={walletClient}
+                publicClient={publicClient}
+                network_matchain={chain}
+                binanceW3WProvider={library}
               />
             }
           />
@@ -7020,6 +7211,21 @@ function App() {
           }}
           handleConnectionPassport={handleConnectPassport}
           handleConnectBinance={handleConnectBinance}
+          handleConnectionMatchId={handleConnectionMatchId}
+        />
+      )}
+
+      {showSync === true && (
+        <SyncModal
+          onCancel={() => {
+            setshowSync(false);
+          }}
+          onclose={() => {
+            setshowSync(false);
+          }}
+          open={showSync === true}
+          onConfirm={handleSync}
+          syncStatus={syncStatus}
         />
       )}
 

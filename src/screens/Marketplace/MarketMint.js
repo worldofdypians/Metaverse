@@ -365,6 +365,9 @@ const MarketMint = ({
   };
 
   const handleEthPool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
     if (window.ethereum) {
       if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x1")
@@ -384,6 +387,8 @@ const MarketMint = ({
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+  }
+
   };
 
   const handleOpBnbPool = async () => {
@@ -408,29 +413,6 @@ const MarketMint = ({
     }
   };
 
-  const handleMatPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x2ba")
-            .then(() => {
-              handleSwitchNetwork(698);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
 
   const handleSeiPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
@@ -1308,8 +1290,8 @@ const MarketMint = ({
                           </h6>
                           <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
                             <div className="mint-benefits-grid">
-                              {benefits.map((item) => (
-                                <div className="d-flex align-items-center gap-2">
+                              {benefits.map((item, index) => (
+                                <div className="d-flex align-items-center gap-2" key={index}>
                                   <img
                                     src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                                     alt=""

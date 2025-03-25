@@ -4,8 +4,6 @@ import getFormattedNumber from "../../../../Caws/functions/get-formatted-number"
 import "../top-pools.css";
 import "./_stakingWod.scss";
 
-
-
 import { Tooltip } from "@mui/material";
 
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
@@ -61,11 +59,9 @@ const CawsDetailsPremium = ({
     }
   };
 
-
   const refreshStakes = () => {
     setnewStakes(newStakes + 1);
-    handleSecondTask(coinbase)
-
+    handleSecondTask(coinbase);
   };
 
   const showPopup = () => {
@@ -80,7 +76,7 @@ const CawsDetailsPremium = ({
     const address = coinbase;
     const stakeAdr = await window.config.nft_caws_premiumstake_address;
 
-    if (address !== null) {
+    if (address !== null && window.WALLET_TYPE !== "matchId") {
       const result = await window.nft
         .checkapproveStake(address, stakeAdr)
         .then((data) => {
@@ -170,7 +166,7 @@ const CawsDetailsPremium = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let myStakes = await getStakesIds();
       let staking_contract = await window.getContractCawsPremiumNFT(
         "CAWSPREMIUM"
@@ -226,6 +222,8 @@ const CawsDetailsPremium = ({
         setEthRewards(0);
         window.alertify.message("Claimed All Rewards!");
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     }
   };
 
@@ -277,13 +275,17 @@ const CawsDetailsPremium = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x1")
-      .then(() => {
-        handleSwitchNetwork("1");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.WALLET_TYPE !== "matchId") {
+      await handleSwitchNetworkhook("0x1")
+        .then(() => {
+          handleSwitchNetwork("1");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    }
   };
 
   const handleNavigateToPlans = () => {
@@ -312,32 +314,34 @@ const CawsDetailsPremium = ({
       setHide("staked");
     } else if (!isConnected) {
       handleConnection();
-    } else if (isConnected && chainId !== "1") {
-      handleEthPool();
     } else if (isConnected && !isPremium && chainId === "1") {
       handleNavigateToPlans();
+    } else if (isConnected && chainId !== "1") {
+      handleEthPool();
     }
   };
 
   useEffect(() => {
-    totalStakedNft();
-  }, [count, newStakes]);
+    if (window.WALLET_TYPE !== "matchId") {
+      totalStakedNft();
+    }
+  }, [count, newStakes, window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
-      myNft().then();
-      myStakes().then();
-      checkApproval().then();
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+      myNft();
+      myStakes();
+      checkApproval();
       handleClaimAll();
     }
-  }, [isConnected, chainId, newStakes, count]);
+  }, [isConnected, chainId, count, newStakes, window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
-      checkApproval().then();
-      calculateCountdown().then();
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+      checkApproval();
+      calculateCountdown();
     }
-  }, [isConnected, chainId, count2]);
+  }, [isConnected, chainId, count2, window.WALLET_TYPE]);
 
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);
@@ -540,7 +544,8 @@ const CawsDetailsPremium = ({
                         : "connectbtn"
                     } d-flex justify-content-center align-items-center`}
                     disabled={
-                     isConnected && (mystakes.length === 4 || totalStakes === 200)
+                      isConnected &&
+                      (mystakes.length === 4 || totalStakes === 200)
                     }
                     onClick={() => {
                       manageState();
@@ -550,149 +555,152 @@ const CawsDetailsPremium = ({
                       ? "Select NFTs"
                       : !isConnected
                       ? "Connect Wallet"
-                      : isConnected && isPremium && chainId !== "1"
+                      : isConnected && chainId !== "1"
                       ? "Switch to Ethereum"
                       : "Become Prime"}
                   </button>
                 </div>
               </div>
             </div>
-            {mystakes.length > 0 && 
-            <div className="stake-separator"></div>
-             }
+            {mystakes.length > 0 && <div className="stake-separator"></div>}
             {mystakes.length > 0 && (
-            <div
-              className={`otherside-border ${
-                listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-              }  ${
-                (chainId !== "1" || expired === true || !isPremium) &&
-                "blurrypool"
-              } `}
-            >
-              <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
-                <h6
-                  className={
-                    listType === "list"
-                      ? "m-0 withdraw-txt align-items-center d-flex gap-2"
-                      : "m-0 deposit-txt d-flex flex-column gap-2"
-                  }
-                >
-                  Earnings
+              <div
+                className={`otherside-border ${
+                  listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
+                }  ${
+                  (chainId !== "1" || expired === true || !isPremium) &&
+                  "blurrypool"
+                } `}
+              >
+                <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
                   <h6
-                    className="m-0 mybalance-text"
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    NFTs Staked:{" "}
-                    <b>{isConnected === false ? 0 : mystakes.length} CAWS</b>
-                  </h6>
-                </h6>
-                <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
-                  <Tooltip
-                    placement="top"
-                    title={
-                      <div className="tooltip-text">
-                        {
-                          "Rewards earned by your CAWS NFTs deposit to the staking smart contract are displayed in real-time."
-                        }
-                      </div>
+                    className={
+                      listType === "list"
+                        ? "m-0 withdraw-txt align-items-center d-flex gap-2"
+                        : "m-0 deposit-txt d-flex flex-column gap-2"
                     }
                   >
-                    <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
-                  </Tooltip>
-                </h6>
-              </div>
-              <div className="info-pool-wrapper p-2 d-flex flex-column gap-2 justify-content-between">
-                {/* <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6> */}
+                    Earnings
+                    <h6
+                      className="m-0 mybalance-text"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      NFTs Staked:{" "}
+                      <b>{isConnected === false ? 0 : mystakes.length} CAWS</b>
+                    </h6>
+                  </h6>
+                  <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
+                    <Tooltip
+                      placement="top"
+                      title={
+                        <div className="tooltip-text">
+                          {
+                            "Rewards earned by your CAWS NFTs deposit to the staking smart contract are displayed in real-time."
+                          }
+                        </div>
+                      }
+                    >
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/more-info.svg"}
+                        alt=""
+                      />
+                    </Tooltip>
+                  </h6>
+                </div>
+                <div className="info-pool-wrapper p-2 d-flex flex-column gap-2 justify-content-between">
+                  {/* <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6> */}
 
-                <div className="form-row d-flex gap-2 align-items-center justify-content-between">
-                  <h6 className="m-0 w-100 rewardstxtCaws d-flex align-items-center gap-2">
-                    {/* <img
+                  <div className="form-row d-flex gap-2 align-items-center justify-content-between">
+                    <h6 className="m-0 w-100 rewardstxtCaws d-flex align-items-center gap-2">
+                      {/* <img
                         src={weth}
                         alt=""
                         style={{ width: 18, height: 18 }}
                       />{" "} */}
-                    {getFormattedNumber(EthRewards, 4)} WETH ($
-                    {getFormattedNumber(ethToUSD, 4)})
-                  </h6>
-                  <button
-                    className={`btn w-100 outline-btn-stake ${
-                      (claimStatus === "claimed" &&
-                        claimStatus === "initial") ||
-                      EthRewards === 0
-                        ? "disabled-btn"
-                        : claimStatus === "failed"
-                        ? "fail-button"
-                        : claimStatus === "success"
-                        ? "success-button"
-                        : null
-                    } d-flex justify-content-center align-items-center gap-2`}
-                    style={{ height: "fit-content" }}
-                    onClick={claimRewards}
-                    disabled={!isPremium || EthRewards === 0}
-                  >
-                    {claimLoading ? (
-                      <div
-                        class="spinner-border spinner-border-sm text-light"
-                        role="status"
-                      >
-                        <span class="visually-hidden">Loading...</span>
-                      </div>
-                    ) : claimStatus === "failed" ? (
-                      <>Failed</>
-                    ) : claimStatus === "success" ? (
-                      <>Success</>
-                    ) : (
-                      <>Claim</>
-                    )}
-                  </button>
-                </div>
-              </div>
-            </div>
-            )}
-              {mystakes.length > 0 && 
-              <div className="stake-separator"></div>
-             }
-            {mystakes.length > 0 && (
-            <div
-              className={`otherside-border  ${
-                listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
-              } ${chainId !== "1" && "blurrypool"}`}
-            >
-              <div className="d-flex flex-column gap-2">
-                <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
-                  My Deposit
-                </h6>
-                <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
-                  <div className="d-flex align-items-center gap-2 justify-content-between">
-                    <div className="d-flex flex-column w-100">
-                      <h6 className={"m-0 mybalance-text d-flex"}>
-                        Unlocks in
-                      </h6>
-                      <h6 className="m-0 rewardstxtwod text-white d-flex align-items-center gap-2">
-                        Anytime
-                      </h6>
-                    </div>
+                      {getFormattedNumber(EthRewards, 4)} WETH ($
+                      {getFormattedNumber(ethToUSD, 4)})
+                    </h6>
                     <button
-                      disabled={false}
-                      className={"outline-btn-stake btn"}
-                      onClick={() => {
-                        setshowChecklistModal(true);
-                        setOpenStakeChecklist(true);
-                        setHide("");
-                      }}
+                      className={`btn w-100 outline-btn-stake ${
+                        (claimStatus === "claimed" &&
+                          claimStatus === "initial") ||
+                        EthRewards === 0
+                          ? "disabled-btn"
+                          : claimStatus === "failed"
+                          ? "fail-button"
+                          : claimStatus === "success"
+                          ? "success-button"
+                          : null
+                      } d-flex justify-content-center align-items-center gap-2`}
+                      style={{ height: "fit-content" }}
+                      onClick={claimRewards}
+                      disabled={!isPremium || EthRewards === 0}
                     >
-                      Withdraw
+                      {claimLoading ? (
+                        <div
+                          className="spinner-border spinner-border-sm text-light"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : claimStatus === "failed" ? (
+                        <>Failed</>
+                      ) : claimStatus === "success" ? (
+                        <>Success</>
+                      ) : (
+                        <>Claim</>
+                      )}
                     </button>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
+            {mystakes.length > 0 && <div className="stake-separator"></div>}
+            {mystakes.length > 0 && (
+              <div
+                className={`otherside-border  ${
+                  listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
+                } ${chainId !== "1" && "blurrypool"}`}
+              >
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
+                    My Deposit
+                  </h6>
+                  <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
+                    <div className="d-flex align-items-center gap-2 justify-content-between">
+                      <div className="d-flex flex-column w-100">
+                        <h6 className={"m-0 mybalance-text d-flex"}>
+                          Unlocks in
+                        </h6>
+                        <h6 className="m-0 rewardstxtwod text-white d-flex align-items-center gap-2">
+                          Anytime
+                        </h6>
+                      </div>
+                      <button
+                        disabled={false}
+                        className={"outline-btn-stake btn"}
+                        onClick={() => {
+                          setshowChecklistModal(true);
+                          setOpenStakeChecklist(true);
+                          setHide("");
+                        }}
+                      >
+                        Withdraw
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
             <div
-              className={`info-pool-wrapper2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+              className={`info-pool-wrapper2 p-1 d-flex ${
+                mystakes.length > 0
+                  ? "justify-content-center"
+                  : "justify-content-center"
+              } `}
               style={{
                 cursor: "pointer",
-                width: mystakes.length > 0 ? 'auto' : 'fit-content'
+                width: mystakes.length > 0 ? "auto" : "fit-content",
               }}
               onClick={() => {
                 showPopup();
@@ -702,7 +710,11 @@ const CawsDetailsPremium = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                  alt=""
+                />{" "}
+                Details
               </h6>
             </div>
           </div>
