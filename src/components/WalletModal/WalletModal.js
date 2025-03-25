@@ -83,7 +83,7 @@ const WalletModal = ({
                 !window.ethereum) && (
                 <button
                   className="walletbutton"
-                  onClick={() => handleConnectionMatchId("wallet")}
+                  onClick={() => handleConnectionMatchId("evm")}
                   id="connect-matchid"
                 >
                   <div className="justify-content-between d-flex w-100 align-items-center">

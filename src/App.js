@@ -3315,11 +3315,7 @@ function App() {
                 signature: data,
               },
             });
-            setsyncStatus("success");
-            setTimeout(() => {
-              setsyncStatus("initial");
-              setshowSync(false);
-            }, 1000);
+
             refreshSubscription(coinbase);
             signatureData = data;
             handleManageLogin(
@@ -3362,12 +3358,12 @@ function App() {
               `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
             );
 
-            setsyncStatus("success");
-            setTimeout(() => {
-              setsyncStatus("initial");
-              setshowSync(false);
-            }, 3000);
-            handleFirstTask(address);
+            // setsyncStatus("success");
+            // setTimeout(() => {
+            //   setsyncStatus("initial");
+            //   setshowSync(false);
+            // }, 3000);
+            // handleFirstTask(address);
           }
         }
       } catch (error) {
@@ -3391,12 +3387,12 @@ function App() {
             signature: signature,
           },
         }).then(() => {
-          setsyncStatus("success");
-          setTimeout(() => {
-            setsyncStatus("initial");
-            setshowSync(false);
-          }, 1000);
-          handleFirstTask(coinbase);
+          // setsyncStatus("success");
+          // setTimeout(() => {
+          //   setsyncStatus("initial");
+          //   setshowSync(false);
+          // }, 1000);
+          // handleFirstTask(coinbase);
         });
       } catch (error) {
         console.log("🚀 ~ file: App.js:2248 ~ getTokens ~ error", error);
@@ -3756,6 +3752,11 @@ function App() {
   useEffect(() => {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
+      setsyncStatus("success");
+      setTimeout(() => {
+        setsyncStatus("initial");
+        setshowSync(false);
+      }, 1000);
     }
   }, [dataVerify]);
 
@@ -5292,8 +5293,6 @@ function App() {
       handleFirstTask(userWallet);
     }
   }, [loginListener, userWallet]);
-
-  
 
   // useEffect(() => {
   //   if (address && address.length > 0) {
@@ -7234,4 +7233,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;  
