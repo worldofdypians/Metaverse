@@ -8,14 +8,16 @@
 }
 
 .oryn-gif {
-  width: 50%;
-  @media screen and (max-width: 1000px) {
-    width: 60%;
-  }
+  // width: 50%;
+  // @media screen and (max-width: 1000px) {
+  //   width: 60%;
+  // }
+  width: fit-content;
+  height: 290px;
 }
 
 .oryn-chat-title {
-  width: 55%;
+  width: 100%;
   background: rgba(8, 11, 42, 0.8);
   border: 1px solid #525469;
   border-radius: 30px;

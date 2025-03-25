@@ -222,6 +222,20 @@ function Dashboard({
   const username = data?.getPlayer?.displayName;
   const userWallet = data?.getPlayer?.wallet?.publicAddress;
 
+  const bannedEmails = [
+    "hibrahymdaniel@gmail.com",
+    "therocklobo@gmail.com",
+    "thelunapass@gmail.com",
+    "kharu4735@gmail.com",
+    "ti14bookmega@gmail.com",
+    "atop127@yandex.ru",
+    "giftaghedo71@gmail.com",
+    "scottevbaru@gmail.com",
+    "evbaru2@gmail.com",
+    "ogieva.igho@yahoo.com",
+    "ryaeiou100199@gmail.com",
+  ]
+
   const chainDropdowns = [
     {
       name: "Ethereum",
@@ -9370,6 +9384,15 @@ function Dashboard({
       </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft2 d-flex flex-column align-items-start px-lg-4 px-2 position-relative">
+    {bannedEmails.includes(email) && 
+      <div className="custom-container mt-5 mt-lg-0">
+      <div className="banned-account-wrapper w-100 px-2 py-3 mt-5 mt-lg-2 d-flex align-items-center justify-content-center">
+        <h6 className="banned-account-message mb-0 text-white text-center">
+        This account has been banned permanently. Check your email for more information.
+        </h6>
+      </div>
+    </div>
+    }
         {location.pathname === "/account" ||
         location.pathname.includes("/account/challenges") ? (
           <>

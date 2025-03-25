@@ -12,9 +12,8 @@ import Slider from "react-slick";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
-    <h6 className="latest-mint-number mb-0 font-organetto">
-      {hours} hours : {minutes} minutesmarketplace/mintnew-upcoming-tag d-flex
-      align-items-center justify-content-center px-1
+    <h6 className="latest-mint-number mb-0">
+      {hours} hours : {minutes} minutes
     </h6>
   );
 };
@@ -208,8 +207,8 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(timepieceData);
-  const [mintTitle, setMintTitle] = useState("timepiece");
+  const [selectedMint, setSelectedMint] = useState(kucoinData);
+  const [mintTitle, setMintTitle] = useState("kucoin");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -488,11 +487,10 @@ const MarketMint = ({
     } else if (location.pathname.includes("sei")) {
       setSelectedMint(seiData);
       setMintTitle("sei");
-    } 
-    // else if (location.pathname.includes("kucoin")) {
-    //   setSelectedMint(kucoinData);
-    //   setMintTitle("kucoin");
-    // }
+    } else if (location.pathname.includes("kucoin")) {
+      setSelectedMint(kucoinData);
+      setMintTitle("kucoin");
+    }
     // else if (location.pathname.includes("matchain")) {
     //   setSelectedMint(matData);
     //   setMintTitle("mat");
@@ -504,9 +502,9 @@ const MarketMint = ({
     html.classList.remove("hidescroll");
   }, []);
 
-  let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
+  let countToLiveConflux = new Date("2025-04-04T11:00:00.000+02:00");
   let countToExpireConflux = new Date("2024-08-05T16:00:00.000+02:00");
-  let countToExpiresei = new Date("2024-12-19T24:00:00.000+02:00");
+  let countToExpiresei = new Date("2025-04-04T11:00:00.000+02:00");
   let countToExpireImmutable = new Date("2024-08-15T24:00:00.000+02:00");
 
   let countToExpireManta = new Date("2024-08-15T24:00:00.000+02:00");
@@ -521,14 +519,14 @@ const MarketMint = ({
     //   data: avaxData,
     //   class: "mint-1",
     // },
-    // {
-    //   title: "KuCoin Pass",
-    //   eventId: "kucoin",
-    //   desc: "Gain entry to metaverse, and join exclusive KuCoin event with special ticket.",
-    //   img: "https://cdn.worldofdypians.com/wod/kucoinMobileBanner.png",
-    //   data: kucoinData,
-    //   class: "mint-2",
-    // },
+    {
+      title: "KuCoin Pass",
+      eventId: "kucoin",
+      desc: "Gain entry to metaverse, and join exclusive KuCoin event with special ticket.",
+      img: "https://cdn.worldofdypians.com/wod/kucoinMobileBanner.png",
+      data: kucoinData,
+      class: "mint-2",
+    },
     // {
     //   title: "Gate.Io Pass",
     //   eventId: "gate",
@@ -1009,6 +1007,10 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
+                    {" "}
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Live
                   </h6>
                   <h6
@@ -1017,9 +1019,6 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
                     Upcoming
                   </h6>
                   <h6
@@ -1715,7 +1714,7 @@ const MarketMint = ({
                                 </span>
                               </div>
                             </div>
-                            {confluxLive === false ? (
+                            {/* {confluxLive === false ? (
                               <>
                                 <div
                                   className="dark-wrapper d-flex flex-column gap-2 py-5 align-items-center justify-content-center p-2"
@@ -1737,42 +1736,42 @@ const MarketMint = ({
                                   style={{ visibility: "hidden" }}
                                 ></div>
                               </>
-                            ) : (
-                              <>
-                                <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
-                                  <span className="mb-0 latest-mint">
-                                    Available to Mint
-                                  </span>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <h6 className="latest-mint-number mb-0">
-                                      {mintTitle === "manta"
-                                        ? mantaMintAllowed
-                                        : mintTitle === "mat"
-                                        ? matMintAllowed
-                                        : mintTitle === "sei"
-                                        ? seiMintAllowed
-                                        : mintTitle === "kucoin"
-                                        ? myKucoinNfts.length > 0
-                                          ? 0
-                                          : 1
-                                        : 0}{" "}
-                                      NFT
-                                    </h6>
-                                  </div>
+                            ) : ( */}
+                            <>
+                              <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
+                                <span className="mb-0 latest-mint">
+                                  Available to Mint
+                                </span>
+                                <div className="d-flex align-items-center gap-2">
+                                  <h6 className="latest-mint-number mb-0">
+                                    {mintTitle === "manta"
+                                      ? mantaMintAllowed
+                                      : mintTitle === "mat"
+                                      ? matMintAllowed
+                                      : mintTitle === "sei"
+                                      ? seiMintAllowed
+                                      : mintTitle === "kucoin"
+                                      ? myKucoinNfts.length > 0
+                                        ? 0
+                                        : 1
+                                      : 0}{" "}
+                                    NFT
+                                  </h6>
                                 </div>
-                                <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
-                                  <span className="mb-0 latest-mint">
-                                    Minting ends in
-                                  </span>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <Countdown
-                                      date={countToExpiresei}
-                                      renderer={renderer2}
-                                    />
-                                  </div>
+                              </div>
+                              <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
+                                <span className="mb-0 latest-mint">
+                                  Minting ends in
+                                </span>
+                                <div className="d-flex align-items-center gap-2">
+                                  <Countdown
+                                    date={countToExpiresei}
+                                    renderer={renderer2}
+                                  />
                                 </div>
-                              </>
-                            )}
+                              </div>
+                            </>
+                            {/* )} */}
 
                             <span className="latest-mint-currency mb-0">
                               *Important: You can only mint one{" "}
@@ -1913,11 +1912,7 @@ const MarketMint = ({
                                   className={`py-2 ${
                                     mintloading === "error"
                                       ? "fail-button"
-                                      : (isConnected === true &&
-                                          chainId !== 204) ||
-                                        (status !== "Connect your wallet." &&
-                                          status !== "") ||
-                                        myKucoinNfts.length > 0
+                                      : myKucoinNfts.length > 0
                                       ? "outline-btn-disabled"
                                       : "stake-wod-btn"
                                   }  px-4 w-100`}
@@ -1931,9 +1926,7 @@ const MarketMint = ({
                                   disabled={
                                     mintloading === "error" ||
                                     mintloading === "success" ||
-                                    (isConnected === true && chainId !== 204) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
+                                    mintloading === "mint" ||
                                     myKucoinNfts.length > 0
                                       ? true
                                       : false
@@ -2175,101 +2168,79 @@ const MarketMint = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">Mints are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">Mints are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
+                  </div>
+                </div>
+
+                //   <div className="upcoming-mint-wrapper upcoming-base-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">Base Beta Pass</h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted by Base
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={'https://cdn.worldofdypians.com/wod/baseMintBg.png'}
+                //       alt=""
+                //       className="upcoming-mint-img d-none d-lg-block"
+                //     />
+                //     <img
+                //       src={'https://cdn.worldofdypians.com/wod/baseMintMobileBg.png'}
+                //       alt=""
+                //       className="upcoming-mint-img d-block d-lg-none d-md-none"
+                //     />
+                //   </div>
+                //   <div className="upcoming-mint-wrapper upcoming-matchain-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">
+                //         Matchain Beta Pass
+                //       </h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted by Matchain
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={'https://cdn.worldofdypians.com/wod/matchainMintBg.webp'}
+                //       alt=""
+                //       className="upcoming-mint-img d-none d-lg-block"
+                //     />
+                //     <img
+                //       src={"https://cdn.worldofdypians.com/wod/matchainMintActive.webp"}
+                //       alt=""
+                //       className="upcoming-mint-img d-block d-lg-none d-md-none"
+                //     />
+                //   </div>
+
+                //   <div className="upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //       <h6 className="upcoming-mint-title">
+                //         MultiversX Beta Pass
+                //       </h6>
+                //       <p className="upcoming-mint-desc">
+                //         Get access to a special ticket to enter the metaverse
+                //         and participate in an exclusive event hosted by
+                //         MultiversX
+                //       </p>
+                //     </div>
+                //     <img
+                //       src={'https://cdn.worldofdypians.com/wod/multiversMintBg.webp'}
+                //       alt=""
+                //       className="upcoming-mint-img d-none d-lg-block"
+                //     />
+                //     <img
+                //       src={'https://cdn.worldofdypians.com/wod/multiversMintActive.webp'}
+                //       alt=""
+                //       className="upcoming-mint-img d-block d-lg-none d-md-none"
+                //     />
                 //   </div>
                 // </div>
-                <div className="d-flex flex-column gap-4">
-                  <div className="upcoming-mint-wrapper upcoming-kucoin-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">KuCoin Beta Pass</h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by KuCoin
-                      </p>
-                    </div>
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/kucoinBg.png"}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/kucoinMobileBanner.png"
-                      }
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
-                  {/* 
-                  <div className="upcoming-mint-wrapper upcoming-base-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">Base Beta Pass</h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by Base
-                      </p>
-                    </div>
-                    <img
-                      src={'https://cdn.worldofdypians.com/wod/baseMintBg.png'}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={'https://cdn.worldofdypians.com/wod/baseMintMobileBg.png'}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
-                  <div className="upcoming-mint-wrapper upcoming-matchain-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">
-                        Matchain Beta Pass
-                      </h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by Matchain
-                      </p>
-                    </div>
-                    <img
-                      src={'https://cdn.worldofdypians.com/wod/matchainMintBg.webp'}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/matchainMintActive.webp"}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div>
-
-                  <div className="upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                      <h6 className="upcoming-mint-title">
-                        MultiversX Beta Pass
-                      </h6>
-                      <p className="upcoming-mint-desc">
-                        Get access to a special ticket to enter the metaverse
-                        and participate in an exclusive event hosted by
-                        MultiversX
-                      </p>
-                    </div>
-                    <img
-                      src={'https://cdn.worldofdypians.com/wod/multiversMintBg.webp'}
-                      alt=""
-                      className="upcoming-mint-img d-none d-lg-block"
-                    />
-                    <img
-                      src={'https://cdn.worldofdypians.com/wod/multiversMintActive.webp'}
-                      alt=""
-                      className="upcoming-mint-img d-block d-lg-none d-md-none"
-                    />
-                  </div> */}
-                </div>
               )}
               {activeTab === "past" && (
                 <div className="row w-100 align-items-center gap-4 gap-lg-0 px-0">
