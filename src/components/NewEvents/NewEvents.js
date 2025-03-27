@@ -354,6 +354,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setpuzzleMadnessBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setpuzzleMadnessBundleState("initial");
+          }, 3000);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -368,6 +373,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setpuzzleMadnessBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setpuzzleMadnessBundleState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -390,6 +400,11 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.message);
             setpuzzleMadnessBundleState("fail");
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setpuzzleMadnessBundleState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -438,6 +453,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setpuzzleMadnessDepositState("failDeposit");
           console.log(e);
+
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setpuzzleMadnessDepositState("initial");
+          }, 3000);
         });
       handleRefreshCountdownPuzzle();
     } else if (window.WALLET_TYPE === "binance") {
@@ -479,6 +500,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setpuzzleMadnessDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setpuzzleMadnessDepositState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -505,6 +531,11 @@ const NewEvents = ({
             setStatus(e?.message);
             setpuzzleMadnessDepositState("failDeposit");
             console.log(e);
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setpuzzleMadnessDepositState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -693,6 +724,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setDragonBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setDragonBundleState("initial");
+          }, 3000);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -707,6 +743,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setDragonBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setDragonBundleState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -729,6 +770,11 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.message);
             setDragonBundleState("fail");
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setDragonBundleState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -777,6 +823,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setDragonDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setDragonDepositState("initial");
+          }, 3000);
         });
       handleRefreshCountdownDragon();
     } else if (window.WALLET_TYPE === "binance") {
@@ -818,6 +869,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setDragonDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setDragonDepositState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -844,6 +900,11 @@ const NewEvents = ({
             setStatus(e?.message);
             setDragonDepositState("failDeposit");
             console.log(e);
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setDragonDepositState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -1032,6 +1093,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBearBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBearBundleState("initial");
+          }, 3000);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -1046,6 +1112,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBearBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBearBundleState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1068,6 +1139,11 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.message);
             setBearBundleState("fail");
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBearBundleState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -1116,6 +1192,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setBearDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBearDepositState("initial");
+          }, 3000);
         });
       handleRefreshCountdownBear();
     } else if (window.WALLET_TYPE === "binance") {
@@ -1157,6 +1238,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setBearDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBearDepositState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1182,6 +1268,11 @@ const NewEvents = ({
             setStatus(e?.message);
             setBearDepositState("failDeposit");
             console.log(e);
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBearDepositState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -1369,6 +1460,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBeastBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBeastBundleState("initial");
+          }, 3000);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -1383,6 +1479,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBeastBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBeastBundleState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1390,6 +1491,11 @@ const NewEvents = ({
         setBeastBundleState("deposit");
         setStatusColor("#00FECF");
         setBeastShowApproval(false);
+        setTimeout(() => {
+          setStatusColor("#00FECF");
+          setStatus("");
+          setBeastBundleState("initial");
+        }, 3000);
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -1405,6 +1511,11 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.message);
             setBeastBundleState("fail");
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBeastBundleState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -1453,6 +1564,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setBeastDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBeastDepositState("initial");
+          }, 3000);
         });
       handleRefreshCountdownBeast();
     } else if (window.WALLET_TYPE === "binance") {
@@ -1494,6 +1610,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setBeastDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBeastDepositState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1519,6 +1640,11 @@ const NewEvents = ({
             setStatus(e?.message);
             setBeastDepositState("failDeposit");
             console.log(e);
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBeastDepositState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -1706,6 +1832,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setEagleBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setEagleBundleState("initial");
+          }, 3000);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -1720,6 +1851,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setEagleBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setEagleBundleState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1742,6 +1878,11 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.message);
             setEagleBundleState("fail");
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setEagleBundleState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -1790,6 +1931,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setEagleDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setEagleDepositState("initial");
+          }, 3000);
         });
       handleRefreshCountdownEagle();
     } else if (window.WALLET_TYPE === "binance") {
@@ -1831,6 +1977,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setEagleDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setEagleDepositState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1856,6 +2007,11 @@ const NewEvents = ({
             setStatus(e?.message);
             setEagleDepositState("failDeposit");
             console.log(e);
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setEagleDepositState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -2045,6 +2201,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setScorpionBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setScorpionBundleState("initial");
+          }, 3000);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -2059,6 +2220,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setScorpionBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setScorpionBundleState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -2081,6 +2247,11 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.message);
             setScorpionBundleState("fail");
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setScorpionBundleState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -2130,6 +2301,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setScorpionDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setScorpionDepositState("initial");
+          }, 3000);
         });
       handleRefreshCountdownScorpion();
     } else if (window.WALLET_TYPE === "binance") {
@@ -2171,6 +2347,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setScorpionDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setScorpionDepositState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -2196,6 +2377,11 @@ const NewEvents = ({
             setStatus(e?.message);
             setScorpionDepositState("failDeposit");
             console.log(e);
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setScorpionDepositState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -2384,6 +2570,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setCyclopsBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setCyclopsBundleState("initial");
+          }, 3000);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -2398,6 +2589,11 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setCyclopsBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setCyclopsBundleState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -2420,6 +2616,11 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.message);
             setCyclopsBundleState("fail");
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setCyclopsBundleState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -2469,6 +2670,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setCyclopsDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setCyclopsDepositState("initial");
+          }, 3000);
         });
       handleRefreshCountdownCyclops();
     } else if (window.WALLET_TYPE === "binance") {
@@ -2510,6 +2716,11 @@ const NewEvents = ({
           setStatus(e?.message);
           setCyclopsDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setCyclopsDepositState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -2535,6 +2746,11 @@ const NewEvents = ({
             setStatus(e?.message);
             setCyclopsDepositState("failDeposit");
             console.log(e);
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setCyclopsDepositState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -3159,7 +3375,7 @@ const NewEvents = ({
       html.classList.remove("hidescroll");
     }
   }, [showPopup]);
-
+  console.log(status);
   return (
     <>
       <div

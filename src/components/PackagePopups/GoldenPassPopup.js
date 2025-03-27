@@ -150,6 +150,11 @@ const GoldenPassPopup = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBundleState("initial");
+          }, 3000);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -185,6 +190,11 @@ const GoldenPassPopup = ({
             setStatusColor("#FE7A00");
             setStatus(e?.message);
             setBundleState("fail");
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBundleState("initial");
+            }, 3000);
           });
 
         if (result) {
@@ -232,6 +242,12 @@ const GoldenPassPopup = ({
           setStatus(e?.message);
           setDepositState("failDeposit");
           console.log(e);
+
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setDepositState("initial");
+          }, 3000);
         });
       handleRefreshCountdown();
     } else if (window.WALLET_TYPE === "binance") {
@@ -263,6 +279,11 @@ const GoldenPassPopup = ({
           setStatus(e?.message);
           setDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setDepositState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -289,6 +310,11 @@ const GoldenPassPopup = ({
             setStatus(e?.message);
             setDepositState("failDeposit");
             console.log(e);
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setDepositState("initial");
+            }, 3000);
           });
 
         if (result) {
