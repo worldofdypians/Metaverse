@@ -385,13 +385,13 @@ const chainAreas = [
       ],
     ],
     events: [
-      {
+     
+    ],
+    pastEvents: [ {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    pastEvents: [],
+      },],
     socials: [
       {
         link: "https://x.com/Immutable",
@@ -555,13 +555,13 @@ const chainAreas = [
       ],
     ],
     events: [
-      {
+   
+    ],
+    pastEvents: [   {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    pastEvents: [],
+      },],
     socials: [
       {
         link: "https://x.com/midle_official",
@@ -608,7 +608,11 @@ const chainAreas = [
         [-0.06806908436765445, 0.08490800857543945],
       ],
     ],
-    events: [],
+    events: [{
+      title: "Treasure Hunt",
+      image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      link: "/account/challenges/treasure-hunt",
+    }],
     pastEvents: [],
     socials: [
       {
@@ -756,13 +760,13 @@ const chainAreas = [
       ],
     ],
     events: [
-      {
+      
+    ],
+    pastEvents: [{
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    pastEvents: [],
+      },],
     socials: [
       {
         link: "https://x.com/easy2stake",
@@ -875,13 +879,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-      {
+      
+    ],
+    pastEvents: [{
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
-      },
-    ],
-    pastEvents: [],
+      },],
     socials: [
       {
         link: "https://x.com/BuildOnViction",

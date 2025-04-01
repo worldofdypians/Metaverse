@@ -162,7 +162,8 @@ function Dashboard({
   chainlinkEarnUsd,
   isTokenExpired,
   listedNFTS,
-  mykucoinNFTs
+  mykucoinNFTs,
+  kucoinEarnUsd
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -9014,11 +9015,8 @@ function Dashboard({
                 Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
-                Number(immutableEarnUsd) +
-                Number(victionEarnUsd) +
                 Number(baseEarnUSD) +
-                Number(easy2StakeEarnUsd) +
-                Number(midleEarnUsd) +
+                Number(kucoinEarnUsd)+
                 Number(taikoEarnUsd) +
                 Number(skaleEarnUsd) +
                 Number(coingeckoEarnUsd) +
@@ -9180,6 +9178,7 @@ function Dashboard({
             genesisRank2={genesisRank2}
             cookieEarnUsd={cookieEarnUsd}
             baseEarnUSD={baseEarnUSD}
+            kucoinEarnUsd={kucoinEarnUsd}
             easy2StakeEarnUsd={easy2StakeEarnUsd}
             midleEarnUsd={midleEarnUsd}
             coingeckoEarnUsd={coingeckoEarnUsd}
@@ -9640,10 +9639,12 @@ function Dashboard({
             onCancel={() => {
               setshowSyncModal(false);
               onCloseSync();
+              setsyncStatus('initial');
             }}
             onclose={() => {
               setshowSyncModal(false);
               onCloseSync();
+              setsyncStatus('initial');
             }}
             open={showSyncModal === true || showSync === true}
             onConfirm={handleSync}
@@ -9841,6 +9842,7 @@ function Dashboard({
                 genesisRank2={genesisRank2}
                 cookieEarnUsd={cookieEarnUsd}
                 baseEarnUSD={baseEarnUSD}
+                kucoinEarnUsd={kucoinEarnUsd}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 coingeckoEarnUsd={coingeckoEarnUsd}
