@@ -781,6 +781,11 @@ function App() {
   const [midleEarnToken, setMidleEarnToken] = useState(0);
   const [midlePoints, setMidlePoints] = useState(0);
 
+  const [kucoinEarnUsd, setKucoinEarnUsd] = useState(0);
+  const [kucoinEarnToken, setKucoinEarnToken] = useState(0);
+  const [kucoinPoints, setKucoinPoints] = useState(0);
+  const [kucoinPrice, setKucoinPrice] = useState(0);
+
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
   const [mantaPrice, setMantaPrice] = useState(0);
   const [mantaEarnToken, setMantaEarnToken] = useState(0);
@@ -1129,6 +1134,10 @@ function App() {
             return obj.id === "chainlinkEvent10";
           });
 
+          const kucoinEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "kucoin";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -1155,9 +1164,9 @@ function App() {
           }
 
           if (immutableEvent && immutableEvent[0]) {
-            if (immutableEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (immutableEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               immutableEvent[0].reward.earn.total /
@@ -1169,10 +1178,25 @@ function App() {
             setImmutableEarnToken(userEarnedusd / immutablePrice);
           }
 
-          if (easy2stakeEvent && easy2stakeEvent[0]) {
-            if (easy2stakeEvent[0].reward.earn.totalPoints > 0) {
+          if (kucoinEvent && kucoinEvent[0]) {
+            if (kucoinEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
             }
+
+            const userEarnedusd =
+              kucoinEvent[0].reward.earn.total /
+              kucoinEvent[0].reward.earn.multiplier;
+            const pointskucoin = kucoinEvent[0].reward.earn.totalPoints;
+
+            setKucoinPoints(pointskucoin);
+            setKucoinEarnUsd(userEarnedusd);
+            setKucoinEarnToken(userEarnedusd / kucoinPrice);
+          }
+
+          if (easy2stakeEvent && easy2stakeEvent[0]) {
+            // if (easy2stakeEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
             const userEarnedusd =
               easy2stakeEvent[0].reward.earn.total /
               easy2stakeEvent[0].reward.earn.multiplier;
@@ -1198,9 +1222,9 @@ function App() {
           }
 
           if (midleEvent && midleEvent[0]) {
-            if (midleEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (midleEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               midleEvent[0].reward.earn.total /
@@ -1276,9 +1300,9 @@ function App() {
           }
 
           if (victionEvent && victionEvent[0]) {
-            if (victionEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (victionEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               victionEvent[0].reward.earn.total /
@@ -1903,6 +1927,16 @@ function App() {
       .then((obj) => {
         if (obj.data) {
           setDogePrice(obj.data.price);
+        }
+      });
+  };
+
+  const fetchKucoinCoinPrice = async () => {
+    await axios
+      .get("https://api.worldofdypians.com/api/price/kucoin-shares")
+      .then((obj) => {
+        if (obj.data) {
+          setKucoinPrice(obj.data.price);
         }
       });
   };
@@ -3770,6 +3804,44 @@ function App() {
       },
     },
     {
+      title: "KuCoin",
+      logo: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
+      eventStatus: "Live",
+      rewardType: "KCS",
+      rewardAmount: "$20,000",
+      location: [-0.06778661442929296, 0.08464515209198],
+      image: "kucoinBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in KCS Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 01, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/kucoinBg.png",
+      userEarnUsd: kucoinEarnUsd,
+      userEarnCrypto: kucoinEarnToken,
+      userEarnPoints: kucoinPoints,
+      popupInfo: {
+        title: "KuCoin",
+        chain: "opBNB Chain",
+        linkState: "kucoin",
+        rewards: "KCS",
+        status: "Live",
+        id: "event29",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in KCS Rewards",
+        eventDuration: kucoinLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Apr 01, 2025",
+      },
+    },
+    {
       title: "Taiko",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
       eventStatus: "Live",
@@ -3847,7 +3919,7 @@ function App() {
     {
       title: "Immutable",
       logo: "https://cdn.worldofdypians.com/wod/immutable.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "IMX",
       rewardAmount: "$20,000",
       location: [-0.05935191046684262, 0.03785133361816407],
@@ -3871,7 +3943,7 @@ function App() {
         chain: "Immutable",
         linkState: "immutable",
         rewards: "IMX",
-        status: "Live",
+        status: "Expired",
         id: "event15",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in IMX Rewards",
@@ -3996,7 +4068,7 @@ function App() {
     {
       title: "Easy2Stake",
       logo: "https://cdn.worldofdypians.com/wod/easy2stakeLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.05935191046684262, 0.03785133361816407],
@@ -4020,7 +4092,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "easy2stake",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event26",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4036,7 +4108,7 @@ function App() {
     {
       title: "Midle",
       logo: "https://cdn.worldofdypians.com/wod/midle.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.05935191046684262, 0.03785133361816407],
@@ -4058,7 +4130,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "midle",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event27",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4109,48 +4181,11 @@ function App() {
         eventDate: "Aug 26, 2024",
       },
     },
-    {
-      title: "KuCoin",
-      logo: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
-      eventStatus: "Coming Soon",
-      rewardType: "KCS",
-      rewardAmount: "$20,000",
-      location: [-0.06778661442929296, 0.08464515209198],
-      image: "kucoinBanner.png",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
 
-      marker: markers.treasureMarker,
-      totalRewards: "$20,000 in KCS Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Apr 01, 2025",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/kucoinBg.png",
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
-      popupInfo: {
-        title: "KuCoin",
-        chain: "opBNB Chain",
-        linkState: "kucoin",
-        rewards: "KCS",
-        status: "Coming Soon",
-        id: "event29",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in KCS Rewards",
-        eventDuration: kucoinLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Apr 01, 2025",
-      },
-    },
     {
       title: "VICTION",
       logo: "https://cdn.worldofdypians.com/wod/viction.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
@@ -4169,7 +4204,7 @@ function App() {
         chain: "VICTION Chain",
         linkState: "viction",
         rewards: "VIC",
-        status: "Live",
+        status: "Expired",
         id: "event14",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in VIC Rewards",
@@ -5137,6 +5172,7 @@ function App() {
     getPriceDYP();
     fetchDogeCoinPrice();
     fetchWodPrice();
+    fetchKucoinCoinPrice();
 
     checkNetworkId();
   }, []);
@@ -5607,6 +5643,7 @@ function App() {
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
+                kucoinEarnUsd={kucoinEarnUsd}
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
@@ -5687,6 +5724,7 @@ function App() {
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
+                kucoinEarnUsd={kucoinEarnUsd}
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
@@ -6203,6 +6241,7 @@ function App() {
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 coingeckoEarnUsd={userEarnUsd}
+                kucoinEarnUsd={kucoinEarnUsd}
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}

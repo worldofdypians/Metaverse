@@ -8,11 +8,11 @@ const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
 const [slicedEvents, setSlicedEvents] = useState([])
 
 useEffect(() => {
- if(page === 1 && eventDuration === "Live"){
+ if(page === 1){
   setSlicedEvents(events .filter((obj) => {
     return obj.eventStatus === eventDuration;
   }).slice(0, 8))
- }else if(page === 2 && eventDuration === "Live"){
+ }else if(page === 2){
   setSlicedEvents(events.filter((obj) => {
     return obj.eventStatus === eventDuration;
   }).slice(8, events.length))
