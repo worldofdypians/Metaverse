@@ -489,7 +489,6 @@ function App() {
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
   const [myNFTs, setMyNFTs] = useState([]);
-  const [count2, setCount2] = useState(0);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState();
@@ -2125,7 +2124,7 @@ function App() {
   const checkNetworkId = async () => {
     if (window.WALLET_TYPE === "matchId") {
       if (chain && chain?.chainId !== null) {
-        setChainId(chain.chainId);
+        setChainId(chain?.chainId ?? 56);
       }
     } else if (
       window.ethereum &&
@@ -2134,13 +2133,16 @@ function App() {
       window.WALLET_TYPE !== "matchId" &&
       window.WALLET_TYPE !== ""
     ) {
+      // console.log("window.ethereumwindow.ethereum", window.ethereum);
       window.ethereum
-        .request({ method: "net_version" })
+        .request({ method: "eth_chainId" })
         .then((data) => {
           setChainId(parseInt(data));
         })
         .catch((e) => {
           console.log(e);
+          window.alertify.message((e?.message).toString());
+          setChainId(56);
         });
     } else if (
       window.ethereum &&
@@ -5283,13 +5285,6 @@ function App() {
   }, [coinbase, isConnected, authToken, email, userWallet]);
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      setCount2(0);
-      return () => clearInterval(interval);
-    }, 300000);
-  }, [count2]);
-
-  useEffect(() => {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     fetchSocialData();
@@ -5613,7 +5608,7 @@ function App() {
           {/* <Route
             exact
             path="/explorer"
-            element={<Explorer count={count2} setCount={setCount2} />}
+            element={<Explorer />}
           /> */}
           {/* <Route exact path="/stake" element={<NftMinting />} /> */}
           <Route exact path="/contact-us" element={<PartnerForm />} />
@@ -5921,8 +5916,6 @@ function App() {
             path="/land"
             element={
               <Land
-                count={count2}
-                setCount={setCount2}
                 handleConnectWallet={handleConnectWallet}
                 coinbase={coinbase}
                 isConnected={isConnected}
@@ -5948,7 +5941,6 @@ function App() {
             element={
               <Marketplace
                 totalSupply={totalSupply}
-                count={count2}
                 wodHolders={wodHolders}
                 totalVolumeNew={totalVolumeNew}
                 ethTokenData={ethTokenData}

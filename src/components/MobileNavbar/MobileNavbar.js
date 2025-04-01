@@ -225,9 +225,8 @@ const MobileNavbar = ({
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                           : "https://cdn.worldofdypians.com/wod/error.svg"
                       }
-                      height={16}
-                      width={16}
                       alt=""
+                      className="chain-logo-active"
                     />
                     <span className="change-chain-text d-none d-lg-flex">
                       src=
@@ -274,6 +273,7 @@ const MobileNavbar = ({
                     <img
                       src={"https://cdn.worldofdypians.com/wod/eth.svg"}
                       alt=""
+                      className="chain-logo"
                     />
                     Ethereum
                   </Dropdown.Item>
@@ -282,6 +282,7 @@ const MobileNavbar = ({
                   <img
                     src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                     alt=""
+                    className="chain-logo"
                   />
                   BNB Chain
                 </Dropdown.Item>
@@ -292,9 +293,8 @@ const MobileNavbar = ({
                         src={
                           "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                         }
-                        width={20}
-                        height={20}
                         alt=""
+                        className="chain-logo"
                       />
                       Matchain
                     </Dropdown.Item>
@@ -305,9 +305,8 @@ const MobileNavbar = ({
                     <Dropdown.Item onClick={() => switchNetwork("0x531", 1329)}>
                       <img
                         src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
-                        width={20}
-                        height={20}
                         alt=""
+                        className="chain-logo"
                       />
                       SEI
                     </Dropdown.Item>
@@ -326,6 +325,7 @@ const MobileNavbar = ({
                     <img
                       src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                       alt=""
+                      className="chain-logo"
                     />
                     opBNB Chain
                   </Dropdown.Item>
@@ -338,8 +338,7 @@ const MobileNavbar = ({
                     >
                       <img
                         src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
-                        width={20}
-                        height={20}
+                        className="chain-logo"
                         alt=""
                       />
                       Taiko
@@ -352,8 +351,7 @@ const MobileNavbar = ({
                     <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
                       <img
                         src={"https://cdn.worldofdypians.com/wod/core.svg"}
-                        width={20}
-                        height={20}
+                        className="chain-logo"
                         alt=""
                       />
                       CORE
@@ -368,6 +366,7 @@ const MobileNavbar = ({
                       <img
                         src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
                         alt=""
+                        className="chain-logo"
                       />
                       SKALE
                     </Dropdown.Item>
@@ -377,6 +376,7 @@ const MobileNavbar = ({
                     <img
                       src={"https://cdn.worldofdypians.com/wod/confluxIcon.svg"}
                       alt=""
+                      className="chain-logo"
                     />
                     Conflux
                   </Dropdown.Item>
@@ -389,8 +389,7 @@ const MobileNavbar = ({
                     >
                       <img
                         src={"https://cdn.worldofdypians.com/wod/immutable.svg"}
-                        width={20}
-                        height={20}
+                        className="chain-logo"
                         alt=""
                       />
                       Immutable
@@ -401,6 +400,7 @@ const MobileNavbar = ({
                     <img
                       src={"https://cdn.worldofdypians.com/wod/base.svg"}
                       alt=""
+                      className="chain-logo"
                     />
                     Base
                   </Dropdown.Item>
@@ -415,8 +415,7 @@ const MobileNavbar = ({
                     <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
                       <img
                         src={"https://cdn.worldofdypians.com/wod/viction.svg"}
-                        width={20}
-                        height={20}
+                        className="chain-logo"
                         alt=""
                       />
                       Viction
@@ -427,6 +426,7 @@ const MobileNavbar = ({
                     <img
                       src={"https://cdn.worldofdypians.com/wod/avaxIcon.svg"}
                       alt=""
+                      className="chain-logo"
                     />
                     Avalanche
                   </Dropdown.Item>

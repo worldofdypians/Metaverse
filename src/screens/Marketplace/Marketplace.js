@@ -28,8 +28,6 @@ const Marketplace = ({
   ethTokenData,
   totalTx,
   totalvolume,
-  count,
-  setCount,
   totalSupply,
   binanceW3WProvider,
   chainId,
@@ -84,7 +82,6 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
-  const [activePopup, setActivePopup] = useState(false);
 
   const dummyData = [
     {
@@ -865,14 +862,6 @@ const Marketplace = ({
     cutLength();
   }, [windowSize.width]);
 
-  useEffect(() => {
-    {
-      count === 0 &&
-        setTimeout(() => {
-          setActivePopup(true);
-        }, 500);
-    }
-  }, [count]);
 
   return (
     <div
