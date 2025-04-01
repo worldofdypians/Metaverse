@@ -9,11 +9,10 @@
 
 .oryn-gif {
   // width: 50%;
-  // @media screen and (max-width: 1000px) {
-  //   width: 60%;
-  // }
-  width: fit-content;
   height: 290px;
+  @media screen and (max-width: 767px) {
+    width: 164px;
+  }
 }
 
 .oryn-chat-title {
@@ -28,45 +27,43 @@
   pointer-events: none;
   transition: all 1s;
 
-  h6{
+  h6 {
     color: #ffffff;
     font-size: 14px;
   }
 }
 
-.oryn-chat-active{
+.oryn-chat-active {
   opacity: 1 !important;
   pointer-events: auto;
 }
 
-
 .chat-fang {
-    width: 20px;
-    height: 25px;
-    background-color: rgba(8, 11, 42, 0.8);
-    position: absolute;
-    bottom: -25px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    clip-path: polygon(50% 0%, 100% 100%, 0 0);
-  }
+  width: 20px;
+  height: 25px;
+  background-color: rgba(8, 11, 42, 0.8);
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  clip-path: polygon(50% 0%, 100% 100%, 0 0);
+}
 
-  .oryn-gif {
-    transition: opacity 0.5s ease-in-out;
-  }
-  
-  .fade-in {
+.oryn-gif {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    animation: fadeIn 1s forwards;
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  to {
+    opacity: 1;
   }
-  
+}

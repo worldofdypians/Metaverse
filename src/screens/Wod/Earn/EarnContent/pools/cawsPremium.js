@@ -534,43 +534,41 @@ const CawsDetailsPremium = ({
               <div className="d-flex flex-column gap-2 justify-content-between">
                 <div className="d-flex align-items-center justify-content-between gap-2">
                   <button
-                    className={`btn w-100 connectbtn  ${
-                      (mystakes.length === 4 || totalStakes === 200) &&
-                      "disabled-btn"
-                    }
-                    ${
-                      (!isPremium || chainId !== "1") && isConnected
-                        ? "fail-button"
-                        : "connectbtn"
-                    } d-flex justify-content-center align-items-center`}
-                    disabled={
-                      isConnected &&
-                      (mystakes.length === 4 || totalStakes === 200)
-                    }
-                    onClick={() => {
-                      manageState();
-                    }}
+                    className={`btn w-100 disabled-btn 
+                     d-flex justify-content-center align-items-center`}
+                    disabled={true}
                   >
-                    {isConnected && chainId === "1" && isPremium
-                      ? "Select NFTs"
-                      : !isConnected
-                      ? "Connect Wallet"
-                      : isConnected && chainId !== "1"
-                      ? "Switch to Ethereum"
-                      : "Become Prime"}
+                    Select NFTs
                   </button>
                 </div>
               </div>
             </div>
+            {!isConnected && (
+              <button
+                className={`btn w-100 connectbtn  d-flex justify-content-center align-items-center`}
+                onClick={() => {
+                  handleConnection();
+                }}
+              >
+                Connect Wallet
+              </button>
+            )}
+            {isConnected && chainId !== "1" && (
+              <button
+                className={`btn w-100 fail-button  d-flex justify-content-center align-items-center`}
+                onClick={() => {
+                  handleEthPool();
+                }}
+              >
+                Switch to Ethereum
+              </button>
+            )}
             {mystakes.length > 0 && <div className="stake-separator"></div>}
             {mystakes.length > 0 && (
               <div
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-                }  ${
-                  (chainId !== "1" || expired === true || !isPremium) &&
-                  "blurrypool"
-                } `}
+                }  ${(chainId !== "1" || !isPremium) && "blurrypool"} `}
               >
                 <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
                   <h6
@@ -638,10 +636,10 @@ const CawsDetailsPremium = ({
                     >
                       {claimLoading ? (
                         <div
-                          className="spinner-border spinner-border-sm text-light"
+                          class="spinner-border spinner-border-sm text-light"
                           role="status"
                         >
-                          <span className="visually-hidden">Loading...</span>
+                          <span class="visually-hidden">Loading...</span>
                         </div>
                       ) : claimStatus === "failed" ? (
                         <>Failed</>
@@ -693,7 +691,7 @@ const CawsDetailsPremium = ({
               </div>
             )}
             <div
-              className={`info-pool-wrapper2 p-1 d-flex ${
+              className={`info-pool-wrapper2 mt-2 p-1 d-flex ${
                 mystakes.length > 0
                   ? "justify-content-center"
                   : "justify-content-center"

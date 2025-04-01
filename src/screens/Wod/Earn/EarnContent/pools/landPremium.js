@@ -561,7 +561,7 @@ const LandDetailsPremium = ({
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
                 }  ${
-                  (chainId !== "1" || expired === true || !isPremium) &&
+                  (chainId !== "1" || !isPremium) &&
                   "blurrypool"
                 } `}
               >
@@ -795,7 +795,7 @@ const LandDetailsPremium = ({
                   </div>
                   <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Contract End date:</span>
-                    <h6 className="stats-card-content">27 Jul 2025</h6>
+                    <h6 className="stats-card-content">24 Mar 2025</h6>
                   </div>
                   <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Contract Address:</span>
