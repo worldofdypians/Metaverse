@@ -3375,7 +3375,7 @@ const NewEvents = ({
       html.classList.remove("hidescroll");
     }
   }, [showPopup]);
-  console.log(status);
+
   return (
     <>
       <div
