@@ -1324,7 +1324,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${showVerify && "complete"
+                                  className={`col-3 li ${showVerify && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1332,7 +1332,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${playerCreation && "complete"
+                                  className={`col-3 li ${playerCreation && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1340,7 +1340,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-2 li ${linkWallet && "complete"}`}
+                                  className={`col-2 li ${linkWallet && "complete"}`}
                                   style={{ width: 0 }}
                                 >
                                   <div className="status">

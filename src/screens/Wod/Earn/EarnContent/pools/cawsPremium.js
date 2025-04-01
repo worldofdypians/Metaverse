@@ -76,7 +76,7 @@ const CawsDetailsPremium = ({
     const address = coinbase;
     const stakeAdr = await window.config.nft_caws_premiumstake_address;
 
-    if (address !== null) {
+    if (address !== null && window.WALLET_TYPE !== "matchId") {
       const result = await window.nft
         .checkapproveStake(address, stakeAdr)
         .then((data) => {
@@ -166,7 +166,7 @@ const CawsDetailsPremium = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let myStakes = await getStakesIds();
       let staking_contract = await window.getContractCawsPremiumNFT(
         "CAWSPREMIUM"
@@ -222,6 +222,8 @@ const CawsDetailsPremium = ({
         setEthRewards(0);
         window.alertify.message("Claimed All Rewards!");
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     }
   };
 
@@ -273,13 +275,17 @@ const CawsDetailsPremium = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x1")
-      .then(() => {
-        handleSwitchNetwork("1");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.WALLET_TYPE !== "matchId") {
+      await handleSwitchNetworkhook("0x1")
+        .then(() => {
+          handleSwitchNetwork("1");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    }
   };
 
   const handleNavigateToPlans = () => {
@@ -308,32 +314,34 @@ const CawsDetailsPremium = ({
       setHide("staked");
     } else if (!isConnected) {
       handleConnection();
-    } else if (isConnected && chainId !== "1") {
-      handleEthPool();
     } else if (isConnected && !isPremium && chainId === "1") {
       handleNavigateToPlans();
+    } else if (isConnected && chainId !== "1") {
+      handleEthPool();
     }
   };
 
   useEffect(() => {
-    totalStakedNft();
-  }, [count, newStakes]);
+    if (window.WALLET_TYPE !== "matchId") {
+      totalStakedNft();
+    }
+  }, [count, newStakes, window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
-      myNft().then();
-      myStakes().then();
-      checkApproval().then();
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+      myNft();
+      myStakes();
+      checkApproval();
       handleClaimAll();
     }
-  }, [isConnected, chainId, newStakes, count]);
+  }, [isConnected, chainId, count, newStakes, window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
-      checkApproval().then();
-      calculateCountdown().then();
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+      checkApproval();
+      calculateCountdown();
     }
-  }, [isConnected, chainId, count2]);
+  }, [isConnected, chainId, count2, window.WALLET_TYPE]);
 
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);

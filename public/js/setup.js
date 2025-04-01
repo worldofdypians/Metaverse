@@ -108,7 +108,7 @@ window.config = {
   conflux_endpoint: "https://evm.confluxrpc.com/",
   base_endpoint: "https://mainnet.base.org",
   opbnb_endpoint: "https://opbnb.publicnode.com",
-  core_endpoint: "https://core.drpc.org",
+  core_endpoint: "https://1rpc.io/core",
   viction_endpoint: "https://rpc.viction.xyz",
   sei_endpoint: "https://evm-rpc.sei-apis.com",
   immutable_endpoint: "https://rpc.immutable.com",
@@ -3984,8 +3984,8 @@ async function myNftListContract(address) {
 }
 
 async function myNftListContractCCIP(address, nftAddress) {
-  window.web3 = new Web3(window.ethereum);
-  let nft_contract = new window.web3.eth.Contract(
+   
+  let nft_contract = new window.bscWeb3.eth.Contract(
     window.CAWS_CCIP_ABI,
     nftAddress
   );
@@ -33805,6 +33805,7 @@ async function getCoinbase() {
   if (
     window.ethereum &&
     window.WALLET_TYPE !== "binance" &&
+    window.WALLET_TYPE !== "matchId" &&
     window.WALLET_TYPE !== ""
   ) {
     if (window.WALLET_TYPE == "coin98") {
