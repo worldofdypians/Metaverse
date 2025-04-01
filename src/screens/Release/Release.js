@@ -198,7 +198,7 @@ const Release = ({
           })
           .catch((e) => {
             console.error(e);
-            window.alertify.error(e?.message);
+            window.alertify.error(e?.shortMessage);
             setclaimStatus("failed");
             setclaimLoading(false);
             setTimeout(() => {

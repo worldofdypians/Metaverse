@@ -3375,6 +3375,13 @@ function App() {
           const res = await signMessage({
             message: `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`,
             account: address,
+          }).catch((e) => {
+            console.log(e);
+            setsyncStatus("error");
+            setTimeout(() => {
+              setsyncStatus("initial");
+              setshowSync(false);
+            }, 3000);
           });
 
           if (res) {

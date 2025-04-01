@@ -550,7 +550,7 @@ const StakeWodDetails2 = ({
           .catch((e) => {
             setdepositLoading(false);
             setdepositStatus("fail");
-            seterrorMsg(e?.message);
+            seterrorMsg(e?.shortMessage);
             setTimeout(() => {
               setdepositAmount("");
               setdepositStatus("initial");
@@ -682,7 +682,7 @@ const StakeWodDetails2 = ({
           .catch((e) => {
             setdepositLoading(false);
             setdepositStatus("fail");
-            seterrorMsg(e?.message);
+            seterrorMsg(e?.shortMessage);
             setTimeout(() => {
               setdepositAmount("");
               setdepositStatus("fail");
@@ -792,7 +792,7 @@ const StakeWodDetails2 = ({
           .catch((e) => {
             setwithdrawLoading(false);
             setwithdrawStatus("failed");
-            seterrorMsg3(e?.message);
+            seterrorMsg3(e?.shortMessage);
 
             setTimeout(() => {
               setwithdrawStatus("initial");
@@ -889,7 +889,7 @@ const StakeWodDetails2 = ({
           .catch((e) => {
             setclaimStatus("failed");
             setclaimLoading(false);
-            seterrorMsg2(e?.message);
+            seterrorMsg2(e?.shortMessage);
 
             setTimeout(() => {
               setclaimStatus("initial");
@@ -1074,7 +1074,7 @@ const StakeWodDetails2 = ({
           .catch((e) => {
             setreInvestStatus("failed");
             setreInvestLoading(false);
-            seterrorMsg2(e?.message);
+            seterrorMsg2(e?.shortMessage);
 
             setTimeout(() => {
               setreInvestStatus("initial");

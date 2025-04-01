@@ -1469,7 +1469,7 @@ const NewChestItem = ({
                 args: [],
               })
               .catch((e) => {
-                window.alertify.error(e?.message);
+                window.alertify.error(e?.shortMessage);
                 onChestStatus("error");
                 setTimeout(() => {
                   onChestStatus("initial");
@@ -1507,7 +1507,7 @@ const NewChestItem = ({
                 args: [],
               })
               .catch((e) => {
-                window.alertify.error(e?.message);
+                window.alertify.error(e?.shortMessage);
                 onChestStatus("error");
                 setTimeout(() => {
                   onChestStatus("initial");
@@ -1764,7 +1764,7 @@ const NewChestItem = ({
                 args: [],
               })
               .catch((e) => {
-                window.alertify.error(e?.message);
+                window.alertify.error(e?.shortMessage);
                 onChestStatus("error");
                 setTimeout(() => {
                   onChestStatus("initial");
@@ -1797,7 +1797,7 @@ const NewChestItem = ({
                 args: [],
               })
               .catch((e) => {
-                window.alertify.error(e?.message);
+                window.alertify.error(e?.shortMessage);
                 onChestStatus("error");
                 setTimeout(() => {
                   onChestStatus("initial");

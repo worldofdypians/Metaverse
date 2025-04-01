@@ -986,10 +986,10 @@ const GetPremiumPopup = ({
                 ],
               })
               .catch((e) => {
-                setstatus(e?.message);
+                setstatus(e?.shortMessage);
                 setloadspinner(false);
                 setapproveStatus("fail");
-                window.alertify.error(e?.message);
+                window.alertify.error(e?.shortMessage);
                 setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
@@ -1030,10 +1030,10 @@ const GetPremiumPopup = ({
                 args: [bnbsubscribeAddress, price],
               })
               .catch((e) => {
-                setstatus(e?.message);
+                setstatus(e?.shortMessage);
                 setloadspinner(false);
                 setapproveStatus("fail");
-                window.alertify.error(e?.message);
+                window.alertify.error(e?.shortMessage);
                 setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
@@ -1261,10 +1261,10 @@ const GetPremiumPopup = ({
                 ],
               })
               .catch((e) => {
-                setstatus(e?.message);
+                setstatus(e?.shortMessage);
                 setloadspinner(false);
                 setapproveStatus("fail");
-                window.alertify.error(e?.message);
+                window.alertify.error(e?.shortMessage);
                 setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
@@ -1300,10 +1300,10 @@ const GetPremiumPopup = ({
                 args: [matsubscribeAddress, price],
               })
               .catch((e) => {
-                setstatus(e?.message);
+                setstatus(e?.shortMessage);
                 setloadspinner(false);
                 setapproveStatus("fail");
-                window.alertify.error(e?.message);
+                window.alertify.error(e?.shortMessage);
                 setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
@@ -1455,10 +1455,10 @@ const GetPremiumPopup = ({
               ],
             })
             .catch((e) => {
-              setstatus(e?.message);
+              setstatus(e?.shortMessage);
               setloadspinner(false);
               setapproveStatus("fail");
-              window.alertify.error(e?.message);
+              window.alertify.error(e?.shortMessage);
               setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
@@ -2337,8 +2337,8 @@ const GetPremiumPopup = ({
               .catch((e) => {
                 setloadspinnerSub(false);
                 setapproveStatus("failsubscribe");
-                setstatus(e?.message);
-                window.alertify.error(e?.message);
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
 
                 setTimeout(() => {
                   setloadspinnerSub(false);
@@ -2390,8 +2390,8 @@ const GetPremiumPopup = ({
               .catch((e) => {
                 setloadspinnerSub(false);
                 setapproveStatus("failsubscribe");
-                setstatus(e?.message);
-                window.alertify.error(e?.message);
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
                 setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
@@ -2433,8 +2433,8 @@ const GetPremiumPopup = ({
               .catch((e) => {
                 setloadspinnerSub(false);
                 setapproveStatus("failsubscribe");
-                setstatus(e?.message);
-                window.alertify.error(e?.message);
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
                 setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
@@ -2483,8 +2483,8 @@ const GetPremiumPopup = ({
               .catch(() => {
                 setloadspinnerSub(false);
                 setapproveStatus("failsubscribe");
-                setstatus(e?.message);
-                window.alertify.error(e?.message);
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
 
                 setTimeout(() => {
                   setloadspinnerSub(false);
@@ -2527,8 +2527,8 @@ const GetPremiumPopup = ({
               .catch(() => {
                 setloadspinnerSub(false);
                 setapproveStatus("failsubscribe");
-                setstatus(e?.message);
-                window.alertify.error(e?.message);
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
                 setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);

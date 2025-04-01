@@ -707,7 +707,7 @@ const Whitelist = ({
           })
           .catch((e) => {
             console.error(e);
-            window.alertify.error(e?.message);
+            window.alertify.error(e?.shortMessage);
 
             setclaimStatus("failed");
             setclaimLoading(false);
@@ -866,7 +866,7 @@ const Whitelist = ({
           })
           .catch((e) => {
             console.error(e);
-            window.alertify.error(e?.message);
+            window.alertify.error(e?.shortMessage);
 
             setclaimStatusOTC("failed");
             setclaimLoadingOTC(false);
@@ -1007,7 +1007,7 @@ const Whitelist = ({
           })
           .catch((e) => {
             console.error(e);
-            window.alertify.error(e?.message);
+            window.alertify.error(e?.shortMessage);
 
             setclaimStatusPrivate("failed");
             setclaimLoadingPrivate(false);
@@ -1141,7 +1141,7 @@ const Whitelist = ({
           })
           .catch((e) => {
             console.error(e);
-            window.alertify.error(e?.message);
+            window.alertify.error(e?.shortMessage);
 
             setclaimStatusKol("failed");
             setclaimLoadingKol(false);
@@ -1280,7 +1280,7 @@ const Whitelist = ({
           })
           .catch((e) => {
             console.error(e);
-            window.alertify.error(e?.message);
+            window.alertify.error(e?.shortMessage);
 
             setclaimStatusAdvisors("failed");
             setclaimLoadingAdvisors(false);

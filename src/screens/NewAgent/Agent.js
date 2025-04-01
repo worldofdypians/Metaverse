@@ -208,7 +208,7 @@ const Agent = ({
           .catch((e) => {
             setdepositLoading(false);
             setdepositStatus("fail");
-            seterrorMsg(e?.message);
+            seterrorMsg(e?.shortMessage);
             console.error(e);
             setTimeout(() => {
               setdepositAmount("");
@@ -330,7 +330,7 @@ const Agent = ({
           .catch((e) => {
             setdepositLoading(false);
             setdepositStatus("fail");
-            seterrorMsg(e?.message);
+            seterrorMsg(e?.shortMessage);
             setTimeout(() => {
               setdepositAmount("");
               setdepositStatus("fail");
@@ -554,7 +554,7 @@ const Agent = ({
           .catch((e) => {
             setwithdrawLoading(false);
             setwithdrawStatus("failed");
-            seterrorMsg3(e?.message);
+            seterrorMsg3(e?.shortMessage);
 
             setTimeout(() => {
               setwithdrawStatus("initial");

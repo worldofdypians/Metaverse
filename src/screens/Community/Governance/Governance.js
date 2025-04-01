@@ -194,7 +194,7 @@ const Governance = ({
             .catch((e) => {
               setgovLoading(false);
               setgovStatus("error");
-              window.alertify.error(e?.message);
+              window.alertify.error(e?.shortMessage);
               setTimeout(() => {
                 setgovStatus("initial");
               }, 5000);

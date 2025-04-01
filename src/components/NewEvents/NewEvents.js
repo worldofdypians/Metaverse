@@ -398,7 +398,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setpuzzleMadnessBundleState("fail");
             setTimeout(() => {
               setStatusColor("#00FECF");
@@ -528,7 +528,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setpuzzleMadnessDepositState("failDeposit");
             console.log(e);
             setTimeout(() => {
@@ -768,7 +768,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setDragonBundleState("fail");
             setTimeout(() => {
               setStatusColor("#00FECF");
@@ -897,7 +897,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setDragonDepositState("failDeposit");
             console.log(e);
             setTimeout(() => {
@@ -1137,7 +1137,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setBearBundleState("fail");
             setTimeout(() => {
               setStatusColor("#00FECF");
@@ -1265,7 +1265,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setBearDepositState("failDeposit");
             console.log(e);
             setTimeout(() => {
@@ -1509,7 +1509,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setBeastBundleState("fail");
             setTimeout(() => {
               setStatusColor("#00FECF");
@@ -1637,7 +1637,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setBeastDepositState("failDeposit");
             console.log(e);
             setTimeout(() => {
@@ -1876,7 +1876,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setEagleBundleState("fail");
             setTimeout(() => {
               setStatusColor("#00FECF");
@@ -2004,7 +2004,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setEagleDepositState("failDeposit");
             console.log(e);
             setTimeout(() => {
@@ -2245,7 +2245,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setScorpionBundleState("fail");
             setTimeout(() => {
               setStatusColor("#00FECF");
@@ -2374,7 +2374,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setScorpionDepositState("failDeposit");
             console.log(e);
             setTimeout(() => {
@@ -2614,7 +2614,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setCyclopsBundleState("fail");
             setTimeout(() => {
               setStatusColor("#00FECF");
@@ -2743,7 +2743,7 @@ const NewEvents = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setCyclopsDepositState("failDeposit");
             console.log(e);
             setTimeout(() => {

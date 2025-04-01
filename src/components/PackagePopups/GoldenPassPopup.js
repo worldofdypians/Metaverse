@@ -188,7 +188,7 @@ const GoldenPassPopup = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setBundleState("fail");
             setTimeout(() => {
               setStatusColor("#00FECF");
@@ -307,7 +307,7 @@ const GoldenPassPopup = ({
           })
           .catch((e) => {
             setStatusColor("#FE7A00");
-            setStatus(e?.message);
+            setStatus(e?.shortMessage);
             setDepositState("failDeposit");
             console.log(e);
             setTimeout(() => {

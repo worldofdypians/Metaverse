@@ -211,7 +211,7 @@ const GovernanceInner = ({
           .catch((e) => {
             setdepositLoading(false);
             setdepositStatus("error");
-            window.alertify.error(e?.message);
+            window.alertify.error(e?.shortMessage);
             setTimeout(() => {
               setdepositAmount(0);
               setdepositStatus("initial");
@@ -374,7 +374,7 @@ const GovernanceInner = ({
           .catch((e) => {
             setdepositLoading(false);
             setdepositStatus("error");
-            window.alertify.error(e?.message);
+            window.alertify.error(e?.shortMessage);
             setTimeout(() => {
               setdepositLoading(false);
               setdepositStatus("initial");
@@ -486,7 +486,7 @@ const GovernanceInner = ({
           .catch((e) => {
             setwithdrawLoading(false);
             setwithdrawStatus("error");
-            window.alertify.error(e?.message);
+            window.alertify.error(e?.shortMessage);
             setTimeout(() => {
               setwithdrawLoading(false);
               setwithdrawStatus("initial");
