@@ -133,47 +133,15 @@ const BnbDailyBonus = ({
   openedMatChests,
   onMatChestClaimed,
   allMatChests,
-  onConnectWallet
+  onConnectWallet,
+  walletClient,
+  publicClient,
+  network_matchain,
 }) => {
-  const numberArray = Array.from({ length: 20 }, (_, index) => ({
-    id: index + 1,
-    opened: false,
-    premium: index + 1 > 10 && !isPremium ? true : false,
-  }));
-  const cawsArray = Array.from({ length: 4 }, (_, index) => ({
-    id: index + 1,
-  }));
-
-  const rewardsRef = useRef();
-
   const html = document.querySelector("html");
 
   const bnbClaimed = claimedChests + claimedPremiumChests;
   const bnbPercentage = (bnbClaimed / 20) * 100;
-
-  const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
-  const skalePercentage = (skaleClaimed / 20) * 100;
-
-  const coreClaimed = claimedCoreChests + claimedCorePremiumChests;
-  const corePercentage = (coreClaimed / 20) * 100;
-
-  const victionClaimed = claimedVictionChests + claimedVictionPremiumChests;
-  const victionPercentage = (victionClaimed / 20) * 100;
-
-  const mantaClaimed = claimedMantaChests + claimedMantaPremiumChests;
-  const mantaPercentage = (mantaClaimed / 20) * 100;
-
-  const baseClaimed = claimedBaseChests + claimedBasePremiumChests;
-  const basePercentage = (baseClaimed / 20) * 100;
-
-  const taikoClaimed = claimedTaikoChests + claimedTaikoPremiumChests;
-  const taikoPercentage = (taikoClaimed / 20) * 100;
-
-  const matClaimed = claimedMatChests + claimedMatPremiumChests;
-  const matPercentage = (matClaimed / 20) * 100;
-
-  const seiClaimed = claimedSeiChests + claimedSeiPremiumChests;
-  const seiPercentage = (seiClaimed / 20) * 100;
 
   var settings = {
     dots: false,
@@ -734,24 +702,28 @@ const BnbDailyBonus = ({
   };
 
   const handleOpBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0xcc")
-          .then(() => {
-            handleSwitchNetwork(204);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(204);
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0xcc")
+            .then(() => {
+              handleSwitchNetwork(204);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(204);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(204);
+        }
       } else if (binanceWallet && window.WALLET_TYPE === "binance") {
         handleSwitchChainBinanceWallet(204);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(204);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
@@ -803,96 +775,116 @@ const BnbDailyBonus = ({
   }, [premiumTxHash, selectedChainforPremium]);
 
   const handleBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0x38")
-          .then(() => {
-            handleSwitchNetwork(56);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(56);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(56);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(56);
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
     } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-  const handleMantaPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0xa9")
-          .then(() => {
-            handleSwitchNetwork(169);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(169);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(169);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(169);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleBasePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0x2105")
-          .then(() => {
-            handleSwitchNetwork(8453);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(8453);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(8453);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(8453);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleTaikoPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x28c58")
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0x38")
             .then(() => {
-              handleSwitchNetwork(167000);
+              handleSwitchNetwork(56);
             })
             .catch((e) => {
               console.log(e);
             });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(56);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(56);
         }
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(56);
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
+    }
+  };
+  const handleMantaPool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     } else {
-      window.alertify.error("This network is not available on Binance Wallet");
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0xa9")
+            .then(() => {
+              handleSwitchNetwork(169);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(169);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(169);
+        }
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(169);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    }
+  };
+
+  const handleBasePool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0x2105")
+            .then(() => {
+              handleSwitchNetwork(8453);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(8453);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(8453);
+        }
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(8453);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    }
+  };
+
+  const handleTaikoPool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.WALLET_TYPE !== "binance") {
+        if (window.ethereum) {
+          if (!window.gatewallet) {
+            await handleSwitchNetworkhook("0x28c58")
+              .then(() => {
+                handleSwitchNetwork(167000);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          } else if (window.ethereum?.isBinance) {
+            window.alertify.error(
+              "This network is not available on Binance Wallet"
+            );
+          }
+        } else {
+          window.alertify.error("No web3 detected. Please install Metamask!");
+        }
+      } else {
+        window.alertify.error(
+          "This network is not available on Binance Wallet"
+        );
+      }
     }
   };
 
   const handleMatPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
           await handleSwitchNetworkhook("0x2ba")
@@ -916,100 +908,122 @@ const BnbDailyBonus = ({
   };
 
   const handleSkalePool = async () => {
-    if (window.ethereum) {
-      if (
-        !window.gatewallet &&
-        window.WALLET_TYPE !== "binance" &&
-        !window.ethereum?.isBinance
-      ) {
-        await handleSwitchNetworkhook("0x585eb4b1")
-          .then(() => {
-            handleSwitchNetwork(1482601649);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (
-        window.gatewallet &&
-        window.WALLET_TYPE !== "binance" &&
-        !window.ethereum?.isBinance
-      ) {
-        handleSwitchChainGateWallet(1482601649);
-      } else if (
-        window.ethereum?.isBinance ||
-        window.WALLET_TYPE === "binance"
-      ) {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.ethereum) {
+        if (
+          !window.gatewallet &&
+          window.WALLET_TYPE !== "binance" &&
+          !window.ethereum?.isBinance
+        ) {
+          await handleSwitchNetworkhook("0x585eb4b1")
+            .then(() => {
+              handleSwitchNetwork(1482601649);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (
+          window.gatewallet &&
+          window.WALLET_TYPE !== "binance" &&
+          !window.ethereum?.isBinance
+        ) {
+          handleSwitchChainGateWallet(1482601649);
+        } else if (
+          window.ethereum?.isBinance ||
+          window.WALLET_TYPE === "binance"
+        ) {
+          window.alertify.error(
+            "This network is not available on Binance Wallet"
+          );
+        }
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
         window.alertify.error(
           "This network is not available on Binance Wallet"
         );
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      window.alertify.error("This network is not available on Binance Wallet");
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
   const handleCorePool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x45c")
-            .then(() => {
-              handleSwitchNetwork(1116);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.WALLET_TYPE !== "binance") {
+        if (window.ethereum) {
+          if (!window.gatewallet) {
+            await handleSwitchNetworkhook("0x45c")
+              .then(() => {
+                handleSwitchNetwork(1116);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          } else if (window.ethereum?.isBinance) {
+            window.alertify.error(
+              "This network is not available on Binance Wallet"
+            );
+          }
+        } else {
+          window.alertify.error("No web3 detected. Please install Metamask!");
         }
       } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
+        window.alertify.error(
+          "This network is not available on Binance Wallet"
+        );
       }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
     }
   };
   const handleVictionPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x58")
-            .then(() => {
-              handleSwitchNetwork(88);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.WALLET_TYPE !== "binance") {
+        if (window.ethereum) {
+          if (!window.gatewallet) {
+            await handleSwitchNetworkhook("0x58")
+              .then(() => {
+                handleSwitchNetwork(88);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          } else if (window.ethereum?.isBinance) {
+            window.alertify.error(
+              "This network is not available on Binance Wallet"
+            );
+          }
+        } else {
+          window.alertify.error("No web3 detected. Please install Metamask!");
         }
       } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
+        window.alertify.error(
+          "This network is not available on Binance Wallet"
+        );
       }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
     }
   };
 
   const handleSeiPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x531")
-          .then(() => {
-            handleSwitchNetwork(1329);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
+      if (window.ethereum) {
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x531")
+            .then(() => {
+              handleSwitchNetwork(1329);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
     }
   };
 
@@ -1962,11 +1976,10 @@ const BnbDailyBonus = ({
 
   useEffect(() => {
     if (chain === "bnb") {
-      if(!email) {
+      if (!email) {
         setMessage("login");
         setDisable(true);
-      }
-      else if (email && coinbase && address) {
+      } else if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -2030,11 +2043,10 @@ const BnbDailyBonus = ({
       }
     } else if (chain === "skale") {
       if (window.WALLET_TYPE !== "binance") {
-        if(!email) {
+        if (!email) {
           setMessage("login");
           setDisable(true);
-        }
-        else if (email && coinbase && address) {
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2103,11 +2115,10 @@ const BnbDailyBonus = ({
       }
     } else if (chain === "core") {
       if (window.WALLET_TYPE !== "binance") {
-        if(!email) {
+        if (!email) {
           setMessage("login");
           setDisable(true);
-        }
-        else if (email && coinbase && address) {
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2176,11 +2187,10 @@ const BnbDailyBonus = ({
       }
     } else if (chain === "viction") {
       if (window.WALLET_TYPE !== "binance") {
-        if(!email) {
+        if (!email) {
           setMessage("login");
           setDisable(true);
-        }
-        else if (email && coinbase && address) {
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2248,11 +2258,10 @@ const BnbDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "manta") {
-      if(!email) {
+      if (!email) {
         setMessage("login");
         setDisable(true);
-      }
-      else if (email && coinbase && address) {
+      } else if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -2314,11 +2323,10 @@ const BnbDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "base") {
-      if(!email) {
+      if (!email) {
         setMessage("login");
         setDisable(true);
-      }
-      else if (email && coinbase && address) {
+      } else if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -3075,7 +3083,10 @@ const BnbDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        <div className={`position-relative chain-item w-100`} style={{pointerEvents: "none"}}>
+                        <div
+                          className={`position-relative chain-item w-100`}
+                          style={{ pointerEvents: "none" }}
+                        >
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon3.png"
@@ -3110,7 +3121,8 @@ const BnbDailyBonus = ({
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              visibleChain === "bnb" && "chain-title-wrapper-active"
+                              visibleChain === "bnb" &&
+                              "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("bnb");
@@ -3146,8 +3158,6 @@ const BnbDailyBonus = ({
                                 />{" "}
                                 BNB
                               </button>
-
-                             
                             </div>
                           </div>
                         </div>
@@ -3183,7 +3193,7 @@ const BnbDailyBonus = ({
                               className="d-flex align-items-center gap-2"
                               style={{ width: "fit-content" }}
                             >
-                            <button
+                              <button
                                 className={` ${
                                   chainId === 204
                                     ? "new-chain-active-btn"
@@ -3215,6 +3225,8 @@ const BnbDailyBonus = ({
                           ? allChests && allChests.length > 0
                             ? allChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3263,6 +3275,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3317,6 +3331,8 @@ const BnbDailyBonus = ({
                           ? allCoreChests && allCoreChests.length > 0
                             ? allCoreChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3365,6 +3381,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3419,6 +3437,8 @@ const BnbDailyBonus = ({
                           ? allMantaChests && allMantaChests.length > 0
                             ? allMantaChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3467,6 +3487,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3521,6 +3543,8 @@ const BnbDailyBonus = ({
                           ? allBaseChests && allBaseChests.length > 0
                             ? allBaseChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3568,6 +3592,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3621,6 +3647,8 @@ const BnbDailyBonus = ({
                           ? allTaikoChests && allTaikoChests.length > 0
                             ? allTaikoChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3668,6 +3696,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3721,6 +3751,8 @@ const BnbDailyBonus = ({
                           ? allMatChests && allMatChests.length > 0
                             ? allMatChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3768,6 +3800,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3821,6 +3855,8 @@ const BnbDailyBonus = ({
                           ? allSeiChests && allSeiChests.length > 0
                             ? allSeiChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3868,6 +3904,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3921,6 +3959,8 @@ const BnbDailyBonus = ({
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3969,6 +4009,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -4024,6 +4066,8 @@ const BnbDailyBonus = ({
                             allSkaleChests.length > 0
                           ? allSkaleChests.map((item, index) => (
                               <NewChestItem
+                                walletClient={walletClient}
+                                publicClient={publicClient}
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
@@ -4071,6 +4115,8 @@ const BnbDailyBonus = ({
                             ))
                           : window.range(0, 19).map((item, index) => (
                               <NewChestItem
+                                walletClient={walletClient}
+                                publicClient={publicClient}
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}

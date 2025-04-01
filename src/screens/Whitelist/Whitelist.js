@@ -19,6 +19,7 @@ import Countdown from "react-countdown";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
 import WhitelistContent from "./WhitelistContent/WhitelistContent";
 import StakingBanner from "../Release/StakingBanner/StakingBanner";
+import { ethers } from "ethers";
 
 const renderer2 = ({ hours, minutes }) => {
   return (
@@ -35,6 +36,10 @@ const Whitelist = ({
   coinbase,
   handleSwitchNetwork,
   type,
+  network_matchain,
+  walletClient,
+  binanceW3WProvider,
+  publicClient,
 }) => {
   const [cliffTime, setcliffTime] = useState(0);
   const [cliffTimePrivate, setcliffTimePrivate] = useState(0);
@@ -681,47 +686,101 @@ const Whitelist = ({
 
   const handleClaim = async () => {
     console.log("seed");
-    let isSpecialSeed = false;
     setclaimLoading(true);
-    let web3 = new Web3(window.ethereum);
+    if (window.WALLET_TYPE === "matchId") {
+      let isSpecialSeed = false;
 
-    if (coinbase) {
-      if (specialWalletsSeed.includes(coinbase.toLowerCase())) {
-        isSpecialSeed = true;
-      } else isSpecialSeed = false;
-    }
+      if (walletClient) {
+        if (coinbase) {
+          if (specialWalletsSeed.includes(coinbase.toLowerCase())) {
+            isSpecialSeed = true;
+          } else isSpecialSeed = false;
+        }
+        const result = await walletClient
+          .writeContract({
+            address: isSpecialSeed
+              ? window.config.vesting_special_address
+              : window.config.vesting_address,
+            abi: isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
+            functionName: "claim",
+            args: [],
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
 
-    const vestingSc = new web3.eth.Contract(
-      isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
-      isSpecialSeed
-        ? window.config.vesting_special_address
-        : window.config.vesting_address
-    );
+            setclaimStatus("failed");
+            setclaimLoading(false);
+            setTimeout(() => {
+              setclaimStatus("initial");
+            }, 5000);
+          });
 
-    const gasPrice = await window.bscWeb3.eth.getGasPrice();
-    console.log("gasPrice", gasPrice);
-    const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-    // const increasedGwei = parseInt(currentGwei) + 2;
-    // console.log("increasedGwei", increasedGwei);
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
 
-    const transactionParameters = {
-      gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-    };
+          if (receipt) {
+            setclaimStatus("success");
+            setclaimLoading(false);
 
-    await vestingSc.methods
-      .claim()
-      .estimateGas({ from: await window.getCoinbase() })
-      .then((gas) => {
-        transactionParameters.gas = web3.utils.toHex(gas);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+            setTimeout(() => {
+              setclaimStatus("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      let isSpecialSeed = false;
+      if (coinbase) {
+        if (specialWalletsSeed.includes(coinbase.toLowerCase())) {
+          isSpecialSeed = true;
+        } else isSpecialSeed = false;
+      }
+      const vestingSc = new ethers.Contract(
+        isSpecialSeed
+          ? window.config.vesting_special_address
+          : window.config.vesting_address,
+        isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
 
-    await vestingSc.methods
-      .claim()
-      .send({ from: await window.getCoinbase(), ...transactionParameters })
-      .then(() => {
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      const txResponse = await vestingSc
+        .claim({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatus("failed");
+          setclaimLoading(false);
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setclaimStatus("success");
         setclaimLoading(false);
 
@@ -730,50 +789,149 @@ const Whitelist = ({
           getInfo();
           getInfoTimer();
         }, 5000);
-      })
-      .catch((e) => {
-        console.error(e);
-        window.alertify.error(e?.message);
+      }
+    } else {
+      let web3 = new Web3(window.ethereum);
+      let isSpecialSeed = false;
+      if (coinbase) {
+        if (specialWalletsSeed.includes(coinbase.toLowerCase())) {
+          isSpecialSeed = true;
+        } else isSpecialSeed = false;
+      }
 
-        setclaimStatus("failed");
-        setclaimLoading(false);
-        setTimeout(() => {
-          setclaimStatus("initial");
-        }, 5000);
-      });
+      const vestingSc = new web3.eth.Contract(
+        isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
+        isSpecialSeed
+          ? window.config.vesting_special_address
+          : window.config.vesting_address
+      );
+
+      const gasPrice = await window.bscWeb3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+      // const increasedGwei = parseInt(currentGwei) + 2;
+      // console.log("increasedGwei", increasedGwei);
+
+      const transactionParameters = {
+        gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+      };
+
+      await vestingSc.methods
+        .claim()
+        .estimateGas({ from: await window.getCoinbase() })
+        .then((gas) => {
+          transactionParameters.gas = web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      await vestingSc.methods
+        .claim()
+        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .then(() => {
+          setclaimStatus("success");
+          setclaimLoading(false);
+
+          setTimeout(() => {
+            setclaimStatus("initial");
+            getInfo();
+            getInfoTimer();
+          }, 5000);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatus("failed");
+          setclaimLoading(false);
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        });
+    }
   };
 
   const handleClaimOTC = async () => {
     console.log("otc");
     setclaimLoadingOTC(true);
-    let web3 = new Web3(window.ethereum);
+    if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: window.config.otc_address,
+            abi: OTC_ABI,
+            functionName: "claim",
+            args: [],
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
 
-    const otcSc = new web3.eth.Contract(OTC_ABI, window.config.otc_address);
+            setclaimStatusOTC("failed");
+            setclaimLoadingOTC(false);
+            setTimeout(() => {
+              setclaimStatusOTC("initial");
+            }, 5000);
+          });
 
-    const gasPrice = await window.bscWeb3.eth.getGasPrice();
-    console.log("gasPrice", gasPrice);
-    const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-    // const increasedGwei = parseInt(currentGwei) + 2;
-    // console.log("increasedGwei", increasedGwei);
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
 
-    const transactionParameters = {
-      gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-    };
+          if (receipt) {
+            setclaimStatusOTC("success");
+            setclaimLoadingOTC(false);
 
-    await otcSc.methods
-      .claim()
-      .estimateGas({ from: await window.getCoinbase() })
-      .then((gas) => {
-        transactionParameters.gas = web3.utils.toHex(gas);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+            setTimeout(() => {
+              setclaimStatusOTC("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      const otcSc = new ethers.Contract(
+        window.config.otc_address,
+        OTC_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
 
-    await otcSc.methods
-      .claim()
-      .send({ from: await window.getCoinbase(), ...transactionParameters })
-      .then(() => {
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      const txResponse = await otcSc
+        .claim({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusOTC("failed");
+          setclaimLoadingOTC(false);
+          setTimeout(() => {
+            setclaimStatusOTC("initial");
+          }, 5000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setclaimStatusOTC("success");
         setclaimLoadingOTC(false);
 
@@ -782,34 +940,139 @@ const Whitelist = ({
           getInfo();
           getInfoTimer();
         }, 5000);
-      })
-      .catch((e) => {
-        console.error(e);
-        window.alertify.error(e?.message);
+      }
+    } else {
+      let web3 = new Web3(window.ethereum);
 
-        setclaimStatusOTC("failed");
-        setclaimLoadingOTC(false);
-        setTimeout(() => {
-          setclaimStatusOTC("initial");
-        }, 5000);
-      });
+      const otcSc = new web3.eth.Contract(OTC_ABI, window.config.otc_address);
+
+      const gasPrice = await window.bscWeb3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+      // const increasedGwei = parseInt(currentGwei) + 2;
+      // console.log("increasedGwei", increasedGwei);
+
+      const transactionParameters = {
+        gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+      };
+
+      await otcSc.methods
+        .claim()
+        .estimateGas({ from: await window.getCoinbase() })
+        .then((gas) => {
+          transactionParameters.gas = web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      await otcSc.methods
+        .claim()
+        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .then(() => {
+          setclaimStatusOTC("success");
+          setclaimLoadingOTC(false);
+
+          setTimeout(() => {
+            setclaimStatusOTC("initial");
+            getInfo();
+            getInfoTimer();
+          }, 5000);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusOTC("failed");
+          setclaimLoadingOTC(false);
+          setTimeout(() => {
+            setclaimStatusOTC("initial");
+          }, 5000);
+        });
+    }
   };
 
   const handleClaimPrivate = async () => {
     console.log("private");
 
     setclaimLoadingPrivate(true);
-    let web3 = new Web3(window.ethereum);
-    const privateSc = new web3.eth.Contract(
-      PRIVATE_ABI,
-      window.config.private_address,
-      { from: await window.getCoinbase() }
-    );
+    if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: window.config.private_address,
+            abi: PRIVATE_ABI,
+            functionName: "claim",
+            args: [],
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
 
-    await privateSc.methods
-      .claim()
-      .send({ from: await window.getCoinbase() })
-      .then(() => {
+            setclaimStatusPrivate("failed");
+            setclaimLoadingPrivate(false);
+            setTimeout(() => {
+              setclaimStatusPrivate("initial");
+            }, 5000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatusPrivate("success");
+            setclaimLoadingPrivate(false);
+
+            setTimeout(() => {
+              setclaimStatusPrivate("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      const privateSc = new ethers.Contract(
+        window.config.private_address,
+        PRIVATE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      const txResponse = await privateSc
+        .claim({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusPrivate("failed");
+          setclaimLoadingPrivate(false);
+          setTimeout(() => {
+            setclaimStatusPrivate("initial");
+          }, 5000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setclaimStatusPrivate("success");
         setclaimLoadingPrivate(false);
 
@@ -818,42 +1081,139 @@ const Whitelist = ({
           getInfo();
           getInfoTimer();
         }, 5000);
-      })
-      .catch((e) => {
-        console.error(e);
-        window.alertify.error(e?.message);
+      }
+    } else {
+      let web3 = new Web3(window.ethereum);
+      const privateSc = new web3.eth.Contract(
+        PRIVATE_ABI,
+        window.config.private_address,
+        { from: await window.getCoinbase() }
+      );
 
-        setclaimStatusPrivate("failed");
-        setclaimLoadingPrivate(false);
-        setTimeout(() => {
-          setclaimStatusPrivate("initial");
-        }, 5000);
-      });
+      await privateSc.methods
+        .claim()
+        .send({ from: await window.getCoinbase() })
+        .then(() => {
+          setclaimStatusPrivate("success");
+          setclaimLoadingPrivate(false);
+
+          setTimeout(() => {
+            setclaimStatusPrivate("initial");
+            getInfo();
+            getInfoTimer();
+          }, 5000);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusPrivate("failed");
+          setclaimLoadingPrivate(false);
+          setTimeout(() => {
+            setclaimStatusPrivate("initial");
+          }, 5000);
+        });
+    }
   };
 
   const handleClaimKol = async () => {
     console.log("kol");
-    let isSpecial = false;
-    if (coinbase) {
-      if (specialWallets.includes(coinbase.toLowerCase())) {
-        isSpecial = true;
-      } else isSpecial = false;
-    }
-
     setclaimLoadingKol(true);
-    let web3 = new Web3(window.ethereum);
-    const kolSc = new web3.eth.Contract(
-      KOL_ABI,
-      isSpecial ? window.config.kol2_address : window.config.kol_address,
-      {
-        from: await window.getCoinbase(),
-      }
-    );
+    if (window.WALLET_TYPE === "matchId") {
+      let isSpecial = false;
 
-    await kolSc.methods
-      .claim()
-      .send({ from: await window.getCoinbase() })
-      .then(() => {
+      if (walletClient) {
+        let isSpecial = false;
+        if (coinbase) {
+          if (specialWallets.includes(coinbase.toLowerCase())) {
+            isSpecial = true;
+          } else isSpecial = false;
+        }
+
+        const result = await walletClient
+          .writeContract({
+            address: isSpecial
+              ? window.config.kol2_address
+              : window.config.kol_address,
+            abi: KOL_ABI,
+            functionName: "claim",
+            args: [],
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+
+            setclaimStatusKol("failed");
+            setclaimLoadingKol(false);
+            setTimeout(() => {
+              setclaimStatusKol("initial");
+            }, 5000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatusKol("success");
+            setclaimLoadingKol(false);
+
+            setTimeout(() => {
+              setclaimStatusKol("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      let isSpecial = false;
+      if (coinbase) {
+        if (specialWallets.includes(coinbase.toLowerCase())) {
+          isSpecial = true;
+        } else isSpecial = false;
+      }
+
+      const kolSc = new ethers.Contract(
+        isSpecial ? window.config.kol2_address : window.config.kol_address,
+        KOL_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      const txResponse = await kolSc
+        .claim({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusKol("failed");
+          setclaimLoadingKol(false);
+          setTimeout(() => {
+            setclaimStatusKol("initial");
+          }, 5000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setclaimStatusKol("success");
         setclaimLoadingKol(false);
 
@@ -862,36 +1222,130 @@ const Whitelist = ({
           getInfo();
           getInfoTimer();
         }, 5000);
-      })
-      .catch((e) => {
-        console.error(e);
-        window.alertify.error(e?.message);
+      }
+    } else {
+      let isSpecial = false;
+      if (coinbase) {
+        if (specialWallets.includes(coinbase.toLowerCase())) {
+          isSpecial = true;
+        } else isSpecial = false;
+      }
 
-        setclaimStatusKol("failed");
-        setclaimLoadingKol(false);
-        setTimeout(() => {
-          setclaimStatusKol("initial");
-        }, 5000);
-      });
+      let web3 = new Web3(window.ethereum);
+      const kolSc = new web3.eth.Contract(
+        KOL_ABI,
+        isSpecial ? window.config.kol2_address : window.config.kol_address,
+        {
+          from: await window.getCoinbase(),
+        }
+      );
+
+      await kolSc.methods
+        .claim()
+        .send({ from: await window.getCoinbase() })
+        .then(() => {
+          setclaimStatusKol("success");
+          setclaimLoadingKol(false);
+
+          setTimeout(() => {
+            setclaimStatusKol("initial");
+            getInfo();
+            getInfoTimer();
+          }, 5000);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusKol("failed");
+          setclaimLoadingKol(false);
+          setTimeout(() => {
+            setclaimStatusKol("initial");
+          }, 5000);
+        });
+    }
   };
 
   const handleClaimAdvisors = async () => {
     console.log("advisors");
-
     setclaimLoadingAdvisors(true);
-    let web3 = new Web3(window.ethereum);
-    const advisorsSc = new web3.eth.Contract(
-      ADVISORS_ABI,
-      window.config.advisors_address,
-      {
-        from: await window.getCoinbase(),
-      }
-    );
+    if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: window.config.advisors_address,
+            abi: ADVISORS_ABI,
+            functionName: "claim",
+            args: [],
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
 
-    await advisorsSc.methods
-      .claim()
-      .send({ from: await window.getCoinbase() })
-      .then(() => {
+            setclaimStatusAdvisors("failed");
+            setclaimLoadingAdvisors(false);
+            setTimeout(() => {
+              setclaimStatusAdvisors("initial");
+            }, 5000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatusAdvisors("success");
+            setclaimLoadingAdvisors(false);
+
+            setTimeout(() => {
+              setclaimStatusAdvisors("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      const advisorsSc = new ethers.Contract(
+        window.config.advisors_address,
+        ADVISORS_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      const txResponse = await advisorsSc
+        .claim({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusAdvisors("failed");
+          setclaimLoadingAdvisors(false);
+          setTimeout(() => {
+            setclaimStatusAdvisors("initial");
+          }, 5000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setclaimStatusAdvisors("success");
         setclaimLoadingAdvisors(false);
 
@@ -900,27 +1354,55 @@ const Whitelist = ({
           getInfo();
           getInfoTimer();
         }, 5000);
-      })
-      .catch((e) => {
-        console.error(e);
-        window.alertify.error(e?.message);
+      }
+    } else {
+      let web3 = new Web3(window.ethereum);
+      const advisorsSc = new web3.eth.Contract(
+        ADVISORS_ABI,
+        window.config.advisors_address,
+        {
+          from: await window.getCoinbase(),
+        }
+      );
 
-        setclaimStatusAdvisors("failed");
-        setclaimLoadingAdvisors(false);
-        setTimeout(() => {
-          setclaimStatusAdvisors("initial");
-        }, 5000);
-      });
+      await advisorsSc.methods
+        .claim()
+        .send({ from: await window.getCoinbase() })
+        .then(() => {
+          setclaimStatusAdvisors("success");
+          setclaimLoadingAdvisors(false);
+
+          setTimeout(() => {
+            setclaimStatusAdvisors("initial");
+            getInfo();
+            getInfoTimer();
+          }, 5000);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusAdvisors("failed");
+          setclaimLoadingAdvisors(false);
+          setTimeout(() => {
+            setclaimStatusAdvisors("initial");
+          }, 5000);
+        });
+    }
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x38")
-      .then(() => {
-        handleSwitchNetwork("56");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else {
+      await handleSwitchNetworkhook("0x38")
+        .then(() => {
+          handleSwitchNetwork("56");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
 
   useEffect(() => {

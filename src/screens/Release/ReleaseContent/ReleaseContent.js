@@ -84,7 +84,7 @@ const ReleaseContent = ({
   selectedRound,
   userClaimedTokens,
   totalVestedTokens,
-  cliffTime
+  cliffTime,
 }) => {
   const [timerFinished, settimerFinished] = useState(false);
   const today = new Date();
@@ -97,10 +97,10 @@ const ReleaseContent = ({
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinished(true);
         }
-      } 
+      }
     }
   }, [selectedRound, userClaimedTokens, cliffTime]);
- 
+
   return (
     <div
       className="release-ecosystem-wrapper py-5 position-relative d-flex justify-content-center align-items-center mb-5"
@@ -113,9 +113,7 @@ const ReleaseContent = ({
               <div className="release-input-wrapper p-3 h-100">
                 <div className="d-flex flex-column">
                   <span className="release-green-txt">TGE Release</span>
-                  <span className="release-white-txt">
-                    6%
-                  </span>
+                  <span className="release-white-txt">6%</span>
                 </div>
               </div>
               <div className="release-input-wrapper p-3 h-100">
@@ -148,13 +146,19 @@ const ReleaseContent = ({
             <div className="release-input-wrapper d-flex flex-column gap-2">
               <div className="release-input-upper-wrapper  d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center p-3 gap-2">
-                  <img src={'https://cdn.worldofdypians.com/wod/wodToken.png'} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/wodToken.png"}
+                    alt=""
+                  />
                   <h6 className="mb-0 release-wod-title">WOD</h6>
                 </div>
                 <div className="d-flex flex-column gap-1 p-3 release-network-wrapper col-6 col-lg-5">
                   <span className="release-network-span">Network</span>
                   <div className="d-flex align-items-center gap-2">
-                    <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                      alt=""
+                    />
                     <h6 className="mb-0 release-network-title">BNB Chain</h6>
                   </div>
                 </div>
@@ -195,31 +199,33 @@ const ReleaseContent = ({
                   </div>
                 </div>
                 <div className="whitelist-input-upper-wrapper p-2">
-                <div className="d-flex align-items-center gap-2 justify-content-between">
-                  <span className="whitelist-timer-txt">Next withdraw in</span>
-                  <span className="whitelist-timer">
-                    {" "}
-                    {userClaimedTokens &&
-                    Number(userClaimedTokens) > 0 &&
-                    selectedRound?.id === "ido" ? (
-                      <Countdown
-                        date={Number(cliffTime)}
-                        renderer={renderer2}
-                        onComplete={() => {
-                          settimerFinished(true);
-                        }}
-                      />
-                    ) : (
-                      <h6
-                        className="rewardstxtwod mb-0"
-                        style={{ color: "#F3BF09" }}
-                      >
-                        00d:00h:00m
-                      </h6>
-                    )}
-                  </span>
+                  <div className="d-flex align-items-center gap-2 justify-content-between">
+                    <span className="whitelist-timer-txt">
+                      Next withdraw in
+                    </span>
+                    <span className="whitelist-timer">
+                      {" "}
+                      {userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "ido" ? (
+                        <Countdown
+                          date={Number(cliffTime)}
+                          renderer={renderer2}
+                          onComplete={() => {
+                            settimerFinished(true);
+                          }}
+                        />
+                      ) : (
+                        <h6
+                          className="rewardstxtwod mb-0"
+                          style={{ color: "#F3BF09" }}
+                        >
+                          00d:00h:00m
+                        </h6>
+                      )}
+                    </span>
+                  </div>
                 </div>
-              </div>
               </div>
             )}
             {!isConnected && (
@@ -243,7 +249,7 @@ const ReleaseContent = ({
                 
               
                 `}
-                  disabled={ 
+                  disabled={
                     canClaim === false ||
                     timerFinished === false ||
                     Number(wodBalance) === 0
@@ -254,7 +260,7 @@ const ReleaseContent = ({
                 >
                   {claimLoading ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     ></div>
                   ) : claimStatus === "failed" ? (
@@ -269,11 +275,11 @@ const ReleaseContent = ({
 
             {isConnected && chainId === 56 && selectedRound?.id === "ido" && (
               <button
-              className={` w-100 py-2
+                className={` w-100 py-2
                 
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
-                    Number(wodBalance) === 0)||
+                    Number(wodBalance) === 0) ||
                   canClaim === false ||
                   timerFinished === false
                     ? "disabled-btn2"
@@ -283,18 +289,18 @@ const ReleaseContent = ({
                     ? "success-button"
                     : "connectbtn"
                 }`}
-                  disabled={
-                    canClaim === false ||
-                    timerFinished === false ||
-                    Number(wodBalance) === 0
-                      ? true
-                      : false
-                  }
+                disabled={
+                  canClaim === false ||
+                  timerFinished === false ||
+                  Number(wodBalance) === 0
+                    ? true
+                    : false
+                }
                 onClick={handleClaim}
               >
                 {claimLoading ? (
                   <div
-                    class="spinner-border spinner-border-sm text-light"
+                    className="spinner-border spinner-border-sm text-light"
                     role="status"
                   ></div>
                 ) : claimStatus === "failed" ? (

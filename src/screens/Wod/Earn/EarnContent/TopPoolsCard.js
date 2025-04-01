@@ -92,6 +92,7 @@ const TopPoolsCard = ({
                 tokenLogo.map((obj, index) => {
                   return (
                     <img
+                    key={index}
                       src={`https://cdn.worldofdypians.com/wod/${obj}.png`}
                       alt=""
                       className="pool-coins"

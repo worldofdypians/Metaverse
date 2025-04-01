@@ -40,6 +40,8 @@ const GoldenPassPopup = ({
   chainId,
   binanceW3WProvider,
   wodPrice,
+  publicClient,
+  walletClient,
 }) => {
   const [goldenPassWodAmount, setGoldenPassWodAmount] = useState(0);
   const [countdown, setCountdown] = useState(0);
@@ -92,20 +94,42 @@ const GoldenPassPopup = ({
 
   const checkApproval = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await wod_token_abi.methods
-        .allowance(coinbase, goldenPassAddress)
-        .call()
-        .then((data) => {
-          if (data === "0" || data < 150000000000000000000) {
-            setShowApproval(true);
-          } else {
-            setShowApproval(false);
-            setBundleState("deposit");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (window.WALLET_TYPE === "matchId") {
+        await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: window.config.wod_token_address,
+            functionName: "allowance",
+            args: [coinbase, goldenPassAddress],
+          })
+          .then((data) => {
+            if (Number(data) === 0 || Number(data) < 150000000000000000000) {
+              setShowApproval(true);
+            } else {
+              setShowApproval(false);
+              setBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      } else {
+        await wod_token_abi.methods
+          .allowance(coinbase, goldenPassAddress)
+          .call()
+          .then((data) => {
+            if (data === "0" || data < 150000000000000000000) {
+              setShowApproval(true);
+            } else {
+              setShowApproval(false);
+              setBundleState("deposit");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   };
 
@@ -113,34 +137,95 @@ const GoldenPassPopup = ({
     setBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
-    // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      await wod_token_abi.methods
+        .approve(goldenPassAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setBundleState("deposit");
+          setStatusColor("#00FECF");
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBundleState("fail");
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBundleState("initial");
+          }, 3000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        window.config.wod_token_address,
+        window.TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    await wod_token_abi.methods
-      .approve(goldenPassAddress, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
+      const txResponse = await tokenSc
+        .approve(goldenPassAddress, "500000000000000000000000000")
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBundleState("fail");
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setStatus("Succesfully approved!");
         setBundleState("deposit");
         setStatusColor("#00FECF");
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setBundleState("fail");
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [goldenPassAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBundleState("fail");
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBundleState("initial");
+            }, 3000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setBundleState("deposit");
+            setStatusColor("#00FECF");
+          }
+        }
+      }
+    }
   };
 
   const handleDeposit = async () => {
-    let web3 = new Web3(window.ethereum);
-    const goldenPassContract = new web3.eth.Contract(
-      GOLDEN_PASS_ABI,
-      golden_pass_address
-    );
-
     setDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      let web3 = new Web3(window.ethereum);
+      const goldenPassContract = new web3.eth.Contract(
+        GOLDEN_PASS_ABI,
+        golden_pass_address
+      );
       await goldenPassContract.methods
         .deposit()
         .send({ from: coinbase })
@@ -157,6 +242,12 @@ const GoldenPassPopup = ({
           setStatus(e?.message);
           setDepositState("failDeposit");
           console.log(e);
+
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setDepositState("initial");
+          }, 3000);
         });
       handleRefreshCountdown();
     } else if (window.WALLET_TYPE === "binance") {
@@ -181,16 +272,6 @@ const GoldenPassPopup = ({
         gasPrice: gasPriceInWei,
       };
 
-      // let gasLimit;
-      // console.log('dragonsc',dragonsc.callStatic.deposit())
-      // try {
-      //   gasLimit = await dragonsc.estimateGas.deposit();
-      //   transactionParameters.gasLimit = gasLimit;
-      //   console.log("transactionParameters", transactionParameters);
-      // } catch (error) {
-      //   console.error(error);
-      // }
-
       const txResponse = await goldensc
         .deposit({ from: coinbase, ...transactionParameters })
         .catch((e) => {
@@ -198,6 +279,11 @@ const GoldenPassPopup = ({
           setStatus(e?.message);
           setDepositState("failDeposit");
           console.log(e);
+          setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setDepositState("initial");
+          }, 3000);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -210,6 +296,46 @@ const GoldenPassPopup = ({
       }
 
       handleRefreshCountdown();
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: golden_pass_address,
+            abi: GOLDEN_PASS_ABI,
+            functionName: "deposit",
+            args: [],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setDepositState("failDeposit");
+            console.log(e);
+            setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setDepositState("initial");
+            }, 3000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Bundle successfully purchased!");
+            setDepositState("success");
+            setStatusColor("#00FECF");
+
+            handleRefreshCountdown();
+            checkApproval();
+          }
+        }
+      }
     }
   };
 
@@ -511,10 +637,10 @@ const GoldenPassPopup = ({
                 >
                   {bundleState === "loading" ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : (
                     "Approve"
@@ -537,10 +663,10 @@ const GoldenPassPopup = ({
                 >
                   {depositState === "loading-deposit" ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : (
                     "Buy"
