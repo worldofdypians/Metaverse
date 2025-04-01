@@ -56,6 +56,7 @@ const BetaPassNFT = ({
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnUsdConflux, setuserEarnUsdConflux] = useState(0);
   const [userEarnUsdGate, setUserEarnUsdGate] = useState(0);
+  const [userEarnUsdKucoin, setUserEarnUsdKucoin] = useState(0);
 
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
@@ -305,7 +306,7 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "viction-mint-bg",
       wrapperClassName: "viction-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in VIC rewards",
       rewardType: "VIC",
       userEarned: victionEarnUsd,
@@ -459,10 +460,10 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "kucoin-mint-bg2",
       wrapperClassName: "kucoin-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$2,000 in KCS rewards",
       rewardType: "KCS",
-      userEarned: 0,
+      userEarned: userEarnUsdKucoin,
       eventType: "Explore & Mine",
       eventStartDate: "Apr. 01, 2025",
       eventEndDate: "Jul. 30, 2025",
@@ -590,6 +591,11 @@ const BetaPassNFT = ({
           const seiEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "sei";
           });
+
+          const kucoinEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "kucoin";
+          });
+
           if (coingeckoEvent && coingeckoEvent[0]) {
             const usdValue =
               coingeckoEvent[0].reward.earn.total /
@@ -609,6 +615,12 @@ const BetaPassNFT = ({
               cmcEvent[0].reward.earn.total /
               cmcEvent[0].reward.earn.multiplier;
             setCmcEarnUSD(usdValue);
+          }
+          if (kucoinEvent && kucoinEvent[0]) {
+            const usdValue =
+              kucoinEvent[0].reward.earn.total /
+              kucoinEvent[0].reward.earn.multiplier;
+            setUserEarnUsdKucoin(usdValue);
           }
           if (matEvent && matEvent[0]) {
             const userEarnedusd =
@@ -1068,7 +1080,7 @@ const BetaPassNFT = ({
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
-                         {selectedMint?.giveawayButtonTitle}
+                          {selectedMint?.giveawayButtonTitle}
                         </NavLink>
                       )}
                     </div>

@@ -165,6 +165,7 @@ function Dashboard({
   isTokenExpired,
   listedNFTS,
   mykucoinNFTs,
+  kucoinEarnUsd,
   walletClient,
   publicClient,
   network_matchain,
@@ -9491,11 +9492,8 @@ function Dashboard({
                 Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
-                Number(immutableEarnUsd) +
-                Number(victionEarnUsd) +
                 Number(baseEarnUSD) +
-                Number(easy2StakeEarnUsd) +
-                Number(midleEarnUsd) +
+                Number(kucoinEarnUsd)+
                 Number(taikoEarnUsd) +
                 Number(skaleEarnUsd) +
                 Number(coingeckoEarnUsd) +
@@ -9660,6 +9658,7 @@ function Dashboard({
             genesisRank2={genesisRank2}
             cookieEarnUsd={cookieEarnUsd}
             baseEarnUSD={baseEarnUSD}
+            kucoinEarnUsd={kucoinEarnUsd}
             easy2StakeEarnUsd={easy2StakeEarnUsd}
             midleEarnUsd={midleEarnUsd}
             coingeckoEarnUsd={coingeckoEarnUsd}
@@ -10318,6 +10317,7 @@ function Dashboard({
                 genesisRank2={genesisRank2}
                 cookieEarnUsd={cookieEarnUsd}
                 baseEarnUSD={baseEarnUSD}
+                kucoinEarnUsd={kucoinEarnUsd}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 coingeckoEarnUsd={coingeckoEarnUsd}
