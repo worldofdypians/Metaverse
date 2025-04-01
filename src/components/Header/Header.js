@@ -72,9 +72,7 @@ const Header = ({
   let id = Math.random().toString(36);
 
   const manageDisconnect = () => {
-    if (location.pathname.includes("/account")) {
-      handleDisconnect();
-    } else handleDisconnect();
+    handleDisconnect();
   };
 
   const setActiveChain = () => {

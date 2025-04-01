@@ -79,7 +79,10 @@ const MobileNavbar = ({
       }
     }
   };
-
+  const manageDisconnect = () => {
+    handleDisconnect();
+    setOpenNavbar(false);
+  };
   const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
       if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
@@ -1098,7 +1101,21 @@ const MobileNavbar = ({
                 {!coinbase ? "Connect Wallet" : shortAddress(coinbase)}
               </button>{" "}
             </div>
-
+            {isConnected && (
+              <button
+                className="sign-out-btn p-2  d-flex align-items-center gap-2 justify-content-start"
+                onClick={() => {
+                  manageDisconnect();
+                }}
+              >
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/logout.svg"}
+                  alt=""
+                  className="logout-icon"
+                />
+                DISCONNECT
+              </button>
+            )}
             {/* 
             {!coinbase ? (
               <NavLink
