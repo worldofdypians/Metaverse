@@ -2659,7 +2659,9 @@ const NewEvents = ({
                             <span>Past</span>
                           </div>
                         </div>
-                        {(eventDuration === "Live" || eventDuration === "Expired") && (
+                        {(
+                          // eventDuration === "Live" || 
+                          eventDuration === "Expired") && (
                           <div className="d-flex align-items-center gap-2 mb-3">
                             <div
                               className={`${
