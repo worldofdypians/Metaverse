@@ -9017,9 +9017,9 @@ function Dashboard({
                 Number(landPremiumRewards) +
                 Number(baseEarnUSD) +
                 Number(kucoinEarnUsd)+
-                Number(taikoEarnUsd) +
-                Number(skaleEarnUsd) +
-                Number(coingeckoEarnUsd) +
+                // Number(taikoEarnUsd) +
+                // Number(skaleEarnUsd) +
+                // Number(coingeckoEarnUsd) +
                 Number(seiEarnUsd) +
                 Number(mantaEarnUsd) +
                 Number(matEarnUsd) +
