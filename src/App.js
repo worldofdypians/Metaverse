@@ -1208,9 +1208,9 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            if (taikoEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (taikoEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -1346,9 +1346,9 @@ function App() {
           }
 
           if (coingeckoEvent && coingeckoEvent[0]) {
-            if (coingeckoEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (coingeckoEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const points = coingeckoEvent[0].reward.earn.totalPoints;
             setuserPoints(points);
@@ -1373,9 +1373,9 @@ function App() {
             }
           }
           if (skaleEvent && skaleEvent[0]) {
-            if (skaleEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (skaleEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const points = skaleEvent[0].reward.earn.totalPoints;
             setSkalePoints(points);
@@ -3844,7 +3844,7 @@ function App() {
     {
       title: "Taiko",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
       location: [-0.06124018456762751, 0.11788845062255861],
@@ -3865,7 +3865,7 @@ function App() {
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Live",
+        status: "Expired",
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TAIKO Rewards",
@@ -3882,7 +3882,7 @@ function App() {
       title: "CoinGecko",
       image: "coingeckoBanner.png",
       logo: "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -3901,7 +3901,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event3",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4258,7 +4258,7 @@ function App() {
     {
       title: "SKALE",
       logo: "https://cdn.worldofdypians.com/wod/skaleIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -4276,7 +4276,7 @@ function App() {
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Live",
+        status: "Expired",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
