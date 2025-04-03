@@ -360,7 +360,10 @@ const MyProfile = ({
           <div className="col-12 col-lg-4">
             <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
               <div className="d-flex align-items-center gap-2">
-                <div
+              
+                <div className="d-flex flex-column gap-2 w-100">
+                  <div className="d-flex align-items-center gap-1">
+                  <div
                   className="position-relative"
                   style={{ cursor: "pointer" }}
                 >
@@ -378,9 +381,8 @@ const MyProfile = ({
                   <span>Score</span>
                 </div> */}
                 </div>
-                <div className="d-flex flex-column gap-2 w-100">
-                  <div className="d-flex align-items-center gap-1">
-                    <div
+                   <div className="d-flex flex-column gap-1">
+                   <div
                       className={`d-flex flex-column flex-lg-row align-items-lg-center ${
                         !email
                           ? "justify-content-between w-100"
@@ -403,8 +405,9 @@ const MyProfile = ({
                     <span className="current-rank-text text-capitalize">
                       {email && username ? userRankName.name : ""}
                     </span> */}
-                  </div>
                   <span className="my-profile-email mb-2">{email}</span>
+                   </div>
+                  </div>
                   <div className="d-flex flex-column flex-lg-row gap-2">
                     <div
                       className={` ${
@@ -777,14 +780,14 @@ const MyProfile = ({
                       isConnected &&
                       !address ? (
                       <button
-                        className="loginbtn-profile px-5 py-2"
+                        className="loginbtn-profile px-3 py-2"
                         onClick={onLinkWallet}
                       >
                         Link Wallet
                       </button>
                     ) : coinbase && email && !address && !username ? (
                       <NavLink
-                        className="loginbtn-profile px-5 py-2 d-flex align-items-center"
+                        className="loginbtn-profile px-3 py-2 d-flex align-items-center"
                         to={"/player"}
                       >
                         Create player
@@ -1243,7 +1246,7 @@ const MyProfile = ({
                           <span
                             className="beast-siege-timer"
                             style={{
-                              fontSize: "12px",
+                              fontSize: "11px",
                               fontWeight: 400,
                               color: "#fff",
                             }}
@@ -1256,7 +1259,7 @@ const MyProfile = ({
                           <span
                             className="beast-siege-timer"
                             style={{
-                              fontSize: "12px",
+                              fontSize: "11px",
                               fontWeight: 400,
                               color: "#fff",
                             }}
@@ -1269,7 +1272,7 @@ const MyProfile = ({
                           <span
                             className="beast-siege-timer"
                             style={{
-                              fontSize: "12px",
+                              fontSize: "11px",
                               fontWeight: 400,
                               color: "#fff",
                             }}
