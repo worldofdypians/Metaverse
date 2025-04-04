@@ -95,7 +95,7 @@ const MainHero = ({ scrollInto }) => {
                 >
                   <img
                     src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
-                    className="w-auto"
+                    className=" exchange-grid-image"
                     alt=""
                     style={{
                       height:
@@ -103,7 +103,7 @@ const MainHero = ({ scrollInto }) => {
                         item.logo === "thena.svg"
                           ? "32px"
                           : "",
-                      scale: item.logo === "bitPandaExchange.png" ? "1.5" : "",
+                      // scale: item.logo === "bitPandaExchange.png" ? "1.5" : "",
                     }}
                   />
                 </a>

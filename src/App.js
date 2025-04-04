@@ -625,7 +625,7 @@ function App() {
   let midleLastDay = new Date("2025-03-30T14:00:00.000+02:00");
 
   let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
-  let taikoLastDay = new Date("2025-04-03T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
@@ -1208,9 +1208,9 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            // if (taikoEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (taikoEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -3700,7 +3700,7 @@ function App() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -3719,7 +3719,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -3735,7 +3735,7 @@ function App() {
     {
       title: "Matchain",
       logo: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.06787060104021504, 0.08728981018066406],
@@ -3756,7 +3756,7 @@ function App() {
         chain: "Matchain",
         linkState: "matchain",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event25",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -3844,7 +3844,7 @@ function App() {
     {
       title: "Taiko",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
-      eventStatus: "Expired",
+      eventStatus: "Live",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
       location: [-0.06124018456762751, 0.11788845062255861],
@@ -3852,10 +3852,10 @@ function App() {
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       marker: markers.treasureMarker,
-      totalRewards: "$20,000 in TAIKO Rewards",
+      totalRewards: "$30,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 03, 2024",
+      eventDate: "Aug 02, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
@@ -3865,17 +3865,17 @@ function App() {
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Expired",
+        status: "Live",
         id: "event22",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TAIKO Rewards",
+        totalRewards: "$30,000 in TAIKO Rewards",
         eventDuration: taikoLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 03, 2024",
+        eventDate: "Aug 02, 2025",
       },
     },
     {
@@ -3959,7 +3959,7 @@ function App() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -3978,7 +3978,7 @@ function App() {
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Live",
+        status: "Expired",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",

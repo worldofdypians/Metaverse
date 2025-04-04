@@ -1014,6 +1014,25 @@ const MobileNavbar = ({
               />{" "}
             </NavLink>
           </div>
+          <div
+            className={`${
+              window.location.pathname.includes("/map") &&
+              "mobile-nav-item-active"
+            } mobile-nav-item d-flex align-items-center justify-content-between p-2`}
+          >
+            <NavLink
+              to="/map"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Map</h6>
+              <img
+                src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"}
+                alt="arrow"
+              />{" "}
+            </NavLink>
+          </div>
           <div className="accordion" id="accordionExample2">
             <div className="">
               <h2
@@ -1244,25 +1263,7 @@ const MobileNavbar = ({
             </div>
           </div>
 
-          <div
-            className={`${
-              window.location.pathname.includes("/map") &&
-              "mobile-nav-item-active"
-            } mobile-nav-item d-flex align-items-center justify-content-between p-2`}
-          >
-            <NavLink
-              to="/map"
-              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-              style={{ textDecoration: "none" }}
-              onClick={() => setOpenNavbar(false)}
-            >
-              <h6 className="mobile-nav-link font-poppins mb-0">Map</h6>
-              <img
-                src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"}
-                alt="arrow"
-              />{" "}
-            </NavLink>
-          </div>
+        
 
           <div className="w-100 d-flex align-items-center justify-content-center gap-3">
             <div className="w-100">

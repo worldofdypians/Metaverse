@@ -24,13 +24,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
+     
     ],
-    pastEvents: [],
+    pastEvents: [ {
+      title: "Treasure Hunt",
+      image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      link: "/account/challenges/treasure-hunt",
+    },],
     socials: [
       {
         link: "https://x.com/BNBCHAIN",
@@ -90,11 +90,7 @@ const chainAreas = [
       ],
     ],
     events: [
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
+      
 
       {
         title: "Leaderboard",
@@ -107,7 +103,11 @@ const chainAreas = [
         link: "/account#dailybonus",
       },
     ],
-    pastEvents: [],
+    pastEvents: [{
+      title: "Treasure Hunt",
+      image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      link: "/account/challenges/treasure-hunt",
+    },],
     socials: [
       {
         link: "https://x.com/Coredao_Org",
@@ -165,13 +165,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
+     
     ],
-    pastEvents: [],
+    pastEvents: [ {
+      title: "Treasure Hunt",
+      image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      link: "/account/challenges/treasure-hunt",
+    },],
     socials: [
       {
         link: "https://x.com/matchain_io",
@@ -946,13 +946,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
+    ],
+    pastEvents: [
+  
     ],
     socials: [
       {
