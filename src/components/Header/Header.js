@@ -57,6 +57,7 @@ const Header = ({
   const [immutableState, setImmutableState] = useState(false);
   const [taikoState, setTaikoState] = useState(false);
   const [matState, setMatState] = useState(false);
+  const [vanarState, setVanarState] = useState(false);
 
   const [account, setAccount] = useState({
     logged: false,
@@ -105,6 +106,7 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
+        setVanarState(false);
       } else if (chainId === 43114) {
         setMatState(false);
         setAvaxState(true);
@@ -119,6 +121,8 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 8453) {
         setMatState(false);
         setAvaxState(false);
@@ -133,6 +137,8 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 56) {
         setMatState(false);
         setAvaxState(false);
@@ -147,6 +153,8 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 698) {
         setAvaxState(false);
         setBnbState(false);
@@ -160,6 +168,8 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
+        setVanarState(false);
+
         setMatState(true);
       } else if (chainId === 204) {
         setMatState(false);
@@ -175,6 +185,8 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 1030) {
         setMatState(false);
         setAvaxState(false);
@@ -190,6 +202,8 @@ const Header = ({
         setMantaState(false);
         setImmutableState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 1482601649) {
         setMatState(false);
         setAvaxState(false);
@@ -205,6 +219,8 @@ const Header = ({
         setMantaState(false);
         setImmutableState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 1116) {
         setMatState(false);
         setAvaxState(false);
@@ -220,6 +236,8 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 88) {
         setMatState(false);
         setAvaxState(false);
@@ -235,6 +253,8 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 13371) {
         setMatState(false);
         setAvaxState(false);
@@ -250,6 +270,8 @@ const Header = ({
         setImmutableState(true);
         setMantaState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 169) {
         setMatState(false);
         setAvaxState(false);
@@ -265,6 +287,8 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       } else if (chainId === 167000) {
         setMatState(false);
         setAvaxState(false);
@@ -280,6 +304,8 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setTaikoState(true);
+        setVanarState(false);
+
       } else if (chainId === 1329) {
         setMatState(false);
         setAvaxState(false);
@@ -295,7 +321,29 @@ const Header = ({
         setSeiState(true);
         setImmutableState(false);
         setTaikoState(false);
-      } else {
+        setVanarState(false);
+
+      } 
+      else if (chainId === 2040) {
+        setMatState(false);
+        setAvaxState(false);
+        setBnbState(false);
+        setMantaState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(false);
+        setTaikoState(false);
+        setVanarState(true);
+
+      }
+      
+      else {
         setMatState(false);
         setAvaxState(false);
         setBnbState(false);
@@ -308,6 +356,8 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setTaikoState(false);
+        setVanarState(false);
+
       }
     }
   };
@@ -1493,6 +1543,8 @@ const Header = ({
                                     ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                                     : seiState === true
                                     ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                    : vanarState === true
+                                    ? "https://cdn.worldofdypians.com/wod/vanar.png"
                                     : "https://cdn.worldofdypians.com/wod/error.svg"
                                 }
                                 width={20}
@@ -1736,6 +1788,19 @@ const Header = ({
                                 height={20}
                               />
                               Conflux
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() => switchNetwork("0x7f8", 2040)}
+                            >
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/vanar.png"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              Vanar
                             </Dropdown.Item>
                           </div>
                           <hr className="header-divider my-0" />

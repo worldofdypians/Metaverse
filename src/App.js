@@ -449,6 +449,16 @@ function App() {
       },
       blockExplorerUrls: ["https://matchscan.io"],
     },
+    2040: {
+      chainId: 2040,
+      chainName: "Vanar",
+      rpcUrls: ["https://rpc.vanarchain.com"],
+      nativeCurrency: {
+        symbol: "VANRY",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://explorer.vanarchain.com/"],
+    },
   };
 
   const {
@@ -4625,7 +4635,7 @@ function App() {
           return false;
         });
       if (isPremium_bnb === true) {
-        setIsPremium(true);
+        setIsPremium(false);
       } else {
         const isPremium_opbnb = await daily_bonus_contract.methods
           .isPremiumUser(addr)
@@ -4635,7 +4645,7 @@ function App() {
             return false;
           });
         if (isPremium_opbnb === true) {
-          setIsPremium(true);
+          setIsPremium(false);
         } else {
           const isPremium_core = await daily_bonus_contract_core.methods
             .isPremiumUser(addr)
@@ -4645,7 +4655,7 @@ function App() {
               return false;
             });
           if (isPremium_core === true) {
-            setIsPremium(true);
+            setIsPremium(false);
           } else {
             const isPremium_viction = await daily_bonus_contract_viction.methods
               .isPremiumUser(addr)
@@ -4655,7 +4665,7 @@ function App() {
                 return false;
               });
             if (isPremium_viction === true) {
-              setIsPremium(true);
+              setIsPremium(false);
             } else {
               const isPremium_skale = await daily_bonus_contract_skale.methods
                 .isPremiumUser(addr)
@@ -4665,7 +4675,7 @@ function App() {
                   return false;
                 });
               if (isPremium_skale === true) {
-                setIsPremium(true);
+                setIsPremium(false);
               } else {
                 const isPremium_manta = await daily_bonus_contract_manta.methods
                   .isPremiumUser(addr)
@@ -4675,7 +4685,7 @@ function App() {
                     return false;
                   });
                 if (isPremium_manta === true) {
-                  setIsPremium(true);
+                  setIsPremium(false);
                 } else {
                   const isPremium_taiko =
                     await daily_bonus_contract_taiko.methods
@@ -4686,7 +4696,7 @@ function App() {
                         return false;
                       });
                   if (isPremium_taiko === true) {
-                    setIsPremium(true);
+                    setIsPremium(false);
                   } else {
                     const isPremium_base =
                       await daily_bonus_contract_base.methods
@@ -4697,7 +4707,7 @@ function App() {
                           return false;
                         });
                     if (isPremium_base === true) {
-                      setIsPremium(true);
+                      setIsPremium(false);
                     } else {
                       const isPremium_mat =
                         await daily_bonus_contract_mat.methods
@@ -4708,7 +4718,7 @@ function App() {
                             return false;
                           });
                       if (isPremium_mat === true) {
-                        setIsPremium(true);
+                        setIsPremium(false);
                       } else {
                         setIsPremium(false);
                       }
@@ -4817,6 +4827,8 @@ function App() {
                     ? "0x406"
                     : chain === 13371
                     ? "0x343b"
+                    : chain === 2040
+                    ? "0x7f8"
                     : chain === 1482601649
                     ? "0x585eb4b1"
                     : "0x406",

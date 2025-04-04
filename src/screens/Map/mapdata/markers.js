@@ -54,6 +54,7 @@ const iconData = [
   { name: "cookieMarker", url: "https://cdn.worldofdypians.com/wod/cookie3.svg", size: 24, chain: true,  },
   { name: "midleMarker", url: "https://cdn.worldofdypians.com/wod/midle.svg", size: 24 , chain: true},
   { name: "ordifyMarker", url: "https://cdn.worldofdypians.com/wod/ordify.svg", size: 24, chain: true,  },
+  { name: "vanarMarker", url: "https://cdn.worldofdypians.com/wod/vanar.png", size: 24, chain: true,  },
 ];
 
 // Function to create markers dynamically
