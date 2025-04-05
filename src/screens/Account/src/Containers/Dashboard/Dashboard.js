@@ -9020,8 +9020,8 @@ function Dashboard({
                 Number(taikoEarnUsd) +
                 // Number(skaleEarnUsd) +
                 // Number(coingeckoEarnUsd) +
-                Number(seiEarnUsd) +
-                Number(mantaEarnUsd) +
+                // Number(seiEarnUsd) +
+                // Number(mantaEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
                 // Number(coreEarnUsd) +
