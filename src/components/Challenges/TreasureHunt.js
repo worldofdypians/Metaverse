@@ -15,8 +15,15 @@ useEffect(() => {
  }else if(page === 2){
   setSlicedEvents(events.filter((obj) => {
     return obj.eventStatus === eventDuration;
-  }).slice(8, events.length))
- }else if(eventDuration !== "Live"){
+  }).slice(8, 16))
+ }
+ else if(page === 3){
+  setSlicedEvents(events.filter((obj) => {
+    return obj.eventStatus === eventDuration;
+  }).slice(16, events.length))
+ }
+ 
+ else if(eventDuration !== "Live"){
   setSlicedEvents(events .filter((obj) => {
     return obj.eventStatus === eventDuration;
   }))
