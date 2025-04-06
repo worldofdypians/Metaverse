@@ -1086,13 +1086,13 @@ const MyRewardsPopupNew = ({
                       Number(matEarnUsd) +
                       Number(seiEarnUsd) +
                       Number(mantaEarnUsd) +
+                      Number(chainlinkEarnUsd) +
+                      Number(multiversEarnUsd) +
                       Number(midleEarnUsd),
                     2
                   )
                 : getFormattedNumber(
                       Number(taikoEarnUsd) +
-                      Number(multiversEarnUsd) +
-                      Number(chainlinkEarnUsd) +
                       Number(baseEarnUSD) +
                       Number(kucoinEarnUsd),
                     2
@@ -1578,21 +1578,7 @@ const MyRewardsPopupNew = ({
                 
              
               
-                <div className="d-flex gap-2 align-items-center justify-content-between">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg"
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Chainlink
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(chainlinkEarnUsd, 2)}
-                  </span>
-                </div>
+              
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1754,6 +1740,21 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(matEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Chainlink
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(chainlinkEarnUsd, 2)}
                   </span>
                 </div>
               </div>
