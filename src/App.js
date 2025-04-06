@@ -4031,7 +4031,7 @@ function App() {
     {
       title: "Chainlink",
       logo: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.06912771797944854, 0.0847846269607544],
@@ -4052,7 +4052,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "chainlink",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event28",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",

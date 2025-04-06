@@ -819,13 +819,13 @@ const chainAreas = [
       ],
     ],
     events: [
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
+   
     ],
-    pastEvents: [],
+    pastEvents: [   {
+      title: "Treasure Hunt",
+      image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      link: "/account/challenges/treasure-hunt",
+    },],
     socials: [
       {
         link: "https://x.com/chainlink",
