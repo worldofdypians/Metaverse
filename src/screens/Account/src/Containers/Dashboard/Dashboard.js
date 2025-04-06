@@ -9017,15 +9017,15 @@ function Dashboard({
                 Number(landPremiumRewards) +
                 Number(baseEarnUSD) +
                 Number(kucoinEarnUsd)+
-                Number(taikoEarnUsd) +
+                Number(taikoEarnUsd) 
                 // Number(skaleEarnUsd) +
                 // Number(coingeckoEarnUsd) +
-                Number(seiEarnUsd) +
-                Number(mantaEarnUsd) +
+                // Number(seiEarnUsd) +
+                // Number(mantaEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
                 // Number(coreEarnUsd) +
-                Number(chainlinkEarnUsd)
+                // Number(chainlinkEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}

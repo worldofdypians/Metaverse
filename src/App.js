@@ -1149,9 +1149,9 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            if (bnbEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (bnbEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /
@@ -1259,9 +1259,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            if (coreEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (coreEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -1273,9 +1273,9 @@ function App() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            if (seiEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (seiEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
@@ -1286,9 +1286,9 @@ function App() {
             setSeiEarnToken(userEarnedusd / seiPrice);
           }
           if (matEvent && matEvent[0]) {
-            if (matEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (matEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               matEvent[0].reward.earn.total /
@@ -1314,9 +1314,9 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            if (mantaEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (mantaEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -3994,7 +3994,7 @@ function App() {
     {
       title: "SEI",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "SEI",
       rewardAmount: "$20,000",
       location: [-0.06787060104021504, 0.08728981018066406],
@@ -4015,7 +4015,7 @@ function App() {
         chain: "Sei Network",
         linkState: "sei",
         rewards: "SEI",
-        status: "Live",
+        status: "Expired",
         id: "event13",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SEI Rewards",
@@ -4031,7 +4031,7 @@ function App() {
     {
       title: "Chainlink",
       logo: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.06912771797944854, 0.0847846269607544],
@@ -4052,7 +4052,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "chainlink",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event28",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4220,7 +4220,7 @@ function App() {
     {
       title: "Manta",
       logo: "https://cdn.worldofdypians.com/wod/mantaLogoBig.png",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.033817289296309505, 0.09595870971679689],
@@ -4242,7 +4242,7 @@ function App() {
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Live",
+        status: "Expired",
         id: "event21",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in MANTA Rewards",
