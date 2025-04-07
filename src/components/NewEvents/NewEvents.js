@@ -3626,7 +3626,8 @@ const NewEvents = ({
                             <span>Past</span>
                           </div>
                         </div>
-                        {(eventDuration === "Live" ||
+                        {(
+                          // eventDuration === "Live" || 
                           eventDuration === "Expired") && (
                           <div className="d-flex align-items-center gap-2 mb-3">
                             <div
@@ -3653,6 +3654,18 @@ const NewEvents = ({
                             >
                               <span>2</span>
                             </div>
+                            {/* <div
+                              className={`${
+                                page === 3
+                                  ? "active-challenge-tab"
+                                  : "challenge-tab"
+                              } px-4 py-2 d-flex align-items-center justify-content-center`}
+                              onClick={() => {
+                                setPage(3);
+                              }}
+                            >
+                              <span>3</span>
+                            </div> */}
                           </div>
                         )}
                       </div>

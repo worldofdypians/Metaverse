@@ -1552,7 +1552,7 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
+                  <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1600,8 +1600,8 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div> */}
-                  <div className="d-flex flex-column gap-2 w-100 h-100">
+                  </div>
+                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1672,7 +1672,7 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">

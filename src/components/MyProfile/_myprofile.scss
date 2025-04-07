@@ -303,6 +303,9 @@
   right: 5%;
   top: -30px;
   width: 60%;
+  @media screen and (max-width: 1500px) {
+    top: -20px;    
+  }
   @media screen and (max-width: 786px) {
     width: 100%;
     top: -20px;
@@ -318,6 +321,10 @@
   font-weight: 700;
   line-height: 10px; /* 125% */
   text-transform: uppercase;
+  @media screen and (max-width: 1500px) {
+
+    font-size: 9px;
+  }
 }
 
 .flag-content {

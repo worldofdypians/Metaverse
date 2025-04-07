@@ -632,7 +632,7 @@ function App() {
   let midleLastDay = new Date("2025-03-30T14:00:00.000+02:00");
 
   let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
-  let taikoLastDay = new Date("2025-04-03T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
@@ -1186,9 +1186,9 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            if (bnbEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (bnbEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /
@@ -1296,9 +1296,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            if (coreEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (coreEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -1310,9 +1310,9 @@ function App() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            if (seiEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (seiEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
@@ -1323,9 +1323,9 @@ function App() {
             setSeiEarnToken(userEarnedusd / seiPrice);
           }
           if (matEvent && matEvent[0]) {
-            if (matEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (matEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               matEvent[0].reward.earn.total /
@@ -1351,9 +1351,9 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            if (mantaEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (mantaEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -1383,9 +1383,9 @@ function App() {
           }
 
           if (coingeckoEvent && coingeckoEvent[0]) {
-            if (coingeckoEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (coingeckoEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const points = coingeckoEvent[0].reward.earn.totalPoints;
             setuserPoints(points);
@@ -1410,9 +1410,9 @@ function App() {
             }
           }
           if (skaleEvent && skaleEvent[0]) {
-            if (skaleEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (skaleEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const points = skaleEvent[0].reward.earn.totalPoints;
             setSkalePoints(points);
@@ -2135,7 +2135,7 @@ function App() {
     ) {
       // console.log("window.ethereumwindow.ethereum", window.ethereum);
       window.ethereum
-        .request({ method: "eth_chainId" })
+      .request({ method: "eth_chainId" })
         .then((data) => {
           setChainId(parseInt(data));
         })
@@ -3835,11 +3835,11 @@ function App() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Coming Soon",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 04, 2024",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
       userEarnUsd: bnbEarnUsd,
       userEarnCrypto: bnbEarnToken,
@@ -3854,7 +3854,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Live",
+        status: "Coming Soon",
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -3864,13 +3864,13 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 04, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {
       title: "Matchain",
       logo: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.06787060104021504, 0.08728981018066406],
@@ -3891,7 +3891,7 @@ function App() {
         chain: "Matchain",
         linkState: "matchain",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event25",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -3987,10 +3987,10 @@ function App() {
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       marker: markers.treasureMarker,
-      totalRewards: "$20,000 in TAIKO Rewards",
+      totalRewards: "$30,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 03, 2024",
+      eventDate: "Aug 02, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
@@ -4003,21 +4003,21 @@ function App() {
         status: "Live",
         id: "event22",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TAIKO Rewards",
+        totalRewards: "$30,000 in TAIKO Rewards",
         eventDuration: taikoLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 03, 2024",
+        eventDate: "Aug 02, 2025",
       },
     },
     {
       title: "CoinGecko",
       image: "coingeckoBanner.png",
       logo: "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -4036,7 +4036,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event3",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4094,11 +4094,11 @@ function App() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Live",
+      eventStatus: "Coming Soon",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 04, 2024",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
       image: "coreBanner.png",
       type: "Treasure Hunt",
@@ -4113,7 +4113,7 @@ function App() {
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Live",
+        status: "Coming Soon",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -4123,13 +4123,13 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 04, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {
       title: "SEI",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "SEI",
       rewardAmount: "$20,000",
       location: [-0.06787060104021504, 0.08728981018066406],
@@ -4150,7 +4150,7 @@ function App() {
         chain: "Sei Network",
         linkState: "sei",
         rewards: "SEI",
-        status: "Live",
+        status: "Expired",
         id: "event13",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SEI Rewards",
@@ -4166,7 +4166,7 @@ function App() {
     {
       title: "Chainlink",
       logo: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.06912771797944854, 0.0847846269607544],
@@ -4187,7 +4187,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "chainlink",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event28",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4355,7 +4355,7 @@ function App() {
     {
       title: "Manta",
       logo: "https://cdn.worldofdypians.com/wod/mantaLogoBig.png",
-      eventStatus: "Live",
+      eventStatus: "Coming Soon",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.033817289296309505, 0.09595870971679689],
@@ -4367,7 +4367,7 @@ function App() {
       totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 05, 2024",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/mantaMintBg.webp",
       userEarnUsd: mantaEarnUsd,
       userEarnCrypto: mantaEarnToken,
@@ -4377,7 +4377,7 @@ function App() {
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Live",
+        status: "Expired",
         id: "event21",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in MANTA Rewards",
@@ -4387,13 +4387,13 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 05, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {
       title: "SKALE",
       logo: "https://cdn.worldofdypians.com/wod/skaleIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -4411,7 +4411,7 @@ function App() {
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Live",
+        status: "Expired",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
@@ -6543,7 +6543,7 @@ function App() {
               />
             }
           />
-          <Route
+         {/* <Route
             exact
             path="/shop/mint/kucoin"
             element={
@@ -6583,7 +6583,7 @@ function App() {
               />
             }
           />
-          {/* <Route
+           <Route
             exact
             path="/shop/mint/matchain"
             element={
