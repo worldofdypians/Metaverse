@@ -449,7 +449,13 @@ const MyProfile = ({
                               component="div"
                               data-event="click"
                               data-tip="Copied To Clipboard!"
-                              data-clipboard-text={address}
+                              data-clipboard-text={
+                                email !== undefined && address
+                                  ? address
+                                  : coinbase
+                                  ? coinbase
+                                  : address
+                              }
                               className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
                             >
                               <span

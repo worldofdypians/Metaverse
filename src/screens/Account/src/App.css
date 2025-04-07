@@ -15,6 +15,10 @@
   gap: 10px;
 }
 
+.h-screen {
+  height: auto !important;
+}
+
 .premium-chains-wrapper2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
