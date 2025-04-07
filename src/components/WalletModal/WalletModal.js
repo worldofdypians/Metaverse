@@ -102,7 +102,7 @@ const WalletModal = ({
 
                     <img
                       src={
-                        "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                        "https://cdn.worldofdypians.com/wod/matchID-wallet.png"
                       }
                       className="wallet-item-icon"
                       alt="Icon"
