@@ -126,7 +126,7 @@ const Campaigns = () => {
 
   const dummyBanner = {
     title: "The Grand Battle Challenge",
-    status: "Live",
+    status: "Expired",
     start_date: "Mar 17, 2025",
     end_date: "Mar 31, 2025",
     image: "https://cdn.worldofdypians.com/wod/grand_battle_challenge.webp",

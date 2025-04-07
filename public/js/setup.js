@@ -108,7 +108,7 @@ window.config = {
   conflux_endpoint: "https://evm.confluxrpc.com/",
   base_endpoint: "https://mainnet.base.org",
   opbnb_endpoint: "https://opbnb.publicnode.com",
-  core_endpoint: "https://core.drpc.org",
+  core_endpoint: "https://1rpc.io/core",
   viction_endpoint: "https://rpc.viction.xyz",
   sei_endpoint: "https://evm-rpc.sei-apis.com",
   immutable_endpoint: "https://rpc.immutable.com",
