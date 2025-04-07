@@ -2091,7 +2091,7 @@ function App() {
       window.WALLET_TYPE !== "binance"
     ) {
       window.ethereum
-        .request({ method: "net_version" })
+      .request({ method: "eth_chainId" })
         .then((data) => {
           setChainId(parseInt(data));
         })
@@ -3700,11 +3700,11 @@ function App() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Expired",
+      eventStatus: "Coming Soon",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 04, 2024",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
       userEarnUsd: bnbEarnUsd,
       userEarnCrypto: bnbEarnToken,
@@ -3719,7 +3719,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Expired",
+        status: "Coming Soon",
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -3729,7 +3729,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 04, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {
@@ -3959,11 +3959,11 @@ function App() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Expired",
+      eventStatus: "Coming Soon",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 04, 2024",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
       image: "coreBanner.png",
       type: "Treasure Hunt",
@@ -3978,7 +3978,7 @@ function App() {
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Expired",
+        status: "Coming Soon",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -3988,7 +3988,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 04, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {
@@ -4220,7 +4220,7 @@ function App() {
     {
       title: "Manta",
       logo: "https://cdn.worldofdypians.com/wod/mantaLogoBig.png",
-      eventStatus: "Expired",
+      eventStatus: "Coming Soon",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.033817289296309505, 0.09595870971679689],
@@ -4232,7 +4232,7 @@ function App() {
       totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 05, 2024",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/mantaMintBg.webp",
       userEarnUsd: mantaEarnUsd,
       userEarnCrypto: mantaEarnToken,
@@ -4252,7 +4252,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 05, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {
@@ -6364,7 +6364,7 @@ function App() {
               />
             }
           />
-          <Route
+         {/* <Route
             exact
             path="/shop/mint/kucoin"
             element={
@@ -6404,7 +6404,7 @@ function App() {
               />
             }
           />
-          {/* <Route
+           <Route
             exact
             path="/shop/mint/matchain"
             element={
