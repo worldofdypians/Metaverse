@@ -2,14 +2,18 @@ import React from "react";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import "./_utilities.scss";
 
-const Utilities = ({monthlyPlayers, totalSupply, socials, totalTx}) => {
-  const totalMembers = Number(socials?.discordMembers) + Number(socials?.youtubeSubscribers)+Number(socials?.telegramMembers) + Number(socials?.twitterFollowers)
+const Utilities = ({ monthlyPlayers, totalSupply, socials, totalTx }) => {
+  const totalMembers =
+    Number(socials?.discordMembers) +
+    Number(socials?.youtubeSubscribers) +
+    Number(socials?.telegramMembers) +
+    Number(socials?.twitterFollowers);
   const utilities = [
     {
       title: "Live on Mainnet",
       image: "dyp.svg",
       desc: `
-      <p class="utility-desc">
+      <p className="utility-desc">
       Launched on December 29, 2022, World of Dypians it is currently live on Ethereum, BNB Chain, opBNB Chain, Manta Network, Taiko Network, CORE Network, SKALE Network, Immutable Network, Viction Network, Conflux Network,  Avalanche and Base. By being on the mainnet, users can participate in activities and integrations in real-time and explore the benefits of blockchain technology.
       </p>`,
       class: "mainnet-card",
@@ -18,8 +22,20 @@ const Utilities = ({monthlyPlayers, totalSupply, socials, totalTx}) => {
       title: "Stats",
       image: "idyp.svg",
       desc: `
-      <p class="utility-desc">
-     World of Dypians boasts over 492,000 daily active users (DAU) and ${getFormattedNumber(monthlyPlayers,0)} monthly active users (MAU). The platform has achieved over ${getFormattedNumber(totalTx,0)} on-chain transactions and sold ${getFormattedNumber(totalSupply,0)} NFTs. Our community has grown to over ${getFormattedNumber(totalMembers, 0)} members.
+      <p className="utility-desc">
+     World of Dypians boasts over 492,000 daily active users (DAU) and ${getFormattedNumber(
+       monthlyPlayers,
+       0
+     )} monthly active users (MAU). The platform has achieved over ${getFormattedNumber(
+        totalTx,
+        0
+      )} on-chain transactions and sold ${getFormattedNumber(
+        totalSupply,
+        0
+      )} NFTs. Our community has grown to over ${getFormattedNumber(
+        totalMembers,
+        0
+      )} members.
       </p>`,
       class: "stats-card",
     },
@@ -27,7 +43,7 @@ const Utilities = ({monthlyPlayers, totalSupply, socials, totalTx}) => {
       title: "All-In-One Platform",
       image: "caws.png",
       desc: `
-      <p class="utility-desc">
+      <p className="utility-desc">
       The World of Dypians ecosystem seamlessly integrates the Metaverse, DeFi, NFTs, and Business Development into one platform. We have integrated DeFi, businesses, and NFTs within the Metaverse, providing a unique user journey and experience for our users.     
       </p>`,
       class: "integrations-card",
@@ -36,7 +52,7 @@ const Utilities = ({monthlyPlayers, totalSupply, socials, totalTx}) => {
       title: "Utilities",
       image: "genesis.png",
       desc: `
-      <p class="utility-desc">
+      <p className="utility-desc">
       The WOD token will serve as the primary utility within the World of Dypians metaverse. It will be used for in-game purchases, unlocking features and upgrades, and accessing other content. By integrating a decentralized utility token, the game enhances the player experience and drives the growth of the World of Dypians ecosystem.  
       </p>`,
       class: "coins-card",
@@ -45,7 +61,7 @@ const Utilities = ({monthlyPlayers, totalSupply, socials, totalTx}) => {
     //   title: "Premium Events",
     //   image: "genesis.png",
     //   desc: `
-    //   <p class="utility-desc">
+    //   <p className="utility-desc">
     //   A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.
     //   </p>`,
     //   class: "events-card",
@@ -54,7 +70,7 @@ const Utilities = ({monthlyPlayers, totalSupply, socials, totalTx}) => {
     //   title: "Partners",
     //   image: "genesis.png",
     //   desc: `
-    //   <p class="utility-desc">
+    //   <p className="utility-desc">
     //   A wide range of exclusive features and benefits to its users, and one way to gain access to these is by participating in live events. There are four events such as Golden Pass, Puzzle Madness, Dragon Ruins, and Critical Hit. Users can unlock new opportunities from custom integrations and activities on-chain, as well as earn rewards and recognition within the World of Dypians community.
     //   </p>`,
     //   class: "partners-card",

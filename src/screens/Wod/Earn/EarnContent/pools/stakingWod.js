@@ -4,7 +4,6 @@ import getFormattedNumber from "../../../../Caws/functions/get-formatted-number"
 import "../top-pools.css";
 import "./_stakingWod.scss";
 
-
 import Modal from "../../../../../components/General/Modal";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
@@ -13,8 +12,6 @@ import Countdown from "react-countdown";
 import { ClickAwayListener } from "@material-ui/core";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
-
-
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -171,7 +168,6 @@ const StakeWodDetails = ({
   const [show, setshow] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
   const [popup, setpopup] = useState(false);
-
 
   const [approvedAmount, setapprovedAmount] = useState("0.00");
   const [availableQuota, setavailableQuota] = useState(0);
@@ -668,8 +664,6 @@ const StakeWodDetails = ({
     }
   };
 
- 
-
   const getAvailableQuota = async () => {
     if (staking && staking._address) {
       const stakingSc = new window.infuraWeb3.eth.Contract(
@@ -970,10 +964,10 @@ const StakeWodDetails = ({
                     <>Switch to Ethereum</>
                   ) : depositLoading ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : depositStatus === "initial" ? (
                     <>Approve</>
@@ -988,10 +982,9 @@ const StakeWodDetails = ({
                     </>
                   )}
                 </button> */}
-                 <button
+                <button
                   disabled
                   className={`btn w-100  disabled-btn d-flex justify-content-center align-items-center gap-2`}
-              
                 >
                   Coming Soon
                 </button>
@@ -1076,10 +1069,10 @@ const StakeWodDetails = ({
                       >
                         {claimLoading ? (
                           <div
-                            class="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                           </div>
                         ) : claimStatus === "failed" ? (
                           <>
@@ -1108,10 +1101,10 @@ const StakeWodDetails = ({
                       >
                         {reInvestLoading ? (
                           <div
-                            class="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                           </div>
                         ) : reInvestStatus === "failed" ? (
                           <>
@@ -1176,31 +1169,38 @@ const StakeWodDetails = ({
                 </div>
               </div>
              )} */}
-           <HtmlTooltip
-           placement="top"
-           title={<span className="card-eth-chain-text">Coming Soon</span>}
-           >
-           <div
-              className={`info-pool-wrapper2 p-1 d-flex ${ depositedTokens > 0 ?  'justify-content-center' : 'justify-content-start'} `}
-              style={{
-                cursor: "pointer",
-                width: depositedTokens > 0 ? 'auto' : 'fit-content'
-              }}
-              // onClick={() => {
-              //   showPopup();
-              // }}
+            <HtmlTooltip
+              placement="top"
+              title={<span className="card-eth-chain-text">Coming Soon</span>}
             >
-              <h6
-                className="m-0 mybalance-text d-flex align-items-center gap-1"
-                style={{ color: "#4ed5d2" }}
+              <div
+                className={`info-pool-wrapper2 p-1 d-flex ${
+                  depositedTokens > 0
+                    ? "justify-content-center"
+                    : "justify-content-start"
+                } `}
+                style={{
+                  cursor: "pointer",
+                  width: depositedTokens > 0 ? "auto" : "fit-content",
+                }}
+                // onClick={() => {
+                //   showPopup();
+                // }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
-              </h6>
-            </div>
-           </HtmlTooltip>
+                <h6
+                  className="m-0 mybalance-text d-flex align-items-center gap-1"
+                  style={{ color: "#4ed5d2" }}
+                >
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                    alt=""
+                  />{" "}
+                  Details
+                </h6>
+              </div>
+            </HtmlTooltip>
           </div>
         </div>
-      
       </div>
 
       {popup && (
@@ -1395,14 +1395,19 @@ const StakeWodDetails = ({
                     >
                       {withdrawLoading ? (
                         <div
-                          class="spinner-border spinner-border-sm text-light"
+                          className="spinner-border spinner-border-sm text-light"
                           role="status"
                         >
-                          <span class="visually-hidden">Loading...</span>
+                          <span className="visually-hidden">Loading...</span>
                         </div>
                       ) : withdrawStatus === "failed" ? (
                         <>
-                          <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/failMark.svg"
+                            }
+                            alt=""
+                          />
                           Failed
                         </>
                       ) : withdrawStatus === "success" ? (
@@ -1762,10 +1767,10 @@ const StakeWodDetails = ({
     //               >
     //                 {depositLoading ? (
     //                   <div
-    //                     class="spinner-border spinner-border-sm text-light"
+    //                     className="spinner-border spinner-border-sm text-light"
     //                     role="status"
     //                   >
-    //                     <span class="visually-hidden">Loading...</span>
+    //                     <span className="visually-hidden">Loading...</span>
     //                   </div>
     //                 ) : depositStatus === "initial" ? (
     //                   <>Approve</>
@@ -1883,10 +1888,10 @@ const StakeWodDetails = ({
     //                 >
     //                   {claimLoading ? (
     //                     <div
-    //                       class="spinner-border spinner-border-sm text-light"
+    //                       className="spinner-border spinner-border-sm text-light"
     //                       role="status"
     //                     >
-    //                       <span class="visually-hidden">Loading...</span>
+    //                       <span className="visually-hidden">Loading...</span>
     //                     </div>
     //                   ) : claimStatus === "failed" ? (
     //                     <>
@@ -1916,10 +1921,10 @@ const StakeWodDetails = ({
     //                   >
     //                     {reInvestLoading ? (
     //                       <div
-    //                         class="spinner-border spinner-border-sm text-light"
+    //                         className="spinner-border spinner-border-sm text-light"
     //                         role="status"
     //                       >
-    //                         <span class="visually-hidden">Loading...</span>
+    //                         <span className="visually-hidden">Loading...</span>
     //                       </div>
     //                     ) : reInvestStatus === "failed" ? (
     //                       <>
@@ -2337,10 +2342,10 @@ const StakeWodDetails = ({
     //                 >
     //                   {withdrawLoading ? (
     //                     <div
-    //                       class="spinner-border spinner-border-sm text-light"
+    //                       className="spinner-border spinner-border-sm text-light"
     //                       role="status"
     //                     >
-    //                       <span class="visually-hidden">Loading...</span>
+    //                       <span className="visually-hidden">Loading...</span>
     //                     </div>
     //                   ) : withdrawStatus === "failed" ? (
     //                     <>
