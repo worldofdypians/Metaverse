@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./_campaigns.scss";
 import { NavLink } from "react-router-dom";
 import NewChallenges from "../../Game/NewChallenges";
+import TradingComp from "./TradingComp/TradingComp";
 
 const Campaigns = () => {
   const [popupEvent, setPopupEvent] = useState(null);
@@ -146,7 +147,7 @@ const Campaigns = () => {
   return (
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-2 px-lg-0">
       <div className="custom-container  my-5 py-0 py-lg-5">
-        <div className="row">
+        {/* <div className="row">
           <div className="col-12 col-lg-6">
             <img
               src={dummyBanner.image}
@@ -211,7 +212,8 @@ const Campaigns = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <TradingComp />
         <div className="campaign-items-grid mt-5">
           {dummyData.map((item, index) => (
             <a href={item.link} rel="noreferrer" target="_blank">
