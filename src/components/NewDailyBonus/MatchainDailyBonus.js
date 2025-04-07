@@ -75,7 +75,7 @@ const MatchainDailyBonus = ({
   onChestClaimed,
   onSkaleChestClaimed,
   listedNFTS,
-  dypTokenData, 
+  dypTokenData,
   ethTokenData,
   handleSwitchChain,
   openedSkaleChests,
@@ -133,7 +133,10 @@ const MatchainDailyBonus = ({
   openedMatChests,
   onMatChestClaimed,
   allMatChests,
-  onConnectWallet
+  onConnectWallet,
+  walletClient,
+  publicClient,
+  network_matchain,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -733,28 +736,6 @@ const MatchainDailyBonus = ({
     }
   };
 
-  const handleOpBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0xcc")
-          .then(() => {
-            handleSwitchNetwork(204);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(204);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(204);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(204);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
   const handleClaimUsdPremium = async () => {
     const data = {
       transactionHash: premiumTxHash,
@@ -802,97 +783,10 @@ const MatchainDailyBonus = ({
     }
   }, [premiumTxHash, selectedChainforPremium]);
 
-  const handleBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0x38")
-          .then(() => {
-            handleSwitchNetwork(56);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(56);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(56);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(56);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-  const handleMantaPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0xa9")
-          .then(() => {
-            handleSwitchNetwork(169);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(169);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(169);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(169);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleBasePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0x2105")
-          .then(() => {
-            handleSwitchNetwork(8453);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(8453);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(8453);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(8453);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleTaikoPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x28c58")
-            .then(() => {
-              handleSwitchNetwork(167000);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
-
   const handleMatPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
           await handleSwitchNetworkhook("0x2ba")
@@ -912,104 +806,6 @@ const MatchainDailyBonus = ({
       }
     } else {
       window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
-
-  const handleSkalePool = async () => {
-    if (window.ethereum) {
-      if (
-        !window.gatewallet &&
-        window.WALLET_TYPE !== "binance" &&
-        !window.ethereum?.isBinance
-      ) {
-        await handleSwitchNetworkhook("0x585eb4b1")
-          .then(() => {
-            handleSwitchNetwork(1482601649);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (
-        window.gatewallet &&
-        window.WALLET_TYPE !== "binance" &&
-        !window.ethereum?.isBinance
-      ) {
-        handleSwitchChainGateWallet(1482601649);
-      } else if (
-        window.ethereum?.isBinance ||
-        window.WALLET_TYPE === "binance"
-      ) {
-        window.alertify.error(
-          "This network is not available on Binance Wallet"
-        );
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      window.alertify.error("This network is not available on Binance Wallet");
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleCorePool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x45c")
-            .then(() => {
-              handleSwitchNetwork(1116);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
-  const handleVictionPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x58")
-            .then(() => {
-              handleSwitchNetwork(88);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
-
-  const handleSeiPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x531")
-          .then(() => {
-            handleSwitchNetwork(1329);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
@@ -2426,11 +2222,10 @@ const MatchainDailyBonus = ({
       }
     } else if (chain === "matchain") {
       if (window.WALLET_TYPE !== "binance") {
-        if(!email) {
+        if (!email) {
           setMessage("login");
           setDisable(true);
-        }
-        else if (email && coinbase && address) {
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2824,7 +2619,9 @@ const MatchainDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={"https://cdn.worldofdypians.com/wod/comingSoon.png"}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon.png"
+                            }
                             className={`chain-img-2 ${
                               visibleChain === "matchain" && "chain-img-active"
                             }`}
@@ -2935,7 +2732,10 @@ const MatchainDailyBonus = ({
                             </button>
                           </div>
                         </div>
-                        <div className={`position-relative chain-item w-100`} style={{pointerEvents: "none"}}>
+                        <div
+                          className={`position-relative chain-item w-100`}
+                          style={{ pointerEvents: "none" }}
+                        >
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon3.png"
@@ -2953,7 +2753,10 @@ const MatchainDailyBonus = ({
                             </div> */}
                           </div>
                         </div>
-                        <div className={`position-relative chain-item w-100`} style={{pointerEvents: "none"}}>
+                        <div
+                          className={`position-relative chain-item w-100`}
+                          style={{ pointerEvents: "none" }}
+                        >
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon2.png"
@@ -2980,7 +2783,9 @@ const MatchainDailyBonus = ({
                           } w-auto`}
                         >
                           <img
-                            src={"https://cdn.worldofdypians.com/wod/comingSoon.png"}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon.png"
+                            }
                             className={`chain-img-2 ${
                               visibleChain === "matchain" && "chain-img-active"
                             }`}
@@ -2988,7 +2793,8 @@ const MatchainDailyBonus = ({
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              visibleChain === "matchain" && "chain-title-wrapper-active"
+                              visibleChain === "matchain" &&
+                              "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("matchain");
@@ -3024,8 +2830,6 @@ const MatchainDailyBonus = ({
                                 />{" "}
                                 Matchain
                               </button>
-
-                             
                             </div>
                           </div>
                         </div>
@@ -3041,6 +2845,8 @@ const MatchainDailyBonus = ({
                           ? allChests && allChests.length > 0
                             ? allChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3089,6 +2895,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3143,6 +2951,8 @@ const MatchainDailyBonus = ({
                           ? allCoreChests && allCoreChests.length > 0
                             ? allCoreChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3191,6 +3001,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3245,6 +3057,8 @@ const MatchainDailyBonus = ({
                           ? allMantaChests && allMantaChests.length > 0
                             ? allMantaChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3293,6 +3107,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3347,6 +3163,8 @@ const MatchainDailyBonus = ({
                           ? allBaseChests && allBaseChests.length > 0
                             ? allBaseChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3394,6 +3212,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3447,6 +3267,8 @@ const MatchainDailyBonus = ({
                           ? allTaikoChests && allTaikoChests.length > 0
                             ? allTaikoChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3494,6 +3316,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3547,6 +3371,8 @@ const MatchainDailyBonus = ({
                           ? allMatChests && allMatChests.length > 0
                             ? allMatChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3594,6 +3420,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3647,6 +3475,8 @@ const MatchainDailyBonus = ({
                           ? allSeiChests && allSeiChests.length > 0
                             ? allSeiChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3694,6 +3524,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3747,6 +3579,8 @@ const MatchainDailyBonus = ({
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3795,6 +3629,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3850,6 +3686,8 @@ const MatchainDailyBonus = ({
                             allSkaleChests.length > 0
                           ? allSkaleChests.map((item, index) => (
                               <NewChestItem
+                                walletClient={walletClient}
+                                publicClient={publicClient}
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
@@ -3897,6 +3735,8 @@ const MatchainDailyBonus = ({
                             ))
                           : window.range(0, 19).map((item, index) => (
                               <NewChestItem
+                                walletClient={walletClient}
+                                publicClient={publicClient}
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
