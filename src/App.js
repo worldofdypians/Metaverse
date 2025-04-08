@@ -2135,7 +2135,7 @@ function App() {
     ) {
       // console.log("window.ethereumwindow.ethereum", window.ethereum);
       window.ethereum
-      .request({ method: "eth_chainId" })
+        .request({ method: "eth_chainId" })
         .then((data) => {
           setChainId(parseInt(data));
         })
@@ -4129,7 +4129,7 @@ function App() {
     {
       title: "SEI",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
-      eventStatus: "Expired",
+      eventStatus: "Coming Soon",
       rewardType: "SEI",
       rewardAmount: "$20,000",
       location: [-0.06787060104021504, 0.08728981018066406],
@@ -4140,7 +4140,7 @@ function App() {
       totalRewards: "$20,000 in SEI Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 05, 2024",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/seiBg.webp",
       userEarnUsd: seiEarnUsd,
       userEarnCrypto: seiEarnToken,
@@ -4150,7 +4150,7 @@ function App() {
         chain: "Sei Network",
         linkState: "sei",
         rewards: "SEI",
-        status: "Expired",
+        status: "Coming Soon",
         id: "event13",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SEI Rewards",
@@ -4160,7 +4160,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 05, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {
@@ -5397,6 +5397,9 @@ function App() {
           handleRedirect={() => {
             setFireAppContent(true);
           }}
+          onLogout={() => {
+            setCount55(count55 + 1);
+          }}
           handleDisconnect={handleDisconnect}
           myOffers={myNftsOffer}
           handleRefreshList={handleRefreshList}
@@ -6543,7 +6546,7 @@ function App() {
               />
             }
           />
-         {/* <Route
+          {/* <Route
             exact
             path="/shop/mint/kucoin"
             element={
