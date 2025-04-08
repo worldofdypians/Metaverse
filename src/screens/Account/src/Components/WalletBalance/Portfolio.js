@@ -12,18 +12,15 @@ import useWindowSize from "../../../../../hooks/useWindowSize";
  
 
 const Portfolio = ({
-  dypBalance,
+
   address,
   coinbase,
-  dypBalancebnb,
-  dypBalanceavax,
+
   isVerified,
   email,
   // handleConnectWallet,
   handleShowWalletPopup,
-  idypBalance,
-  idypBalancebnb,
-  idypBalanceavax,
+
   userId,
   username,
   allListed,

@@ -196,13 +196,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "manta-mint-bg",
       wrapperClassName: "manta-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Coming Soon",
       rewardsTitle: "$20,000 in Manta rewards",
       rewardType: "Manta",
-      userEarned: mantaEarnUsd,
+      userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 05, 2024",
-      eventEndDate: "Apr. 05, 2025",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
     },
     {
       id: "bnb",
@@ -218,13 +218,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "bnb-mint-bg",
       wrapperClassName: "bnb-eventwrapper",
-      treasureHuntStatus: "Expired",
+      treasureHuntStatus: "Coming Soon",
       rewardsTitle: "$20,000 in BNB rewards",
       rewardType: "BNB",
-      userEarned: bnbEarnUSD,
+      userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 04, 2024",
-      eventEndDate: "Apr. 04, 2025",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
     },
     {
       id: "core",
@@ -240,13 +240,13 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "core-mint-bg",
       wrapperClassName: "core-eventwrapper",
-      treasureHuntStatus: "Expired",
+      treasureHuntStatus: "Coming Soon",
       rewardsTitle: "$20,000 in CORE rewards",
       rewardType: "CORE",
-      userEarned: coreEarnUsd,
+      userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 04, 2024",
-      eventEndDate: "Apr. 04, 2025",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
     },
     {
       id: "multiversx",
@@ -284,13 +284,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "sei-mint-bg",
       wrapperClassName: "sei-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Coming Soon",
       rewardsTitle: "$20,000 in SEI rewards",
       rewardType: "SEI",
-      userEarned: seiEarnUsd,
+      userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 05, 2024",
-      eventEndDate: "Apr. 05, 2025",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
     },
     {
       id: "viction",
@@ -454,9 +454,9 @@ const BetaPassNFT = ({
       logo: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
       buttonTitle: "KuCoin",
       isComingSoon: false,
-      giveawayButton: true,
-      giveawayButtonTitle: "Mint your NFT",
-      giveawayLink: "/shop/mint/kucoin",
+      giveawayButton: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
       areaImage: undefined,
       cardClassName: "kucoin-mint-bg2",
       wrapperClassName: "kucoin-eventwrapper",
@@ -1324,7 +1324,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${showVerify && "complete"
+                                  className={`col-3 li ${showVerify && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1332,7 +1332,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${playerCreation && "complete"
+                                  className={`col-3 li ${playerCreation && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1340,7 +1340,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-2 li ${linkWallet && "complete"}`}
+                                  className={`col-2 li ${linkWallet && "complete"}`}
                                   style={{ width: 0 }}
                                 >
                                   <div className="status">

@@ -9,9 +9,8 @@ import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import axios from "axios";
 import Countdown from "react-countdown";
-import { ClickAwayListener } from "@material-ui/core";
-import { abbreviateNumber } from "js-abbreviation-number";
 import { ethers } from "ethers";
+import { useQuery } from "@tanstack/react-query";
 
 const renderer = ({ days, hours, minutes, seconds }) => {
   return (
@@ -60,13 +59,30 @@ const StakeWodDetails2 = ({
   start_date,
   onSuccessfulStake,
   binanceW3WProvider,
+  walletClient,
+  publicClient,
+  network_matchain,
 }) => {
-  let { reward_token_wod, BigNumber, alertify, reward_token_idyp, token_dyps } =
-    window;
+  let { reward_token_wod, BigNumber } = window;
   let token_symbol = "WOD";
-  const today = new Date();
 
   // 8% apr 1M Cap in DYP, locktime 30days, dyp deposit & dyp rewards
+
+  const refreshBalanceQuery = async (
+    wallet,
+    staking,
+    queryFunc,
+    publicClient
+  ) => {
+    if (publicClient) {
+      return await publicClient.readContract({
+        abi: window.CONSTANT_STAKING_WOD_ABI,
+        address: staking._address,
+        functionName: queryFunc,
+        args: wallet ? [wallet] : [],
+      });
+    }
+  };
 
   function download(filename, text) {
     var element = document.createElement("a");
@@ -83,7 +99,7 @@ const StakeWodDetails2 = ({
 
     document.body.removeChild(element);
   }
-
+  // console.log(publicClient);
   function jsonToCsv(items) {
     const replacer = (key, value) => (value === null ? "" : value); // specify how you want to handle null values here
     const header = Object.keys(items[0]);
@@ -124,7 +140,7 @@ const StakeWodDetails2 = ({
 
   const [token_balance, settoken_balance] = useState(0);
   const [pendingDivs, setpendingDivs] = useState("");
-  const [totalEarnedTokens, settotalEarnedTokens] = useState("");
+
   const [cliffTime, setcliffTime] = useState("");
   const [stakingTime, setstakingTime] = useState("");
   const [depositedTokens, setdepositedTokens] = useState("");
@@ -139,58 +155,158 @@ const StakeWodDetails2 = ({
   const [claimStatus, setclaimStatus] = useState("initial");
   const [withdrawLoading, setwithdrawLoading] = useState(false);
   const [withdrawStatus, setwithdrawStatus] = useState("initial");
- 
+
   const [tvl, settvl] = useState("");
   const [tvlusd, settvlusd] = useState("");
 
   const [referralFeeEarned, setreferralFeeEarned] = useState("");
-  const [stakingOwner, setstakingOwner] = useState(null);
+  // const [stakingOwner, setstakingOwner] = useState(null);
   const [usdPerToken, setusdPerToken] = useState("");
   const [errorMsg, seterrorMsg] = useState("");
   const [errorMsg2, seterrorMsg2] = useState("");
   const [errorMsg3, seterrorMsg3] = useState("");
-  const [contractDeployTime, setcontractDeployTime] = useState("");
-  const [disburseDuration, setdisburseDuration] = useState("");
-  const [settotal_stakers, setsettotal_stakers] = useState("");
+
+  // const [settotal_stakers, setsettotal_stakers] = useState("");
 
   const [show, setshow] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
   const [popup, setpopup] = useState(false);
- 
 
   const [approvedAmount, setapprovedAmount] = useState("0.00");
-  const [availableQuota, setavailableQuota] = useState(0);
+
   const [totalDeposited, settotalDeposited] = useState(0);
   const [canDeposit, setCanDeposit] = useState(true);
 
-  const [poolCapTooltip, setPoolCapTooltip] = useState(false);
-  const [quotaTooltip, setQuotaTooltip] = useState(false);
-  const [maxDepositTooltip, setMaxDepositTooltip] = useState(false);
+  // const [poolCapTooltip, setPoolCapTooltip] = useState(false);
+  // const [quotaTooltip, setQuotaTooltip] = useState(false);
+  // const [maxDepositTooltip, setMaxDepositTooltip] = useState(false);
 
-  const poolCapClose = () => {
-    setPoolCapTooltip(false);
+  const refreshBalanceMatchId = async () => {
+    try {
+      let reward_token_wod_sc = new window.bscWeb3.eth.Contract(
+        window.TOKEN_ABI,
+        reward_token_wod._address
+      );
+
+      let _bal;
+      if (chainId === "56" && coinbase && isConnected) {
+        _bal = await reward_token_wod_sc.methods
+          .balanceOf(coinbase)
+          .call()
+          .catch((e) => {
+            console.error(e);
+          });
+      }
+
+      if (staking && coinbase !== undefined && coinbase !== null) {
+        let _pDivs = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "getTotalPendingDivs",
+          publicClient
+        );
+
+        // let _tEarned = refreshBalanceQuery(
+        //   coinbase,
+        //   staking,
+        //   "totalEarnedTokens",
+        //   publicClient,
+        //   false
+        // );
+        let _stakingTime = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "stakingTime",
+          publicClient
+        );
+        let _dTokens = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "depositedTokens",
+          publicClient
+        );
+        let _lClaimTime = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "lastClaimedTime",
+          publicClient
+        );
+        let _rFeeEarned = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "totalReferralFeeEarned",
+          publicClient
+        );
+        let _cliffTime = refreshBalanceQuery(
+          undefined,
+          staking,
+          "LOCKUP_TIME",
+          publicClient
+        );
+
+        let _tvl = await reward_token_wod_sc.methods
+          .balanceOf(staking._address)
+          .call()
+          .catch((e) => {
+            console.error(e);
+          });
+        let [
+          token_balance,
+          pendingDivs,
+          // totalEarnedTokens,
+          stakingTime,
+          depositedTokens,
+          lastClaimedTime,
+          tvl,
+          referralFeeEarned,
+          clifftime,
+          // total_stakers,
+        ] = await Promise.all([
+          _bal,
+          _pDivs,
+          // _tEarned,
+          _stakingTime,
+          _dTokens,
+          _lClaimTime,
+          _tvl,
+          _rFeeEarned,
+          _cliffTime,
+          // tStakers,
+        ]);
+
+        let balance_formatted = new BigNumber(token_balance ?? 0)
+          .div(1e18)
+          .toString(10);
+        settoken_balance(balance_formatted);
+
+        let divs_formatted = new BigNumber(pendingDivs).div(1e18).toFixed(6);
+        setpendingDivs(divs_formatted);
+
+        // let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
+        //   .div(1e18)
+        //   .toFixed(6);
+        // settotalEarnedTokens(earnedTokens_formatted);
+        setcliffTime(Number(clifftime));
+        setstakingTime(Number(stakingTime));
+
+        let depositedTokens_formatted = new BigNumber(depositedTokens)
+          .div(1e18)
+          .toString(10);
+
+        setdepositedTokens(depositedTokens_formatted);
+
+        setlastClaimedTime(lastClaimedTime);
+
+        let tvl_formatted = new BigNumber(tvl).div(1e18).toFixed(6);
+        settvl(tvl_formatted);
+
+        setreferralFeeEarned(referralFeeEarned);
+        // setsettotal_stakers(total_stakers);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
-
-  const poolCapOpen = () => {
-    setPoolCapTooltip(true);
-  };
-
-  const quotaClose = () => {
-    setQuotaTooltip(false);
-  };
-
-  const quotaOpen = () => {
-    setQuotaTooltip(true);
-  };
-
-  const maxDepositClose = () => {
-    setMaxDepositTooltip(false);
-  };
-
-  const maxDepositOpen = () => {
-    setMaxDepositTooltip(true);
-  };
-
   const showPopup = () => {
     setpopup(true);
   };
@@ -227,175 +343,126 @@ const StakeWodDetails2 = ({
   };
 
   const refreshBalance = async () => {
-    
+    if (window.WALLET_TYPE === "matchId") {
+      refreshBalanceMatchId();
+    } else {
+      try {
+        let reward_token_wod_sc = new window.bscWeb3.eth.Contract(
+          window.TOKEN_ABI,
+          reward_token_wod._address
+        );
 
-    //console.log({lp_data})
-    //Calculate APY
-
-    try {
-      // let amount = new BigNumber(1000000000000000000).toFixed(0);
-      // let router = await window.getUniswapRouterContract();
-      // let WETH = await router.methods.WETH().call();
-      // let platformTokenAddress = window.config.USDC_address;
-      // let rewardTokenAddress = window.config.reward_token_wod_address;
-      // let path = [
-      //   ...new Set(
-      //     [rewardTokenAddress, WETH, platformTokenAddress].map((a) =>
-      //       a.toLowerCase()
-      //     )
-      //   ),
-      // ];
-      // let _amountOutMin = await router.methods
-      //   .getAmountsOut(amount, path)
-      //   .call();
-      // _amountOutMin = _amountOutMin[_amountOutMin.length - 1];
-      // _amountOutMin = new BigNumber(_amountOutMin).div(1e6).toFixed(18);
-      let reward_token_wod_sc = new window.bscWeb3.eth.Contract(
-        window.TOKEN_ABI,
-        reward_token_wod._address
-      );
-
-      let _bal;
-      if (chainId === "56" && coinbase && isConnected) {
-        _bal = await reward_token_wod_sc.methods
-          .balanceOf(coinbase)
-          .call()
-          .catch((e) => {
+        let _bal;
+        if (chainId === "56" && coinbase && isConnected) {
+          _bal = await reward_token_wod_sc.methods
+            .balanceOf(coinbase)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+        }
+        if (staking && coinbase !== undefined && coinbase !== null) {
+          let _pDivs = staking.getTotalPendingDivs(coinbase).catch((e) => {
             console.error(e);
           });
+
+          // let _tEarned = staking.totalEarnedTokens(coinbase).catch((e) => {
+          //   console.error(e);
+          // });
+          let _stakingTime = staking.stakingTime(coinbase).catch((e) => {
+            console.error(e);
+          });
+          let _dTokens = staking.depositedTokens(coinbase).catch((e) => {
+            console.error(e);
+          });
+          let _lClaimTime = staking.lastClaimedTime(coinbase).catch((e) => {
+            console.error(e);
+          });
+          let _tvl = await reward_token_wod_sc.methods
+            .balanceOf(staking._address)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+
+          let _rFeeEarned = staking
+            .totalReferralFeeEarned(coinbase)
+            .catch((e) => {
+              console.error(e);
+            });
+          let tStakers = staking.getNumberOfHolders().catch((e) => {
+            console.error(e);
+          });
+
+          let [
+            token_balance,
+            pendingDivs,
+            // totalEarnedTokens,
+            stakingTime,
+            depositedTokens,
+            lastClaimedTime,
+            tvl,
+            referralFeeEarned,
+            // total_stakers,
+          ] = await Promise.all([
+            _bal,
+            _pDivs,
+            // _tEarned,
+            _stakingTime,
+            _dTokens,
+            _lClaimTime,
+            _tvl,
+            _rFeeEarned,
+            tStakers,
+          ]);
+
+          let balance_formatted = new BigNumber(token_balance ?? 0)
+            .div(1e18)
+            .toString(10);
+          settoken_balance(balance_formatted);
+
+          let divs_formatted = new BigNumber(pendingDivs).div(1e18).toFixed(6);
+          setpendingDivs(divs_formatted);
+
+          // let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
+          //   .div(1e18)
+          //   .toFixed(6);
+          // settotalEarnedTokens(earnedTokens_formatted);
+
+          setstakingTime(Number(stakingTime));
+
+          let depositedTokens_formatted = new BigNumber(depositedTokens)
+            .div(1e18)
+            .toString(10);
+
+          setdepositedTokens(depositedTokens_formatted);
+
+          setlastClaimedTime(lastClaimedTime);
+
+          let tvl_formatted = new BigNumber(tvl).div(1e18).toFixed(6);
+          settvl(tvl_formatted);
+
+          setreferralFeeEarned(referralFeeEarned);
+          // setsettotal_stakers(total_stakers);
+
+          //console.log({tvlUSD})
+
+          // let stakingOwner = await staking.owner();
+          // setstakingOwner(stakingOwner);
+        }
+      } catch (e) {
+        console.error(e);
       }
-      if (staking && coinbase !== undefined && coinbase !== null) {
-        let _pDivs = staking.getTotalPendingDivs(coinbase);
-
-        let _tEarned = staking.totalEarnedTokens(coinbase);
-        let _stakingTime = staking.stakingTime(coinbase);
-        let _dTokens = staking.depositedTokens(coinbase);
-        let _lClaimTime = staking.lastClaimedTime(coinbase);
-        let _tvl = await reward_token_wod_sc.methods
-          .balanceOf(staking._address)
-          .call()
-          .catch((e) => {
-            console.error(e);
-          });
-        // console.log('tvl', _tvl)
-        let _rFeeEarned = staking.totalReferralFeeEarned(coinbase);
-        let tStakers = staking.getNumberOfHolders();
-
-        //Take iDYP Balance on Staking
-        // let _tvlConstantiDYP = reward_token_idyp.balanceOf(
-        //   staking._address
-        // );
-        /* TVL of iDYP on Staking */
-
-        //Take DYPS Balance
-        // let _tvlDYPS = token_dyps.balanceOf(staking._address); /* TVL of DYPS */
-
-        let [
-          token_balance,
-          pendingDivs,
-          totalEarnedTokens,
-          stakingTime,
-          depositedTokens,
-          lastClaimedTime,
-          tvl,
-          referralFeeEarned,
-          total_stakers,
-          tvlConstantiDYP,
-          //   tvlDYPS,
-        ] = await Promise.all([
-          _bal,
-          _pDivs,
-          _tEarned,
-          _stakingTime,
-          _dTokens,
-          _lClaimTime,
-          _tvl,
-          _rFeeEarned,
-          tStakers,
-          // _tvlConstantiDYP,
-          //   _tvlDYPS,
-        ]);
-
-        //console.log({tvl, tvlConstantiDYP, _amountOutMin})
-        const dypprice = await axios
-          .get(
-            "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-          )
-          .then((res) => {
-            return res.data.data.attributes.base_token_price_usd;
+      if (staking) {
+        staking
+          .LOCKUP_TIME()
+          .then((cliffTime) => {
+            setcliffTime(Number(cliffTime));
           })
-          .catch((e) => {
-            console.log(e);
-          });
-
-        // let usdValueiDYP = new BigNumber(tvlConstantiDYP)
-        //   .times(_amountOutMin)
-        //   .toFixed(18);
-        // let usdValueDYPS = 0;
-        // let usd_per_lp = dypprice;
-        // let tvlUSD = new BigNumber(tvl)
-        //   .times(usd_per_lp)
-        //   .plus(usdValueiDYP)
-        //   .plus(usdValueDYPS)
-        //   .toFixed(18);
-        // settvlusd(tvlUSD);
-
-        let balance_formatted = new BigNumber(token_balance ?? 0)
-          .div(1e18)
-          .toString(10);
-        settoken_balance(balance_formatted);
-
-        let divs_formatted = new BigNumber(pendingDivs).div(1e18).toFixed(6);
-        setpendingDivs(divs_formatted);
-
-        let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
-          .div(1e18)
-          .toFixed(6);
-        settotalEarnedTokens(earnedTokens_formatted);
-
-        setstakingTime(stakingTime);
-
-        let depositedTokens_formatted = new BigNumber(depositedTokens)
-          .div(1e18)
-          .toString(10);
-
-        setdepositedTokens(depositedTokens_formatted);
-
-        setlastClaimedTime(lastClaimedTime);
-
-        let tvl_formatted = new BigNumber(tvl).div(1e18).toFixed(6);
-        settvl(tvl_formatted);
-
-        setreferralFeeEarned(referralFeeEarned);
-        setsettotal_stakers(total_stakers);
-
-        //console.log({tvlUSD})
-
-        let stakingOwner = await staking.owner();
-        setstakingOwner(stakingOwner);
+          .catch(console.error);
       }
-    } catch (e) {
-      console.error(e);
-    }
-    if (staking) {
-      staking
-        .LOCKUP_TIME()
-        .then((cliffTime) => {
-          setcliffTime(Number(cliffTime));
-        })
-        .catch(console.error);
-
-      staking.contractStartTime().then((contractDeployTime) => {
-        setcontractDeployTime(contractDeployTime);
-      });
-
-      staking.REWARD_INTERVAL().then((disburseDuration) => {
-        setdisburseDuration(disburseDuration);
-      });
     }
   };
-
- 
 
   useEffect(() => {
     getPriceDYP();
@@ -409,7 +476,7 @@ const StakeWodDetails2 = ({
       }
       getApprovedAmount();
     }
-  }, [coinbase, staking, isConnected, chainId]);
+  }, [publicClient, coinbase, staking, isConnected, chainId]);
 
   useEffect(() => {
     setdepositAmount("");
@@ -419,7 +486,7 @@ const StakeWodDetails2 = ({
   const handleApprove = async (e) => {
     // e.preventDefault();
     setdepositLoading(true);
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
       await reward_token_wod
@@ -469,13 +536,55 @@ const StakeWodDetails2 = ({
         refreshBalance();
         getApprovedAmount();
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = depositAmount;
+        amount = new BigNumber(amount).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: reward_token_wod._address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [staking._address, amount],
+          })
+          .catch((e) => {
+            setdepositLoading(false);
+            setdepositStatus("fail");
+            seterrorMsg(e?.shortMessage);
+            setTimeout(() => {
+              setdepositAmount("");
+              setdepositStatus("initial");
+              seterrorMsg("");
+            }, 10000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setdepositLoading(false);
+            setdepositStatus("deposit");
+            refreshBalance();
+            getApprovedAmount();
+          }
+        }
+      }
     }
   };
   // console.log(staking)
   const handleStake = async (e) => {
     setdepositLoading(true);
-    if (window.WALLET_TYPE !== "binance") {
-      if(staking._address.toLowerCase() === window.config.constant_staking_wod5_address.toLowerCase()) {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      if (
+        staking._address.toLowerCase() ===
+        window.config.constant_staking_wod5_address.toLowerCase()
+      ) {
         window.alertify.error("You must be connected to Binance Wallet!");
         setdepositLoading(false);
         return;
@@ -556,12 +665,60 @@ const StakeWodDetails2 = ({
           setdepositAmount("");
         }, 5000);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = depositAmount;
+        amount = new BigNumber(amount).times(1e18).toFixed(0);
+
+        let referrer = window.config.ZERO_ADDRESS;
+
+        const result = await walletClient
+          .writeContract({
+            address: staking._address,
+            abi: window.CONSTANT_STAKING_WOD_ABI,
+            functionName: "stake",
+            args: [amount, referrer],
+          })
+          .catch((e) => {
+            setdepositLoading(false);
+            setdepositStatus("fail");
+            seterrorMsg(e?.shortMessage);
+            setTimeout(() => {
+              setdepositAmount("");
+              setdepositStatus("fail");
+              seterrorMsg("");
+            }, 10000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            handleSecondTask(coinbase);
+            setdepositLoading(false);
+            setdepositStatus("success");
+            refreshBalance();
+            getApprovedAmount();
+            onSuccessfulStake();
+            setTimeout(() => {
+              setdepositStatus("initial");
+              setdepositAmount("");
+            }, 5000);
+          }
+        }
+      }
     }
   };
 
   const handleWithdraw = async (e) => {
     // e.preventDefault();
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let amount = new BigNumber(withdrawAmount).times(1e18).toFixed(0);
       setwithdrawLoading(true);
 
@@ -620,13 +777,58 @@ const StakeWodDetails2 = ({
           setwithdrawAmount("");
         }, 5000);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new BigNumber(withdrawAmount).times(1e18).toFixed(0);
+        setwithdrawLoading(true);
+
+        const result = await walletClient
+          .writeContract({
+            address: staking._address,
+            abi: window.CONSTANT_STAKING_WOD_ABI,
+            functionName: "unstake",
+            args: [amount],
+          })
+          .catch((e) => {
+            setwithdrawLoading(false);
+            setwithdrawStatus("failed");
+            seterrorMsg3(e?.shortMessage);
+
+            setTimeout(() => {
+              setwithdrawStatus("initial");
+              seterrorMsg3("");
+              setwithdrawAmount("");
+            }, 10000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setwithdrawLoading(false);
+            setwithdrawStatus("success");
+            refreshBalance();
+            onSuccessfulStake();
+            setTimeout(() => {
+              setwithdrawStatus("initial");
+              setwithdrawAmount("");
+            }, 5000);
+          }
+        }
+      }
     }
   };
 
   const handleClaimDivs = async (e) => {
     // e.preventDefault();
     setclaimLoading(true);
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       staking
         .claim()
         .then(() => {
@@ -675,6 +877,46 @@ const StakeWodDetails2 = ({
           setclaimStatus("initial");
         }, 5000);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: staking._address,
+            abi: window.CONSTANT_STAKING_WOD_ABI,
+            functionName: "claim",
+            args: [],
+          })
+          .catch((e) => {
+            setclaimStatus("failed");
+            setclaimLoading(false);
+            seterrorMsg2(e?.shortMessage);
+
+            setTimeout(() => {
+              setclaimStatus("initial");
+              seterrorMsg2("");
+            }, 10000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatus("success");
+            setclaimLoading(false);
+            setpendingDivs(getFormattedNumber(0, 6));
+            refreshBalance();
+            setTimeout(() => {
+              setclaimStatus("initial");
+            }, 5000);
+          }
+        }
+      }
     }
   };
 
@@ -686,15 +928,31 @@ const StakeWodDetails2 = ({
 
   const handleSetMaxWithdraw = async (e) => {
     // e.preventDefault();
-    let amount;
-    await staking.depositedTokens(coinbase).then((data) => {
-      amount = data;
-    });
+    if (window.WALLET_TYPE === "matchId") {
+      let amount;
+      await refreshBalanceQuery(
+        coinbase,
+        staking,
+        "depositedTokens",
+        publicClient
+      ).then((data) => {
+        amount = data;
+      });
+      let depositedTokens_formatted = new BigNumber(amount)
+        .div(1e18)
+        .toString(10);
+      setwithdrawAmount(depositedTokens_formatted);
+    } else {
+      let amount;
+      await staking.depositedTokens(coinbase).then((data) => {
+        amount = data;
+      });
 
-    let depositedTokens_formatted = new BigNumber(amount)
-      .div(1e18)
-      .toString(10);
-    setwithdrawAmount(depositedTokens_formatted);
+      let depositedTokens_formatted = new BigNumber(amount)
+        .div(1e18)
+        .toString(10);
+      setwithdrawAmount(depositedTokens_formatted);
+    }
   };
 
   const getApproxReturn = (depositAmount) => {
@@ -713,26 +971,49 @@ const StakeWodDetails2 = ({
   };
 
   const getApprovedAmount = async () => {
-    const result = await window
-      .checkapproveStakePool(
-        coinbase,
-        reward_token_wod._address,
-        staking._address
-      )
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
+    if (coinbase) {
+      if (window.WALLET_TYPE !== "matchId") {
+        const result = await window
+          .checkapproveStakePool(
+            coinbase,
+            reward_token_wod._address,
+            staking._address
+          )
+          .then((data) => {
+            console.log(data);
+            return data;
+          });
 
-    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
-    setapprovedAmount(result_formatted);
+        let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+        setapprovedAmount(result_formatted);
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (publicClient) {
+          const result = await publicClient
+            .readContract({
+              abi: window.TOKEN_ABI,
+              address: reward_token_wod._address,
+              functionName: "allowance",
+              args: [coinbase, staking._address],
+            })
+            .then((data) => {
+              return Number(data);
+            })
+            .catch((e) => {
+              console.error(e);
+              return 0;
+            });
+          let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+          setapprovedAmount(result_formatted);
+        }
+      }
+    }
   };
 
   const handleReinvest = async (e) => {
     // e.preventDefault();
     setreInvestStatus("invest");
     setreInvestLoading(true);
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       staking
         .reInvest()
         .then(() => {
@@ -781,33 +1062,62 @@ const StakeWodDetails2 = ({
           setreInvestStatus("initial");
         }, 10000);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: staking._address,
+            abi: window.CONSTANT_STAKING_WOD_ABI,
+            functionName: "reInvest",
+            args: [],
+          })
+          .catch((e) => {
+            setreInvestStatus("failed");
+            setreInvestLoading(false);
+            seterrorMsg2(e?.shortMessage);
+
+            setTimeout(() => {
+              setreInvestStatus("initial");
+              seterrorMsg2("");
+            }, 10000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setreInvestStatus("success");
+            setreInvestLoading(false);
+            setpendingDivs(getFormattedNumber(0, 6));
+            refreshBalance();
+            setTimeout(() => {
+              setreInvestStatus("initial");
+            }, 10000);
+          }
+        }
+      }
     }
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x38")
-      .then(() => {
-        handleSwitchNetwork("56");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  let id = Math.random().toString(36);
-
-  let showDeposit = true;
-
-  if (!isNaN(disburseDuration) && !isNaN(contractDeployTime)) {
-    let lastDay = parseInt(disburseDuration) + parseInt(contractDeployTime);
-    let lockTimeExpire = parseInt(Date.now()) + parseInt(cliffTime);
-    lockTimeExpire = lockTimeExpire.toString().substr(0, 10);
-    //console.log("now " + lockTimeExpire)
-    //console.log('last ' + lastDay)
-    if (lockTimeExpire > lastDay) {
-      showDeposit = false;
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else {
+      await handleSwitchNetworkhook("0x38")
+        .then(() => {
+          handleSwitchNetwork("56");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
-  }
+  };
 
   let cliffTimeInWords = "lockup period";
 
@@ -838,31 +1148,58 @@ const StakeWodDetails2 = ({
   tvl_usd = getFormattedNumber(tvl_usd, 2);
 
   const checkApproval = async (amount) => {
-    const result = await window
-      .checkapproveStakePool(
-        coinbase,
-        reward_token_wod._address,
-        staking._address
-      )
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
+    if (window.WALLET_TYPE === "matchId") {
+      if (publicClient) {
+        const result = await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: reward_token_wod._address,
+            functionName: "allowance",
+            args: [coinbase, staking._address],
+          })
+          .then((data) => {
+            return Number(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+        let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
 
-    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
-    let result_formatted2 = new BigNumber(result).div(1e18).toFixed(2);
-
-    if (
-      Number(result_formatted) >= Number(amount) &&
-      Number(result_formatted) !== 0
-    ) {
-      setdepositStatus("deposit");
+        if (
+          Number(result_formatted) >= Number(amount) &&
+          Number(result_formatted) !== 0
+        ) {
+          setdepositStatus("deposit");
+        } else {
+          setdepositStatus("initial");
+        }
+      }
     } else {
-      setdepositStatus("initial");
+      const result = await window
+        .checkapproveStakePool(
+          coinbase,
+          reward_token_wod._address,
+          staking._address
+        )
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
+
+      let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+
+      if (
+        Number(result_formatted) >= Number(amount) &&
+        Number(result_formatted) !== 0
+      ) {
+        setdepositStatus("deposit");
+      } else {
+        setdepositStatus("initial");
+      }
     }
   };
 
- 
   const getAvailableQuota = async () => {
     if (staking && staking._address) {
       const stakingSc = new window.bscWeb3.eth.Contract(
@@ -879,8 +1216,7 @@ const StakeWodDetails2 = ({
       const totalDeposited_formatted = new BigNumber(totalDeposited)
         .div(1e18)
         .toFixed(6);
-      const quotaLeft = poolCap - totalDeposited_formatted;
-      setavailableQuota(quotaLeft);
+
       settotalDeposited(totalDeposited_formatted);
     }
   };
@@ -898,7 +1234,7 @@ const StakeWodDetails2 = ({
     }
   }, [depositAmount, totalDeposited, poolCap]);
 
-  useEffect(() => { 
+  useEffect(() => {
     getAvailableQuota();
   }, [staking, poolCap]);
 
@@ -1157,10 +1493,10 @@ const StakeWodDetails2 = ({
                     <>Switch to BNB Chain</>
                   ) : depositLoading ? (
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : depositStatus === "initial" ? (
                     <>Approve</>
@@ -1170,7 +1506,10 @@ const StakeWodDetails2 = ({
                     <>Success</>
                   ) : (
                     <>
-                      <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
+                        alt=""
+                      />
                       Failed
                     </>
                   )}
@@ -1214,7 +1553,10 @@ const StakeWodDetails2 = ({
                         </div>
                       }
                     >
-                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/more-info.svg"}
+                        alt=""
+                      />
                     </Tooltip>
                   </h6>
                 </div>
@@ -1259,14 +1601,19 @@ const StakeWodDetails2 = ({
                       >
                         {claimLoading ? (
                           <div
-                            class="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                           </div>
                         ) : claimStatus === "failed" ? (
                           <>
-                            <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/failMark.svg"
+                              }
+                              alt=""
+                            />
                             Failed
                           </>
                         ) : claimStatus === "success" ? (
@@ -1291,14 +1638,19 @@ const StakeWodDetails2 = ({
                       >
                         {reInvestLoading ? (
                           <div
-                            class="spinner-border spinner-border-sm text-light"
+                            className="spinner-border spinner-border-sm text-light"
                             role="status"
                           >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                           </div>
                         ) : reInvestStatus === "failed" ? (
                           <>
-                            <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/failMark.svg"
+                              }
+                              alt=""
+                            />
                             Failed
                           </>
                         ) : reInvestStatus === "success" ? (
@@ -1389,7 +1741,11 @@ const StakeWodDetails2 = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                  alt=""
+                />{" "}
+                Details
               </h6>
             </div>
           </div>
@@ -1588,14 +1944,19 @@ const StakeWodDetails2 = ({
                     >
                       {withdrawLoading ? (
                         <div
-                          class="spinner-border spinner-border-sm text-light"
+                          className="spinner-border spinner-border-sm text-light"
                           role="status"
                         >
-                          <span class="visually-hidden">Loading...</span>
+                          <span className="visually-hidden">Loading...</span>
                         </div>
                       ) : withdrawStatus === "failed" ? (
                         <>
-                          <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/failMark.svg"
+                            }
+                            alt=""
+                          />
                           Failed
                         </>
                       ) : withdrawStatus === "success" ? (
@@ -1955,10 +2316,10 @@ const StakeWodDetails2 = ({
     //               >
     //                 {depositLoading ? (
     //                   <div
-    //                     class="spinner-border spinner-border-sm text-light"
+    //                     className="spinner-border spinner-border-sm text-light"
     //                     role="status"
     //                   >
-    //                     <span class="visually-hidden">Loading...</span>
+    //                     <span className="visually-hidden">Loading...</span>
     //                   </div>
     //                 ) : depositStatus === "initial" ? (
     //                   <>Approve</>
@@ -2076,10 +2437,10 @@ const StakeWodDetails2 = ({
     //                 >
     //                   {claimLoading ? (
     //                     <div
-    //                       class="spinner-border spinner-border-sm text-light"
+    //                       className="spinner-border spinner-border-sm text-light"
     //                       role="status"
     //                     >
-    //                       <span class="visually-hidden">Loading...</span>
+    //                       <span className="visually-hidden">Loading...</span>
     //                     </div>
     //                   ) : claimStatus === "failed" ? (
     //                     <>
@@ -2109,10 +2470,10 @@ const StakeWodDetails2 = ({
     //                   >
     //                     {reInvestLoading ? (
     //                       <div
-    //                         class="spinner-border spinner-border-sm text-light"
+    //                         className="spinner-border spinner-border-sm text-light"
     //                         role="status"
     //                       >
-    //                         <span class="visually-hidden">Loading...</span>
+    //                         <span className="visually-hidden">Loading...</span>
     //                       </div>
     //                     ) : reInvestStatus === "failed" ? (
     //                       <>
@@ -2530,10 +2891,10 @@ const StakeWodDetails2 = ({
     //                 >
     //                   {withdrawLoading ? (
     //                     <div
-    //                       class="spinner-border spinner-border-sm text-light"
+    //                       className="spinner-border spinner-border-sm text-light"
     //                       role="status"
     //                     >
-    //                       <span class="visually-hidden">Loading...</span>
+    //                       <span className="visually-hidden">Loading...</span>
     //                     </div>
     //                   ) : withdrawStatus === "failed" ? (
     //                     <>
