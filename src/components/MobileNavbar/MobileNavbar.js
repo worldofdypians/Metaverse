@@ -6,6 +6,7 @@ import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
 
 const MobileNavbar = ({
   handleSignUp,
@@ -27,6 +28,7 @@ const MobileNavbar = ({
   username,
   isConnected,
   network_matchain,
+  onLogout,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [chainState, setchainState] = useState("");
@@ -36,6 +38,7 @@ const MobileNavbar = ({
   const hamburger = document.querySelector("#mobileNavbar");
   const html = document.querySelector("html");
   let id = Math.random().toString(36);
+  const { logout } = useAuth();
 
   const checkRead = () => {
     if (myOffers.length > 0) {
@@ -530,29 +533,48 @@ const MobileNavbar = ({
                         Log In
                       </NavLink>
                     ) : (
-                      <NavLink
-                        to="/account"
-                        end
-                        className={({ isActive }) =>
-                          "d-flex px-2 py-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                        }
-                        onClick={() => setOpenNavbar(false)}
-                      >
-                        <span className="header-wallet-span d-flex align-items-center gap-2">
+                      <div className="d-flex align-items-center gap-2">
+                        <NavLink
+                          to="/account"
+                          end
+                          className={({ isActive }) =>
+                            "d-flex px-2 py-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          }
+                          onClick={() => setOpenNavbar(false)}
+                        >
+                          <span className="header-wallet-span d-flex align-items-center gap-2">
+                            <img
+                              width={20}
+                              height={20}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/walletIcon.svg"
+                              }
+                              alt=""
+                            />
+                            {username}
+                            <span className="header-wallet">
+                              {shortAddress(coinbase)}
+                            </span>
+                          </span>
+                        </NavLink>
+                        <button
+                          className="sign-out-btn w-50 py-1 d-flex align-items-center gap-2 justify-content-start"
+                          onClick={() => {
+                            logout();
+                            onLogout();
+                            setOpenNavbar(false);
+                          }}
+                        >
                           <img
-                            width={20}
-                            height={20}
                             src={
-                              "https://cdn.worldofdypians.com/wod/walletIcon.svg"
+                              "https://cdn.worldofdypians.com/wod/logout.svg"
                             }
                             alt=""
-                          />
-                          {username}
-                          <span className="header-wallet">
-                            {shortAddress(coinbase)}
-                          </span>
-                        </span>
-                      </NavLink>
+                            className="logout-icon"
+                          />{" "}
+                          Log Out
+                        </button>
+                      </div>
                     )}
 
                     {!email && (
@@ -1087,8 +1109,6 @@ const MobileNavbar = ({
               </div>
             </div>
           </div>
-
-        
 
           <div className="w-100 d-flex align-items-center justify-content-center gap-3">
             <div className="w-100">
