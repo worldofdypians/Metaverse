@@ -105,6 +105,8 @@ const Header = ({
         setchainState("taiko");
       } else if (chainId === 1329) {
         setchainState("sei");
+      } else if (chainId === 2040) {
+        setchainState("vanar");
       } else {
         setchainState("");
       }
@@ -1304,6 +1306,8 @@ const Header = ({
                                     ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                                     : chainState === "sei"
                                     ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                    : vanarState === true
+                                    ? "https://cdn.worldofdypians.com/wod/vanar.png"
                                     : "https://cdn.worldofdypians.com/wod/error.svg"
                                 }
                                 width={20}
@@ -1554,21 +1558,32 @@ const Header = ({
                                   Immutable
                                 </Dropdown.Item>
                               )}
-                            {window.WALLET_TYPE !== "matchId" && (
-                              <Dropdown.Item
-                                onClick={() => switchNetwork("0x406", 1030)}
-                              >
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
-                                  }
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                />
-                                Conflux
-                              </Dropdown.Item>
-                            )}
+                            <Dropdown.Item
+                              onClick={() => switchNetwork("0x406", 1030)}
+                            >
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              Conflux
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() => switchNetwork("0x7f8", 2040)}
+                            >
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/vanar.png"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              Vanar
+                            </Dropdown.Item>
                           </div>
                           <hr className="header-divider my-0" />
                           <a
