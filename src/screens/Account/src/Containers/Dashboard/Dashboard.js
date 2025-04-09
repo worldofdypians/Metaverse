@@ -238,7 +238,7 @@ function Dashboard({
     "ciangsabin@gmail.com",
     "izcipara88@gmail.com",
     "therockhidder@gmail.com",
-  ]
+  ];
 
   const chainDropdowns = [
     {
@@ -9388,15 +9388,16 @@ function Dashboard({
       </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft2 d-flex flex-column align-items-start px-lg-4 px-2 position-relative">
-    {bannedEmails.includes(email) && 
-      <div className="custom-container mt-5 mt-lg-0">
-      <div className="banned-account-wrapper w-100 px-2 py-3 mt-5 mt-lg-2 d-flex align-items-center justify-content-center">
-        <h6 className="banned-account-message mb-0 text-white text-center">
-        This account has been banned permanently. Check your email for more information.
-        </h6>
-      </div>
-    </div>
-    }
+        {bannedEmails.includes(email) && (
+          <div className="custom-container mt-5 mt-lg-0">
+            <div className="banned-account-wrapper w-100 px-2 py-3 mt-5 mt-lg-2 d-flex align-items-center justify-content-center">
+              <h6 className="banned-account-message mb-0 text-white text-center">
+                This account has been banned permanently. Check your email for
+                more information.
+              </h6>
+            </div>
+          </div>
+        )}
         {location.pathname === "/account" ||
         location.pathname.includes("/account/challenges") ? (
           <>
@@ -9493,8 +9494,9 @@ function Dashboard({
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
                 Number(baseEarnUSD) +
-                Number(kucoinEarnUsd)+
-                Number(taikoEarnUsd) 
+                Number(kucoinEarnUsd) +
+                Number(bnbEarnUsd) +
+                Number(taikoEarnUsd)
                 // Number(skaleEarnUsd) +
                 // Number(coingeckoEarnUsd) +
                 // Number(seiEarnUsd) +
