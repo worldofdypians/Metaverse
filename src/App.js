@@ -626,7 +626,7 @@ function App() {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
-  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2025-08-07T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
   let midleLastDay = new Date("2025-03-30T14:00:00.000+02:00");
@@ -1186,9 +1186,9 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            // if (bnbEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (bnbEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /
@@ -3835,11 +3835,11 @@ function App() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "Apr 09, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
       userEarnUsd: bnbEarnUsd,
       userEarnCrypto: bnbEarnToken,
@@ -3854,17 +3854,17 @@ function App() {
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: coreLastDay,
+        eventDuration: bnbLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Apr 09, 2025",
       },
     },
     {
