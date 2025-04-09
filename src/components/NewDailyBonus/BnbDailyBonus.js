@@ -81,8 +81,6 @@ const BnbDailyBonus = ({
   openedSkaleChests,
   coinbase,
   dummypremiumChests,
-  onPremiumClick,
-  onPremiumClickOther,
   premiumTxHash,
   selectedChainforPremium,
   skaleImages,
@@ -4616,12 +4614,12 @@ const BnbDailyBonus = ({
                             style={{ width: 70, height: 70 }}
                             alt=""
                           />
-                          <button
+                          <NavLink
                             className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
-                            onClick={onPremiumClick}
+                            to={"/account/prime"}
                           >
                             Get Prime
-                          </button>
+                          </NavLink>
                         </div>
                       </div>
                     ) : message === "caws" ? (
@@ -4905,12 +4903,12 @@ const BnbDailyBonus = ({
                             style={{ width: 60, height: 60 }}
                             alt=""
                           />
-                          <button
-                            className="get-premium-btn px-2 py-1"
-                            onClick={onPremiumClickOther}
+                          <NavLink
+                            className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
+                            to={"/account/prime"}
                           >
                             Get Prime
-                          </button>
+                          </NavLink>
                         </div>
                       </div>
                     ) : message === "login" ? (

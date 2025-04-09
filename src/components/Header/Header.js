@@ -114,7 +114,6 @@ const Header = ({
       }
     }
   };
-
   const handleDropdown = (key) => {
     setDropdown((prevState) => ({
       ...Object.keys(prevState).reduce((acc, curr) => {

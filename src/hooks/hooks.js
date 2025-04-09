@@ -182,6 +182,17 @@ export const handleSwitchNetworkhook = async (chainID) => {
     blockExplorerUrls: ["https://pacific-explorer.manta.network/"],
   };
 
+  const VANARPARAMS = {
+    chainId: "0x7f8", // A 0x-prefixed hexadecimal string
+    chainName: "Vanar Mainnet",
+    nativeCurrency: {
+      symbol: "VANRY", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc.vanarchain.com"],
+    blockExplorerUrls: ["https://explorer.vanarchain.com/"],
+  };
+
   try {
     await ethereum.request({
       method: "wallet_switchEthereumChain",
@@ -206,6 +217,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x531" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x343b" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xa9" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x7f8" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x2ba" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x585eb4b1" &&
         switchError.code.toString().includes("32603")) ||
@@ -246,6 +258,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [IMMUTABLEPARAMS]
               : chainID === "0xa9"
               ? [MANTAPARAMS]
+              : chainID === "0x7f8"
+              ? [VANARPARAMS]
               : "",
         });
         if (window.ethereum && window.ethereum.isTrust === true) {

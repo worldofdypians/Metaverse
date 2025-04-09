@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./_walletbalance.scss"; 
+import "./_walletbalance.scss";
 import axios from "axios";
 
 import { NavLink } from "react-router-dom";
@@ -9,10 +9,8 @@ import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../../../hooks/useWindowSize";
- 
 
 const Portfolio = ({
-
   address,
   coinbase,
 
@@ -66,7 +64,8 @@ const Portfolio = ({
   myCookieNfts,
   wodBalance,
   mySeiNfts,
-  mykucoinNFTs
+  mykucoinNFTs,
+  myVanarNFTs,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -79,14 +78,14 @@ const Portfolio = ({
 
   const [listedItemsFiltered, setlistedItemsFiltered] = useState([]);
   const [listedItems, setlistedItems] = useState([]);
- 
+
   const [filterTitle, setFilterTitle] = useState("Collected");
   const [nftItems, setNftItems] = useState([]);
   const [collectedItems, setcollectedItems] = useState([]);
   const [showNfts, setShowNfts] = useState(false);
   const [activeSlide, setActiveSlide] = useState();
   const [loading, setLoading] = useState(false);
-  const [loadingRecentListings, setLoadingRecentListings] = useState(false); 
+  const [loadingRecentListings, setLoadingRecentListings] = useState(false);
 
   const [filter1, setFilter1] = useState("all");
   const [filter2, setFilter2] = useState("all");
@@ -217,10 +216,8 @@ const Portfolio = ({
     borderColor: "#554fd8",
   };
 
-  
-  
   const sortNfts = (sortValue) => {
-     if (sortValue === "collected") {
+    if (sortValue === "collected") {
       setFilterTitle("Collected");
     } else if (sortValue === "favorites") {
       setFilterTitle("Favorites");
@@ -410,6 +407,7 @@ const Portfolio = ({
 
     let matNftsArray = [];
     let kucoinNftsArray = [];
+    let vanarNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -798,6 +796,22 @@ const Portfolio = ({
         );
       }
 
+      if (myVanarNFTs && myVanarNFTs.length > 0) {
+        await Promise.all(
+          myVanarNFTs.map(async (i) => {
+            vanarNftsArray.push({
+              nftAddress: window.config.nft_vanar_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "vanar",
+              chain: 2040,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
       if (myTaikoNfts && myTaikoNfts.length > 0) {
         await Promise.all(
           myTaikoNfts.map(async (i) => {
@@ -1016,6 +1030,7 @@ const Portfolio = ({
 
       finalCollection = [
         ...kucoinNftsArray,
+        ...vanarNftsArray,
         ...baseNftsArray,
         ...bnbNftsArray,
         ...matNftsArray,
@@ -1124,9 +1139,6 @@ const Portfolio = ({
       setGenesisRank(testArray[0].position);
     }
   };
- 
- 
- 
 
   const getTwonfts = () => {
     const allnft = [...myCawsWodStakes, ...landStaked];
@@ -1166,6 +1178,9 @@ const Portfolio = ({
       );
       let kucoinFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_kucoin_address
+      );
+      let vanarFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_vanar_address
       );
       let gateFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_gate_address
@@ -1233,6 +1248,7 @@ const Portfolio = ({
 
       const allBetapassArray = [
         ...coingeckoFilter,
+        ...vanarFilter,
         ...confluxFilter,
         ...gateFilter,
         ...dogeFilter,
@@ -1421,13 +1437,10 @@ const Portfolio = ({
   //     getCollected();
   //   }
   // }, [myTimepieceCollected, myCawsCollected, myLandCollected, coinbase]);
- 
 
   useEffect(() => {
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
-
-
 
   const [dummyEvent, setDummyEvent] = useState({});
   const [reqModal, setReqModal] = useState(false);
@@ -1494,7 +1507,6 @@ const Portfolio = ({
           <div className="col-12 px-0 position-relative mt-lg-0">
             <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
-  
                 <h6
                   className={`account-nft-sort ${
                     filterTitle === "Collected" && "nft-sort-selected"
@@ -1853,6 +1865,8 @@ const Portfolio = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
                                   : item.type === "kucoin"
                                   ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
+                                  : item.type === "vanar"
+                                  ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
@@ -1890,6 +1904,8 @@ const Portfolio = ({
                                   ? "VCBP"
                                   : item.type === "kucoin"
                                   ? "KCBP"
+                                  : item.type === "vanar"
+                                  ? "VNBP"
                                   : item.type === "immutable"
                                   ? "IMXBP"
                                   : item.type === "multivers"
@@ -2127,10 +2143,7 @@ const Portfolio = ({
                 </div>
               )}
 
-            
-
-              { 
-                loading === false &&
+              {loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||
                   (filterTitle === "Listed" && listedItems.length > 0) ||
                   (filterTitle === "Offers" && myOffers.length > 6) ||
@@ -2157,7 +2170,7 @@ const Portfolio = ({
                         </span>
                         <img
                           src={
-                            'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'
+                            "https://cdn.worldofdypians.com/wod/viewAllArrow.svg"
                           }
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
@@ -2177,7 +2190,9 @@ const Portfolio = ({
                           {showNfts ? "View Less" : "View All"}
                         </span>
                         <img
-                          src={ 'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/viewAllArrow.svg"
+                          }
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
                         />
@@ -2196,7 +2211,9 @@ const Portfolio = ({
                           {showNfts ? "View Less" : "View All"}
                         </span>
                         <img
-                          src={ 'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/viewAllArrow.svg"
+                          }
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
                         />
@@ -2215,7 +2232,9 @@ const Portfolio = ({
                           {showNfts ? "View Less" : "View All"}
                         </span>
                         <img
-                          src={ 'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/viewAllArrow.svg"
+                          }
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
                         />
@@ -2234,7 +2253,9 @@ const Portfolio = ({
                           {showNfts ? "View Less" : "View All"}
                         </span>
                         <img
-                          src={ 'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/viewAllArrow.svg"
+                          }
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
                         />
@@ -2396,7 +2417,12 @@ const Portfolio = ({
                             {filter1 === "" ? "Collections" : filter1}
                           </h6>
                         </div>
-                        <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/dropdownIcon.svg"
+                          }
+                          alt=""
+                        />
                       </button>
                       <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                         <li
@@ -2482,7 +2508,12 @@ const Portfolio = ({
                             {filter2 === "" ? "Status" : filter2}
                           </h6>
                         </div>
-                        <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/dropdownIcon.svg"
+                          }
+                          alt=""
+                        />
                       </button>
                       <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                         <li
@@ -2640,6 +2671,9 @@ const Portfolio = ({
                                   window.config.nft_kucoin_address
                                 ? "kucoin"
                                 : nft.nftAddress ===
+                                  window.config.nft_vanar_address
+                                ? "vanar"
+                                : nft.nftAddress ===
                                   window.config.nft_immutable_address
                                 ? "immutable"
                                 : nft.nftAddress ===
@@ -2760,6 +2794,9 @@ const Portfolio = ({
                                       window.config.nft_kucoin_address
                                     ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_vanar_address
+                                    ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_immutable_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
@@ -2829,6 +2866,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_kucoin_address
                                     ? "KCBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_vanar_address
+                                    ? "VNBP"
                                     : nft.nftAddress ===
                                       window.config.nft_immutable_address
                                     ? "IMXBP"
@@ -3026,6 +3066,9 @@ const Portfolio = ({
                                   window.config.nft_kucoin_address
                                 ? "kucoin"
                                 : nft.nftAddress ===
+                                  window.config.nft_vanar_address
+                                ? "vanar"
+                                : nft.nftAddress ===
                                   window.config.nft_immutable_address
                                 ? "immutable"
                                 : nft.nftAddress ===
@@ -3130,6 +3173,9 @@ const Portfolio = ({
                                       window.config.nft_kucoin_address
                                     ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_vanar_address
+                                    ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_immutable_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
@@ -3216,6 +3262,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_kucoin_address
                                     ? "KCBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_vanar_address
+                                    ? "VNBP"
                                     : nft.nftAddress ===
                                       window.config.nft_immutable_address
                                     ? "IMXBP"
@@ -3566,7 +3615,7 @@ const Portfolio = ({
                   </h6>
                 </div>
                 <img
-                  src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   alt="x mark"
                   style={{ cursor: "pointer" }}
                   onClick={() => setReqModal(false)}
@@ -3656,7 +3705,7 @@ const Portfolio = ({
                   </h6>
                 </div>
                 <img
-                  src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   alt="x mark"
                   style={{ cursor: "pointer" }}
                   onClick={() => setmultiplayerModal(false)}

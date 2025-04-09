@@ -40,6 +40,7 @@ window.config = {
   nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
   nft_mat_address: "0x8e4917c1ba9598fbbf66934cb17ac28c3b5849ab",
   nft_kucoin_address: "0x6dE32bb9F7bfEf596e7767F2DA9Fb62FEb91c1E2",
+  nft_vanar_address: "0x6dE32bb9F7bfEf596e7767F2DA9Fb62FEb91c1E2",
 
 
   nft_dypius_premium_address: "0xA3e62c82410fF6697B68CABE90a8b1B6e3CEC8CD",
@@ -3957,6 +3958,21 @@ async function getMyNFTs(address, type = "") {
     contract = new window.seiWeb3.eth.Contract(
       window.SEI_NFT_ABI,
       window.config.nft_sei_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  } else if (type === "vanar") {
+    contract = new window.vanarWeb3.eth.Contract(
+      window.SEI_NFT_ABI,
+      window.config.nft_vanar_address
     );
 
     const balance = await contract.methods.balanceOf(address).call();

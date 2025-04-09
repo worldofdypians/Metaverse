@@ -456,7 +456,7 @@ function App() {
     },
     2040: {
       chainId: 2040,
-      chainName: "Vanar",
+      chainName: "Vanar Mainnet",
       rpcUrls: ["https://rpc.vanarchain.com"],
       nativeCurrency: {
         symbol: "VANRY",
@@ -570,6 +570,7 @@ function App() {
   const [myseiNfts, setMyseiNfts] = useState([]);
   const [myMatNFTs, setMyMatNfts] = useState([]);
   const [mykucoinNFTs, setMykucoinNFTs] = useState([]);
+  const [myVanarNFTs, setmyVanarNFTs] = useState([]);
 
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
@@ -2476,6 +2477,9 @@ function App() {
 
       getMyNFTS(coinbase, "kucoin").then((NFTS) => {
         setMykucoinNFTs(NFTS);
+      });
+      getMyNFTS(coinbase, "vanar").then((NFTS) => {
+        setmyVanarNFTs(NFTS);
       });
       //setmyBaseNFTs
     } else {
@@ -5831,6 +5835,8 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
+
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -5919,6 +5925,7 @@ function App() {
                 coingeckoEarnUsd={userEarnUsd}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -6042,6 +6049,22 @@ function App() {
           <Route
             exact
             path="/shop/beta-pass/bnb"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/vanar"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -6442,6 +6465,7 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -6555,12 +6579,14 @@ function App() {
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
                 myKucoinNfts={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />
-          {/* <Route
+          <Route
             exact
-            path="/shop/mint/kucoin"
+            path="/shop/mint/vanar"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -6595,10 +6621,12 @@ function App() {
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
                 myKucoinNfts={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />
-           <Route
+          {/* <Route
             exact
             path="/shop/mint/matchain"
             element={
