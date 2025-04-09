@@ -13,6 +13,21 @@
   );
   z-index: 2;
 }
+.overlay-shadow-2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0) 50%
+  );
+  z-index: 2;
+}
 
 .trading-comp-title {
   color: #eeedff;
@@ -92,6 +107,8 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   background-size: cover;
   background-repeat: no-repeat;
+  height: 570px;
+  overflow-y: scroll;
 }
 
 .trading-comp-lb-item {
@@ -230,6 +247,10 @@
     font-style: italic;
     font-weight: 500;
     line-height: 12px; /* 120% */
+
+    @media screen and (max-width: 1500px) {
+      font-size: 10px;
+    }
   }
 }
 .trading-comp-airdrop-prize-wrapper {
@@ -252,6 +273,9 @@
     font-style: italic;
     font-weight: 500;
     line-height: 12px; /* 120% */
+    @media screen and (max-width: 1500px) {
+      font-size: 10px;
+    }
   }
 }
 
@@ -259,12 +283,18 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+  @media screen and (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .trading-comp-stats-grid {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(3, 1fr);
+  @media screen and (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .trading-comp-stats-wrapper {
@@ -380,4 +410,103 @@ font-size: 20px;
 font-style: normal;
 font-weight: 700;
 line-height: 24px; /* 120% */
+}
+
+
+.trading-popup-wrapper {
+  border-radius: 10px;
+  border: 1px solid #525469;
+  background: rgba(8, 11, 42, 1);
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  top: -10000px;
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  margin: auto;
+  z-index: 1000;
+  border-radius: 16px;
+  pointer-events: auto !important;
+  transition: all 1s ease-in-out;
+  width: 25%;
+  height: 480px;
+
+  @media screen and (max-width: 1455px) {
+    width: 55%;
+  }
+  @media screen and (max-width: 1300px) {
+    width: 70%;
+  }
+  @media screen and (max-width: 786px) {
+    width: 90%;
+  }
+}
+
+.trading-comp-lb-item-2{
+ 
+  border-radius: 12px;
+  background: rgba(113, 127, 255, 0.10);
+  span{
+    color: #C0C9FF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 100% */
+ }
+}
+
+.trading-comp-lb-prize{
+  color: #00E5FF !important;
+  text-align: right;
+  font-size: 16px !important;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 112.5% */
+}
+
+.trading-comp-overflow{
+  max-height: 350px;
+  overflow-y: scroll;
+}
+
+.trading-comp-overflow::-webkit-scrollbar{
+  display: none !important; 
+}
+
+.trading-comp-overflow-2{
+  max-height: 260px;
+  overflow-y: scroll;
+}
+
+.trading-comp-overflow-2::-webkit-scrollbar{
+  display: none !important; 
+}
+
+.trading-comp-lb-item-player{
+  border-radius: 12px !important;
+background: rgba(243, 191, 9, 0.10) !important;
+span{
+  color: #F3BF09 !important;
+}
+
+}
+
+.no-winners-text{
+  color: #C0C9FF;
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 18px; /* 128.571% */
+}
+
+.airdrop-weeks-grid{
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: 6px;
+  @media screen and (max-width: 600px) {
+  grid-template-columns: repeat(4,1fr);
+    
+  }
 }

@@ -6504,7 +6504,9 @@ function App() {
               />
             }
           />
-          <Route exact path="/campaigns" element={<Campaigns />} />
+          <Route exact path="/campaigns" element={<Campaigns
+          coinbase={coinbase}
+          />} />
           <Route
             exact
             path="/governance/proposal/:proposalId"

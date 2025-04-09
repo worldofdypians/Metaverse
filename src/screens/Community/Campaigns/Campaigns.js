@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import NewChallenges from "../../Game/NewChallenges";
 import TradingComp from "./TradingComp/TradingComp";
 
-const Campaigns = () => {
+const Campaigns = ({coinbase}) => {
   const [popupEvent, setPopupEvent] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
 
@@ -213,7 +213,9 @@ const Campaigns = () => {
             </div>
           </div>
         </div> */}
-        <TradingComp />
+        <TradingComp
+        coinbase={coinbase}
+        />
         <div className="campaign-items-grid mt-5">
           {dummyData.map((item, index) => (
             <a href={item.link} rel="noreferrer" target="_blank">
