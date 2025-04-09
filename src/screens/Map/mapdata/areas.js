@@ -1477,6 +1477,71 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
+  {
+    title: "Vanar Area",
+    marker: markers.vanarMarker,
+    activeMarker: activeMarkers.vanarMarker,
+
+    icon: "https://cdn.worldofdypians.com/wod/vanar.png",
+    location: [-0.06799398256818387, 0.08384048938751222],
+    banner: "seiBanner.png",
+    area: [
+      [
+        [-0.06776331275477364, 0.08392632007598878],
+        [-0.06781695689751979, 0.08366882801055908],
+        [-0.06816027940971604, 0.0837761163711548],
+        [-0.06807981319613751, 0.08403897285461426],
+      ],
+    ],
+    events: [
+      {
+        title: "Daily Bonus",
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+        link: "/account#dailybonus",
+      },
+
+      {
+        title: "Leaderboard",
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+        link: "/account#leaderboard",
+      },
+      // {
+      //   title: "Treasure Hunt",
+      //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      //   link: "/account/challenges/treasure-hunt",
+      // },
+    ],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/vanarchain",
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+      },
+      {
+        link: "https://t.me/vanarofficial",
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+      },
+      {
+        link: "https://discord.gg/fBwPGQUwBm",
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+      },
+      {
+        link: "https://vanarchain.com/",
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+      },
+    ],
+    city: "Dypians",
+    size: "500x500",
+    rewards: "N/A",
+    desc: "Vanar offers a suite of solutions for brands built on years of experience. From new engagement experiences to AI-driven IP tracking. ",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Participate in daily challenges",
+      "Explore an immersive environment",
+      "Experience real-time interactions",
+      "Join community-driven contests",
+    ],
+  },
 ];
 
 const bearAreas = [

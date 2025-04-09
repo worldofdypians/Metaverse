@@ -293,6 +293,12 @@ const iconData = [
     size: 24,
     chain: true,
   },
+  {
+    name: "vanarMarker",
+    url: "https://cdn.worldofdypians.com/wod/vanar.png",
+    size: 24,
+    chain: true,
+  },
 ];
 
 // Function to create markers dynamically

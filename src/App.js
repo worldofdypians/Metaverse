@@ -454,6 +454,16 @@ function App() {
       },
       blockExplorerUrls: ["https://matchscan.io"],
     },
+    2040: {
+      chainId: 2040,
+      chainName: "Vanar Mainnet",
+      rpcUrls: ["https://rpc.vanarchain.com"],
+      nativeCurrency: {
+        symbol: "VANRY",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://explorer.vanarchain.com/"],
+    },
   };
 
   const { useUserInfo, useWallet } = Hooks;
@@ -560,6 +570,7 @@ function App() {
   const [myseiNfts, setMyseiNfts] = useState([]);
   const [myMatNFTs, setMyMatNfts] = useState([]);
   const [mykucoinNFTs, setMykucoinNFTs] = useState([]);
+  const [myVanarNFTs, setmyVanarNFTs] = useState([]);
 
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
@@ -2466,6 +2477,9 @@ function App() {
 
       getMyNFTS(coinbase, "kucoin").then((NFTS) => {
         setMykucoinNFTs(NFTS);
+      });
+      getMyNFTS(coinbase, "vanar").then((NFTS) => {
+        setmyVanarNFTs(NFTS);
       });
       //setmyBaseNFTs
     } else {
@@ -4760,7 +4774,7 @@ function App() {
           return false;
         });
       if (isPremium_bnb === true) {
-        setIsPremium(true);
+        setIsPremium(false);
       } else {
         const isPremium_opbnb = await daily_bonus_contract.methods
           .isPremiumUser(addr)
@@ -4770,7 +4784,7 @@ function App() {
             return false;
           });
         if (isPremium_opbnb === true) {
-          setIsPremium(true);
+          setIsPremium(false);
         } else {
           const isPremium_core = await daily_bonus_contract_core.methods
             .isPremiumUser(addr)
@@ -4780,7 +4794,7 @@ function App() {
               return false;
             });
           if (isPremium_core === true) {
-            setIsPremium(true);
+            setIsPremium(false);
           } else {
             const isPremium_viction = await daily_bonus_contract_viction.methods
               .isPremiumUser(addr)
@@ -4790,7 +4804,7 @@ function App() {
                 return false;
               });
             if (isPremium_viction === true) {
-              setIsPremium(true);
+              setIsPremium(false);
             } else {
               const isPremium_skale = await daily_bonus_contract_skale.methods
                 .isPremiumUser(addr)
@@ -4800,7 +4814,7 @@ function App() {
                   return false;
                 });
               if (isPremium_skale === true) {
-                setIsPremium(true);
+                setIsPremium(false);
               } else {
                 const isPremium_taiko = await daily_bonus_contract_taiko.methods
                   .isPremiumUser(addr)
@@ -4938,6 +4952,8 @@ function App() {
                     ? "0x406"
                     : chain === 13371
                     ? "0x343b"
+                    : chain === 2040
+                    ? "0x7f8"
                     : chain === 1482601649
                     ? "0x585eb4b1"
                     : "0x406",
@@ -5819,6 +5835,8 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
+
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -5907,6 +5925,7 @@ function App() {
                 coingeckoEarnUsd={userEarnUsd}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -6030,6 +6049,22 @@ function App() {
           <Route
             exact
             path="/shop/beta-pass/bnb"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/vanar"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -6430,6 +6465,7 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -6543,12 +6579,14 @@ function App() {
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
                 myKucoinNfts={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />
-          {/* <Route
+          <Route
             exact
-            path="/shop/mint/kucoin"
+            path="/shop/mint/vanar"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -6583,10 +6621,12 @@ function App() {
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
                 myKucoinNfts={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />
-           <Route
+          {/* <Route
             exact
             path="/shop/mint/matchain"
             element={

@@ -237,6 +237,7 @@ const NewChestItem = ({
     chainText
   ) => {
     if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      window.web3 = new Web3(window.ethereum);
       const txResult = await window.web3.eth
         .getTransaction(txHash)
         .catch((e) => {
