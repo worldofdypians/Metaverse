@@ -6449,6 +6449,7 @@ function Dashboard({
                 Number(landPremiumRewards) +
                 Number(baseEarnUSD) +
                 Number(kucoinEarnUsd) +
+                Number(bnbEarnUsd) +
                 Number(taikoEarnUsd)
                 // Number(skaleEarnUsd) +
                 // Number(coingeckoEarnUsd) +
