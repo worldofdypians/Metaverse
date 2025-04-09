@@ -1819,6 +1819,9 @@ const Header = ({
               switchNetwork(hexchain, chain);
             }}
             activeChain={chainState}
+            isMobile={false}
+            isPremium={false}
+
           />
         </OutsideClickHandler>
       )}

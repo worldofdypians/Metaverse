@@ -5,6 +5,8 @@ const ChainPopup = ({
   onSwitchNetwork,
   onClose,
   activeChain,
+  isMobile,
+  isPremium,
 }) => {
   return (
     <div className="challenge-popup-wrapper popup-active p-3">
@@ -52,7 +54,7 @@ const ChainPopup = ({
               />
               BNB Chain
             </Dropdown.Item>
-            {window.WALLET_TYPE !== "matchId" && (
+            {window.WALLET_TYPE !== "matchId" && !isPremium && (
               <Dropdown.Item
                 onClick={() => onSwitchNetwork("0xcc", 204)}
                 className={activeChain === "opbnb" ? "active-chain-btn" : ""}
@@ -210,6 +212,7 @@ const ChainPopup = ({
               )}
             {window.WALLET_TYPE !== "matchId" &&
               window.WALLET_TYPE !== "binance" &&
+              !isPremium &&
               !window.ethereum?.isBinance && (
                 <Dropdown.Item
                   onClick={() => onSwitchNetwork("0x343b", 13371)}
@@ -252,39 +255,43 @@ const ChainPopup = ({
             </Dropdown.Item>
           </div>
         </div>
-        <hr className="header-divider my-0" />
-        <div className="d-flex align-items-center gap-lg-3 gap-2">
-          <a href="https://wod.space.id" rel="noreferrer" target="_blank">
-            <span
-              className="dropdown-nav p-2 d-flex align-items-center gap-2"
-              onClick={() => {
-                // handleOpenDomains();
-                onClose();
-              }}
-            >
-              <img
-                src={"https://cdn.worldofdypians.com/wod/domainIcon.svg"}
-                width={16}
-                height={16}
-                alt=""
-              />{" "}
-              Domain Name{" "}
-            </span>
-          </a>{" "}
-          <button
-            className="sign-out-btn p-2  d-flex align-items-center gap-2 justify-content-start"
-            onClick={() => {
-              onDisconnect();
-            }}
-          >
-            <img
-              src={"https://cdn.worldofdypians.com/wod/logout.svg"}
-              alt=""
-              className="logout-icon"
-            />
-            DISCONNECT
-          </button>
-        </div>
+        {!isMobile && (
+          <>
+            <hr className="header-divider my-0" />
+            <div className="d-flex align-items-center gap-lg-3 gap-2">
+              <a href="https://wod.space.id" rel="noreferrer" target="_blank">
+                <span
+                  className="dropdown-nav p-2 d-flex align-items-center gap-2"
+                  onClick={() => {
+                    // handleOpenDomains();
+                    onClose();
+                  }}
+                >
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/domainIcon.svg"}
+                    width={16}
+                    height={16}
+                    alt=""
+                  />{" "}
+                  Domain Name{" "}
+                </span>
+              </a>{" "}
+              <button
+                className="sign-out-btn p-2  d-flex align-items-center gap-2 justify-content-start"
+                onClick={() => {
+                  onDisconnect();
+                }}
+              >
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/logout.svg"}
+                  alt=""
+                  className="logout-icon"
+                />
+                DISCONNECT
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
