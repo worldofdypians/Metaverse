@@ -1049,7 +1049,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerCore = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardCoreDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -1057,50 +1057,15 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
+
+      var testArray = result.data.data.leaderboard;
 
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountCore(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountCore(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountCore(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerCore(true);
-          setUserDataCore([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerCore(false);
-          setUserDataCore(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataCore(...testArray);
+      if (userPosition > 99) {
         setActivePlayerCore(false);
-        setUserDataCore(...testArray);
+      } else {
+        setActivePlayerCore(true);
       }
     }
   };
@@ -1299,7 +1264,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerViction = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardVictionDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -1307,50 +1272,14 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
+      var testArray = result.data.data.leaderboard;
 
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountViction(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountViction(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountViction(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerViction(true);
-          setUserDataViction([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerViction(false);
-          setUserDataViction(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataViction(...testArray);
+      if (userPosition > 99) {
         setActivePlayerViction(false);
-        setUserDataViction(...testArray);
+      } else {
+        setActivePlayerViction(true);
       }
     }
   };
@@ -1554,7 +1483,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerManta = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardMantaDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -1562,50 +1491,14 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
 
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountManta(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountManta(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountManta(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerManta(true);
-          setUserDataManta([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerManta(false);
-          setUserDataManta(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataManta(...testArray);
+      if (userPosition > 99) {
         setActivePlayerManta(false);
-        setUserDataManta(...testArray);
+      } else {
+        setActivePlayerManta(true);
       }
     }
   };
@@ -1809,7 +1702,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerSei = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardSeiDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -1817,50 +1710,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountSei(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountSei(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountSei(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerSei(true);
-          setUserDataSei(...testArray);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerSei(false);
-          setUserDataSei(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataSei(...testArray);
+      if (userPosition > 99) {
         setActivePlayerSei(false);
-        setUserDataSei(...testArray);
+      } else {
+        setActivePlayerSei(true);
       }
     }
   };
@@ -2066,7 +1922,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerBase = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardBaseDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -2074,50 +1930,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountBase(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountBase(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountBase(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerBase(true);
-          setUserDataBase([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerBase(false);
-          setUserDataBase(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataBase(...testArray);
+      if (userPosition > 99) {
         setActivePlayerBase(false);
-        setUserDataBase(...testArray);
+      } else {
+        setActivePlayerBase(true);
       }
     }
   };
@@ -2321,7 +2140,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardTaikoDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -2329,50 +2148,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountTaiko(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountTaiko(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountTaiko(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerTaiko(true);
-          setUserDataTaiko([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerTaiko(false);
-          setUserDataTaiko(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataTaiko(...testArray);
+      if (userPosition > 99) {
         setActivePlayerTaiko(false);
-        setUserDataTaiko(...testArray);
+      } else {
+        setActivePlayerTaiko(true);
       }
     }
   };
@@ -2576,7 +2358,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerMat = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardMatchainDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -2584,50 +2366,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountMat(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountMat(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountMat(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerMat(true);
-          setUserDataMat([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerMat(false);
-          setUserDataMat(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataMat(...testArray);
+      if (userPosition > 99) {
         setActivePlayerMat(false);
-        setUserDataMat(...testArray);
+      } else {
+        setActivePlayerMat(true);
       }
     }
   };
@@ -2827,7 +2572,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerSkale = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardSkaleDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -2835,50 +2580,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium) {
-      //   setDailyDataAmountSkale(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium) {
-      //   setDailyDataAmountSkale(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // }
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerSkale(true);
-          setUserDataSkale([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerSkale(false);
-          setUserDataSkale(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataSkale(...testArray);
+      if (userPosition > 99) {
         setActivePlayerSkale(false);
-        setUserDataSkale(...testArray);
+      } else {
+        setActivePlayerSkale(true);
       }
     }
   };
@@ -5135,50 +4843,13 @@ function Dashboard({
         data
       );
       // setRecordsAroundPlayer(result.data.data.leaderboard);
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (goldenPassRemainingTime) {
-      //   setdailyplayerDataAmount(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(dailyPrizes[9]) + Number(dailyPrizesGolden[9])
-      //         : Number(dailyPrizes[userPosition]) +
-      //           Number(dailyPrizesGolden[userPosition])
-      //       : 0
-      //   );
-      // } else if (!goldenPassRemainingTime) {
-      //   setdailyplayerDataAmount(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(dailyPrizes[9])
-      //         : Number(dailyPrizes[userPosition])
-      //       : 0
-      //   );
-      // }
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayer(true);
-          setUserData([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayer(false);
-          setUserData(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserData(...testArray);
+      if (userPosition > 99) {
         setActivePlayer(false);
-        setUserData(...testArray);
+      } else {
+        setActivePlayer(true);
       }
     }
   };
@@ -9496,6 +9167,7 @@ function Dashboard({
                 Number(baseEarnUSD) +
                 Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
+                Number(coreEarnUsd) +
                 Number(taikoEarnUsd)
                 // Number(skaleEarnUsd) +
                 // Number(coingeckoEarnUsd) +
@@ -9503,7 +9175,7 @@ function Dashboard({
                 // Number(mantaEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
-                // Number(coreEarnUsd) +
+
                 // Number(chainlinkEarnUsd)
               }
               specialRewards={userSocialRewardsCached}

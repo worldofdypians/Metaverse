@@ -310,7 +310,7 @@ iconData.forEach(({ name, url, size, chain }) => {
   markers[name] = L.divIcon({
     className: `custom-chain-icon`,
     html: `<div>
-    <img className="marker-pin ${
+    <img class="marker-pin ${
       !chain && "d-none"
     }" src="${"https://cdn.worldofdypians.com/wod/markerPin.svg"}" alt="marker-pin" />
     <img src="${url}" style="width: ${size}px; height: ${size}px;" alt="${name} icon"/></div>`,
@@ -326,7 +326,7 @@ iconData.forEach(({ name, url, size, chain }) => {
   activeMarkers[name] = L.divIcon({
     className: `custom-chain-icon`,
     html: `<div>
-    <img className="marker-pin ${
+    <img class="marker-pin ${
       !chain && "d-none"
     }" src="${"https://cdn.worldofdypians.com/wod/markerPinRed.svg"}" alt="marker-pin" />
     <img src="${url}" style="width: ${size}px; height: ${size}px;" alt="${name} icon"/></div>`,
