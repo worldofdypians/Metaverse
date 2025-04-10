@@ -28,8 +28,6 @@ const Marketplace = ({
   ethTokenData,
   totalTx,
   totalvolume,
-  count,
-  setCount,
   totalSupply,
   binanceW3WProvider,
   chainId,
@@ -84,7 +82,6 @@ const Marketplace = ({
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [showSecondNext, setShowSecondNext] = useState(false);
   const [favItems, setfavItems] = useState(0);
-  const [activePopup, setActivePopup] = useState(false);
 
   const dummyData = [
     {
@@ -865,14 +862,6 @@ const Marketplace = ({
     cutLength();
   }, [windowSize.width]);
 
-  useEffect(() => {
-    {
-      count === 0 &&
-        setTimeout(() => {
-          setActivePopup(true);
-        }, 500);
-    }
-  }, [count]);
 
   return (
     <div
@@ -1563,7 +1552,7 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
+                  <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1579,8 +1568,8 @@ const Marketplace = ({
                         </div>
                         <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
                           <div className="mint-benefits-grid">
-                            {benefits.map((item) => (
-                              <div className="d-flex align-items-center gap-2">
+                            {benefits.map((item, index) => (
+                              <div className="d-flex align-items-center gap-2" key={index}>
                                 <img
                                   src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                                   alt=""
@@ -1611,8 +1600,8 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div> */}
-                  <div className="d-flex flex-column gap-2 w-100 h-100">
+                  </div>
+                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1683,7 +1672,7 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">

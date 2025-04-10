@@ -357,7 +357,7 @@ const MyProfile = ({
     <>
       <div className="custom-container mt-5">
         <div className="row mt-4 mt-lg-0">
-          <div className="col-12 col-lg-4">
+          <div className="col-12 col-xl-4">
             <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
               <div className="d-flex align-items-center gap-2">
                 <div
@@ -365,7 +365,7 @@ const MyProfile = ({
                   style={{ cursor: "pointer" }}
                 >
                   <img
-                    className="new-profile-img w-100"
+                    className="new-profile-img"
                     src={
                       isPremium
                         ? "https://cdn.worldofdypians.com/wod/starterProfilePremium.png"
@@ -446,7 +446,13 @@ const MyProfile = ({
                               component="div"
                               data-event="click"
                               data-tip="Copied To Clipboard!"
-                              data-clipboard-text={address}
+                              data-clipboard-text={
+                                email !== undefined && address
+                                  ? address
+                                  : coinbase
+                                  ? coinbase
+                                  : address
+                              }
                               className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
                             >
                               <span
@@ -1102,9 +1108,9 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 14
+                        {userActiveEvents === 5
                           ? "Completed"
-                          : userActiveEvents + "/14"}
+                          : userActiveEvents + "/5"}
                       </span>
                     </div>
 
@@ -1177,7 +1183,7 @@ const MyProfile = ({
               </div>
             </div>
           </div>
-          <div className="col-12 col-lg-8">
+          <div className="col-12 col-xl-8">
             <div className="row ">
               <div className="col-12 col-lg-4">
                 {/* <div className="new-special-rewards-wrapper d-flex flex-column gap-4 p-3">
@@ -1243,7 +1249,7 @@ const MyProfile = ({
                           <span
                             className="beast-siege-timer"
                             style={{
-                              fontSize: "12px",
+                              fontSize: "11px",
                               fontWeight: 400,
                               color: "#fff",
                             }}
@@ -1256,7 +1262,7 @@ const MyProfile = ({
                           <span
                             className="beast-siege-timer"
                             style={{
-                              fontSize: "12px",
+                              fontSize: "11px",
                               fontWeight: 400,
                               color: "#fff",
                             }}
@@ -1269,7 +1275,7 @@ const MyProfile = ({
                           <span
                             className="beast-siege-timer"
                             style={{
-                              fontSize: "12px",
+                              fontSize: "11px",
                               fontWeight: 400,
                               color: "#fff",
                             }}

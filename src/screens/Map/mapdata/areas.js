@@ -91,12 +91,6 @@ const chainAreas = [
     ],
     events: [
       {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
-
-      {
         title: "Leaderboard",
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
@@ -105,6 +99,11 @@ const chainAreas = [
         title: "Daily Bonus",
         image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
+      },
+      {
+        title: "Treasure Hunt",
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     pastEvents: [],
@@ -165,13 +164,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/matchain_io",
@@ -218,14 +218,14 @@ const chainAreas = [
       ],
     ],
 
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/coingecko",
@@ -384,14 +384,14 @@ const chainAreas = [
         [-0.06716249835192278, 0.08542835712432861],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/Immutable",
@@ -452,13 +452,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/SkaleNetwork",
@@ -554,14 +555,14 @@ const chainAreas = [
         [-0.06783305014033982, 0.08444130420684816],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/midle_official",
@@ -608,7 +609,13 @@ const chainAreas = [
         [-0.06806908436765445, 0.08490800857543945],
       ],
     ],
-    events: [],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
     pastEvents: [],
     socials: [
       {
@@ -755,14 +762,14 @@ const chainAreas = [
         [-0.06888983973998769, 0.08470952510833742],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/easy2stake",
@@ -809,14 +816,14 @@ const chainAreas = [
         [-0.06885765325506008, 0.08509039878845216],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/chainlink",
@@ -875,13 +882,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/BuildOnViction",
@@ -1158,13 +1166,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/mantanetwork",
@@ -1429,13 +1438,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/SeiNetwork",

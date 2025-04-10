@@ -204,6 +204,7 @@ const MarketMint = ({
   const [immutableNftsSold, setimmutableNftsSold] = useState(0);
   const [taikoNftsSold, setTaikoNftsSold] = useState(0);
   const [seiNftsSold, setSeiNftsSold] = useState(0);
+  const [kucoinNftsSold, setKucoinNftsSold] = useState(0);
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
@@ -261,6 +262,11 @@ const MarketMint = ({
     const bnbnftContract = new window.bscWeb3.eth.Contract(
       window.BNB_NFT_ABI,
       window.config.nft_bnb_address
+    );
+
+    const kucoinnftContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_kucoin_address
     );
 
     const bnbresult = await bnbnftContract.methods
@@ -362,9 +368,22 @@ const MarketMint = ({
       });
 
     setSeiNftsSold(seiresult);
+
+    const kucoinresult = await kucoinnftContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    setKucoinNftsSold(kucoinresult);
   };
 
   const handleEthPool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
     if (window.ethereum) {
       if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
         await handleSwitchNetworkhook("0x1")
@@ -384,6 +403,8 @@ const MarketMint = ({
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
+  }
+
   };
 
   const handleOpBnbPool = async () => {
@@ -408,29 +429,6 @@ const MarketMint = ({
     }
   };
 
-  const handleMatPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x2ba")
-            .then(() => {
-              handleSwitchNetwork(698);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
 
   const handleSeiPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
@@ -537,14 +535,14 @@ const MarketMint = ({
     //   data: avaxData,
     //   class: "mint-1",
     // },
-    {
-      title: "KuCoin Pass",
-      eventId: "kucoin",
-      desc: "Gain entry to metaverse, and join exclusive KuCoin event with special ticket.",
-      img: "https://cdn.worldofdypians.com/wod/kucoinMobileBanner.png",
-      data: kucoinData,
-      class: "mint-2",
-    },
+    // {
+    //   title: "KuCoin Pass",
+    //   eventId: "kucoin",
+    //   desc: "Gain entry to metaverse, and join exclusive KuCoin event with special ticket.",
+    //   img: "https://cdn.worldofdypians.com/wod/kucoinMobileBanner.png",
+    //   data: kucoinData,
+    //   class: "mint-2",
+    // },
     // {
     //   title: "Gate.Io Pass",
     //   eventId: "gate",
@@ -1308,8 +1306,8 @@ const MarketMint = ({
                           </h6>
                           <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
                             <div className="mint-benefits-grid">
-                              {benefits.map((item) => (
-                                <div className="d-flex align-items-center gap-2">
+                              {benefits.map((item, index) => (
+                                <div className="d-flex align-items-center gap-2" key={index}>
                                   <img
                                     src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                                     alt=""
@@ -2459,6 +2457,24 @@ const MarketMint = ({
                             {getFormattedNumber(seiNftsSold, 0)}
                           </h6>
                           <span className="past-sei-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-kucoin-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">KuCoin Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-kucoin-mint-amount">
+                            {getFormattedNumber(kucoinNftsSold, 0)}
+                          </h6>
+                          <span className="past-kucoin-mint-desc">
+                            SOLD OUT
+                          </span>
                         </div>
                       </div>
                     </div>

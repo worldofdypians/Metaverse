@@ -20,6 +20,7 @@ const CreateProposal = ({
   govStatus,
   govLoading,
   handleConnection,
+  network_matchain,
 }) => {
   const windowSize = useWindowSize();
 
@@ -28,8 +29,13 @@ const CreateProposal = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width:
-      windowSize.width ? windowSize.width > 1400 ? "auto" : windowSize.width > 786 ? "50%" : "95%" : "auto",
+    width: windowSize.width
+      ? windowSize.width > 1400
+        ? "auto"
+        : windowSize.width > 786
+        ? "50%"
+        : "95%"
+      : "auto",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -45,24 +51,28 @@ const CreateProposal = ({
   const [proposalDesc, setproposalDesc] = useState("");
 
   const switchNetwork = async (hexChainId, chain) => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook(hexChainId)
-          .then(() => {
-            handleSwitchNetwork(chain);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(chain);
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else {
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook(hexChainId)
+            .then(() => {
+              handleSwitchNetwork(chain);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(chain);
+        } else if (coinbase && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(chain);
+        }
       } else if (coinbase && window.WALLET_TYPE === "binance") {
         handleSwitchChainBinanceWallet(chain);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (coinbase && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(chain);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
@@ -95,7 +105,7 @@ const CreateProposal = ({
           {/* <div className="d-flex flex-column gap-2">
             <div className="dropdown position relative">
               <button
-                class={`btn w-100 launchpad-dropdown gap-2 d-flex justify-content-between align-items-center dropdown-toggle`}
+                className={`btn w-100 launchpad-dropdown gap-2 d-flex justify-content-between align-items-center dropdown-toggle`}
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -187,7 +197,7 @@ const CreateProposal = ({
             {isConnected && coinbase && chainId === 56 && (
               <button
                 className={` ${
-                  proposalDesc === ""  
+                  proposalDesc === ""
                     ? "disabled-btn-gov"
                     : govStatus === "error"
                     ? "fail-button-gov"
@@ -197,18 +207,16 @@ const CreateProposal = ({
                 onClick={() => {
                   onSubmitProposal(proposalDesc);
                 }}
-                disabled={
-                  proposalDesc === ""  || govStatus === "error"
-                }
+                disabled={proposalDesc === "" || govStatus === "error"}
               >
                 {govLoading ? (
                   <div className="d-flex align-items-center gap-2">
                     Processing
                     <div
-                      class="spinner-border spinner-border-sm text-light"
+                      className="spinner-border spinner-border-sm text-light"
                       role="status"
                     >
-                      <span class="visually-hidden">Loading...</span>
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   </div>
                 ) : govStatus === "initial" ? (
@@ -217,7 +225,11 @@ const CreateProposal = ({
                   <>Success</>
                 ) : (
                   <>
-                    Failed <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                    Failed{" "}
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
+                      alt=""
+                    />
                   </>
                 )}
               </button>

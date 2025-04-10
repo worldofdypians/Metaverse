@@ -2,6 +2,8 @@ import React from "react";
 import Modal from "../General/Modal";
 import OutsideClickHandler from "react-outside-click-handler";
 import { isMobile } from "react-device-detect";
+import { Components } from "@matchain/matchid-sdk-react";
+const { LoginButton } = Components;
 
 const WalletModal = ({
   handleClose,
@@ -9,6 +11,7 @@ const WalletModal = ({
   handleConnection,
   handleConnectionPassport,
   handleConnectBinance,
+  handleConnectionMatchId,
 }) => {
   return (
     <Modal visible={show} onModalClose={handleClose} maxWidth={500}>
@@ -39,7 +42,9 @@ const WalletModal = ({
                       MetaMask
                     </span>
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/metamaskConnect.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/metamaskConnect.svg"
+                      }
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -62,7 +67,43 @@ const WalletModal = ({
                       Binance Wallet
                     </span>
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"
+                      }
+                      className="wallet-item-icon"
+                      alt="Icon"
+                    />
+                  </div>
+                </button>
+              )}
+              {(!isMobile ||
+                (isMobile &&
+                  !window.ethereum?.isBinance &&
+                  window.ethereum?.isMetaMask === true) ||
+                !window.ethereum) && (
+                <button
+                  className="walletbutton"
+                  onClick={() => handleConnectionMatchId("evm")}
+                  id="connect-matchid"
+                >
+                  <div className="justify-content-between d-flex w-100 align-items-center">
+                    {/* <LoginButton
+                      methods={["telegram", "twitter"]}
+                      recommendMethods={["wallet", "email", "google"]}
+                      walletMethods={["evm", "sol"]}
+                      popoverPosition="bottom"
+                      popoverType="click"
+                      popoverGap={10}
+                      onLoginClick={handleConnectionMatchId}
+                      className="position-relative bg-transparent w-100 h-100 wallet-item-name justify-content-start"
+                    /> */}
+                    {/* <button onClick={() => handleConnectionMatchId('wallet')}>Login with Wallet</button> */}
+                    <span className="text-white wallet-item-name">MatchID</span>
+
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/matchID-wallet.png"
+                      }
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -87,7 +128,9 @@ const WalletModal = ({
                       Immutable Passport
                     </span>
                     <img
-                       src={"https://cdn.worldofdypians.com/wod/immutableConnect.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/immutableConnect.svg"
+                      }
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -110,7 +153,7 @@ const WalletModal = ({
                       Gate wallet
                     </span>
                     <img
-                       src={"https://cdn.worldofdypians.com/wod/gateConnect.jpg"}
+                      src={"https://cdn.worldofdypians.com/wod/gateConnect.jpg"}
                       className="wallet-item-icon"
                       alt="Icon"
                       style={{ borderRadius: "50%" }}
@@ -134,7 +177,9 @@ const WalletModal = ({
                       Coinbase
                     </span>
                     <img
-                       src={"https://cdn.worldofdypians.com/wod/coinbaseConnect.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/coinbaseConnect.svg"
+                      }
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -155,7 +200,9 @@ const WalletModal = ({
                   >
                     <span className="text-white wallet-item-name">Coin98</span>
                     <img
-                       src={"https://cdn.worldofdypians.com/wod/coin98Connect.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/coin98Connect.svg"
+                      }
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -181,7 +228,9 @@ const WalletModal = ({
                       Trust Wallet
                     </span>
                     <img
-                       src={"https://cdn.worldofdypians.com/wod/trustwalletConnect.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/trustwalletConnect.svg"
+                      }
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -202,7 +251,9 @@ const WalletModal = ({
                   >
                     <span className="text-white wallet-item-name">SafePal</span>
                     <img
-                       src={"https://cdn.worldofdypians.com/wod/safepalConnect.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/safepalConnect.svg"
+                      }
                       className="wallet-item-icon"
                       alt="Icon"
                     />

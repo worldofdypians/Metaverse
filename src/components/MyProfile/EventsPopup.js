@@ -989,7 +989,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
           <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
             <div className="d-flex flex-column gap-2">
               <h6 className="mb-0 event-earnings-coin2">
-                {getFormattedNumber(dummyEvent.userEarnPoints, 0)}
+                {getFormattedNumber(dummyEvent.popupInfo?.status === "Coming Soon" ? 0 : dummyEvent.userEarnPoints, 0)}
                 {dummyEvent.popupInfo.id === "event5" && " DYP"}
               </h6>
 
@@ -1006,11 +1006,11 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   left: dummyEvent.popupInfo.id === "event5" && "0px",
                 }}
               >
-                ${getFormattedNumber(dummyEvent.userEarnUsd, 2)}
+                ${getFormattedNumber(dummyEvent.popupInfo?.status === "Coming Soon" ? 0 : dummyEvent.userEarnUsd, 2)}
                 <span className="ethpricerewards specialstyle-wrapper-eth">
                   {dummyEvent.popupInfo.id !== "event5" && (
                     <>
-                      {getFormattedNumber(dummyEvent.userEarnCrypto, 2)}
+                      {getFormattedNumber(dummyEvent.popupInfo?.status === "Coming Soon" ? 0 : dummyEvent.userEarnCrypto, 2)}
                       {dummyEvent.popupInfo.rewards}
                     </>
                   )}

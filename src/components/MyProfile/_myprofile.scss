@@ -303,6 +303,9 @@
   right: 5%;
   top: -30px;
   width: 60%;
+  @media screen and (max-width: 1500px) {
+    top: -20px;    
+  }
   @media screen and (max-width: 786px) {
     width: 100%;
     top: -20px;
@@ -318,6 +321,10 @@
   font-weight: 700;
   line-height: 10px; /* 125% */
   text-transform: uppercase;
+  @media screen and (max-width: 1500px) {
+
+    font-size: 9px;
+  }
 }
 
 .flag-content {
@@ -559,6 +566,7 @@
 .daily-progress-wrapper {
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.2);
+  overflow-x: auto;
 }
 
 .progress-line {
@@ -588,7 +596,10 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px 20px;
-
+  @media screen and (max-width: 1199px) {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 26px 0px;
+  }
   @media screen and (max-width: 500px) {
     grid-template-columns: repeat(3, 1fr);
     gap: 26px 0px;
@@ -738,7 +749,8 @@
 }
 
 .new-profile-img {
-  // width: 100px;
+  height: 106px;
+  width: 82px;
 }
 
 .stoneEyeBannerItem {

@@ -56,6 +56,7 @@ const BetaPassNFT = ({
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnUsdConflux, setuserEarnUsdConflux] = useState(0);
   const [userEarnUsdGate, setUserEarnUsdGate] = useState(0);
+  const [userEarnUsdKucoin, setUserEarnUsdKucoin] = useState(0);
 
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
@@ -129,7 +130,7 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "matchain-mint-bg",
       wrapperClassName: "mat-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in BNB rewards",
       rewardType: "BNB",
       userEarned: matChainEarnUsd,
@@ -174,12 +175,12 @@ const BetaPassNFT = ({
       cardClassName: "taiko-mint-bg",
       wrapperClassName: "taiko-eventwrapper",
       treasureHuntStatus: "Live",
-      rewardsTitle: "$20,000 in Taiko rewards",
+      rewardsTitle: "$30,000 in Taiko rewards",
       rewardType: "Taiko",
       userEarned: taikoEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 03, 2024",
-      eventEndDate: "Apr. 03, 2025",
+      eventStartDate: "Apr. 04, 2025",
+      eventEndDate: "Aug. 02, 2025",
     },
     {
       id: "manta",
@@ -195,13 +196,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "manta-mint-bg",
       wrapperClassName: "manta-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Coming Soon",
       rewardsTitle: "$20,000 in Manta rewards",
       rewardType: "Manta",
-      userEarned: mantaEarnUsd,
+      userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 05, 2024",
-      eventEndDate: "Apr. 05, 2025",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
     },
     {
       id: "bnb",
@@ -222,8 +223,8 @@ const BetaPassNFT = ({
       rewardType: "BNB",
       userEarned: bnbEarnUSD,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 04, 2024",
-      eventEndDate: "Apr. 04, 2025",
+      eventStartDate: "Apr 09, 2025",
+      eventEndDate: "Aug 07, 2025",
     },
     {
       id: "core",
@@ -244,8 +245,8 @@ const BetaPassNFT = ({
       rewardType: "CORE",
       userEarned: coreEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 04, 2024",
-      eventEndDate: "Apr. 04, 2025",
+      eventStartDate: "Apr 10, 2025",
+      eventEndDate: "Aug 08, 2025",
     },
     {
       id: "multiversx",
@@ -283,13 +284,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "sei-mint-bg",
       wrapperClassName: "sei-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Coming Soon",
       rewardsTitle: "$20,000 in SEI rewards",
       rewardType: "SEI",
-      userEarned: seiEarnUsd,
+      userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 05, 2024",
-      eventEndDate: "Apr. 05, 2025",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
     },
     {
       id: "viction",
@@ -305,7 +306,7 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "viction-mint-bg",
       wrapperClassName: "viction-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in VIC rewards",
       rewardType: "VIC",
       userEarned: victionEarnUsd,
@@ -327,7 +328,7 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "skale2-mint-bg",
       wrapperClassName: "skl-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in SKL rewards",
       rewardType: "SKL",
       userEarned: skaleEarnUsd,
@@ -393,7 +394,7 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkArea.svg",
       cardClassName: "coingecko-mint-bg",
       wrapperClassName: "coingecko-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in BNB rewards",
       rewardType: "BNB",
       userEarned: userEarnUsd,
@@ -453,16 +454,16 @@ const BetaPassNFT = ({
       logo: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
       buttonTitle: "KuCoin",
       isComingSoon: false,
-      giveawayButton: true,
-      giveawayButtonTitle: "Mint your NFT",
-      giveawayLink: "/shop/mint/kucoin",
+      giveawayButton: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
       areaImage: undefined,
       cardClassName: "kucoin-mint-bg2",
       wrapperClassName: "kucoin-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$2,000 in KCS rewards",
       rewardType: "KCS",
-      userEarned: 0,
+      userEarned: userEarnUsdKucoin,
       eventType: "Explore & Mine",
       eventStartDate: "Apr. 01, 2025",
       eventEndDate: "Jul. 30, 2025",
@@ -590,6 +591,11 @@ const BetaPassNFT = ({
           const seiEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "sei";
           });
+
+          const kucoinEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "kucoin";
+          });
+
           if (coingeckoEvent && coingeckoEvent[0]) {
             const usdValue =
               coingeckoEvent[0].reward.earn.total /
@@ -609,6 +615,12 @@ const BetaPassNFT = ({
               cmcEvent[0].reward.earn.total /
               cmcEvent[0].reward.earn.multiplier;
             setCmcEarnUSD(usdValue);
+          }
+          if (kucoinEvent && kucoinEvent[0]) {
+            const usdValue =
+              kucoinEvent[0].reward.earn.total /
+              kucoinEvent[0].reward.earn.multiplier;
+            setUserEarnUsdKucoin(usdValue);
           }
           if (matEvent && matEvent[0]) {
             const userEarnedusd =
@@ -1068,7 +1080,7 @@ const BetaPassNFT = ({
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
-                         {selectedMint?.giveawayButtonTitle}
+                          {selectedMint?.giveawayButtonTitle}
                         </NavLink>
                       )}
                     </div>
@@ -1312,7 +1324,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${showVerify && "complete"
+                                  className={`col-3 li ${showVerify && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1320,7 +1332,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${playerCreation && "complete"
+                                  className={`col-3 li ${playerCreation && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1328,7 +1340,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-2 li ${linkWallet && "complete"}`}
+                                  className={`col-2 li ${linkWallet && "complete"}`}
                                   style={{ width: 0 }}
                                 >
                                   <div className="status">
