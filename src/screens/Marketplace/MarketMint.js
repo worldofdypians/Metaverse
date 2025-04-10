@@ -174,8 +174,8 @@ const MarketMint = ({
     id: "vanar",
     cardTitle: "Vanar Beta Pass",
     title: "Vanar Beta Pass",
-    background: "matchain-mint-bg",
-    mobileBg: "matchainMobileBg.webp",
+    background: "vanar-mint-bg",
+    mobileBg: "vanarMobileBg.webp",
   };
 
   const windowSize = useWindowSize();
@@ -210,8 +210,8 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(kucoinData);
-  const [mintTitle, setMintTitle] = useState("kucoin");
+  const [selectedMint, setSelectedMint] = useState(vanarData);
+  const [mintTitle, setMintTitle] = useState("vanar");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -668,6 +668,7 @@ const MarketMint = ({
       img: "https://cdn.worldofdypians.com/wod/matchainMintActive.webp",
       data: vanarData,
       class: "mint-core",
+      id: "vanar",
     },
     {
       title: "CAWS Timepiece",
@@ -937,8 +938,7 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
-        }
-        else if (selectedMint.id === "vanar") {
+        } else if (selectedMint.id === "vanar") {
           if (chainId !== 2040) {
             setactiveButton(false);
             setStatus("Switch to Vanar to continue minting.");
@@ -976,7 +976,7 @@ const MarketMint = ({
     window.scrollTo(0, 0);
     document.title = "NFT Mint";
   }, []);
-
+  console.log(mintTitle);
   return (
     <>
       <div
@@ -1157,8 +1157,8 @@ const MarketMint = ({
                                     totalMatNfts > 0
                                   ? "mat-active"
                                   : selectedMint.id === "vanar" &&
-                                  totalVanarNfts > 0
-                                ? "vanar-active"
+                                    totalVanarNfts > 0
+                                  ? "vanar-active"
                                   : selectedMint.id === "mat" &&
                                     totalMatNfts === 0
                                   ? "conflux-empty"
@@ -1292,7 +1292,7 @@ const MarketMint = ({
                             </NavLink>
                           )}
 
-{selectedMint.id === "vanar" && (
+                          {selectedMint.id === "vanar" && (
                             <NavLink
                               className={`py-2 ${
                                 isConnected === false ||
@@ -1317,7 +1317,6 @@ const MarketMint = ({
                               View NFT
                             </NavLink>
                           )}
-
                         </div>
                       </div>
                       <div
@@ -1794,18 +1793,8 @@ const MarketMint = ({
                                 </span>
                                 <div className="d-flex align-items-center gap-2">
                                   <h6 className="latest-mint-number mb-0">
-                                    {mintTitle === "manta"
-                                      ? mantaMintAllowed
-                                      : mintTitle === "mat"
-                                      ? matMintAllowed
-                                      : mintTitle === "vanar"
+                                    {mintTitle === "vanar"
                                       ? totalVanarNfts > 0
-                                      ? 0
-                                      : 1
-                                      : mintTitle === "sei"
-                                      ? seiMintAllowed
-                                      : mintTitle === "kucoin"
-                                      ? myKucoinNfts.length > 0
                                         ? 0
                                         : 1
                                       : 0}{" "}
@@ -1836,29 +1825,11 @@ const MarketMint = ({
                               className="limit-span position-relative d-flex align-items-center gap-2"
                               style={{ bottom: "0px" }}
                             >
-                              Available only on{" "}
-                              {mintTitle === "manta"
-                                ? "Manta"
-                                : mintTitle === "taiko"
-                                ? "Taiko"
-                                : mintTitle === "mat"
-                                ? "Matchain": mintTitle === "vanar"
-                                ? "Vanar"
-                                : mintTitle === "kucoin"
-                                ? "opBNB Chain"
-                                : "SEI"}
+                              Available only on Vanar
                               <img
                                 style={{ width: 24, height: 24 }}
                                 src={
-                                  mintTitle === "manta"
-                                    ? "https://cdn.worldofdypians.com/wod/manta.png"
-                                    : mintTitle === "mat"
-                                    ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
-                                    : mintTitle === "kucoin"
-                                    ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                                    : mintTitle === "vanar"
-                                    ? "https://cdn.worldofdypians.com/wod/vanar.png"
-                                    : "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                  "https://cdn.worldofdypians.com/wod/vanar.svg"
                                 }
                                 alt=""
                               />
@@ -2237,10 +2208,11 @@ const MarketMint = ({
                                   disabled={
                                     mintloading === "error" ||
                                     mintloading === "success" ||
-                                    (isConnected === true && chainId !== 2040) ||
+                                    (isConnected === true &&
+                                      chainId !== 2040) ||
                                     (status !== "Connect your wallet." &&
                                       status !== "") ||
-                                      totalVanarNfts > 0
+                                    totalVanarNfts > 0
                                       ? true
                                       : false
                                   }

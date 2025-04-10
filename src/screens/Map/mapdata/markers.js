@@ -295,7 +295,7 @@ const iconData = [
   },
   {
     name: "vanarMarker",
-    url: "https://cdn.worldofdypians.com/wod/vanar.png",
+    url: "https://cdn.worldofdypians.com/wod/vanar.svg",
     size: 24,
     chain: true,
   },

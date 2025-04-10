@@ -246,7 +246,7 @@ const ChainPopup = ({
               className={activeChain === "vanar" ? "active-chain-btn" : ""}
             >
               <img
-                src={"https://cdn.worldofdypians.com/wod/vanar.png"}
+                src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
                 alt=""
                 width={20}
                 height={20}

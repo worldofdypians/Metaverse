@@ -4193,7 +4193,7 @@ const NewDailyBonus = ({
                               {" "}
                               <img
                                 src={
-                                  "https://cdn.worldofdypians.com/wod/vanar.png"
+                                  "https://cdn.worldofdypians.com/wod/vanar.svg"
                                 }
                                 width={20}
                                 height={20}

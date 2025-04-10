@@ -232,7 +232,7 @@ const MobileNavbar = ({
                           : chainState === "sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                           : chainState === "vanar"
-                          ? "https://cdn.worldofdypians.com/wod/vanar.png"
+                          ? "https://cdn.worldofdypians.com/wod/svg.png"
                           : "https://cdn.worldofdypians.com/wod/error.svg"
                       }
                       alt=""

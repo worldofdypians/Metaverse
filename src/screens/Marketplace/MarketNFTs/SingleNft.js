@@ -2941,7 +2941,7 @@ const SingleNft = ({
                           : type === "sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                           : type === "vanar"
-                          ? "https://cdn.worldofdypians.com/wod/vanar.png"
+                          ? "https://cdn.worldofdypians.com/wod/vanar.svg"
                           : "https://cdn.worldofdypians.com/wod/eth.svg"
                       }
                       alt=""

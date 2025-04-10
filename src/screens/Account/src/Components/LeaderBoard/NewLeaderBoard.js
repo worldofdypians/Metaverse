@@ -564,11 +564,11 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "vanar"
-                              ? "https://cdn.worldofdypians.com/wod/vanar.png"
+                              ? "https://cdn.worldofdypians.com/wod/vanar.svg"
                               : optionText2 !== "vanar" &&
                                 hoverState === "vanar"
-                              ? "https://cdn.worldofdypians.com/wod/vanar.png"
-                              : "https://cdn.worldofdypians.com/wod/vanar.png"
+                              ? "https://cdn.worldofdypians.com/wod/vanarWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/vanarInactive.svg"
                           }vanar
                           className={`${
                             optionText2 === "vanar"

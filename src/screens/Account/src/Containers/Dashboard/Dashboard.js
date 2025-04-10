@@ -6680,7 +6680,7 @@ function Dashboard({
               window.location.hash = "";
             }}
             onConnectWallet={() => {
-              setshowWalletModal(true);
+              handleConnect();
             }}
             binanceW3WProvider={binanceW3WProvider}
             coinbase={coinbase}
@@ -6793,7 +6793,7 @@ function Dashboard({
               window.location.hash = "";
             }}
             onConnectWallet={() => {
-              setshowWalletModal(true);
+              handleConnect();
             }}
             binanceW3WProvider={binanceW3WProvider}
             coinbase={coinbase}
@@ -6909,7 +6909,7 @@ function Dashboard({
               window.location.hash = "";
             }}
             onConnectWallet={() => {
-              setshowWalletModal(true);
+              handleConnect();
             }}
             binanceW3WProvider={binanceW3WProvider}
             coinbase={coinbase}

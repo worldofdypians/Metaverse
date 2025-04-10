@@ -3377,7 +3377,7 @@ const GetPremiumPopup = ({
                     </div>
                     <div className="d-flex align-items-center gap-2">
                       <img
-                        src={"https://cdn.worldofdypians.com/wod/vanar.png"}
+                        src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
                         alt=""
                         style={{ width: 18, height: 18 }}
                       />

@@ -1324,7 +1324,7 @@ const Header = ({
                                       : chainState === "sei"
                                       ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                                       : chainState === "vanar"
-                                      ? "https://cdn.worldofdypians.com/wod/vanar.png"
+                                      ? "https://cdn.worldofdypians.com/wod/vanar.svg"
                                       : "https://cdn.worldofdypians.com/wod/error.svg"
                                   }
                                   width={20}

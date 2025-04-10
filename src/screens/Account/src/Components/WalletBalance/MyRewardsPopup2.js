@@ -1239,7 +1239,7 @@ const MyRewardsPopupNew = ({
               alt=""
             />
             <img
-              src={"https://cdn.worldofdypians.com/wod/vanar.png"}
+              src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
               style={{ width: 16, height: 16 }}
               alt=""
             />

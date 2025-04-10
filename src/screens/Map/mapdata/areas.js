@@ -1482,7 +1482,7 @@ const chainAreas = [
     marker: markers.vanarMarker,
     activeMarker: activeMarkers.vanarMarker,
 
-    icon: "https://cdn.worldofdypians.com/wod/vanar.png",
+    icon: "https://cdn.worldofdypians.com/wod/vanar.svg",
     location: [-0.06799398256818387, 0.08384048938751222],
     banner: "seiBanner.png",
     area: [
