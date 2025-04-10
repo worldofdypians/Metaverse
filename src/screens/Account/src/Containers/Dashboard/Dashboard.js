@@ -9496,6 +9496,7 @@ function Dashboard({
                 Number(baseEarnUSD) +
                 Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
+                Number(coreEarnUsd) +
                 Number(taikoEarnUsd)
                 // Number(skaleEarnUsd) +
                 // Number(coingeckoEarnUsd) +
@@ -9503,7 +9504,7 @@ function Dashboard({
                 // Number(mantaEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
-                // Number(coreEarnUsd) +
+
                 // Number(chainlinkEarnUsd)
               }
               specialRewards={userSocialRewardsCached}

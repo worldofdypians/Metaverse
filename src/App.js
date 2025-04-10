@@ -629,7 +629,7 @@ function App() {
   let bnbLastDay = new Date("2025-08-07T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
-  let midleLastDay = new Date("2025-03-30T14:00:00.000+02:00");
+  let coreLastDay2 = new Date("2025-08-08T14:00:00.000+02:00");
 
   let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
@@ -1296,9 +1296,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            // if (coreEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (coreEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -3990,7 +3990,7 @@ function App() {
       totalRewards: "$30,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Aug 02, 2025",
+      eventDate: "Apr 04, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
@@ -4010,7 +4010,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Aug 02, 2025",
+        eventDate: "Apr 04, 2025",
       },
     },
     {
@@ -4094,11 +4094,11 @@ function App() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "Apr 10, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
       image: "coreBanner.png",
       type: "Treasure Hunt",
@@ -4113,17 +4113,17 @@ function App() {
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Coming Soon",
+        status: "Live",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
-        eventDuration: coreLastDay,
+        eventDuration: coreLastDay2,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Apr 10, 2025",
       },
     },
     {
