@@ -506,11 +506,11 @@
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
+  height: 200px !important;
 
-  // @media screen and (max-width: 786px) {
-  //   background-image: none;
-  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-  // }
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
 }
 
 .market-mint-immutable {
@@ -988,7 +988,7 @@
   --mask: linear-gradient(45deg, #0000 30px, #000 0);
   -webkit-mask: var(--mask);
   mask: var(--mask);
-  padding: 30px;
+  padding: 25px;
   // position: absolute;
   // top: 80%;
 }

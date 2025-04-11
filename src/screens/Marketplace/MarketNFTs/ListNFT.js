@@ -643,7 +643,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -659,7 +659,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -675,7 +675,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -691,7 +691,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -707,7 +707,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -723,7 +723,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -739,7 +739,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -755,7 +755,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -771,7 +771,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -787,7 +787,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -873,7 +873,7 @@ const ListNFT = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
