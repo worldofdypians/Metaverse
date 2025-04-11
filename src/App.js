@@ -560,6 +560,7 @@ function App() {
   const [myseiNfts, setMyseiNfts] = useState([]);
   const [myMatNFTs, setMyMatNfts] = useState([]);
   const [mykucoinNFTs, setMykucoinNFTs] = useState([]);
+  const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
 
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
@@ -2467,6 +2468,9 @@ function App() {
       getMyNFTS(coinbase, "kucoin").then((NFTS) => {
         setMykucoinNFTs(NFTS);
       });
+      getMyNFTS(coinbase, "opbnb").then((NFTS) => {
+        setmyOpbnbNfts(NFTS);
+      });
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -2741,147 +2745,6 @@ function App() {
     }
   };
 
-  const handleKucoinMint = async () => {
-    if (isConnected) {
-      if (window.WALLET_TYPE !== "binance") {
-        try {
-          setmintloading("mint");
-          setmintStatus("Minting in progress...");
-          settextColor("rgb(123, 216, 176)");
-
-          let tokenId = await window.kucoin_nft
-            .mintKucoinNFT()
-            .then(() => {
-              setmintStatus("Success! Your Nft was minted successfully!");
-              setmintloading("success");
-              settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
-                setmintStatus("");
-                setmintloading("initial");
-              }, 5000);
-              getMyNFTS(coinbase, "kucoin").then((NFTS) => {
-                setMykucoinNFTs(NFTS);
-              });
-            })
-            .catch((e) => {
-              console.error(e);
-              setmintloading("error");
-              settextColor("#d87b7b");
-
-              if (typeof e == "object" && e.message) {
-                setmintStatus(e.message);
-              } else {
-                setmintStatus(
-                  "Oops, something went wrong! Refresh the page and try again!"
-                );
-              }
-              setTimeout(() => {
-                setmintloading("initial");
-                setmintStatus("");
-              }, 5000);
-            });
-
-          if (tokenId) {
-            let getNftData = await window.getNft(tokenId);
-            setMyNFTsCreated(getNftData);
-          }
-        } catch (e) {
-          setmintloading("error");
-
-          if (typeof e == "object" && e.message) {
-            setmintStatus(e.message);
-          } else {
-            setmintStatus(
-              "Oops, something went wrong! Refresh the page and try again!"
-            );
-          }
-          window.alertify.error(
-            typeof e == "object" && e.message
-              ? e.message
-              : typeof e == "string"
-              ? String(e)
-              : "Oops, something went wrong! Refresh the page and try again!"
-          );
-          setTimeout(() => {
-            setmintloading("initial");
-            setmintStatus("");
-          }, 5000);
-        }
-      } else if (window.WALLET_TYPE === "binance") {
-        try {
-          setmintloading("mint");
-          setmintStatus("Minting in progress...");
-          settextColor("rgb(123, 216, 176)");
-
-          const kucoinsc = new ethers.Contract(
-            window.config.nft_kucoin_address,
-            window.OPBNB_NFT_ABI,
-            library.getSigner()
-          );
-
-          let txResponse = await kucoinsc.mintBetaPass().catch((e) => {
-            console.error(e);
-            setmintloading("error");
-            settextColor("#d87b7b");
-
-            if (typeof e == "object" && e.message) {
-              setmintStatus(e.message);
-            } else {
-              setmintStatus(
-                "Oops, something went wrong! Refresh the page and try again!"
-              );
-            }
-            setTimeout(() => {
-              setmintloading("initial");
-              setmintStatus("");
-            }, 5000);
-          });
-
-          const txReceipt = txResponse.wait();
-          if (txReceipt) {
-            setmintStatus("Success! Your Nft was minted successfully!");
-            setmintloading("success");
-            settextColor("rgb(123, 216, 176)");
-            setTimeout(() => {
-              setmintStatus("");
-              setmintloading("initial");
-            }, 5000);
-            getMyNFTS(coinbase, "kucoin").then((NFTS) => {
-              setMykucoinNFTs(NFTS);
-            });
-          }
-        } catch (e) {
-          setmintloading("error");
-
-          if (typeof e == "object" && e.message) {
-            setmintStatus(e.message);
-          } else {
-            setmintStatus(
-              "Oops, something went wrong! Refresh the page and try again!"
-            );
-          }
-          window.alertify.error(
-            typeof e == "object" && e.message
-              ? e.message
-              : typeof e == "string"
-              ? String(e)
-              : "Oops, something went wrong! Refresh the page and try again!"
-          );
-          setTimeout(() => {
-            setmintloading("initial");
-            setmintStatus("");
-          }, 5000);
-        }
-      }
-    } else {
-      try {
-        handleConnectWallet();
-      } catch (e) {
-        window.alertify.error("No web3 detected! Please Install MetaMask!");
-      }
-    }
-  };
-
   const handleBaseNftMint = async () => {
     if (isConnected && coinbase) {
       try {
@@ -2954,143 +2817,82 @@ function App() {
     }
   };
 
-  const handleMatNftMint = async () => {
+  const handleopbnbNftMint = async () => {
     if (isConnected && coinbase) {
-      try {
-        //Check Whitelist
-        let whitelist = 1;
-
-        if (parseInt(whitelist) === 1) {
-          setmintloading("mint");
-          setmintStatus("Minting in progress...");
-          settextColor("rgb(123, 216, 176)");
-          // console.log(data,finalCaws, totalCawsDiscount);
-          let tokenId = await window.mat_nft
-            .mintMatNFT()
-            .then(() => {
-              setmintStatus("Success! Your Nft was minted successfully!");
-              setmintloading("success");
-              settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
-                setmintStatus("");
-                setmintloading("initial");
-              }, 5000);
-              getMyNFTS(coinbase, "mat").then((NFTS) => {
-                setMyMatNfts(NFTS);
-              });
-            })
-            .catch((e) => {
-              console.error(e);
-              setmintloading("error");
-              settextColor("#d87b7b");
-
-              if (typeof e == "object" && e.message) {
-                setmintStatus(e.message);
-              } else {
-                setmintStatus(
-                  "Oops, something went wrong! Refresh the page and try again!"
-                );
-              }
-              setTimeout(() => {
-                setmintloading("initial");
-                setmintStatus("");
-              }, 5000);
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      if (window.WALLET_TYPE !== "binance") {
+        await window.opbnb_nft
+          .mintOPBNBNFT()
+          .then(() => {
+            setmintStatus("Success! Your Nft was minted successfully!");
+            setmintloading("success");
+            settextColor("rgb(123, 216, 176)");
+            setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            getMyNFTS(coinbase, "opbnb").then((NFTS) => {
+              setmyOpbnbNfts(NFTS);
             });
-        } else {
-          // setShowWhitelistLoadingModal(true);
-        }
-      } catch (e) {
-        setmintloading("error");
+          })
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
 
-        if (typeof e == "object" && e.message) {
-          setmintStatus(e.message);
-        } else {
-          setmintStatus(
-            "Oops, something went wrong! Refresh the page and try again!"
-          );
-        }
-        window.alertify.error(
-          typeof e == "object" && e.message
-            ? e.message
-            : typeof e == "string"
-            ? String(e)
-            : "Oops, something went wrong! Refresh the page and try again!"
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+      } else if (window.WALLET_TYPE === "binance") {
+        const nft_contract = new ethers.Contract(
+          window.config.nft_opbnb_address,
+          window.OPBNB_NFT_ABI,
+          library.getSigner()
         );
-        setTimeout(() => {
-          setmintloading("initial");
-          setmintStatus("");
-        }, 5000);
-      }
-    }
-  };
+        const txResponse = await nft_contract
+          .mintBetaPass()
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
 
-  const handleSeiNftMint = async () => {
-    if (isConnected && coinbase) {
-      try {
-        //Check Whitelist
-        let whitelist = 1;
-        console.log("mint sei");
-        if (parseInt(whitelist) === 1) {
-          setmintloading("mint");
-          setmintStatus("Minting in progress...");
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setmintStatus("Success! Your Nft was minted successfully!");
+          setmintloading("success");
           settextColor("rgb(123, 216, 176)");
-          // console.log(data,finalCaws, totalCawsDiscount);
-          let tokenId = await window.sei_nft
-            .mintSeiNFT()
-            .then(() => {
-              setmintStatus("Success! Your Nft was minted successfully!");
-              setmintloading("success");
-              settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
-                setmintStatus("");
-                setmintloading("initial");
-              }, 5000);
-              getMyNFTS(coinbase, "sei").then((NFTS) => {
-                setMyseiNfts(NFTS);
-                setTotalseiNft(NFTS.length);
-              });
-            })
-            .catch((e) => {
-              console.error(e);
-              setmintloading("error");
-              settextColor("#d87b7b");
-
-              if (typeof e == "object" && e.message) {
-                setmintStatus(e.message);
-              } else {
-                setmintStatus(
-                  "Oops, something went wrong! Refresh the page and try again!"
-                );
-              }
-              setTimeout(() => {
-                setmintloading("initial");
-                setmintStatus("");
-              }, 5000);
-            });
-        } else {
-          // setShowWhitelistLoadingModal(true);
+          setTimeout(() => {
+            setmintStatus("");
+            setmintloading("initial");
+          }, 5000);
+          getMyNFTS(coinbase, "opbnb").then((NFTS) => {
+            setmyOpbnbNfts(NFTS);
+          });
         }
-      } catch (e) {
-        setmintloading("error");
-
-        if (typeof e == "object" && e.message) {
-          setmintStatus(e.message);
-        } else {
-          setmintStatus(
-            "Oops, something went wrong! Refresh the page and try again!"
-          );
-        }
-        window.alertify.error(
-          typeof e == "object" && e.message
-            ? e.message
-            : typeof e == "string"
-            ? String(e)
-            : "Oops, something went wrong! Refresh the page and try again!"
-        );
-        setTimeout(() => {
-          setmintloading("initial");
-          setmintStatus("");
-        }, 5000);
       }
     }
   };
@@ -6543,6 +6345,8 @@ function App() {
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
                 myKucoinNfts={mykucoinNFTs}
+                myOpbnbNfts={myOpbnbNfts}
+                totalOpbnbNft={myOpbnbNfts?.length}
               />
             }
           />
@@ -6772,7 +6576,7 @@ function App() {
             }
           /> */}
 
-          {/* <Route
+          <Route
             exact
             path="/shop/mint/opbnbchain"
             element={
@@ -6781,51 +6585,36 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                cawsArray={allCawsForTimepieceMint}
-                mintloading={mintloading}
-                isConnected={isConnected}
-                chainId={networkId}
-                handleMint={handleOpbnbNftMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalopbnbNft={totalopbnbNft}
-                totalCreated={totalTimepieceCreated}
-                timepieceMetadata={timepieceMetadata}
-                opbnbMintAllowed={opbnbMintAllowed}
-                myopbnbNFTsCreated={myopbnbNFTsCreated}
-                myConfluxNFTsCreated={myConfluxNFTsCreated}
-                mybaseNFTsCreated={mybaseNFTsCreated}
-                myskaleNFTsCreated={myskaleNFTsCreated}
-                handleConfluxMint={handleConfluxNftMint}
-                handleBaseNftMint={handleBaseNftMint}
-                confluxMintAllowed={confluxMintAllowed}
-                baseMintAllowed={baseMintAllowed}
-                skaleMintAllowed={skaleMintAllowed}
-                coreMintAllowed={coreMintAllowed}
-                victionMintAllowed={victionMintAllowed}
-                immutableMintAllowed={immutableMintAllowed}
-                totalCoreNft={totalCoreNft}
-                myCoreNfts={myCoreNfts}
-                totalMultiversNft={totalMultiversNft}
-                totalImmutableNft={totalImmutableNft}
-                myImmutableNfts={myImmutableNfts}
-                myMultiversNfts={myMultiversNfts}
-                totalseiNft={totalseiNft}
-                myseiNfts={myseiNfts}
-                totalVictionNft={totalVictionNft}
-                myVictionNfts={myVictionNfts}
-                myOpbnbNfts={myOpbnbNfts}
-                myBnbNfts={myBnbNfts}
-                totalBnbNft={totalBnbNft}
+                totalMatNfts={myMatNFTs.length}
+                matMintAllowed={1 - myMatNFTs.length}
+                seiMintAllowed={1 - myseiNfts.length}
+                myMatNFTs={myMatNFTs}
+                myMatNFTsCreated={myMatNFTs}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
                 totalMantaNft={totalMantaNft}
                 mantaMintAllowed={mantaMintAllowed}
                 myMantaNfts={myMantaNfts}
                 myMantaNFTsCreated={myMantaNFTsCreated}
-                totalTaikoNft={totalTaikoNft}
-                taikoMintAllowed={taikoMintAllowed}
-                myTaikoNfts={myTaikoNfts}
-                myTaikoNFTsCreated={myTaikoNFTsCreated}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleopbnbNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                handleBaseNftMint={handleBaseNftMint}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+                myKucoinNfts={mykucoinNFTs}
+                myOpbnbNfts={myOpbnbNfts}
+                totalOpbnbNft={myOpbnbNfts?.length}
               />
             }
           />
