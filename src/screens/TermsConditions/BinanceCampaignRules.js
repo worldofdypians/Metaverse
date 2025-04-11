@@ -136,7 +136,7 @@ const BinanceCampaignRules = () => {
                   Only one entry per user is allowed.
                 </li>
                 <li className="text-white">
-                  Keyless MPC Binance Wallet users with verified accounts are
+                  Binance Wallet (Keyless) users with verified accounts are
                   eligible to participate.
                 </li>
               </ol>
@@ -187,10 +187,10 @@ const BinanceCampaignRules = () => {
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      Only Keyless MPC Binance Wallet users with verified
-                      accounts are eligible to participate in this campaign.
-                      Each user can only join once, ensuring fair participation
-                      and preventing duplicate entries.
+                      Only Binance Wallet (Keyless) users with verified accounts
+                      are eligible to participate in this campaign. Each user
+                      can only join once, ensuring fair participation and
+                      preventing duplicate entries.
                     </li>
                   </ul>
                 </li>
