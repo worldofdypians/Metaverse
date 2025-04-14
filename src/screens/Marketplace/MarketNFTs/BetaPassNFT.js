@@ -468,6 +468,28 @@ const BetaPassNFT = ({
       eventStartDate: "Apr. 01, 2025",
       eventEndDate: "Jul. 30, 2025",
     },
+    {
+      id: "vanar",
+      mainTitle: "Vanar Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Vanar. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/kucoinhero.webp",
+      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+      buttonTitle: "Vanar",
+      isComingSoon: false,
+      giveawayButton: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
+      areaImage: undefined,
+      cardClassName: "vanar-mint-bg",
+      wrapperClassName: "vanar-eventwrapper",
+      treasureHuntStatus: "Coming Soon",
+      rewardsTitle: "$2,000 in VANRY rewards",
+      rewardType: "VANRY",
+      userEarned: 0,
+      eventType: "Explore & Mine",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
+    },
   ];
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =

@@ -607,7 +607,23 @@ const SingleNft = ({
 
       setowner(owner);
       return owner;
-    }  else if (nftType === "skale") {
+    } else if (nftType === "vanar") {
+      const nft_contract = new window.vanarWeb3.eth.Contract(
+        window.SEI_NFT_ABI,
+        window.config.nft_vanar_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
+
+      setowner(owner);
+      return owner;
+    } else if (nftType === "skale") {
       const nft_contract = new window.skaleWeb3.eth.Contract(
         window.SKALE_NFT_ABI,
         window.config.nft_skale_address
@@ -2382,7 +2398,11 @@ const SingleNft = ({
       window.config.nft_kucoin_address.toLowerCase()
     ) {
       setType("kucoin");
-    }else if (
+    } else if (
+      nftAddress.toLowerCase() === window.config.nft_vanar_address.toLowerCase()
+    ) {
+      setType("vanar");
+    } else if (
       nftAddress.toLowerCase() ===
       window.config.nft_land_base_address.toLowerCase()
     ) {
@@ -2405,6 +2425,9 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_kucoin_address.toLowerCase()
         ? "kucoin"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_vanar_address.toLowerCase()
+        ? "vanar"
         : nftAddress.toLowerCase() ===
           window.config.nft_gate_address.toLowerCase()
         ? "gate"
@@ -2688,10 +2711,22 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
-            )  : type === "kucoin" ? (
+            ) : type === "kucoin" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   KuCoin{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
+            ) : type === "vanar" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Vanar{" "}
                   <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
@@ -2850,6 +2885,8 @@ const SingleNft = ({
                         ? `https://cdn.worldofdypians.com/media/seibp400x400.png`
                         : type === "kucoin"
                         ? `https://cdn.worldofdypians.com/wod/kucoin-bp-400.png`
+                        : type === "vanar"
+                        ? `https://cdn.worldofdypians.com/wod/vanar-400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
@@ -2874,7 +2911,7 @@ const SingleNft = ({
                         type === "opbnb" ||
                         type === "cawsbnb" ||
                         type === "landbnb" ||
-                        type === "cookie3"||
+                        type === "cookie3" ||
                         type === "kucoin"
                           ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                           : type === "conflux"
@@ -2903,6 +2940,8 @@ const SingleNft = ({
                           ? "https://cdn.worldofdypians.com/wod/immutable.svg"
                           : type === "sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                          : type === "vanar"
+                          ? "https://cdn.worldofdypians.com/wod/vanar.svg"
                           : "https://cdn.worldofdypians.com/wod/eth.svg"
                       }
                       alt=""
@@ -2939,8 +2978,9 @@ const SingleNft = ({
                       ? "Matchain"
                       : type === "taiko"
                       ? "Taiko"
-                      : type === "opbnb"||
-                    type === "kucoin"
+                      : type === "vanar"
+                      ? "Vanar"
+                      : type === "opbnb" || type === "kucoin"
                       ? "opBNB Chain"
                       : type === "immutable"
                       ? "Immutable"
@@ -3016,6 +3056,8 @@ const SingleNft = ({
                         ? "SEI Beta Pass"
                         : type === "kucoin"
                         ? "KuCoin Beta Pass"
+                        : type === "vanar"
+                        ? "Vanar Beta Pass"
                         : "CAWS Timepiece"}{" "}
                       {type === "immutable" ? "" : ` #${nftId}`}
                       <img
@@ -3156,6 +3198,7 @@ const SingleNft = ({
                       type !== "mat" &&
                       type !== "sei" &&
                       type !== "kucoin" &&
+                      type !== "vanar" &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -3327,7 +3370,8 @@ const SingleNft = ({
                       type !== "immutable" &&
                       type !== "mat" &&
                       type !== "sei" &&
-                      type !== "kucoin" && (
+                      type !== "kucoin" &&
+                      type !== "vanar" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -3529,8 +3573,9 @@ const SingleNft = ({
                         type === "landbnb" ||
                         type === "landbase" ||
                         type === "mat" ||
-                        type === "sei"||
-                        type === "kucoin") && (
+                        type === "sei" ||
+                        type === "kucoin" ||
+                        type === "vanar") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                             <span className="currentprice-txt">
@@ -3574,8 +3619,10 @@ const SingleNft = ({
                                   ? `https://pacific-explorer.manta.network/address/${owner}`
                                   : type === "taiko"
                                   ? `https://taikoscan.io/address/${owner}`
-                                  : type === "opbnb"||type === "kucoin"
+                                  : type === "opbnb" || type === "kucoin"
                                   ? `https://opbnbscan.com/address/${owner}`
+                                  : type === "vanar"
+                                  ? `https://explorer.vanarchain.com/address/${owner}`
                                   : type === "mat"
                                   ? `https://matchscan.io/address/${owner}`
                                   : type === "sei"
@@ -3782,7 +3829,8 @@ const SingleNft = ({
                         type !== "landbase" &&
                         type !== "mat" &&
                         type !== "sei" &&
-                        type !== "kucoin" && (
+                        type !== "kucoin" &&
+                        type !== "vanar" && (
                           <button
                             disabled={
                               sellLoading === true || sellStatus === "failed"
@@ -3863,7 +3911,8 @@ const SingleNft = ({
                         type !== "landbase" &&
                         type !== "mat" &&
                         type !== "sei" &&
-                        type !== "kucoin" && (
+                        type !== "kucoin" &&
+                        type !== "vanar" && (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
@@ -3907,7 +3956,8 @@ const SingleNft = ({
                         type !== "landbase" &&
                         type !== "mat" &&
                         type !== "sei" &&
-                        type !== "kucoin" && (
+                        type !== "kucoin" &&
+                        type !== "vanar" && (
                           <button
                             className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
@@ -3955,8 +4005,9 @@ const SingleNft = ({
             type !== "multivers" &&
             type !== "immutable" &&
             type !== "mat" &&
-            type !== "sei"&&
-            type !== "kucoin" && (
+            type !== "sei" &&
+            type !== "kucoin" &&
+            type !== "vanar" && (
               <div className="px-2">
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -4231,8 +4282,9 @@ const SingleNft = ({
             type === "multivers" ||
             type === "immutable" ||
             type === "mat" ||
-            type === "sei"||
-            type === "kucoin") && (
+            type === "sei" ||
+            type === "kucoin" ||
+            type === "vanar") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -4293,6 +4345,8 @@ const SingleNft = ({
                             ? "COOKIE"
                             : type === "sei"
                             ? "SEI"
+                            : type === "vanar"
+                            ? "VANRY"
                             : "BNB"}{" "}
                           rewards
                         </span>

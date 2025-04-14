@@ -19,6 +19,7 @@ const MyRewardsPopupNew = ({
   cawsPremiumRewards,
   allCoreChests,
   allVictionChests,
+  allVanarChests,
   allSeiChests,
   genesisRank2,
   // weeklyDataAmountCore,
@@ -72,6 +73,7 @@ const MyRewardsPopupNew = ({
   const [treasureRewardMoneySkale, setTreasureRewardMoneySkale] = useState(0);
   const [treasureRewardMoneySei, setTreasureRewardMoneySei] = useState(0);
   const [treasureRewardMoneyCore, setTreasureRewardMoneyCore] = useState(0);
+  const [treasureRewardMoneyVanar, setTreasureRewardMoneyVanar] = useState(0);
   const [treasureRewardMoneyViction, setTreasureRewardMoneyViction] =
     useState(0);
   const [treasureRewardMoneyManta, setTreasureRewardMoneyManta] = useState(0);
@@ -361,6 +363,7 @@ const MyRewardsPopupNew = ({
     var moneyResult = 0;
     var moneyResultSkale = 0;
     var moneyResultCore = 0;
+    var moneyResultVanar = 0;
     var moneyResultViction = 0;
     var moneyResultManta = 0;
     var moneyResultBase = 0;
@@ -439,6 +442,24 @@ const MyRewardsPopupNew = ({
                 innerChest.status === "Claimed"
               ) {
                 moneyResultViction += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+    if (allVanarChests && allVanarChests.length > 0) {
+      allVanarChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultVanar += Number(innerChest.reward);
               }
             });
           }
@@ -542,6 +563,7 @@ const MyRewardsPopupNew = ({
     setTreasureRewardMoney(moneyResult);
     setTreasureRewardMoneySkale(moneyResultSkale);
     setTreasureRewardMoneyCore(moneyResultCore);
+    setTreasureRewardMoneyVanar(moneyResultVanar);
     setTreasureRewardMoneyViction(moneyResultViction);
     setTreasureRewardMoneyManta(moneyResultManta);
     setTreasureRewardMoneyBase(moneyResultBase);
@@ -612,6 +634,7 @@ const MyRewardsPopupNew = ({
     allSkaleChests,
     allCoreChests,
     allVictionChests,
+    allVanarChests,
     allMantaChests,
     allBaseChests,
     allSeiChests,
@@ -773,6 +796,7 @@ const MyRewardsPopupNew = ({
                   )
                 : getFormattedNumber(
                     Number(treasureRewardMoneyCore) +
+                    Number(treasureRewardMoneyVanar) +
                       Number(treasureRewardMoneySei) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
@@ -1007,6 +1031,7 @@ const MyRewardsPopupNew = ({
                 : getFormattedNumber(
                     Number(treasureRewardMoney) +
                       Number(treasureRewardMoneyCore) +
+                      Number(treasureRewardMoneyVanar) +
                       Number(treasureRewardMoneyMat) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
@@ -1210,6 +1235,11 @@ const MyRewardsPopupNew = ({
             />
             <img
               src={"https://cdn.worldofdypians.com/wod/viction.svg"}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
               style={{ width: 16, height: 16 }}
               alt=""
             />
@@ -1536,6 +1566,15 @@ const MyRewardsPopupNew = ({
                   {previousRewards
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneyMat, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Vanar</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyVanar, 2)}
                 </span>
               </div>
 

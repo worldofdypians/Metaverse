@@ -454,6 +454,16 @@ function App() {
       },
       blockExplorerUrls: ["https://matchscan.io"],
     },
+    2040: {
+      chainId: 2040,
+      chainName: "Vanar Mainnet",
+      rpcUrls: ["https://rpc.vanarchain.com"],
+      nativeCurrency: {
+        symbol: "VANRY",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://explorer.vanarchain.com/"],
+    },
   };
 
   const { useUserInfo, useWallet } = Hooks;
@@ -561,6 +571,7 @@ function App() {
   const [myMatNFTs, setMyMatNfts] = useState([]);
   const [mykucoinNFTs, setMykucoinNFTs] = useState([]);
   const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
+  const [myVanarNFTs, setmyVanarNFTs] = useState([]);
 
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
@@ -2471,7 +2482,11 @@ function App() {
       getMyNFTS(coinbase, "opbnb").then((NFTS) => {
         setmyOpbnbNfts(NFTS);
       });
+      getMyNFTS(coinbase, "vanar").then((NFTS) => {
+        setmyVanarNFTs(NFTS);
+      });
       //setmyBaseNFTs
+     
     } else {
       setMyNFTSCaws([]);
       setMyNFTSTimepiece([]);
@@ -2741,6 +2756,146 @@ function App() {
         } catch (e) {
           window.alertify.error("No web3 detected! Please Install MetaMask!");
         }
+      }
+    }
+  };
+  const handleKucoinMint = async () => {
+    if (isConnected) {
+      if (window.WALLET_TYPE !== "binance") {
+        try {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+
+          let tokenId = await window.kucoin_nft
+            .mintKucoinNFT()
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "kucoin").then((NFTS) => {
+                setMykucoinNFTs(NFTS);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+
+          if (tokenId) {
+            let getNftData = await window.getNft(tokenId);
+            setMyNFTsCreated(getNftData);
+          }
+        } catch (e) {
+          setmintloading("error");
+
+          if (typeof e == "object" && e.message) {
+            setmintStatus(e.message);
+          } else {
+            setmintStatus(
+              "Oops, something went wrong! Refresh the page and try again!"
+            );
+          }
+          window.alertify.error(
+            typeof e == "object" && e.message
+              ? e.message
+              : typeof e == "string"
+              ? String(e)
+              : "Oops, something went wrong! Refresh the page and try again!"
+          );
+          setTimeout(() => {
+            setmintloading("initial");
+            setmintStatus("");
+          }, 5000);
+        }
+      } else if (window.WALLET_TYPE === "binance") {
+        try {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+
+          const kucoinsc = new ethers.Contract(
+            window.config.nft_kucoin_address,
+            window.OPBNB_NFT_ABI,
+            library.getSigner()
+          );
+
+          let txResponse = await kucoinsc.mintBetaPass().catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+
+          const txReceipt = txResponse.wait();
+          if (txReceipt) {
+            setmintStatus("Success! Your Nft was minted successfully!");
+            setmintloading("success");
+            settextColor("rgb(123, 216, 176)");
+            setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            getMyNFTS(coinbase, "kucoin").then((NFTS) => {
+              setMykucoinNFTs(NFTS);
+            });
+          }
+        } catch (e) {
+          setmintloading("error");
+
+          if (typeof e == "object" && e.message) {
+            setmintStatus(e.message);
+          } else {
+            setmintStatus(
+              "Oops, something went wrong! Refresh the page and try again!"
+            );
+          }
+          window.alertify.error(
+            typeof e == "object" && e.message
+              ? e.message
+              : typeof e == "string"
+              ? String(e)
+              : "Oops, something went wrong! Refresh the page and try again!"
+          );
+          setTimeout(() => {
+            setmintloading("initial");
+            setmintStatus("");
+          }, 5000);
+        }
+      }
+    } else {
+      try {
+        handleConnectWallet();
+      } catch (e) {
+        window.alertify.error("No web3 detected! Please Install MetaMask!");
       }
     }
   };
@@ -4562,7 +4717,7 @@ function App() {
           return false;
         });
       if (isPremium_bnb === true) {
-        setIsPremium(true);
+        setIsPremium(false);
       } else {
         const isPremium_opbnb = await daily_bonus_contract.methods
           .isPremiumUser(addr)
@@ -4572,7 +4727,7 @@ function App() {
             return false;
           });
         if (isPremium_opbnb === true) {
-          setIsPremium(true);
+          setIsPremium(false);
         } else {
           const isPremium_core = await daily_bonus_contract_core.methods
             .isPremiumUser(addr)
@@ -4582,7 +4737,7 @@ function App() {
               return false;
             });
           if (isPremium_core === true) {
-            setIsPremium(true);
+            setIsPremium(false);
           } else {
             const isPremium_viction = await daily_bonus_contract_viction.methods
               .isPremiumUser(addr)
@@ -4592,7 +4747,7 @@ function App() {
                 return false;
               });
             if (isPremium_viction === true) {
-              setIsPremium(true);
+              setIsPremium(false);
             } else {
               const isPremium_skale = await daily_bonus_contract_skale.methods
                 .isPremiumUser(addr)
@@ -4602,7 +4757,7 @@ function App() {
                   return false;
                 });
               if (isPremium_skale === true) {
-                setIsPremium(true);
+                setIsPremium(false);
               } else {
                 const isPremium_taiko = await daily_bonus_contract_taiko.methods
                   .isPremiumUser(addr)
@@ -4740,6 +4895,8 @@ function App() {
                     ? "0x406"
                     : chain === 13371
                     ? "0x343b"
+                    : chain === 2040
+                    ? "0x7f8"
                     : chain === 1482601649
                     ? "0x585eb4b1"
                     : "0x406",
@@ -5621,6 +5778,8 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
+
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -5709,6 +5868,7 @@ function App() {
                 coingeckoEarnUsd={userEarnUsd}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -5832,6 +5992,22 @@ function App() {
           <Route
             exact
             path="/shop/beta-pass/bnb"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/vanar"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -6232,6 +6408,7 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -6347,12 +6524,14 @@ function App() {
                 myKucoinNfts={mykucoinNFTs}
                 myOpbnbNfts={myOpbnbNfts}
                 totalOpbnbNft={myOpbnbNfts?.length}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />
-          {/* <Route
+          <Route
             exact
-            path="/shop/mint/kucoin"
+            path="/shop/mint/vanar"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -6387,10 +6566,14 @@ function App() {
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
                 myKucoinNfts={mykucoinNFTs}
+                myOpbnbNfts={myOpbnbNfts}
+                totalOpbnbNft={myOpbnbNfts?.length}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />
-           <Route
+          {/* <Route
             exact
             path="/shop/mint/matchain"
             element={
@@ -6615,6 +6798,8 @@ function App() {
                 myKucoinNfts={mykucoinNFTs}
                 myOpbnbNfts={myOpbnbNfts}
                 totalOpbnbNft={myOpbnbNfts?.length}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />

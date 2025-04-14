@@ -240,8 +240,8 @@
   }
   
  
-  .dropdown-item:hover {
-    background: #3b3883;
+  .dropdown-item:hover, .active-chain-btn {
+    background: #3b3883 !important;
   }
   
   .dropdown-title {
@@ -275,7 +275,7 @@
   .select-gray-txt {
     color: #8b8ca2;
     text-align: center;
-    font-size: 12px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 600;
     line-height: 24px; /* 240% */
@@ -650,8 +650,12 @@
 
   .header-chain-grid{
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(5,1fr);
     gap: 10px;
+
+    @media screen and (max-width: 991px) {
+      grid-template-columns: repeat(2,1fr);
+    }
   }
   
   .chaindropdown {

@@ -7,6 +7,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
+import ChainPopup from "../Header/ChainPopup";
 
 const MobileNavbar = ({
   handleSignUp,
@@ -33,6 +34,7 @@ const MobileNavbar = ({
   const [openNavbar, setOpenNavbar] = useState(false);
   const [chainState, setchainState] = useState("");
   const [unreadNotifications, setunreadNotifications] = useState(0);
+  const [showChainDropdown, setshowChainDropdown] = useState(false);
 
   const bgmenu = document.querySelector("#bgmenu");
   const hamburger = document.querySelector("#mobileNavbar");
@@ -77,6 +79,8 @@ const MobileNavbar = ({
         setchainState("taiko");
       } else if (chainId === 1329) {
         setchainState("sei");
+      } else if (chainId === 2040) {
+        setchainState("vanar");
       } else {
         setchainState("");
       }
@@ -86,11 +90,14 @@ const MobileNavbar = ({
     handleDisconnect();
     setOpenNavbar(false);
   };
+
   const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
-        network_matchain?.showChangeNetwork();
-      } else if (!window.gatewallet && window.WALLET_TYPE !== "matchId") {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         await handleSwitchNetworkhook(hexChainId)
           .then(() => {
             handleSwitchNetwork(chain);
@@ -101,27 +108,22 @@ const MobileNavbar = ({
       } else if (
         window.gatewallet &&
         window.WALLET_TYPE !== "binance" &&
-        !window.ethereum?.isBinance &&
         window.WALLET_TYPE !== "matchId"
       ) {
         handleSwitchChainGateWallet(chain);
-      } else if (
-        window.ethereum?.isBinance ||
-        window.WALLET_TYPE === "binance"
-      ) {
-        window.alertify.error(
-          "This network is not available on Binance Wallet"
-        );
+      } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+        network_matchain?.showChangeNetwork();
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(chain);
       }
     } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
       network_matchain?.showChangeNetwork();
-    } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
-      window.alertify.error("This network is not available on Binance Wallet");
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(chain);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
   useEffect(() => {
     setActiveChain();
   }, [chainId]);
@@ -194,6 +196,9 @@ const MobileNavbar = ({
               <DropdownButton
                 id="dropdown-basic-button"
                 className="d-flex align-items-center justify-content-center"
+                onClick={() => {
+                  setshowChainDropdown(true);
+                }}
                 title={
                   <span className="dropdown-title">
                     <img
@@ -226,6 +231,8 @@ const MobileNavbar = ({
                           ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                           : chainState === "sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                          : chainState === "vanar"
+                          ? "https://cdn.worldofdypians.com/wod/svg.png"
                           : "https://cdn.worldofdypians.com/wod/error.svg"
                       }
                       alt=""
@@ -271,7 +278,7 @@ const MobileNavbar = ({
                   </span>
                 }
               >
-                {window.WALLET_TYPE !== "matchId" && (
+                {/* {window.WALLET_TYPE !== "matchId" && (
                   <Dropdown.Item onClick={() => switchNetwork("0x1", 1)}>
                     <img
                       src={"https://cdn.worldofdypians.com/wod/eth.svg"}
@@ -408,10 +415,7 @@ const MobileNavbar = ({
                     Base
                   </Dropdown.Item>
                 )}
-                {/* <Dropdown.Item onClick={() => handleSeiPool()}>
-                    <img src={sei} width={20} height={20} alt="" />
-                    Sei
-                  </Dropdown.Item>*/}
+                
                 {window.WALLET_TYPE !== "matchId" &&
                   window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
@@ -433,7 +437,7 @@ const MobileNavbar = ({
                     />
                     Avalanche
                   </Dropdown.Item>
-                )}
+                )} */}
               </DropdownButton>
             </>
           )}
@@ -1168,6 +1172,26 @@ const MobileNavbar = ({
           </div>
         </div>
       </OutsideClickHandler>
+      {showChainDropdown && (
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            setshowChainDropdown(false);
+          }}
+        >
+          <ChainPopup
+            onClose={() => {
+              setshowChainDropdown(false);
+            }}
+            onDisconnect={manageDisconnect}
+            onSwitchNetwork={(hexchain, chain) => {
+              switchNetwork(hexchain, chain);
+            }}
+            activeChain={chainState}
+            isMobile={true}
+            isPremium={false}
+          />
+        </OutsideClickHandler>
+      )}
     </>
   );
 };
