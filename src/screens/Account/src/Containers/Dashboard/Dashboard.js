@@ -11766,7 +11766,7 @@ function Dashboard({
                     The WOD Team will review the quality of the content, the
                     engagement of the post, and other details. If you are
                     eligible, they will determine the reward, which is
-                    distributed in BNB on a monthly basis.
+                    distributed in WOD on a monthly basis.
                   </p>
                   <p className="popup-paragraph mb-4">
                     <b>*Note:</b> You can submit one post per time. The team
