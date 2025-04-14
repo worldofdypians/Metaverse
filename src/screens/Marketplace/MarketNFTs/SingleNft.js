@@ -459,7 +459,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -475,7 +475,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -491,7 +491,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -507,7 +507,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -523,7 +523,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -539,7 +539,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -555,7 +555,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -571,7 +571,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -587,7 +587,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -603,7 +603,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -635,7 +635,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
@@ -721,7 +721,7 @@ const SingleNft = ({
           console.log(e);
         });
 
-      console.log(owner);
+      
 
       setowner(owner);
       return owner;
