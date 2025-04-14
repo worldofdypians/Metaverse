@@ -1750,7 +1750,10 @@ const MarketMint = ({
                               className="limit-span position-relative d-flex align-items-center gap-2"
                               style={{ bottom: "0px" }}
                             >
-                              Available only on Vanar
+                              Available only on{" "}
+                              {mintTitle === "opbnbchain"
+                                ? "opBnb Chain"
+                                : "Vanar"}
                               <img
                                 style={{ width: 24, height: 24 }}
                                 src={
