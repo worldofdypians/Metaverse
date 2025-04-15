@@ -4745,7 +4745,7 @@ function App() {
           return false;
         });
       if (isPremium_bnb === true) {
-        setIsPremium(false);
+        setIsPremium(true);
       } else {
         const isPremium_opbnb = await daily_bonus_contract.methods
           .isPremiumUser(addr)
@@ -4755,7 +4755,7 @@ function App() {
             return false;
           });
         if (isPremium_opbnb === true) {
-          setIsPremium(false);
+          setIsPremium(true);
         } else {
           const isPremium_core = await daily_bonus_contract_core.methods
             .isPremiumUser(addr)
@@ -4765,7 +4765,7 @@ function App() {
               return false;
             });
           if (isPremium_core === true) {
-            setIsPremium(false);
+            setIsPremium(true);
           } else {
             const isPremium_viction = await daily_bonus_contract_viction.methods
               .isPremiumUser(addr)
@@ -4775,7 +4775,7 @@ function App() {
                 return false;
               });
             if (isPremium_viction === true) {
-              setIsPremium(false);
+              setIsPremium(true);
             } else {
               const isPremium_skale = await daily_bonus_contract_skale.methods
                 .isPremiumUser(addr)
@@ -4785,7 +4785,7 @@ function App() {
                   return false;
                 });
               if (isPremium_skale === true) {
-                setIsPremium(false);
+                setIsPremium(true);
               } else {
                 const isPremium_taiko = await daily_bonus_contract_taiko.methods
                   .isPremiumUser(addr)
