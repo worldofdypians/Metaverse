@@ -1483,7 +1483,7 @@ const chainAreas = [
 
     icon: "https://cdn.worldofdypians.com/wod/vanar.svg",
     location: [-0.06799398256818387, 0.08384048938751222],
-    banner: "seiBanner.png",
+    banner: "vanarArea.webp",
     area: [
       [
         [-0.06776331275477364, 0.08392632007598878],

@@ -513,6 +513,18 @@
   }
 }
 
+.market-mint-vanar {
+  background-image: url("https://cdn.worldofdypians.com/wod/vanarMarketMint.webp");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px !important;
+
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
+}
+
 .market-mint-immutable {
   background-image: url("https://cdn.worldofdypians.com/wod/immutableMarketBanner.png");
   background-size: 100% 100%;

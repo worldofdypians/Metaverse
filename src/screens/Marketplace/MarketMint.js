@@ -667,7 +667,7 @@ const MarketMint = ({
       title: "Vanar Pass",
       eventId: "vanar",
       desc: "Gain entry to metaverse, and join exclusive Vanar event with special ticket.",
-      img: "https://cdn.worldofdypians.com/wod/matchainMintActive.webp",
+      img: "https://cdn.worldofdypians.com/wod/vanarMintSlide.webp",
       data: vanarData,
       class: "mint-core",
       id: "vanar",
@@ -2587,6 +2587,22 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
+                  {/* <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-vanar-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">Vanar Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-vanar-mint-amount">
+                            {getFormattedNumber(kucoinNftsSold, 0)}
+                          </h6>
+                          <span className="past-vanar-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
                 </div>
               )}
             </div>
