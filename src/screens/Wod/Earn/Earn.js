@@ -21,7 +21,9 @@ const Earn = ({
   onSuccessfulStake,
   walletClient,
   publicClient,
-  network_matchain
+  network_matchain,
+  handleSwitchChainBinanceWallet,
+  handleSwitchChainGateWallet,
 }) => {
   // const nftPools = [
   //   {
@@ -174,6 +176,8 @@ const Earn = ({
             walletClient={walletClient}
             publicClient={publicClient}
             network_matchain={network_matchain}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
           />
         </div>
       </div>
