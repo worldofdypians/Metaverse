@@ -6468,6 +6468,8 @@ function App() {
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
               />
             }
           />
