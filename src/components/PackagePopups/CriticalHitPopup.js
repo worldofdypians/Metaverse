@@ -35,7 +35,7 @@ const CriticalHitPopup = ({ onClosePopup }) => {
             log in to the game and visit your land. On your land, you have a
             Genesis Gem, which you need to break with a pickaxe. Once broken, it
             gives you either points that are added to your leaderboard rank on
-            BNB Chain or direct rewards in BNB.
+            BNB Chain or direct rewards in WOD.
           </p>
           <h6 className="text-white">What is Genesis Land?</h6>
           <p className="package-popup-desc">
