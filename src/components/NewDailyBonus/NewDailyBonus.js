@@ -4184,7 +4184,7 @@ const NewDailyBonus = ({
                           >
                             <button
                               className={`${
-                                chainId === 88
+                                chainId === 2040
                                   ? "new-chain-active-btn"
                                   : "new-chain-inactive-btn"
                               } d-flex gap-1 align-items-center`}
