@@ -9167,12 +9167,12 @@ function Dashboard({
                 Number(baseEarnUSD) +
                 Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
+                Number(mantaEarnUsd) +
                 Number(coreEarnUsd) +
                 Number(taikoEarnUsd)
                 // Number(skaleEarnUsd) +
                 // Number(coingeckoEarnUsd) +
                 // Number(seiEarnUsd) +
-                // Number(mantaEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
 

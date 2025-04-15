@@ -632,7 +632,7 @@ function App() {
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
   let coreLastDay2 = new Date("2025-08-08T14:00:00.000+02:00");
 
-  let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2025-08-13T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
@@ -1352,9 +1352,9 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            // if (mantaEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (mantaEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -2860,25 +2860,23 @@ function App() {
           window.OPBNB_NFT_ABI,
           library.getSigner()
         );
-        const txResponse = await nft_contract
-          .mintBetaPass()
-          .catch((e) => {
-            console.error(e);
-            setmintloading("error");
-            settextColor("#d87b7b");
+        const txResponse = await nft_contract.mintBetaPass().catch((e) => {
+          console.error(e);
+          setmintloading("error");
+          settextColor("#d87b7b");
 
-            if (typeof e == "object" && e.message) {
-              setmintStatus(e.message);
-            } else {
-              setmintStatus(
-                "Oops, something went wrong! Refresh the page and try again!"
-              );
-            }
-            setTimeout(() => {
-              setmintloading("initial");
-              setmintStatus("");
-            }, 5000);
-          });
+          if (typeof e == "object" && e.message) {
+            setmintStatus(e.message);
+          } else {
+            setmintStatus(
+              "Oops, something went wrong! Refresh the page and try again!"
+            );
+          }
+          setTimeout(() => {
+            setmintloading("initial");
+            setmintStatus("");
+          }, 5000);
+        });
 
         const txReceipt = await txResponse.wait();
         if (txReceipt) {
@@ -3714,7 +3712,7 @@ function App() {
       location: [-0.06787060104021504, 0.08728981018066406],
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "Jul 10, 2025",
+      eventDate: "Mar 12, 2025",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBase2.webp",
@@ -4157,7 +4155,7 @@ function App() {
     {
       title: "Manta",
       logo: "https://cdn.worldofdypians.com/wod/mantaLogoBig.png",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.033817289296309505, 0.09595870971679689],
@@ -4169,7 +4167,7 @@ function App() {
       totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "Apr 15, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/mantaMintBg.webp",
       userEarnUsd: mantaEarnUsd,
       userEarnCrypto: mantaEarnToken,
@@ -4179,17 +4177,17 @@ function App() {
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Expired",
+        status: "Live",
         id: "event21",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in MANTA Rewards",
-        eventDuration: seiLastDay,
+        eventDuration: mantaLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Apr 15, 2025",
       },
     },
     {
