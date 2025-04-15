@@ -3712,7 +3712,7 @@ function App() {
       location: [-0.06787060104021504, 0.08728981018066406],
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "Jul 10, 2025",
+      eventDate: "Mar 12, 2025",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBase2.webp",
