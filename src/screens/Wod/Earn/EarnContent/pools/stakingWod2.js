@@ -62,6 +62,8 @@ const StakeWodDetails2 = ({
   walletClient,
   publicClient,
   network_matchain,
+  handleSwitchChainBinanceWallet,
+  handleSwitchChainGateWallet,
 }) => {
   let { reward_token_wod, BigNumber } = window;
   let token_symbol = "WOD";
@@ -1109,13 +1111,25 @@ const StakeWodDetails2 = ({
     if (window.WALLET_TYPE === "matchId") {
       network_matchain?.showChangeNetwork();
     } else {
-      await handleSwitchNetworkhook("0x38")
-        .then(() => {
-          handleSwitchNetwork("56");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0x38")
+            .then(() => {
+              handleSwitchNetwork(56);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(56);
+        } else if (coinbase && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(56);
+        }
+      } else if (coinbase && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(56);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
     }
   };
 
