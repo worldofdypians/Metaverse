@@ -2661,10 +2661,7 @@ const NewDailyBonus = ({
       ) {
         setMessage("notsupported");
       }
-    } 
-    
-
-    else if (chain === "vanar") {
+    } else if (chain === "vanar") {
       if ( window.WALLET_TYPE !== "binance" &&
         window.WALLET_TYPE !== "matchId") {
         if (!email) {

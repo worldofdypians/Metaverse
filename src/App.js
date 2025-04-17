@@ -2486,7 +2486,6 @@ function App() {
         setmyVanarNFTs(NFTS);
       });
       //setmyBaseNFTs
-     
     } else {
       setMyNFTSCaws([]);
       setMyNFTSTimepiece([]);
@@ -5340,6 +5339,10 @@ function App() {
       >
         {!location.pathname.includes("ai-agent") &&
           !location.pathname.includes("staking") &&
+          !location.pathname.includes("auth") &&
+          !location.pathname.includes("player") &&
+          !location.pathname.includes("ResetPassword") &&
+          !location.pathname.includes("forgotPassword") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -5807,7 +5810,6 @@ function App() {
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
                 myVanarNFTs={myVanarNFTs}
-
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}

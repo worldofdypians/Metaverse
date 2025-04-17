@@ -3078,6 +3078,11 @@ const GetPremiumPopup = ({
     setActiveChain();
   }, [chainId]);
 
+  useEffect(() => {
+    document.title = "WOD Prime";
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className="custom-container mt-5 mt-lg-0">
