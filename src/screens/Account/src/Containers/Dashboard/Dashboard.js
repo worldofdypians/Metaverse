@@ -4834,7 +4834,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayer = async (itemData) => {
     const data = {
       StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
