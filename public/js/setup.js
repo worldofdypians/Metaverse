@@ -40,7 +40,7 @@ window.config = {
   nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
   nft_mat_address: "0x8e4917c1ba9598fbbf66934cb17ac28c3b5849ab",
   nft_kucoin_address: "0x6dE32bb9F7bfEf596e7767F2DA9Fb62FEb91c1E2",
-  nft_vanar_address: "0x6dE32bb9F7bfEf596e7767F2DA9Fb62FEb91c1E2",
+  nft_vanar_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
 
 
   nft_dypius_premium_address: "0xA3e62c82410fF6697B68CABE90a8b1B6e3CEC8CD",
@@ -1875,6 +1875,7 @@ class KUCOIN_NFT {
 }
 
 window.kucoin_nft = new KUCOIN_NFT();
+
 
 
 /**

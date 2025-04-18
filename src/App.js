@@ -2758,16 +2758,25 @@ function App() {
       }
     }
   };
-  const handleKucoinMint = async () => {
-    if (isConnected) {
-      if (window.WALLET_TYPE !== "binance") {
+  const handleMintVanarNft = async () => {
+    if (isConnected && coinbase) {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         try {
           setmintloading("mint");
           setmintStatus("Minting in progress...");
           settextColor("rgb(123, 216, 176)");
+          let web3 = new Web3(window.ethereum);
+          let vanar_contract = new web3.eth.Contract(
+            window.SEI_NFT_ABI,
+            window.config.nft_vanar_address
+          );
 
-          let tokenId = await window.kucoin_nft
-            .mintKucoinNFT()
+          await vanar_contract.methods
+            .mintBetaPass()
+            .send({ from: coinbase })
             .then(() => {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
@@ -2776,8 +2785,8 @@ function App() {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
-              getMyNFTS(coinbase, "kucoin").then((NFTS) => {
-                setMykucoinNFTs(NFTS);
+              getMyNFTS(coinbase, "vanar").then((NFTS) => {
+                setmyVanarNFTs(NFTS);
               });
             })
             .catch((e) => {
@@ -2797,11 +2806,6 @@ function App() {
                 setmintStatus("");
               }, 5000);
             });
-
-          if (tokenId) {
-            let getNftData = await window.getNft(tokenId);
-            setMyNFTsCreated(getNftData);
-          }
         } catch (e) {
           setmintloading("error");
 
@@ -2830,13 +2834,13 @@ function App() {
           setmintStatus("Minting in progress...");
           settextColor("rgb(123, 216, 176)");
 
-          const kucoinsc = new ethers.Contract(
-            window.config.nft_kucoin_address,
-            window.OPBNB_NFT_ABI,
+          const vanarsc = new ethers.Contract(
+            window.config.nft_vanar_address,
+            window.SEI_NFT_ABI,
             library.getSigner()
           );
 
-          let txResponse = await kucoinsc.mintBetaPass().catch((e) => {
+          let txResponse = await vanarsc.mintBetaPass().catch((e) => {
             console.error(e);
             setmintloading("error");
             settextColor("#d87b7b");
@@ -2863,8 +2867,8 @@ function App() {
               setmintStatus("");
               setmintloading("initial");
             }, 5000);
-            getMyNFTS(coinbase, "kucoin").then((NFTS) => {
-              setMykucoinNFTs(NFTS);
+            getMyNFTS(coinbase, "vanar").then((NFTS) => {
+              setmyVanarNFTs(NFTS);
             });
           }
         } catch (e) {
@@ -2889,12 +2893,56 @@ function App() {
             setmintStatus("");
           }, 5000);
         }
-      }
-    } else {
-      try {
-        handleConnectWallet();
-      } catch (e) {
-        window.alertify.error("No web3 detected! Please Install MetaMask!");
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: window.config.nft_vanar_address,
+              abi: window.SEI_NFT_ABI,
+              functionName: "mintBetaPass",
+              args: [],
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e?.shortMessage);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (receipt) {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "vanar").then((NFTS) => {
+                setmyVanarNFTs(NFTS);
+              });
+            }
+          }
+        }
       }
     }
   };
@@ -6585,7 +6633,7 @@ function App() {
                 mintloading={mintloading}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleMint={handleKucoinMint}
+                handleMint={handleMintVanarNft}
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}

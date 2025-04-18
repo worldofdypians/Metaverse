@@ -432,6 +432,30 @@ const MarketMint = ({
     }
   };
 
+  const handleVanarPool = async () => {
+    if (window.WALLET_TYPE !== "binance") {
+      if (window.ethereum) {
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x7f8")
+            .then(() => {
+              handleSwitchNetwork(2040);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.ethereum?.isBinance) {
+          window.alertify.error(
+            "This network is not available on Binance Wallet"
+          );
+        }
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    } else {
+      window.alertify.error("This network is not available on Binance Wallet");
+    }
+  };
+
   const handleSeiPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
@@ -2199,39 +2223,34 @@ const MarketMint = ({
                               )}
                               {selectedMint.id === "vanar" && (
                                 <button
-                                  className={`py-2 ${
-                                    mintloading === "error"
-                                      ? "filled-error-btn"
-                                      : (isConnected === true &&
-                                          chainId !== 2040) ||
-                                        (status !== "Connect your wallet." &&
-                                          status !== "") ||
-                                        totalVanarNfts > 0
-                                      ? "outline-btn-disabled"
-                                      : "stake-wod-btn"
-                                  }  px-4 w-100`}
-                                  onClick={() => {
-                                    isConnected === true && chainId === 2040
-                                      ? handleMint()
-                                      : showWalletConnect();
-                                  }}
-                                  disabled={
-                                    mintloading === "error" ||
-                                    mintloading === "success" ||
-                                    (isConnected === true &&
-                                      chainId !== 2040) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    totalVanarNfts > 0
-                                      ? true
-                                      : false
-                                  }
-                                  onMouseEnter={() => {
-                                    setMouseOver(true);
-                                  }}
-                                  onMouseLeave={() => {
-                                    setMouseOver(false);
-                                  }}
+                                className={`py-2 ${
+                                  mintloading === "error"
+                                    ? "fail-button"
+                                    : myVanarNFTs.length > 0
+                                    ? "outline-btn-disabled"
+                                    : "stake-wod-btn"
+                                }  px-4 w-100`}
+                                onClick={() => {
+                                  isConnected === true && chainId === 2040
+                                    ? handleMint()
+                                    : isConnected === true && chainId !== 2040
+                                    ? handleVanarPool()
+                                    : showWalletConnect();
+                                }}
+                                disabled={
+                                  mintloading === "error" ||
+                                  mintloading === "success" ||
+                                  mintloading === "mint" ||
+                                  myVanarNFTs.length > 0
+                                    ? true
+                                    : false
+                                }
+                                onMouseEnter={() => {
+                                  setMouseOver(true);
+                                }}
+                                onMouseLeave={() => {
+                                  setMouseOver(false);
+                                }}
                                 >
                                   {(isConnected === false ||
                                     chainId !== 2040) && (
@@ -2248,7 +2267,7 @@ const MarketMint = ({
                                       }}
                                     />
                                   )}{" "}
-                                  {mintloading === "initial" &&
+                                   {mintloading === "initial" &&
                                   isConnected === true &&
                                   chainId === 2040 ? (
                                     "Mint"
@@ -2257,7 +2276,7 @@ const MarketMint = ({
                                     chainId === 2040 ? (
                                     <>
                                       <div
-                                        className="spinner-border"
+                                        className="spinner-border "
                                         role="status"
                                         style={{
                                           height: "1rem",
