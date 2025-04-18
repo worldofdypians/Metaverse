@@ -3,11 +3,10 @@ import "../_tradingcomp.scss";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 
 const AirdropPopup = ({ onClose, coinbase, participants }) => {
-  const [leaderboard, setLeaderboard] = useState("weekly");
   const [airdropWeek, setAirdropWeek] = useState(1);
   const hasLeaderboard = true;
 
-  const dummyArray = Array.from({ length: 10 }, (_, i) => i + 1);
+
   const airdropArray = Array.from({ length: 12 }, (_, i) => i + 1);
 
   return (

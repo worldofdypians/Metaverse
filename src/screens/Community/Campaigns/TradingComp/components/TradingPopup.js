@@ -4,8 +4,10 @@ import { shortAddress } from '../../../../Caws/functions/shortAddress';
 
 const TradingPopup = ({onClose, coinbase, participants}) => {
   const [leaderboard, setLeaderboard] = useState("weekly");
+  const [leaderboardWeek, setLeaderboardWeek] = useState(1)
   const hasLeaderboard = true;
 
+  const leaderboardArray = Array.from({ length: 12 }, (_, i) => i + 1);
   
 
   return (
@@ -22,35 +24,23 @@ const TradingPopup = ({onClose, coinbase, participants}) => {
           alt=""
         />
       </div>
-      <div className="d-flex align-items-center gap-2 mt-3 w-100 justify-content-center">
-              <div
-                className={`trading-comp-lb-button ${
-                  leaderboard === "weekly" && "leaderboard-active"
-                } px-3 py-2 d-flex align-items-center justify-content-center`}
-                onClick={() => setLeaderboard("weekly")}
-              >
-                Weekly
-              </div>
-              <div
-                className={`trading-comp-lb-button ${
-                  leaderboard === "monthly" && "leaderboard-active"
-                } px-3 py-2 d-flex align-items-center justify-content-center`}
-                onClick={() => setLeaderboard("monthly")}
-              >
-                Monthly
-              </div>
-              <div
-                className={`trading-comp-lb-button ${
-                  leaderboard === "quarterly" && "leaderboard-active"
-                } px-3 py-2 d-flex align-items-center justify-content-center`}
-                onClick={() => setLeaderboard("quarterly")}
-              >
-                3-Months
-              </div>
-            </div>
+      <div className="airdrop-weeks-grid mt-3">
+        {leaderboardArray.map((item, index) => (
+           <div
+           key={index}
+           className={`trading-comp-lb-button ${
+             leaderboardWeek === item && "leaderboard-active"
+           } px-2 py-2 d-flex align-items-center justify-content-center`}
+           onClick={() => setLeaderboardWeek(item)}
+           style={{fontSize: "13px"}}
+         >
+           Week {item}
+         </div>
+        ))}
+      </div>
           {hasLeaderboard ? 
           
-          <div className="d-flex trading-comp-overflow flex-column gap-2 mt-3">
+          <div className="d-flex trading-comp-overflow-2 flex-column gap-2 mt-3">
               {participants.slice(0,10).map((item, index) => (
                 <div className="d-flex align-items-center gap-2">
                  <div className="trading-comp-lb-rank d-flex align-items-center justify-content-center">
@@ -72,7 +62,7 @@ const TradingPopup = ({onClose, coinbase, participants}) => {
           :
           <div className="trading-comp-wrapper d-flex flex-column gap-2 align-items-center justify-content-center w-100 h-75 mt-3">
             ⌛
-            <span className='no-winners-text'>Winners will be displayed once the {leaderboard} competition ends.</span>
+            <span className='no-winners-text'>Winners will be displayed once Week {leaderboardWeek} competition ends.</span>
           </div>
           }
     </div>

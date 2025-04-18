@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./_tradingcomp.scss";
-import tradingCompBanner from "./assets/tradingCompBanner.webp";
+import tradingCompBanner from "./assets/tradingCompBanner.png";
 import tradingCalendar from "./assets/tradingCalendar.svg";
 import tradingCompChest from "./assets/tradingCompChest.png";
 import tradingCompGift from "./assets/tradingCompGift.png";
 import tradingCompLeaderboard from "./assets/tradingCompLeaderboard.png";
 import tradingCompMedal from "./assets/tradingCompMedal.png";
 import tradingCompLines from "./assets/tradingCompLines.svg";
+import newTradingLines from "./assets/newTradingLines.svg";
 import tradingCompCoin from "./assets/tradingCompCoin.svg";
 import tradingCompDiamond from "./assets/tradingCompDiamond.svg";
 import blueArrow from "./assets/blueArrow.svg";
@@ -37,7 +38,6 @@ const TradingComp = ({coinbase}) => {
       
     })
   }
-
 
   const fetchWeeklyParticipants = async () => {
     setLoading(true);
@@ -107,17 +107,17 @@ const TradingComp = ({coinbase}) => {
 
   return (
     <>
-      <div className="row">
+      <div className="row" style={{overflowX: "hidden"}}>
         <div className="col-12 col-lg-6">
           <div className="d-flex flex-column gap-2">
             <div className="trading-banner-wrapper position-relative w-100">
-              <div class="overlay-shadow"></div>
+              {/* <div class="overlay-shadow"></div> */}
               <img
                 src={tradingCompBanner}
                 className="trading-comp-banner w-100"
                 alt=""
               />
-              <h6 className="trading-comp-title mb-0">The Gathering Storm</h6>
+              {/* <h6 className="trading-comp-title mb-0">The Gathering Storm</h6> */}
             </div>
             <div className="d-flex align-items-center gap-2">
               <img src={tradingCalendar} alt="" />
@@ -133,26 +133,22 @@ const TradingComp = ({coinbase}) => {
             <div className="trading-comp-wrapper w-100 p-3">
               <div className="d-flex align-items-center justify-content-between">
                 <h6 className="mb-0 trading-comp-subtitle">Prize Pool</h6>
-                <div className="d-flex align-items-center gap-2">
-                  <div className="trading-comp-rules-btn d-flex align-items-center justify-content-center px-3 py-2">
-                    <span>Rules</span>
-                  </div>
-                  <div className="trading-comp-rules-btn d-flex align-items-center justify-content-center px-3 py-2">
-                    <span>FAQs</span>
-                  </div>
-                </div>
+                  <a href="https://medium.com/@worldofdypians/the-gathering-storm-ultimate-wod-trading-competition-5fb06f827023" target="_blank" rel="noreferrer" className="trading-comp-rules-btn d-flex align-items-center justify-content-center px-3 py-2">
+                    <span>Competition Rules</span>
+                  </a>
+                  
               </div>
               <div className="mt-3 d-flex flex-column w-100 align-items-center">
                 <div className="trading-comp-total-prize-wrapper px-5 py-3 d-flex align-items-center justify-content-center">
-                  <h6 className="mb-0">$600,000</h6>
+                  <h6 className="mb-0">$300,000</h6>
                 </div>
                 <div className="golen-line d-none d-lg-flex"></div>
                 <img
-                  src={tradingCompLines}
+                  src={newTradingLines}
                   className="trading-lines d-none d-lg-flex"
                   alt=""
                 />
-                <div className="trading-prize-grid">
+                <div className="trading-prize-grid w-100">
                   <div className="d-flex w-100 justify-content-center d-flex d-lg-none">
                     <img src={blueArrow} className="d-flex d-lg-none" alt="" />
                   </div>
@@ -162,44 +158,12 @@ const TradingComp = ({coinbase}) => {
                       <span>Trading</span>
                     </div>
                     <div className="trading-comp-prize-wrapper p-3 d-flex flex-column gap-2">
-                      <h6 className="mb-0">$50,000</h6>
-                      <span>10,000 weekly winners</span>
+                      <h6 className="mb-0">$60,000</h6>
+                      <span>30 weekly winners</span>
                     </div>
                   </div>
                   <div className="d-flex w-100 justify-content-center d-flex d-lg-none">
                     <img src={blueArrow} className="d-flex d-lg-none" alt="" />
-                  </div>
-
-                  <div className="d-flex flex-column align-items-center">
-                    <div className="trading-comp-trade-wrapper px-3 py-2 d-flex align-items-center justify-content-center">
-                      <img src={tradingCompCoin} alt="" />
-                      <span>Trading</span>
-                    </div>
-                    <div className="trading-comp-prize-wrapper p-3 d-flex flex-column gap-2">
-                      <h6 className="mb-0">$150,000</h6>
-                      <span>600 monthly winners</span>
-                    </div>
-                  </div>
-                  <div className="d-flex w-100 justify-content-center d-flex d-lg-none">
-                    <img src={blueArrow} className="d-flex d-lg-none" alt="" />
-                  </div>
-
-                  <div className="d-flex flex-column align-items-center">
-                    <div className="trading-comp-trade-wrapper px-3 py-2 d-flex align-items-center justify-content-center">
-                      <img src={tradingCompCoin} alt="" />
-                      <span>Trading</span>
-                    </div>
-                    <div className="trading-comp-prize-wrapper p-3 d-flex flex-column gap-2">
-                      <h6 className="mb-0">$300,000</h6>
-                      <span>100 3-month winners</span>
-                    </div>
-                  </div>
-                  <div className="d-flex w-100 justify-content-center d-flex d-lg-none">
-                    <img
-                      src={purpleArrow}
-                      className="d-flex d-lg-none"
-                      alt=""
-                    />
                   </div>
 
                   <div className="d-flex flex-column align-items-center">
@@ -208,45 +172,49 @@ const TradingComp = ({coinbase}) => {
                       <span>Aidrop</span>
                     </div>
                     <div className="trading-comp-airdrop-prize-wrapper p-3 d-flex flex-column gap-2">
-                      <h6 className="mb-0">$100,000</h6>
-                      <span>50 weekly winners</span>
+                      <h6 className="mb-0">$240,000</h6>
+                      <span>3,100 weekly winners</span>
                     </div>
                   </div>
+                 
+                
                 </div>
               </div>
             </div>
             <div className="d-flex flex-column gap-2 mt-2">
-              <h6 className="trading-comp-subtitle mb-0">My Stats</h6>
-              <div className="trading-comp-wrapper w-100 p-3">
-                <div className="trading-comp-stats-grid">
-                  <div className="trading-comp-stats-wrapper d-flex flex-column w-100">
-                    <div className="trading-comp-stats-header p-3 d-flex align-items-center justify-content-between">
-                      <span>Rank</span>
-                      <h6 className="mb-0">#{getFormattedNumber(userStats?.weekly, 0)}</h6>
-                    </div>
-                    <div className="d-flex p-3 align-items-center justify-content-center">
-                      <h6 className="trading-comp-stats-type mb-0">Weekly</h6>
-                    </div>
+              <h6 className="trading-comp-subtitle mb-0">Airdrop Groups</h6>
+              <div className="trading-comp-wrapper w-100 p-3 d-flex flex-column justify-content-center align-items-center">
+                <div className="row w-100 airdrop-group-item py-2">
+                  <div className="col-3 d-flex justify-content-start">
+                    <h6 className="mb-0 airdrop-group-title">Group 1</h6>
                   </div>
-                  <div className="trading-comp-stats-wrapper d-flex flex-column w-100">
-                    <div className="trading-comp-stats-header p-3 d-flex align-items-center justify-content-between">
-                      <span>Rank</span>
-                      <h6 className="mb-0">#{getFormattedNumber(userStats?.monthly, 0)}</h6>
-
-                    </div>
-                    <div className="d-flex p-3 align-items-center justify-content-center">
-                      <h6 className="trading-comp-stats-type mb-0">Monthly</h6>
-                    </div>
+                  <div className="col-3 d-flex justify-content-center">
+                    <span className="airdrop-group-winners">100 winners</span>
                   </div>
-                  <div className="trading-comp-stats-wrapper d-flex flex-column w-100">
-                    <div className="trading-comp-stats-header p-3 d-flex align-items-center justify-content-between">
-                      <span>Rank</span>
-                      <h6 className="mb-0">#{getFormattedNumber(userStats?.quarterly, 0)}</h6>
-
-                    </div>
-                    <div className="d-flex p-3 align-items-center justify-content-center">
-                      <h6 className="trading-comp-stats-type mb-0">3 Months</h6>
-                    </div>
+                  <div className="col-6 d-flex justify-content-end">
+                    <span className="airdrop-group-volume">Min weekly volume $1,000</span>
+                  </div>
+                </div>
+                <div className="row w-100 airdrop-group-item py-2">
+                  <div className="col-3 d-flex justify-content-start">
+                    <h6 className="mb-0 airdrop-group-title">Group 2</h6>
+                  </div>
+                  <div className="col-3 d-flex justify-content-center">
+                    <span className="airdrop-group-winners">600 winners</span>
+                  </div>
+                  <div className="col-6 d-flex justify-content-end">
+                    <span className="airdrop-group-volume">Min weekly volume $750</span>
+                  </div>
+                </div>
+                <div className="row w-100 airdrop-group-item py-2">
+                  <div className="col-3 d-flex justify-content-start">
+                    <h6 className="mb-0 airdrop-group-title">Group 3</h6>
+                  </div>
+                  <div className="col-3 d-flex justify-content-center">
+                    <span className="airdrop-group-winners">2,400 winners</span>
+                  </div>
+                  <div className="col-6 d-flex justify-content-end">
+                    <span className="airdrop-group-volume">Min weekly volume $500</span>
                   </div>
                 </div>
               </div>
@@ -267,42 +235,8 @@ const TradingComp = ({coinbase}) => {
         <div className="col-12 col-lg-6">
           <div className="d-flex flex-column gap-3">
             <div className="d-flex w-100 flex-column flex-lg-row align-items-center mt-3 justify-content-between">
-              <h6 className="trading-comp-lb-title">Rankings</h6>
-              <div className="d-flex align-items-center gap-2">
-                <div
-                  className={`trading-comp-lb-button ${
-                    leaderboard === "weekly" && "leaderboard-active"
-                  } px-3 py-2 d-flex align-items-center justify-content-center`}
-                  onClick={() => {
-                    setLeaderboard("weekly");
-                    fetchWeeklyParticipants();
-                  }}
-                >
-                  Weekly
-                </div>
-                <div
-                  className={`trading-comp-lb-button ${
-                    leaderboard === "monthly" && "leaderboard-active"
-                  } px-3 py-2 d-flex align-items-center justify-content-center`}
-                  onClick={() => {
-                    setLeaderboard("monthly");
-                    fetchMonthlyParticipants();
-                  }}
-                >
-                  Monthly
-                </div>
-                <div
-                  className={`trading-comp-lb-button ${
-                    leaderboard === "3month" && "leaderboard-active"
-                  } px-3 py-2 d-flex align-items-center justify-content-center`}
-                  onClick={() => {
-                    setLeaderboard("3month");
-                    fetchQuarterlyParticipants();
-                  }}
-                >
-                  3-Months
-                </div>
-              </div>
+              <h6 className="trading-comp-lb-title">Weekly Rankings</h6>
+        
             </div>
             <div className="d-flex flex-column w-100">
               <div className="container">
