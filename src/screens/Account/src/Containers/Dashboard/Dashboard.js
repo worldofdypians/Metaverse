@@ -9169,10 +9169,11 @@ function Dashboard({
                 Number(bnbEarnUsd) +
                 Number(mantaEarnUsd) +
                 Number(coreEarnUsd) +
+                Number(seiEarnUsd) +
                 Number(taikoEarnUsd)
                 // Number(skaleEarnUsd) +
                 // Number(coingeckoEarnUsd) +
-                // Number(seiEarnUsd) +
+                //
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
 
