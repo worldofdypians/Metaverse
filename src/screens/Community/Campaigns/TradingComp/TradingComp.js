@@ -264,7 +264,7 @@ const TradingComp = ({coinbase}) => {
                     </div>
                   </div>
                 ) : (
-                  particpants.map((item, index) => (
+                  particpants.slice(0,10).map((item, index) => (
                     <div className="trading-comp-lb-item row p-3">
                       <div className="col-2">
                         <div className="trading-comp-lb-rank d-flex align-items-center justify-content-center">
