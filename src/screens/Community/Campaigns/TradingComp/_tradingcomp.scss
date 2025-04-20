@@ -166,7 +166,7 @@
   border: 0.5px solid #dfdced;
   cursor: pointer;
   text-decoration: none;
-  transition: all .25s;
+  transition: all 0.25s;
   span {
     color: #dfdced;
     text-align: center;
@@ -177,9 +177,9 @@
   }
 }
 
-.trading-comp-rules-btn:hover{
+.trading-comp-rules-btn:hover {
   background: #dfdced;
-  span{
+  span {
     color: #0e1236;
   }
 }
@@ -489,6 +489,16 @@
   display: none !important;
 }
 
+
+.trading-comp-overflow-3 {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.trading-comp-overflow-3::-webkit-scrollbar {
+  display: none !important;
+}
+
 .trading-comp-lb-item-player {
   border-radius: 12px !important;
   background: rgba(243, 191, 9, 0.1) !important;
@@ -520,7 +530,7 @@
 }
 
 .airdrop-group-title {
-  color: #C0C9FF;
+  color: #c0c9ff;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
@@ -532,27 +542,45 @@
 }
 
 .airdrop-group-winners {
-  color: #00E5FF;
-text-align: center;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 18px; /* 150% */
-@media screen and (max-width: 500px) {
-  font-size: 10px;
-  white-space: nowrap;
-}
+  color: #00e5ff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 150% */
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+    white-space: nowrap;
+  }
 }
 
 .airdrop-group-volume {
-  color: #C0C9FF;
-text-align: right;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 18px; /* 150% */
-@media screen and (max-width: 500px) {
-  font-size: 10px;
-  white-space: nowrap;
+  color: #c0c9ff;
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 150% */
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+    white-space: nowrap;
+  }
 }
+
+.trading-comp-lb-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  @media screen and (max-width: 1600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.trading-comp-more-position {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  margin: auto;
+  z-index: 2;
 }

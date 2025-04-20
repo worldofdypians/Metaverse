@@ -90,6 +90,7 @@ import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
 import NFTBridge from "./screens/NFTBridge/NftBridge";
 import Agent from "./screens/NewAgent/Agent.js";
 import OrynFly from "./components/OrynFly/OrynFly.js";
+import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5216,7 +5217,7 @@ function App() {
       >
         {!location.pathname.includes("ai-agent") &&
           !location.pathname.includes("staking") &&
-          !location.pathname.includes("campaigns") &&
+          !location.pathname.includes("trading-competition") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -6506,6 +6507,9 @@ function App() {
             }
           />
           <Route exact path="/campaigns" element={<Campaigns
+          coinbase={coinbase}
+          />} />
+          <Route exact path="/trading-competition" element={<TradingComp
           coinbase={coinbase}
           />} />
           <Route

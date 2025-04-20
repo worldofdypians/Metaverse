@@ -19,9 +19,11 @@ import AirdropPopup from "./components/AirdropPopup";
 import axios from "axios";
 import { shortAddress } from "../../../Caws/functions/shortAddress";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
+import RanksPopup from "./components/RanksPopup";
 
 const TradingComp = ({coinbase}) => {
   const [leaderboard, setLeaderboard] = useState("weekly");
+  const [ranksPopup, setRanksPopup] = useState(false)
   const [airdropPopup, setAirdropPopup] = useState(false);
   const [tradingPopup, setTradingPopup] = useState(false);
   const [particpants, setParticpants] = useState([]);
@@ -107,7 +109,9 @@ const TradingComp = ({coinbase}) => {
 
   return (
     <>
-      <div className="row" style={{overflowX: "hidden"}}>
+    <div className="container-fluid mt-5 d-flex justify-content-center">
+    <div className="custom-container mt-5">
+    <div className="row mt-5" style={{overflowX: "hidden"}}>
         <div className="col-12 col-lg-6">
           <div className="d-flex flex-column gap-2">
             <div className="trading-banner-wrapper position-relative w-100">
@@ -253,7 +257,15 @@ const TradingComp = ({coinbase}) => {
                   </div>
                 </div>
               </div>
-              <div className="trading-comp-leaderboard container">
+              <div className="trading-comp-leaderboard container position-relative">
+                <div className="overlay-shadow"></div>
+                <div className="trading-comp-more-position d-flex justify-content-center">
+                  <div className="trading-comp-rules-btn d-flex align-items-center justify-content-center px-3 py-2" onClick={() => setRanksPopup(true)} style={{width: "fit-content"}}>
+                    <span>
+                    More
+                    </span>
+                  </div>
+                </div>
                 {loading ? (
                   <div className="d-flex w-100 h-100 justify-content-center align-items-center">
                     <div
@@ -292,13 +304,14 @@ const TradingComp = ({coinbase}) => {
         <div className="col-12 col-lg-6">
           <div className="d-flex flex-column gap-3 w-100">
             <h6 className="trading-comp-lb-title mt-4">Winners</h6>
-            <div
+              <div className="trading-comp-lb-grid">
+              <div
               className="trading-comp-medal-wrapper d-flex align-items-center justify-content-between w-100"
               onClick={() => setTradingPopup(true)}
             >
               <div className="d-flex flex-column gap-2 ps-3">
                 <h6 className="mb-0">Trading Competition</h6>
-                <span>3 Months</span>
+                <span>12 Months</span>
               </div>
               <img src={tradingCompMedal} className="pe-3" alt="" />
             </div>
@@ -312,6 +325,7 @@ const TradingComp = ({coinbase}) => {
               </div>
               <img src={tradingCompGift} className="pe-3" alt="" />
             </div>
+              </div>
             <h6 className="trading-optional-title mb-0 mt-3">Optional</h6>
             <NavLink
               to={"/account#dailybonus"}
@@ -325,6 +339,8 @@ const TradingComp = ({coinbase}) => {
           </div>
         </div>
       </div>
+    </div>
+    </div>
       {tradingPopup && (
         <OutsideClickHandler onOutsideClick={() => setTradingPopup(false)}>
           <TradingPopup onClose={() => setTradingPopup(false)}
@@ -336,6 +352,14 @@ const TradingComp = ({coinbase}) => {
       {airdropPopup && (
         <OutsideClickHandler onOutsideClick={() => setAirdropPopup(false)}>
           <AirdropPopup onClose={() => setAirdropPopup(false)}
+          coinbase={coinbase}
+          participants={particpants}
+          />
+        </OutsideClickHandler>
+      )}
+      {ranksPopup && (
+        <OutsideClickHandler onOutsideClick={() => setRanksPopup(false)}>
+          <RanksPopup onClose={() => setRanksPopup(false)}
           coinbase={coinbase}
           participants={particpants}
           />
