@@ -196,7 +196,7 @@ const TradingComp = ({ coinbase }) => {
                           </div>
                           <div className="trading-comp-prize-wrapper p-3 d-flex flex-column gap-2">
                             <h6 className="mb-0">$60,000</h6>
-                            <span>30 weekly winners</span>
+                            <span>360 total winners</span>
                           </div>
                         </div>
                         <div className="d-flex w-100 justify-content-center d-flex d-lg-none">
@@ -214,7 +214,7 @@ const TradingComp = ({ coinbase }) => {
                           </div>
                           <div className="trading-comp-airdrop-prize-wrapper p-3 d-flex flex-column gap-2">
                             <h6 className="mb-0">$240,000</h6>
-                            <span>3,100 weekly winners</span>
+                            <span>37,200 total winners</span>
                           </div>
                         </div>
                       </div>
@@ -331,6 +331,8 @@ const TradingComp = ({ coinbase }) => {
                     <h6 className="trading-comp-lb-title">Weekly Rankings</h6>
                     <HtmlTooltip
                       placement="top"
+                      enterTouchDelay={1}
+                      leaveTouchDelay={2000}
                       title={
                         <div className="d-flex flex-column gap-1">
                           <span className="card-eth-chain-text">

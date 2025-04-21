@@ -63,6 +63,8 @@ const TradingPopup = ({onClose, coinbase, participants}) => {
           <div className="trading-comp-wrapper d-flex flex-column gap-2 align-items-center justify-content-center w-100 h-75 mt-3">
             ⌛
             <span className='no-winners-text'>Winners will be displayed once Week {leaderboardWeek} competition ends.</span>
+        <span className="no-winners-text">Rewards will be distributed within 1–3 days after winner announcement.</span>
+
           </div>
           }
     </div>

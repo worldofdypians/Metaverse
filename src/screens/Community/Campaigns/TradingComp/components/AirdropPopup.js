@@ -67,6 +67,8 @@ const AirdropPopup = ({ onClose, coinbase, participants }) => {
           <span className="no-winners-text">
             Winners will be displayed once the Week {airdropWeek} ends.
           </span>
+        <span className="no-winners-text">Rewards will be distributed within 1–3 days after winner announcement.</span>
+
         </div>
       )}
     </div>

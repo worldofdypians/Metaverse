@@ -12,7 +12,7 @@ const RanksPopup = ({ participants, onClose, coinbase }) => {
       <div className="d-flex align-items-center justify-content-between w-100">
         <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-end gap-2">
         <h6 className="trading-popup-title mb-0">Weekly Rankings</h6>
-        <span className="comp-lb-reset-time">Reset Time: <b>Monday 00:00 UTC</b></span>
+        {/* <span className="comp-lb-reset-time">Reset Time: <b>Monday 00:00 UTC</b></span> */}
         </div>
         <img
           src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}

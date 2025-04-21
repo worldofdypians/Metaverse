@@ -26,11 +26,13 @@ const AirdropDetails = ({ onClose }) => {
   return (
     <div
       className="trading-popup-wrapper popup-active p-3"
-      style={{ background: "#18193C", border: "none", height: "250px" }}
+      style={{ background: "#18193C", border: "none", height: "280px" }}
     >
-      <div className="d-flex align-items-center justify-content-between w-100">
+      <div className="d-flex align-items-start justify-content-between w-100">
         <div className="d-flex flex-column gap-2">
           <h6 className="trading-popup-title mb-0">Airdrop Details</h6>
+        <span className="comp-lb-reset-time">Reward Distribution: <b>Within 1–3 days after winner announcement.</b></span>
+
         </div>
         <img
           src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}

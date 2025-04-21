@@ -68,14 +68,15 @@ const CompDetails = ({ onClose }) => {
   return (
     <div
       className="trading-popup-wrapper popup-active p-3"
-      style={{ background: "#18193C", border: "none" }}
+      style={{ background: "#18193C", border: "none", width: "28%", height: "680px" }}
     >
-        <div className="d-flex align-items-center justify-content-between w-100">
+        <div className="d-flex align-items-start justify-content-between w-100">
         <div className="d-flex flex-column gap-2">
         <h6 className="trading-popup-title mb-0">
           Trading Details
         </h6>
         <span className="comp-lb-reset-time">Reset Time: <b>Monday 00:00 UTC</b></span>
+        <span className="comp-lb-reset-time">Reward Distribution: <b>Within 1–3 days after winner announcement.</b></span>
         </div>
         <img
           src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
@@ -85,31 +86,31 @@ const CompDetails = ({ onClose }) => {
         />
       </div>
       <div className="row py-3 px-2">
-        <div className="col-4 d-flex justify-content-start">
+        <div className="col-6 d-flex justify-content-start">
           <span className="popup-table-header">Position</span>
         </div>
-        <div className="col-4 d-flex justify-content-start">
+        <div className="col-6 d-flex justify-content-end">
           <span className="popup-table-header">Rewards</span>
             
             </div>
-        <div className="col-4 d-flex justify-content-end">
+        {/* <div className="col-4 d-flex justify-content-end">
           <span className="popup-table-header">Winners</span>
 
-        </div>
+        </div> */}
       </div>
       {compRewards.map((item, index) => (
         <div className="row p-2 trading-comp-lb-item-2 mb-2 mx-2" key={index}>
-            <div className="col-4 d-flex justify-content-start">
+            <div className="col-6 d-flex justify-content-start">
           <span className="popup-table-content">{item.position}</span>
         </div>
-        <div className="col-4 d-flex justify-content-start">
+        <div className="col-6 d-flex justify-content-end">
           <span className="popup-table-content">${getFormattedNumber(item.rewards, 0)}</span>
             
             </div>
-        <div className="col-4 d-flex justify-content-end">
+        {/* <div className="col-4 d-flex justify-content-end">
           <span className="popup-table-content">{item.winners}</span>
             
-            </div>
+            </div> */}
         </div>
       ))}
     </div>
