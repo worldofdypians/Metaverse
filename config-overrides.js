@@ -1,23 +1,31 @@
-const webpack = require('webpack');
+const webpack = require("webpack");
+const path = require("path");
 module.exports = function override(config, env) {
-    config.resolve.fallback = {
-        url: require.resolve('url'),
-        assert: require.resolve('assert'),
-        buffer: require.resolve('buffer'),
-        crypto: require.resolve("crypto-browserify"),
-        stream: require.resolve("stream-browserify"),
-        http: require.resolve("stream-http"),
-        https: require.resolve("https-browserify"),
-        os: require.resolve("os-browserify"),
-        'process/browser': require.resolve("process/browser"),
+  config.resolve = {
+    ...config.resolve,
+    alias: {
+      ...config.resolve.alias,
+      "lodash/last": path.resolve(__dirname, "node_modules/lodash/last.js"),
+    },
+  };
+  config.resolve.fallback = {
+    url: require.resolve("url"),
+    assert: require.resolve("assert"),
+    buffer: require.resolve("buffer"),
+    crypto: require.resolve("crypto-browserify"),
+    stream: require.resolve("stream-browserify"),
+    http: require.resolve("stream-http"),
+    https: require.resolve("https-browserify"),
+    os: require.resolve("os-browserify"),
+    "process/browser": require.resolve("process/browser"),
+    zlib: require.resolve("browserify-zlib"),
+  };
+  config.plugins.push(
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+      Buffer: ["buffer", "Buffer"],
+    })
+  );
 
-    };
-    config.plugins.push(
-        new webpack.ProvidePlugin({
-            process: 'process/browser',
-            Buffer: ['buffer', 'Buffer'],
-        }),
-    );
-
-    return config;
-}
+  return config;
+};

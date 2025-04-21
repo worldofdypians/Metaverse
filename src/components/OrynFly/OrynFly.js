@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./_orynfly.scss";
 import orynGif from "./orynGif.webp"; // Walking animation (~10s)
-import orynGifIdle from "./orynGifIdle.webp"; // Idle animation
+import orynGifIdle from "./newOrynGifIdle.webp"; // Idle animation
 import { NavLink } from "react-router-dom";
 
 const OrynFly = ({ onClose }) => {

@@ -16,6 +16,9 @@ const Governance = ({
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
   handleConnection,
+  walletClient,
+  publicClient,
+  network_matchain,
 }) => {
   const [createProposalPopup, setCreateProposalPopup] = useState(false);
   const [minWodBalanceForProposal, setminWodBalanceForProposal] = useState(0);
@@ -115,12 +118,6 @@ const Governance = ({
   };
 
   const handleSubmitProposal = async (desc) => {
-    window.web3 = new Web3(window.ethereum);
-    const governanceSc = new window.web3.eth.Contract(
-      window.GOVERNANCE_ABI,
-      window.config.governance_address
-    );
-
     setgovLoading(true);
 
     if (Number(wodBalance) < Number(minWodBalanceForProposal)) {
@@ -132,7 +129,15 @@ const Governance = ({
       }, 5000);
       return;
     } else {
-      if (window.WALLET_TYPE !== "binance") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        window.web3 = new Web3(window.ethereum);
+        const governanceSc = new window.web3.eth.Contract(
+          window.GOVERNANCE_ABI,
+          window.config.governance_address
+        );
         await governanceSc.methods
           .proposeText(desc)
           .send({ from: coinbase })
@@ -176,6 +181,44 @@ const Governance = ({
             setgovStatus("initial");
             setCreateProposalPopup(false);
           }, 3000);
+        }
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: window.config.governance_address,
+              abi: window.GOVERNANCE_ABI,
+              functionName: "proposeText",
+              args: [desc],
+            })
+            .catch((e) => {
+              setgovLoading(false);
+              setgovStatus("error");
+              window.alertify.error(e?.shortMessage);
+              setTimeout(() => {
+                setgovStatus("initial");
+              }, 5000);
+            });
+
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (receipt) {
+              setgovLoading(false);
+              setgovStatus("success");
+              refreshProposals();
+              setTimeout(() => {
+                setgovStatus("initial");
+                setCreateProposalPopup(false);
+              }, 3000);
+            }
+          }
         }
       }
     }
@@ -223,6 +266,7 @@ const Governance = ({
             handleConnection();
             setCreateProposalPopup(false);
           }}
+          network_matchain={network_matchain}
         />
       )}
     </>

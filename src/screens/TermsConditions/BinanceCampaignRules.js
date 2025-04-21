@@ -17,21 +17,20 @@ const BinanceCampaignRules = () => {
               <p className="text-white m-0">
                 Welcome to the{" "}
                 <b>
-                  World of Dypians $50,000 WOD Token Airdrop Campaign with
-                  Binance Wallet!
+                  Second Edition of World of Dypians x Binance Wallet Campaign!
                 </b>{" "}
-                This is your chance to earn a share of $50,000 in WOD tokens by
-                completing simple tasks and demonstrating your commitment to the
-                World of Dypians ecosystem. Whether you're a seasoned player or
-                a newcomer, this campaign is designed to reward you for your
-                participation and engagement.
+                This is your opportunity to earn from a pool of xxxx WOD tokens
+                by completing simple tasks and engaging with the World of
+                Dypians ecosystem. Whether you're a seasoned player or a
+                newcomer, this campaign rewards your active participation and
+                support.
               </p>
               <p className="text-white m-0">
                 <b>Activity Period:</b>
               </p>
               <ul>
-                <li className="text-white">Start: 2025-01-23 12:00 (UTC)</li>
-                <li className="text-white">End: 2025-02-06 11:00 (UTC)</li>
+                <li className="text-white">Start: 2025-04-21 12:00 (UTC)</li>
+                <li className="text-white">End: 2025-05-05 12:00 (UTC)</li>
               </ul>
               <p className="text-white m-0">
                 <b>Mission Details and Prizes:</b>
@@ -83,31 +82,41 @@ const BinanceCampaignRules = () => {
                   <b>On-Chain Tasks</b>
                   <ul>
                     <li className="text-white">
-                    Swap a minimum of $10 in WOD on BNB Chain using the native swap feature in the Binance Wallet
+                      Swap a minimum of $20 in WOD on BNB Chain using the native
+                      swap feature in the Binance Wallet
                     </li>
                     <li className="text-white">
-                    The swap must be done in one single transaction
+                      The swap must be done in one single transaction
                     </li>
                     <li className="text-white">
-                    WOD Contract: 0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8
+                      WOD Contract: 0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8
                     </li>
                   </ul>
                 </li>
               </ol>
               <p className="text-white m-0">
-                <b>Prizes Breakdown:</b>
+                <b>Rewards Distribution:</b>
               </p>
-              <p className="text-white m-0">
-                2,000 winners will be selected to share $50,000 in WOD tokens.
-                Each winner will receive $25 in WOD tokens, selected via a
-                raffle.
-              </p>
-              <p className="text-white m-0">
+              <ul>
+                <li className="text-white">
+                  A total of 2,000 winners will be selected to share xxxx WOD
+                  tokens.
+                </li>
+                <li className="text-white">
+                  Each winner will receive an equal amount of WOD tokens.
+                </li>
+                <li className="text-white">
+                  Winners will be determined through the “Selection by Binance
+                  Chain Hash Value rule”, ensuring a transparent and verifiable
+                  process.
+                </li>
+              </ul>
+              {/* <p className="text-white m-0">
                 <u>
                   The value of the rewards for WOD tokens was calculated on
                   2025-01-23.
                 </u>
-              </p>
+              </p> */}
               <p className="text-white m-0">
                 <b>Terms and Conditions (T&C):</b>
               </p>
@@ -116,16 +125,44 @@ const BinanceCampaignRules = () => {
                   Participants must complete all mandatory tasks to qualify.
                 </li>
                 <li className="text-white">
-                  Rewards can be claimed in Binance Wallet after the campaign.
+                  Rewards will be claimable within Binance Wallet after the
+                  campaign ends.
                 </li>
                 <li className="text-white">
                   Users with multiple entries or fraudulent behavior will be
                   disqualified.
                 </li>
-                {/* <li className="text-white">
-                Swap at least $10 worth of USDC/WOD on Binance Wallet
-                </li> */}
+                <li className="text-white">
+                  Only one entry per user is allowed.
+                </li>
+                <li className="text-white">
+                  Binance Wallet (Keyless) users with verified accounts are
+                  eligible to participate.
+                </li>
               </ol>
+
+              <p className="text-white m-0">
+                <b>Geographic Restrictions:</b>
+              </p>
+              <p className="text-white m-0">
+                This campaign excludes participants residing in the following
+                countries or regions:
+              </p>
+              <ul>
+                <li className="text-white">
+                  Christmas Island, Cocos (Keeling) Islands, Cook Islands,
+                  Micronesia, Fiji, French Polynesia, Heard Island and McDonald
+                  Islands, Kiribati, Marshall Islands, Nauru, New Caledonia, New
+                  Zealand, Niue, Norfolk Island, Palau, Papua New Guinea,
+                  Pitcairn Islands, Samoa, Solomon Islands, Tokelau, Tonga,
+                  Tuvalu, Vanuatu, Wallis and Futuna, Andorra, Austria,
+                  Bulgaria, Denmark, Faroe Islands, Finland, France, Germany,
+                  Gibraltar, Greece, Guernsey, Iceland, Isle of Man, Jersey,
+                  Liechtenstein, Lithuania, Malta, Monaco, Netherlands, Norway,
+                  San Marino, Switzerland, Vatican City (The Holy See), and
+                  United Arab Emirates.
+                </li>
+              </ul>
 
               <p className="text-white m-0">
                 <b>FAQs</b>
@@ -138,9 +175,8 @@ const BinanceCampaignRules = () => {
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      The prize pool consists of $50,000 worth of WOD tokens,
-                      shared among 2,000 winners, each receiving $25 worth of
-                      WOD tokens.
+                      A total of xxxx WOD tokens will be distributed among 2,000
+                      participants.
                     </li>
                   </ul>
                 </li>
@@ -151,10 +187,10 @@ const BinanceCampaignRules = () => {
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      Only Keyless MPC Binance Wallet users with verified
-                      accounts are eligible to participate in this campaign.
-                      Each user can only join once, ensuring fair participation
-                      and preventing duplicate entries.
+                      Only Binance Wallet (Keyless) users with verified accounts
+                      are eligible to participate in this campaign. Each user
+                      can only join once, ensuring fair participation and
+                      preventing duplicate entries.
                     </li>
                   </ul>
                 </li>
@@ -191,6 +227,18 @@ const BinanceCampaignRules = () => {
                     >
                       Each participant can enter once and must complete all
                       tasks to be eligible for the prize.
+                    </li>
+                  </ul>
+                </li>
+                <li className="text-white">
+                  <b>How are winners selected?</b>
+                  <ul>
+                    <li
+                      className="text-white"
+                      style={{ listStyleType: "none" }}
+                    >
+                      Winners are determined through the “Selection by Binance
+                      Chain Hash Value rule.”
                     </li>
                   </ul>
                 </li>
@@ -260,8 +308,8 @@ const BinanceCampaignRules = () => {
                 </li>
               </ol> */}
               <p className="text-white m-0">
-                That’s it! You’re now part of the $50,000 WOD Token Airdrop.
-                Good luck!
+                You're now part of the World of Dypians x Binance Wallet
+                Campaign. Get started and show your commitment to the adventure!
               </p>
             </div>
           </div>
