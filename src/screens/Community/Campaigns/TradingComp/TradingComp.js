@@ -336,7 +336,7 @@ const TradingComp = ({ coinbase }) => {
                       title={
                         <div className="d-flex flex-column gap-1">
                           <span className="card-eth-chain-text">
-                            Leaderboard refreshes every 5 minutes
+                            Leaderboard refreshes every 4 hours
                           </span>
                           <span className="card-eth-chain-text">
                             Reset Time: <b>Monday 00:00 UTC</b>
