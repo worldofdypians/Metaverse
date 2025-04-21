@@ -95,6 +95,7 @@ import { Hooks } from "@matchain/matchid-sdk-react";
 import { useMatchChain } from "@matchain/matchid-sdk-react/hooks";
 import { http, createPublicClient } from "viem";
 import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
+import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5154,6 +5155,7 @@ function App() {
       >
         {!location.pathname.includes("ai-agent") &&
           !location.pathname.includes("staking") &&
+          !location.pathname.includes("trading-competition") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -6497,7 +6499,12 @@ function App() {
               />
             }
           />
-          <Route exact path="/campaigns" element={<Campaigns />} />
+          <Route exact path="/campaigns" element={<Campaigns
+          coinbase={coinbase}
+          />} />
+          <Route exact path="/trading-competition" element={<TradingComp
+          coinbase={coinbase}
+          />} />
           <Route
             exact
             path="/governance/proposal/:proposalId"
