@@ -238,19 +238,7 @@ const TradingComp = ({ coinbase }) => {
                 </div>
               
               </div>
-              <div className="d-flex w-100 justify-content-center">
-              <a
-                href="https://pancakeswap.finance/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8&exactAmount=&exactField=INPUT"
-                target="_blank"
-                className="pancake-swap-btn mt-3 d-flex align-items-center justify-content-center gap-2 py-2 px-4"
-              >
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"}
-                  alt=""
-                />
-                <h6 className="mb-0">Trade on PancakeSwap</h6>
-              </a>
-              </div>
+              
             </div> */}
                 <div className="comp-details-grid">
                   <div className="d-flex flex-column gap-2">
@@ -322,6 +310,19 @@ const TradingComp = ({ coinbase }) => {
                     </div>
                   </div>
                 </div>
+                <div className="d-flex w-100 justify-content-center">
+              <a
+                href="https://pancakeswap.finance/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8&exactAmount=&exactField=INPUT"
+                target="_blank"
+                className="pancake-swap-btn mt-3 d-flex align-items-center justify-content-center gap-2 py-2 px-4"
+              >
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"}
+                  alt=""
+                />
+                <h6 className="mb-0">Trade on PancakeSwap</h6>
+              </a>
+              </div>
               </div>
             </div>
             <div className="col-12 col-lg-6">
@@ -336,7 +337,7 @@ const TradingComp = ({ coinbase }) => {
                       title={
                         <div className="d-flex flex-column gap-1">
                           <span className="card-eth-chain-text">
-                            Leaderboard refreshes every 4 hours
+                            Leaderboard refreshes every 1 hour
                           </span>
                           <span className="card-eth-chain-text">
                             Reset Time: <b>Monday 00:00 UTC</b>
