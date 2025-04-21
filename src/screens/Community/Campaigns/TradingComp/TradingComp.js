@@ -135,7 +135,7 @@ const TradingComp = ({ coinbase }) => {
     <>
       <div className="container-fluid mt-5 d-flex justify-content-center">
         <div className="custom-container mt-5">
-          <div className="row mt-5" style={{ overflow: "hidden" }}>
+          <div className="row mt-5 pb-3" style={{ overflow: "hidden" }}>
             <div className="col-12 col-lg-6">
               <div className="d-flex flex-column gap-2">
                 <div className="trading-banner-wrapper position-relative w-100">
