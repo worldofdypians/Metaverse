@@ -359,7 +359,9 @@ const MyProfile = ({
         <div className="row mt-4 mt-lg-0">
           <div className="col-12 col-xl-4">
             <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
+              <div className="d-flex flex-column gap-2">
               <div className="d-flex align-items-center gap-2">
+                
                 <div
                   className="position-relative"
                   style={{ cursor: "pointer" }}
@@ -378,8 +380,7 @@ const MyProfile = ({
                   <span>Score</span>
                 </div> */}
                 </div>
-                <div className="d-flex flex-column gap-2 w-100">
-                  <div className="d-flex align-items-center gap-1">
+                <div className="d-flex align-items-center gap-1">
                     <div
                       className={`d-flex flex-column flex-lg-row align-items-lg-center ${
                         !email
@@ -404,6 +405,9 @@ const MyProfile = ({
                       {email && username ? userRankName.name : ""}
                     </span> */}
                   </div>
+                  </div>
+                <div className="d-flex flex-column gap-2 w-100">
+                 
                   <span className="my-profile-email mb-2">{email}</span>
                   <div className="d-flex flex-column flex-lg-row gap-2">
                     <div
@@ -798,7 +802,7 @@ const MyProfile = ({
                     ) : null}
                   </div>
                 </div>
-              </div>
+                </div>
               <div className="sidebar-separator2 my-2"></div>
               <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row position-relative">
                 <div
