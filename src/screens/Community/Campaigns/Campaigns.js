@@ -3,12 +3,11 @@ import "./_campaigns.scss";
 import { NavLink } from "react-router-dom";
 import NewChallenges from "../../Game/NewChallenges";
 import TradingComp from "./TradingComp/TradingComp";
-import tradingCompBanner from './TradingComp/assets/tradingCompBanner.png'
+import tradingCompBanner from "./TradingComp/assets/tradingCompBanner.png";
 
-const Campaigns = ({coinbase}) => {
+const Campaigns = ({ coinbase }) => {
   const [popupEvent, setPopupEvent] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
-
 
   const dummyBanner = {
     title: "The Gathering Storm",
@@ -16,10 +15,13 @@ const Campaigns = ({coinbase}) => {
     start_date: "Apr 21, 2025",
     end_date: "Jul 14, 2025",
     image: tradingCompBanner,
-    desc: `Prepare for an unforgettable showdown! The Grand Battle Challenge is here, bringing players together to compete, strategize, and claim victory to share $30,000 Rewards<br/>
-    <ul><li>Login or Create a Game Account</li>
-    <li>Stake min 100 WOD tokens </li>
-    <li>Open at least 10 Daily Bonus Chests </li>  </ul>
+    desc: `Welcome to the Gathering Storm $WOD Trading Competition, a 12-week battle where only the best rise.<br/>
+    <ul><li>$300,000 in total rewards</li>
+    <li>Weekly prizes for the Top 30 traders</li>
+    <li>Airdrops for eligible volume warriors </li>  
+    <li>Every trade counts. Every week matters.</li>  
+    </ul>
+    Join the storm. Conquer the charts. Earn your WOD.
    `,
     link: "/trading-competition",
   };
@@ -227,7 +229,7 @@ const Campaigns = ({coinbase}) => {
               <div className="d-flex w-100 justify-content-center justify-content-lg-start">
                 <NavLink
                   to={dummyBanner.link}
-                  target="_blank"
+                  // target="_blank"
                   className="explore-btn px-4 py-2 mt-4"
                   style={{ width: "fit-content" }}
                 >

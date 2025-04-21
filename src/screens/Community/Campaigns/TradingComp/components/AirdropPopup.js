@@ -7,7 +7,7 @@ const AirdropPopup = ({ onClose, coinbase, participants }) => {
   const hasLeaderboard = false;
 
 
-  const airdropArray = Array.from({ length: 1 }, (_, i) => i + 1);
+  const airdropArray = Array.from({ length: 12 }, (_, i) => i + 1);
 
   return (
     <div
