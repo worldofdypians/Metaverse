@@ -21,8 +21,6 @@ const Land = ({
   chainId,
   showForms,
   balance,
-  count,
-  setCount,
   socials
 }) => {
   const [showUnstakeModal, setShowUnstakeModal] = useState(false);
@@ -50,7 +48,6 @@ const Land = ({
   const [totalCawsDiscount, settotalCawsDiscount] = useState(0);
   const [limit, setLimit] = useState(0);
   const [newStakes, setnewStakes] = useState(0);
-  const [activePopup, setActivePopup] = useState(false);
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
   const [mintName, setMintName] = useState("");
   const [myNFTsCreated, setMyNFTsCreated] = useState([]);
@@ -473,13 +470,7 @@ const Land = ({
 
 
   
-  useEffect(() => {
-    {count === 0 &&
-      setTimeout(() => {
-        setActivePopup(true);
-      }, 500);
-    }
-  }, []);
+
 
   return (
     <div className="container-fluid mt-lg-5 pt-lg-5 d-flex px-0 align-items-center justify-content-center">

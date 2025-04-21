@@ -24,14 +24,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/BNBCHAIN",
@@ -101,14 +100,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/Coredao_Org",
@@ -818,14 +816,14 @@ const chainAreas = [
         [-0.06885765325506008, 0.08509039878845216],
       ],
     ],
-    events: [
-   
+    events: [],
+    pastEvents: [
+      {
+        title: "Treasure Hunt",
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+        link: "/account/challenges/treasure-hunt",
+      },
     ],
-    pastEvents: [   {
-      title: "Treasure Hunt",
-      image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-      link: "/account/challenges/treasure-hunt",
-    },],
     socials: [
       {
         link: "https://x.com/chainlink",
@@ -1162,20 +1160,18 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
-
       {
         title: "Leaderboard",
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/mantanetwork",
@@ -1440,14 +1436,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/SeiNetwork",
@@ -4814,7 +4809,7 @@ const challenges = [
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     link: "/account/challenges/critical-hit",
     popupDesc:
-      "As a Genesis Land NFT holder, you can participate in the daily Critical Hit event to earn points and rewards. Each day, you need to log in to the game and visit your land. On your land, you have a Genesis Gem, which you need to break with a pickaxe. Once broken, it gives you either points that are added to your leaderboard rank on BNB Chain or direct rewards in BNB.",
+      "As a Genesis Land NFT holder, you can participate in the daily Critical Hit event to earn points and rewards. Each day, you need to log in to the game and visit your land. On your land, you have a Genesis Gem, which you need to break with a pickaxe. Once broken, it gives you either points that are added to your leaderboard rank on BNB Chain or direct rewards in WOD.",
     secondaryTitle: "What is Genesis Land?",
     thirdDesc:
       "Genesis Land is a 125x125 area in World of Dypians, available to those who own a Genesis Land NFT. Benefits include exclusive rewards, Land NFT staking pool, and special in-game events like Critical Hit.",

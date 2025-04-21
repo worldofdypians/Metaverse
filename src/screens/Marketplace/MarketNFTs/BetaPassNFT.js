@@ -196,13 +196,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "manta-mint-bg",
       wrapperClassName: "manta-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$20,000 in Manta rewards",
       rewardType: "Manta",
       userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Coming Soon",
-      eventEndDate: "Coming Soon",
+      eventStartDate: "Apr 15, 2025",
+      eventEndDate: "Aug 13, 2025",
     },
     {
       id: "bnb",
@@ -218,13 +218,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "bnb-mint-bg",
       wrapperClassName: "bnb-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$20,000 in BNB rewards",
       rewardType: "BNB",
       userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Coming Soon",
-      eventEndDate: "Coming Soon",
+      eventStartDate: "Apr 09, 2025",
+      eventEndDate: "Aug 07, 2025",
     },
     {
       id: "core",
@@ -240,13 +240,13 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "core-mint-bg",
       wrapperClassName: "core-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$20,000 in CORE rewards",
       rewardType: "CORE",
       userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Coming Soon",
-      eventEndDate: "Coming Soon",
+      eventStartDate: "Apr 10, 2025",
+      eventEndDate: "Aug 08, 2025",
     },
     {
       id: "multiversx",
@@ -284,13 +284,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "sei-mint-bg",
       wrapperClassName: "sei-eventwrapper",
-      treasureHuntStatus: "Expired",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$20,000 in SEI rewards",
       rewardType: "SEI",
       userEarned: seiEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 05, 2024",
-      eventEndDate: "Apr. 05, 2025",
+      eventStartDate: "Apr 18, 2025",
+      eventEndDate: "Aug 16, 2025",
     },
     {
       id: "viction",
@@ -1324,7 +1324,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${showVerify && "complete"
+                                  className={`col-3 li ${showVerify && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1332,7 +1332,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${playerCreation && "complete"
+                                  className={`col-3 li ${playerCreation && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1340,7 +1340,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-2 li ${linkWallet && "complete"}`}
+                                  className={`col-2 li ${linkWallet && "complete"}`}
                                   style={{ width: 0 }}
                                 >
                                   <div className="status">

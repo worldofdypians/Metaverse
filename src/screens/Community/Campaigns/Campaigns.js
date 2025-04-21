@@ -149,7 +149,19 @@ const Campaigns = ({coinbase}) => {
     },
   ];
 
-
+  const dummyBanner = {
+    title: "The Grand Battle Challenge",
+    status: "Expired",
+    start_date: "Mar 17, 2025",
+    end_date: "Mar 31, 2025",
+    image: "https://cdn.worldofdypians.com/wod/grand_battle_challenge.webp",
+    desc: `Prepare for an unforgettable showdown! The Grand Battle Challenge is here, bringing players together to compete, strategize, and claim victory to share $30,000 Rewards<br/>
+    <ul><li>Login or Create a Game Account</li>
+    <li>Stake min 100 WOD tokens </li>
+    <li>Open at least 10 Daily Bonus Chests </li>  </ul>
+   `,
+    link: "https://dappbay.bnbchain.org/campaign/377-join-world-of-dypians-grand-battle-challenge-to-share-30-000-rewards",
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -357,18 +357,17 @@ const MyProfile = ({
     <>
       <div className="custom-container mt-5">
         <div className="row mt-4 mt-lg-0">
-          <div className="col-12 col-lg-4">
+          <div className="col-12 col-xl-4">
             <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
+              <div className="d-flex flex-column gap-2">
               <div className="d-flex align-items-center gap-2">
-              
-                <div className="d-flex flex-column gap-2 w-100">
-                  <div className="d-flex align-items-center gap-1">
-                  <div
+                
+                <div
                   className="position-relative"
                   style={{ cursor: "pointer" }}
                 >
                   <img
-                    className="new-profile-img w-100"
+                    className="new-profile-img"
                     src={
                       isPremium
                         ? "https://cdn.worldofdypians.com/wod/starterProfilePremium.png"
@@ -381,8 +380,8 @@ const MyProfile = ({
                   <span>Score</span>
                 </div> */}
                 </div>
-                   <div className="d-flex flex-column gap-1">
-                   <div
+                <div className="d-flex align-items-center gap-1">
+                    <div
                       className={`d-flex flex-column flex-lg-row align-items-lg-center ${
                         !email
                           ? "justify-content-between w-100"
@@ -405,9 +404,11 @@ const MyProfile = ({
                     <span className="current-rank-text text-capitalize">
                       {email && username ? userRankName.name : ""}
                     </span> */}
-                  <span className="my-profile-email mb-2">{email}</span>
-                   </div>
                   </div>
+                  </div>
+                <div className="d-flex flex-column gap-2 w-100">
+                 
+                  <span className="my-profile-email mb-2">{email}</span>
                   <div className="d-flex flex-column flex-lg-row gap-2">
                     <div
                       className={` ${
@@ -449,7 +450,13 @@ const MyProfile = ({
                               component="div"
                               data-event="click"
                               data-tip="Copied To Clipboard!"
-                              data-clipboard-text={address}
+                              data-clipboard-text={
+                                email !== undefined && address
+                                  ? address
+                                  : coinbase
+                                  ? coinbase
+                                  : address
+                              }
                               className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
                             >
                               <span
@@ -780,14 +787,14 @@ const MyProfile = ({
                       isConnected &&
                       !address ? (
                       <button
-                        className="loginbtn-profile px-3 py-2"
+                        className="loginbtn-profile px-5 py-2"
                         onClick={onLinkWallet}
                       >
                         Link Wallet
                       </button>
                     ) : coinbase && email && !address && !username ? (
                       <NavLink
-                        className="loginbtn-profile px-3 py-2 d-flex align-items-center"
+                        className="loginbtn-profile px-5 py-2 d-flex align-items-center"
                         to={"/player"}
                       >
                         Create player
@@ -795,7 +802,7 @@ const MyProfile = ({
                     ) : null}
                   </div>
                 </div>
-              </div>
+                </div>
               <div className="sidebar-separator2 my-2"></div>
               <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row position-relative">
                 <div
@@ -1105,9 +1112,9 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 3
+                        {userActiveEvents === 7
                           ? "Completed"
-                          : userActiveEvents + "/3"}
+                          : userActiveEvents + "/7"}
                       </span>
                     </div>
 
@@ -1180,7 +1187,7 @@ const MyProfile = ({
               </div>
             </div>
           </div>
-          <div className="col-12 col-lg-8">
+          <div className="col-12 col-xl-8">
             <div className="row ">
               <div className="col-12 col-lg-4">
                 {/* <div className="new-special-rewards-wrapper d-flex flex-column gap-4 p-3">

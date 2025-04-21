@@ -54,6 +54,7 @@ import {
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
+import { Hooks } from "@matchain/matchid-sdk-react";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -114,6 +115,7 @@ function Dashboard({
   ethTokenData,
   dypTokenData,
   onSigninClick,
+  onSyncClick,
   onLogoutClick,
   availableTime,
   success,
@@ -163,7 +165,11 @@ function Dashboard({
   isTokenExpired,
   listedNFTS,
   mykucoinNFTs,
-  kucoinEarnUsd
+  kucoinEarnUsd,
+  walletClient,
+  publicClient,
+  network_matchain,
+  syncStatus,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -172,7 +178,8 @@ function Dashboard({
     margin: "auto",
     borderColor: "#554fd8",
   };
-
+  const { useWallet } = Hooks;
+  const { signMessage } = useWallet();
   const allBenefits = [
     {
       title: "Exclusive access to the game",
@@ -231,7 +238,7 @@ function Dashboard({
     "ciangsabin@gmail.com",
     "izcipara88@gmail.com",
     "therockhidder@gmail.com",
-  ]
+  ];
 
   const chainDropdowns = [
     {
@@ -491,13 +498,9 @@ function Dashboard({
   const [loading, setLoading] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
-  const [dypBalance, setDypBalance] = useState();
-  const [dypBalancebnb, setDypBalanceBnb] = useState();
-  const [dypBalanceavax, setDypBalanceAvax] = useState();
-  const [idypBalance, setiDypBalance] = useState();
+
   const [errors, setErrors] = useState({});
-  const [idypBalancebnb, setiDypBalanceBnb] = useState();
-  const [idypBalanceavax, setiDypBalanceAvax] = useState();
+
   const [showNfts, setShowNfts] = useState(false);
   const [showWalletModal, setshowWalletModal] = useState(false);
   const [goldenPassRemainingTime, setGoldenPassRemainingTime] = useState();
@@ -562,10 +565,10 @@ function Dashboard({
   const [goldenPassPopup, setgoldenPassPopup] = useState(false);
 
   const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
-  const [syncStatus, setsyncStatus] = useState("initial");
+
   const [myOffers, setmyOffers] = useState([]);
   const [allActiveOffers, setallOffers] = useState([]);
-  const [showSyncModal, setshowSyncModal] = useState(false);
+
   const [isonlink, setIsOnLink] = useState(false);
   // const [isPremium, setIsPremium] = useState(false);
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
@@ -1046,7 +1049,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerCore = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardCoreDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -1054,50 +1057,15 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
+
+      var testArray = result.data.data.leaderboard;
 
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountCore(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountCore(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountCore(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerCore(true);
-          setUserDataCore([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerCore(false);
-          setUserDataCore(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataCore(...testArray);
+      if (userPosition > 99) {
         setActivePlayerCore(false);
-        setUserDataCore(...testArray);
+      } else {
+        setActivePlayerCore(true);
       }
     }
   };
@@ -1296,7 +1264,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerViction = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardVictionDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -1304,50 +1272,14 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
+      var testArray = result.data.data.leaderboard;
 
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountViction(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountViction(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountViction(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerViction(true);
-          setUserDataViction([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerViction(false);
-          setUserDataViction(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataViction(...testArray);
+      if (userPosition > 99) {
         setActivePlayerViction(false);
-        setUserDataViction(...testArray);
+      } else {
+        setActivePlayerViction(true);
       }
     }
   };
@@ -1551,7 +1483,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerManta = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardMantaDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -1559,50 +1491,14 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
 
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountManta(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountManta(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountManta(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerManta(true);
-          setUserDataManta([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerManta(false);
-          setUserDataManta(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataManta(...testArray);
+      if (userPosition > 99) {
         setActivePlayerManta(false);
-        setUserDataManta(...testArray);
+      } else {
+        setActivePlayerManta(true);
       }
     }
   };
@@ -1806,7 +1702,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerSei = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardSeiDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -1814,50 +1710,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountSei(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountSei(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountSei(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerSei(true);
-          setUserDataSei(...testArray);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerSei(false);
-          setUserDataSei(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataSei(...testArray);
+      if (userPosition > 99) {
         setActivePlayerSei(false);
-        setUserDataSei(...testArray);
+      } else {
+        setActivePlayerSei(true);
       }
     }
   };
@@ -2063,7 +1922,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerBase = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardBaseDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -2071,50 +1930,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountBase(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountBase(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountBase(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerBase(true);
-          setUserDataBase([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerBase(false);
-          setUserDataBase(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataBase(...testArray);
+      if (userPosition > 99) {
         setActivePlayerBase(false);
-        setUserDataBase(...testArray);
+      } else {
+        setActivePlayerBase(true);
       }
     }
   };
@@ -2318,7 +2140,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardTaikoDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -2326,50 +2148,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountTaiko(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountTaiko(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountTaiko(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerTaiko(true);
-          setUserDataTaiko([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerTaiko(false);
-          setUserDataTaiko(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataTaiko(...testArray);
+      if (userPosition > 99) {
         setActivePlayerTaiko(false);
-        setUserDataTaiko(...testArray);
+      } else {
+        setActivePlayerTaiko(true);
       }
     }
   };
@@ -2573,7 +2358,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerMat = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardMatchainDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -2581,50 +2366,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountMat(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountMat(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountMat(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerMat(true);
-          setUserDataMat([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerMat(false);
-          setUserDataMat(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataMat(...testArray);
+      if (userPosition > 99) {
         setActivePlayerMat(false);
-        setUserDataMat(...testArray);
+      } else {
+        setActivePlayerMat(true);
       }
     }
   };
@@ -2824,7 +2572,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerSkale = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardSkaleDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -2832,50 +2580,13 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (isPremium) {
-      //   setDailyDataAmountSkale(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium) {
-      //   setDailyDataAmountSkale(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // }
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerSkale(true);
-          setUserDataSkale([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerSkale(false);
-          setUserDataSkale(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataSkale(...testArray);
+      if (userPosition > 99) {
         setActivePlayerSkale(false);
-        setUserDataSkale(...testArray);
+      } else {
+        setActivePlayerSkale(true);
       }
     }
   };
@@ -4779,85 +4490,6 @@ function Dashboard({
     }
   };
 
-  const signWalletPublicAddress = async () => {
-    if (window.ethereum && window.WALLET_TYPE !== "binance") {
-      try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner(account);
-
-        const signature = await signer.signMessage(
-          `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-        );
-
-        verifyWallet({
-          variables: {
-            publicAddress: account,
-            signature: signature,
-          },
-        }).then(() => {
-          onManageLogin(
-            signature,
-            `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-          );
-
-          setsyncStatus("success");
-          setTimeout(() => {
-            setshowSyncModal(false);
-            setsyncStatus("initial");
-            onCloseSync();
-          }, 1000);
-          onSubscribeSuccess(account);
-
-          if (isonlink) {
-            handleFirstTask(account);
-          }
-        });
-      } catch (error) {
-        setsyncStatus("error");
-        setTimeout(() => {
-          setsyncStatus("initial");
-          onCloseSync();
-        }, 3000);
-
-        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
-      }
-    } else if (binanceWallet && binanceW3WProvider) {
-      try {
-        const provider = binanceW3WProvider;
-        const signer = provider.getSigner();
-        const signature = await signer.signMessage(
-          `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-        );
-        verifyWallet({
-          variables: {
-            publicAddress: binanceWallet,
-            signature: signature,
-          },
-        }).then(() => {
-          setsyncStatus("success");
-          setTimeout(() => {
-            setshowSyncModal(false);
-            setsyncStatus("initial");
-            onCloseSync();
-          }, 1000);
-          onSubscribeSuccess(binanceWallet);
-
-          if (isonlink) {
-            handleFirstTask(binanceWallet);
-          }
-        });
-      } catch (error) {
-        setsyncStatus("error");
-        setTimeout(() => {
-          setsyncStatus("initial");
-          onCloseSync();
-        }, 3000);
-
-        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
-      }
-    }
-  };
-
   // const fetchMonthlyRecordsAroundPlayer = async (userId, userName) => {
   //   const data = {
   //     StatisticName: "MonthlyLeaderboard",
@@ -5202,7 +4834,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayer = async (itemData) => {
     const data = {
       StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -5211,50 +4843,13 @@ function Dashboard({
         data
       );
       // setRecordsAroundPlayer(result.data.data.leaderboard);
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-
+      var testArray = result.data.data.leaderboard;
       const userPosition = testArray[0].position;
-
-      // if (goldenPassRemainingTime) {
-      //   setdailyplayerDataAmount(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(dailyPrizes[9]) + Number(dailyPrizesGolden[9])
-      //         : Number(dailyPrizes[userPosition]) +
-      //           Number(dailyPrizesGolden[userPosition])
-      //       : 0
-      //   );
-      // } else if (!goldenPassRemainingTime) {
-      //   setdailyplayerDataAmount(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(dailyPrizes[9])
-      //         : Number(dailyPrizes[userPosition])
-      //       : 0
-      //   );
-      // }
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayer(true);
-          setUserData([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayer(false);
-          setUserData(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserData(...testArray);
+      if (userPosition > 99) {
         setActivePlayer(false);
-        setUserData(...testArray);
+      } else {
+        setActivePlayer(true);
       }
     }
   };
@@ -5730,27 +5325,7 @@ function Dashboard({
   };
 
   const handleShowSyncModal = () => {
-    setshowSyncModal(true);
-  };
-
-  const handleSync = async () => {
-    setsyncStatus("loading");
-
-    try {
-      await generateNonce({
-        variables: {
-          publicAddress: account,
-        },
-      });
-    } catch (error) {
-      setsyncStatus("error");
-      setTimeout(() => {
-        setsyncStatus("initial");
-        setshowSyncModal(false);
-        onCloseSync();
-      }, 3000);
-      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
-    }
+    onSyncClick();
   };
 
   const getMyNFTS = async (coinbase, type) => {
@@ -5863,94 +5438,94 @@ function Dashboard({
 
   const windowSize = useWindowSize();
 
-  const getDypBalance = async (account) => {
-    const web3eth = new Web3(
-      "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
-    );
+  // const getDypBalance = async (account) => {
+  //   const web3eth = new Web3(
+  //     "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
+  //   );
 
-    const web3bsc = new Web3("https://bsc-dataseed.binance.org/");
+  //   const web3bsc = new Web3("https://bsc-dataseed.binance.org/");
 
-    const web3avax = new Web3("https://api.avax.network/ext/bc/C/rpc");
+  //   const web3avax = new Web3("https://api.avax.network/ext/bc/C/rpc");
 
-    if (account !== undefined) {
-      const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
-      const token_address_bsc = "0x1a3264f2e7b1cfc6220ec9348d33ccf02af7aaa4";
+  //   if (account !== undefined) {
+  //     const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
+  //     const token_address_bsc = "0x1a3264f2e7b1cfc6220ec9348d33ccf02af7aaa4";
 
-      const token_addressIDYP = "0xbd100d061e120b2c67a24453cf6368e63f1be056";
+  //     const token_addressIDYP = "0xbd100d061e120b2c67a24453cf6368e63f1be056";
 
-      const contract1 = new web3eth.eth.Contract(ERC20_ABI, token_address);
-      const contract2 = new web3bsc.eth.Contract(ERC20_ABI, token_address_bsc);
-      const contract3 = new web3avax.eth.Contract(ERC20_ABI, token_address_bsc);
+  //     const contract1 = new web3eth.eth.Contract(ERC20_ABI, token_address);
+  //     const contract2 = new web3bsc.eth.Contract(ERC20_ABI, token_address_bsc);
+  //     const contract3 = new web3avax.eth.Contract(ERC20_ABI, token_address_bsc);
 
-      const contract1_idyp = new web3eth.eth.Contract(
-        ERC20_ABI,
-        token_addressIDYP
-      );
-      const contract2_idyp = new web3bsc.eth.Contract(
-        ERC20_ABI,
-        token_addressIDYP
-      );
-      const contract3_idyp = new web3avax.eth.Contract(
-        ERC20_ABI,
-        token_addressIDYP
-      );
+  //     const contract1_idyp = new web3eth.eth.Contract(
+  //       ERC20_ABI,
+  //       token_addressIDYP
+  //     );
+  //     const contract2_idyp = new web3bsc.eth.Contract(
+  //       ERC20_ABI,
+  //       token_addressIDYP
+  //     );
+  //     const contract3_idyp = new web3avax.eth.Contract(
+  //       ERC20_ABI,
+  //       token_addressIDYP
+  //     );
 
-      const bal1 = await contract1.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3eth.utils.fromWei(data, "ether");
-        });
-      setDypBalance(bal1);
+  //     const bal1 = await contract1.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3eth.utils.fromWei(data, "ether");
+  //       });
+  //     setDypBalance(bal1);
 
-      const bal2 = await contract2.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3bsc.utils.fromWei(data, "ether");
-        });
-      setDypBalanceBnb(bal2);
+  //     const bal2 = await contract2.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3bsc.utils.fromWei(data, "ether");
+  //       });
+  //     setDypBalanceBnb(bal2);
 
-      const bal3 = await contract3.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3avax.utils.fromWei(data, "ether");
-        });
-      setDypBalanceAvax(bal3);
+  //     const bal3 = await contract3.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3avax.utils.fromWei(data, "ether");
+  //       });
+  //     setDypBalanceAvax(bal3);
 
-      const bal1_idyp = await contract1_idyp.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3eth.utils.fromWei(data, "ether");
-        });
-      setiDypBalance(bal1_idyp);
+  //     const bal1_idyp = await contract1_idyp.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3eth.utils.fromWei(data, "ether");
+  //       });
+  //     setiDypBalance(bal1_idyp);
 
-      const bal2_idyp = await contract2_idyp.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3bsc.utils.fromWei(data, "ether");
-        });
-      setiDypBalanceBnb(bal2_idyp);
+  //     const bal2_idyp = await contract2_idyp.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3bsc.utils.fromWei(data, "ether");
+  //       });
+  //     setiDypBalanceBnb(bal2_idyp);
 
-      const bal3_idyp = await contract3_idyp.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3avax.utils.fromWei(data, "ether");
-        });
-      setiDypBalanceAvax(bal3_idyp);
-    } else {
-      setDypBalance(0);
-      setDypBalanceBnb(0);
-      setDypBalanceAvax(0);
-      setiDypBalance(0);
-      setiDypBalanceBnb(0);
-      setiDypBalanceAvax(0);
-    }
-  };
+  //     const bal3_idyp = await contract3_idyp.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3avax.utils.fromWei(data, "ether");
+  //       });
+  //     setiDypBalanceAvax(bal3_idyp);
+  //   } else {
+  //     setDypBalance(0);
+  //     setDypBalanceBnb(0);
+  //     setDypBalanceAvax(0);
+  //     setiDypBalance(0);
+  //     setiDypBalanceBnb(0);
+  //     setiDypBalanceAvax(0);
+  //   }
+  // };
 
   async function fetchUserFavorites(userId) {
     if (userId !== undefined && userId !== null) {
@@ -6102,8 +5677,24 @@ function Dashboard({
       let tokenBalance2 = await token_Sc.balanceOf(coinbase);
       setTokenBalance(tokenBalance2);
     }
-
-    if (coinbase && window.WALLET_TYPE !== "binance") {
+    if (coinbase && window.WALLET_TYPE === "matchId") {
+      await publicClient
+        .readContract({
+          abi: window.ERC20_ABI,
+          address: token,
+          functionName: "balanceOf",
+          args: [coinbase],
+        })
+        .then((data) => {
+          let tokenBalance2 = Number(data);
+          setTokenBalance(tokenBalance2);
+        });
+    }
+    if (
+      coinbase &&
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId"
+    ) {
       let token_Sc = new window.web3.eth.Contract(window.ERC20_ABI, token);
       let tokenBalance2 = await token_Sc.methods
         .balanceOf(coinbase)
@@ -6133,10 +5724,9 @@ function Dashboard({
     const matsubscribeAddress = window.config.subscription_mat_address;
     const coresubscribeAddress = window.config.subscription_core_address;
 
-    window.web3 = new Web3(window.ethereum);
-
     setloadspinner(true);
 
+    window.web3 = new Web3(window.ethereum);
     const nftContract_viction = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
@@ -6153,7 +5743,10 @@ function Dashboard({
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
-      if (window.WALLET_TYPE !== "binance") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
@@ -6215,6 +5808,92 @@ function Dashboard({
                 setapproveStatus("initial");
               }, 5000);
             });
+        }
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          if (approveStatus === "initial") {
+            const result = await walletClient
+              .writeContract({
+                address: window.config.nft_dypius_premium_address,
+                abi: window.NFT_DYPIUS_PREMIUM_ABI,
+                functionName: "approve",
+                args: [
+                  window.config.subscription_newbnb2_address,
+                  nftPremium_tokenId,
+                ],
+              })
+              .catch((e) => {
+                setstatus(e?.shortMessage);
+                setloadspinner(false);
+                setapproveStatus("fail");
+                window.alertify.error(e?.shortMessage);
+                setTimeout(() => {
+                  setstatus("");
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                }, 5000);
+              });
+
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                setloadspinner(false);
+                setisApproved(true);
+                if (discountPercentage < 100) {
+                  if (
+                    selectedSubscriptionToken.toLowerCase() ===
+                    "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+                  ) {
+                    setapproveStatus("deposit");
+                  } else setapproveStatus("approveAmount");
+                } else {
+                  setapproveStatus("deposit");
+                }
+              }
+            }
+          } else if (approveStatus === "approveAmount") {
+            const result = await walletClient
+              .writeContract({
+                address: selectedSubscriptionToken,
+                abi: window.ERC20_ABI,
+                functionName: "approve",
+                args: [bnbsubscribeAddress, price],
+              })
+              .catch((e) => {
+                setstatus(e?.shortMessage);
+                setloadspinner(false);
+                setapproveStatus("fail");
+                window.alertify.error(e?.shortMessage);
+                setTimeout(() => {
+                  setstatus("");
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                }, 5000);
+              });
+
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                setloadspinner(false);
+                setisApproved(true);
+                setapproveStatus("deposit");
+              }
+            }
+          }
         }
       } else if (window.WALLET_TYPE === "binance") {
         let tokenContract_binance = new ethers.Contract(
@@ -6405,60 +6084,146 @@ function Dashboard({
       nftPremium_totalMat > 0 &&
       window.WALLET_TYPE !== "binance"
     ) {
-      if (approveStatus === "initial") {
-        await nftContract_mat.methods
-          .approve(
-            window.config.subscription_mat_address,
-            nftPremium_tokenIdMat
-          )
-          .send({ from: coinbase })
-          .then(() => {
-            setloadspinner(false);
-            setisApproved(true);
-            if (discountPercentageMat < 100) {
-              setapproveStatus("approveAmount");
-            } else {
-              setapproveStatus("deposit");
+      if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          if (approveStatus === "initial") {
+            const result = await walletClient
+              .writeContract({
+                address: window.config.nft_dypius_premium_mat_address,
+                abi: window.NFT_DYPIUS_PREMIUM_MAT_ABI,
+                functionName: "approve",
+                args: [
+                  window.config.subscription_mat_address,
+                  nftPremium_tokenIdMat,
+                ],
+              })
+              .catch((e) => {
+                setstatus(e?.shortMessage);
+                setloadspinner(false);
+                setapproveStatus("fail");
+                window.alertify.error(e?.shortMessage);
+                setTimeout(() => {
+                  setstatus("");
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                }, 5000);
+              });
+
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                setloadspinner(false);
+                setisApproved(true);
+                if (discountPercentageMat < 100) {
+                  setapproveStatus("approveAmount");
+                } else {
+                  setapproveStatus("deposit");
+                }
+              }
             }
-          })
-          .catch((e) => {
-            setstatus(e?.message);
-            setloadspinner(false);
-            setapproveStatus("fail");
-            window.alertify.error(e?.message);
-            setTimeout(() => {
-              setstatus("");
+          } else if (approveStatus === "approveAmount") {
+            const result = await walletClient
+              .writeContract({
+                address: selectedSubscriptionToken,
+                abi: window.ERC20_ABI,
+                functionName: "approve",
+                args: [matsubscribeAddress, price],
+              })
+              .catch((e) => {
+                setstatus(e?.shortMessage);
+                setloadspinner(false);
+                setapproveStatus("fail");
+                window.alertify.error(e?.shortMessage);
+                setTimeout(() => {
+                  setstatus("");
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                }, 5000);
+              });
+
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                setloadspinner(false);
+                setisApproved(true);
+                setapproveStatus("deposit");
+              }
+            }
+          }
+        }
+      } else {
+        if (approveStatus === "initial") {
+          await nftContract_mat.methods
+            .approve(
+              window.config.subscription_mat_address,
+              nftPremium_tokenIdMat
+            )
+            .send({ from: coinbase })
+            .then(() => {
               setloadspinner(false);
-              setapproveStatus("initial");
-            }, 5000);
-          });
-      } else if (approveStatus === "approveAmount") {
-        let tokenContract = new window.web3.eth.Contract(
-          window.ERC20_ABI,
-          selectedSubscriptionToken
-        );
-        await tokenContract.methods
-          .approve(matsubscribeAddress, price)
-          .send({ from: coinbase })
-          .then(() => {
-            setloadspinner(false);
-            setisApproved(true);
-            setapproveStatus("deposit");
-          })
-          .catch((e) => {
-            setstatus(e?.message);
-            setloadspinner(false);
-            setapproveStatus("fail");
-            window.alertify.error(e?.message);
-            setTimeout(() => {
-              setstatus("");
+              setisApproved(true);
+              if (discountPercentageMat < 100) {
+                setapproveStatus("approveAmount");
+              } else {
+                setapproveStatus("deposit");
+              }
+            })
+            .catch((e) => {
+              setstatus(e?.message);
               setloadspinner(false);
-              setapproveStatus("initial");
-            }, 5000);
-          });
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+        } else if (approveStatus === "approveAmount") {
+          let tokenContract = new window.web3.eth.Contract(
+            window.ERC20_ABI,
+            selectedSubscriptionToken
+          );
+          await tokenContract.methods
+            .approve(matsubscribeAddress, price)
+            .send({ from: coinbase })
+            .then(() => {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            })
+            .catch((e) => {
+              setstatus(e?.message);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.message);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+        }
       }
     } else {
-      if (window.WALLET_TYPE !== "binance") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
@@ -6510,6 +6275,50 @@ function Dashboard({
               setapproveStatus("initial");
             }, 5000);
           });
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: selectedSubscriptionToken,
+              abi: window.ERC20_ABI,
+              functionName: "approve",
+              args: [
+                chainId === 56
+                  ? bnbsubscribeAddress
+                  : chainId === 698
+                  ? matsubscribeAddress
+                  : bnbsubscribeAddress,
+                price,
+              ],
+            })
+            .catch((e) => {
+              setstatus(e?.shortMessage);
+              setloadspinner(false);
+              setapproveStatus("fail");
+              window.alertify.error(e?.shortMessage);
+              setTimeout(() => {
+                setstatus("");
+                setloadspinner(false);
+                setapproveStatus("initial");
+              }, 5000);
+            });
+
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (receipt) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+          }
+        }
       } else if (window.WALLET_TYPE === "binance") {
         let tokenContract_binance = new ethers.Contract(
           selectedSubscriptionToken,
@@ -7089,9 +6898,19 @@ function Dashboard({
     return window.cached_contracts[key + "-" + address.toLowerCase()];
   };
 
+  const getContractMat = async ({ key, address = null, ABI = null }) => {
+    ABI = window[key + "_ABI"];
+    address = window.config[key.toLowerCase() + "_address"];
+    if (!window.cached_contracts[key + "-" + address.toLowerCase()]) {
+      window.cached_contracts[key + "-" + address?.toLowerCase()] =
+        new ethers.Contract(address, ABI, binanceW3WProvider.getSigner());
+    }
+    return window.cached_contracts[key + "-" + address.toLowerCase()];
+  };
+
   const handleSubscribe = async (e) => {
     // e.preventDefault();
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let subscriptionContract = await window.getContract({
         key:
           chainId === 1
@@ -7482,24 +7301,7 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            // await axios
-            //   .patch(
-            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            //     {
-            //       multiplier: "yes",
-            //       chain: "tamchain subscribeNFT",
-            //       premiumTimestamp: today.toString(),
-            //     },
-            //     {
-            //       headers: { Authorization: `Bearer ${authToken}` },
-            //     }
-            //   )
-            //   .then(() => {
-            //     getRankData();
-            //   })
-            //   .catch((e) => {
-            //     console.error(e);
-            //   });
+
             setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
@@ -7558,32 +7360,13 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            // await axios
-            //   .patch(
-            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            //     {
-            //       multiplier: "yes",
-            //       chain: chainId.toString(),
-            //       premiumTimestamp: today.toString(),
-            //     },
-            //     {
-            //       headers: { Authorization: `Bearer ${authToken}` },
-            //     }
-            //   )
-            //   .then(() => {
-            //     getRankData();
-            //   })
-            //   .catch((e) => {
-            //     console.error(e);
-            //   });
+
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
-            // this.props.onSubscribe();
-            // window.location.href = "https://app.dypius.com/account";
           })
           .catch((e) => {
             setloadspinnerSub(false);
@@ -7597,6 +7380,402 @@ function Dashboard({
               setstatus("");
             }, 5000);
           });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        setloadspinnerSub(true);
+        if (chainId === 56) {
+          if (chainId === 56 && nftPremium_total > 0) {
+            const result = await walletClient
+              .writeContract({
+                address: window.config.subscription_newbnb2_address,
+                abi: window.SUBSCRIPTION_NEWBNB2_ABI,
+                functionName: "subscribeNFT",
+                args: [
+                  nftDiscountObject.nftAddress,
+                  nftPremium_tokenId,
+                  selectedSubscriptionToken,
+                  price,
+                ],
+              })
+              .catch((e) => {
+                setloadspinnerSub(false);
+                setapproveStatus("failsubscribe");
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
+
+                setTimeout(() => {
+                  setloadspinnerSub(false);
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                  setstatus("");
+                }, 5000);
+              });
+
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                if (dailyBonusPopup === true) {
+                  setPremiumTxHash(result);
+                  const selectedchain =
+                    chainId === 1
+                      ? "eth"
+                      : chainId === 56
+                      ? "bnb"
+                      : chainId === 43114
+                      ? "avax"
+                      : chainId === 1030
+                      ? "cfx"
+                      : chainId === 8453
+                      ? "base"
+                      : chainId === 1482601649
+                      ? "skale"
+                      : chainId === 88
+                      ? "viction"
+                      : chainId === 169
+                      ? "manta"
+                      : chainId === 167000
+                      ? "taiko"
+                      : chainId === 1116
+                      ? "core"
+                      : chainId === 1329
+                      ? "sei"
+                      : "";
+                  setselectedChainforPremium(selectedchain);
+                  setTimeout(() => {
+                    setgetPremiumPopup(false);
+                  }, 2000);
+                }
+                setloadspinnerSub(false);
+                handleUpdatePremiumUser(coinbase);
+                setapproveStatus("successsubscribe");
+
+                setTimeout(() => {
+                  setgetPremiumPopup(false);
+                  onSubscribeSuccess();
+                }, 2000);
+              }
+            }
+          } else if (
+            chainId === 56 &&
+            selectedSubscriptionToken.toLowerCase() ===
+              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+          ) {
+            const result = await walletClient
+              .writeContract({
+                address: window.config.subscription_newbnb2_address,
+                abi: window.SUBSCRIPTION_NEWBNB2_ABI,
+                functionName: "subscribeWithBNB",
+                args: [],
+                overrides: {
+                  value: price,
+                  from: coinbase,
+                },
+              })
+              .catch((e) => {
+                setloadspinnerSub(false);
+                setapproveStatus("failsubscribe");
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
+                setTimeout(() => {
+                  setloadspinnerSub(false);
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                  setstatus("");
+                }, 5000);
+              });
+
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                if (dailyBonusPopup === true) {
+                  setPremiumTxHash(data.hash);
+                  const selectedchain =
+                    chainId === 1
+                      ? "eth"
+                      : chainId === 56
+                      ? "bnb"
+                      : chainId === 43114
+                      ? "avax"
+                      : chainId === 1030
+                      ? "cfx"
+                      : chainId === 8453
+                      ? "base"
+                      : chainId === 1482601649
+                      ? "skale"
+                      : chainId === 88
+                      ? "viction"
+                      : chainId === 169
+                      ? "manta"
+                      : chainId === 167000
+                      ? "taiko"
+                      : chainId === 1116
+                      ? "core"
+                      : chainId === 1329
+                      ? "sei"
+                      : "";
+                  setselectedChainforPremium(selectedchain);
+                }
+                setloadspinnerSub(false);
+                onSubscribeSuccess();
+                handleUpdatePremiumUser(coinbase);
+                setapproveStatus("successsubscribe");
+
+                setTimeout(() => {
+                  setloadspinnerSub(false);
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                  setstatus("");
+                  setgetPremiumPopup(false);
+                  onSubscribeSuccess();
+                }, 5000);
+              }
+            }
+          } else {
+            const result = await walletClient
+              .writeContract({
+                address: window.config.subscription_newbnb2_address,
+                abi: window.SUBSCRIPTION_NEWBNB2_ABI,
+                functionName: "subscribe",
+                args: [selectedSubscriptionToken, price],
+              })
+              .catch((e) => {
+                setloadspinnerSub(false);
+                setapproveStatus("failsubscribe");
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
+                setTimeout(() => {
+                  setloadspinnerSub(false);
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                  setstatus("");
+                }, 5000);
+              });
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                if (dailyBonusPopup === true) {
+                  setPremiumTxHash(data.hash);
+                  const selectedchain =
+                    chainId === 1
+                      ? "eth"
+                      : chainId === 56
+                      ? "bnb"
+                      : chainId === 43114
+                      ? "avax"
+                      : chainId === 1030
+                      ? "cfx"
+                      : chainId === 8453
+                      ? "base"
+                      : chainId === 1482601649
+                      ? "skale"
+                      : chainId === 88
+                      ? "viction"
+                      : chainId === 169
+                      ? "manta"
+                      : chainId === 167000
+                      ? "taiko"
+                      : chainId === 1116
+                      ? "core"
+                      : chainId === 1329
+                      ? "sei"
+                      : "";
+                  setselectedChainforPremium(selectedchain);
+                  setTimeout(() => {
+                    setgetPremiumPopup(false);
+                    onSubscribeSuccess();
+                  }, 2000);
+                }
+                setloadspinnerSub(false);
+                handleUpdatePremiumUser(coinbase);
+                setapproveStatus("successsubscribe");
+
+                setTimeout(() => {
+                  setloadspinnerSub(false);
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                  setstatus("");
+                }, 5000);
+              }
+            }
+          }
+        } else if (chainId === 698) {
+          if (chainId === 698 && nftPremium_totalMat > 0) {
+            const result = await walletClient
+              .writeContract({
+                address: window.config.subscription_mat_address,
+                abi: window.SUBSCRIPTION_MAT_ABI,
+                functionName: "subscribeNFT",
+                args: [
+                  nftDiscountObjectMat.nftAddress,
+                  nftPremium_tokenIdMat,
+                  selectedSubscriptionToken,
+                  price,
+                ],
+              })
+              .catch(() => {
+                setloadspinnerSub(false);
+                setapproveStatus("failsubscribe");
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
+
+                setTimeout(() => {
+                  setloadspinnerSub(false);
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                  setstatus("");
+                }, 5000);
+              });
+
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                if (dailyBonusPopup === true) {
+                  setPremiumTxHash(data.transactionHash);
+                  const selectedchain =
+                    chainId === 1
+                      ? "eth"
+                      : chainId === 56
+                      ? "bnb"
+                      : chainId === 43114
+                      ? "avax"
+                      : chainId === 1030
+                      ? "cfx"
+                      : chainId === 8453
+                      ? "base"
+                      : chainId === 1482601649
+                      ? "skale"
+                      : chainId === 88
+                      ? "viction"
+                      : chainId === 169
+                      ? "manta"
+                      : chainId === 1116
+                      ? "core"
+                      : chainId === 698
+                      ? "matchain"
+                      : chainId === 1329
+                      ? "sei"
+                      : "";
+                  setselectedChainforPremium(selectedchain);
+                  setTimeout(() => {
+                    setgetPremiumPopup(false);
+                  }, 2000);
+                }
+                setloadspinnerSub(false);
+                handleUpdatePremiumUser(coinbase);
+                setapproveStatus("successsubscribe");
+
+                setTimeout(() => {
+                  setgetPremiumPopup(false);
+                  onSubscribeSuccess();
+                }, 2000);
+              }
+            }
+          } else {
+            const result = await walletClient
+              .writeContract({
+                address: window.config.subscription_mat_address,
+                abi: window.SUBSCRIPTION_MAT_ABI,
+                functionName: "subscribe",
+                args: [selectedSubscriptionToken, price],
+              })
+              .catch(() => {
+                setloadspinnerSub(false);
+                setapproveStatus("failsubscribe");
+                setstatus(e?.shortMessage);
+                window.alertify.error(e?.shortMessage);
+                setTimeout(() => {
+                  setloadspinnerSub(false);
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                  setstatus("");
+                }, 5000);
+              });
+
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                if (dailyBonusPopup === true) {
+                  setPremiumTxHash(data.transactionHash);
+                  const selectedchain =
+                    chainId === 1
+                      ? "eth"
+                      : chainId === 56
+                      ? "bnb"
+                      : chainId === 43114
+                      ? "avax"
+                      : chainId === 1030
+                      ? "cfx"
+                      : chainId === 8453
+                      ? "base"
+                      : chainId === 1482601649
+                      ? "skale"
+                      : chainId === 88
+                      ? "viction"
+                      : chainId === 169
+                      ? "manta"
+                      : chainId === 1116
+                      ? "core"
+                      : chainId === 1329
+                      ? "sei"
+                      : chainId === 167000
+                      ? "taiko"
+                      : "";
+                  setselectedChainforPremium(selectedchain);
+                  setTimeout(() => {
+                    setgetPremiumPopup(false);
+                    onSubscribeSuccess();
+                  }, 2000);
+                }
+                setloadspinnerSub(false);
+                handleUpdatePremiumUser(coinbase);
+                setapproveStatus("successsubscribe");
+
+                setTimeout(() => {
+                  setloadspinnerSub(false);
+                  setloadspinner(false);
+                  setapproveStatus("initial");
+                  setstatus("");
+                }, 5000);
+              }
+            }
+          }
+        }
       }
     } else if (window.WALLET_TYPE === "binance") {
       let subscriptionContract = await getContractBinance({
@@ -7718,205 +7897,178 @@ function Dashboard({
         selectedSubscriptionToken.toLowerCase() ===
           "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
       ) {
-        await subscriptionContract
+        const txResponse = await subscriptionContract
           .subscribeWithBNB({ from: coinbase, value: price })
-          .then(async (data) => {
-            if (dailyBonusPopup === true) {
-              setPremiumTxHash(data.hash);
-              const selectedchain =
-                chainId === 1
-                  ? "eth"
-                  : chainId === 56
-                  ? "bnb"
-                  : chainId === 43114
-                  ? "avax"
-                  : chainId === 1030
-                  ? "cfx"
-                  : chainId === 8453
-                  ? "base"
-                  : chainId === 1482601649
-                  ? "skale"
-                  : chainId === 88
-                  ? "viction"
-                  : chainId === 169
-                  ? "manta"
-                  : chainId === 167000
-                  ? "taiko"
-                  : chainId === 1116
-                  ? "core"
-                  : chainId === 1329
-                  ? "sei"
-                  : "";
-              setselectedChainforPremium(selectedchain);
-            }
+          .catch((e) => {
             setloadspinnerSub(false);
-            onSubscribeSuccess();
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            // await axios
-            //   .patch(
-            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            //     {
-            //       multiplier: "yes",
-            //       chain: "bnb subscribeBNB BinanceWallet",
-            //       premiumTimestamp: today.toString(),
-            //     },
-            //     {
-            //       headers: { Authorization: `Bearer ${authToken}` },
-            //     }
-            //   )
-            //   .then(() => {
-            //     getRankData();
-            //   })
-            //   .catch((e) => {
-            //     console.error(e);
-            //   });
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
+            }, 5000);
+          });
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          if (dailyBonusPopup === true) {
+            setPremiumTxHash(data.hash);
+            const selectedchain =
+              chainId === 1
+                ? "eth"
+                : chainId === 56
+                ? "bnb"
+                : chainId === 43114
+                ? "avax"
+                : chainId === 1030
+                ? "cfx"
+                : chainId === 8453
+                ? "base"
+                : chainId === 1482601649
+                ? "skale"
+                : chainId === 88
+                ? "viction"
+                : chainId === 169
+                ? "manta"
+                : chainId === 167000
+                ? "taiko"
+                : chainId === 1116
+                ? "core"
+                : chainId === 1329
+                ? "sei"
+                : "";
+            setselectedChainforPremium(selectedchain);
+          }
+          setloadspinnerSub(false);
+          onSubscribeSuccess();
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+            setgetPremiumPopup(false);
+            onSubscribeSuccess();
+          }, 5000);
+        }
+      } else {
+        const txResponse = await subscriptionContract
+          .subscribe(selectedSubscriptionToken, price, { from: coinbase })
+
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          if (dailyBonusPopup === true) {
+            setPremiumTxHash(data.hash);
+            const selectedchain =
+              chainId === 1
+                ? "eth"
+                : chainId === 56
+                ? "bnb"
+                : chainId === 43114
+                ? "avax"
+                : chainId === 1030
+                ? "cfx"
+                : chainId === 8453
+                ? "base"
+                : chainId === 1482601649
+                ? "skale"
+                : chainId === 88
+                ? "viction"
+                : chainId === 169
+                ? "manta"
+                : chainId === 167000
+                ? "taiko"
+                : chainId === 1116
+                ? "core"
+                : chainId === 1329
+                ? "sei"
+                : "";
+            setselectedChainforPremium(selectedchain);
+            setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
-            }, 5000);
-            // this.props.onSubscribe();
-            // window.location.href = "https://app.dypius.com/account";
-          })
-          .catch((e) => {
+            }, 2000);
+          }
+          setloadspinnerSub(false);
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+
+          setTimeout(() => {
             setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
-      } else {
-        await subscriptionContract
-          .subscribe(selectedSubscriptionToken, price, { from: coinbase })
-          .then(async (data) => {
-            if (dailyBonusPopup === true) {
-              setPremiumTxHash(data.hash);
-              const selectedchain =
-                chainId === 1
-                  ? "eth"
-                  : chainId === 56
-                  ? "bnb"
-                  : chainId === 43114
-                  ? "avax"
-                  : chainId === 1030
-                  ? "cfx"
-                  : chainId === 8453
-                  ? "base"
-                  : chainId === 1482601649
-                  ? "skale"
-                  : chainId === 88
-                  ? "viction"
-                  : chainId === 169
-                  ? "manta"
-                  : chainId === 167000
-                  ? "taiko"
-                  : chainId === 1116
-                  ? "core"
-                  : chainId === 1329
-                  ? "sei"
-                  : "";
-              setselectedChainforPremium(selectedchain);
-              setTimeout(() => {
-                setgetPremiumPopup(false);
-                onSubscribeSuccess();
-              }, 2000);
-            }
-            setloadspinnerSub(false);
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            // await axios
-            //   .patch(
-            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            //     {
-            //       multiplier: "yes",
-            //       chain: chainId.toString(),
-            //       premiumTimestamp: today.toString(),
-            //     },
-            //     {
-            //       headers: { Authorization: `Bearer ${authToken}` },
-            //     }
-            //   )
-            //   .then(() => {
-            //     getRankData();
-            //   })
-            //   .catch((e) => {
-            //     console.error(e);
-            //   });
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-            // this.props.onSubscribe();
-            // window.location.href = "https://app.dypius.com/account";
-          })
-          .catch((e) => {
-            setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        }
       }
     }
   };
 
   const handleEthPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0x1")
-          .then(() => {
-            handleSwitchNetwork(1);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(1);
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0x1")
+            .then(() => {
+              handleSwitchNetwork(1);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(1);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(1);
+        }
       } else if (binanceWallet && window.WALLET_TYPE === "binance") {
         handleSwitchChainBinanceWallet(1);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(1);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
   const handleBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0x38")
-          .then(() => {
-            handleSwitchNetwork(56);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(56);
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else {
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0x38")
+            .then(() => {
+              handleSwitchNetwork(56);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(56);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(56);
+        }
       } else if (binanceWallet && window.WALLET_TYPE === "binance") {
         handleSwitchChainBinanceWallet(56);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(56);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
@@ -8156,7 +8308,9 @@ function Dashboard({
   //   userMatScore;
 
   const handleMatPool = async () => {
-    if (window.ethereum) {
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else if (window.ethereum) {
       if (
         !window.gatewallet &&
         window.WALLET_TYPE !== "binance" &&
@@ -8726,12 +8880,6 @@ function Dashboard({
   }, [dataVerify]);
 
   useEffect(() => {
-    if (dataNonce?.generateWalletNonce) {
-      signWalletPublicAddress();
-    }
-  }, [dataNonce]);
-
-  useEffect(() => {
     if (userWallet && email) {
       getOpenedChestPerWallet();
     }
@@ -8766,16 +8914,15 @@ function Dashboard({
 
   useEffect(() => {
     if ((coinbase && isConnected) || userWallet !== undefined) {
-      setsyncStatus("initial");
       fetchAllMyNfts();
       // getmyCawsWodStakes();
       // getmyWodStakes();
     }
   }, [userWallet, isConnected, coinbase]);
 
-  useEffect(() => {
-    getDypBalance(userWallet ? userWallet : coinbase);
-  }, [account, userWallet, isConnected]);
+  // useEffect(() => {
+  //   getDypBalance(userWallet ? userWallet : coinbase);
+  // }, [account, userWallet, isConnected]);
 
   useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
@@ -8912,15 +9059,16 @@ function Dashboard({
       </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft2 d-flex flex-column align-items-start px-lg-4 px-2 position-relative">
-    {bannedEmails.includes(email) && 
-      <div className="custom-container mt-5 mt-lg-0">
-      <div className="banned-account-wrapper w-100 px-2 py-3 mt-5 mt-lg-2 d-flex align-items-center justify-content-center">
-        <h6 className="banned-account-message mb-0 text-white text-center">
-        This account has been banned permanently. Check your email for more information.
-        </h6>
-      </div>
-    </div>
-    }
+        {bannedEmails.includes(email) && (
+          <div className="custom-container mt-5 mt-lg-0">
+            <div className="banned-account-wrapper w-100 px-2 py-3 mt-5 mt-lg-2 d-flex align-items-center justify-content-center">
+              <h6 className="banned-account-message mb-0 text-white text-center">
+                This account has been banned permanently. Check your email for
+                more information.
+              </h6>
+            </div>
+          </div>
+        )}
         {location.pathname === "/account" ||
         location.pathname.includes("/account/challenges") ? (
           <>
@@ -9000,7 +9148,8 @@ function Dashboard({
               userRankName={userRankName}
               isConnected={isConnected}
               onConnectWallet={() => {
-                setshowWalletModal(true);
+                // setshowWalletModal(true);
+                handleConnect();
               }}
               domainName={domainName}
               onDomainClick={() => {
@@ -9016,15 +9165,18 @@ function Dashboard({
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
                 Number(baseEarnUSD) +
-                Number(kucoinEarnUsd)+
-                Number(taikoEarnUsd) 
+                Number(kucoinEarnUsd) +
+                Number(bnbEarnUsd) +
+                Number(mantaEarnUsd) +
+                Number(coreEarnUsd) +
+                Number(seiEarnUsd) +
+                Number(taikoEarnUsd)
                 // Number(skaleEarnUsd) +
                 // Number(coingeckoEarnUsd) +
-                // Number(seiEarnUsd) +
-                // Number(mantaEarnUsd) +
+                //
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
-                // Number(coreEarnUsd) +
+
                 // Number(chainlinkEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
@@ -9124,7 +9276,7 @@ function Dashboard({
                 setshowEventPopup(true);
               }}
               onConnectWallet={() => {
-                setshowWalletModal(true);
+                handleConnect();
               }}
               wodBalance={wodBalance}
               setPuzzleMadnessTimer={setPuzzleMadnessTimer}
@@ -9142,6 +9294,9 @@ function Dashboard({
               isConnected={isConnected}
               setBeastSiegeStatus={setBeastSiegeStatus}
               genesisUsd={genesisRank2}
+              walletClient={walletClient}
+              publicClient={publicClient}
+              network_matchain={network_matchain}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
@@ -9199,6 +9354,9 @@ function Dashboard({
               setgetPremiumPopup(false);
             }}
             isConnected={isConnected}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            network_matchain={network_matchain}
           />
         ) : (
           <></>
@@ -9313,6 +9471,9 @@ function Dashboard({
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}
             binanceWallet={binanceWallet}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            network_matchain={network_matchain}
           />
           // </OutsideClickHandler>
         )}
@@ -9426,6 +9587,9 @@ function Dashboard({
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}
             binanceWallet={binanceWallet}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            network_matchain={network_matchain}
           />
           // </OutsideClickHandler>
         )}
@@ -9539,6 +9703,9 @@ function Dashboard({
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}
             binanceWallet={binanceWallet}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            network_matchain={network_matchain}
           />
           // </OutsideClickHandler>
         )}
@@ -9578,7 +9745,6 @@ function Dashboard({
               <NewLeaderBoard
                 username={username}
                 userId={userId}
-                dypBalancebnb={dypBalancebnb}
                 address={userWallet}
                 availableTime={goldenPassRemainingTime}
                 email={email}
@@ -9631,24 +9797,6 @@ function Dashboard({
               setshowWalletModal(false);
             }}
             handleConnection={handleConnect}
-          />
-        )}
-
-        {(showSyncModal === true || showSync === true) && (
-          <SyncModal
-            onCancel={() => {
-              setshowSyncModal(false);
-              onCloseSync();
-              setsyncStatus('initial');
-            }}
-            onclose={() => {
-              setshowSyncModal(false);
-              onCloseSync();
-              setsyncStatus('initial');
-            }}
-            open={showSyncModal === true || showSync === true}
-            onConfirm={handleSync}
-            syncStatus={syncStatus}
           />
         )}
 
@@ -9781,6 +9929,8 @@ function Dashboard({
             wodPrice={wodPrice}
             binanceW3WProvider={binanceW3WProvider}
             wallet={data?.getPlayer?.wallet?.publicAddress}
+            walletClient={walletClient}
+            publicClient={publicClient}
           />
         )}
 
@@ -9883,15 +10033,10 @@ function Dashboard({
                 coinbase={account}
                 isVerified={data?.getPlayer?.wallet}
                 favoritesArray={favorites}
-                dypBalance={dypBalance}
-                dypBalancebnb={dypBalancebnb}
-                dypBalanceavax={dypBalanceavax}
-                idypBalance={idypBalance}
-                idypBalancebnb={idypBalancebnb}
-                idypBalanceavax={idypBalanceavax}
                 showNfts={showNfts}
                 handleShowWalletPopup={() => {
-                  setshowWalletModal(true);
+                  // setshowWalletModal(true);
+                  handleConnect();
                 }}
                 email={email}
                 userId={data?.getPlayer?.playerId}
@@ -10285,7 +10430,7 @@ function Dashboard({
                               </span>
                               <div className="dropdown position relative">
                                 <button
-                                  class={`btn launchpad-dropdown gap-2 d-flex justify-content-between align-items-center dropdown-toggle`}
+                                  className={`btn launchpad-dropdown gap-2 d-flex justify-content-between align-items-center dropdown-toggle`}
                                   type="button"
                                   data-bs-toggle="dropdown"
                                   aria-expanded="false"
@@ -10309,19 +10454,21 @@ function Dashboard({
                                   />
                                 </button>
                                 <ul className="dropdown-menu w-100">
-                                  <li
-                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                    onClick={handleEthPool}
-                                  >
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/eth.svg"
-                                      }
-                                      style={{ width: 18, height: 18 }}
-                                      alt=""
-                                    />
-                                    Ethereum
-                                  </li>
+                                  {window.WALLET_TYPE !== "matchId" && (
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleEthPool}
+                                    >
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/eth.svg"
+                                        }
+                                        style={{ width: 18, height: 18 }}
+                                        alt=""
+                                      />
+                                      Ethereum
+                                    </li>
+                                  )}
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                     onClick={handleBnbPool}
@@ -10355,7 +10502,8 @@ function Dashboard({
                                       </li>
                                     )}
                                   {window.WALLET_TYPE !== "binance" &&
-                                    !window.ethereum?.isBinance && (
+                                    !window.ethereum?.isBinance &&
+                                    window.WALLET_TYPE !== "matchId" && (
                                       <li
                                         className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                         onClick={handleSeiPool}
@@ -10373,22 +10521,24 @@ function Dashboard({
                                         SEI
                                       </li>
                                     )}
-
-                                  <li
-                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                    onClick={handleMantaPool}
-                                  >
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/manta.png"
-                                      }
-                                      style={{ width: 18, height: 18 }}
-                                      alt=""
-                                    />
-                                    Manta
-                                  </li>
+                                  {window.WALLET_TYPE !== "matchId" && (
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleMantaPool}
+                                    >
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/manta.png"
+                                        }
+                                        style={{ width: 18, height: 18 }}
+                                        alt=""
+                                      />
+                                      Manta
+                                    </li>
+                                  )}
                                   {window.WALLET_TYPE !== "binance" &&
-                                    !window.ethereum?.isBinance && (
+                                    !window.ethereum?.isBinance &&
+                                    window.WALLET_TYPE !== "matchId" && (
                                       <li
                                         className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                         onClick={handleTaikoPool}
@@ -10403,54 +10553,60 @@ function Dashboard({
                                         Taiko
                                       </li>
                                     )}
-
-                                  <li
-                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                    onClick={handleAvaxPool}
-                                  >
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
-                                      }
-                                      style={{ width: 18, height: 18 }}
-                                      alt=""
-                                    />
-                                    Avalanche
-                                  </li>
-                                  <li
-                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                    onClick={handleBasePool}
-                                  >
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/base.svg"
-                                      }
-                                      alt=""
-                                      style={{
-                                        width: "18px",
-                                        height: "18px",
-                                      }}
-                                    />
-                                    Base Network
-                                  </li>
-                                  <li
-                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                    onClick={handleConfluxPool}
-                                  >
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
-                                      }
-                                      alt=""
-                                      style={{
-                                        width: "18px",
-                                        height: "18px",
-                                      }}
-                                    />
-                                    Conflux Network
-                                  </li>
+                                  {window.WALLET_TYPE !== "matchId" && (
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleAvaxPool}
+                                    >
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
+                                        }
+                                        style={{ width: 18, height: 18 }}
+                                        alt=""
+                                      />
+                                      Avalanche
+                                    </li>
+                                  )}
+                                  {window.WALLET_TYPE !== "matchId" && (
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleBasePool}
+                                    >
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/base.svg"
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      Base Network
+                                    </li>
+                                  )}
+                                  {window.WALLET_TYPE !== "matchId" && (
+                                    <li
+                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                      onClick={handleConfluxPool}
+                                    >
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                      Conflux Network
+                                    </li>
+                                  )}
                                   {window.WALLET_TYPE !== "binance" &&
-                                    !window.ethereum?.isBinance && (
+                                    !window.ethereum?.isBinance &&
+                                    window.WALLET_TYPE !== "matchId" && (
                                       <li
                                         className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                         onClick={handleSkalePool}
@@ -10469,7 +10625,8 @@ function Dashboard({
                                       </li>
                                     )}
                                   {window.WALLET_TYPE !== "binance" &&
-                                    !window.ethereum?.isBinance && (
+                                    !window.ethereum?.isBinance &&
+                                    window.WALLET_TYPE !== "matchId" && (
                                       <li
                                         className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                         onClick={handleCorePool}
@@ -10488,7 +10645,8 @@ function Dashboard({
                                       </li>
                                     )}
                                   {window.WALLET_TYPE !== "binance" &&
-                                    !window.ethereum?.isBinance && (
+                                    !window.ethereum?.isBinance &&
+                                    window.WALLET_TYPE !== "matchId" && (
                                       <li
                                         className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                         onClick={handleVictionPool}
@@ -10538,7 +10696,7 @@ function Dashboard({
                                     <div className="d-flex align-items-center gap-2">
                                       <div className="dropdown position relative">
                                         <button
-                                          class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                                          className={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
                                           type="button"
                                           data-bs-toggle="dropdown"
                                           aria-expanded="false"
@@ -11456,8 +11614,9 @@ function Dashboard({
                     <button
                       className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                       onClick={() => {
-                        setshowWalletModal(true);
+                        // setshowWalletModal(true);
                         setgetPremiumPopup(false);
+                        handleConnect();
                       }}
                       style={{
                         width: "fit-content",
@@ -11535,41 +11694,6 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {balancePopup && (
-          <OutsideClickHandler
-            onOutsideClick={() => {
-              setBalancePopup(false);
-            }}
-          >
-            <div
-              className="popup-wrapper popup-active p-4"
-              id="subscribe"
-              style={{ width: "40%", pointerEvents: "auto" }}
-            >
-              <div className="d-flex align-items-center justify-content-between">
-                <h2
-                  className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
-                >
-                  My Balance
-                </h2>
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                  onClick={() => setBalancePopup(false)}
-                  alt=""
-                  style={{ cursor: "pointer" }}
-                />
-              </div>
-              <MyBalance
-                dypBalance={dypBalance}
-                dypBalancebnb={dypBalancebnb}
-                dypBalanceavax={dypBalanceavax}
-                idypBalance={idypBalance}
-                idypBalancebnb={idypBalancebnb}
-                idypBalanceavax={idypBalanceavax}
-              />
-            </div>
-          </OutsideClickHandler>
-        )}
         {specialRewardsPopup && (
           <OutsideClickHandler
             onOutsideClick={() => setSpecialRewardsPopup(false)}
@@ -11643,7 +11767,7 @@ function Dashboard({
                     The WOD Team will review the quality of the content, the
                     engagement of the post, and other details. If you are
                     eligible, they will determine the reward, which is
-                    distributed in BNB on a monthly basis.
+                    distributed in WOD on a monthly basis.
                   </p>
                   <p className="popup-paragraph mb-4">
                     <b>*Note:</b> You can submit one post per time. The team
