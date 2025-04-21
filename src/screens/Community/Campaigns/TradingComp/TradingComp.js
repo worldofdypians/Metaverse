@@ -126,7 +126,7 @@ const TradingComp = ({coinbase}) => {
             <div className="d-flex align-items-center gap-2">
               <img src={tradingCalendar} alt="" />
               <span className="trading-comp-date">
-                Apr 17, 2025 - Jul 31, 2025
+                Apr 21, 2025 - Jul 14, 2025
               </span>
             </div>
             <div className="trading-comp-divider"></div>
@@ -134,15 +134,17 @@ const TradingComp = ({coinbase}) => {
         </div>
         <div className="col-12 col-lg-6">
           <div className="d-flex flex-column justify-content-between h-100 w-100">
-            <div className="trading-comp-wrapper w-100 p-3">
-              <div className="d-flex align-items-center justify-content-between">
+           <div className="d-flex flex-column gap-2">
+           <div className="d-flex align-items-center justify-content-between">
                 <h6 className="mb-0 trading-comp-subtitle">Prize Pool</h6>
                   <a href="https://medium.com/@worldofdypians/the-gathering-storm-ultimate-wod-trading-competition-5fb06f827023" target="_blank" rel="noreferrer" className="trading-comp-rules-btn d-flex align-items-center justify-content-center px-3 py-2">
                     <span>Competition Rules</span>
                   </a>
                   
               </div>
-              <div className="mt-3 d-flex flex-column w-100 align-items-center">
+           <div className="trading-comp-wrapper w-100 p-3">
+             
+              <div className=" d-flex flex-column w-100 align-items-center">
                 <div className="trading-comp-total-prize-wrapper px-5 py-3 d-flex align-items-center justify-content-center">
                   <h6 className="mb-0">$300,000</h6>
                 </div>
@@ -185,47 +187,29 @@ const TradingComp = ({coinbase}) => {
                 </div>
               </div>
             </div>
+           </div>
             <div className="d-flex flex-column gap-2 mt-2">
-              <h6 className="trading-comp-subtitle mb-0">Airdrop Groups</h6>
+              <h6 className="trading-comp-subtitle mb-0">Details</h6>
               <div className="trading-comp-wrapper w-100 p-3 d-flex flex-column justify-content-center align-items-center">
-                <div className="row w-100 airdrop-group-item py-2">
-                  <div className="col-3 d-flex justify-content-start">
-                    <h6 className="mb-0 airdrop-group-title">Group 1</h6>
-                  </div>
-                  <div className="col-3 d-flex justify-content-center">
-                    <span className="airdrop-group-winners">100 winners</span>
-                  </div>
-                  <div className="col-6 d-flex justify-content-end">
-                    <span className="airdrop-group-volume">Min weekly volume $1,000</span>
-                  </div>
+                <div className="d-flex align-items-center justify-content-between w-100 airdrop-group-item py-2">
+                    <h6 className="mb-0 airdrop-group-title">How to select trading winners</h6>
+                    <span className="airdrop-group-volume">Top 30 users on weekly leaderboard</span>
                 </div>
-                <div className="row w-100 airdrop-group-item py-2">
-                  <div className="col-3 d-flex justify-content-start">
-                    <h6 className="mb-0 airdrop-group-title">Group 2</h6>
-                  </div>
-                  <div className="col-3 d-flex justify-content-center">
-                    <span className="airdrop-group-winners">600 winners</span>
-                  </div>
-                  <div className="col-6 d-flex justify-content-end">
-                    <span className="airdrop-group-volume">Min weekly volume $750</span>
-                  </div>
+                <div className="d-flex align-items-center justify-content-between w-100 airdrop-group-item py-2">
+                    <h6 className="mb-0 airdrop-group-title">Winner Announce After</h6>
+                    <span className="airdrop-group-volume">1–3 days after each leaderboard reset</span>
                 </div>
-                <div className="row w-100 airdrop-group-item py-2">
-                  <div className="col-3 d-flex justify-content-start">
-                    <h6 className="mb-0 airdrop-group-title">Group 3</h6>
-                  </div>
-                  <div className="col-3 d-flex justify-content-center">
-                    <span className="airdrop-group-winners">2,400 winners</span>
-                  </div>
-                  <div className="col-6 d-flex justify-content-end">
-                    <span className="airdrop-group-volume">Min weekly volume $500</span>
-                  </div>
+                <div className="d-flex align-items-center justify-content-between w-100 airdrop-group-item py-2">
+                    <h6 className="mb-0 airdrop-group-title">How to select airdrop winners</h6>
+                    <span className="airdrop-group-volume">Raffle based on three groups</span>
                 </div>
+              
               </div>
+              <div className="d-flex w-100 justify-content-center">
               <a
                 href="https://pancakeswap.finance/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8&exactAmount=&exactField=INPUT"
                 target="_blank"
-                className="pancake-swap-btn mt-3 d-flex align-items-center justify-content-center gap-2 p-2 w-100"
+                className="pancake-swap-btn mt-3 d-flex align-items-center justify-content-center gap-2 py-2 px-4"
               >
                 <img
                   src={"https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"}
@@ -233,6 +217,7 @@ const TradingComp = ({coinbase}) => {
                 />
                 <h6 className="mb-0">Trade on PancakeSwap</h6>
               </a>
+              </div>
             </div>
           </div>
         </div>
@@ -311,7 +296,7 @@ const TradingComp = ({coinbase}) => {
             >
               <div className="d-flex flex-column gap-2 ps-3">
                 <h6 className="mb-0">Trading Competition</h6>
-                <span>12 Months</span>
+                <span>12 Weeks</span>
               </div>
               <img src={tradingCompMedal} className="pe-3" alt="" />
             </div>

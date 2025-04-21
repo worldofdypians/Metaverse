@@ -13,8 +13,8 @@ const Campaigns = ({coinbase}) => {
   const dummyBanner = {
     title: "The Gathering Storm",
     status: "Live",
-    start_date: "Apr 17, 2025",
-    end_date: "Jul 31, 2025",
+    start_date: "Apr 21, 2025",
+    end_date: "Jul 14, 2025",
     image: tradingCompBanner,
     desc: `Prepare for an unforgettable showdown! The Grand Battle Challenge is here, bringing players together to compete, strategize, and claim victory to share $30,000 Rewards<br/>
     <ul><li>Login or Create a Game Account</li>

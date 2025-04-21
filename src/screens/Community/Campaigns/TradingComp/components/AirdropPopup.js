@@ -4,10 +4,10 @@ import { shortAddress } from "../../../../Caws/functions/shortAddress";
 
 const AirdropPopup = ({ onClose, coinbase, participants }) => {
   const [airdropWeek, setAirdropWeek] = useState(1);
-  const hasLeaderboard = true;
+  const hasLeaderboard = false;
 
 
-  const airdropArray = Array.from({ length: 12 }, (_, i) => i + 1);
+  const airdropArray = Array.from({ length: 1 }, (_, i) => i + 1);
 
   return (
     <div
@@ -62,7 +62,7 @@ const AirdropPopup = ({ onClose, coinbase, participants }) => {
           ))}
         </div>
       ) : (
-        <div className="trading-comp-wrapper d-flex flex-column gap-2 align-items-center justify-content-center w-100 h-50 mt-3">
+        <div className="trading-comp-wrapper d-flex flex-column gap-2 align-items-center justify-content-center w-100 h-75 mt-3">
           ⌛
           <span className="no-winners-text">
             Winners will be displayed once the Week {airdropWeek} ends.
