@@ -400,6 +400,10 @@ const NewBuilders = () => {
       name: "Gaimin",
       icon: "gaimin.svg",
     },
+    {
+      name: "Vanar",
+      icon: "vanar.svg",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>

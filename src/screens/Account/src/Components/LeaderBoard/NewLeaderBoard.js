@@ -80,6 +80,7 @@ const NewLeaderBoard = ({
   dailyplayerData,
   genesisData,
   allBnbData,
+  allVanarData,
   allCoreData,
   allSkaleData,
   allVictionData,
@@ -148,6 +149,9 @@ const NewLeaderBoard = ({
     if (allTaikoData && allTaikoData.length > 0 && optionText2 === "taiko") {
       setAllData(allTaikoData);
     }
+    if (allVanarData && allVanarData.length > 0 && optionText2 === "vanar") {
+      setAllData(allVanarData);
+    }
     if (
       allVictionData &&
       allVictionData.length > 0 &&
@@ -165,6 +169,7 @@ const NewLeaderBoard = ({
     allSkaleData,
     allTaikoData,
     allVictionData,
+    allVanarData
   ]);
 
   // useEffect(() => {
@@ -540,6 +545,44 @@ const NewLeaderBoard = ({
                           ? "SKALE"
                           : windowSize.width < 786 && optionText2 === "skale"
                           ? "SKALE"
+                          : ""}
+                      </button>
+                      <button
+                        onMouseEnter={() => handleMouseEnter("vanar")}
+                        onMouseLeave={handleMouseLeave}
+                        className={` 
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "vanar" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("vanar");
+                          setAllData(allVanarData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "vanar"
+                              ? "https://cdn.worldofdypians.com/wod/vanar.svg"
+                              : optionText2 !== "vanar" &&
+                                hoverState === "vanar"
+                              ? "https://cdn.worldofdypians.com/wod/vanarWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/vanarInactive.svg"
+                          }vanar
+                          className={`${
+                            optionText2 === "vanar"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Vanar"
+                          : windowSize.width < 786 && optionText2 === "vanar"
+                          ? "Vanar"
                           : ""}
                       </button>
                     </div>

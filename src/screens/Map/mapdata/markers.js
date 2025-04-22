@@ -1,6 +1,6 @@
 import L from "leaflet";
 import { Marker } from "react-leaflet";
-
+import "../_map.scss";
 // Consolidated icon data
 
 // Consolidated icon data array
@@ -290,6 +290,12 @@ const iconData = [
   {
     name: "ordifyMarker",
     url: "https://cdn.worldofdypians.com/wod/ordify.svg",
+    size: 24,
+    chain: true,
+  },
+  {
+    name: "vanarMarker",
+    url: "https://cdn.worldofdypians.com/wod/vanar.svg",
     size: 24,
     chain: true,
   },

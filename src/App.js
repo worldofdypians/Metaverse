@@ -455,6 +455,16 @@ function App() {
       },
       blockExplorerUrls: ["https://matchscan.io"],
     },
+    2040: {
+      chainId: 2040,
+      chainName: "Vanar Mainnet",
+      rpcUrls: ["https://rpc.vanarchain.com"],
+      nativeCurrency: {
+        symbol: "VANRY",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://explorer.vanarchain.com/"],
+    },
   };
 
   const { useUserInfo, useWallet } = Hooks;
@@ -562,6 +572,7 @@ function App() {
   const [myMatNFTs, setMyMatNfts] = useState([]);
   const [mykucoinNFTs, setMykucoinNFTs] = useState([]);
   const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
+  const [myVanarNFTs, setmyVanarNFTs] = useState([]);
 
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
@@ -2472,6 +2483,9 @@ function App() {
       getMyNFTS(coinbase, "opbnb").then((NFTS) => {
         setmyOpbnbNfts(NFTS);
       });
+      getMyNFTS(coinbase, "vanar").then((NFTS) => {
+        setmyVanarNFTs(NFTS);
+      });
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -2741,6 +2755,194 @@ function App() {
           handleConnectWallet();
         } catch (e) {
           window.alertify.error("No web3 detected! Please Install MetaMask!");
+        }
+      }
+    }
+  };
+  const handleMintVanarNft = async () => {
+    if (isConnected && coinbase) {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        try {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          let web3 = new Web3(window.ethereum);
+          let vanar_contract = new web3.eth.Contract(
+            window.SEI_NFT_ABI,
+            window.config.nft_vanar_address
+          );
+
+          await vanar_contract.methods
+            .mintBetaPass()
+            .send({ from: coinbase })
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "vanar").then((NFTS) => {
+                setmyVanarNFTs(NFTS);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } catch (e) {
+          setmintloading("error");
+
+          if (typeof e == "object" && e.message) {
+            setmintStatus(e.message);
+          } else {
+            setmintStatus(
+              "Oops, something went wrong! Refresh the page and try again!"
+            );
+          }
+          window.alertify.error(
+            typeof e == "object" && e.message
+              ? e.message
+              : typeof e == "string"
+              ? String(e)
+              : "Oops, something went wrong! Refresh the page and try again!"
+          );
+          setTimeout(() => {
+            setmintloading("initial");
+            setmintStatus("");
+          }, 5000);
+        }
+      } else if (window.WALLET_TYPE === "binance") {
+        try {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+
+          const vanarsc = new ethers.Contract(
+            window.config.nft_vanar_address,
+            window.SEI_NFT_ABI,
+            library.getSigner()
+          );
+
+          let txResponse = await vanarsc.mintBetaPass().catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+
+          const txReceipt = txResponse.wait();
+          if (txReceipt) {
+            setmintStatus("Success! Your Nft was minted successfully!");
+            setmintloading("success");
+            settextColor("rgb(123, 216, 176)");
+            setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            getMyNFTS(coinbase, "vanar").then((NFTS) => {
+              setmyVanarNFTs(NFTS);
+            });
+          }
+        } catch (e) {
+          setmintloading("error");
+
+          if (typeof e == "object" && e.message) {
+            setmintStatus(e.message);
+          } else {
+            setmintStatus(
+              "Oops, something went wrong! Refresh the page and try again!"
+            );
+          }
+          window.alertify.error(
+            typeof e == "object" && e.message
+              ? e.message
+              : typeof e == "string"
+              ? String(e)
+              : "Oops, something went wrong! Refresh the page and try again!"
+          );
+          setTimeout(() => {
+            setmintloading("initial");
+            setmintStatus("");
+          }, 5000);
+        }
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: window.config.nft_vanar_address,
+              abi: window.SEI_NFT_ABI,
+              functionName: "mintBetaPass",
+              args: [],
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e?.shortMessage);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (receipt) {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "vanar").then((NFTS) => {
+                setmyVanarNFTs(NFTS);
+              });
+            }
+          }
         }
       }
     }
@@ -4424,6 +4626,36 @@ function App() {
         learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
+    {
+      title: "Vanar",
+      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in VANRY Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "Coming Soon",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Vanar",
+        chain: "Vanar Network",
+        linkState: "vanar",
+        rewards: "VANRY",
+        status: "Coming Soon",
+        id: "event2",
+        totalRewards: "$20,000 in VANRY Rewards",
+        eventDuration: confluxLastDay,
+        eventDate: "Coming Soon",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+        learnMore: "",
+      },
+    },
   ];
 
   const getCawsSold = async () => {
@@ -4740,6 +4972,8 @@ function App() {
                     ? "0x406"
                     : chain === 13371
                     ? "0x343b"
+                    : chain === 2040
+                    ? "0x7f8"
                     : chain === 1482601649
                     ? "0x585eb4b1"
                     : "0x406",
@@ -5156,6 +5390,10 @@ function App() {
         {!location.pathname.includes("ai-agent") &&
           !location.pathname.includes("staking") &&
           !location.pathname.includes("trading-competition") &&
+          !location.pathname.includes("auth") &&
+          !location.pathname.includes("player") &&
+          !location.pathname.includes("ResetPassword") &&
+          !location.pathname.includes("forgotPassword") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -5622,6 +5860,7 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -5710,6 +5949,7 @@ function App() {
                 coingeckoEarnUsd={userEarnUsd}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -5833,6 +6073,22 @@ function App() {
           <Route
             exact
             path="/shop/beta-pass/bnb"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/vanar"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -6233,6 +6489,7 @@ function App() {
                 }}
                 listedNFTS={allListedByUser}
                 mykucoinNFTs={mykucoinNFTs}
+                myVanarNFTs={myVanarNFTs}
                 walletClient={walletClient}
                 publicClient={publicClient}
                 network_matchain={chain}
@@ -6348,12 +6605,14 @@ function App() {
                 myKucoinNfts={mykucoinNFTs}
                 myOpbnbNfts={myOpbnbNfts}
                 totalOpbnbNft={myOpbnbNfts?.length}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />
-          {/* <Route
+          <Route
             exact
-            path="/shop/mint/kucoin"
+            path="/shop/mint/vanar"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -6377,7 +6636,7 @@ function App() {
                 mintloading={mintloading}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleMint={handleKucoinMint}
+                handleMint={handleMintVanarNft}
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}
@@ -6388,10 +6647,14 @@ function App() {
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
                 myKucoinNfts={mykucoinNFTs}
+                myOpbnbNfts={myOpbnbNfts}
+                totalOpbnbNft={myOpbnbNfts?.length}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />
-           <Route
+          {/* <Route
             exact
             path="/shop/mint/matchain"
             element={
@@ -6623,6 +6886,8 @@ function App() {
                 myKucoinNfts={mykucoinNFTs}
                 myOpbnbNfts={myOpbnbNfts}
                 totalOpbnbNft={myOpbnbNfts?.length}
+                myVanarNFTs={myVanarNFTs}
+                totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
           />

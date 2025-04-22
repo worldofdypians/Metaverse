@@ -112,8 +112,8 @@ const GlobalLeaderboard = ({
                     <br />
                     <br />
                     Participate in Daily Chain Leaderboards from BNB Chain,
-                    SKALE, Core, Manta, Base, Taiko and Viction to earn STARS
-                    that will boost your global ranking.
+                    SKALE, Core, Manta, Base,Matchain,Sei,Vanar, Taiko and
+                    Viction to earn STARS that will boost your global ranking.
                     <br />
                     <br />
                     Prime Users earn extra STARS from Daily Leaderboards,
@@ -155,7 +155,8 @@ const GlobalLeaderboard = ({
             className={screen === "dash" && "invisible"}
           />
         </div>
-        {allStarData?.loading === false || allStarData?.loading === undefined ? (
+        {allStarData?.loading === false ||
+        allStarData?.loading === undefined ? (
           <></>
         ) : (
           <div className="coming-soon-position d-flex align-items-center justify-content-center">

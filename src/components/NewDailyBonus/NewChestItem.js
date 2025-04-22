@@ -237,6 +237,7 @@ const NewChestItem = ({
     chainText
   ) => {
     if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      window.web3 = new Web3(window.ethereum);
       const txResult = await window.web3.eth
         .getTransaction(txHash)
         .catch((e) => {
@@ -399,7 +400,10 @@ const NewChestItem = ({
       window.DAILY_BONUS_SEI_ABI,
       window.config.daily_bonus_sei_address
     );
-
+    const daily_bonus_contract_vanar = new window.web3.eth.Contract(
+      window.DAILY_BONUS_SEI_ABI,
+      window.config.daily_bonus_vanar_address
+    );
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (window.WALLET_TYPE !== "binance") {
@@ -816,6 +820,136 @@ const NewChestItem = ({
                       transactionHash,
                       chestIndex - 1,
                       "viction"
+                    );
+                  } else {
+                    // Transaction failed on-chain
+                    window.alertify.error("Transaction failed on-chain.");
+                    onChestStatus("error");
+                    setTimeout(() => {
+                      onChestStatus("initial");
+                    }, 3000);
+                    onLoadingChest(false);
+                    setLoading(false);
+                    setClaimingChest(false);
+                  }
+                }
+              }, 2000); // Poll every 2 seconds
+            } else {
+              console.error(e);
+              window.alertify.error(e?.message);
+              onChestStatus("error");
+              setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              onLoadingChest(false);
+              setLoading(false);
+              setClaimingChest(false);
+            }
+          });
+      }
+    } else if (chainId === 2040) {
+      if (rewardTypes === "premium" && isPremium) {
+        let transactionHash = null;
+        await daily_bonus_contract_vanar.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+          })
+          .once("transactionHash", (hash) => {
+            transactionHash = hash;
+          })
+
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "vanar"
+            );
+          })
+          .catch((e) => {
+            console.log(e);
+            if (
+              e?.message &&
+              e.message.includes("Failed to check for transaction receipt")
+            ) {
+              // Poll for the receipt
+              let receipt = null;
+              const web3 = new Web3(window.ethereum);
+              const interval = setInterval(async () => {
+                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                if (receipt) {
+                  clearInterval(interval);
+                  if (receipt.status) {
+                    // Transaction succeeded
+                    handleCheckIfTxExists(
+                      email,
+                      transactionHash,
+                      chestIndex - 1,
+                      "vanar"
+                    );
+                  } else {
+                    // Transaction failed on-chain
+                    window.alertify.error("Transaction failed on-chain.");
+                    onChestStatus("error");
+                    setTimeout(() => {
+                      onChestStatus("initial");
+                    }, 3000);
+                    onLoadingChest(false);
+                    setLoading(false);
+                    setClaimingChest(false);
+                  }
+                }
+              }, 2000); // Poll every 2 seconds
+            } else {
+              window.alertify.error(e?.message);
+              onChestStatus("error");
+              setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              onLoadingChest(false);
+              setLoading(false);
+              setClaimingChest(false);
+              console.error(e);
+            }
+          });
+      } else if (rewardTypes === "standard") {
+        let transactionHash = null;
+        await daily_bonus_contract_vanar.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .once("transactionHash", (hash) => {
+            transactionHash = hash;
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "vanar"
+            );
+          })
+          .catch((e) => {
+            if (
+              e?.message &&
+              e.message.includes("Failed to check for transaction receipt")
+            ) {
+              // Poll for the receipt
+              let receipt = null;
+              const web3 = new Web3(window.ethereum);
+              const interval = setInterval(async () => {
+                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                if (receipt) {
+                  clearInterval(interval);
+                  if (receipt.status) {
+                    // Transaction succeeded
+                    handleCheckIfTxExists(
+                      email,
+                      transactionHash,
+                      chestIndex - 1,
+                      "vanar"
                     );
                   } else {
                     // Transaction failed on-chain
