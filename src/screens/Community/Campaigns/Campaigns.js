@@ -2,12 +2,39 @@ import React, { useEffect, useState } from "react";
 import "./_campaigns.scss";
 import { NavLink } from "react-router-dom";
 import NewChallenges from "../../Game/NewChallenges";
+import TradingComp from "./TradingComp/TradingComp";
+import tradingCompBanner from "./TradingComp/assets/tradingCompBanner.png";
 
-const Campaigns = () => {
+const Campaigns = ({ coinbase }) => {
   const [popupEvent, setPopupEvent] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
 
+  const dummyBanner = {
+    title: "The Gathering Storm",
+    status: "Live",
+    start_date: "Apr 21, 2025",
+    end_date: "Jul 14, 2025",
+    image: tradingCompBanner,
+    desc: `Welcome to the Gathering Storm $WOD Trading Competition, a 12-week battle where only the best rise.<br/>
+    <ul><li>$300,000 in total rewards</li>
+    <li>Weekly prizes for the Top 30 traders</li>
+    <li>Airdrops for eligible volume warriors </li>  
+    <li>Every trade counts. Every week matters.</li>  
+    </ul>
+    Join the storm. Conquer the charts. Earn your WOD.
+   `,
+    link: "/trading-competition",
+  };
+
   const dummyData = [
+    {
+      title: "The Grand Battle Challenge",
+      status: "Expired",
+      start_date: "Mar 17, 2025",
+      end_date: "Mar 31, 2025",
+      image: "https://cdn.worldofdypians.com/wod/grand_battle_challenge.webp",
+      link: "https://dappbay.bnbchain.org/campaign/377-join-world-of-dypians-grand-battle-challenge-to-share-30-000-rewards",
+    },
     {
       title: "$25,000 WOD Trading Competition",
       status: "Expired",
@@ -124,19 +151,19 @@ const Campaigns = () => {
     },
   ];
 
-  const dummyBanner = {
-    title: "The Grand Battle Challenge",
-    status: "Expired",
-    start_date: "Mar 17, 2025",
-    end_date: "Mar 31, 2025",
-    image: "https://cdn.worldofdypians.com/wod/grand_battle_challenge.webp",
-    desc: `Prepare for an unforgettable showdown! The Grand Battle Challenge is here, bringing players together to compete, strategize, and claim victory to share $30,000 Rewards<br/>
-    <ul><li>Login or Create a Game Account</li>
-    <li>Stake min 100 WOD tokens </li>
-    <li>Open at least 10 Daily Bonus Chests </li>  </ul>
-   `,
-    link: "https://dappbay.bnbchain.org/campaign/377-join-world-of-dypians-grand-battle-challenge-to-share-30-000-rewards",
-  };
+  // const dummyBanner = {
+  //   title: "The Grand Battle Challenge",
+  //   status: "Expired",
+  //   start_date: "Mar 17, 2025",
+  //   end_date: "Mar 31, 2025",
+  //   image: "https://cdn.worldofdypians.com/wod/grand_battle_challenge.webp",
+  //   desc: `Prepare for an unforgettable showdown! The Grand Battle Challenge is here, bringing players together to compete, strategize, and claim victory to share $30,000 Rewards<br/>
+  //   <ul><li>Login or Create a Game Account</li>
+  //   <li>Stake min 100 WOD tokens </li>
+  //   <li>Open at least 10 Daily Bonus Chests </li>  </ul>
+  //  `,
+  //   link: "https://dappbay.bnbchain.org/campaign/377-join-world-of-dypians-grand-battle-challenge-to-share-30-000-rewards",
+  // };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -202,7 +229,7 @@ const Campaigns = () => {
               <div className="d-flex w-100 justify-content-center justify-content-lg-start">
                 <NavLink
                   to={dummyBanner.link}
-                  target="_blank"
+                  // target="_blank"
                   className="explore-btn px-4 py-2 mt-4"
                   style={{ width: "fit-content" }}
                 >
@@ -212,6 +239,9 @@ const Campaigns = () => {
             </div>
           </div>
         </div>
+        {/* <TradingComp
+        coinbase={coinbase}
+        /> */}
         <div className="campaign-items-grid mt-5">
           {dummyData.map((item, index) => (
             <a href={item.link} rel="noreferrer" target="_blank">

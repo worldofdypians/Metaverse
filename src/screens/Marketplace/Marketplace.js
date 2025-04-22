@@ -1599,7 +1599,7 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div> */}
+                  </div>  */}
                   {/* <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}

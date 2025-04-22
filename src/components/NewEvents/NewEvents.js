@@ -3391,7 +3391,7 @@ const NewEvents = ({
               </div>
               <div className="new-events-bottom-wrapper p-3 mb-4">
                 <div className="row gap-2 gap-lg-0">
-                  <div className="col-12 col-lg-2">
+                  <div className="col-12 col-lg-3 col-xxl-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
                       {adjustedDay === 5 && (
                         <div className="d-flex flex-column">
@@ -3581,7 +3581,7 @@ const NewEvents = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-lg-10">
+                  <div className="col-12 col-lg-9 col-xxl-10">
                     {(challenge === "treasure-hunt" ||
                       selectedEvent === "treasure-hunt") && (
                       <div className="d-flex align-items-center justify-content-between flex-column flex-lg-row gap-2 gap-lg-0">

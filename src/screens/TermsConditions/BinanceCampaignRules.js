@@ -19,7 +19,7 @@ const BinanceCampaignRules = () => {
                 <b>
                   Second Edition of World of Dypians x Binance Wallet Campaign!
                 </b>{" "}
-                This is your opportunity to earn from a pool of xxxx WOD tokens
+                This is your opportunity to earn from a pool of 610,000 WOD tokens
                 by completing simple tasks and engaging with the World of
                 Dypians ecosystem. Whether you're a seasoned player or a
                 newcomer, this campaign rewards your active participation and
@@ -29,8 +29,8 @@ const BinanceCampaignRules = () => {
                 <b>Activity Period:</b>
               </p>
               <ul>
-                <li className="text-white">Start: 2025-04-21 12:00 (UTC)</li>
-                <li className="text-white">End: 2025-05-05 12:00 (UTC)</li>
+                <li className="text-white">Start: 2025-04-24 09:00 (UTC)</li>
+                <li className="text-white">End: 2025-04-27 09:00 (UTC)</li>
               </ul>
               <p className="text-white m-0">
                 <b>Mission Details and Prizes:</b>
@@ -99,7 +99,7 @@ const BinanceCampaignRules = () => {
               </p>
               <ul>
                 <li className="text-white">
-                  A total of 2,000 winners will be selected to share xxxx WOD
+                  A total of 2,000 winners will be selected to share 610,000 WOD
                   tokens.
                 </li>
                 <li className="text-white">
@@ -175,7 +175,7 @@ const BinanceCampaignRules = () => {
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      A total of xxxx WOD tokens will be distributed among 2,000
+                      A total of 610,000 WOD tokens will be distributed among 2,000
                       participants.
                     </li>
                   </ul>

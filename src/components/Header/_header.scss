@@ -755,6 +755,10 @@
     padding-left: 24px !important;
     padding-right: 24px !important;
     min-height: 48px;
+@media screen and (max-width: 1300px) {
+  font-size: 12px;
+}
+
   }
   .new-connect-btn:hover{
   background-position: 100% 0 !important;

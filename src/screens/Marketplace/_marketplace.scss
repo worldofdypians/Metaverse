@@ -3671,7 +3671,19 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
+  // background: url(../../screens/Community/Campaigns/TradingComp/assets/tradingCompBanner.png);
   background: url(https://cdn.worldofdypians.com/wod/tokenBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.campaignClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../screens/Community/Campaigns/TradingComp/assets/tradingCompBanner.png);
+  // background: url(https://cdn.worldofdypians.com/wod/tokenBg.webp);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
