@@ -353,7 +353,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   To participate in the event, players are required to be{" "}
                   <b>Prime Users.</b> By actively participating in the game on a
                   daily basis and exploring the downtown area, players have the
-                  opportunity to secure daily rewards in BNB. Remember to log in
+                  opportunity to secure daily rewards in WOD. Remember to log in
                   to the game daily and venture into the downtown area to
                   uncover hidden treasures.
                 </p>

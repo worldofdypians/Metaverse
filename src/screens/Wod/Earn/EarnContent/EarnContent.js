@@ -35,7 +35,9 @@ const EarnContent = ({
   onSuccessfulStake,
   walletClient,
   publicClient,
-  network_matchain
+  network_matchain,
+  handleSwitchChainBinanceWallet,
+  handleSwitchChainGateWallet
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -663,6 +665,8 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
+                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
                             />
                           </div>
                         )}
@@ -696,6 +700,8 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
+                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
                             />
                           </div>
                         )}
@@ -729,6 +735,8 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
+                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
                             />
                           </div>
                         )}
@@ -762,6 +770,8 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
+                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
                             />
                           </div>
                         )}
@@ -795,7 +805,8 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
-
+                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
                             />
                           </div>
                         )}

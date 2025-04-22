@@ -3216,7 +3216,7 @@ const NewEvents = ({
     title: "Critical Hit",
     link: "/account/challenges/critical-hit",
     popupDesc:
-      "As a Genesis Land NFT holder, you can participate in the daily Critical Hit event to earn points and rewards. Each day, you need to log in to the game and visit your land. On your land, you have a Genesis Gem, which you need to break with a pickaxe. Once broken, it gives you either points that are added to your leaderboard rank on BNB Chain or direct rewards in BNB.",
+      "As a Genesis Land NFT holder, you can participate in the daily Critical Hit event to earn points and rewards. Each day, you need to log in to the game and visit your land. On your land, you have a Genesis Gem, which you need to break with a pickaxe. Once broken, it gives you either points that are added to your leaderboard rank on BNB Chain or direct rewards in WOD.",
     secondaryTitle: "What is Genesis Land?",
     thirdDesc:
       "Genesis Land is a 125x125 area in World of Dypians, available to those who own a Genesis Land NFT. Benefits include exclusive rewards, Land NFT staking pool, and special in-game events like Critical Hit.",
@@ -3391,7 +3391,7 @@ const NewEvents = ({
               </div>
               <div className="new-events-bottom-wrapper p-3 mb-4">
                 <div className="row gap-2 gap-lg-0">
-                  <div className="col-12 col-lg-2">
+                  <div className="col-12 col-lg-3 col-xxl-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
                       {adjustedDay === 5 && (
                         <div className="d-flex flex-column">
@@ -3581,7 +3581,7 @@ const NewEvents = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-lg-10">
+                  <div className="col-12 col-lg-9 col-xxl-10">
                     {(challenge === "treasure-hunt" ||
                       selectedEvent === "treasure-hunt") && (
                       <div className="d-flex align-items-center justify-content-between flex-column flex-lg-row gap-2 gap-lg-0">

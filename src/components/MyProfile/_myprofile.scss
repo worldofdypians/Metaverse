@@ -596,6 +596,10 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px 20px;
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 26px 15px;
+  }
   @media screen and (max-width: 1199px) {
     grid-template-columns: repeat(8, 1fr);
     gap: 26px 0px;
