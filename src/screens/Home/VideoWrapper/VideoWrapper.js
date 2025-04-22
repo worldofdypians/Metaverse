@@ -96,10 +96,10 @@ const VideoWrapper = ({
       class: "earnClass",
     },
     {
-      link: "/game#challenges",
-      title: "EVENTS & CHALLENGES",
-      desc: "Join exciting in-game challenges",
-      class: "eventClass",
+      link: "/trading-competition",
+      title: "",
+      desc: "",
+      class: "campaignClass",
     },
     {
       link: "/",
