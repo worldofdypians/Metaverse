@@ -3275,7 +3275,7 @@ function Dashboard({
       .catch((err) => {
         console.log(err);
       });
-    console.log("result2result2", result2);
+
     if (result2) {
       setpreviousGenesisVersion(result2.data.data.version);
       setgenesisData(result2.data.data.leaderboard);
