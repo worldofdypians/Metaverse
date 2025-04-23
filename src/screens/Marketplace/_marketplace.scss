@@ -2483,6 +2483,20 @@
   }
 }
 
+.past-vanar-mint {
+  background-image: url("https://cdn.worldofdypians.com/wod/pastVanarMintBg.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("https://cdn.worldofdypians.com/wod/pastVanarMintMobileBg.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+
 
 .past-bnb-mint {
   background-image: url("https://cdn.worldofdypians.com/wod/bnbMintDesktop.webp");
@@ -2648,6 +2662,18 @@
   }
 }
 
+.past-vanar-mint-amount {
+  color: #24AF92;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
 .past-core-mint-amount {
   color: #fc9210;
   text-align: center;
@@ -2759,6 +2785,19 @@
 .past-kucoin-mint-desc {
   color: #fff;
   text-shadow: 0px 3px 4px rgba(44, 190, 127, 0.7);
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-vanar-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(36, 175, 146, 0.7);
   font-size: 40px;
   font-style: normal;
   font-weight: 700;
@@ -3252,6 +3291,11 @@
 .kucoin-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #181B38 0%, rgba(11, 212, 165, 0.5) 168.67%);
+}
+
+.vanar-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #181B38 0%, rgba(5, 156, 121, 0.5) 168.67%);
 }
 
 .gate-eventwrapper {
@@ -4727,6 +4771,15 @@ padding: 16px;
     90deg,
     #181b38 0%,
     rgba(44, 102, 190, 1) 168.67%
+  ) !important;
+}
+
+.upcoming-vanar-event {
+  border-radius: 20px;
+  background: linear-gradient(
+    90deg,
+    #181b38 0%,
+    rgba(5, 156, 121, 0.5) 168.67%
   ) !important;
 }
 

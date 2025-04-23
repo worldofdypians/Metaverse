@@ -3,10 +3,6 @@ import "./_wodbuilders.scss";
 import { useState } from "react";
 import useWindowSize from "../../../hooks/useWindowSize";
 
-
-
-
-
 const WodBuilders = ({ page }) => {
   const [slice, setSlice] = useState(2);
   const windowSize = useWindowSize();
@@ -189,6 +185,13 @@ const WodBuilders = ({ page }) => {
       backer: false,
     },
     {
+      name: "Vanar",
+      icon: "vanar",
+      banner: "vanarBuilderBanner.webp",
+      // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
+      backer: false,
+    },
+    {
       name: "Binance Wallet",
       icon: "binanceWallet",
       banner: "bnbChainBanner.png",
@@ -341,7 +344,9 @@ const WodBuilders = ({ page }) => {
       icon: "kols",
       banner: "kucoinBanner.png",
       backer: false,
-    },, {
+    },
+    ,
+    {
       name: "MintPad",
       icon: "mintpad",
       banner: "kucoinBanner.png",
@@ -351,8 +356,8 @@ const WodBuilders = ({ page }) => {
       name: "Dypius",
       icon: "dypius",
       backer: false,
-
-    },    {
+    },
+    {
       name: "OpenFlux",
       icon: "openflux",
       backer: false,
@@ -424,29 +429,45 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="d-flex align-items-center gap-2 view-more-partners position-relative"
-                onClick={() => (slice === 2 ? setSlice(25) : setSlice(2))}
-                style={{bottom: "0"}}
+                onClick={() => (slice === 2 ? setSlice(26) : setSlice(2))}
+                style={{ bottom: "0" }}
               >
                 <span className="view-all-partners ">
                   {" "}
                   {slice === 2 ? "View More" : "View Less"}
                 </span>
-                <img src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"} width={20} height={20} style={{transform: slice === 2 ? "none" : "rotate(180deg)"}} alt="" />
+                <img
+                  src={
+                    "https://cdn.worldofdypians.com/wod/partnersDropdown.svg"
+                  }
+                  width={20}
+                  height={20}
+                  style={{ transform: slice === 2 ? "none" : "rotate(180deg)" }}
+                  alt=""
+                />
               </div>
             </div>
           ) : (
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="d-flex align-items-center gap-2 view-more-partners position-relative"
-                onClick={() => (slice === 8 ? setSlice(25) : setSlice(8))}
-                style={{bottom: "0"}}
+                onClick={() => (slice === 8 ? setSlice(26) : setSlice(8))}
+                style={{ bottom: "0" }}
               >
                 <span className="view-all-partners ">
                   {" "}
                   {slice === 8 ? "View More" : "View Less"}
                 </span>
 
-                <img src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"} width={20} height={20} style={{transform: slice === 8 ? "none" : "rotate(180deg)"}} alt="" />
+                <img
+                  src={
+                    "https://cdn.worldofdypians.com/wod/partnersDropdown.svg"
+                  }
+                  width={20}
+                  height={20}
+                  style={{ transform: slice === 8 ? "none" : "rotate(180deg)" }}
+                  alt=""
+                />
               </div>
             </div>
           )}

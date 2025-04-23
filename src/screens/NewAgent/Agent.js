@@ -679,6 +679,11 @@ const Agent = ({
     }
   }, [coinbase, isConnected, startWithdrawTimer, getWithdrawTimer]);
 
+  useEffect(() => {
+    document.title = "AI Agent";
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <>
       <div className="container-fluid d-flex bridge-mainhero-wrapper token-wrapper justify-content-center">
