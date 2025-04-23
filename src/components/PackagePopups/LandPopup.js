@@ -38,12 +38,12 @@ const LandPopup = ({ onClosePopup }) => {
     <div className="package-popup-wrapper">
       <div className="package-popup map-popup">
         <div className=" d-flex align-items-center justify-content-between w-100 m-0 p-3 mb-2 new-popup-title-wrapper">
-          <h6 className="market-banner-title m-0">LAND NFT COLLECTION</h6>
+          <h6 className="market-banner-title-2 m-0">LAND NFT COLLECTION</h6>
           <img src={"https://cdn.worldofdypians.com/wod/xMark.svg"} height={29} width={39} onClick={onClosePopup} alt="" />
         </div>
 
         <div className="package-popup-content-land mx-1 p-4 pt-0 d-flex flex-column gap-2">
-          <p className="ways-to-amplify-desc mb-2">
+          <p className="ways-to-amplify-desc-2 mb-2">
             The World of Dypians Land NFT Collection offers a unique opportunity
             for players to own and develop virtual land within the game. Only a
             limited edition of 1,000 NFTs, called Genesis Lands, representing
@@ -68,7 +68,7 @@ const LandPopup = ({ onClosePopup }) => {
           </div>
 
           <h6 className="text-white game-popup-title">Land Tiers</h6>
-          <p className="ways-to-amplify-desc">
+          <p className="ways-to-amplify-desc-2">
             World of Dypians offers 5 tiers of land NFTs. Each tier offers
             unique rewards and benefits within the metaverse.
           </p>

@@ -419,8 +419,6 @@ const Roadmap = () => {
       image: "quarterFourImage",
 
       content: [
-
-
         {
           title: "Website Revamped UI/UX",
           desc: "Unveil a redesigned website with a revamped UI/UX, offering users a more intuitive and visually engaging experience for seamless navigation and interaction within the World of Dypians ecosystem.",
@@ -470,7 +468,6 @@ const Roadmap = () => {
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
           completed: true,
         },
-       
       ],
     },
   ];
@@ -481,8 +478,75 @@ const Roadmap = () => {
       image: "quarterOneImage",
       content: [
         {
-          title: "Introduction of Game Quests",
-          desc: "Add a variety of engaging partner quests to challenge players, offering rewards and enhancing gameplay depth.",
+          title: "Burn Program",
+          desc: "Establish a token burn mechanism to balance the in-game economy and enhance the value of tokens over time.",
+          completed: true,
+        },
+        {
+          title: "Loyalty Program Improvements",
+          desc: "Upgrade the loyalty program with new features, better rewards, and enhanced incentives for consistent player engagement.",
+          completed: true,
+        },
+        {
+          title: "New Game Listings",
+          desc: "Expand game availability by listing it on additional stores, increasing accessibility for players worldwide.",
+          completed: true,
+        },
+        {
+          title: "New Exchange Listings",
+          desc: "Expand availability and liquidity of the WOD token by listing it on new exchanges, enhancing global accessibility and user confidence.",
+          completed: true,
+        },
+        {
+          title: "Launch of Oryn AI Agent",
+          desc: "Introduce the official in-game AI-powered agent, Oryn, designed to guide players, answer questions, explain game mechanics, and provide dynamic support throughout the gameplay experience.",
+          completed: true,
+        },
+        {
+          title: "Enhancing NFT Shop",
+          desc: "Upgrade the in-game NFT shop with an expanded range of items to enhance the purchasing experience.",
+          completed: true,
+        },
+        {
+          title: "Multiplayer Social Hub(Close Beta)",
+          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
+          completed: true,
+        },
+        {
+          title: "CAWS AI Mechanics Improvement",
+          desc: "Enhance in-game AI to improve how CAWS NFTs behave and interact within the game world, making them more responsive, lifelike, and integrated into battles, exploration, and dynamic scenarios.",
+          completed: true,
+        },
+        {
+          title: "New Chain Expansion",
+          desc: `Integrate additional blockchains into the game to broaden the reach and appeal.`,
+          completed: true,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience",
+          completed: true,
+        },
+      ],
+    },
+    {
+      quarter: "quarterTwo",
+      image: "quarterTwoImage",
+
+      content: [
+        {
+          title: "New Wallet Expansion",
+          desc: "Integrate more wallet options into the ecosystem, allowing users to connect using their preferred wallets for smoother onboarding, increased compatibility, and improved accessibility across networks.",
+          completed: true,
+        },
+        {
+          title: "Multiplayer Social Hub(Open Beta)",
+          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
+          completed: true,
+        },
+        {
+          title: "New Game UI Development",
+          desc: "Develop a new user interface to improve navigation and accessibility within the game.",
           completed: false,
         },
         {
@@ -500,50 +564,6 @@ const Roadmap = () => {
           desc: "Implement AI-powered tutorials to help players learn game mechanics, blockchain concepts, and strategies effectively.",
           completed: false,
         },
-        {
-          title: "Burn Program",
-          desc: "Establish a token burn mechanism to balance the in-game economy and enhance the value of tokens over time.",
-          completed: false,
-        },
-        {
-          title: "Loyalty Program Improvements",
-          desc: "Upgrade the loyalty program with new features, better rewards, and enhanced incentives for consistent player engagement.",
-          completed: false,
-        },
-        {
-          title: "New Game Listings",
-          desc: "Expand game availability by listing it on additional stores, increasing accessibility for players worldwide.",
-          completed: false,
-        },
-        {
-          title: "Multiplayer Social Hub",
-          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
-          completed: false,
-        },
-
-        {
-          title: "New Chain Expansion",
-          desc: `Integrate additional blockchains into the game to broaden the reach and appeal.`,
-          completed: false,
-        },
-        {
-          title: "Partnership Development",
-          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience",
-          completed: false,
-        },
-      ],
-    },
-    {
-      quarter: "quarterTwo",
-      image: "quarterTwoImage",
-
-      content: [
-        {
-          title: "New Game UI Development",
-          desc: "Develop a new user interface to improve navigation and accessibility within the game.",
-          completed: false,
-        },
-
         {
           title: "Introduction of Character Customization",
           desc: "Allow players to personalize their main avatar/character with facial and body features.",
@@ -596,6 +616,7 @@ const Roadmap = () => {
           desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
           completed: false,
         },
+
         {
           title: "In-Game DeFi Integration",
           desc: "Introduce seamless DeFi mechanics within the game, allowing players to earn directly in the virtual economy.",
@@ -611,9 +632,15 @@ const Roadmap = () => {
           desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
           completed: false,
         },
+
         {
           title: "Full Release of the Multiplayer PvE",
           desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Game Quests",
+          desc: "Add a variety of engaging partner quests to challenge players, offering rewards and enhancing gameplay depth.",
           completed: false,
         },
         {
@@ -767,7 +794,7 @@ const Roadmap = () => {
             community events, stay informed on the exciting journey ahead.
           </span>
           <div className="d-flex align-items-center justify-content-center gap-3">
-          <button
+            <button
               className={`btn ${
                 title === "2025" ? "getpremium-active-btn" : "getpremium-btn"
               } px-5`}

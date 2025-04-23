@@ -506,11 +506,23 @@
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
+  height: 200px !important;
 
-  // @media screen and (max-width: 786px) {
-  //   background-image: none;
-  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-  // }
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
+}
+
+.market-mint-vanar {
+  background-image: url("https://cdn.worldofdypians.com/wod/vanarMarketMint.webp");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px !important;
+
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
 }
 
 .market-mint-immutable {
@@ -589,6 +601,20 @@
 
 .kucoin-mint-bg2 {
   background-image: url("https://cdn.worldofdypians.com/wod/kucoinMintBanner.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+
+.vanar-mint-bg {
+  background-image: url("https://cdn.worldofdypians.com/wod/vanarMintBanner.webp");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: right;
@@ -988,7 +1014,7 @@
   --mask: linear-gradient(45deg, #0000 30px, #000 0);
   -webkit-mask: var(--mask);
   mask: var(--mask);
-  padding: 30px;
+  padding: 25px;
   // position: absolute;
   // top: 80%;
 }
@@ -1419,6 +1445,13 @@
 
 .mat-active {
   background-image: url("https://cdn.worldofdypians.com/wod/matchainActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.vanar-active {
+  background-image: url("https://cdn.worldofdypians.com/wod/vanarActive.webp");
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: center;

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./_governanceContent.scss"; 
+import "./_governanceContent.scss";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import { handleSwitchNetworkhook } from "../../../../hooks/hooks";
 import Web3 from "web3";
 import { Checkbox } from "@mui/material";
+import { ethers } from "ethers";
 
 const GovernanceInner = ({
   coinbase,
@@ -17,6 +18,10 @@ const GovernanceInner = ({
   handleSwitchChainBinanceWallet,
   refreshBalance,
   wodBalance,
+  walletClient,
+  publicClient,
+  network_matchain,
+  binanceW3WProvider,
 }) => {
   const { proposalId } = useParams();
   const [currentProposal, setCurrentProposal] = useState([]);
@@ -80,24 +85,28 @@ const GovernanceInner = ({
   };
 
   const switchNetwork = async (hexChainId, chain) => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook(hexChainId)
-          .then(() => {
-            handleSwitchNetwork(chain);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(chain);
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else {
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook(hexChainId)
+            .then(() => {
+              handleSwitchNetwork(chain);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(chain);
+        } else if (coinbase && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(chain);
+        }
       } else if (coinbase && window.WALLET_TYPE === "binance") {
         handleSwitchChainBinanceWallet(chain);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (coinbase && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(chain);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
@@ -141,191 +150,448 @@ const GovernanceInner = ({
     }
   };
 
-  const handleApprove = (e) => {
+  const handleApprove = async (e) => {
     // e.preventDefault();
     setdepositLoading(true);
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      let amount = depositAmount;
+      amount = new BigNumber(amount).times(1e18).toFixed(0);
+      reward_token_wod
+        .approve(window.config.governance_address, amount)
+        .then(() => {
+          setdepositLoading(false);
+          setdepositStatus("deposit");
+        })
+        .catch((e) => {
+          setdepositLoading(false);
+          setdepositStatus("error");
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setdepositAmount(0);
+            setdepositStatus("initial");
+          }, 8000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let amount = depositAmount;
+      amount = new BigNumber(amount).times(1e18).toFixed(0);
+      let reward_token_Sc = new ethers.Contract(
+        reward_token_wod._address,
+        window.TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    let amount = depositAmount;
-    amount = new BigNumber(amount).times(1e18).toFixed(0);
-    reward_token_wod
-      .approve(window.config.governance_address, amount)
-      .then(() => {
+      const txResponse = await reward_token_Sc
+        .approve(window.config.governance_address, amount)
+        .catch((e) => {
+          setdepositLoading(false);
+          setdepositStatus("error");
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setdepositAmount(0);
+            setdepositStatus("initial");
+          }, 8000);
+        });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setdepositLoading(false);
         setdepositStatus("deposit");
-      })
-      .catch((e) => {
-        setdepositLoading(false);
-        setdepositStatus("error");
-        window.alertify.error(e?.message);
-        setTimeout(() => {
-          setdepositAmount(0);
-          setdepositStatus("initial");
-        }, 8000);
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = depositAmount;
+        amount = new BigNumber(amount).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: reward_token_wod._address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [window.config.governance_address, amount],
+          })
+          .catch((e) => {
+            setdepositLoading(false);
+            setdepositStatus("error");
+            window.alertify.error(e?.shortMessage);
+            setTimeout(() => {
+              setdepositAmount(0);
+              setdepositStatus("initial");
+            }, 8000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setdepositLoading(false);
+            setdepositStatus("deposit");
+          }
+        }
+      }
+    }
   };
 
   const checkApproval = async (amount) => {
-    const result = await window
-      .checkapproveStakePool(
-        coinbase,
-        reward_token_wod._address,
-        window.config.governance_address
-      )
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
+    if (window.WALLET_TYPE === "matchId") {
+      if (publicClient) {
+        const result = await publicClient
+          .readContract({
+            abi: window.TOKEN_ABI,
+            address: reward_token_wod._address,
+            functionName: "allowance",
+            args: [coinbase, window.config.governance_address],
+          })
+          .then((data) => {
+            return Number(data);
+          })
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+        let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
 
-    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
-
-    if (
-      Number(result_formatted) >= Number(amount) &&
-      Number(result_formatted) !== 0
-    ) {
-      setdepositStatus("deposit");
+        if (
+          Number(result_formatted) >= Number(amount) &&
+          Number(result_formatted) !== 0
+        ) {
+          setdepositStatus("deposit");
+        } else {
+          setdepositStatus("initial");
+        }
+      }
     } else {
-      setdepositStatus("initial");
+      const result = await window
+        .checkapproveStakePool(
+          coinbase,
+          reward_token_wod._address,
+          window.config.governance_address
+        )
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
+
+      let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+
+      if (
+        Number(result_formatted) >= Number(amount) &&
+        Number(result_formatted) !== 0
+      ) {
+        setdepositStatus("deposit");
+      } else {
+        setdepositStatus("initial");
+      }
     }
   };
 
   const handleAddVote = async (proposalId, option) => {
     setdepositLoading(true);
-    window.web3 = new Web3(window.ethereum);
-    const governanceSc = new window.web3.eth.Contract(
-      window.GOVERNANCE_ABI,
-      window.config.governance_address
-    );
     let amount = depositAmount;
     amount = new BigNumber(amount).times(1e18).toFixed(0);
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      window.web3 = new Web3(window.ethereum);
+      const governanceSc = new window.web3.eth.Contract(
+        window.GOVERNANCE_ABI,
+        window.config.governance_address
+      );
 
-    const web3 = new Web3(window.ethereum);
-    const gasPrice = await window.bscWeb3.eth.getGasPrice();
-    console.log("gasPrice", gasPrice);
-    const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-    const increasedGwei = parseInt(currentGwei) + 1.3;
-    console.log("increasedGwei", increasedGwei);
+      const web3 = new Web3(window.ethereum);
+      const gasPrice = await window.bscWeb3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 1.3;
+      console.log("increasedGwei", increasedGwei);
 
-    const transactionParameters = {
-      gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-    };
-    await governanceSc.methods
-      .addVotes(proposalId, option, amount)
-      .estimateGas({ from: coinbase })
-      .then((gas) => {
-        transactionParameters.gas = web3.utils.toHex(gas);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    console.log(transactionParameters);
+      const transactionParameters = {
+        gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+      };
+      await governanceSc.methods
+        .addVotes(proposalId, option, amount)
+        .estimateGas({ from: coinbase })
+        .then((gas) => {
+          transactionParameters.gas = web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      console.log(transactionParameters);
 
-    await governanceSc.methods
-      .addVotes(proposalId, option, amount)
-      .send({ from: coinbase, ...transactionParameters })
-      .then(() => {
+      await governanceSc.methods
+        .addVotes(proposalId, option, amount)
+        .send({ from: coinbase, ...transactionParameters })
+        .then(() => {
+          setdepositLoading(false);
+          setdepositStatus("success");
+          getuserInfo();
+        })
+        .catch((e) => {
+          setdepositLoading(false);
+          setdepositStatus("error");
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setdepositLoading(false);
+            setdepositStatus("initial");
+          }, 8000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let staking_Sc = new ethers.Contract(
+        window.config.governance_address,
+        window.GOVERNANCE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse = staking_Sc
+        .addVotes(proposalId, option, amount)
+        .catch((e) => {
+          setdepositLoading(false);
+          setdepositStatus("error");
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setdepositLoading(false);
+            setdepositStatus("initial");
+          }, 8000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setdepositLoading(false);
         setdepositStatus("success");
         getuserInfo();
-      })
-      .catch((e) => {
-        setdepositLoading(false);
-        setdepositStatus("error");
-        window.alertify.error(e?.message);
-        setTimeout(() => {
-          setdepositLoading(false);
-          setdepositStatus("initial");
-        }, 8000);
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: window.config.governance_address,
+            abi: window.GOVERNANCE_ABI,
+            functionName: "addVotes",
+            args: [proposalId, option, amount],
+          })
+          .catch((e) => {
+            setdepositLoading(false);
+            setdepositStatus("error");
+            window.alertify.error(e?.shortMessage);
+            setTimeout(() => {
+              setdepositLoading(false);
+              setdepositStatus("initial");
+            }, 8000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setdepositLoading(false);
+            setdepositStatus("success");
+            getuserInfo();
+          }
+        }
+      }
+    }
   };
 
   const handleRemoveVote = async () => {
     // e.preventDefault();
     setwithdrawLoading(true);
-    window.web3 = new Web3(window.ethereum);
-    const governanceSc = new window.web3.eth.Contract(
-      window.GOVERNANCE_ABI,
-      window.config.governance_address
-    );
     let amount = withdrawAmount;
     amount = new BigNumber(amount).times(1e18).toFixed(0);
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      window.web3 = new Web3(window.ethereum);
+      const governanceSc = new window.web3.eth.Contract(
+        window.GOVERNANCE_ABI,
+        window.config.governance_address
+      );
 
-    const web3 = new Web3(window.ethereum);
-    const gasPrice = await window.bscWeb3.eth.getGasPrice();
-    console.log("gasPrice", gasPrice);
-    const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-    const increasedGwei = parseInt(currentGwei) + 1.3;
-    console.log("increasedGwei", increasedGwei);
+      const gasPrice = await window.bscWeb3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 1.3;
+      console.log("increasedGwei", increasedGwei);
 
-    const transactionParameters = {
-      gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-    };
-    await governanceSc.methods
-      .removeVotes(proposalId, amount)
-      .estimateGas({ from: coinbase })
-      .then((gas) => {
-        transactionParameters.gas = web3.utils.toHex(gas);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    console.log(transactionParameters);
-    await governanceSc.methods
-      .removeVotes(proposalId, amount)
-      .send({ from: coinbase, ...transactionParameters })
-      .then(() => {
+      const transactionParameters = {
+        gasPrice: window.web3.utils.toWei(increasedGwei.toString(), "gwei"),
+      };
+      await governanceSc.methods
+        .removeVotes(proposalId, amount)
+        .estimateGas({ from: coinbase })
+        .then((gas) => {
+          transactionParameters.gas = window.web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      console.log(transactionParameters);
+      await governanceSc.methods
+        .removeVotes(proposalId, amount)
+        .send({ from: coinbase, ...transactionParameters })
+        .then(() => {
+          setwithdrawLoading(false);
+          setwithdrawStatus("success");
+          getuserInfo();
+        })
+        .catch((e) => {
+          setwithdrawLoading(false);
+          setwithdrawStatus("error");
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setwithdrawLoading(false);
+            setwithdrawStatus("initial");
+            setwithdrawAmount(0);
+          }, 8000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let governanceSc = new ethers.Contract(
+        window.config.governance_address,
+        window.GOVERNANCE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse = governanceSc
+        .removeVotes(proposalId, amount)
+        .catch((e) => {
+          setwithdrawLoading(false);
+          setwithdrawStatus("error");
+          window.alertify.error(e?.message);
+          setTimeout(() => {
+            setwithdrawLoading(false);
+            setwithdrawStatus("initial");
+            setwithdrawAmount(0);
+          }, 8000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setwithdrawLoading(false);
         setwithdrawStatus("success");
         getuserInfo();
-      })
-      .catch((e) => {
-        setwithdrawLoading(false);
-        setwithdrawStatus("error");
-        window.alertify.error(e?.message);
-        setTimeout(() => {
-          setwithdrawLoading(false);
-          setwithdrawStatus("initial");
-          setwithdrawAmount(0);
-        }, 8000);
-      });
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: window.config.governance_address,
+            abi: window.GOVERNANCE_ABI,
+            functionName: "removeVotes",
+            args: [proposalId, amount],
+          })
+          .catch((e) => {
+            setwithdrawLoading(false);
+            setwithdrawStatus("error");
+            window.alertify.error(e?.shortMessage);
+            setTimeout(() => {
+              setwithdrawLoading(false);
+              setwithdrawStatus("initial");
+              setwithdrawAmount(0);
+            }, 8000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setwithdrawLoading(false);
+            setwithdrawStatus("success");
+            getuserInfo();
+          }
+        }
+      }
+    }
   };
 
   const handleClaim = async () => {
-    window.web3 = new Web3(window.ethereum);
-    const governanceSc = new window.web3.eth.Contract(
-      window.GOVERNANCE_ABI,
-      window.config.governance_address
-    );
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      const web3 = new Web3(window.ethereum);
 
-    const web3 = new Web3(window.ethereum);
-    const gasPrice = await window.bscWeb3.eth.getGasPrice();
-    console.log("gasPrice", gasPrice);
-    const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-    const increasedGwei = parseInt(currentGwei) + 1.3;
-    console.log("increasedGwei", increasedGwei);
+      const governanceSc = new web3.eth.Contract(
+        window.GOVERNANCE_ABI,
+        window.config.governance_address
+      );
+      const gasPrice = await window.bscWeb3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 1.3;
+      console.log("increasedGwei", increasedGwei);
 
-    const transactionParameters = {
-      gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-    };
-    await governanceSc.methods
-      .withdrawAllTokens()
-      .estimateGas({ from: coinbase })
-      .then((gas) => {
-        transactionParameters.gas = web3.utils.toHex(gas);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    console.log(transactionParameters);
+      const transactionParameters = {
+        gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+      };
+      await governanceSc.methods
+        .withdrawAllTokens()
+        .estimateGas({ from: coinbase })
+        .then((gas) => {
+          transactionParameters.gas = web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      console.log(transactionParameters);
 
-    await governanceSc.methods
-      .withdrawAllTokens()
-      .send({ from: coinbase, ...transactionParameters })
-      .then(() => {
-        refreshBalance();
-      })
-      .catch((e) => {
+      await governanceSc.methods
+        .withdrawAllTokens()
+        .send({ from: coinbase, ...transactionParameters })
+        .then(() => {
+          refreshBalance();
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let governanceSc = new ethers.Contract(
+        window.config.governance_address,
+        window.GOVERNANCE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse = governanceSc.withdrawAllTokens().catch((e) => {
         console.error(e);
       });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        refreshBalance();
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: window.config.governance_address,
+            abi: window.GOVERNANCE_ABI,
+            functionName: "withdrawAllTokens",
+            args: [],
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            refreshBalance();
+          }
+        }
+      }
+    }
   };
 
   useEffect(() => {
@@ -349,7 +615,12 @@ const GovernanceInner = ({
             to="/governance"
             className="d-flex align-items-center gap-2 gov-navlink"
           >
-            <img src={'https://cdn.worldofdypians.com/wod/whitearrow.svg'} alt="" style={{transform: 'rotate(180deg)'}}/> Governance
+            <img
+              src={"https://cdn.worldofdypians.com/wod/whitearrow.svg"}
+              alt=""
+              style={{ transform: "rotate(180deg)" }}
+            />{" "}
+            Governance
           </NavLink>
         </div>
         <div className="proposal-top-wrapper w-100 p-3">
@@ -613,10 +884,10 @@ const GovernanceInner = ({
                                 <>Switch to BNB Chain</>
                               ) : depositLoading ? (
                                 <div
-                                  class="spinner-border spinner-border-sm text-light"
+                                  className="spinner-border spinner-border-sm text-light"
                                   role="status"
                                 >
-                                  <span class="visually-hidden">
+                                  <span className="visually-hidden">
                                     Loading...
                                   </span>
                                 </div>
@@ -692,10 +963,10 @@ const GovernanceInner = ({
                               >
                                 {withdrawLoading ? (
                                   <div
-                                    class="spinner-border spinner-border-sm text-light"
+                                    className="spinner-border spinner-border-sm text-light"
                                     role="status"
                                   >
-                                    <span class="visually-hidden">
+                                    <span className="visually-hidden">
                                       Loading...
                                     </span>
                                   </div>

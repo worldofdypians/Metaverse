@@ -201,8 +201,8 @@ const BetaPassNFT = ({
       rewardType: "Manta",
       userEarned: mantaEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 05, 2024",
-      eventEndDate: "Apr. 05, 2025",
+      eventStartDate: "Apr 15, 2025",
+      eventEndDate: "Aug 13, 2025",
     },
     {
       id: "bnb",
@@ -218,13 +218,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "bnb-mint-bg",
       wrapperClassName: "bnb-eventwrapper",
-      treasureHuntStatus: "Expired",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$20,000 in BNB rewards",
       rewardType: "BNB",
-      userEarned: bnbEarnUSD,
+      userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 04, 2024",
-      eventEndDate: "Apr. 04, 2025",
+      eventStartDate: "Apr 09, 2025",
+      eventEndDate: "Aug 07, 2025",
     },
     {
       id: "core",
@@ -240,13 +240,13 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "core-mint-bg",
       wrapperClassName: "core-eventwrapper",
-      treasureHuntStatus: "Expired",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$20,000 in CORE rewards",
       rewardType: "CORE",
-      userEarned: coreEarnUsd,
+      userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 04, 2024",
-      eventEndDate: "Apr. 04, 2025",
+      eventStartDate: "Apr 10, 2025",
+      eventEndDate: "Aug 08, 2025",
     },
     {
       id: "multiversx",
@@ -289,8 +289,8 @@ const BetaPassNFT = ({
       rewardType: "SEI",
       userEarned: seiEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 05, 2024",
-      eventEndDate: "Apr. 05, 2025",
+      eventStartDate: "Apr 18, 2025",
+      eventEndDate: "Aug 16, 2025",
     },
     {
       id: "viction",
@@ -454,9 +454,9 @@ const BetaPassNFT = ({
       logo: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
       buttonTitle: "KuCoin",
       isComingSoon: false,
-      giveawayButton: true,
-      giveawayButtonTitle: "Mint your NFT",
-      giveawayLink: "/shop/mint/kucoin",
+      giveawayButton: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
       areaImage: undefined,
       cardClassName: "kucoin-mint-bg2",
       wrapperClassName: "kucoin-eventwrapper",
@@ -467,6 +467,28 @@ const BetaPassNFT = ({
       eventType: "Explore & Mine",
       eventStartDate: "Apr. 01, 2025",
       eventEndDate: "Jul. 30, 2025",
+    },
+    {
+      id: "vanar",
+      mainTitle: "Vanar Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Vanar. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/vanarHero.webp",
+      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+      buttonTitle: "Vanar",
+      isComingSoon: false,
+      giveawayButton: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
+      areaImage: undefined,
+      cardClassName: "vanar-mint-bg",
+      wrapperClassName: "vanar-eventwrapper",
+      treasureHuntStatus: "Coming Soon",
+      rewardsTitle: "$20,000 in VANRY rewards",
+      rewardType: "VANRY",
+      userEarned: 0,
+      eventType: "Explore & Mine",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
     },
   ];
 
@@ -1324,7 +1346,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${showVerify && "complete"
+                                  className={`col-3 li ${showVerify && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1332,7 +1354,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-3 li ${playerCreation && "complete"
+                                  className={`col-3 li ${playerCreation && "complete"
                                     } `}
                                 >
                                   <div className="status">
@@ -1340,7 +1362,7 @@ const BetaPassNFT = ({
                                   </div>
                                 </li>
                                 <li
-                                  class={`col-2 li ${linkWallet && "complete"}`}
+                                  className={`col-2 li ${linkWallet && "complete"}`}
                                   style={{ width: 0 }}
                                 >
                                   <div className="status">

@@ -40,6 +40,7 @@ window.config = {
   nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
   nft_mat_address: "0x8e4917c1ba9598fbbf66934cb17ac28c3b5849ab",
   nft_kucoin_address: "0x6dE32bb9F7bfEf596e7767F2DA9Fb62FEb91c1E2",
+  nft_vanar_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
 
 
   nft_dypius_premium_address: "0xA3e62c82410fF6697B68CABE90a8b1B6e3CEC8CD",
@@ -87,6 +88,7 @@ window.config = {
   daily_bonus_taiko_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
   daily_bonus_mat_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_sei_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
+  daily_bonus_vanar_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
 
@@ -109,7 +111,7 @@ window.config = {
   conflux_endpoint: "https://evm.confluxrpc.com/",
   base_endpoint: "https://mainnet.base.org",
   opbnb_endpoint: "https://opbnb.publicnode.com",
-  core_endpoint: "https://core.drpc.org",
+  core_endpoint: "https://1rpc.io/core",
   viction_endpoint: "https://rpc.viction.xyz",
   sei_endpoint: "https://evm-rpc.sei-apis.com",
   immutable_endpoint: "https://rpc.immutable.com",
@@ -1873,6 +1875,7 @@ class KUCOIN_NFT {
 }
 
 window.kucoin_nft = new KUCOIN_NFT();
+
 
 
 /**
@@ -3968,6 +3971,21 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
+  } else if (type === "vanar") {
+    contract = new window.vanarWeb3.eth.Contract(
+      window.SEI_NFT_ABI,
+      window.config.nft_vanar_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
   }
 }
 
@@ -3994,8 +4012,8 @@ async function myNftListContract(address) {
 }
 
 async function myNftListContractCCIP(address, nftAddress) {
-  window.web3 = new Web3(window.ethereum);
-  let nft_contract = new window.web3.eth.Contract(
+   
+  let nft_contract = new window.bscWeb3.eth.Contract(
     window.CAWS_CCIP_ABI,
     nftAddress
   );
@@ -34118,6 +34136,7 @@ async function getCoinbase() {
   if (
     window.ethereum &&
     window.WALLET_TYPE !== "binance" &&
+    window.WALLET_TYPE !== "matchId" &&
     window.WALLET_TYPE !== ""
   ) {
     if (window.WALLET_TYPE == "coin98") {

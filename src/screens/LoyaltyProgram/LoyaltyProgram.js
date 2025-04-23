@@ -233,8 +233,8 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  if(!email) {
-    return(<Auth/>)
+  if (!email) {
+    return <Auth />;
   }
 
   return (
@@ -255,27 +255,34 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                       Loyalty Program
                     </h6>
                     <p className="loyalty-banner-desc mb-0">
-                    This program rewards your interactions within World of Dypians ecosystem by offering gas fee rebates. Join us in exploring the ecosystem with lower costs and great benefits for loyal participants!
+                      This program rewards your interactions within World of
+                      Dypians ecosystem by offering gas fee rebates. Join us in
+                      exploring the ecosystem with lower costs and great
+                      benefits for loyal participants!
                     </p>
                   </div>
                   <div className="loyalty-banner-timer px-5 py-4 position-relative d-flex align-items-center justify-content-center">
-                    <img src={"https://cdn.worldofdypians.com/wod/clock.svg"} alt="" className="loyalty-clock" />
-                    <div className="d-flex flex-column align-items-center ">
-                     {!expired &&
-                      <Countdown
-                      renderer={renderer}
-                      date={loyaltyCd}
-                      onComplete={() => {
-                        setisExpired(true);
-                      }}
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/clock.svg"}
+                      alt=""
+                      className="loyalty-clock"
                     />
-                     }
-                      {expired &&
-                        <h6 className="loyalty-timer mb-0">
-                        Season two
-                      </h6>
-                      }
-                      <span className="loyalty-time-left">{expired ? "Coming soon" : "Time left"}</span>
+                    <div className="d-flex flex-column align-items-center ">
+                      {!expired && (
+                        <Countdown
+                          renderer={renderer}
+                          date={loyaltyCd}
+                          onComplete={() => {
+                            setisExpired(true);
+                          }}
+                        />
+                      )}
+                      {expired && (
+                        <h6 className="loyalty-timer mb-0">Season two</h6>
+                      )}
+                      <span className="loyalty-time-left">
+                        {expired ? "Coming soon" : "Time left"}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -290,7 +297,10 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                         </h6>
                         <div className="d-flex flex-column gap-5 h-100 justify-content-start align-items-center pt-3">
                           <p className="loyalty-desc mb-0 align-items-center  d-flex">
-                          Winners will enjoy 90 days of gas-free transactions in the World of Dypians ecosystem on every network reimbursed to cover the gas costs for one transaction per day.
+                            Winners will enjoy 90 days of gas-free transactions
+                            in the World of Dypians ecosystem on every network
+                            reimbursed to cover the gas costs for one
+                            transaction per day.
                           </p>
                           {step !== 5 && step !== 4 && expired === false && (
                             <button
@@ -348,7 +358,13 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                               {/* <h6 className="loyalty-joined m-0">
                                   You have already applied.
                                 </h6> */}
-                              <img src={"https://cdn.worldofdypians.com/wod/appliedBadge.webp"} className="w-75" alt="" />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/appliedBadge.webp"
+                                }
+                                className="w-75"
+                                alt=""
+                              />
                             </div>
                           </div>
                         </div>
@@ -363,7 +379,12 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                           Participants
                         </h6>
                         <div className="d-flex align-items-center gap-2">
-                          <img src={"https://cdn.worldofdypians.com/wod/fireIcon.svg"} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/fireIcon.svg"
+                            }
+                            alt=""
+                          />
                           <span className="participants-desc">
                             <span style={{ color: "#FCE202" }}>
                               {getFormattedNumber(totalUsers, 0)}
@@ -425,34 +446,54 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                   <div className="loyalty-benefits-grid w-100">
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
                       <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                        <img src={"https://cdn.worldofdypians.com/wod/contractIcon.svg"} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/contractIcon.svg"
+                          }
+                          alt=""
+                        />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
-                      Rewards for consistent engagement and participation
+                        Rewards for consistent engagement and participation
                       </p>
                     </div>
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
                       <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                        <img src={"https://cdn.worldofdypians.com/wod/starIcon.svg"} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/starIcon.svg"
+                          }
+                          alt=""
+                        />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
-                      Gas fee rebates for interactions with the game products
+                        Gas fee rebates for interactions with the game products
                       </p>
                     </div>
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
                       <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                        <img src={"https://cdn.worldofdypians.com/wod/coinsIcon.svg"} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/coinsIcon.svg"
+                          }
+                          alt=""
+                        />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
-                      Exclusive incentives for World of Dypians loyal users
+                        Exclusive incentives for World of Dypians loyal users
                       </p>
                     </div>
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
                       <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                        <img src={"https://cdn.worldofdypians.com/wod/moneyIcon.svg"} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/moneyIcon.svg"
+                          }
+                          alt=""
+                        />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
-                      Lower costs to explore and engage in the ecosystem
+                        Lower costs to explore and engage in the ecosystem
                       </p>
                     </div>
                   </div>
@@ -467,7 +508,11 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
         className={`popup-wrapper ${
           popup && "popup-active"
         } p-3 d-flex flex-column gap-3 justify-content-center align-items-center`}
-        style={{ borderRadius: "8px", background: "#312F69", maxWidth: '540px' }}
+        style={{
+          borderRadius: "8px",
+          background: "#312F69",
+          maxWidth: "540px",
+        }}
       >
         <div className="d-flex py-3 align-items-center justify-content-between w-100">
           <h6 className="loyalty-popup-title mb-0">Loyalty Program</h6>
@@ -481,7 +526,9 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
         {step <= 3 && (
           <>
             <p className="loyalty-popup-desc mb-0">
-            Submit your application to join the Loyalty Program, tailored specifically for all loyal users, providing tangible benefits that make participation in the ecosystem more cost-effective.
+              Submit your application to join the Loyalty Program, tailored
+              specifically for all loyal users, providing tangible benefits that
+              make participation in the ecosystem more cost-effective.
             </p>
             <div className="reimbursement-divider"></div>
           </>
@@ -497,35 +544,60 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">Metamask</span>
-              <img src={"https://cdn.worldofdypians.com/wod/metamask.png"} width={30} height={30} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/metamask.png"}
+                width={30}
+                height={30}
+                alt=""
+              />
             </div>
             <div
               className="connect-wallet-item p-3 w-100 d-flex align-items-center justify-content-between"
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">Coinbase</span>
-              <img src={"https://cdn.worldofdypians.com/wod/coinbase.png"} width={30} height={30} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/coinbase.png"}
+                width={30}
+                height={30}
+                alt=""
+              />
             </div>
             <div
               className="connect-wallet-item p-3 w-100 d-flex align-items-center justify-content-between"
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">Coin98</span>
-              <img src={"https://cdn.worldofdypians.com/wod/coin98.png"} width={30} height={30} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/coin98.png"}
+                width={30}
+                height={30}
+                alt=""
+              />
             </div>
             <div
               className="connect-wallet-item p-3 w-100 d-flex align-items-center justify-content-between"
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">Trustwallet</span>
-              <img src={"https://cdn.worldofdypians.com/wod/trustwallet.png"} width={30} height={30} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/trustwallet.png"}
+                width={30}
+                height={30}
+                alt=""
+              />
             </div>
             <div
               className="connect-wallet-item p-3 w-100 d-flex align-items-center justify-content-between"
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">SafePal</span>
-              <img src={"https://cdn.worldofdypians.com/wod/safepal.png"} width={30} height={30} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/safepal.png"}
+                width={30}
+                height={30}
+                alt=""
+              />
             </div>
           </div>
         ) : step === 3 ? (
@@ -593,10 +665,10 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
               >
                 {loading ? (
                   <div
-                    class="spinner-border spinner-border-sm text-light"
+                    className="spinner-border spinner-border-sm text-light"
                     role="status"
                   >
-                    <span class="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">Loading...</span>
                   </div>
                 ) : (
                   "Submit"
@@ -606,12 +678,17 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
           </>
         ) : step === 4 ? (
           <div className="d-flex flex-column w-100 align-items-center gap-3">
-            <img src={"https://cdn.worldofdypians.com/wod/successful.svg"} alt="" />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/successful.svg"}
+              alt=""
+            />
             <p
               className="loyalty-popup-desc"
               style={{ textAlign: "center", width: "75%" }}
             >
-              Congratulations! Your application for the Loyalty Program was successful. Please stay tuned to our official social media channels for the winners announcement.
+              Congratulations! Your application for the Loyalty Program was
+              successful. Please stay tuned to our official social media
+              channels for the winners announcement.
             </p>
             <h6 className="loyalty-popup-close" onClick={() => setPopup(false)}>
               Close

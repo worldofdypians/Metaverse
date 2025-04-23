@@ -6,6 +6,8 @@ import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
+import ChainPopup from "../Header/ChainPopup";
 
 const MobileNavbar = ({
   handleSignUp,
@@ -26,29 +28,19 @@ const MobileNavbar = ({
   email,
   username,
   isConnected,
+  network_matchain,
+  onLogout,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
-  const [tooltip, setTooltip] = useState(false);
+  const [chainState, setchainState] = useState("");
   const [unreadNotifications, setunreadNotifications] = useState(0);
-  const [ethState, setEthState] = useState(true);
-  const [bnbState, setBnbState] = useState(false);
-  const [opbnbState, setopBnbState] = useState(false);
-  const [avaxState, setAvaxState] = useState(false);
-  const [baseState, setBaseState] = useState(false);
-  const [confluxState, setConfluxState] = useState(false);
-  const [skaleState, setSkaleState] = useState(false);
-  const [coreState, setCoreState] = useState(false);
-  const [mantaState, setMantaState] = useState(false);
-  const [victionState, setVictionState] = useState(false);
-  const [seiState, setSeiState] = useState(false);
-  const [immutableState, setImmutableState] = useState(false);
-  const [taikoState, setTaikoState] = useState(false);
-  const [matState, setMatState] = useState(false);
+  const [showChainDropdown, setshowChainDropdown] = useState(false);
 
   const bgmenu = document.querySelector("#bgmenu");
   const hamburger = document.querySelector("#mobileNavbar");
   const html = document.querySelector("html");
   let id = Math.random().toString(36);
+  const { logout } = useAuth();
 
   const checkRead = () => {
     if (myOffers.length > 0) {
@@ -60,229 +52,52 @@ const MobileNavbar = ({
   const setActiveChain = () => {
     if (chainId) {
       if (chainId === 1) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(true);
-        setCoreState(false);
-        setBaseState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("eth");
       } else if (chainId === 43114) {
-        setMatState(false);
-        setAvaxState(true);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("avax");
       } else if (chainId === 8453) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(true);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("base");
       } else if (chainId === 56) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(true);
-        setEthState(false);
-        setBaseState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("bnb");
       } else if (chainId === 698) {
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
-        setMatState(true);
+        setchainState("mat");
       } else if (chainId === 204) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setopBnbState(true);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("opbnb");
       } else if (chainId === 1030) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(true);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setMantaState(false);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("conflux");
       } else if (chainId === 1482601649) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(true);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setMantaState(false);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("skale");
       } else if (chainId === 1116) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(true);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("core");
       } else if (chainId === 88) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(true);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("viciton");
       } else if (chainId === 13371) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(true);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("immutable");
       } else if (chainId === 169) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setMantaState(true);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("manta");
       } else if (chainId === 167000) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setMantaState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setTaikoState(true);
+        setchainState("taiko");
       } else if (chainId === 1329) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setMantaState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(true);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("sei");
+      } else if (chainId === 2040) {
+        setchainState("vanar");
       } else {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setBaseState(false);
-        setEthState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("");
       }
     }
+  };
+  const manageDisconnect = () => {
+    handleDisconnect();
+    setOpenNavbar(false);
   };
 
   const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
-      if (!window.gatewallet) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         await handleSwitchNetworkhook(hexChainId)
           .then(() => {
             handleSwitchNetwork(chain);
@@ -293,27 +108,25 @@ const MobileNavbar = ({
       } else if (
         window.gatewallet &&
         window.WALLET_TYPE !== "binance" &&
-        !window.ethereum?.isBinance
+        window.WALLET_TYPE !== "matchId"
       ) {
         handleSwitchChainGateWallet(chain);
-      } else if (
-        window.ethereum?.isBinance ||
-        window.WALLET_TYPE === "binance"
-      ) {
-        window.alertify.error(
-          "This network is not available on Binance Wallet"
-        );
+      } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+        network_matchain?.showChangeNetwork();
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(chain);
       }
-    } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
-      window.alertify.error("This network is not available on Binance Wallet");
+    } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(chain);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
   useEffect(() => {
     setActiveChain();
-  }, [chainId, ethState]);
+  }, [chainId]);
 
   useEffect(() => {
     checkRead();
@@ -383,72 +196,77 @@ const MobileNavbar = ({
               <DropdownButton
                 id="dropdown-basic-button"
                 className="d-flex align-items-center justify-content-center"
+                onClick={() => {
+                  setshowChainDropdown(true);
+                }}
                 title={
                   <span className="dropdown-title">
                     <img
                       src={
-                        ethState === true
+                        chainState === "eth"
                           ? "https://cdn.worldofdypians.com/wod/eth.svg"
-                          : bnbState === true
+                          : chainState === "bnb"
                           ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                          : opbnbState === true
+                          : chainState === "opbnb"
                           ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                          : avaxState === true
+                          : chainState === "avax"
                           ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
-                          : baseState === true
+                          : chainState === "base"
                           ? "https://cdn.worldofdypians.com/wod/base.svg"
-                          : confluxState === true
+                          : chainState === "conflux"
                           ? "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
-                          : skaleState === true
+                          : chainState === "skale"
                           ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
-                          : coreState === true
+                          : chainState === "core"
                           ? "https://cdn.worldofdypians.com/wod/core.svg"
-                          : victionState === true
+                          : chainState === "viction"
                           ? "https://cdn.worldofdypians.com/wod/viction.svg"
-                          : immutableState === true
+                          : chainState === "immutable"
                           ? "https://cdn.worldofdypians.com/wod/immutable.svg"
-                          : mantaState === true
+                          : chainState === "manta"
                           ? "https://cdn.worldofdypians.com/wod/manta.png"
-                          : taikoState === true
+                          : chainState === "taiko"
                           ? "https://cdn.worldofdypians.com/wod/taiko.svg"
-                          : matState === true
+                          : chainState === "mat"
                           ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
-                          : seiState === true
+                          : chainState === "sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                          : chainState === "vanar"
+                          ? "https://cdn.worldofdypians.com/wod/svg.png"
                           : "https://cdn.worldofdypians.com/wod/error.svg"
                       }
-                      height={16}
-                      width={16}
                       alt=""
+                      className="chain-logo-active"
                     />
                     <span className="change-chain-text d-none d-lg-flex">
-                      {ethState === true
+                      src=
+                      {chainState === "eth"
                         ? "Ethereum"
-                        : bnbState === true
+                        : chainState === "bnb"
                         ? "BNB Chain"
-                        : opbnbState === true
+                        : chainState === "opbnb"
                         ? "opBNB Chain"
-                        : avaxState === true
+                        : chainState === "avax"
                         ? "Avalanche"
-                        : baseState === true
+                        : chainState === "base"
                         ? "Base"
-                        : confluxState === true
+                        : chainState === "conflux"
                         ? "Conflux"
-                        : skaleState === true
+                        : chainState === "skale"
                         ? "SKALE"
-                        : coreState === true
+                        : chainState === "core"
                         ? "CORE"
-                        : victionState === true
+                        : chainState === "viction"
                         ? "Viction"
-                        : immutableState === true
+                        : chainState === "immutable"
                         ? "Immutable"
-                        : mantaState === true
+                        : chainState === "manta"
                         ? "Manta"
-                        : taikoState === true
+                        : chainState === "taiko"
                         ? "Taiko"
-                        : matState === true
+                        : chainState === "mat"
                         ? "Matchain"
-                        : seiState === true
+                        : chainState === "sei"
                         ? "Sei"
                         : "Unsupported"}
                     </span>
@@ -460,17 +278,21 @@ const MobileNavbar = ({
                   </span>
                 }
               >
-                <Dropdown.Item onClick={() => switchNetwork("0x1", 1)}>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/eth.svg"}
-                    alt=""
-                  />
-                  Ethereum
-                </Dropdown.Item>
+                {/* {window.WALLET_TYPE !== "matchId" && (
+                  <Dropdown.Item onClick={() => switchNetwork("0x1", 1)}>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/eth.svg"}
+                      alt=""
+                      className="chain-logo"
+                    />
+                    Ethereum
+                  </Dropdown.Item>
+                )}
                 <Dropdown.Item onClick={() => switchNetwork("0x38", 56)}>
                   <img
                     src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                     alt=""
+                    className="chain-logo"
                   />
                   BNB Chain
                 </Dropdown.Item>
@@ -481,67 +303,72 @@ const MobileNavbar = ({
                         src={
                           "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                         }
-                        width={20}
-                        height={20}
                         alt=""
+                        className="chain-logo"
                       />
                       Matchain
                     </Dropdown.Item>
                   )}
-                {window.WALLET_TYPE !== "binance" &&
+                {window.WALLET_TYPE !== "matchId" &&
+                  window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item onClick={() => switchNetwork("0x531", 1329)}>
                       <img
                         src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
-                        width={20}
-                        height={20}
                         alt=""
+                        className="chain-logo"
                       />
                       SEI
                     </Dropdown.Item>
                   )}
-                <Dropdown.Item onClick={() => switchNetwork("0xa9", 169)}>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/manta.png"}
-                    alt=""
-                  />
-                  Manta
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => switchNetwork("0xcc", 204)}>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
-                    alt=""
-                  />
-                  opBNB Chain
-                </Dropdown.Item>
-                {window.WALLET_TYPE !== "binance" &&
+                {window.WALLET_TYPE !== "matchId" && (
+                  <Dropdown.Item onClick={() => switchNetwork("0xa9", 169)}>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/manta.png"}
+                      alt=""
+                    />
+                    Manta
+                  </Dropdown.Item>
+                )}
+                {window.WALLET_TYPE !== "matchId" && (
+                  <Dropdown.Item onClick={() => switchNetwork("0xcc", 204)}>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                      alt=""
+                      className="chain-logo"
+                    />
+                    opBNB Chain
+                  </Dropdown.Item>
+                )}
+                {window.WALLET_TYPE !== "matchId" &&
+                  window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item
                       onClick={() => switchNetwork("0x28c58", 167000)}
                     >
                       <img
                         src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
-                        width={20}
-                        height={20}
+                        className="chain-logo"
                         alt=""
                       />
                       Taiko
                     </Dropdown.Item>
                   )}
 
-                {window.WALLET_TYPE !== "binance" &&
+                {window.WALLET_TYPE !== "matchId" &&
+                  window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
                       <img
                         src={"https://cdn.worldofdypians.com/wod/core.svg"}
-                        width={20}
-                        height={20}
+                        className="chain-logo"
                         alt=""
                       />
                       CORE
                     </Dropdown.Item>
                   )}
-                {window.WALLET_TYPE !== "binance" &&
+                {window.WALLET_TYPE !== "matchId" &&
+                  window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item
                       onClick={() => switchNetwork("0x585eb4b1", 1482601649)}
@@ -549,62 +376,68 @@ const MobileNavbar = ({
                       <img
                         src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
                         alt=""
+                        className="chain-logo"
                       />
                       SKALE
                     </Dropdown.Item>
                   )}
-                <Dropdown.Item onClick={() => switchNetwork("0x406", 1030)}>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/confluxIcon.svg"}
-                    alt=""
-                  />
-                  Conflux
-                </Dropdown.Item>
-                {window.WALLET_TYPE !== "binance" &&
+                {window.WALLET_TYPE !== "matchId" && (
+                  <Dropdown.Item onClick={() => switchNetwork("0x406", 1030)}>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/confluxIcon.svg"}
+                      alt=""
+                      className="chain-logo"
+                    />
+                    Conflux
+                  </Dropdown.Item>
+                )}
+                {window.WALLET_TYPE !== "matchId" &&
+                  window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item
                       onClick={() => switchNetwork("0x343b", 13371)}
                     >
                       <img
                         src={"https://cdn.worldofdypians.com/wod/immutable.svg"}
-                        width={20}
-                        height={20}
+                        className="chain-logo"
                         alt=""
                       />
                       Immutable
                     </Dropdown.Item>
                   )}
-                <Dropdown.Item onClick={() => switchNetwork("0x2105", 8453)}>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/base.svg"}
-                    alt=""
-                  />
-                  Base
-                </Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => handleSeiPool()}>
-                    <img src={sei} width={20} height={20} alt="" />
-                    Sei
-                  </Dropdown.Item>*/}
-                {window.WALLET_TYPE !== "binance" &&
+                {window.WALLET_TYPE !== "matchId" && (
+                  <Dropdown.Item onClick={() => switchNetwork("0x2105", 8453)}>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/base.svg"}
+                      alt=""
+                      className="chain-logo"
+                    />
+                    Base
+                  </Dropdown.Item>
+                )}
+                
+                {window.WALLET_TYPE !== "matchId" &&
+                  window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
                       <img
                         src={"https://cdn.worldofdypians.com/wod/viction.svg"}
-                        width={20}
-                        height={20}
+                        className="chain-logo"
                         alt=""
                       />
                       Viction
                     </Dropdown.Item>
                   )}
-
-                <Dropdown.Item onClick={() => switchNetwork("0xa86a", 43114)}>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/avaxIcon.svg"}
-                    alt=""
-                  />
-                  Avalanche
-                </Dropdown.Item>
+                {window.WALLET_TYPE !== "matchId" && (
+                  <Dropdown.Item onClick={() => switchNetwork("0xa86a", 43114)}>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/avaxIcon.svg"}
+                      alt=""
+                      className="chain-logo"
+                    />
+                    Avalanche
+                  </Dropdown.Item>
+                )} */}
               </DropdownButton>
             </>
           )}
@@ -704,29 +537,48 @@ const MobileNavbar = ({
                         Log In
                       </NavLink>
                     ) : (
-                      <NavLink
-                        to="/account"
-                        end
-                        className={({ isActive }) =>
-                          "d-flex px-2 py-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                        }
-                        onClick={() => setOpenNavbar(false)}
-                      >
-                        <span className="header-wallet-span d-flex align-items-center gap-2">
+                      <div className="d-flex align-items-center gap-2">
+                        <NavLink
+                          to="/account"
+                          end
+                          className={({ isActive }) =>
+                            "d-flex px-2 py-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          }
+                          onClick={() => setOpenNavbar(false)}
+                        >
+                          <span className="header-wallet-span d-flex align-items-center gap-2">
+                            <img
+                              width={20}
+                              height={20}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/walletIcon.svg"
+                              }
+                              alt=""
+                            />
+                            {username}
+                            <span className="header-wallet">
+                              {shortAddress(coinbase)}
+                            </span>
+                          </span>
+                        </NavLink>
+                        <button
+                          className="sign-out-btn w-50 py-1 d-flex align-items-center gap-2 justify-content-start"
+                          onClick={() => {
+                            logout();
+                            onLogout();
+                            setOpenNavbar(false);
+                          }}
+                        >
                           <img
-                            width={20}
-                            height={20}
                             src={
-                              "https://cdn.worldofdypians.com/wod/walletIcon.svg"
+                              "https://cdn.worldofdypians.com/wod/logout.svg"
                             }
                             alt=""
-                          />
-                          {username}
-                          <span className="header-wallet">
-                            {shortAddress(coinbase)}
-                          </span>
-                        </span>
-                      </NavLink>
+                            className="logout-icon"
+                          />{" "}
+                          Log Out
+                        </button>
+                      </div>
                     )}
 
                     {!email && (
@@ -796,7 +648,6 @@ const MobileNavbar = ({
 
                       <span className={`sidebar-title`}>Prime</span>
                     </NavLink>
-                    
 
                     <NavLink
                       to="/join-beta"
@@ -1263,8 +1114,6 @@ const MobileNavbar = ({
             </div>
           </div>
 
-        
-
           <div className="w-100 d-flex align-items-center justify-content-center gap-3">
             <div className="w-100">
               <button
@@ -1277,7 +1126,21 @@ const MobileNavbar = ({
                 {!coinbase ? "Connect Wallet" : shortAddress(coinbase)}
               </button>{" "}
             </div>
-
+            {isConnected && (
+              <button
+                className="sign-out-btn p-2  d-flex align-items-center gap-2 justify-content-start"
+                onClick={() => {
+                  manageDisconnect();
+                }}
+              >
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/logout.svg"}
+                  alt=""
+                  className="logout-icon"
+                />
+                DISCONNECT
+              </button>
+            )}
             {/* 
             {!coinbase ? (
               <NavLink
@@ -1309,6 +1172,26 @@ const MobileNavbar = ({
           </div>
         </div>
       </OutsideClickHandler>
+      {showChainDropdown && (
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            setshowChainDropdown(false);
+          }}
+        >
+          <ChainPopup
+            onClose={() => {
+              setshowChainDropdown(false);
+            }}
+            onDisconnect={manageDisconnect}
+            onSwitchNetwork={(hexchain, chain) => {
+              switchNetwork(hexchain, chain);
+            }}
+            activeChain={chainState}
+            isMobile={true}
+            isPremium={false}
+          />
+        </OutsideClickHandler>
+      )}
     </>
   );
 };

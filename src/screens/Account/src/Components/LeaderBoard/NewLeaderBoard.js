@@ -169,7 +169,7 @@ const NewLeaderBoard = ({
     allSkaleData,
     allTaikoData,
     allVictionData,
-    allVanarData
+    allVanarData,
   ]);
 
   // useEffect(() => {
@@ -564,12 +564,13 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "vanar"
-                              ? "https://cdn.worldofdypians.com/wod/vanar.png"
+                              ? "https://cdn.worldofdypians.com/wod/vanar.svg"
                               : optionText2 !== "vanar" &&
                                 hoverState === "vanar"
-                              ? "https://cdn.worldofdypians.com/wod/vanar.png"
-                              : "https://cdn.worldofdypians.com/wod/vanar.png"
-                          }vanar
+                              ? "https://cdn.worldofdypians.com/wod/vanarWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/vanarInactive.svg"
+                          }
+                          vanar
                           className={`${
                             optionText2 === "vanar"
                               ? "leaderboard-icon leaderboard-icon-active"
@@ -723,12 +724,18 @@ const NewLeaderBoard = ({
                 </div>
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
-                    {allData[0]?.loading === false ? (
+                    {optionText2 === "vanar" ? (
+                      <div className="coming-soon-position d-flex align-items-center justify-content-center">
+                        <h6 className="mb-0">Coming Soon</h6>
+                      </div>
+                    ) : allData[0]?.loading === false ? (
                       <></>
-                    ) : (
+                    ) : allData[0]?.loading === true ? (
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <CircularProgress size={20} />
                       </div>
+                    ) : (
+                      <></>
                     )}
                     {/* <img
                       src={leftArrow}
@@ -756,7 +763,9 @@ const NewLeaderBoard = ({
                           <div
                             key={index}
                             className={`${
-                              leaderboard.loading === true && "comingsoon-new"
+                              (leaderboard.loading === true ||
+                                optionText2 === "vanar") &&
+                              "comingsoon-new"
                             } leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
                             {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
