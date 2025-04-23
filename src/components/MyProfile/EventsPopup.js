@@ -124,6 +124,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                     ? "https://cdn.worldofdypians.com/wod/midleThumb.webp"
                     : dummyEvent.popupInfo.linkState === "kucoin"
                     ? "https://cdn.worldofdypians.com/wod/kucoinThumb.png"
+                    : dummyEvent.popupInfo.linkState === "vanar"
+                    ? "https://cdn.worldofdypians.com/wod/vanarThumb.webp"
                     : "https://cdn.worldofdypians.com/wod/eventPopupImage.png"
                 }
                 alt=""
@@ -227,13 +229,13 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
               ) : dummyEvent.popupInfo.id === "event2" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
-                  <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
-                  Beta Pass NFT from the World of Dypians Shop. By engaging in
-                  the game on a daily basis and exploring the Coin98 area,
-                  players not only stand a chance to secure daily rewards in
-                  C98, but also earn points for their placement on the global
+                  <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the Vanar area, players
+                  not only stand a chance to secure daily rewards in VANRY, but
+                  also earn points for their placement on the global
                   leaderboard. Remember to log in to the game daily and venture
-                  into the Coin98 area to uncover hidden treasures.
+                  into the Vanar area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event20" ? (
                 <p className="popup-event-desc">
@@ -548,11 +550,9 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             className="popup-event-desc"
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
-            Coin98 Labs is an Open Infrastructure Financial Services builder
-            focusing on creating and developing an ecosystem of DeFi protocols,
-            applications, NFTs on multiple blockchains. Their mission is to
-            fulfill untapped demand and enhance in-demand utilities in the DeFi
-            space, helping people to access DeFi services effortlessly.
+            Vanar offers a suite of solutions for brands built on years of
+            experience. From new engagement experiences to AI-driven IP
+            tracking.
           </p>
         ) : dummyEvent.popupInfo.id === "event20" ? (
           <p
@@ -833,6 +833,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://x.com/chainlink"
                 : dummyEvent.popupInfo.id === "event29"
                 ? "https://x.com/KuCoinCom"
+                : dummyEvent.popupInfo.id === "event2"
+                ? "https://x.com/vanarchain"
                 : "https://twitter.com/buildonbase"
             }
             target="_blank"
@@ -893,6 +895,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://t.me/chainlinkofficial"
                 : dummyEvent.popupInfo.id === "event29"
                 ? "https://t.me/Kucoin_Exchange"
+                : dummyEvent.popupInfo.id === "event2"
+                ? "https://t.me/vanarofficial"
                 : "https://base.org/discord"
             }
             target="_blank"
@@ -962,6 +966,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://chain.link/"
                 : dummyEvent.popupInfo.id === "event29"
                 ? "https://www.kucoin.com/"
+                : dummyEvent.popupInfo.id === "event2"
+                ? "https://vanarchain.com/"
                 : "https://base.org/"
             }
             target="_blank"
@@ -989,7 +995,12 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
           <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
             <div className="d-flex flex-column gap-2">
               <h6 className="mb-0 event-earnings-coin2">
-                {getFormattedNumber(dummyEvent.popupInfo?.status === "Coming Soon" ? 0 : dummyEvent.userEarnPoints, 0)}
+                {getFormattedNumber(
+                  dummyEvent.popupInfo?.status === "Coming Soon"
+                    ? 0
+                    : dummyEvent.userEarnPoints,
+                  0
+                )}
                 {dummyEvent.popupInfo.id === "event5" && " DYP"}
               </h6>
 
@@ -1006,11 +1017,22 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   left: dummyEvent.popupInfo.id === "event5" && "0px",
                 }}
               >
-                ${getFormattedNumber(dummyEvent.popupInfo?.status === "Coming Soon" ? 0 : dummyEvent.userEarnUsd, 2)}
+                $
+                {getFormattedNumber(
+                  dummyEvent.popupInfo?.status === "Coming Soon"
+                    ? 0
+                    : dummyEvent.userEarnUsd,
+                  2
+                )}
                 <span className="ethpricerewards specialstyle-wrapper-eth">
                   {dummyEvent.popupInfo.id !== "event5" && (
                     <>
-                      {getFormattedNumber(dummyEvent.popupInfo?.status === "Coming Soon" ? 0 : dummyEvent.userEarnCrypto, 2)}
+                      {getFormattedNumber(
+                        dummyEvent.popupInfo?.status === "Coming Soon"
+                          ? 0
+                          : dummyEvent.userEarnCrypto,
+                        2
+                      )}
                       {dummyEvent.popupInfo.rewards}
                     </>
                   )}

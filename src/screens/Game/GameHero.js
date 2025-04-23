@@ -5,8 +5,9 @@ import Slider from "react-slick";
 import BetaEventCardHome from "../Marketplace/components/BetaEventCardHome";
 import LandPopup from "../../components/PackagePopups/LandPopup";
 import CawsPopup from "../../components/PackagePopups/CawsPopup";
-import { useNavigate } from "react-router-dom";
-
+import { NavLink, useNavigate } from "react-router-dom";
+import BnbAIPopup from "../../components/PackagePopups/BnbAIPopup";
+import MuseumAIPopup from "../../components/PackagePopups/MuseumAIPopup";
 
 const GameHero = ({ showPopup, setShowPopup }) => {
   const [activeSlide, setActiveSlide] = useState();
@@ -94,12 +95,12 @@ const GameHero = ({ showPopup, setShowPopup }) => {
       desc: "Own and develop virtual areas",
       class: "landClass",
     },
-    {
-      state: "caws",
-      title: "CAWS",
-      desc: "AI-driven digital companions",
-      class: "cawsClass",
-    },
+    // {
+    //   state: "caws",
+    //   title: "CAWS",
+    //   desc: "AI-driven digital companions",
+    //   class: "cawsClass",
+    // },
   ];
   const html = document.querySelector("html");
 
@@ -111,14 +112,11 @@ const GameHero = ({ showPopup, setShowPopup }) => {
     }
   }, [showPopup]);
 
-
-
   useEffect(() => {
     if (window.location.hash === "#land") {
-      setShowPopup("land")
+      setShowPopup("land");
     }
   }, []);
-
 
   return (
     <>
@@ -127,7 +125,7 @@ const GameHero = ({ showPopup, setShowPopup }) => {
         style={{ borderBottom: "none" }}
       >
         <div className="custom-container  mt-5 mt-lg-0">
-          <div className="d-flex w-100 flex-column align-items-center gap-2 px-3 px-lg-0 position-relative game-hero-content-wrapper"  >
+          <div className="d-flex w-100 flex-column align-items-center gap-2 px-3 px-lg-0 position-relative game-hero-content-wrapper">
             <h2 className="font-montserrat main-hero-title text-center  px-0">
               {/* What is <br />
               World of Dypians? */}
@@ -149,7 +147,11 @@ const GameHero = ({ showPopup, setShowPopup }) => {
               target="_blank"
             >
               <img
-                src={hoverState ? "https://cdn.worldofdypians.com/wod/epicwhite.svg" : "https://cdn.worldofdypians.com/wod/epicblack.svg"}
+                src={
+                  hoverState
+                    ? "https://cdn.worldofdypians.com/wod/epicwhite.svg"
+                    : "https://cdn.worldofdypians.com/wod/epicblack.svg"
+                }
                 alt="icon"
                 className="epicgame2"
               />
@@ -171,14 +173,73 @@ const GameHero = ({ showPopup, setShowPopup }) => {
                   <BetaEventCardHome data={item} isFrontPage={true} />
                 </div>
               ))}
+              <div
+                className={`aiClass event-card justify-content-end flex-column d-flex align-items-center position-relative`}
+                // onClick={onOpenPopup}
+                style={{
+                  cursor: "pointer",
+                  // aspectRatio: addRatio === false ? "" : "1.8/1",
+                }}
+              >
+                <div className="ai-grid">
+                <div className="ai-tab-wrapper" onClick={() => setShowPopup("bnbAi")}>
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/bnbAi.png"
+                      alt=""
+                    />
+                  </div>
+                  
+                  
+                  <NavLink to={"/ai-agent"} className="ai-tab-wrapper">
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/orynAi.png"
+                      alt=""
+                    />
+                  </NavLink>
+                  <div className="ai-tab-wrapper" onClick={() => setShowPopup("museumAi")}>
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/museumAi.png"
+                      alt=""
+                    />
+                  </div>
+                  <div className="ai-tab-wrapper" onClick={() => setShowPopup("caws")}>
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/cawsAi.png"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="d-flex align-items-center justify-content-between p-3 w-100 bottom-dark-wrapper bottom-dark-wrapper-position">
+                  <div className="d-flex flex-column">
+                    <h6 className="events-page-title-home mb-0">AI</h6>
+                    <h6 className="events-page-desc-home mb-0">
+                      AI-Driven Gameplay
+                    </h6>
+                  </div>
+                </div>
+              </div>
             </Slider>
           </div>
           {/* )} */}
         </div>
       </div>
-    
+
       {showPopup === "land" && (
         <LandPopup
+          onClosePopup={() => {
+            setShowPopup("");
+          }}
+        />
+      )}
+      {showPopup === "bnbAi" && (
+        <BnbAIPopup
+          onClosePopup={() => {
+            setShowPopup("");
+          }}
+        />
+      )}
+      {showPopup === "museumAi" && (
+        <MuseumAIPopup
           onClosePopup={() => {
             setShowPopup("");
           }}

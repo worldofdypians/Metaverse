@@ -308,7 +308,7 @@
   }
   @media screen and (max-width: 786px) {
     width: 100%;
-    top: -20px;
+    top: -23px;
     right: 0px;
     justify-content: center;
   }
@@ -342,8 +342,8 @@
   cursor: pointer;
   width: 33%;
   transition: all 0.25s;
-  @media screen and (max-width: 786px) {
-    width: 22%;
+  @media screen and (max-width: 991px) {
+    width: 100px;
   }
   @media screen and (max-width: 500px) {
     width: 26%;
@@ -597,16 +597,16 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 30px 20px;
   @media screen and (max-width: 1400px) {
-    grid-template-columns: repeat(8, 1fr);
-    gap: 26px 15px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 20px;
   }
   @media screen and (max-width: 1199px) {
     grid-template-columns: repeat(8, 1fr);
-    gap: 26px 0px;
+    gap: 26px 10px;
   }
   @media screen and (max-width: 500px) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 26px 0px;
+    gap: 26px 10px;
   }
 }
 
@@ -756,6 +756,13 @@
   height: 106px;
   width: 82px;
 }
+
+@media (min-width: 1610px) {
+  .custom-flex-lg {
+    flex-direction: row !important;
+  }
+}
+
 
 .stoneEyeBannerItem {
   border-radius: 10px;

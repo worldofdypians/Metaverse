@@ -862,7 +862,6 @@ const Marketplace = ({
     cutLength();
   }, [windowSize.width]);
 
-
   return (
     <div
       className="container-fluid mt-lg-5 pt-lg-5 d-flex flex-column-reverse flex-lg-row justify-content-center justify-content-lg-end p-0"
@@ -1552,7 +1551,7 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                  <div className="d-flex flex-column gap-2 w-100 h-100">
+                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1600,8 +1599,8 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div>
-                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
+                  </div>  */}
+                  <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1637,6 +1636,40 @@ const Marketplace = ({
                       </span>
                     </NavLink>
                   </div>
+                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
+                    <NavLink
+                      to={"/shop/mint/vanar"}
+                      className="w-100 m-0 d-flex flex-column gap-5 h-100"
+                    >
+                      <div className="p-4 mint-wrappernew market-mint-vanar w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-100">
+                        <div className="d-flex align-items-center justify-content-center homepage-nft-mint-tag px-3 py-1">
+                          <span>NFT Minting</span>
+                        </div>
+                        <div className="d-flex flex-column gap-2 mb-3">
+                          <h6 className="newminttitlehome m-0 position-relative">
+                            Vanar
+                          </h6>
+                          <h6 className="newminttitlehome m-0 position-relative">
+                            Beta Pass
+                          </h6>
+                        </div>
+                      </div>
+                    </NavLink>
+                    <NavLink to="/shop/mint/vanar">
+                      <span
+                        className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
+                        style={{ width: "fit-content" }}
+                      >
+                        Mint now{" "}
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/greenArrowMarket.svg"
+                          }
+                          alt=""
+                        />{" "}
+                      </span>
+                    </NavLink>
+                  </div> */}
                   <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/opbnbchain"}
@@ -1655,7 +1688,6 @@ const Marketplace = ({
                             Beta Pass
                           </h6>
                         </div>
-                       
                       </div>
                     </NavLink>
                     <NavLink to="/shop/mint/opbnbchain">
@@ -1672,7 +1704,7 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div> */}
+                  </div>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
