@@ -13,7 +13,7 @@ const Campaigns = ({ coinbase }) => {
     {
       title: "World of Dypians x Binance Wallet Campaign!",
       status: "Live",
-      start_date: "Apr 23, 2025",
+      start_date: "Apr 24, 2025",
       end_date: "Apr 27, 2025",
       image: "https://cdn.worldofdypians.com/wod/binance-campagin-v2.webp",
       desc: `Our second $50,000 $WOD Airdrop Campaign with Binance Wallet is officially live! <br/>
