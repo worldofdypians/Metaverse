@@ -4631,29 +4631,35 @@ function App() {
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
       eventStatus: "Coming Soon",
       totalRewards: "$20,000 in VANRY Rewards",
-      myEarnings: 0,
+      location: [-0.06784377896887378, 0.0839531421661377],
+      myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Coming Soon",
+      type: "Treasure Hunt",
+      rewardType: "VANRY",
+      rewardAmount: "$20,000",
+      infoType: "Treasure Hunt",
       backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+      image: "vanarArea.webp",
       userEarnUsd: 0,
       userEarnCrypto: 0,
       userEarnPoints: 0,
       popupInfo: {
-        eventType: "Explore & Mine",
         title: "Vanar",
         chain: "Vanar Network",
         linkState: "vanar",
         rewards: "VANRY",
         status: "Coming Soon",
         id: "event2",
+        eventType: "Explore & Mine",
         totalRewards: "$20,000 in VANRY Rewards",
         eventDuration: confluxLastDay,
-        eventDate: "Coming Soon",
-        minRewards: "1",
+        minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
-        maxPoints: "20,000",
+        maxPoints: "50,000",
         learnMore: "",
+        eventDate: "Coming Soon",
       },
     },
   ];
@@ -6762,12 +6768,16 @@ function App() {
               />
             }
           />
-          <Route exact path="/campaigns" element={<Campaigns
-          coinbase={coinbase}
-          />} />
-          <Route exact path="/trading-competition" element={<TradingComp
-          coinbase={coinbase}
-          />} />
+          <Route
+            exact
+            path="/campaigns"
+            element={<Campaigns coinbase={coinbase} />}
+          />
+          <Route
+            exact
+            path="/trading-competition"
+            element={<TradingComp coinbase={coinbase} />}
+          />
           <Route
             exact
             path="/governance/proposal/:proposalId"
