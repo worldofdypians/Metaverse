@@ -1480,7 +1480,7 @@ const chainAreas = [
 
     icon: "https://cdn.worldofdypians.com/wod/vanar.png",
     location: [-0.06784377896887378, 0.0839531421661377],
-    banner: "seiBanner.png",
+    banner: "vanarArea.webp",
     area: [
       [
         [-0.06776331275477364, 0.08392632007598878],
@@ -1490,17 +1490,17 @@ const chainAreas = [
       ],
     ],
     events: [
-      {
-        title: "Daily Bonus",
-        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
-        link: "/account#dailybonus",
-      },
+      // {
+      //   title: "Daily Bonus",
+      //   image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+      //   link: "/account#dailybonus",
+      // },
 
-      {
-        title: "Leaderboard",
-        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
-        link: "/account#leaderboard",
-      },
+      // {
+      //   title: "Leaderboard",
+      //   image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+      //   link: "/account#leaderboard",
+      // },
       // {
       //   title: "Treasure Hunt",
       //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
