@@ -80,6 +80,7 @@ const Map = ({ dummyBetaPassData2 }) => {
     bear: false,
     challenges: false,
     chains: false,
+    museum: false,
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [markerType, setMarkerType] = useState(null);
@@ -108,6 +109,43 @@ const Map = ({ dummyBetaPassData2 }) => {
   const memoizedDeerAreas = useMemo(() => deerAreas, [deerAreas]);
   const memoizedFirstParcel = useMemo(() => firstParcel, [firstParcel]);
   const memoizedSecondParcel = useMemo(() => secondParcel, [secondParcel]);
+
+  const museumLocation = {
+    title: "Cryptiroum",
+    special: true,
+    type: "museum",
+    location: [-0.06801544022518818, 0.08683919906616212],
+    marker: "museumMarker",
+    image: "https://cdn.worldofdypians.com/wod/museumMap.webp",
+    link: "/shop/land",
+    city: "Dypians",
+    size: "500x500",
+    rewards: "N/A",
+    area: [
+      [
+        [-0.06759701591186747, 0.0870591402053833],
+        [-0.06775258392621424, 0.08641004562377931],
+        [-0.06839094922121794, 0.08656561374664307],
+        [-0.06824074562316736, 0.08723616600036622],
+      ],
+    ],
+    popupDesc:
+      "The AI Museum & Academy is a next-generation educational hub built inside World of Dypians. With interactive elements and AI-driven guidance, it helps players understand everything from basic crypto concepts to advanced blockchain ecosystems.",
+    benefits: [
+      "A visual walkthrough of Web3 history and evolution",
+      "Interactive lessons on crypto, wallets, NFTs, and DeFi",
+      "Guided educational paths powered by AI",
+      "AI-powered NPCs that explain, engage, and answer questions in real time",
+      "A hands-on learning experience for both new and seasoned players",
+    ],
+    landInfo: [
+      "Learn complex topics through storytelling and interaction",
+      "Get real-time help from AI-driven characters",
+      "Guided educational paths powered by AI",
+      "Makes onboarding to Web3 simple, engaging, and rewarding",
+      "Combines education and gameplay in a fully gamified format",
+    ],
+  };
 
   const allChallenges = challenges.filter((item) =>
     item.hasOwnProperty("location")
@@ -164,6 +202,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               item={item}
               handleMarkerClick={handleMarkerClick}
               setActiveMarker={setActiveMarker}
+              type={"chain"}
             />
             <CustomMarker
               item={item}
@@ -189,6 +228,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               item={item}
               handleMarkerClick={handleMarkerClick}
               setActiveMarker={setActiveMarker}
+              type={"chain"}
             />
             <CustomMarker
               item={item}
@@ -215,6 +255,13 @@ const Map = ({ dummyBetaPassData2 }) => {
           setInfo={areaContent}
           activeMarker={activeMarker}
           setActiveMarker={setActiveMarker}
+          museumLocation={museumLocation}
+          onClose={() => {
+            setSelectedMarker(null);
+            setMarkerType(null);
+            setActiveMarker(null);
+            setShow(false);
+          }}
         />
       </Suspense>
       <MapContainer
@@ -232,7 +279,7 @@ const Map = ({ dummyBetaPassData2 }) => {
         ]}
         style={{ height: "100vh", width: "100%" }}
       >
-        {/* <TileLayer url="/customTiles/{z}/{x}/{y}.webp" noWrap={true} /> */}
+        {/* <TileLayer url="/dummyTiles/{z}/{x}/{y}.webp" noWrap={true} /> */}
         <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.webp" />
 
         {switches.chains && (
@@ -319,6 +366,25 @@ const Map = ({ dummyBetaPassData2 }) => {
               setActiveMarker={setActiveMarker}
             />
           ))}
+        {switches.museum && (
+          <React.Fragment >
+            <ChainPolygon
+              item={museumLocation}
+              handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+              type={"museum"}
+            />
+            <CustomMarker
+              key={museumLocation.title}
+              icon={markers.museumMarker}
+              item={museumLocation}
+              type={museumLocation.type}
+              showMarker={true}
+              handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+            />
+          </React.Fragment>
+        )}
         {switches.teleports &&
           memoizedTeleports.map((item) => (
             <CustomMarker

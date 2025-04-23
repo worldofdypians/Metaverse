@@ -5391,6 +5391,7 @@ function App() {
           !location.pathname.includes("staking") &&
           !location.pathname.includes("trading-competition") &&
           !location.pathname.includes("auth") &&
+          !location.pathname.includes("map") &&
           !location.pathname.includes("player") &&
           !location.pathname.includes("ResetPassword") &&
           !location.pathname.includes("forgotPassword") &&

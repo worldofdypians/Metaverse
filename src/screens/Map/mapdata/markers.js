@@ -6,6 +6,12 @@ import "../_map.scss";
 // Consolidated icon data array
 const iconData = [
   {
+    name: "museumMarker",
+    url: "https://cdn.worldofdypians.com/wod/museumIcon.svg",
+    size: 32,
+    chain: false,
+  },
+  {
     name: "bearMarker",
     url: "https://cdn.worldofdypians.com/wod/bearIcon.svg",
     size: 32,
