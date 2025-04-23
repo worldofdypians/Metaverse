@@ -80,6 +80,7 @@ const NewLeaderBoard = ({
   dailyplayerData,
   genesisData,
   allBnbData,
+  allVanarData,
   allCoreData,
   allSkaleData,
   allVictionData,
@@ -148,6 +149,9 @@ const NewLeaderBoard = ({
     if (allTaikoData && allTaikoData.length > 0 && optionText2 === "taiko") {
       setAllData(allTaikoData);
     }
+    if (allVanarData && allVanarData.length > 0 && optionText2 === "vanar") {
+      setAllData(allVanarData);
+    }
     if (
       allVictionData &&
       allVictionData.length > 0 &&
@@ -165,6 +169,7 @@ const NewLeaderBoard = ({
     allSkaleData,
     allTaikoData,
     allVictionData,
+    allVanarData,
   ]);
 
   // useEffect(() => {
@@ -542,6 +547,45 @@ const NewLeaderBoard = ({
                           ? "SKALE"
                           : ""}
                       </button>
+                      <button
+                        onMouseEnter={() => handleMouseEnter("vanar")}
+                        onMouseLeave={handleMouseLeave}
+                        className={` 
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "vanar" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("vanar");
+                          setAllData(allVanarData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "vanar"
+                              ? "https://cdn.worldofdypians.com/wod/vanar.svg"
+                              : optionText2 !== "vanar" &&
+                                hoverState === "vanar"
+                              ? "https://cdn.worldofdypians.com/wod/vanarWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/vanarInactive.svg"
+                          }
+                          vanar
+                          className={`${
+                            optionText2 === "vanar"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Vanar"
+                          : windowSize.width < 786 && optionText2 === "vanar"
+                          ? "Vanar"
+                          : ""}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -680,12 +724,18 @@ const NewLeaderBoard = ({
                 </div>
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
-                    {allData[0]?.loading === false ? (
+                    {optionText2 === "vanar" ? (
+                      <div className="coming-soon-position d-flex align-items-center justify-content-center">
+                        <h6 className="mb-0">Coming Soon</h6>
+                      </div>
+                    ) : allData[0]?.loading === false ? (
                       <></>
-                    ) : (
+                    ) : allData[0]?.loading === true ? (
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <CircularProgress size={20} />
                       </div>
+                    ) : (
+                      <></>
                     )}
                     {/* <img
                       src={leftArrow}
@@ -713,7 +763,9 @@ const NewLeaderBoard = ({
                           <div
                             key={index}
                             className={`${
-                              leaderboard.loading === true && "comingsoon-new"
+                              (leaderboard.loading === true ||
+                                optionText2 === "vanar") &&
+                              "comingsoon-new"
                             } leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
                             {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">

@@ -501,7 +501,7 @@
   span {
     color: #828fbb;
     font-family: "Montserrat";
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 600;
     line-height: 24px; /* 240% */
@@ -642,8 +642,10 @@
 }
 
 .green-dot {
-  width: 6px;
-  height: 6px;
+  min-width: 6px;
+  min-height: 6px;
+  max-width: 6px;
+  max-height: 6px;
   border-radius: 50%;
   background: #00c6c3;
 }
@@ -823,4 +825,9 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+}
+.museum-marker-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 5px;
 }

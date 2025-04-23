@@ -285,6 +285,10 @@ const WodPartners = ({ full }) => {
       name: "Gaimin",
       icon: "gaimin.svg",
     },
+    {
+      name: "Vanar",
+      icon: "vanar.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);

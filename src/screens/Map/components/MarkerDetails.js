@@ -664,7 +664,85 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
               </NavLink>
             </div>
           </div>
-        ) : (
+        ) :
+        type === "museum" ? (
+          <div className="d-flex flex-column justify-content-between h-100">
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex flex-column">
+                <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
+                  <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
+                  <a
+                    href="javascript:void(0)"
+                    className="closebtn-3"
+                    onClick={onClose}
+                  >
+                    ×
+                  </a>
+                </div>
+                <img
+                  src={marker.image}
+                  className="mx-3 my-3"
+                  alt={marker.title}
+                />
+              </div>
+              <div className="d-flex flex-column gap-3 px-3">
+                <p className="custom-marker-content mb-0">{marker.popupDesc}</p>
+                {/* <div className="chain-marker-info-wrapper chain-marker-info-grid-2 p-2">
+                    <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
+                      <h6 className="mb-0">{marker?.city}</h6>
+                      <span>City</span>
+                    </div>
+
+                    <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
+                      <h6 className="mb-0">{marker?.size}</h6>
+                      <span>Size</span>
+                    </div>
+                    <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
+                      <h6 className="mb-0">{marker?.rewards}</h6>
+                      <span>Rewards</span>
+                    </div>
+                  </div> */}
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="mb-0 challenge-popup-secondary-title">
+                  What You'll Discover
+                  </h6>
+                  <div className="museum-marker-grid">
+                    {marker.benefits.map((benefit, index) => (
+                      <div
+                        className="d-flex align-items-center gap-2"
+                        key={index}
+                      >
+                        <div className="green-dot"></div>
+                        <span className="custom-marker-content">{benefit}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="d-flex flex-column gap-2">
+                  {marker?.landInfo && (
+                    <h6 className="mb-0 challenge-popup-secondary-title">
+                      Key Benefits
+                    </h6>
+                  )}
+                  <div className="museum-marker-grid">
+                    {marker?.landInfo?.map((tip, index) => (
+                      <div
+                        className="d-flex align-items-center gap-2"
+                        key={index}
+                      >
+                        <div className="green-dot"></div>
+                        <span className="custom-marker-content">{tip}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          </div>
+        ) :
+        (
           <> </>
         )}
       </>

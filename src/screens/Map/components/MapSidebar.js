@@ -4,7 +4,6 @@ import DypiusDropdown from "./DypiusDropdown";
 import IslandDropdown from "./IslandDropdown";
 import useWindowSize from "../../../hooks/useWindowSize";
 
-
 const Sidebar = ({
   switches,
   setSwitches,
@@ -12,7 +11,9 @@ const Sidebar = ({
   handleMarkerClick,
   setContent,
   activeMarker,
-setActiveMarker
+  setActiveMarker,
+  museumLocation,
+  onClose
 }) => {
   const [search, setSearch] = useState("");
   const [sidebar, setSidebar] = useState(true);
@@ -77,6 +78,8 @@ setActiveMarker
     ],
   };
 
+ 
+
   return (
     <div>
       <div id="mySidebar" className={`sidebar ${sidebar ? "" : "closed"}`}>
@@ -93,7 +96,11 @@ setActiveMarker
         <div className="d-flex align-items-center justify-content-end px-3">
           <div className="d-flex align-items-center gap-2 w-100">
             <div className="position-relative w-100" style={{ zIndex: 6 }}>
-              <img src={"https://cdn.worldofdypians.com/wod/searchIcon.svg"} className="search-icon" alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/searchIcon.svg"}
+                className="search-icon"
+                alt=""
+              />
               <input
                 type="text"
                 value={search}
@@ -177,7 +184,11 @@ setActiveMarker
                 <img
                   width={24}
                   height={24}
-                  src={switches.regions ? "https://cdn.worldofdypians.com/wod/regionIconActive.svg" : "https://cdn.worldofdypians.com/wod/regionIcon.svg"}
+                  src={
+                    switches.regions
+                      ? "https://cdn.worldofdypians.com/wod/regionIconActive.svg"
+                      : "https://cdn.worldofdypians.com/wod/regionIcon.svg"
+                  }
                   alt=""
                 />
                 <span>Regions</span>
@@ -196,7 +207,11 @@ setActiveMarker
                 <img
                   width={24}
                   height={24}
-                  src={switches.areas ? "https://cdn.worldofdypians.com/wod/cityIconActive.svg" : "https://cdn.worldofdypians.com/wod/cityIcon.svg"}
+                  src={
+                    switches.areas
+                      ? "https://cdn.worldofdypians.com/wod/cityIconActive.svg"
+                      : "https://cdn.worldofdypians.com/wod/cityIcon.svg"
+                  }
                   alt=""
                 />
                 <span>Cities</span>
@@ -216,7 +231,9 @@ setActiveMarker
                   width={24}
                   height={24}
                   src={
-                    switches.challenges ? "https://cdn.worldofdypians.com/wod/challengeIconActive.svg" : "https://cdn.worldofdypians.com/wod/challengeIcon.svg"
+                    switches.challenges
+                      ? "https://cdn.worldofdypians.com/wod/challengeIconActive.svg"
+                      : "https://cdn.worldofdypians.com/wod/challengeIcon.svg"
                   }
                   alt=""
                 />
@@ -229,7 +246,12 @@ setActiveMarker
                   setContent(genesisLocation.title);
                 }}
               >
-                <img width={24} height={24} src={"https://cdn.worldofdypians.com/wod/genesisIcon.svg"} alt="" />
+                <img
+                  width={24}
+                  height={24}
+                  src={"https://cdn.worldofdypians.com/wod/genesisIcon.svg"}
+                  alt=""
+                />
                 <span>Genesis Land</span>
               </div>
             </div>
@@ -242,7 +264,9 @@ setActiveMarker
               setSwitches={setSwitches}
               activeMarker={activeMarker}
               setActiveMarker={setActiveMarker}
-    
+              setContent={setContent}
+              museumLocation={museumLocation}
+              onClose={onClose}
             />
             <IslandDropdown
               parent={"Island Zero"}
@@ -271,6 +295,7 @@ setActiveMarker
                 boar: false,
                 bear: false,
                 challenges: false,
+                museum: false,
               })
             }
           >

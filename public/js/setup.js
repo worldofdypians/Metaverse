@@ -40,6 +40,7 @@ window.config = {
   nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
   nft_mat_address: "0x8e4917c1ba9598fbbf66934cb17ac28c3b5849ab",
   nft_kucoin_address: "0x6dE32bb9F7bfEf596e7767F2DA9Fb62FEb91c1E2",
+  nft_vanar_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
 
 
   nft_dypius_premium_address: "0xA3e62c82410fF6697B68CABE90a8b1B6e3CEC8CD",
@@ -49,6 +50,7 @@ window.config = {
     "0xBd651c4b282bbAD9f2317b06EfeD9f120C199B17",
 
   nft_dypius_premium_mat_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
+  nft_dypius_premium_vanar_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
 
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
   ccip_bnb_caws_address: "0x0C5E19B9147c39d196bC6c88D087A7A84f99563E",
@@ -86,6 +88,7 @@ window.config = {
   daily_bonus_taiko_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
   daily_bonus_mat_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_sei_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
+  daily_bonus_vanar_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
 
@@ -112,6 +115,7 @@ window.config = {
   viction_endpoint: "https://rpc.viction.xyz",
   sei_endpoint: "https://evm-rpc.sei-apis.com",
   immutable_endpoint: "https://rpc.immutable.com",
+  vanar_endpoint : "https://rpc.vanarchain.com",
 
   subscription_address: "0x5078a4912f6e0d74dcf99482ac5910df123e9b4b",
   subscription_newavax_address: "0xef3819fc5bb5a5468cac4d47e2a1ee6905b8cc7d",
@@ -133,6 +137,7 @@ window.config = {
   subscription_skale_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
   subscription_core_address: "0x2deecf2a05f735890eb3ea085d55cec8f1a93895",
   subscription_viction_address: "0x128a60F2F359D11C2C768C6a9880223e98342634",
+  subscription_vanar_address: "0x128a60F2F359D11C2C768C6a9880223e98342634",
 
   subscription_manta_address: "0xF943437f92519e3AdE18f16cb045453B7a92e6D5",
   subscription_taiko_address: "0x0570cb2bb014d0eda8dfffffdeb07906a5b40aa3",
@@ -282,6 +287,12 @@ window.config = {
       decimals: 6,
     },
   },
+  subscriptionvanar_tokens: {
+    "0x381B31409e4D220919B2cFF012ED94d70135A59e": {
+      symbol: "USDT",
+      decimals: 6,
+    },
+  },
 
   subscriptionmanta_tokens: {
     "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f": {
@@ -400,6 +411,7 @@ window.coreWeb3 = new Web3(window.config.core_endpoint);
 window.immutableWeb3 = new Web3(window.config.immutable_endpoint);
 
 window.victionWeb3 = new Web3(window.config.viction_endpoint);
+window.vanarWeb3 = new Web3(window.config.vanar_endpoint);
 window.seiWeb3 = new Web3(window.config.sei_endpoint);
 
 window.REWARD_TOKEN_WOD_ABI = window.TOKEN_ABI;
@@ -1863,6 +1875,7 @@ class KUCOIN_NFT {
 }
 
 window.kucoin_nft = new KUCOIN_NFT();
+
 
 
 /**
@@ -3947,6 +3960,21 @@ async function getMyNFTs(address, type = "") {
     contract = new window.seiWeb3.eth.Contract(
       window.SEI_NFT_ABI,
       window.config.nft_sei_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  } else if (type === "vanar") {
+    contract = new window.vanarWeb3.eth.Contract(
+      window.SEI_NFT_ABI,
+      window.config.nft_vanar_address
     );
 
     const balance = await contract.methods.balanceOf(address).call();
@@ -16777,6 +16805,309 @@ window.SUBSCRIPTION_CORE_ABI = [
 ];
 
 window.SUBSCRIPTION_VICTION_ABI = [
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "platformTokenAmount",
+        type: "uint256",
+      },
+    ],
+    name: "Subscribe",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountDai",
+        type: "uint256",
+      },
+    ],
+    name: "SubscriptionFeeSet",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
+    name: "SupportedTokenAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
+    name: "SupportedTokenRemoved",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "accountAddress",
+        type: "address",
+      },
+    ],
+    name: "UnsubscribeAddress",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "ONE_HUNDRED_X_100",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "SLIPPAGE_TOLERANCE_X_100",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_DAI_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "discountPercentage", type: "uint256" },
+      { internalType: "uint256", name: "durationInDays", type: "uint256" },
+    ],
+    name: "addOrUpdateNFTDiscount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address[]", name: "subscribers", type: "address[]" },
+    ],
+    name: "addSubscribersInBulk",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "tokenAddress", type: "address" },
+    ],
+    name: "addSupportedToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "discountPercentageGlobal",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "uint256", name: "discountPercentage", type: "uint256" },
+    ],
+    name: "getEstimatedTokenSubscriptionAmount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "isTokenSupported",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "nftDiscounts",
+    outputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "discountPercentage", type: "uint256" },
+      { internalType: "uint256", name: "expiration", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "nftAddress", type: "address" }],
+    name: "removeNFTDiscount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "tokenAddress", type: "address" },
+    ],
+    name: "removeSupportedToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "_newDiscount", type: "uint256" },
+    ],
+    name: "setDiscountPercentage",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "newSubscriptionFeeInDai",
+        type: "uint256",
+      },
+    ],
+    name: "setSubscriptionFee",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "subscribe",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "nftAddress", type: "address" },
+      { internalType: "uint256", name: "tokenID", type: "uint256" },
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "uint256", name: "tokenAmount", type: "uint256" },
+    ],
+    name: "subscribeNFT",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "subscriptionFeeInDai",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "subscriptionPlatformTokenAmount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "token", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transferAnyERC20Token",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "uniswapRouterV2",
+    outputs: [
+      { internalType: "contract IUniswapV2Router", name: "", type: "address" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "accountAddress", type: "address" },
+    ],
+    name: "unsubscribeAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  { stateMutability: "payable", type: "receive" },
+];
+window.SUBSCRIPTION_VANAR_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
@@ -34092,6 +34423,22 @@ async function getEstimatedTokenSubscriptionAmountViction(
   );
 
   return await vicitonContract.methods
+    .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
+    .call()
+    .catch((e) => {
+      return 100000000;
+    });
+}
+async function getEstimatedTokenSubscriptionAmountVanar(
+  tokenAddress,
+  discountPercentage
+) {
+  const vanarcontract = new window.vanarWeb3.eth.Contract(
+    window.SUBSCRIPTION_VANAR_ABI,
+    window.config.subscription_vanar_address
+  );
+
+  return await vanarcontract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
     .call()
     .catch((e) => {

@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Checkbox } from "@mui/material";
 import FormControlLabel from "@mui/material";
-
 
 const DypiusDropdown = ({
   options,
@@ -17,6 +12,9 @@ const DypiusDropdown = ({
   setSwitches,
   activeMarker,
   setActiveMarker,
+  setContent,
+  museumLocation,
+  onClose,
 }) => {
   return (
     <div className="d-flex px-3 flex-column gap-2">
@@ -38,7 +36,12 @@ const DypiusDropdown = ({
             }))
           }
         >
-          <img src={"https://cdn.worldofdypians.com/wod/leaderboardsIcon.svg"} width={20} height={20} alt="" />
+          <img
+            src={"https://cdn.worldofdypians.com/wod/leaderboardsIcon.svg"}
+            width={20}
+            height={20}
+            alt=""
+          />
           <span>Leaderboards</span>
         </div>
         <div
@@ -52,22 +55,37 @@ const DypiusDropdown = ({
             }))
           }
         >
-          <img src={"https://cdn.worldofdypians.com/wod/teleportsIcon.svg"} width={20} height={20} alt="" />
+          <img
+            src={"https://cdn.worldofdypians.com/wod/teleportsIcon.svg"}
+            width={20}
+            height={20}
+            alt=""
+          />
           <span>Teleports</span>
         </div>
         <div
-          className={`section-switch-btn inactive-switch ${
-            switches.quests && "section-switch-btn-active"
+          className={`section-switch-btn ${
+            switches.museum && "section-switch-btn-active"
           } d-flex align-items-center gap-2 p-2 w-100`}
-          // onClick={() =>
-          //   setSwitches((prev) => ({
-          //     ...prev,
-          //     quests: !switches.quests,
-          //   }))
-          // }
+          onClick={() => {
+            setSwitches((prev) => ({
+              ...prev,
+              museum: !switches.museum,
+            }));
+            if (switches.museum) {
+              onClose();
+            } else {
+              onZoomIn(museumLocation, 18, "museum");
+            }
+          }}
         >
-          <img src={"https://cdn.worldofdypians.com/wod/questsIcon.svg"} width={20} height={20} alt="" />
-          <span>Quests</span>
+          <img
+            src={"https://cdn.worldofdypians.com/wod/museumIcon.svg"}
+            width={20}
+            height={20}
+            alt=""
+          />
+          <span>Cryptorium</span>
         </div>
       </div>
       <Accordion defaultExpanded>
@@ -84,35 +102,49 @@ const DypiusDropdown = ({
           }}
         >
           <div className="d-flex align-items-center gap-2">
-            <img src={"https://cdn.worldofdypians.com/wod/areasIcon.svg"} alt="" />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/areasIcon.svg"}
+              alt=""
+            />
             <span className="accordion-side-text">Areas</span>
           </div>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: 0, marginTop: "12px" }}>
-         <div className="dypians-areas-grid">
-         <div className={`section-switch-btn ${switches.chains && "section-switch-btn-active"} d-flex align-items-center mb-2`}  onClick={() =>
-            setSwitches((prev) => ({
-              ...prev,
-              chains: !switches.chains,
-            }))
-          }>
-            <Checkbox checked={switches.chains} 
-             sx={{
-              color: "#ff9800", // Default color
-              "&.Mui-checked": {
-                color: "#5690ff", // Checked color
-              },
-            }}
-            />
-            <span>Show All</span>
+          <div className="dypians-areas-grid">
+            <div
+              className={`section-switch-btn ${
+                switches.chains && "section-switch-btn-active"
+              } d-flex align-items-center mb-2`}
+              onClick={() =>
+                setSwitches((prev) => ({
+                  ...prev,
+                  chains: !switches.chains,
+                }))
+              }
+            >
+              <Checkbox
+                checked={switches.chains}
+                sx={{
+                  color: "#ff9800", // Default color
+                  "&.Mui-checked": {
+                    color: "#5690ff", // Checked color
+                  },
+                }}
+              />
+              <span>Show All</span>
+            </div>
           </div>
-         </div>
           <div className="dypians-areas-grid">
             {options.map((item, index) => (
               <div
                 key={index}
-                className={`areas-grid-item ${activeMarker === item.title && "areas-grid-item-active"} py-1 d-flex align-items-center gap-1 justify-content-start ps-1`}
-                onClick={() => {onZoomIn(item, 18, "chain"); setActiveMarker(item.title)}}
+                className={`areas-grid-item ${
+                  activeMarker === item.title && "areas-grid-item-active"
+                } py-1 d-flex align-items-center gap-1 justify-content-start ps-1`}
+                onClick={() => {
+                  onZoomIn(item, 18, "chain");
+                  setActiveMarker(item.title);
+                }}
               >
                 <img src={item.icon} width={20} height={20} alt="" />
                 <span>{item.title.slice(0, item.title.length - 5)}</span>
