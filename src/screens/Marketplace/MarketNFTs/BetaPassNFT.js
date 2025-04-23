@@ -483,7 +483,7 @@ const BetaPassNFT = ({
       cardClassName: "vanar-mint-bg",
       wrapperClassName: "vanar-eventwrapper",
       treasureHuntStatus: "Coming Soon",
-      rewardsTitle: "$2,000 in VANRY rewards",
+      rewardsTitle: "$20,000 in VANRY rewards",
       rewardType: "VANRY",
       userEarned: 0,
       eventType: "Explore & Mine",

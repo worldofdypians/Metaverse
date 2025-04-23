@@ -439,7 +439,7 @@ const RankSmallPopup = ({
                   <div className="sidebar-separator2"></div>
                 </div>
               </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
+              {/* <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img
                   src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
                   width={30}
@@ -475,7 +475,7 @@ const RankSmallPopup = ({
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -2662,79 +2662,80 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "vanar") {
-      if ( window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId") {
-        if (!email) {
-          setMessage("login");
-          setDisable(true);
-        } else if (email && coinbase && address) {
-          if (coinbase.toLowerCase() === address.toLowerCase()) {
-            if (isPremium) {
-              if (
-                claimedVanarChests + claimedVanarPremiumChests === 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase()
-              ) {
-                setMessage("complete");
-              } else if (
-                claimedVanarChests + claimedVanarPremiumChests < 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 2040
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedVanarChests + claimedVanarPremiumChests < 20 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 2040
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            } else if (!isPremium) {
-              if (
-                claimedVanarChests === 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 2040
-              ) {
-                setMessage("premium");
-                setDisable(true);
-              } else if (
-                claimedVanarChests < 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 2040
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedVanarChests < 10 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 2040
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            }
-          } else {
-            setMessage("switchAccount");
-            setDisable(true);
-          }
-        } else {
-          setMessage("connect");
-          setDisable(true);
-        }
-      } else if (
-        window.WALLET_TYPE === "binance" ||
-        window.WALLET_TYPE === "matchId" ||
-        window.ethereum?.isBinance
-      ) {
-        setMessage("notsupported");
-      }
+      // if ( window.WALLET_TYPE !== "binance" &&
+      //   window.WALLET_TYPE !== "matchId") {
+      //   if (!email) {
+      //     setMessage("login");
+      //     setDisable(true);
+      //   } else if (email && coinbase && address) {
+      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
+      //       if (isPremium) {
+      //         if (
+      //           claimedVanarChests + claimedVanarPremiumChests === 20 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase()
+      //         ) {
+      //           setMessage("complete");
+      //         } else if (
+      //           claimedVanarChests + claimedVanarPremiumChests < 20 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 2040
+      //         ) {
+      //           setMessage("");
+      //           setDisable(false);
+      //         } else if (
+      //           claimedVanarChests + claimedVanarPremiumChests < 20 &&
+      //           // rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId !== 2040
+      //         ) {
+      //           setMessage("switch");
+      //           setDisable(true);
+      //         }
+      //       } else if (!isPremium) {
+      //         if (
+      //           claimedVanarChests === 10 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 2040
+      //         ) {
+      //           setMessage("premium");
+      //           setDisable(true);
+      //         } else if (
+      //           claimedVanarChests < 10 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 2040
+      //         ) {
+      //           setMessage("");
+      //           setDisable(false);
+      //         } else if (
+      //           claimedVanarChests < 10 &&
+      //           // rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId !== 2040
+      //         ) {
+      //           setMessage("switch");
+      //           setDisable(true);
+      //         }
+      //       }
+      //     } else {
+      //       setMessage("switchAccount");
+      //       setDisable(true);
+      //     }
+      //   } else {
+      //     setMessage("connect");
+      //     setDisable(true);
+      //   }
+      // } else if (
+      //   window.WALLET_TYPE === "binance" ||
+      //   window.WALLET_TYPE === "matchId" ||
+      //   window.ethereum?.isBinance
+      // ) {
+      //   setMessage("notsupported");
+      // }
+      setMessage("comingsoon");
     }
     
     
@@ -4199,7 +4200,7 @@ const NewDailyBonus = ({
                               Vanar
                             </button>
                             <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
+                              {/* <div className="d-flex align-items-center">
                                 <img
                                   className="percent-img"
                                   src={
@@ -4250,9 +4251,9 @@ const NewDailyBonus = ({
                                   height={8}
                                   alt=""
                                 />
-                              </div>
+                              </div> */}
                               <span className="percentage-span">
-                                {parseInt(vanarPercentage)}%
+                                {/* {parseInt(vanarPercentage)}% */} Coming Soon
                               </span>
                             </div>
                           </div>
