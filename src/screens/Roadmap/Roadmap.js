@@ -545,6 +545,26 @@ const Roadmap = () => {
           completed: true,
         },
         {
+          title: "Educational AI",
+          desc: "Implement AI-powered tutorials to help players learn game mechanics, blockchain concepts, and strategies effectively.",
+          completed: true,
+        },
+        {
+          title: "AI Gameplay Improvements",
+          desc: "Enhance AI mechanics to make NPCs smarter and more responsive, improving player interactions and dynamic gameplay.",
+          completed: true,
+        },
+        {
+          title: "Dynamic NPC Behavior",
+          desc: "Enhance NPC crowds nteractions and behaviors to create a more immersive and lifelike environment, improving player engagement and overall realism.",
+          completed: true,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience",
+          completed: true,
+        },
+        {
           title: "New Game UI Development",
           desc: "Develop a new user interface to improve navigation and accessibility within the game.",
           completed: false,
@@ -559,31 +579,19 @@ const Roadmap = () => {
           desc: "Create a Launchpool system where players can contribute resources to community-driven projects and unlock exclusive benefits.",
           completed: false,
         },
-        {
-          title: "Educational AI",
-          desc: "Implement AI-powered tutorials to help players learn game mechanics, blockchain concepts, and strategies effectively.",
-          completed: false,
-        },
+
         {
           title: "Introduction of Character Customization",
           desc: "Allow players to personalize their main avatar/character with facial and body features.",
           completed: false,
         },
-        {
-          title: "AI Gameplay Improvements",
-          desc: "Enhance AI mechanics to make NPCs smarter and more responsive, improving player interactions and dynamic gameplay.",
-          completed: false,
-        },
+
         {
           title: "Introduction of Shop v1",
           desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
           completed: false,
         },
-        {
-          title: "Dynamic NPC Behavior",
-          desc: "Enhance NPC crowds nteractions and behaviors to create a more immersive and lifelike environment, improving player engagement and overall realism.",
-          completed: false,
-        },
+
         {
           title: "Daily Engagement System",
           desc: "Launch a new daily engagement product designed to keep players active and rewarded through innovative tasks and experiences.",
@@ -592,11 +600,6 @@ const Roadmap = () => {
         {
           title: "Intelligent Economy Integration",
           desc: "Combine AI-powered features with DeFi mechanics to create an adaptive and engaging in-game economy.",
-          completed: false,
-        },
-        {
-          title: "Partnership Development",
-          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience",
           completed: false,
         },
       ],

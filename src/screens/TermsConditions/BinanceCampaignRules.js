@@ -67,7 +67,7 @@ const BinanceCampaignRules = () => {
                     <li className="text-white">
                       <b>
                         <a
-                          href="https://x.com/worldofdypians/status/1882410555673379234"
+                          href="https://x.com/worldofdypians/status/1915335188667605291"
                           target="_blank"
                           rel="noreferrer"
                           className="text-white text-decoration-underline"
