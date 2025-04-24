@@ -24,7 +24,8 @@ const Campaigns = ({ coinbase }) => {
     </ul>
     
    `,
-      link: "/",
+      link: "https://www.binance.com/en/web3-campaign/airdrop/4484095621998736896",
+      target: "_blank",
     },
     {
       title: "The Gathering Storm",
@@ -249,7 +250,7 @@ const Campaigns = ({ coinbase }) => {
                   <div className="d-flex w-100 justify-content-center justify-content-lg-start">
                     <NavLink
                       to={item.link}
-                      // target="_blank"
+                      target={item.target}
                       className="explore-btn px-4 py-2 mt-4"
                       style={{ width: "fit-content" }}
                     >
