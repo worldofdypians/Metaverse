@@ -113,6 +113,8 @@ const TradingComp = ({ coinbase }) => {
   useEffect(() => {
     fetchWeeklyParticipants();
     fetchUserStats();
+    window.scrollTo(0, 0);
+    document.title = "Trading Competition";
   }, []);
 
   const html = document.querySelector("html");
@@ -311,18 +313,20 @@ const TradingComp = ({ coinbase }) => {
                   </div>
                 </div>
                 <div className="d-flex w-100 justify-content-center">
-              <a
-                href="https://pancakeswap.finance/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8&exactAmount=&exactField=INPUT"
-                target="_blank"
-                className="pancake-swap-btn mt-3 d-flex align-items-center justify-content-center gap-2 py-2 px-4"
-              >
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"}
-                  alt=""
-                />
-                <h6 className="mb-0">Trade on PancakeSwap</h6>
-              </a>
-              </div>
+                  <a
+                    href="https://pancakeswap.finance/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8&exactAmount=&exactField=INPUT"
+                    target="_blank"
+                    className="pancake-swap-btn mt-3 d-flex align-items-center justify-content-center gap-2 py-2 px-4"
+                  >
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
+                      }
+                      alt=""
+                    />
+                    <h6 className="mb-0">Trade on PancakeSwap</h6>
+                  </a>
+                </div>
               </div>
             </div>
             <div className="col-12 col-lg-6">
