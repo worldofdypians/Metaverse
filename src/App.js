@@ -6858,7 +6858,7 @@ function App() {
             }
           /> */}
 
-          <Route
+          {/* <Route
             exact
             path="/shop/mint/opbnbchain"
             element={
@@ -6901,7 +6901,7 @@ function App() {
                 totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
-          />
+          /> */}
           {/* <Route
             exact
             path="/shop/mint/manta"

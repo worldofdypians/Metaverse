@@ -188,6 +188,11 @@ const Map = ({ dummyBetaPassData2 }) => {
     [customClusterIcon]
   );
 
+  useEffect(() => {
+    document.title = "WOD Map";
+    window.scrollTo(0, 0);
+  }, []);
+
   // Render chain markers and polygons
   const ChainMarkers = useCallback(
     () =>
@@ -367,7 +372,7 @@ const Map = ({ dummyBetaPassData2 }) => {
             />
           ))}
         {switches.museum && (
-          <React.Fragment >
+          <React.Fragment>
             <ChainPolygon
               item={museumLocation}
               handleMarkerClick={handleMarkerClick}
