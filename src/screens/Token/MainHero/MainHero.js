@@ -24,6 +24,11 @@ const MainHero = ({ scrollInto }) => {
       link: "https://www.bitpanda.com/en/prices/world-of-dypians-wod",
     },
     {
+      title: "Binance Wallet",
+      logo: "binance-wallet-exchange.svg",
+      link: "https://www.binance.com/en/download",
+    },
+    {
       title: "PancakeSwap",
       logo: "pancakeswap.svg",
       link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
@@ -97,14 +102,6 @@ const MainHero = ({ scrollInto }) => {
                     src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
                     className=" exchange-grid-image"
                     alt=""
-                    style={{
-                      height:
-                        item.logo === "bitPandaExchange.png" ||
-                        item.logo === "thena.svg"
-                          ? "32px"
-                          : "",
-                      // scale: item.logo === "bitPandaExchange.png" ? "1.5" : "",
-                    }}
                   />
                 </a>
               ))}
