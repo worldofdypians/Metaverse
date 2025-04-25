@@ -229,7 +229,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
   }, [refresh]);
 
   useEffect(() => {
-    // getPriceDYP();
+    document.title = "Loyalty Program";
     window.scrollTo(0, 0);
   }, []);
 

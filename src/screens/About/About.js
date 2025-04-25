@@ -26,10 +26,15 @@ const About = () => {
     scrollToElement();
   }, [location]);
 
+  useEffect(() => {
+    document.title = "About WOD";
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="container-fluid token-wrapper px-0">
       <div className="d-flex flex-column">
-        <MainHero /> 
+        <MainHero />
         <Tokenomics />
         <Security />
         <Roadmap />
