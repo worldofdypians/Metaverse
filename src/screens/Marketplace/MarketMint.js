@@ -212,8 +212,8 @@ const MarketMint = ({
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
-  const [selectedMint, setSelectedMint] = useState(opbnbData);
-  const [mintTitle, setMintTitle] = useState("opbnbchain");
+  const [selectedMint, setSelectedMint] = useState(timepieceData);
+  const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -511,10 +511,12 @@ const MarketMint = ({
     ) {
       setSelectedMint(bnbData);
       setMintTitle("bnbchain");
-    } else if (location.pathname.includes("opbnbchain")) {
-      setSelectedMint(opbnbData);
-      setMintTitle("opbnbchain");
-    } else if (location.pathname.includes("timepiece")) {
+    } 
+    // else if (location.pathname.includes("opbnbchain")) {
+    //   setSelectedMint(opbnbData);
+    //   setMintTitle("opbnbchain");
+    // } 
+    else if (location.pathname.includes("timepiece")) {
       setSelectedMint(timepieceData);
       setMintTitle("timepiece");
     } else if (location.pathname.includes("immutable")) {
@@ -651,15 +653,15 @@ const MarketMint = ({
     //   class: "mint-manta",
     //   id: "manta",
     // },
-    {
-      title: "opBNB Chain Pass",
-      eventId: "opbnbchain",
-      desc: "Gain entry to metaverse, and join exclusive opBNB Chain event with special ticket.",
-      img: "https://cdn.worldofdypians.com/wod/opbnbactive.webp",
-      data: opbnbData,
-      class: "mint-bnb",
-      id: "opbnbchain",
-    },
+    // {
+    //   title: "opBNB Chain Pass",
+    //   eventId: "opbnbchain",
+    //   desc: "Gain entry to metaverse, and join exclusive opBNB Chain event with special ticket.",
+    //   img: "https://cdn.worldofdypians.com/wod/opbnbactive.webp",
+    //   data: opbnbData,
+    //   class: "mint-bnb",
+    //   id: "opbnbchain",
+    // },
     // {
     //   title: "Taiko Pass",
     //   eventId: "taiko",
