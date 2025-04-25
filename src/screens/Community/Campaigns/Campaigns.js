@@ -8,14 +8,35 @@ import tradingCompBanner from "./TradingComp/assets/tradingCompBanner.png";
 const Campaigns = ({ coinbase }) => {
   const [popupEvent, setPopupEvent] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
+  let today = new Date();
+  let binance_campaign_end_timestamp = 1745740370000;
 
-  const dummyBanner = {
-    title: "The Gathering Storm",
-    status: "Live",
-    start_date: "Apr 21, 2025",
-    end_date: "Jul 14, 2025",
-    image: tradingCompBanner,
-    desc: `Welcome to the Gathering Storm $WOD Trading Competition, a 12-week battle where only the best rise.<br/>
+  const dummyBanner = [
+    {
+      title: "World of Dypians x Binance Wallet Campaign!",
+      status:
+        today.getTime() > binance_campaign_end_timestamp ? "Expired" : "Live",
+      start_date: "Apr 24, 2025",
+      end_date: "Apr 27, 2025",
+      image: "https://cdn.worldofdypians.com/wod/binance-campagin-v2.webp",
+      desc: `Our second $50,000 $WOD Airdrop Campaign with Binance Wallet is officially live! <br/>
+    <ul><li>Follow Binance on X</li>
+    <li> Follow World of Dypians on X</li>
+    <li> Like and Retweet the Pinned Post</li>  
+    <li> Swap a minimum of $20 in WOD on BNB Chain</li>  
+    </ul>
+    
+   `,
+      link: "https://www.binance.com/en/web3-campaign/airdrop/4484095621998736896",
+      target: "_blank",
+    },
+    {
+      title: "The Gathering Storm",
+      status: "Live",
+      start_date: "Apr 21, 2025",
+      end_date: "Jul 14, 2025",
+      image: tradingCompBanner,
+      desc: `Welcome to the Gathering Storm $WOD Trading Competition, a 12-week battle where only the best rise.<br/>
     <ul><li>$300,000 in total rewards</li>
     <li>Weekly prizes for the Top 30 traders</li>
     <li>Airdrops for eligible volume warriors </li>  
@@ -23,10 +44,22 @@ const Campaigns = ({ coinbase }) => {
     </ul>
     Join the storm. Conquer the charts. Earn your WOD.
    `,
-    link: "/trading-competition",
-  };
+      link: "/trading-competition",
+    },
+  ];
 
   const dummyData = [
+    {
+      title: "World of Dypians x Binance Wallet Campaign!",
+      status:
+        today.getTime() > binance_campaign_end_timestamp ? "Expired" : "Live",
+      start_date: "Apr 24, 2025",
+      end_date: "Apr 27, 2025",
+      image: "https://cdn.worldofdypians.com/wod/binance-campagin-v2.webp",
+
+      link: "https://www.binance.com/en/web3-campaign/airdrop/4484095621998736896",
+      target: "_blank",
+    },
     {
       title: "The Grand Battle Challenge",
       status: "Expired",
@@ -173,128 +206,143 @@ const Campaigns = ({ coinbase }) => {
   return (
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-2 px-lg-0">
       <div className="custom-container  my-5 py-0 py-lg-5">
-        <div className="row">
-          <div className="col-12 col-lg-6">
-            <img
-              src={dummyBanner.image}
-              alt="Campaign Banner"
-              className="campaign-banner w-100"
-            />
-          </div>
-          <div className="col-12 col-lg-6">
-            <div className="d-flex flex-column justify-content-between h-100">
-              <div className="d-flex align-items-center justify-content-between mt-3 mt-lg-0">
-                <h6 className="campaign-banner-title mb-0">
-                  {dummyBanner.title}
-                </h6>
-                <div
-                  className={`position-relative py-1 ${
-                    dummyBanner.status === "Live"
-                      ? "events-page-status-tag-live"
-                      : dummyBanner.status === "Coming Soon"
-                      ? "events-page-status-tag-upcoming"
-                      : "events-page-status-tag-expired"
-                  } px-2 d-flex align-items-center justify-content-center gap-0`}
-                  style={{ top: 0 }}
-                >
-                  {dummyBanner.status === "Live" && (
-                    <div
-                      className="pulsatingDot"
-                      style={{
-                        width: 7,
-                        height: 7,
-                        marginRight: 5,
-                      }}
-                    ></div>
-                  )}
+        {dummyBanner
+          .filter((item) => {
+            return item.status === "Live";
+          })
+          .map((item, index) => {
+            return (
+              <div className="row mb-5 pb-5" key={index}>
+                <div className="col-12 col-lg-6">
+                  <img
+                    src={item.image}
+                    alt="Campaign Banner"
+                    className="campaign-banner w-100"
+                  />
+                </div>
+                <div className="col-12 col-lg-6">
+                  <div className="d-flex flex-column justify-content-between h-100">
+                    <div className="d-flex align-items-center justify-content-between mt-3 mt-lg-0">
+                      <h6 className="campaign-banner-title mb-0">
+                        {item.title}
+                      </h6>
+                      <div
+                        className={`position-relative py-1 ${
+                          item.status === "Live"
+                            ? "events-page-status-tag-live"
+                            : item.status === "Coming Soon"
+                            ? "events-page-status-tag-upcoming"
+                            : "events-page-status-tag-expired"
+                        } px-2 d-flex align-items-center justify-content-center gap-0`}
+                        style={{ top: 0 }}
+                      >
+                        {item.status === "Live" && (
+                          <div
+                            className="pulsatingDot"
+                            style={{
+                              width: 7,
+                              height: 7,
+                              marginRight: 5,
+                            }}
+                          ></div>
+                        )}
 
-                  <span>{dummyBanner.status}</span>
+                        <span>{item.status}</span>
+                      </div>
+                    </div>
+                    <hr className="campaign-banner-divider" />
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/calendarYellow.svg"
+                        }
+                        alt=""
+                      />
+                      <span className="campaign-banner-date">
+                        {item.start_date} - {item.end_date}
+                      </span>
+                    </div>
+                    <p
+                      className="campaign-banner-desc mb-0"
+                      dangerouslySetInnerHTML={{ __html: item.desc }}
+                    ></p>
+
+                    <div className="d-flex w-100 justify-content-center justify-content-lg-start">
+                      <NavLink
+                        to={item.link}
+                        target={item.target}
+                        className="explore-btn px-4 py-2 mt-4"
+                        style={{ width: "fit-content" }}
+                      >
+                        Explore
+                      </NavLink>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <hr className="campaign-banner-divider" />
-              <div className="d-flex align-items-center gap-2">
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/calendarYellow.svg"}
-                  alt=""
-                />
-                <span className="campaign-banner-date">
-                  {dummyBanner.start_date} - {dummyBanner.end_date}
-                </span>
-              </div>
-              <p
-                className="campaign-banner-desc mb-0"
-                dangerouslySetInnerHTML={{ __html: dummyBanner.desc }}
-              ></p>
+            );
+          })}
 
-              <div className="d-flex w-100 justify-content-center justify-content-lg-start">
-                <NavLink
-                  to={dummyBanner.link}
-                  // target="_blank"
-                  className="explore-btn px-4 py-2 mt-4"
-                  style={{ width: "fit-content" }}
-                >
-                  Explore
-                </NavLink>
-              </div>
-            </div>
-          </div>
-        </div>
         {/* <TradingComp
         coinbase={coinbase}
         /> */}
         <div className="campaign-items-grid mt-5">
-          {dummyData.map((item, index) => (
-            <a href={item.link} rel="noreferrer" target="_blank">
-              <div
-                className="campaign-item d-flex flex-column gap-2"
-                key={index}
-              >
-                <img
-                  src={item.image}
-                  alt="campaign image"
-                  className="w-100 campaign-item-image"
-                  style={{ opacity: item.status === "Expired" ? "0.5" : "1" }}
-                />
-                <div className="d-flex align-items-center gap-2">
-                  <h6 className="campaign-item-title mb-0">{item.title}</h6>
-                  <div
-                    className={`position-relative py-1 ${
-                      item.status === "Live"
-                        ? "events-page-status-tag-live"
-                        : item.status === "Coming Soon"
-                        ? "events-page-status-tag-upcoming"
-                        : "events-page-status-tag-expired"
-                    } px-2 d-flex align-items-center justify-content-center gap-0`}
-                    style={{ top: 0 }}
-                  >
-                    {item.status === "Live" && (
-                      <div
-                        className="pulsatingDot"
-                        style={{
-                          width: 7,
-                          height: 7,
-                          marginRight: 5,
-                        }}
-                      ></div>
-                    )}
-
-                    <span>{item.status}</span>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center gap-2">
+          {dummyData
+            .filter((item) => {
+              return item.status === "Expired";
+            })
+            .map((item, index) => (
+              <a href={item.link} rel="noreferrer" target="_blank">
+                <div
+                  className="campaign-item d-flex flex-column gap-2"
+                  key={index}
+                >
                   <img
-                    src={"https://cdn.worldofdypians.com/wod/calendar.svg"}
-                    alt=""
-                    style={{ width: 24, height: 24 }}
+                    src={item.image}
+                    alt="campaign image"
+                    className="w-100 campaign-item-image"
+                    style={{ opacity: item.status === "Expired" ? "0.5" : "1" }}
                   />
-                  <span className="campaign-item-date">
-                    {item.start_date} - {item.end_date}
-                  </span>
+                  <div className="d-flex align-items-center gap-2">
+                    <h6 className="campaign-item-title mb-0">{item.title}</h6>
+                    <div
+                      className={`position-relative py-1 ${
+                        item.status === "Live"
+                          ? "events-page-status-tag-live"
+                          : item.status === "Coming Soon"
+                          ? "events-page-status-tag-upcoming"
+                          : "events-page-status-tag-expired"
+                      } px-2 d-flex align-items-center justify-content-center gap-0`}
+                      style={{ top: 0 }}
+                    >
+                      {item.status === "Live" && (
+                        <div
+                          className="pulsatingDot"
+                          style={{
+                            width: 7,
+                            height: 7,
+                            marginRight: 5,
+                          }}
+                        ></div>
+                      )}
+
+                      <span>{item.status}</span>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/calendar.svg"}
+                      alt=""
+                      style={{ width: 24, height: 24 }}
+                    />
+                    <span className="campaign-item-date">
+                      {item.start_date} - {item.end_date}
+                    </span>
+                  </div>
+                  <hr className="campaign-banner-divider" />
                 </div>
-                <hr className="campaign-banner-divider" />
-              </div>
-            </a>
-          ))}
+              </a>
+            ))}
         </div>
       </div>
       <div className="w-100">
