@@ -4211,15 +4211,20 @@ function Dashboard({
     setGoldenPassRemainingTime(value);
   };
 
-  const handleRefreshCountdown700 = async () => {
+  const handleRefreshCountdown700 = async (wallet) => {
     const goldenPassContract = new window.bscWeb3.eth.Contract(
       GOLDEN_PASS_ABI,
       golden_pass_address
     );
 
     const purchaseTimestamp = await goldenPassContract.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call();
+      .getTimeOfExpireBuff(wallet)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     const today = new Date();
 
     if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
@@ -5924,9 +5929,9 @@ function Dashboard({
   }, [email]);
 
   useEffect(() => {
-    if (coinbase && isConnected && email && userWallet) {
-      handleRefreshCountdown700();
-    }
+    handleRefreshCountdown700(
+      email ? userWallet : isConnected ? coinbase : window.config.ZERO_ADDRESS
+    );
   }, [coinbase, isConnected, email, userWallet]);
 
   useEffect(() => {
