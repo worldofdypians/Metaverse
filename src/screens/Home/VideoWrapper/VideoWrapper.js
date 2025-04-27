@@ -61,6 +61,13 @@ const VideoWrapper = ({
       link: "https://www.bitpanda.com/en/prices/world-of-dypians-wod",
     },
     {
+      title: "Binance Wallet",
+      logo: "binanceWalletUpdated.svg",
+      link: "https://www.binance.com/en/download"
+
+
+    },
+    {
       title: "PancakeSwap",
       logo: "pancakeSwapBuyWod.svg",
       link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
