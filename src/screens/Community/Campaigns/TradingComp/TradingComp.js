@@ -344,7 +344,7 @@ const TradingComp = ({ coinbase }) => {
                             Leaderboard refreshes every 1 hour
                           </span>
                           <span className="card-eth-chain-text">
-                            Reset Time: <b>Monday 00:00 UTC</b>
+                            Reset Time: <b>Monday 09:00 UTC</b>
                           </span>
                         </div>
                       }
