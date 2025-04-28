@@ -105,6 +105,9 @@
       "react-app/jest"
     ]
   },
+  "resolutions": {
+    "viem": "^2.23.12"
+  },
   "browserslist": {
     "production": [
       "chrome >= 67",
