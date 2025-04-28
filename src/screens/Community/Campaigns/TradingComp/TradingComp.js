@@ -48,6 +48,8 @@ const TradingComp = ({ coinbase }) => {
   const [loading, setLoading] = useState(true);
   const [userStats, setUserStats] = useState([]);
 
+  console.log(1);
+
   const fetchUserStats = async () => {
     await axios
       .get(`https://api.worldofdypians.com/api/lb-rank/${coinbase}`)
