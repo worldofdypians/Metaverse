@@ -80,6 +80,23 @@
   color: #0a0a2c !important;
 }
 
+.trading-comp-lb-button-past {
+  color: #dfdced;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 10px;
+  background: #1fc7d4;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.trading-comp-lb-button-past:hover {
+  background: #dfdced !important;
+  color: #0a0a2c !important;
+}
+
 .leaderboard-active {
   border-radius: 10px;
   background: #dfdced !important;
@@ -132,7 +149,7 @@
   border-radius: 50%;
 }
 
-.lb-winner{
+.lb-winner {
   background: rgba(31, 199, 212, 0.2) !important;
 }
 
@@ -158,7 +175,7 @@
 }
 .trading-comp-wrapper-2 {
   border-radius: 8px;
-  border: 0.5px solid #4C4D65;
+  border: 0.5px solid #4c4d65;
 }
 
 .trading-comp-subtitle {
@@ -470,7 +487,7 @@
   }
 }
 
-.comp-lb-header{
+.comp-lb-header {
   color: #c0c9ff;
   font-size: 14px;
   font-style: normal;
@@ -497,7 +514,7 @@
 }
 
 .trading-comp-overflow-2 {
-  max-height: 470px;
+  max-height: 450px;
   overflow-y: scroll;
   @media screen and (max-width: 600px) {
     max-height: 420px;
@@ -507,7 +524,6 @@
 .trading-comp-overflow-2::-webkit-scrollbar {
   display: none !important;
 }
-
 
 .trading-comp-overflow-3 {
   max-height: 520px;
@@ -608,7 +624,7 @@
   z-index: 2;
 }
 
-.comp-lb-reset-time{
+.comp-lb-reset-time {
   color: #c0c9ff;
   font-size: 12px;
   font-style: normal;
@@ -616,73 +632,70 @@
   line-height: 18px; /* 150% */
 }
 
-.comp-details-grid{
+.comp-details-grid {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   @media screen and (max-width: 786px) {
-    grid-template-columns: repeat(1,1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
-.comp-details-header{
-  color: #C0C9FF;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 18px; /* 150% */
-
+.comp-details-header {
+  color: #c0c9ff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 150% */
 }
 
-.comp-details-content{
-  color: #FFF;
+.comp-details-content {
+  color: #fff;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: 18px; /* 150% */
 }
 
-.details-popup-text{
-  color: #1FC7D4;
+.details-popup-text {
+  color: #1fc7d4;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: 18px; /* 150% */
 }
 
-.popup-table-header{
-  color: #C0C9FF;
-font-size: 18px;
-font-style: normal;
-font-weight: 600;
-line-height: 18px; /* 150% */
-@media screen and (max-width: 500px) {
-  font-size: 16px;
-}
-}
-
-.popup-table-content{
-  color: #C0C9FF;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 18px; /* 150% */
+.popup-table-header {
+  color: #c0c9ff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px; /* 150% */
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 }
 
-
+.popup-table-content {
+  color: #c0c9ff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 150% */
+}
 
 @media screen and (max-width: 786px) {
-.airdrop-rewards-wrapper-outer{
-  width: 100%;
-  overflow-x: scroll;
-}
+  .airdrop-rewards-wrapper-outer {
+    width: 100%;
+    overflow-x: scroll;
+  }
 
-  .airdrop-rewards-wrapper{
+  .airdrop-rewards-wrapper {
     min-width: 620px;
     overflow-x: scroll;
   }
 
-  .airdrop-rewards-wrapper::-webkit-scrollbar{
+  .airdrop-rewards-wrapper::-webkit-scrollbar {
     display: none !important;
   }
 }
