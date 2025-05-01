@@ -39,9 +39,13 @@
   height: 23px;
 }
 
-.getwod-item:hover{
+.buywodimg-round {
+  border-radius: 50%;
+}
+
+.getwod-item:hover {
   border-radius: 6px;
-    background: rgba(113, 127, 255, 0.20);
+  background: rgba(113, 127, 255, 0.2);
 }
 
 .whitearrowUp {
@@ -204,7 +208,7 @@
 }
 
 .new-special-rewards-wrapper {
-  background-image: url('https://cdn.worldofdypians.com/wod/specialRewardsBg.png');
+  background-image: url("https://cdn.worldofdypians.com/wod/specialRewardsBg.png");
   border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -218,7 +222,7 @@
   }
 }
 .wod-domain-name-wrapper {
-  background-image: url('https://cdn.worldofdypians.com/wod/domainNameBg.svg');
+  background-image: url("https://cdn.worldofdypians.com/wod/domainNameBg.svg");
   border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -275,7 +279,7 @@
 }
 
 .game-leaderboards-wrapper {
-  background-image: url('https://cdn.worldofdypians.com/wod/leaderboardsBg.png');
+  background-image: url("https://cdn.worldofdypians.com/wod/leaderboardsBg.png");
   background-size: 100% 100%;
   border-radius: 10px;
   transition: all 0.25s;
@@ -304,7 +308,7 @@
   top: -30px;
   width: 60%;
   @media screen and (max-width: 1500px) {
-    top: -20px;    
+    top: -20px;
   }
   @media screen and (max-width: 786px) {
     width: 100%;
@@ -322,7 +326,6 @@
   line-height: 10px; /* 125% */
   text-transform: uppercase;
   @media screen and (max-width: 1500px) {
-
     font-size: 9px;
   }
 }
@@ -529,7 +532,7 @@
 
 .my-rewards-wrapper-new {
   border-radius: 10px;
-  background-image: url('https://cdn.worldofdypians.com/wod/myRewards.png');
+  background-image: url("https://cdn.worldofdypians.com/wod/myRewards.png");
   background-size: cover;
   height: 145px;
   cursor: pointer;
@@ -762,7 +765,6 @@
     flex-direction: row !important;
   }
 }
-
 
 .stoneEyeBannerItem {
   border-radius: 10px;
@@ -1085,7 +1087,6 @@
   }
 }
 
-
 .beast-siege-timer-db {
   color: #d3d5d7;
   font-family: "Montserrat";
@@ -1093,7 +1094,6 @@
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  
 }
 
 .new-time-remaining {

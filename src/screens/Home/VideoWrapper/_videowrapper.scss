@@ -78,6 +78,13 @@
   height: 34px;
 }
 
+.buy-wod-items-wrapper {
+  // @media only screen and (max-width: 786px) {
+    height: 400px;
+    overflow: auto;
+  // }
+}
+
 .bigtitle {
   color: #f7f7fc;
   font-size: 16px;
@@ -199,7 +206,7 @@
   }
 }
 
-.leaderboard-bg { 
+.leaderboard-bg {
   background-repeat: no-repeat;
   background-position: right;
   background-size: 60% 100%;
@@ -230,34 +237,38 @@
 }
 
 .token-launch-wrapper {
-  background: linear-gradient(148deg, rgb(255 254 254 / 20%), rgb(237 222 222 / 20%));;
+  background: linear-gradient(
+    148deg,
+    rgb(255 254 254 / 20%),
+    rgb(237 222 222 / 20%)
+  );
   border-radius: 12px;
 }
 
-.buy-wod-popup-title{
-  color: #EEEDFF;
-font-family: "Montserrat";
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: 24px; /* 171.429% */
+.buy-wod-popup-title {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 171.429% */
 }
 
-.home-epic{
+.home-epic {
   cursor: pointer;
-  transition: all .25s;
+  transition: all 0.25s;
   z-index: 2;
 }
 
-.home-epic:hover{
+.home-epic:hover {
   transform: scale(1.05);
   filter: drop-shadow(0px 4px 6px rgba(243, 191, 9, 0.45));
 }
 
-.home-line{
+.home-line {
   position: absolute;
-  top: 22%;  
-    left: 50%; 
+  top: 22%;
+  left: 50%;
 
-    transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }

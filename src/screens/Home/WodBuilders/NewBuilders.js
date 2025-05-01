@@ -404,6 +404,10 @@ const NewBuilders = () => {
       name: "Vanar",
       icon: "vanar.svg",
     },
+    {
+      name: "ChangeNOW",
+      icon: "changeNow.webp",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
@@ -420,7 +424,11 @@ const NewBuilders = () => {
                   className={`d-flex flex-column align-items-center gap-2`}
                 >
                   <img
-                    src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
+                    src={
+                      item.icon.includes("changeNow")
+                        ? require("../../../components/MyProfile/changeNow.webp")
+                        : `https://cdn.worldofdypians.com/wod/${item.icon}`
+                    }
                     width={45}
                     height={45}
                     alt=""
