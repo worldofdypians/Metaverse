@@ -82,11 +82,11 @@ const VideoWrapper = ({
       logo: "trustWalletBuyWod.svg",
       link: "https://short.trustwallet.com/app-download",
     },
-    // {
-    //   title: "StealthEX",
-    //   logo: "stealthEx.svg",
-    //   link: "https://stealthex.io/?amount=320.3353683438&from=wod&to=usdtbsc",
-    // },
+    {
+      title: "ChangeNOW",
+      logo: "changeNow.jpg",
+      link: "https://changenow.io/currencies/world-of-dypians",
+    },
   ];
 
   const dummyBetaPassData2 = [
@@ -384,7 +384,7 @@ const VideoWrapper = ({
                 alt=""
               />
             </div>
-            <div className="d-flex flex-column gap-2">
+            <div className="d-flex flex-column gap-2 buy-wod-items-wrapper">
               {exchanges.map((item, index) => (
                 <BuyWodCard item={item} key={index} />
               ))}

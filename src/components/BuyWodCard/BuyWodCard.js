@@ -17,8 +17,13 @@ const BuyWodCard = ({ item }) => {
     >
       <div className="d-flex align-items-center gap-2">
         <img
-          src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
+          src={
+            item.logo.includes("changeNow")
+              ? require("../MyProfile/changeNow.webp")
+              : `https://cdn.worldofdypians.com/wod/${item.logo}`
+          }
           alt=""
+          
           style={{ width: 32, height: 32 }}
         />
         <h6 className="mb-0 buy-wod-title">{item.title}</h6>

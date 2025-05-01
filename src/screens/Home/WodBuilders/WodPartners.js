@@ -289,6 +289,10 @@ const WodPartners = ({ full }) => {
       name: "Vanar",
       icon: "vanar.svg",
     },
+    {
+      name: "ChangeNOW",
+      icon: "changeNow.webp",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
@@ -326,7 +330,11 @@ const WodPartners = ({ full }) => {
                 >
                   <div className="partner-logo-container">
                     <img
-                      src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
+                      src={
+                        partner.icon.includes("changeNow")
+                          ? require("../../../components/MyProfile/changeNow.webp")
+                          : `https://cdn.worldofdypians.com/wod/${partner.icon}`
+                      }
                       alt=""
                       style={{
                         width: "60px",

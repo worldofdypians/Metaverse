@@ -745,8 +745,8 @@ const MyProfile = ({
                                       TrustWallet
                                     </h6>
                                   </a>
-                                  {/* <a
-                                    href="https://stealthex.io/?amount=320.3353683438&from=wod&to=usdtbsc"
+                                  <a
+                                    href="https://changenow.io/currencies/world-of-dypians"
                                     target="_blank"
                                     rel="noreferrer"
                                     onClick={() => {
@@ -756,14 +756,12 @@ const MyProfile = ({
                                   >
                                     <h6 className="bottomitems mb-0">
                                       <img
-                                        src={
-                                          "https://cdn.worldofdypians.com/wod/stealthEx.svg"
-                                        }
+                                        src={require("./changeNow.webp")}
                                         className="buywodimg"
                                       />
-                                      StealthEX
+                                      ChangeNOW
                                     </h6>
-                                  </a> */}
+                                  </a>
                                 </div>
                               </div>
                             </OutsideClickHandler>
