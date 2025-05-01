@@ -43,6 +43,12 @@ const MainHero = ({ scrollInto }) => {
       logo: "trustwallet.svg",
       link: "https://short.trustwallet.com/app-download",
     },
+
+    {
+      title: "ChangeNOW",
+      logo: "changeNowExchange.svg",
+      link: "https://changenow.io/currencies/world-of-dypians",
+    },
   ];
 
   return (
@@ -99,7 +105,11 @@ const MainHero = ({ scrollInto }) => {
                   key={index}
                 >
                   <img
-                    src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
+                    src={
+                      item.logo.includes("changeNow")
+                        ? require("./changeNowExchange.svg").default
+                        : `https://cdn.worldofdypians.com/wod/${item.logo}`
+                    }
                     className=" exchange-grid-image"
                     alt=""
                   />
