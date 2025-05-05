@@ -42,7 +42,6 @@ window.config = {
   nft_kucoin_address: "0x6dE32bb9F7bfEf596e7767F2DA9Fb62FEb91c1E2",
   nft_vanar_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
 
-
   nft_dypius_premium_address: "0xA3e62c82410fF6697B68CABE90a8b1B6e3CEC8CD",
   nft_dypius_premium_viction_address:
     "0x3216574908Fe5B4fF523c3E6d2edFfb7bBc066E0",
@@ -50,7 +49,8 @@ window.config = {
     "0xBd651c4b282bbAD9f2317b06EfeD9f120C199B17",
 
   nft_dypius_premium_mat_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
-  nft_dypius_premium_vanar_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
+  nft_dypius_premium_vanar_address:
+    "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
 
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
   ccip_bnb_caws_address: "0x0C5E19B9147c39d196bC6c88D087A7A84f99563E",
@@ -110,12 +110,18 @@ window.config = {
   avax_endpoint: "https://api.avax.network/ext/bc/C/rpc",
   conflux_endpoint: "https://evm.confluxrpc.com/",
   base_endpoint: "https://mainnet.base.org",
+  all_base_endpoints: [
+    "https://mainnet.base.org",
+    "https://1rpc.io/base",
+    "https://base-rpc.publicnode.com",
+  ],
+
   opbnb_endpoint: "https://opbnb.publicnode.com",
   core_endpoint: "https://1rpc.io/core",
   viction_endpoint: "https://rpc.viction.xyz",
   sei_endpoint: "https://evm-rpc.sei-apis.com",
   immutable_endpoint: "https://rpc.immutable.com",
-  vanar_endpoint : "https://rpc.vanarchain.com",
+  vanar_endpoint: "https://rpc.vanarchain.com",
 
   subscription_address: "0x5078a4912f6e0d74dcf99482ac5910df123e9b4b",
   subscription_newavax_address: "0xef3819fc5bb5a5468cac4d47e2a1ee6905b8cc7d",
@@ -406,6 +412,7 @@ window.matWeb3 = new Web3(window.config.mat_endpoint);
 window.avaxWeb3 = new Web3(window.config.avax_endpoint);
 window.confluxWeb3 = new Web3(window.config.conflux_endpoint);
 window.baseWeb3 = new Web3(window.config.base_endpoint);
+
 window.opBnbWeb3 = new Web3(window.config.opbnb_endpoint);
 window.coreWeb3 = new Web3(window.config.core_endpoint);
 window.immutableWeb3 = new Web3(window.config.immutable_endpoint);
@@ -1771,10 +1778,6 @@ class MAT_NFT {
 }
 
 window.mat_nft = new MAT_NFT();
-
-
-
-
 
 /**
  *
@@ -3470,7 +3473,7 @@ window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
 window.isApprovedOffer = async (amount, priceType, tokenType) => {
   window.web3 = new Web3(window.config.infura_endpoint);
   console.log(amount, priceType, tokenType);
-   
+
   if (priceType === 0) {
     const contract = new window.web3.eth.Contract(
       window.TOKEN_ABI,
@@ -3612,20 +3615,41 @@ async function getMyNFTs(address, type = "") {
 
     return tokens;
   } else if (type === "landbase") {
-    contract = new window.baseWeb3.eth.Contract(
-      window.LAND_CCIP_ABI,
-      window.config.nft_land_base_address
-    );
+    for (let i = 0; i < 3; i++) {
+      try {
+        let web3 = new Web3(window.config.all_base_endpoints[i]);
+        contract = new web3.eth.Contract(
+          window.LAND_CCIP_ABI,
+          window.config.nft_land_base_address
+        );
 
-    const balance = await contract.methods.balanceOf(address).call();
+        const balance = await contract.methods.balanceOf(address).call();
+        const tokens = await Promise.all(
+          range(0, balance - 1).map((j) =>
+            contract.methods.tokenOfOwnerByIndex(address, j).call()
+          )
+        );
 
-    const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
-    );
+        return tokens;
+      } catch (err) {
+        const message = err?.message || "";
 
-    return tokens;
+        console.warn(
+          `Error with ${window.config.all_base_endpoints[i]}: ${message}`
+        );
+
+        const isRateLimited =
+          message.toLowerCase().includes("rate limit") ||
+          message.toLowerCase().includes("too many requests") ||
+          message.toLowerCase().includes("over rate limit");
+
+        if (isRateLimited) {
+          console.log(
+            `Rate limited on Land Base ${window.config.all_base_endpoints[i]}. Trying next...`
+          );
+        }
+      }
+    }
   } else if (type === "coingecko") {
     contract = new window.bscWeb3.eth.Contract(
       window.COINGECKO_NFT_ABI,
@@ -3746,7 +3770,7 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
-  }  else if (type === "skale") {
+  } else if (type === "skale") {
     contract = new window.skaleWeb3.eth.Contract(
       window.SKALE_NFT_ABI,
       window.config.nft_skale_address
@@ -3762,20 +3786,45 @@ async function getMyNFTs(address, type = "") {
 
     return tokens;
   } else if (type === "base") {
-    contract = new window.baseWeb3.eth.Contract(
-      window.BASE_NFT_ABI,
-      window.config.nft_base_address
-    );
+    for (let i = 0; i < 3; i++) {
+      try {
+        let web3 = new Web3(window.config.all_base_endpoints[i]);
 
-    const balance = await contract.methods.balanceOf(address).call();
+        contract = new web3.eth.Contract(
+          window.BASE_NFT_ABI,
+          window.config.nft_base_address
+        );
 
-    const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
-    );
+        const balance = await contract.methods.balanceOf(address).call();
 
-    return tokens;
+        const tokens = await Promise.all(
+          range(0, balance - 1).map((j) =>
+            contract.methods.tokenOfOwnerByIndex(address, j).call()
+          )
+        );
+
+        return tokens;
+      } catch (err) {
+        const message = err?.message || "";
+
+        console.warn(
+          `Error with ${window.config.all_base_endpoints[i]}: ${message}`
+        );
+
+        const isRateLimited =
+          message.toLowerCase().includes("rate limit") ||
+          message.toLowerCase().includes("too many requests") ||
+          message.toLowerCase().includes("over rate limit");
+
+        if (isRateLimited) {
+          console.log(
+            `Rate limited on Base BetaPass ${window.config.all_base_endpoints[i]}. Trying next...`
+          );
+        }
+      }
+    }
+
+
   } else if (type === "gate") {
     contract = new window.bscWeb3.eth.Contract(
       window.GATE_NFT_ABI,
@@ -3852,20 +3901,42 @@ async function getMyNFTs(address, type = "") {
 
     return tokens;
   } else if (type === "cawsbase") {
-    contract = new window.baseWeb3.eth.Contract(
-      window.CAWS_CCIP_ABI,
-      window.config.nft_caws_base_address
-    );
+    for (let i = 0; i < 3; i++) {
+      try {
+        let web3 = new Web3(window.config.all_base_endpoints[i]);
+        contract = new web3.eth.Contract(
+          window.CAWS_CCIP_ABI,
+          window.config.nft_caws_base_address
+        );
 
-    const balance = await contract.methods.balanceOf(address).call();
+        const balance = await contract.methods.balanceOf(address).call();
+        const tokens = await Promise.all(
+          range(0, balance - 1).map((j) =>
+            contract.methods.tokenOfOwnerByIndex(address, j).call()
+          )
+        );
 
-    const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
-    );
+        return tokens;
+      } catch (err) {
+        const message = err?.message || "";
 
-    return tokens;
+        console.warn(
+          `Error with ${window.config.all_base_endpoints[i]}: ${message}`
+        );
+
+        const isRateLimited =
+          message.toLowerCase().includes("rate limit") ||
+          message.toLowerCase().includes("too many requests") ||
+          message.toLowerCase().includes("over rate limit");
+
+        if (isRateLimited) {
+          console.log(
+            `Rate limited on CAWS Base ${window.config.all_base_endpoints[i]}. Trying next...`
+          );
+        }
+      }
+    }
+
   } else if (type === "core") {
     contract = new window.coreWeb3.eth.Contract(
       window.CORE_NFT_ABI,
@@ -4012,7 +4083,6 @@ async function myNftListContract(address) {
 }
 
 async function myNftListContractCCIP(address, nftAddress) {
-   
   let nft_contract = new window.bscWeb3.eth.Contract(
     window.CAWS_CCIP_ABI,
     nftAddress
@@ -34375,14 +34445,38 @@ async function getEstimatedTokenSubscriptionAmountCFX(tokenAddress) {
 }
 
 async function getEstimatedTokenSubscriptionAmountBase(tokenAddress) {
-  const baseContract = new window.baseWeb3.eth.Contract(
-    window.SUBSCRIPTION_BASE_ABI,
-    window.config.subscription_base_address
-  );
-  if (baseContract) {
-    return await baseContract.methods
-      .getEstimatedTokenSubscriptionAmount(tokenAddress)
-      .call();
+  for (let i = 0; i < 3; i++) {
+    try {
+      let web3 = new Web3(window.config.all_base_endpoints[i]);
+
+      let baseContract = new web3.eth.Contract(
+        window.SUBSCRIPTION_BASE_ABI,
+        window.config.subscription_base_address
+      );
+
+      if (baseContract) {
+        return await baseContract.methods
+          .getEstimatedTokenSubscriptionAmount(tokenAddress)
+          .call();
+      }
+    } catch (err) {
+      const message = err?.message || "";
+
+      console.warn(
+        `Error with ${window.config.all_base_endpoints[i]}: ${message}`
+      );
+
+      const isRateLimited =
+        message.toLowerCase().includes("rate limit") ||
+        message.toLowerCase().includes("too many requests") ||
+        message.toLowerCase().includes("over rate limit");
+
+      if (isRateLimited) {
+        console.log(
+          `Rate limited on getEstimatedTokenSubscriptionAmountBase ${window.config.all_base_endpoints[i]}. Trying next...`
+        );
+      }
+    }
   }
 }
 

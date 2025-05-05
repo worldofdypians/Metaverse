@@ -3440,11 +3440,11 @@ function Dashboard({
     }
   }, [taikocount]);
   useEffect(() => {
-    if (taikocount !== 0) {
+    if (vanarcount !== 0) {
       fetchDailyRecordsVanar();
       getAllVanarChests(email);
     }
-  }, [taikocount]);
+  }, [vanarcount]);
 
   useEffect(() => {
     if (matcount !== 0) {
@@ -4212,23 +4212,25 @@ function Dashboard({
   };
 
   const handleRefreshCountdown700 = async (wallet) => {
-    const goldenPassContract = new window.bscWeb3.eth.Contract(
-      GOLDEN_PASS_ABI,
-      golden_pass_address
-    );
+    if (wallet) {
+      const goldenPassContract = new window.bscWeb3.eth.Contract(
+        GOLDEN_PASS_ABI,
+        golden_pass_address
+      );
 
-    const purchaseTimestamp = await goldenPassContract.methods
-      .getTimeOfExpireBuff(wallet)
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+      const purchaseTimestamp = await goldenPassContract.methods
+        .getTimeOfExpireBuff(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
 
-    const today = new Date();
+      const today = new Date();
 
-    if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
-      handleSetAvailableTime(purchaseTimestamp);
+      if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
+        handleSetAvailableTime(purchaseTimestamp);
+      }
     }
   };
 
@@ -5922,7 +5924,7 @@ function Dashboard({
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
-      getAllVanarChests(email);
+      // getAllVanarChests(email);
       getAllMatChests(email);
       getAllSeiChests(email);
     }

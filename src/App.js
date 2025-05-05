@@ -1562,7 +1562,7 @@ function App() {
       window.CAWS_TIMEPIECE_ABI,
       window.config.nft_timepiece_address
     );
-
+    let result_base = 0;
     const result = await timepiece_contract.methods
       .totalSupply()
       .call()
@@ -1571,18 +1571,41 @@ function App() {
         return 0;
       });
 
-    let base_contract = new window.baseWeb3.eth.Contract(
-      window.BASE_NFT_ABI,
-      window.config.nft_base_address
-    );
+    for (let i = 0; i < 3; i++) {
+      try {
+        let web3 = new Web3(window.config.all_base_endpoints[i]);
 
-    const result_base = await base_contract.methods
-      .totalSupply()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+        let base_contract = new web3.eth.Contract(
+          window.BASE_NFT_ABI,
+          window.config.nft_base_address
+        );
+
+        result_base = await base_contract.methods
+          .totalSupply()
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      } catch (err) {
+        const message = err?.message || "";
+
+        console.warn(
+          `Error with ${window.config.all_base_endpoints[i]}: ${message}`
+        );
+
+        const isRateLimited =
+          message.toLowerCase().includes("rate limit") ||
+          message.toLowerCase().includes("too many requests") ||
+          message.toLowerCase().includes("over rate limit");
+
+        if (isRateLimited) {
+          console.log(
+            `Rate limited on totalSupply ${window.config.all_base_endpoints[i]}. Trying next...`
+          );
+        }
+      }
+    }
 
     const confluxContract = new window.confluxWeb3.eth.Contract(
       window.CONFLUX_NFT_ABI,
@@ -2462,7 +2485,7 @@ function App() {
       getMyNFTS(coinbase, "base").then((NFTS) => {
         settotalBaseNft(NFTS.length);
         setmyBaseNFTs(NFTS);
-        setbaseMintAllowed(NFTS.length > 0 ? 0 : 1);
+        setbaseMintAllowed(NFTS ? (NFTS.length > 0 ? 0 : 1) : 0);
         setmybaseNFTsCreated(NFTS);
       });
 
@@ -3568,16 +3591,16 @@ function App() {
       fetchAllMyNfts();
     }
 
-    if (isConnected === true && coinbase && networkId === 56) {
-      myNftBNB();
-      myLandNftBNB();
-    } else if (isConnected === true && coinbase && networkId === 43114) {
-      myNft2Avax();
-      myLandNftAVAX();
-    } else if (isConnected === true && coinbase && networkId === 8453) {
-      myNftsBase();
-      myLandNftsBase();
-    }
+    // if (isConnected === true && coinbase && networkId === 56) {
+    //   myNftBNB();
+    //   myLandNftBNB();
+    // } else if (isConnected === true && coinbase && networkId === 43114) {
+    //   myNft2Avax();
+    //   myLandNftAVAX();
+    // } else if (isConnected === true && coinbase && networkId === 8453) {
+    //   myNftsBase();
+    //   myLandNftsBase();
+    // }
   }, [isConnected, networkId, coinbase, count]);
 
   // useEffect(() => {
