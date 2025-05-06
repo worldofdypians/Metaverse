@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../_tradingcomp.scss";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import axios from "axios";
@@ -15,7 +15,7 @@ const AirdropPopup = ({ onClose, coinbase }) => {
     await axios
       .get(`https://api.worldofdypians.com/api/get_leaderboards/${week}`)
       .then((res) => {
-        setParticipants(res.data.data?.airdrop?.group1);
+        setParticipants([...res.data.data?.airdrop?.group1,...res.data.data?.airdrop?.group2,...res.data.data?.airdrop?.group3]);
         console.log(res.data.data?.airdrop?.group1, "data");
 
         setAirdropWeek(week);
@@ -28,6 +28,41 @@ const AirdropPopup = ({ onClose, coinbase }) => {
         console.log(err, "error");
       });
   };
+
+
+  const scrollRef = useRef(null);
+
+  const [slice, setSlice] = useState(300);
+
+  const onScrollEnd = () => {
+    setSlice(slice + 100);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = scrollRef.current;
+      if (el) {
+        const isBottom = el.scrollHeight - el.scrollTop === el.clientHeight;
+        if (isBottom) {
+          onScrollEnd && onScrollEnd(); // Dispatch your function
+        }
+      }
+    };
+
+    const el = scrollRef.current;
+    if (el) {
+      el.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (el) {
+        el.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [onScrollEnd]);
+
+
+
 
   useEffect(() => {
     setAirdropWeek(currentWeek - 1);
@@ -75,6 +110,8 @@ const AirdropPopup = ({ onClose, coinbase }) => {
       {loading ? (
         <div
           className="d-flex trading-comp-overflow-2 align-items-center justify-content-center mt-3"
+        ref={scrollRef}
+          
           style={{ height: "470px" }}
         >
           <div
@@ -104,7 +141,7 @@ const AirdropPopup = ({ onClose, coinbase }) => {
                         {shortAddress(item)} {coinbase === item && "(You)"}
                       </span>
                     </div>
-                    <span className="trading-comp-lb-prize">$20</span>
+                    <span className="trading-comp-lb-prize">{index <= 99 ? "$20" : index <= 699 ? "$10" : "$5"}</span>
                   </div>
                 </div>
               ))}
