@@ -290,10 +290,10 @@ const GetPremiumPopup = ({
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
     );
-    const nftContract_vanar = new window.vanarWeb3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
-      window.config.nft_dypius_premium_vanar_address
-    );
+    // const nftContract_vanar = new window.vanarWeb3.eth.Contract(
+    //   window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
+    //   window.config.nft_dypius_premium_vanar_address
+    // );
 
     const nftContract_taiko = new window.taikoWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
@@ -321,13 +321,13 @@ const GetPremiumPopup = ({
           console.error(e);
           return 0;
         });
-      const result_vanar = await nftContract_vanar.methods
-        .balanceOf(wallet)
-        .call()
-        .catch((e) => {
-          console.error(e);
-          return 0;
-        });
+      // const result_vanar = await nftContract_vanar.methods
+      //   .balanceOf(wallet)
+      //   .call()
+      //   .catch((e) => {
+      //     console.error(e);
+      //     return 0;
+      //   });
 
       const result_taiko = await nftContract_taiko.methods
         .balanceOf(wallet)
@@ -464,30 +464,32 @@ const GetPremiumPopup = ({
 
         setnftPremium_tokenIdViction(tokenId);
         setnftPremium_totalViction(parseInt(result_viction));
-      } else if (result_vanar && parseInt(result_vanar) > 0) {
-        const tokenId = await nftContract_vanar.methods
-          .tokenOfOwnerByIndex(wallet, 0)
-          .call()
-          .catch((e) => {
-            console.error(e);
-            return 0;
-          });
+      }
+      //  else if (result_vanar && parseInt(result_vanar) > 0) {
+      //   const tokenId = await nftContract_vanar.methods
+      //     .tokenOfOwnerByIndex(wallet, 0)
+      //     .call()
+      //     .catch((e) => {
+      //       console.error(e);
+      //       return 0;
+      //     });
 
-        if (nftObject_vanar) {
-          setnftDiscountObjectVanar(nftObject_vanar);
-          if (discount_vanar) {
-            setdiscountPercentageVanar(
-              Math.max(
-                parseInt(discount_vanar),
-                parseInt(nftObject_vanar.discountPercentage)
-              )
-            );
-          }
-        }
+      //   if (nftObject_vanar) {
+      //     setnftDiscountObjectVanar(nftObject_vanar);
+      //     if (discount_vanar) {
+      //       setdiscountPercentageVanar(
+      //         Math.max(
+      //           parseInt(discount_vanar),
+      //           parseInt(nftObject_vanar.discountPercentage)
+      //         )
+      //       );
+      //     }
+      //   }
 
-        setnftPremium_tokenIdVanar(tokenId);
-        setnftPremium_totalVanar(parseInt(result_vanar));
-      } else if (result_taiko && parseInt(result_taiko) > 0) {
+      //   setnftPremium_tokenIdVanar(tokenId);
+      //   setnftPremium_totalVanar(parseInt(result_vanar));
+      // }
+      else if (result_taiko && parseInt(result_taiko) > 0) {
         const tokenId = await nftContract_taiko.methods
           .tokenOfOwnerByIndex(wallet, 0)
           .call()
@@ -750,10 +752,10 @@ const GetPremiumPopup = ({
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
     );
-    let nftContract_vanar = new window.web3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
-      window.config.nft_dypius_premium_vanar_address
-    );
+    // let nftContract_vanar = new window.web3.eth.Contract(
+    //   window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
+    //   window.config.nft_dypius_premium_vanar_address
+    // );
 
     let nftContract_taiko = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
@@ -1045,64 +1047,66 @@ const GetPremiumPopup = ({
             }, 5000);
           });
       }
-    } else if (
-      chainId === 2040 &&
-      nftPremium_totalVanar > 0 &&
-      window.WALLET_TYPE !== "binance"
-    ) {
-      if (approveStatus === "initial") {
-        await nftContract_vanar.methods
-          .approve(
-            window.config.subscription_vanar_address,
-            nftPremium_tokenIdVanar
-          )
-          .send({ from: coinbase })
-          .then(() => {
-            setloadspinner(false);
-            setisApproved(true);
-            if (discountPercentageVanar < 100) {
-              setapproveStatus("approveAmount");
-            } else {
-              setapproveStatus("deposit");
-            }
-          })
-          .catch((e) => {
-            setstatus(e?.message);
-            setloadspinner(false);
-            setapproveStatus("fail");
-            window.alertify.error(e?.message);
-            setTimeout(() => {
-              setstatus("");
-              setloadspinner(false);
-              setapproveStatus("initial");
-            }, 5000);
-          });
-      } else if (approveStatus === "approveAmount") {
-        let tokenContract = new window.web3.eth.Contract(
-          window.ERC20_ABI,
-          selectedSubscriptionToken
-        );
-        await tokenContract.methods
-          .approve(vanarsubscribeAddress, price)
-          .send({ from: coinbase })
-          .then(() => {
-            setloadspinner(false);
-            setisApproved(true);
-            setapproveStatus("deposit");
-          })
-          .catch((e) => {
-            setstatus(e?.message);
-            setloadspinner(false);
-            setapproveStatus("fail");
-            window.alertify.error(e?.message);
-            setTimeout(() => {
-              setstatus("");
-              setloadspinner(false);
-              setapproveStatus("initial");
-            }, 5000);
-          });
-      }
-    } else if (
+    }
+    // else if (
+    //   chainId === 2040 &&
+    //   nftPremium_totalVanar > 0 &&
+    //   window.WALLET_TYPE !== "binance"
+    // ) {
+    //   if (approveStatus === "initial") {
+    //     await nftContract_vanar.methods
+    //       .approve(
+    //         window.config.subscription_vanar_address,
+    //         nftPremium_tokenIdVanar
+    //       )
+    //       .send({ from: coinbase })
+    //       .then(() => {
+    //         setloadspinner(false);
+    //         setisApproved(true);
+    //         if (discountPercentageVanar < 100) {
+    //           setapproveStatus("approveAmount");
+    //         } else {
+    //           setapproveStatus("deposit");
+    //         }
+    //       })
+    //       .catch((e) => {
+    //         setstatus(e?.message);
+    //         setloadspinner(false);
+    //         setapproveStatus("fail");
+    //         window.alertify.error(e?.message);
+    //         setTimeout(() => {
+    //           setstatus("");
+    //           setloadspinner(false);
+    //           setapproveStatus("initial");
+    //         }, 5000);
+    //       });
+    //   } else if (approveStatus === "approveAmount") {
+    //     let tokenContract = new window.web3.eth.Contract(
+    //       window.ERC20_ABI,
+    //       selectedSubscriptionToken
+    //     );
+    //     await tokenContract.methods
+    //       .approve(vanarsubscribeAddress, price)
+    //       .send({ from: coinbase })
+    //       .then(() => {
+    //         setloadspinner(false);
+    //         setisApproved(true);
+    //         setapproveStatus("deposit");
+    //       })
+    //       .catch((e) => {
+    //         setstatus(e?.message);
+    //         setloadspinner(false);
+    //         setapproveStatus("fail");
+    //         window.alertify.error(e?.message);
+    //         setTimeout(() => {
+    //           setstatus("");
+    //           setloadspinner(false);
+    //           setapproveStatus("initial");
+    //         }, 5000);
+    //       });
+    //   }
+    // }
+    else if (
       chainId === 167000 &&
       nftPremium_totalTaiko > 0 &&
       window.WALLET_TYPE !== "binance"
@@ -2018,7 +2022,59 @@ const GetPremiumPopup = ({
         const result = await subscribeTokencontractbase.methods
           .allowance(coinbase, basesubscribeAddress)
           .call()
-          .then();
+          .then()
+          .catch(async (e) => {
+            for (let i = 0; i < 3; i++) {
+              try {
+                let web3 = new Web3(window.config.all_base_endpoints[i]);
+
+                let base_contract = new web3.eth.Contract(
+                  window.ERC20_ABI,
+                  subscribeToken
+                );
+
+                let result_base = await base_contract.methods
+                  .allowance(coinbase, basesubscribeAddress)
+                  .call()
+                  .catch((e) => {
+                    console.error(e);
+                    return 0;
+                  });
+                if (
+                  result_base != 0 &&
+                  Number(result_base) >= Number(tokenprice)
+                ) {
+                  setloadspinner(false);
+                  setisApproved(true);
+                  setapproveStatus("deposit");
+                } else if (
+                  result_base == 0 ||
+                  Number(result_base) < Number(tokenprice)
+                ) {
+                  setloadspinner(false);
+                  setisApproved(false);
+                  setapproveStatus("initial");
+                }
+              } catch (err) {
+                const message = err?.message || "";
+
+                console.warn(
+                  `Error with ${window.config.all_base_endpoints[i]}: ${message}`
+                );
+
+                const isRateLimited =
+                  message.toLowerCase().includes("rate limit") ||
+                  message.toLowerCase().includes("too many requests") ||
+                  message.toLowerCase().includes("over rate limit");
+
+                if (isRateLimited) {
+                  console.log(
+                    `Rate limited on subscribeTokencontractbase ${window.config.all_base_endpoints[i]}. Trying next...`
+                  );
+                }
+              }
+            }
+          });
 
         if (result != 0 && Number(result) >= Number(tokenprice)) {
           setloadspinner(false);

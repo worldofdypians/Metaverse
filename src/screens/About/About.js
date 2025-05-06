@@ -28,7 +28,7 @@ const About = () => {
 
   useEffect(() => {
     document.title = "About WOD";
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
 
   return (
