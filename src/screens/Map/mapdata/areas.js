@@ -1527,7 +1527,7 @@ const chainAreas = [
       },
     ],
     city: "Dypians",
-    size: "500x500",
+    size: "125x125",
     rewards: "N/A",
     desc: "Vanar offers a suite of solutions for brands built on years of experience. From new engagement experiences to AI-driven IP tracking. ",
     benefits: [
