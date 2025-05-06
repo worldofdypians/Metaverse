@@ -511,11 +511,11 @@ const MarketMint = ({
     ) {
       setSelectedMint(bnbData);
       setMintTitle("bnbchain");
-    } 
+    }
     // else if (location.pathname.includes("opbnbchain")) {
     //   setSelectedMint(opbnbData);
     //   setMintTitle("opbnbchain");
-    // } 
+    // }
     else if (location.pathname.includes("timepiece")) {
       setSelectedMint(timepieceData);
       setMintTitle("timepiece");
@@ -534,11 +534,10 @@ const MarketMint = ({
     } else if (location.pathname.includes("kucoin")) {
       setSelectedMint(kucoinData);
       setMintTitle("kucoin");
+    } else if (location.pathname.includes("vanar")) {
+      setSelectedMint(vanarData);
+      setMintTitle("vanar");
     }
-    // else if (location.pathname.includes("vanar")) {
-    //   setSelectedMint(vanarData);
-    //   setMintTitle("vanar");
-    // }
     getTotalSupply();
   }, [location]);
 
@@ -546,7 +545,7 @@ const MarketMint = ({
     html.classList.remove("hidescroll");
   }, []);
 
-  let countToExpiresei = new Date("2025-04-25T14:00:00.000+02:00");
+  let countToExpiresei = new Date("2025-05-23T14:00:00.000+02:00");
   const dummyCards = [
     // {
     //   title: "Avalanche Pass",
@@ -690,15 +689,15 @@ const MarketMint = ({
     //   data: immutableData,
     //   class: "mint-immutable",
     // },
-    // {
-    //   title: "Vanar Pass",
-    //   eventId: "vanar",
-    //   desc: "Gain entry to metaverse, and join exclusive Vanar event with special ticket.",
-    //   img: "https://cdn.worldofdypians.com/wod/vanarMintSlide.webp",
-    //   data: vanarData,
-    //   class: "mint-core",
-    //   id: "vanar",
-    // },
+    {
+      title: "Vanar Pass",
+      eventId: "vanar",
+      desc: "Gain entry to metaverse, and join exclusive Vanar event with special ticket.",
+      img: "https://cdn.worldofdypians.com/wod/vanarMintSlide.webp",
+      data: vanarData,
+      class: "mint-core",
+      id: "vanar",
+    },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -1030,6 +1029,9 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Live
                   </h6>
                   <h6
@@ -1038,9 +1040,6 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
                     Upcoming
                   </h6>
                   <h6
@@ -2254,8 +2253,7 @@ const MarketMint = ({
                                     setMouseOver(false);
                                   }}
                                 >
-                                  {(isConnected === false ||
-                                    chainId !== 2040) && (
+                                  {isConnected === false && (
                                     <img
                                       src={
                                         mouseOver === true
@@ -2313,36 +2311,36 @@ const MarketMint = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">Mints are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-
-                <div className="upcoming-mint-wrapper upcoming-vanar-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                  <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                    <h6 className="upcoming-mint-title">Vanar Beta Pass</h6>
-                    <p className="upcoming-mint-desc">
-                      Get access to a special ticket to enter the metaverse and
-                      participate in an exclusive event hosted by Vanar
-                    </p>
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">Mints are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
                   </div>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/vanarEventBg.webp"}
-                    alt=""
-                    className="upcoming-mint-img d-none d-lg-block"
-                  />
-                  <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/vanarMintMobileBg.webp"
-                    }
-                    alt=""
-                    className="upcoming-mint-img d-block d-lg-none d-md-none"
-                  />
                 </div>
+
+                // <div className="upcoming-mint-wrapper upcoming-vanar-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //     <h6 className="upcoming-mint-title">Vanar Beta Pass</h6>
+                //     <p className="upcoming-mint-desc">
+                //       Get access to a special ticket to enter the metaverse and
+                //       participate in an exclusive event hosted by Vanar
+                //     </p>
+                //   </div>
+                //   <img
+                //     src={"https://cdn.worldofdypians.com/wod/vanarEventBg.webp"}
+                //     alt=""
+                //     className="upcoming-mint-img d-none d-lg-block"
+                //   />
+                //   <img
+                //     src={
+                //       "https://cdn.worldofdypians.com/wod/vanarMintMobileBg.webp"
+                //     }
+                //     alt=""
+                //     className="upcoming-mint-img d-block d-lg-none d-md-none"
+                //   />
+                // </div>
                 //   <div className="upcoming-mint-wrapper upcoming-matchain-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                 //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                 //       <h6 className="upcoming-mint-title">

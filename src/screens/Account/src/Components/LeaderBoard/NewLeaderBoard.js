@@ -724,13 +724,7 @@ const NewLeaderBoard = ({
                 </div>
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
-                    {optionText2 === "vanar" ? (
-                      <div className="coming-soon-position d-flex align-items-center justify-content-center">
-                        <h6 className="mb-0">Coming Soon</h6>
-                      </div>
-                    ) : allData[0]?.loading === false ? (
-                      <></>
-                    ) : allData[0]?.loading === true ? (
+                    {allData[0]?.loading === true ? (
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <CircularProgress size={20} />
                       </div>
@@ -763,8 +757,7 @@ const NewLeaderBoard = ({
                           <div
                             key={index}
                             className={`${
-                              (leaderboard.loading === true ||
-                                optionText2 === "vanar") &&
+                              (leaderboard.loading === true) &&
                               "comingsoon-new"
                             } leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >

@@ -86,11 +86,11 @@ const GetPremiumPopup = ({
       symbol: "sei",
       chainId: 1329,
     },
-    // {
-    //   name: "Vanar",
-    //   symbol: "vanar",
-    //   chainId: 2040,
-    // },
+    {
+      name: "Vanar",
+      symbol: "vanar",
+      chainId: 2040,
+    },
   ];
 
   const { BigNumber } = window;
@@ -290,10 +290,10 @@ const GetPremiumPopup = ({
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
     );
-    // const nftContract_vanar = new window.vanarWeb3.eth.Contract(
-    //   window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
-    //   window.config.nft_dypius_premium_vanar_address
-    // );
+    const nftContract_vanar = new window.vanarWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
+      window.config.nft_dypius_premium_vanar_address
+    );
 
     const nftContract_taiko = new window.taikoWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
@@ -321,13 +321,13 @@ const GetPremiumPopup = ({
           console.error(e);
           return 0;
         });
-      // const result_vanar = await nftContract_vanar.methods
-      //   .balanceOf(wallet)
-      //   .call()
-      //   .catch((e) => {
-      //     console.error(e);
-      //     return 0;
-      //   });
+      const result_vanar = await nftContract_vanar.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
 
       const result_taiko = await nftContract_taiko.methods
         .balanceOf(wallet)
@@ -464,32 +464,30 @@ const GetPremiumPopup = ({
 
         setnftPremium_tokenIdViction(tokenId);
         setnftPremium_totalViction(parseInt(result_viction));
-      }
-      //  else if (result_vanar && parseInt(result_vanar) > 0) {
-      //   const tokenId = await nftContract_vanar.methods
-      //     .tokenOfOwnerByIndex(wallet, 0)
-      //     .call()
-      //     .catch((e) => {
-      //       console.error(e);
-      //       return 0;
-      //     });
+      } else if (result_vanar && parseInt(result_vanar) > 0) {
+        const tokenId = await nftContract_vanar.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
 
-      //   if (nftObject_vanar) {
-      //     setnftDiscountObjectVanar(nftObject_vanar);
-      //     if (discount_vanar) {
-      //       setdiscountPercentageVanar(
-      //         Math.max(
-      //           parseInt(discount_vanar),
-      //           parseInt(nftObject_vanar.discountPercentage)
-      //         )
-      //       );
-      //     }
-      //   }
+        if (nftObject_vanar) {
+          setnftDiscountObjectVanar(nftObject_vanar);
+          if (discount_vanar) {
+            setdiscountPercentageVanar(
+              Math.max(
+                parseInt(discount_vanar),
+                parseInt(nftObject_vanar.discountPercentage)
+              )
+            );
+          }
+        }
 
-      //   setnftPremium_tokenIdVanar(tokenId);
-      //   setnftPremium_totalVanar(parseInt(result_vanar));
-      // }
-      else if (result_taiko && parseInt(result_taiko) > 0) {
+        setnftPremium_tokenIdVanar(tokenId);
+        setnftPremium_totalVanar(parseInt(result_vanar));
+      } else if (result_taiko && parseInt(result_taiko) > 0) {
         const tokenId = await nftContract_taiko.methods
           .tokenOfOwnerByIndex(wallet, 0)
           .call()
@@ -658,12 +656,12 @@ const GetPremiumPopup = ({
             token,
             discountPercentageViction
           )
-        : // : chainId === 2040
-        // ? await window.getEstimatedTokenSubscriptionAmountVanar(
-        //     token,
-        //     discountPercentageVanar
-        //   )
-        chainId === 169
+        : chainId === 2040
+        ? await window.getEstimatedTokenSubscriptionAmountVanar(
+            token,
+            discountPercentageVanar
+          )
+        : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
         ? await window.getEstimatedTokenSubscriptionAmountTaiko(
@@ -752,10 +750,10 @@ const GetPremiumPopup = ({
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
     );
-    // let nftContract_vanar = new window.web3.eth.Contract(
-    //   window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
-    //   window.config.nft_dypius_premium_vanar_address
-    // );
+    let nftContract_vanar = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
+      window.config.nft_dypius_premium_vanar_address
+    );
 
     let nftContract_taiko = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
@@ -1047,66 +1045,64 @@ const GetPremiumPopup = ({
             }, 5000);
           });
       }
-    }
-    // else if (
-    //   chainId === 2040 &&
-    //   nftPremium_totalVanar > 0 &&
-    //   window.WALLET_TYPE !== "binance"
-    // ) {
-    //   if (approveStatus === "initial") {
-    //     await nftContract_vanar.methods
-    //       .approve(
-    //         window.config.subscription_vanar_address,
-    //         nftPremium_tokenIdVanar
-    //       )
-    //       .send({ from: coinbase })
-    //       .then(() => {
-    //         setloadspinner(false);
-    //         setisApproved(true);
-    //         if (discountPercentageVanar < 100) {
-    //           setapproveStatus("approveAmount");
-    //         } else {
-    //           setapproveStatus("deposit");
-    //         }
-    //       })
-    //       .catch((e) => {
-    //         setstatus(e?.message);
-    //         setloadspinner(false);
-    //         setapproveStatus("fail");
-    //         window.alertify.error(e?.message);
-    //         setTimeout(() => {
-    //           setstatus("");
-    //           setloadspinner(false);
-    //           setapproveStatus("initial");
-    //         }, 5000);
-    //       });
-    //   } else if (approveStatus === "approveAmount") {
-    //     let tokenContract = new window.web3.eth.Contract(
-    //       window.ERC20_ABI,
-    //       selectedSubscriptionToken
-    //     );
-    //     await tokenContract.methods
-    //       .approve(vanarsubscribeAddress, price)
-    //       .send({ from: coinbase })
-    //       .then(() => {
-    //         setloadspinner(false);
-    //         setisApproved(true);
-    //         setapproveStatus("deposit");
-    //       })
-    //       .catch((e) => {
-    //         setstatus(e?.message);
-    //         setloadspinner(false);
-    //         setapproveStatus("fail");
-    //         window.alertify.error(e?.message);
-    //         setTimeout(() => {
-    //           setstatus("");
-    //           setloadspinner(false);
-    //           setapproveStatus("initial");
-    //         }, 5000);
-    //       });
-    //   }
-    // }
-    else if (
+    } else if (
+      chainId === 2040 &&
+      nftPremium_totalVanar > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_vanar.methods
+          .approve(
+            window.config.subscription_vanar_address,
+            nftPremium_tokenIdVanar
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageVanar < 100) {
+              setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
+        let tokenContract = new window.web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+          .approve(vanarsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      }
+    } else if (
       chainId === 167000 &&
       nftPremium_totalTaiko > 0 &&
       window.WALLET_TYPE !== "binance"
@@ -1848,7 +1844,11 @@ const GetPremiumPopup = ({
           const result = await subscribeTokencontractvanar.methods
             .allowance(coinbase, vanarsubscribeAddress)
             .call()
-            .then();
+            .then()
+            .catch((e) => {
+              console.error(e);
+              return 0;
+            });
 
           if (result != 0 && Number(result) >= Number(tokenprice)) {
             setloadspinner(false);
@@ -2683,9 +2683,9 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_SKALE"
             : chainId === 88
             ? "SUBSCRIPTION_VICTION"
-            : // : chainId === 2040
-            // ? "SUBSCRIPTION_VANAR"
-            chainId === 169
+            : chainId === 2040
+            ? "SUBSCRIPTION_VANAR"
+            : chainId === 169
             ? "SUBSCRIPTION_MANTA"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
@@ -2947,22 +2947,20 @@ const GetPremiumPopup = ({
       );
       handleSubscriptionTokenChange(wvictionAddress);
       handleCheckIfAlreadyApproved(wvictionAddress);
-    }
-    //  else if (chainId === 2040) {
-    //   setChainDropdown(
-    //     chainDropdowns.find((item) => {
-    //       return item.chainId === chainId;
-    //     })
-    //   );
-    //   setdropdownIcon("usdt");
-    //   setdropdownTitle("USDT");
-    //   setselectedSubscriptionToken(
-    //     Object.keys(window.config.subscriptionvanar_tokens)[0]
-    //   );
-    //   handleSubscriptionTokenChange(wvanarAddress);
-    //   handleCheckIfAlreadyApproved(wvanarAddress);
-    // }
-    else if (chainId === 169) {
+    } else if (chainId === 2040) {
+      setChainDropdown(
+        chainDropdowns.find((item) => {
+          return item.chainId === chainId;
+        })
+      );
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionvanar_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wvanarAddress);
+      handleCheckIfAlreadyApproved(wvanarAddress);
+    } else if (chainId === 169) {
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
@@ -3040,17 +3038,17 @@ const GetPremiumPopup = ({
     chainId,
     nftPremium_total,
     nftPremium_totalViction,
-    // nftPremium_totalVanar,
+    nftPremium_totalVanar,
     nftPremium_totalTaiko,
     nftPremium_totalMat,
     discountPercentage,
     discountPercentageViction,
-    // discountPercentageVanar,
+    discountPercentageVanar,
     discountPercentageTaiko,
     discountPercentageMat,
     nftPremium_tokenId,
     nftPremium_tokenIdViction,
-    // nftPremium_tokenIdVanar,
+    nftPremium_tokenIdVanar,
     nftPremium_tokenIdTaiko,
     nftPremium_tokenIdMat,
   ]);
@@ -3080,14 +3078,12 @@ const GetPremiumPopup = ({
         window.config.subscriptionviction_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    }
-    //  else if (chainId === 2040 && selectedSubscriptionToken !== "") {
-    //   settokenDecimals(
-    //     window.config.subscriptionvanar_tokens[selectedSubscriptionToken]
-    //       ?.decimals
-    //   );
-    // }
-    else if (chainId === 169 && selectedSubscriptionToken !== "") {
+    } else if (chainId === 2040 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionvanar_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 169 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionmanta_tokens[selectedSubscriptionToken]
           ?.decimals
@@ -3184,12 +3180,12 @@ const GetPremiumPopup = ({
             <div className="" style={{ background: "#8E97CD" }}></div>
             {discountPercentage > 0 ||
             discountPercentageViction > 0 ||
-            // discountPercentageVanar > 0 ||
+            discountPercentageVanar > 0 ||
             discountPercentageTaiko > 0 ||
             discountPercentageMat > 0 ||
             nftPremium_total > 0 ||
             nftPremium_totalViction ||
-            // nftPremium_totalVanar ||
+            nftPremium_totalVanar ||
             nftPremium_totalTaiko > 0 ||
             nftPremium_totalMat > 0 ? (
               <div className="premium-gold-bg mt-3 p-4 position-relative d-flex align-items-center justify-content-between">
@@ -3207,9 +3203,9 @@ const GetPremiumPopup = ({
                           ? discountPercentage
                           : discountPercentageViction > 0
                           ? discountPercentageViction
-                          : // : discountPercentageVanar > 0
-                          // ? discountPercentageVanar
-                          discountPercentageTaiko > 0
+                          : discountPercentageVanar > 0
+                          ? discountPercentageVanar
+                          : discountPercentageTaiko > 0
                           ? discountPercentageTaiko
                           : discountPercentageMat > 0
                           ? discountPercentageMat
@@ -3225,7 +3221,7 @@ const GetPremiumPopup = ({
                     <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
                     {(nftPremium_total > 0 ||
                       nftPremium_totalViction > 0 ||
-                      // nftPremium_totalVanar > 0 ||
+                      nftPremium_totalVanar > 0 ||
                       nftPremium_totalTaiko > 0 ||
                       nftPremium_totalMat > 0) && (
                       <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
@@ -3237,9 +3233,9 @@ const GetPremiumPopup = ({
                             ? nftDiscountObjectTaiko.expiration * 1000
                             : nftPremium_totalMat > 0
                             ? nftDiscountObjectMat.expiration * 1000
-                            : // : nftPremium_totalVanar > 0
-                              // ? nftDiscountObjectVanar.expiration * 1000
-                              nftDiscountObjectViction.expiration * 1000
+                            : nftPremium_totalVanar > 0
+                            ? nftDiscountObjectVanar.expiration * 1000
+                            : nftDiscountObjectViction.expiration * 1000
                         )
                           .toDateString()
                           .slice(
@@ -3251,9 +3247,9 @@ const GetPremiumPopup = ({
                                 ? nftDiscountObjectTaiko.expiration * 1000
                                 : nftPremium_totalMat > 0
                                 ? nftDiscountObjectMat.expiration * 1000
-                                : // : nftPremium_totalVanar > 0
-                                  // ? nftDiscountObjectVanar.expiration * 1000
-                                  nftDiscountObjectViction.expiration * 1000
+                                : nftPremium_totalVanar > 0
+                                ? nftDiscountObjectVanar.expiration * 1000
+                                : nftDiscountObjectViction.expiration * 1000
                             ).toDateString().length
                           )}
                       </h6>
@@ -3263,7 +3259,7 @@ const GetPremiumPopup = ({
                     <h6 className="discount-price">
                       {discountPercentage == 100 ||
                       discountPercentageViction == 100 ||
-                      // discountPercentageVanar == 100 ||
+                      discountPercentageVanar == 100 ||
                       discountPercentageTaiko == 100 ||
                       discountPercentageMat == 100
                         ? "FREE"
@@ -3274,9 +3270,9 @@ const GetPremiumPopup = ({
                                 ? discountPercentage
                                 : discountPercentageViction > 0
                                 ? discountPercentageViction
-                                : // : discountPercentageVanar > 0
-                                // ? discountPercentageVanar
-                                discountPercentageTaiko > 0
+                                : discountPercentageVanar > 0
+                                ? discountPercentageVanar
+                                : discountPercentageTaiko > 0
                                 ? discountPercentageTaiko
                                 : discountPercentageMat > 0
                                 ? discountPercentageMat
@@ -3287,7 +3283,7 @@ const GetPremiumPopup = ({
                   </div>
                   {(nftPremium_total > 0 ||
                     nftPremium_totalViction > 0 ||
-                    // nftPremium_totalVanar > 0 ||
+                    nftPremium_totalVanar > 0 ||
                     nftPremium_totalTaiko > 0 ||
                     nftPremium_totalMat > 0) && (
                     <h6 className="token-amount-placeholder m-0 premium-custom-text">
@@ -3299,9 +3295,9 @@ const GetPremiumPopup = ({
                           ? nftDiscountObjectTaiko.expiration * 1000
                           : nftPremium_totalMat > 0
                           ? nftDiscountObjectMat.expiration * 1000
-                          : // : nftPremium_totalVanar > 0
-                            // ? nftDiscountObjectVanar.expiration * 1000
-                            nftDiscountObjectViction.expiration * 1000
+                          : nftPremium_totalVanar > 0
+                          ? nftDiscountObjectVanar.expiration * 1000
+                          : nftDiscountObjectViction.expiration * 1000
                       )
                         .toDateString()
                         .slice(
@@ -3313,9 +3309,9 @@ const GetPremiumPopup = ({
                               ? nftDiscountObjectTaiko.expiration * 1000
                               : nftPremium_totalMat > 0
                               ? nftDiscountObjectMat.expiration * 1000
-                              : // : nftPremium_totalVanar > 0
-                                // ? nftDiscountObjectVanar.expiration * 1000
-                                nftDiscountObjectViction.expiration * 1000
+                              : nftPremium_totalVanar > 0
+                              ? nftDiscountObjectVanar.expiration * 1000
+                              : nftDiscountObjectViction.expiration * 1000
                           ).toDateString().length
                         )}
                     </h6>
@@ -3572,9 +3568,9 @@ const GetPremiumPopup = ({
                               ? window.config.subscriptionskale_tokens
                               : chainId === 88
                               ? window.config.subscriptionviction_tokens
-                              : // : chainId === 2040
-                              // ? window.config.subscriptionvanar_tokens
-                              chainId === 169
+                              : chainId === 2040
+                              ? window.config.subscriptionvanar_tokens
+                              : chainId === 169
                               ? window.config.subscriptionmanta_tokens
                               : chainId === 167000
                               ? window.config.subscriptiontaiko_tokens
@@ -3615,11 +3611,11 @@ const GetPremiumPopup = ({
                                       : chainId === 88
                                       ? window.config
                                           .subscriptionviction_tokens[t]?.symbol
-                                      : // : chainId === 2040
-                                      // ? window.config.subscriptionvanar_tokens[
-                                      //     t
-                                      //   ]?.symbol
-                                      chainId === 169
+                                      : chainId === 2040
+                                      ? window.config.subscriptionvanar_tokens[
+                                          t
+                                        ]?.symbol
+                                      : chainId === 169
                                       ? window.config.subscriptionmanta_tokens[
                                           t
                                         ]?.symbol
@@ -3662,11 +3658,11 @@ const GetPremiumPopup = ({
                                       : chainId === 88
                                       ? window.config
                                           .subscriptionviction_tokens[t]?.symbol
-                                      : // : chainId === 2040
-                                      // ? window.config.subscriptionvanar_tokens[
-                                      //     t
-                                      //   ]?.symbol
-                                      chainId === 169
+                                      : chainId === 2040
+                                      ? window.config.subscriptionvanar_tokens[
+                                          t
+                                        ]?.symbol
+                                      : chainId === 169
                                       ? window.config.subscriptionmanta_tokens[
                                           t
                                         ]?.symbol
@@ -3727,11 +3723,11 @@ const GetPremiumPopup = ({
                                     ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionviction_tokens[
                                         t
                                       ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : // : chainId === 2040
-                                    // ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
-                                    //     t
-                                    //   ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    chainId === 169
+                                    : chainId === 2040
+                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
+                                        t
+                                      ]?.symbol.toLowerCase()}IconPremium.svg`
+                                    : chainId === 169
                                     ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
                                         t
                                       ]?.symbol.toLowerCase()}IconPremium.svg`
@@ -3780,10 +3776,10 @@ const GetPremiumPopup = ({
                                 : chainId === 88
                                 ? window.config.subscriptionviction_tokens[t]
                                     ?.symbol
-                                : // : chainId === 2040
-                                // ? window.config.subscriptionvanar_tokens[t]
-                                //     ?.symbol
-                                chainId === 169
+                                : chainId === 2040
+                                ? window.config.subscriptionvanar_tokens[t]
+                                    ?.symbol
+                                : chainId === 169
                                 ? window.config.subscriptionmanta_tokens[t]
                                     ?.symbol
                                 : chainId === 167000
