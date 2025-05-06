@@ -6420,6 +6420,9 @@ function Dashboard({
             onMantaChestClaimed={() => {
               setmantacount(mantacount + 1);
             }}
+            onVanarChestClaimed={() => {
+              setVanarcount(vanarcount + 1);
+            }}
             onBaseChestClaimed={() => {
               setbasecount(basecount + 1);
             }}
@@ -6538,9 +6541,6 @@ function Dashboard({
             }}
             onTaikoChestClaimed={() => {
               settaikocount(taikocount + 1);
-            }}
-            onVanarChestClaimed={() => {
-              setVanarcount(vanarcount + 1);
             }}
             onMatChestClaimed={() => {
               setmatcount(matcount + 1);

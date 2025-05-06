@@ -832,11 +832,9 @@ const NewDailyBonus = ({
         showSingleRewardDataBase(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "taiko") {
         showSingleRewardDataTaiko(rewardData.chestId, isActiveIndex - 1);
-      }
-      else if (chain === "vanar") {
+      } else if (chain === "vanar") {
         showSingleRewardDataVanar(rewardData.chestId, isActiveIndex - 1);
-      }
-      else if (chain === "matchain") {
+      } else if (chain === "matchain") {
         showSingleRewardDataMat(rewardData.chestId, isActiveIndex - 1);
       }
     }
@@ -2662,8 +2660,10 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "vanar") {
-      if ( window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2736,10 +2736,7 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
       // setMessage("comingsoon");
-    }
-    
-    
-    else if (chain === "matchain") {
+    } else if (chain === "matchain") {
       if (window.WALLET_TYPE !== "binance") {
         if (!email) {
           setMessage("login");
@@ -4253,7 +4250,7 @@ const NewDailyBonus = ({
                                 />
                               </div>
                               <span className="percentage-span">
-                                {parseInt(vanarPercentage)}% 
+                                {parseInt(vanarPercentage)}%
                               </span>
                             </div>
                           </div>
@@ -5375,110 +5372,107 @@ const NewDailyBonus = ({
                                   publicClient={publicClient}
                                 />
                               ))
-
-                              : chain === "vanar"
-                              ? allVanarChests && allVanarChests.length > 0
-                                ? allVanarChests.map((item, index) => (
-                                    <NewChestItem
-                                      coinbase={coinbase}
-                                      claimingChest={claimingChest}
-                                      setClaimingChest={setClaimingChest}
-                                      buyNftPopup={buyNftPopup}
-                                      chainId={chainId}
-                                      image={taikoImages[index]} //RETURN HERE
-                                      chain={chain}
-                                      key={index}
-                                      item={item}
-                                      // openChest={openChest}
-                                      selectedChest={selectedChest}
-                                      isPremium={isPremium}
-                                      onClaimRewards={(value) => {
-                                        // setRewardData(value);
-                                        setLiveRewardData(value);
-                                        onVanarChestClaimed();
-                                        showLiveRewardData(value);
-                                        setIsActive(item.chestId);
-                                        setIsActiveIndex(index + 1);
-                                      }}
-                                      handleShowRewards={(value, value2) => {
-                                        showSingleRewardDataVanar(value, value2);
-                                        setIsActive(value);
-                                        setIsActiveIndex(index + 1);
-                                      }}
-                                      onLoadingChest={(value) => {
-                                        // setDisable(value);
-                                      }}
-                                      onChestStatus={(val) => {
-                                        setMessage(val);
-                                      }}
-                                      address={address}
-                                      email={email}
-                                      rewardTypes={item.chestType?.toLowerCase()}
-                                      chestId={item.chestId}
-                                      chestIndex={index + 1}
-                                      open={item.isOpened}
-                                      disableBtn={disable}
-                                      isActive={isActive}
-                                      isActiveIndex={isActiveIndex}
-                                      dummypremiumChests={
-                                        dummypremiumChests[index - 10]?.closedImg
-                                      }
-                                    />
-                                  ))
-                                : window.range(0, 19).map((item, index) => (
-                                    <NewChestItem
-                                      coinbase={coinbase}
-                                      claimingChest={claimingChest}
-                                      setClaimingChest={setClaimingChest}
-                                      buyNftPopup={buyNftPopup}
-                                      chainId={chainId}
-                                      chain={chain}
-                                      key={index}
-                                      item={item}
-                                      image={taikoImages[index]}
-                                      // openChest={openChest}
-                                      selectedChest={selectedChest}
-                                      isPremium={isPremium}
-                                      onClaimRewards={(value) => {
-                                        // setRewardData(value);
-                                        setLiveRewardData(value);
-                                        onVanarChestClaimed();
-                                        showLiveRewardData(value);
-                                        setIsActive(item.chestId);
-                                        // setIsActiveIndex(index + 1);
-                                      }}
-                                      handleShowRewards={(value, value2) => {
-                                        showSingleRewardDataVanar(value, value2);
-                                        setIsActive(value);
-                                        // setIsActiveIndex(index + 1);
-                                      }}
-                                      onLoadingChest={(value) => {
-                                        // setDisable(value);
-                                      }}
-                                      onChestStatus={(val) => {
-                                        setMessage(val);
-                                      }}
-                                      address={address}
-                                      email={email}
-                                      rewardTypes={
-                                        index + 1 <= 10 ? "standard" : "premium"
-                                      }
-                                      chestId={item.chestId}
-                                      chestIndex={index + 1}
-                                      open={item.opened}
-                                      disableBtn={true}
-                                      isActive={isActive}
-                                      openChest={() => {
-                                        console.log("test");
-                                      }}
-                                      dummypremiumChests={
-                                        dummypremiumChests[index - 10]?.closedImg
-                                      }
-                                    />
-                                  ))
-
-
-
+                          : chain === "vanar"
+                          ? allVanarChests && allVanarChests.length > 0
+                            ? allVanarChests.map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={taikoImages[index]} //RETURN HERE
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    console.log('vanar', value)
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onVanarChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataVanar(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  image={taikoImages[index]}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onVanarChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataVanar(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
                           : chain === "matchain"
                           ? allMatChests && allMatChests.length > 0
                             ? allMatChests.map((item, index) => (
@@ -6047,9 +6041,7 @@ const NewDailyBonus = ({
                               Taiko Chain
                             </span>
                           </h6>
-                        ) 
-                        
-                        : chain === "vanar" ? (
+                        ) : chain === "vanar" ? (
                           <h6
                             className="loader-text mb-0"
                             style={{ color: "#ce5d1b" }}
@@ -6065,8 +6057,7 @@ const NewDailyBonus = ({
                               Vanar Chain
                             </span>
                           </h6>
-                        )
-                        : chain === "matchain" ? (
+                        ) : chain === "matchain" ? (
                           <h6
                             className="loader-text mb-0"
                             style={{ color: "#ce5d1b" }}
@@ -6369,7 +6360,7 @@ const NewDailyBonus = ({
                           />
                           <NavLink
                             className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
-                            to={'/account/prime'}
+                            to={"/account/prime"}
                           >
                             Get Prime
                           </NavLink>
@@ -6658,7 +6649,7 @@ const NewDailyBonus = ({
                           />
                           <NavLink
                             className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
-                            to={'/account/prime'}
+                            to={"/account/prime"}
                           >
                             Get Prime
                           </NavLink>
@@ -8599,12 +8590,11 @@ const NewDailyBonus = ({
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                  : chain === "vanar"
-                  ? showSingleRewardDataVanar(
-                      rewardData.chestId,
-                      isActiveIndex - 1
-                    )
-
+                : chain === "vanar"
+                ? showSingleRewardDataVanar(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
                 : chain === "matchain"
                 ? showSingleRewardDataMat(rewardData.chestId, isActiveIndex - 1)
                 : chain === "viction"
