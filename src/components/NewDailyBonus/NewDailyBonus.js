@@ -2662,80 +2662,80 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "vanar") {
-      // if ( window.WALLET_TYPE !== "binance" &&
-      //   window.WALLET_TYPE !== "matchId") {
-      //   if (!email) {
-      //     setMessage("login");
-      //     setDisable(true);
-      //   } else if (email && coinbase && address) {
-      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
-      //       if (isPremium) {
-      //         if (
-      //           claimedVanarChests + claimedVanarPremiumChests === 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase()
-      //         ) {
-      //           setMessage("complete");
-      //         } else if (
-      //           claimedVanarChests + claimedVanarPremiumChests < 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 2040
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedVanarChests + claimedVanarPremiumChests < 20 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 2040
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       } else if (!isPremium) {
-      //         if (
-      //           claimedVanarChests === 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 2040
-      //         ) {
-      //           setMessage("premium");
-      //           setDisable(true);
-      //         } else if (
-      //           claimedVanarChests < 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 2040
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedVanarChests < 10 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 2040
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       }
-      //     } else {
-      //       setMessage("switchAccount");
-      //       setDisable(true);
-      //     }
-      //   } else {
-      //     setMessage("connect");
-      //     setDisable(true);
-      //   }
-      // } else if (
-      //   window.WALLET_TYPE === "binance" ||
-      //   window.WALLET_TYPE === "matchId" ||
-      //   window.ethereum?.isBinance
-      // ) {
-      //   setMessage("notsupported");
-      // }
-      setMessage("comingsoon");
+      if ( window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId") {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedVanarChests + claimedVanarPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedVanarChests + claimedVanarPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 2040
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedVanarChests + claimedVanarPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 2040
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedVanarChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 2040
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedVanarChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 2040
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedVanarChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 2040
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
+          }
+        } else {
+          setMessage("connect");
+          setDisable(true);
+        }
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.WALLET_TYPE === "matchId" ||
+        window.ethereum?.isBinance
+      ) {
+        setMessage("notsupported");
+      }
+      // setMessage("comingsoon");
     }
     
     
@@ -4161,7 +4161,7 @@ const NewDailyBonus = ({
                         >
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/victionBg.png"
+                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
                             }
                             className={`chain-img ${
                               chain === "vanar" && "chain-img-active"
@@ -4200,7 +4200,7 @@ const NewDailyBonus = ({
                               Vanar
                             </button>
                             <div className="d-flex align-items-center gap-2">
-                              {/* <div className="d-flex align-items-center">
+                              <div className="d-flex align-items-center">
                                 <img
                                   className="percent-img"
                                   src={
@@ -4251,9 +4251,9 @@ const NewDailyBonus = ({
                                   height={8}
                                   alt=""
                                 />
-                              </div> */}
+                              </div>
                               <span className="percentage-span">
-                                {/* {parseInt(vanarPercentage)}% */} Coming Soon
+                                {parseInt(vanarPercentage)}% 
                               </span>
                             </div>
                           </div>
@@ -4698,7 +4698,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "base" && "chain-item-active"
-                          }  w-auto`}
+                          }`}
                         >
                           <img
                             src={
@@ -4792,6 +4792,52 @@ const NewDailyBonus = ({
                                 alt=""
                               />{" "}
                               VICTION
+                            </button>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "vanar" && "chain-item-active"
+                          }`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
+                            }
+                            className={`chain-img ${
+                              chain === "vanar" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "vanar" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("vanar");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 2040
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleVanarPool}
+                            >
+                              {" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/vanar.svg"
+                                }
+                                style={{ width: 20, height: 20 }}
+                                alt=""
+                              />{" "}
+                              Vanar
                             </button>
                           </div>
                         </div>

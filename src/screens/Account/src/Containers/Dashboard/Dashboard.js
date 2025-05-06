@@ -5924,7 +5924,7 @@ function Dashboard({
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
-      // getAllVanarChests(email);
+      getAllVanarChests(email);
       getAllMatChests(email);
       getAllSeiChests(email);
     }
