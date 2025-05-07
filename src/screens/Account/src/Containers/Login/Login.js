@@ -7,7 +7,7 @@ import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./Login.module.css";
 import { Redirect } from "react-router-dom";
 
-function Login({onSuccessLogin}) {
+function Login({ onSuccessLogin }) {
   const {
     isAuthenticated,
     login: LoginGlobal,
@@ -22,9 +22,20 @@ function Login({onSuccessLogin}) {
   const [disabled, setDisabled] = useState(false);
 
   const login = async () => {
-    await LoginGlobal(username, password).then(()=>{
-      onSuccessLogin()
-    })
+    await LoginGlobal(username, password).then(() => {
+      onSuccessLogin();
+    });
+  };
+
+  const resendCode = async () => {
+    await Auth.resendSignUp(username).catch((err) => {
+      setLoginValues((prev) => {
+        return {
+          ...prev,
+          loginError: err?.message,
+        };
+      });
+    });
   };
 
   useEffect(() => {
@@ -46,6 +57,12 @@ function Login({onSuccessLogin}) {
     }
   }, [username, password, verifyCode]);
 
+  useEffect(() => {
+    if (code === "UserNotConfirmedException") {
+      resendCode();
+    }
+  }, [code]);
+
   async function verifyEmailValidationCode() {
     await Auth.confirmSignUp(username, verifyCode)
       .then(() => {
@@ -62,7 +79,7 @@ function Login({onSuccessLogin}) {
   }
 
   if (isAuthenticated) {
-    return <Navigate to={"/player"} state={{fromLogin: true}} />;
+    return <Navigate to={"/player"} state={{ fromLogin: true }} />;
   }
 
   if (code === "UserNotConfirmedException") {
