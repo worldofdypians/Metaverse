@@ -5916,7 +5916,7 @@ function Dashboard({
   const logoutItem = localStorage.getItem("logout");
 
   useEffect(() => {
-    if (email) {
+    if (email && userWallet) {
       getAllSkaleChests(email);
       getAllChests(email);
       getAllCoreChests(email);
@@ -5928,7 +5928,7 @@ function Dashboard({
       getAllMatChests(email);
       getAllSeiChests(email);
     }
-  }, [email]);
+  }, [email, userWallet]);
 
   useEffect(() => {
     handleRefreshCountdown700(
@@ -6236,7 +6236,7 @@ function Dashboard({
               onEventCardClick={() => {
                 seteventCardCount(eventCardCount + 1);
               }}
-              onLinkWallet={connectWallet}
+              onLinkWallet={onManageLogin}
             />
             <NewEvents
               events={dummyBetaPassData2}
