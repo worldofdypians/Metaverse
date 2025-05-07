@@ -1490,17 +1490,17 @@ const chainAreas = [
       ],
     ],
     events: [
-      // {
-      //   title: "Daily Bonus",
-      //   image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
-      //   link: "/account#dailybonus",
-      // },
+      {
+        title: "Daily Bonus",
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+        link: "/account#dailybonus",
+      },
 
-      // {
-      //   title: "Leaderboard",
-      //   image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
-      //   link: "/account#leaderboard",
-      // },
+      {
+        title: "Leaderboard",
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+        link: "/account#leaderboard",
+      },
       // {
       //   title: "Treasure Hunt",
       //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
