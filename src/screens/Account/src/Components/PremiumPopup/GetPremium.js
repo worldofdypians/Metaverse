@@ -102,7 +102,7 @@ const GetPremiumPopup = ({
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
-  let wvanarAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
+  let wvanarAddress = "0x97eec1c29f745dC7c267F90292AA663d997a601D";
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
   let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
@@ -291,7 +291,7 @@ const GetPremiumPopup = ({
       window.config.nft_dypius_premium_viction_address
     );
     const nftContract_vanar = new window.vanarWeb3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
+      window.NFT_DYPIUS_PREMIUM_MAT_ABI,
       window.config.nft_dypius_premium_vanar_address
     );
 
@@ -751,7 +751,7 @@ const GetPremiumPopup = ({
       window.config.nft_dypius_premium_viction_address
     );
     let nftContract_vanar = new window.web3.eth.Contract(
-      window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
+      window.NFT_DYPIUS_PREMIUM_MAT_ABI,
       window.config.nft_dypius_premium_vanar_address
     );
 
@@ -1797,7 +1797,7 @@ const GetPremiumPopup = ({
       } else if (chainId === 2040) {
         if (nftPremium_totalVanar > 0) {
           let contract = new window.web3.eth.Contract(
-            window.NFT_DYPIUS_PREMIUM_VANAR_ABI,
+            window.NFT_DYPIUS_PREMIUM_MAT_ABI,
             window.config.nft_dypius_premium_vanar_address
           );
 
@@ -2953,8 +2953,8 @@ const GetPremiumPopup = ({
           return item.chainId === chainId;
         })
       );
-      setdropdownIcon("usdt");
-      setdropdownTitle("USDT");
+      setdropdownIcon("usdc");
+      setdropdownTitle("USDC");
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptionvanar_tokens)[0]
       );
