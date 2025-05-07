@@ -190,7 +190,7 @@ function Dashboard({
 
   const userId = data?.getPlayer?.playerId;
   const username = data?.getPlayer?.displayName;
-  const userWallet = '0xF58006457d6AFD07496e099120E55dA98B340Af1';
+  const userWallet = data?.getPlayer?.wallet?.publicAddress;
 
   const bannedEmails = [
     "hibrahymdaniel@gmail.com",
@@ -6093,7 +6093,7 @@ function Dashboard({
               email={email}
               username={username}
               isPremium={isPremium}
-              address={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+              address={data?.getPlayer?.wallet?.publicAddress}
               coinbase={coinbase}
               // totalScore={userTotalScore}
               openChainsLeaderboard={() => setLeaderboard(true)}
@@ -6236,7 +6236,7 @@ function Dashboard({
               onEventCardClick={() => {
                 seteventCardCount(eventCardCount + 1);
               }}
-              onLinkWallet={onSyncClickonSyncClick}
+              onLinkWallet={connectWallet}
             />
             <NewEvents
               events={dummyBetaPassData2}
@@ -6253,7 +6253,7 @@ function Dashboard({
               explorerHuntData={explorerHuntData}
               availableTime={goldenPassRemainingTime}
               coinbase={coinbase}
-              wallet={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+              wallet={data?.getPlayer?.wallet?.publicAddress}
               chainId={chainId}
               wodPrice={wodPrice}
               binanceW3WProvider={binanceW3WProvider}
@@ -6892,7 +6892,7 @@ function Dashboard({
             chainId={chainId}
             wodPrice={wodPrice}
             binanceW3WProvider={binanceW3WProvider}
-            wallet={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+            wallet={data?.getPlayer?.wallet?.publicAddress}
             walletClient={walletClient}
             publicClient={publicClient}
           />
@@ -6994,7 +6994,7 @@ function Dashboard({
                 dypTokenData={dypTokenData}
                 onOpenNfts={onOpenNfts}
                 allListed={listedNFTS}
-                address={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+                address={data?.getPlayer?.wallet?.publicAddress}
                 coinbase={account}
                 isVerified={data?.getPlayer?.wallet}
                 favoritesArray={favorites}

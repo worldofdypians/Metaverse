@@ -2086,7 +2086,7 @@ function App() {
 
   const checkConnection = async () => {
     await window.getCoinbase().then((data) => {
-      setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+      setCoinbase(data);
       // axios
       //   .get(`https://api-image.dyp.finance/api/v1/username/${data}`)
       //   .then((res) => {
@@ -2103,14 +2103,14 @@ function App() {
     const logout = localStorage.getItem("logout");
     if (logout !== "true") {
       if (window.gatewallet) {
-        setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+        setCoinbase(account);
         setIsConnected(isActive);
         // fetchAvatar(account);
       } else {
         await window.getCoinbase().then((data) => {
           if (data) {
             // fetchAvatar(data);
-            setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+            setCoinbase(data);
             setIsConnected(true);
           } else {
             setCoinbase();
@@ -2140,7 +2140,7 @@ function App() {
       });
       await window.getCoinbase().then((data) => {
         console.log(data);
-        setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+        setCoinbase(data);
       });
       setShowForms(true);
       setSuccess(true);
@@ -2219,7 +2219,7 @@ function App() {
           });
 
           await window.getCoinbase().then((data) => {
-            setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+            setCoinbase(data);
           });
           if (isBnb === true) {
             setisBnbSuccess(true);
@@ -2265,7 +2265,7 @@ function App() {
             });
 
             if (coinbase_address && coinbase_address.length > 0) {
-              setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+              setCoinbase(coinbase_address[0]);
               setIsConnected(true);
               window.ethereum
                 .request({ method: "net_version" })
@@ -2337,7 +2337,7 @@ function App() {
       console.log("Logged in with method:", method);
       window.WALLET_TYPE = "matchId";
       setIsConnected(true);
-      setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+      setCoinbase(address);
     });
   };
   const myNft = async () => {
@@ -3127,10 +3127,10 @@ function App() {
       binanceData !== null &&
       window.WALLET_TYPE === "binance"
     ) {
-      setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+      setCoinbase(binanceData.accounts[0]);
       setIsConnected(binanceData.connected);
       setChainId(parseInt(binanceData.chainId));
-      window.coinbase_address = '0xF58006457d6AFD07496e099120E55dA98B340Af1';
+      window.coinbase_address = binanceData.accounts[0];
       window.WALLET_TYPE = "binance";
     } else if (
       window.WALLET_TYPE === "binance" ||
@@ -3140,14 +3140,14 @@ function App() {
       if (binanceData != null && binanceData !== undefined) {
         activate(binanceConnector);
 
-        setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+        setCoinbase(binanceData.accounts[0]);
         setIsConnected(binanceData.connected);
         setChainId(parseInt(binanceData.chainId));
         window.coinbase_address = binanceData.accounts[0];
         window.WALLET_TYPE = "binance";
       } else if (account !== undefined && chainId !== undefined) {
         window.WALLET_TYPE = "binance";
-        setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+        setCoinbase(account);
         setIsConnected(true);
         setChainId(chainId);
       }
@@ -3551,11 +3551,11 @@ function App() {
     ) {
       setIsConnected(isActive);
       if (account) {
-        setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+        setCoinbase(account);
       }
     } else if (address) {
       setIsConnected(true);
-      setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+      setCoinbase(address);
       window.WALLET_TYPE = "matchId";
     } else if (window.WALLET_TYPE !== "binance") {
       setIsConnected(false);
@@ -3568,7 +3568,7 @@ function App() {
       logout === "false"
     ) {
       if (account) {
-        setCoinbase('0xF58006457d6AFD07496e099120E55dA98B340Af1');
+        setCoinbase(account);
         setIsConnected(true);
       } else {
         setCoinbase();
@@ -5843,10 +5843,10 @@ function App() {
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
                 handleSwitchChain={handleSwitchChain}
-                coinbase={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
-                account={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+                coinbase={coinbase}
+                account={coinbase}
                 binanceW3WProvider={library}
-                binanceWallet={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+                binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
                 handleConnect={() => {
@@ -5932,10 +5932,10 @@ function App() {
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
                 handleSwitchChain={handleSwitchChain}
-                coinbase={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
-                account={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+                coinbase={coinbase}
+                account={coinbase}
                 binanceW3WProvider={library}
-                binanceWallet={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+                binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
                 handleConnect={() => {
@@ -6472,10 +6472,10 @@ function App() {
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
                 handleSwitchChain={handleSwitchChain}
-                coinbase={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
-                account={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+                coinbase={coinbase}
+                account={coinbase}
                 binanceW3WProvider={library}
-                binanceWallet={'0xF58006457d6AFD07496e099120E55dA98B340Af1'}
+                binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
                 handleConnect={() => {
