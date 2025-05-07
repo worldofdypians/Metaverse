@@ -6236,7 +6236,7 @@ function Dashboard({
               onEventCardClick={() => {
                 seteventCardCount(eventCardCount + 1);
               }}
-              onLinkWallet={connectWallet}
+              onLinkWallet={onManageLogin}
             />
             <NewEvents
               events={dummyBetaPassData2}

@@ -5877,9 +5877,7 @@ function App() {
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 kucoinEarnUsd={kucoinEarnUsd}
-                onManageLogin={(value1, value2) => {
-                  handleManageLogin(value1, value2);
-                }}
+                onManageLogin={handleSync}
                 showSync={showSync}
                 onCloseSync={() => {
                   setshowSync(false);
@@ -5969,9 +5967,7 @@ function App() {
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 kucoinEarnUsd={kucoinEarnUsd}
-                onManageLogin={(value1, value2) => {
-                  handleManageLogin(value1, value2);
-                }}
+                onManageLogin={handleSync}
                 showSync={showSync}
                 onCloseSync={() => {
                   setshowSync(false);
@@ -6510,9 +6506,7 @@ function App() {
                 midleEarnUsd={midleEarnUsd}
                 coingeckoEarnUsd={userEarnUsd}
                 kucoinEarnUsd={kucoinEarnUsd}
-                onManageLogin={(value1, value2) => {
-                  handleManageLogin(value1, value2);
-                }}
+                onManageLogin={handleSync}
                 showSync={showSync}
                 onCloseSync={() => {
                   setshowSync(false);
