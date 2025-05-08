@@ -50,7 +50,7 @@ window.config = {
 
   nft_dypius_premium_mat_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
   nft_dypius_premium_vanar_address:
-    "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
+    "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
 
   ccip_eth_caws_address: "0x2824Ac0Eab15744396E763A698b55F4Fe983a757",
   ccip_bnb_caws_address: "0x0C5E19B9147c39d196bC6c88D087A7A84f99563E",
@@ -88,7 +88,7 @@ window.config = {
   daily_bonus_taiko_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
   daily_bonus_mat_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_sei_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
-  daily_bonus_vanar_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
+  daily_bonus_vanar_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
 
@@ -143,7 +143,7 @@ window.config = {
   subscription_skale_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
   subscription_core_address: "0x2deecf2a05f735890eb3ea085d55cec8f1a93895",
   subscription_viction_address: "0x128a60F2F359D11C2C768C6a9880223e98342634",
-  subscription_vanar_address: "0x128a60F2F359D11C2C768C6a9880223e98342634",
+  subscription_vanar_address: "0xCb2Eb4ba62346751F36bA652010b553759141AEE",
 
   subscription_manta_address: "0xF943437f92519e3AdE18f16cb045453B7a92e6D5",
   subscription_taiko_address: "0x0570cb2bb014d0eda8dfffffdeb07906a5b40aa3",
@@ -294,9 +294,13 @@ window.config = {
     },
   },
   subscriptionvanar_tokens: {
-    "0x381B31409e4D220919B2cFF012ED94d70135A59e": {
-      symbol: "USDT",
+    "0x97eec1c29f745dC7c267F90292AA663d997a601D": {
+      symbol: "USDC",
       decimals: 6,
+    },
+    "0x3F59B60748f001bd53cb96A81F148e438227B0F4": {
+      symbol: "WVANRY",
+      decimals: 18,
     },
   },
 
@@ -1878,8 +1882,6 @@ class KUCOIN_NFT {
 }
 
 window.kucoin_nft = new KUCOIN_NFT();
-
-
 
 /**
  *
@@ -3823,8 +3825,6 @@ async function getMyNFTs(address, type = "") {
         }
       }
     }
-
-
   } else if (type === "gate") {
     contract = new window.bscWeb3.eth.Contract(
       window.GATE_NFT_ABI,
@@ -3936,7 +3936,6 @@ async function getMyNFTs(address, type = "") {
         }
       }
     }
-
   } else if (type === "core") {
     contract = new window.coreWeb3.eth.Contract(
       window.CORE_NFT_ABI,
@@ -34402,7 +34401,10 @@ async function getEstimatedTokenSubscriptionAmountETH(tokenAddress) {
   if (subscriptionContract) {
     return await subscriptionContract.methods
       .getEstimatedTokenSubscriptionAmount(tokenAddress)
-      .call();
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
   }
 }
 

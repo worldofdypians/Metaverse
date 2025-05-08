@@ -5820,6 +5820,7 @@ function App() {
                 wodPrice={wodPrice}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
+                  setIsPremium(true);
                 }}
                 onSyncClick={() => {
                   setshowSync(true);
@@ -5877,9 +5878,7 @@ function App() {
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 kucoinEarnUsd={kucoinEarnUsd}
-                onManageLogin={(value1, value2) => {
-                  handleManageLogin(value1, value2);
-                }}
+                onManageLogin={handleSync}
                 showSync={showSync}
                 onCloseSync={() => {
                   setshowSync(false);
@@ -5913,6 +5912,7 @@ function App() {
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
+                  setIsPremium(true);
                 }}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -5969,9 +5969,7 @@ function App() {
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 kucoinEarnUsd={kucoinEarnUsd}
-                onManageLogin={(value1, value2) => {
-                  handleManageLogin(value1, value2);
-                }}
+                onManageLogin={handleSync}
                 showSync={showSync}
                 onCloseSync={() => {
                   setshowSync(false);
@@ -6453,6 +6451,7 @@ function App() {
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
+                  setIsPremium(true);
                 }}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -6510,9 +6509,7 @@ function App() {
                 midleEarnUsd={midleEarnUsd}
                 coingeckoEarnUsd={userEarnUsd}
                 kucoinEarnUsd={kucoinEarnUsd}
-                onManageLogin={(value1, value2) => {
-                  handleManageLogin(value1, value2);
-                }}
+                onManageLogin={handleSync}
                 showSync={showSync}
                 onCloseSync={() => {
                   setshowSync(false);
@@ -6640,7 +6637,7 @@ function App() {
               />
             }
           />
-          {/* <Route
+            <Route
             exact
             path="/shop/mint/vanar"
             element={
@@ -6683,7 +6680,7 @@ function App() {
                 totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
-          /> */}
+          />  
           {/* <Route
             exact
             path="/shop/mint/matchain"

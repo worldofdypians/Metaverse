@@ -10,6 +10,7 @@ import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../hooks/useWindowSize";
 import { Checkbox } from "@mui/material";
 import { Auth } from "../Account/src/Containers";
+import { phase1_loyalty_winners } from "./index";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -30,14 +31,19 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
     twitterUser: "",
   });
   const [latestUsers, setLatestUsers] = useState([]);
+  const [previousUsers, setpreviousUsers] = useState([]);
+
   const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(false);
   const [totalUsers, setTotalUsers] = useState(0);
+
+  const [totalPreviousUsers, settotalPreviousUsers] = useState(0);
+
   const [expired, setisExpired] = useState(false);
   // const [isWinner, setisWinner] = useState(false);
 
-  const [dypPrice, setDypPrice] = useState(0);
-  const [ethPrice, setEthPrice] = useState(0);
+  const [activeLoyalty, setactiveLoyalty] = useState(false);
+
   const [chains, setChains] = useState({
     bnbChain: { title: "BNB Chain", value: "bnb", checked: false },
     manta: { title: "Manta", value: "manta", checked: false },
@@ -46,6 +52,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
     core: { title: "CORE", value: "core", checked: false },
     opBnb: { title: "opBnb", value: "opbnb", checked: false },
     viction: { title: "Viction", value: "viction", checked: false },
+    viction: { title: "Vanar", value: "vanar", checked: false },
   });
   const [reqChains, setReqChains] = useState([]);
   const selectedCount = Object.values(chains).filter(
@@ -78,7 +85,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
     });
   };
 
-  let loyaltyCd = new Date("2024-10-08T12:59:59.000+02:00");
+  let loyaltyCd = new Date("2025-08-06T12:59:59.000+02:00");
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -115,6 +122,11 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
         setTotalUsers(data.data.totalCount);
       })
       .catch((err) => console.log(err));
+  };
+
+  const fetchPreviousUsers = async () => {
+    setpreviousUsers(phase1_loyalty_winners.participants);
+    settotalPreviousUsers(phase1_loyalty_winners.totalCount);
   };
 
   const loyaltyCheck = async () => {
@@ -231,6 +243,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
   useEffect(() => {
     document.title = "Loyalty Program";
     window.scrollTo(0, 0);
+    fetchPreviousUsers();
   }, []);
 
   if (!email) {
@@ -302,20 +315,23 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                             reimbursed to cover the gas costs for one
                             transaction per day.
                           </p>
-                          {step !== 5 && step !== 4 && expired === false && (
-                            <button
-                              className=" btn filled-btn w-75"
-                              onClick={() => setPopup(true)}
-                            >
-                              Apply
-                            </button>
-                          )}
+                          {step !== 5 &&
+                            step !== 4 &&
+                            expired === false &&
+                            !activeLoyalty && (
+                              <button
+                                className=" btn filled-btn w-75"
+                                onClick={() => setPopup(true)}
+                              >
+                                Apply
+                              </button>
+                            )}
 
-                          {/* {expired === true && (
+                          {(expired === true || activeLoyalty) && (
                             <button className="disabled-btn pe-none" disabled>
                               Ended
                             </button>
-                          )} */}
+                          )}
                         </div>
                         {/* <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
                       <div className="d-flex align-items-center justify-content-center p-2 my-reimbursement">
@@ -351,13 +367,10 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                           className="appliedbadge"
                         />
                       )} */}
-                      {step === 5 && (
+                      {(step === 5 || step === 4) && (
                         <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
                           <div className="d-flex align-items-center justify-content-center w-100">
                             <div className="d-flex align-items-center justify-content-center gap-2">
-                              {/* <h6 className="loyalty-joined m-0">
-                                  You have already applied.
-                                </h6> */}
                               <img
                                 src={
                                   "https://cdn.worldofdypians.com/wod/appliedBadge.webp"
@@ -372,68 +385,135 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                     </div>
                     <div className="col-12 col-lg-7">
                       <div
-                        className="reimbursement-wrapper h-100 p-3 d-flex flex-column align-items-center gap-2"
+                        className="reimbursement-wrapper h-100 d-flex flex-column align-items-center gap-2 justify-content-between w-100"
                         style={{ borderRadius: "12px" }}
                       >
-                        <h6 className="participants-title mb-0">
-                          Participants
-                        </h6>
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/fireIcon.svg"
-                            }
-                            alt=""
-                          />
-                          <span className="participants-desc">
-                            <span style={{ color: "#FCE202" }}>
-                              {getFormattedNumber(totalUsers, 0)}
-                            </span>{" "}
-                            joined the Loyalty Program
-                          </span>
-                        </div>
-                        <div className="d-flex flex-column w-100">
-                          {latestUsers.slice(0, 7).map((item, index) => (
-                            <div
-                              key={index}
-                              className="participant-item d-flex align-items-center justify-content-between w-100 py-2"
-                            >
-                              <span className="participant-name">
-                                {shortAddress(item.walletAddress)} joined
-                              </span>
-                              <div className="d-flex align-items-center gap-1">
-                                <div className="d-flex align-items-center">
-                                  {item.chains.map((item, index) =>
-                                    item === "manta" ? (
-                                      <img
-                                        key={index}
-                                        src={`https://cdn.worldofdypians.com/wod/${item}Icon.png`}
-                                        width={16}
-                                        height={16}
-                                        alt=""
-                                        className="participant-chain"
-                                      />
-                                    ) : (
-                                      <img
-                                        key={index}
-                                        src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}
-                                        width={16}
-                                        height={16}
-                                        alt=""
-                                        className="participant-chain"
-                                      />
-                                    )
-                                  )}
-                                </div>
-                                <span
-                                  className="participant-time-ago"
-                                  style={{ width: "75px" }}
+                        <div className="px-3 pt-3 d-flex flex-column align-items-center gap-2 w-100">
+                          <h6 className="participants-title mb-0">
+                            Participants
+                          </h6>
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/fireIcon.svg"
+                              }
+                              alt=""
+                            />
+                            <span className="participants-desc">
+                              <span style={{ color: "#FCE202" }}>
+                                {getFormattedNumber(
+                                  activeLoyalty
+                                    ? totalPreviousUsers
+                                    : totalUsers,
+                                  0
+                                )}
+                              </span>{" "}
+                              joined the Loyalty Program
+                            </span>
+                          </div>
+                          <div className="d-flex flex-column w-100">
+                            {!activeLoyalty &&
+                              latestUsers.slice(0, 7).map((item, index) => (
+                                <div
+                                  key={index}
+                                  className="participant-item d-flex align-items-center justify-content-between w-100 py-2"
                                 >
-                                  {getTimeAgo(item.timestamp)}
-                                </span>
-                              </div>
-                            </div>
-                          ))}
+                                  <span className="participant-name">
+                                    {shortAddress(item.walletAddress)} joined
+                                  </span>
+                                  <div className="d-flex align-items-center gap-1">
+                                    <div className="d-flex align-items-center">
+                                      {item.chains.map((item, index) =>
+                                        item === "manta" ? (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Icon.png`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
+                                        ) : (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
+                                        )
+                                      )}
+                                    </div>
+                                    <span
+                                      className="participant-time-ago"
+                                      style={{ width: "75px" }}
+                                    >
+                                      {getTimeAgo(item.timestamp)}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                            {activeLoyalty &&
+                              previousUsers.slice(0, 7).map((item, index) => (
+                                <div
+                                  key={index}
+                                  className="participant-item d-flex align-items-center justify-content-between w-100 py-2"
+                                >
+                                  <span className="participant-name">
+                                    {shortAddress(item.walletAddress)} joined
+                                  </span>
+                                  <div className="d-flex align-items-center gap-1">
+                                    <div className="d-flex align-items-center">
+                                      {item.chains.map((item, index) =>
+                                        item === "manta" ? (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Icon.png`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
+                                        ) : (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
+                                        )
+                                      )}
+                                    </div>
+                                    <span
+                                      className="participant-time-ago"
+                                      style={{ width: "75px" }}
+                                    >
+                                      {getTimeAgo(item.timestamp)}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                        <div className="viewprevious-wrapper d-flex w-100 px-3 py-1 align-items-center gap-2 justify-content-between">
+                          <span className="viewWinners">
+                            View previous season
+                          </span>
+                          <div class="form-check form-switch p-0 m-0">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              role="switch"
+                              id="flexSwitchCheckChecked"
+                              onChange={() => {
+                                setactiveLoyalty(!activeLoyalty);
+                              }}
+                              style={{ cursor: "pointer" }}
+                            ></input>
+                          </div>
                         </div>
                       </div>
                     </div>

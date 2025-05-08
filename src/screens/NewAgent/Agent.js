@@ -661,10 +661,10 @@ const Agent = ({
   };
 
   useEffect(() => {
-    if (coinbase && isConnected) {
+    if (coinbase && isConnected && chainId === 56) {
       checkApproval(10000);
     }
-  }, [popup, coinbase, isConnected, publicClient]);
+  }, [popup, coinbase, isConnected, publicClient, chainId]);
 
   useEffect(() => {
     if (coinbase && isConnected) {
@@ -683,7 +683,7 @@ const Agent = ({
     document.title = "AI Agent";
     window.scrollTo(0, 0);
   }, []);
-  
+
   return (
     <>
       <div className="container-fluid d-flex bridge-mainhero-wrapper token-wrapper justify-content-center">

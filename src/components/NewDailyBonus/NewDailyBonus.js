@@ -832,11 +832,9 @@ const NewDailyBonus = ({
         showSingleRewardDataBase(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "taiko") {
         showSingleRewardDataTaiko(rewardData.chestId, isActiveIndex - 1);
-      }
-      else if (chain === "vanar") {
+      } else if (chain === "vanar") {
         showSingleRewardDataVanar(rewardData.chestId, isActiveIndex - 1);
-      }
-      else if (chain === "matchain") {
+      } else if (chain === "matchain") {
         showSingleRewardDataMat(rewardData.chestId, isActiveIndex - 1);
       }
     }
@@ -2662,84 +2660,83 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "vanar") {
-      // if ( window.WALLET_TYPE !== "binance" &&
-      //   window.WALLET_TYPE !== "matchId") {
-      //   if (!email) {
-      //     setMessage("login");
-      //     setDisable(true);
-      //   } else if (email && coinbase && address) {
-      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
-      //       if (isPremium) {
-      //         if (
-      //           claimedVanarChests + claimedVanarPremiumChests === 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase()
-      //         ) {
-      //           setMessage("complete");
-      //         } else if (
-      //           claimedVanarChests + claimedVanarPremiumChests < 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 2040
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedVanarChests + claimedVanarPremiumChests < 20 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 2040
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       } else if (!isPremium) {
-      //         if (
-      //           claimedVanarChests === 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 2040
-      //         ) {
-      //           setMessage("premium");
-      //           setDisable(true);
-      //         } else if (
-      //           claimedVanarChests < 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 2040
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedVanarChests < 10 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 2040
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       }
-      //     } else {
-      //       setMessage("switchAccount");
-      //       setDisable(true);
-      //     }
-      //   } else {
-      //     setMessage("connect");
-      //     setDisable(true);
-      //   }
-      // } else if (
-      //   window.WALLET_TYPE === "binance" ||
-      //   window.WALLET_TYPE === "matchId" ||
-      //   window.ethereum?.isBinance
-      // ) {
-      //   setMessage("notsupported");
-      // }
-      setMessage("comingsoon");
-    }
-    
-    
-    else if (chain === "matchain") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedVanarChests + claimedVanarPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedVanarChests + claimedVanarPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 2040
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedVanarChests + claimedVanarPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 2040
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedVanarChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 2040
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedVanarChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 2040
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedVanarChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 2040
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
+          }
+        } else {
+          setMessage("connect");
+          setDisable(true);
+        }
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.WALLET_TYPE === "matchId" ||
+        window.ethereum?.isBinance
+      ) {
+        setMessage("notsupported");
+      }
+      // setMessage("comingsoon");
+    } else if (chain === "matchain") {
       if (window.WALLET_TYPE !== "binance") {
         if (!email) {
           setMessage("login");
@@ -4161,7 +4158,7 @@ const NewDailyBonus = ({
                         >
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/victionBg.png"
+                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
                             }
                             className={`chain-img ${
                               chain === "vanar" && "chain-img-active"
@@ -4200,7 +4197,7 @@ const NewDailyBonus = ({
                               Vanar
                             </button>
                             <div className="d-flex align-items-center gap-2">
-                              {/* <div className="d-flex align-items-center">
+                              <div className="d-flex align-items-center">
                                 <img
                                   className="percent-img"
                                   src={
@@ -4251,9 +4248,9 @@ const NewDailyBonus = ({
                                   height={8}
                                   alt=""
                                 />
-                              </div> */}
+                              </div>
                               <span className="percentage-span">
-                                {/* {parseInt(vanarPercentage)}% */} Coming Soon
+                                {parseInt(vanarPercentage)}%
                               </span>
                             </div>
                           </div>
@@ -4698,7 +4695,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "base" && "chain-item-active"
-                          }  w-auto`}
+                          }`}
                         >
                           <img
                             src={
@@ -4792,6 +4789,52 @@ const NewDailyBonus = ({
                                 alt=""
                               />{" "}
                               VICTION
+                            </button>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "vanar" && "chain-item-active"
+                          }`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
+                            }
+                            className={`chain-img ${
+                              chain === "vanar" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "vanar" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("vanar");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 2040
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleVanarPool}
+                            >
+                              {" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/vanar.svg"
+                                }
+                                style={{ width: 20, height: 20 }}
+                                alt=""
+                              />{" "}
+                              Vanar
                             </button>
                           </div>
                         </div>
@@ -5329,110 +5372,107 @@ const NewDailyBonus = ({
                                   publicClient={publicClient}
                                 />
                               ))
-
-                              : chain === "vanar"
-                              ? allVanarChests && allVanarChests.length > 0
-                                ? allVanarChests.map((item, index) => (
-                                    <NewChestItem
-                                      coinbase={coinbase}
-                                      claimingChest={claimingChest}
-                                      setClaimingChest={setClaimingChest}
-                                      buyNftPopup={buyNftPopup}
-                                      chainId={chainId}
-                                      image={taikoImages[index]} //RETURN HERE
-                                      chain={chain}
-                                      key={index}
-                                      item={item}
-                                      // openChest={openChest}
-                                      selectedChest={selectedChest}
-                                      isPremium={isPremium}
-                                      onClaimRewards={(value) => {
-                                        // setRewardData(value);
-                                        setLiveRewardData(value);
-                                        onVanarChestClaimed();
-                                        showLiveRewardData(value);
-                                        setIsActive(item.chestId);
-                                        setIsActiveIndex(index + 1);
-                                      }}
-                                      handleShowRewards={(value, value2) => {
-                                        showSingleRewardDataVanar(value, value2);
-                                        setIsActive(value);
-                                        setIsActiveIndex(index + 1);
-                                      }}
-                                      onLoadingChest={(value) => {
-                                        // setDisable(value);
-                                      }}
-                                      onChestStatus={(val) => {
-                                        setMessage(val);
-                                      }}
-                                      address={address}
-                                      email={email}
-                                      rewardTypes={item.chestType?.toLowerCase()}
-                                      chestId={item.chestId}
-                                      chestIndex={index + 1}
-                                      open={item.isOpened}
-                                      disableBtn={disable}
-                                      isActive={isActive}
-                                      isActiveIndex={isActiveIndex}
-                                      dummypremiumChests={
-                                        dummypremiumChests[index - 10]?.closedImg
-                                      }
-                                    />
-                                  ))
-                                : window.range(0, 19).map((item, index) => (
-                                    <NewChestItem
-                                      coinbase={coinbase}
-                                      claimingChest={claimingChest}
-                                      setClaimingChest={setClaimingChest}
-                                      buyNftPopup={buyNftPopup}
-                                      chainId={chainId}
-                                      chain={chain}
-                                      key={index}
-                                      item={item}
-                                      image={taikoImages[index]}
-                                      // openChest={openChest}
-                                      selectedChest={selectedChest}
-                                      isPremium={isPremium}
-                                      onClaimRewards={(value) => {
-                                        // setRewardData(value);
-                                        setLiveRewardData(value);
-                                        onVanarChestClaimed();
-                                        showLiveRewardData(value);
-                                        setIsActive(item.chestId);
-                                        // setIsActiveIndex(index + 1);
-                                      }}
-                                      handleShowRewards={(value, value2) => {
-                                        showSingleRewardDataVanar(value, value2);
-                                        setIsActive(value);
-                                        // setIsActiveIndex(index + 1);
-                                      }}
-                                      onLoadingChest={(value) => {
-                                        // setDisable(value);
-                                      }}
-                                      onChestStatus={(val) => {
-                                        setMessage(val);
-                                      }}
-                                      address={address}
-                                      email={email}
-                                      rewardTypes={
-                                        index + 1 <= 10 ? "standard" : "premium"
-                                      }
-                                      chestId={item.chestId}
-                                      chestIndex={index + 1}
-                                      open={item.opened}
-                                      disableBtn={true}
-                                      isActive={isActive}
-                                      openChest={() => {
-                                        console.log("test");
-                                      }}
-                                      dummypremiumChests={
-                                        dummypremiumChests[index - 10]?.closedImg
-                                      }
-                                    />
-                                  ))
-
-
-
+                          : chain === "vanar"
+                          ? allVanarChests && allVanarChests.length > 0
+                            ? allVanarChests.map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={taikoImages[index]} //RETURN HERE
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    console.log('vanar', value)
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onVanarChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataVanar(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  image={taikoImages[index]}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onVanarChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataVanar(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
                           : chain === "matchain"
                           ? allMatChests && allMatChests.length > 0
                             ? allMatChests.map((item, index) => (
@@ -6001,9 +6041,7 @@ const NewDailyBonus = ({
                               Taiko Chain
                             </span>
                           </h6>
-                        ) 
-                        
-                        : chain === "vanar" ? (
+                        ) : chain === "vanar" ? (
                           <h6
                             className="loader-text mb-0"
                             style={{ color: "#ce5d1b" }}
@@ -6019,8 +6057,7 @@ const NewDailyBonus = ({
                               Vanar Chain
                             </span>
                           </h6>
-                        )
-                        : chain === "matchain" ? (
+                        ) : chain === "matchain" ? (
                           <h6
                             className="loader-text mb-0"
                             style={{ color: "#ce5d1b" }}
@@ -6323,7 +6360,7 @@ const NewDailyBonus = ({
                           />
                           <NavLink
                             className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
-                            to={'/account/prime'}
+                            to={"/account/prime"}
                           >
                             Get Prime
                           </NavLink>
@@ -6612,7 +6649,7 @@ const NewDailyBonus = ({
                           />
                           <NavLink
                             className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
-                            to={'/account/prime'}
+                            to={"/account/prime"}
                           >
                             Get Prime
                           </NavLink>
@@ -8553,12 +8590,11 @@ const NewDailyBonus = ({
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                  : chain === "vanar"
-                  ? showSingleRewardDataVanar(
-                      rewardData.chestId,
-                      isActiveIndex - 1
-                    )
-
+                : chain === "vanar"
+                ? showSingleRewardDataVanar(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
                 : chain === "matchain"
                 ? showSingleRewardDataMat(rewardData.chestId, isActiveIndex - 1)
                 : chain === "viction"
