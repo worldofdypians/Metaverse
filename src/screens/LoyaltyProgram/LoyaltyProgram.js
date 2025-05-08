@@ -85,7 +85,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
     });
   };
 
-  let loyaltyCd = new Date("2025-08-06T12:59:59.000+02:00");
+  let loyaltyCd = new Date("2025-06-06T12:59:59.000+02:00");
 
   const convertEthToUsd = async () => {
     const res = axios
