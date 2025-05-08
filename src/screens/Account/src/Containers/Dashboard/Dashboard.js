@@ -4677,7 +4677,7 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests < 20 ||
           claimedBaseChests + claimedBasePremiumChests < 20 ||
           claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
-          // claimedVanarChests + claimedVanarPremiumChests < 20 ||
+          claimedVanarChests + claimedVanarPremiumChests < 20 ||
           claimedMatChests + claimedMatPremiumChests < 20 ||
           claimedSeiChests + claimedSeiPremiumChests < 20
         ) {
@@ -4690,7 +4690,7 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests === 20 &&
           claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
-          // claimedVanarChests + claimedVanarPremiumChests === 20 &&
+          claimedVanarChests + claimedVanarPremiumChests === 20 &&
           claimedMatChests + claimedMatPremiumChests === 20 &&
           claimedSeiChests + claimedSeiPremiumChests === 20
         ) {
@@ -4705,7 +4705,7 @@ function Dashboard({
           claimedMantaChests < 10 ||
           claimedBaseChests < 10 ||
           claimedTaikoChests < 10 ||
-          // claimedVanarChests < 10 ||
+          claimedVanarChests < 10 ||
           claimedMatChests < 10 ||
           claimedSeiChests < 10
         ) {
@@ -4718,7 +4718,7 @@ function Dashboard({
           claimedMantaChests === 10 &&
           claimedBaseChests === 10 &&
           claimedTaikoChests === 10 &&
-          // claimedVanarChests === 10 &&
+          claimedVanarChests === 10 &&
           claimedMatChests === 10 &&
           claimedSeiChests === 10
         ) {
