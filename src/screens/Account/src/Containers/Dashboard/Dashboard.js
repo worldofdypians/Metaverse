@@ -2023,7 +2023,7 @@ function Dashboard({
   const fetchDailyRecordsAroundPlayerVanar = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardVanarDaily",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     if (userId) {
@@ -2031,50 +2031,15 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
+      var testArray = result.data.data.leaderboard;
 
       const userPosition = testArray[0].position;
 
-      // if (isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountCore(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-      //         : Number(skaleStars[userPosition]) +
-      //           Number(skaleStarsPremium[userPosition])
-      //       : 0
-      //   );
-      // } else if (!isPremium && testArray[0].statValue != 0) {
-      //   setDailyDataAmountCore(
-      //     testArray[0].statValue !== 0
-      //       ? userPosition > 10
-      //         ? 0
-      //         : userPosition === 10
-      //         ? Number(skaleStars[9])
-      //         : Number(skaleStars[userPosition])
-      //       : 0
-      //   );
-      // } else setDailyDataAmountCore(0);
-
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerVanar(true);
-          setUserDataVanar([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerVanar(false);
-          setUserDataVanar(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      setUserDataVanar(...testArray);
+      if (userPosition > 99) {
         setActivePlayerVanar(false);
-        setUserDataVanar(...testArray);
+      } else {
+        setActivePlayerVanar(true);
       }
     }
   };
@@ -4712,7 +4677,7 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests < 20 ||
           claimedBaseChests + claimedBasePremiumChests < 20 ||
           claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
-          // claimedVanarChests + claimedVanarPremiumChests < 20 ||
+          claimedVanarChests + claimedVanarPremiumChests < 20 ||
           claimedMatChests + claimedMatPremiumChests < 20 ||
           claimedSeiChests + claimedSeiPremiumChests < 20
         ) {
@@ -4725,7 +4690,7 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests === 20 &&
           claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
-          // claimedVanarChests + claimedVanarPremiumChests === 20 &&
+          claimedVanarChests + claimedVanarPremiumChests === 20 &&
           claimedMatChests + claimedMatPremiumChests === 20 &&
           claimedSeiChests + claimedSeiPremiumChests === 20
         ) {
@@ -4740,7 +4705,7 @@ function Dashboard({
           claimedMantaChests < 10 ||
           claimedBaseChests < 10 ||
           claimedTaikoChests < 10 ||
-          // claimedVanarChests < 10 ||
+          claimedVanarChests < 10 ||
           claimedMatChests < 10 ||
           claimedSeiChests < 10
         ) {
@@ -4753,7 +4718,7 @@ function Dashboard({
           claimedMantaChests === 10 &&
           claimedBaseChests === 10 &&
           claimedTaikoChests === 10 &&
-          // claimedVanarChests === 10 &&
+          claimedVanarChests === 10 &&
           claimedMatChests === 10 &&
           claimedSeiChests === 10
         ) {
@@ -5924,7 +5889,7 @@ function Dashboard({
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
-      // getAllVanarChests(email);
+      getAllVanarChests(email);
       getAllMatChests(email);
       getAllSeiChests(email);
     }
@@ -6420,6 +6385,9 @@ function Dashboard({
             onMantaChestClaimed={() => {
               setmantacount(mantacount + 1);
             }}
+            onVanarChestClaimed={() => {
+              setVanarcount(vanarcount + 1);
+            }}
             onBaseChestClaimed={() => {
               setbasecount(basecount + 1);
             }}
@@ -6538,9 +6506,6 @@ function Dashboard({
             }}
             onTaikoChestClaimed={() => {
               settaikocount(taikocount + 1);
-            }}
-            onVanarChestClaimed={() => {
-              setVanarcount(vanarcount + 1);
             }}
             onMatChestClaimed={() => {
               setmatcount(matcount + 1);

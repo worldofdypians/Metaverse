@@ -459,8 +459,6 @@ const SingleNft = ({
           console.log(e);
         });
 
-      
-
       setowner(owner);
       return owner;
     } else if (nftType === "manta") {
@@ -474,8 +472,6 @@ const SingleNft = ({
         .catch((e) => {
           console.log(e);
         });
-
-      
 
       setowner(owner);
       return owner;
@@ -491,8 +487,6 @@ const SingleNft = ({
           console.log(e);
         });
 
-      
-
       setowner(owner);
       return owner;
     } else if (nftType === "taiko") {
@@ -506,8 +500,6 @@ const SingleNft = ({
         .catch((e) => {
           console.log(e);
         });
-
-      
 
       setowner(owner);
       return owner;
@@ -523,8 +515,6 @@ const SingleNft = ({
           console.log(e);
         });
 
-      
-
       setowner(owner);
       return owner;
     } else if (nftType === "mat") {
@@ -538,8 +528,6 @@ const SingleNft = ({
         .catch((e) => {
           console.log(e);
         });
-
-      
 
       setowner(owner);
       return owner;
@@ -555,8 +543,6 @@ const SingleNft = ({
           console.log(e);
         });
 
-      
-
       setowner(owner);
       return owner;
     } else if (nftType === "bnb") {
@@ -570,8 +556,6 @@ const SingleNft = ({
         .catch((e) => {
           console.log(e);
         });
-
-      
 
       setowner(owner);
       return owner;
@@ -587,8 +571,6 @@ const SingleNft = ({
           console.log(e);
         });
 
-      
-
       setowner(owner);
       return owner;
     } else if (nftType === "kucoin") {
@@ -602,8 +584,6 @@ const SingleNft = ({
         .catch((e) => {
           console.log(e);
         });
-
-      
 
       setowner(owner);
       return owner;
@@ -634,8 +614,6 @@ const SingleNft = ({
         .catch((e) => {
           console.log(e);
         });
-
-      
 
       setowner(owner);
       return owner;
@@ -720,8 +698,6 @@ const SingleNft = ({
         .catch((e) => {
           console.log(e);
         });
-
-      
 
       setowner(owner);
       return owner;
@@ -2269,7 +2245,7 @@ const SingleNft = ({
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     window.scrollTo(0, 0);
-    getFavoritesCount(nftId, nftAddress);
+
     // getLatest20BoughtNFTS(nftAddress, nftId);
   }, []);
 
@@ -2505,6 +2481,12 @@ const SingleNft = ({
       getOffer();
     }
   }, [coinbase, nftCount, window.WALLET_TYPE]);
+
+  useEffect(() => {
+    if (type === "caws" || type === "timepiece" || type === "land") {
+      getFavoritesCount(nftId, nftAddress);
+    }
+  }, [nftId, nftAddress, type]);
 
   useEffect(() => {
     if (favorites && favorites.length > 0) {
