@@ -5820,7 +5820,9 @@ function App() {
                 wodPrice={wodPrice}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
-                  setIsPremium(true);
+                  setTimeout(() => {
+                    setIsPremium(true);
+                  }, 2000);
                 }}
                 onSyncClick={() => {
                   setshowSync(true);
@@ -5912,7 +5914,9 @@ function App() {
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
-                  setIsPremium(true);
+                  setTimeout(() => {
+                    setIsPremium(true);
+                  }, 2000);
                 }}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -6451,7 +6455,9 @@ function App() {
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
-                  setIsPremium(true);
+                  setTimeout(() => {
+                    setIsPremium(true);
+                  }, 2000);
                 }}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -6637,7 +6643,7 @@ function App() {
               />
             }
           />
-            <Route
+          <Route
             exact
             path="/shop/mint/vanar"
             element={
@@ -6680,7 +6686,7 @@ function App() {
                 totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
-          />  
+          />
           {/* <Route
             exact
             path="/shop/mint/matchain"
