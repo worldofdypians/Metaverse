@@ -573,11 +573,9 @@ const GetPremiumPopup = ({
   };
 
   const handleUpdatePremiumUser = async (wallet) => {
-    const userauthToken = localStorage.getItem("authToken");
+    
     await axios
-      .get(`https://api.worldofdypians.com/api/sub/${wallet}`, {
-        headers: { Authorization: `Bearer ${userauthToken}` },
-      })
+      .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
       .catch((e) => {
         console.error(e);
       });
@@ -4421,7 +4419,7 @@ const GetPremiumPopup = ({
               )}
             </div>
 
-            {chainId === 1482601649 && (
+            {chainId === 1482601649 && isConnected && (
               <div className="gotoNebula-wrapper p-3 mb-3">
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="nebula-wrapper-text">

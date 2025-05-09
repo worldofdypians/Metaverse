@@ -243,10 +243,10 @@ window.config = {
       symbol: "BNB",
       decimals: 18,
     },
-    // "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56": {
-    //   symbol: "BUSD",
-    //   decimals: 18,
-    // },
+    "0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d": {
+      symbol: "USD1",
+      decimals: 18,
+    },
 
     "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8": {
       symbol: "WOD",
