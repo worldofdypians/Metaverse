@@ -1004,7 +1004,7 @@ const MarketMint = ({
     window.scrollTo(0, 0);
     document.title = "NFT Mint";
   }, []);
-  console.log(mintTitle);
+  
   return (
     <>
       <div

@@ -2794,7 +2794,7 @@ function App() {
           settextColor("rgb(123, 216, 176)");
           let web3 = new Web3(window.ethereum);
           let vanar_contract = new web3.eth.Contract(
-            window.SEI_NFT_ABI,
+            window.VANAR_NFT_ABI,
             window.config.nft_vanar_address
           );
 
@@ -2860,7 +2860,7 @@ function App() {
 
           const vanarsc = new ethers.Contract(
             window.config.nft_vanar_address,
-            window.SEI_NFT_ABI,
+            window.VANAR_NFT_ABI,
             library.getSigner()
           );
 
@@ -2922,7 +2922,7 @@ function App() {
           const result = await walletClient
             .writeContract({
               address: window.config.nft_vanar_address,
-              abi: window.SEI_NFT_ABI,
+              abi: window.VANAR_NFT_ABI,
               functionName: "mintBetaPass",
               args: [],
             })
