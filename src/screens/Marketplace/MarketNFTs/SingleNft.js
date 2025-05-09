@@ -589,7 +589,7 @@ const SingleNft = ({
       return owner;
     } else if (nftType === "vanar") {
       const nft_contract = new window.vanarWeb3.eth.Contract(
-        window.SEI_NFT_ABI,
+        window.VANAR_NFT_ABI,
         window.config.nft_vanar_address
       );
       const owner = await nft_contract.methods
