@@ -4046,25 +4046,13 @@ async function getMyNFTs(address, type = "") {
       window.VANAR_NFT_ABI,
       window.config.nft_vanar_address
     );
+    const events = await contract.getPastEvents("Transfer", {
+      filter: { to: address },
+      fromBlock: 0,
+      toBlock: "latest",
+    });
 
-    const balance = await contract.methods
-      .balanceOf(address)
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
-
-    const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods
-          .tokenOfOwnerByIndex(address, i)
-          .call()
-          .catch((e) => {
-            console.error(e);
-            return 5000;
-          })
-      )
-    );
+    const tokens = events.length > 0 ? [events[0]?.returnValues.tokenId] : [];
 
     return tokens;
   }
