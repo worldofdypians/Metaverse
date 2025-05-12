@@ -96,6 +96,7 @@ import { useMatchChain } from "@matchain/matchid-sdk-react/hooks";
 import { http, createPublicClient } from "viem";
 import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
 import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.js";
+import DailyQuestion from "./screens/DailyQuestion/DailyQuestion.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5488,6 +5489,7 @@ function App() {
 
         <Routes>
           <Route path="/news/:newsId?/:titleId?" element={<News />} />
+          <Route path="/daily-question" element={<DailyQuestion />} />
           <Route
             path="shop/nft/:nftId/:nftAddress?"
             element={
