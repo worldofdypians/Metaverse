@@ -3356,21 +3356,21 @@ function Dashboard({
 
   useEffect(() => {
     if (count !== 0) {
-      fetchDailyRecords();
+      // fetchDailyRecords();
       getAllChests(email);
     }
   }, [count]);
 
   useEffect(() => {
     if (corecount !== 0) {
-      fetchDailyRecordsCore();
+      // fetchDailyRecordsCore();
       getAllCoreChests(email);
     }
   }, [corecount]);
 
   useEffect(() => {
     if (skalecount !== 0) {
-      fetchDailyRecordsSkale();
+      // fetchDailyRecordsSkale();
       getAllSkaleChests(email);
     }
   }, [skalecount]);
@@ -3379,48 +3379,48 @@ function Dashboard({
 
   useEffect(() => {
     if (vicitoncount !== 0) {
-      fetchDailyRecordsViction();
+      // fetchDailyRecordsViction();
       getAllVictionChests(email);
     }
   }, [vicitoncount]);
 
   useEffect(() => {
     if (mantacount !== 0) {
-      fetchDailyRecordsManta();
+      // fetchDailyRecordsManta();
       getAllMantaChests(email);
     }
   }, [mantacount]);
 
   useEffect(() => {
     if (basecount !== 0) {
-      fetchDailyRecordsBase();
+      // fetchDailyRecordsBase();
       getAllBaseChests(email);
     }
   }, [basecount]);
 
   useEffect(() => {
     if (taikocount !== 0) {
-      fetchDailyRecordsTaiko();
+      // fetchDailyRecordsTaiko();
       getAllTaikoChests(email);
     }
   }, [taikocount]);
   useEffect(() => {
     if (vanarcount !== 0) {
-      fetchDailyRecordsVanar();
+      // fetchDailyRecordsVanar();
       getAllVanarChests(email);
     }
   }, [vanarcount]);
 
   useEffect(() => {
     if (matcount !== 0) {
-      fetchDailyRecordsMat();
+      // fetchDailyRecordsMat();
       getAllMatChests(email);
     }
   }, [matcount]);
 
   useEffect(() => {
     if (seicount !== 0) {
-      fetchDailyRecordsSei();
+      // fetchDailyRecordsSei();
       getAllSeiChests(email);
     }
   }, [seicount]);

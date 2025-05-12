@@ -2794,7 +2794,7 @@ function App() {
           settextColor("rgb(123, 216, 176)");
           let web3 = new Web3(window.ethereum);
           let vanar_contract = new web3.eth.Contract(
-            window.SEI_NFT_ABI,
+            window.VANAR_NFT_ABI,
             window.config.nft_vanar_address
           );
 
@@ -2860,7 +2860,7 @@ function App() {
 
           const vanarsc = new ethers.Contract(
             window.config.nft_vanar_address,
-            window.SEI_NFT_ABI,
+            window.VANAR_NFT_ABI,
             library.getSigner()
           );
 
@@ -2922,7 +2922,7 @@ function App() {
           const result = await walletClient
             .writeContract({
               address: window.config.nft_vanar_address,
-              abi: window.SEI_NFT_ABI,
+              abi: window.VANAR_NFT_ABI,
               functionName: "mintBetaPass",
               args: [],
             })
@@ -5820,7 +5820,9 @@ function App() {
                 wodPrice={wodPrice}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
-                  setIsPremium(true);
+                  setTimeout(() => {
+                    setIsPremium(true);
+                  }, 2000);
                 }}
                 onSyncClick={() => {
                   setshowSync(true);
@@ -5912,7 +5914,9 @@ function App() {
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
-                  setIsPremium(true);
+                  setTimeout(() => {
+                    setIsPremium(true);
+                  }, 2000);
                 }}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -6451,7 +6455,9 @@ function App() {
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
-                  setIsPremium(true);
+                  setTimeout(() => {
+                    setIsPremium(true);
+                  }, 2000);
                 }}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -6637,7 +6643,7 @@ function App() {
               />
             }
           />
-            <Route
+          <Route
             exact
             path="/shop/mint/vanar"
             element={
@@ -6680,7 +6686,7 @@ function App() {
                 totalVanarNfts={myVanarNFTs?.length ?? 0}
               />
             }
-          />  
+          />
           {/* <Route
             exact
             path="/shop/mint/matchain"
