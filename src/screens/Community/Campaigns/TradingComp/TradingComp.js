@@ -316,7 +316,7 @@ const TradingComp = ({ coinbase }) => {
                 </div>
                 <div className="d-flex w-100 justify-content-center">
                   <a
-                    href="https://pancakeswap.finance/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8&exactAmount=&exactField=INPUT"
+                    href="https://pancakeswap.finance/swap?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
                     target="_blank"
                     className="pancake-swap-btn mt-3 d-flex align-items-center justify-content-center gap-2 py-2 px-4"
                   >
