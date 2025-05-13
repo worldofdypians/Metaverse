@@ -82,19 +82,19 @@ const DailyQuestion = ({
             </div>
           </div>
           {unlock && (
-            <div class="col-md-12">
+            <div class={`col-md-12 ${!unlock && "d-none"}`}>
               <div class="answers-grid">
                 {answers.map((item, index) => (
                   <div
                     class={`answer-card ${
-                      selected === index && item.correct === false
+                      selected !== null && item.correct === false && answered
                         ? "answer-card-incorrect"
-                        : selected === index && item.correct === true
+                        : selected !== null && item.correct === true && answered
                         ? "answer-card-correct"
                         : ""
                     } 
                     ${answered && "disabled-answer"}
-                    ${index === selected && "disabled-answer-selected"}
+                    ${selected === index && "selected-answer"}
                     
                     `}
                     style={{
@@ -104,7 +104,7 @@ const DailyQuestion = ({
                     key={index}
                     onClick={() => {
                       setSelected(index);
-                      setAnswered(true);
+                      // setAnswered(true);
                     }}
                   >
                     <p class="answer-text">{item.text}</p>
@@ -113,6 +113,14 @@ const DailyQuestion = ({
               </div>
             </div>
           )}
+          {unlock &&
+          <div className="d-flex flex-column gap-2 w-100 align-items-center">
+            {selected !== null && (
+              <span className="question-sure text-center">Are you sure?</span>
+            )}
+            <button className="explore-btn px-3 py-2" onClick={() => setAnswered(true)}>Submit</button>
+          </div>
+          }
         </div>
       </div>
     </div>
