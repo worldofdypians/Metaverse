@@ -5489,7 +5489,21 @@ function App() {
 
         <Routes>
           <Route path="/news/:newsId?/:titleId?" element={<News />} />
-          <Route path="/daily-question" element={<DailyQuestion />} />
+          <Route
+            path="/daily-question"
+            element={
+              <DailyQuestion
+                isConnected={isConnected}
+                handleSwitchNetwork={handleSwitchNetwork}
+                network_matchain={chain}
+          chainId={networkId}
+
+                onConnectWallet={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
           <Route
             path="shop/nft/:nftId/:nftAddress?"
             element={
