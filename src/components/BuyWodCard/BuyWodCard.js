@@ -18,9 +18,7 @@ const BuyWodCard = ({ item }) => {
       <div className="d-flex align-items-center gap-2">
         <img
           src={
-            item.logo.includes("changeNow")
-              ? require("../MyProfile/changeNow.webp")
-              : `https://cdn.worldofdypians.com/wod/${item.logo}`
+             `https://cdn.worldofdypians.com/wod/${item.logo}`
           }
           alt=""
           

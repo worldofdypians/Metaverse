@@ -332,8 +332,7 @@ const WodPartners = ({ full }) => {
                     <img
                       src={
                         partner.icon.includes("changeNow")
-                          ? require("../../../components/MyProfile/changeNow.webp")
-                          : `https://cdn.worldofdypians.com/wod/${partner.icon}`
+                           `https://cdn.worldofdypians.com/wod/${partner.icon}`
                       }
                       alt=""
                       style={{
