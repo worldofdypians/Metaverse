@@ -9,10 +9,10 @@ const DailyQuestionHero = () => {
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
                 <h6 className="market-banner-title text-center">
-                  Daily Question
+                  AI Question Of The Day
                 </h6>
                 <span className="market-banner-desc font-montserrat text-center">
-                 The Daily Question is a fun and engaging mini-game where players unlock a new AI-generated question every day. Each question comes with three answer choices — one correct and two incorrect. Choose the right answer to earn star rewards and test your knowledge daily!
+                 The AI Question Of The Day is a fun and engaging mini-game where players unlock a new AI-generated question every day. Each question comes with three answer choices — one correct and two incorrect. Choose the right answer to earn star rewards and test your knowledge daily!
                 </span>
               </div>
             </div>

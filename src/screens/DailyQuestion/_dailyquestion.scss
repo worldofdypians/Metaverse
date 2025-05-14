@@ -85,6 +85,18 @@
   opacity: 0;
   animation: fadeInLeft 1s ease forwards;
 }
+.countdown-card {
+  border-radius: 8px;
+  border: 0.5px solid #dfdced;
+  padding: 20px;
+  // background: #c23644;
+  // background: #43b65e;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 
 .answer-card-correct {
   background: #43b65e !important;

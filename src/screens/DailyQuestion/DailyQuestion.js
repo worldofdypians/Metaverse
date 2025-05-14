@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import "./_dailyquestion.scss";
 import DailyQuestionHero from "./DailyQuestionHero";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import Countdown from "react-countdown";
+
+const renderer = ({ seconds, completed }) => {
+  if (completed) {
+    return <p className="answer-text">Time's up!</p>;
+  } else {
+    return <p className=" answer-text">{seconds} seconds left</p>;
+  }
+};
 
 const DailyQuestion = ({
   isConnected,
@@ -44,6 +53,9 @@ const DailyQuestion = ({
     }
   };
 
+  console.log(timer);
+  
+
   return (
     <div className="d-flex flex-column align-items-center">
       <DailyQuestionHero />
@@ -83,13 +95,27 @@ const DailyQuestion = ({
           </div>
           {unlock && (
             <div class={`col-md-12 ${!unlock && "d-none"}`}>
+              <div
+                className="countdown-card mb-3"
+                style={{ pointerEvents: "none" }}
+              >
+                <Countdown
+                  date={Date.now() + 15000} // 15 seconds from now
+                  renderer={renderer}
+                  onComplete={() => setTimer(true)}
+                />
+              </div>
               <div class="answers-grid">
                 {answers.map((item, index) => (
                   <div
                     class={`answer-card ${
-                      selected !== null && item.correct === false && answered
+                      ((selected !== null || timer) &&
+                        item.correct === false) ||
+                      answered
                         ? "answer-card-incorrect"
-                        : selected !== null && item.correct === true && answered
+                        : ((selected !== null || timer) &&
+                            item.correct === true) ||
+                          answered
                         ? "answer-card-correct"
                         : ""
                     } 
@@ -113,14 +139,20 @@ const DailyQuestion = ({
               </div>
             </div>
           )}
-          {unlock &&
-          <div className="d-flex flex-column gap-2 w-100 align-items-center">
-            {selected !== null && (
-              <span className="question-sure text-center">Are you sure?</span>
-            )}
-            <button className="explore-btn px-3 py-2" onClick={() => setAnswered(true)}>Submit</button>
-          </div>
-          }
+          {unlock && (
+            <div className="d-flex flex-column gap-2 w-100 align-items-center">
+              {selected !== null && (
+                <span className="question-sure text-center">Are you sure?</span>
+              )}
+              <button
+                disabled={selected !== null ? false : true}
+                className="explore-btn px-3 py-2"
+                onClick={() => setAnswered(true)}
+              >
+                Submit
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
