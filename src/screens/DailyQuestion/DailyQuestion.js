@@ -18,7 +18,7 @@ const DailyQuestion = ({
   const [selected, setSelected] = useState(null); // which answer index?
   const [answered, setAnswered] = useState(false); // has the user submitted?
   const [timerDone, setTimerDone] = useState(false); // did the countdown finish?
-
+  const isFinished = true;
   // one‑time finish timestamp for the countdown (15 s after unlocking)
   const finishAtRef = useRef(null);
 
@@ -89,36 +89,44 @@ const DailyQuestion = ({
         <div className="row g-4 align-items-stretch mt-4">
           {/* ── TOP BUTTON / QUESTION ───────────────────── */}
           <div className="col-md-12">
-            <div className="question-wrapper h-100 d-flex align-items-center justify-content-center">
-              {!isConnected ? (
-                <button
-                  className="getpremium-btn px-3 py-2"
-                  onClick={onConnectWallet}
-                >
-                  Connect Wallet
-                </button>
-              ) : isConnected && chainId !== 56 ? (
-                <button
-                  className="getpremium-btn px-3 py-2"
-                  onClick={handleEthPool}
-                >
-                  Switch to BNB Chain
-                </button>
-              ) : !unlock ? (
-                <button
-                  className="getpremium-btn px-3 py-2"
-                  onClick={startQuestion}
-                >
-                  Unlock Question
-                </button>
-              ) : (
+            {isFinished ? (
+              <div className="question-wrapper h-100 d-flex align-items-center justify-content-center">
                 <h6 className="question-title text-center">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Soluta temporibus harum numquam, nihil aliquid animi minima
-                  quis officiis sed qui?
+                  Today's question is finished. Come back tomorrow!
                 </h6>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className="question-wrapper h-100 d-flex align-items-center justify-content-center">
+                {!isConnected ? (
+                  <button
+                    className="getpremium-btn px-3 py-2"
+                    onClick={onConnectWallet}
+                  >
+                    Connect Wallet
+                  </button>
+                ) : isConnected && chainId !== 56 ? (
+                  <button
+                    className="getpremium-btn px-3 py-2"
+                    onClick={handleEthPool}
+                  >
+                    Switch to BNB Chain
+                  </button>
+                ) : !unlock ? (
+                  <button
+                    className="getpremium-btn px-3 py-2"
+                    onClick={startQuestion}
+                  >
+                    Unlock Question
+                  </button>
+                ) : (
+                  <h6 className="question-title text-center">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Soluta temporibus harum numquam, nihil aliquid animi minima
+                    quis officiis sed qui?
+                  </h6>
+                )}
+              </div>
+            )}
           </div>
 
           {/* ── COUNTDOWN + ANSWERS ───────────────────── */}
