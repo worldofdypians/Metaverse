@@ -1,16 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./_dailyquestion.scss";
 import DailyQuestionHero from "./DailyQuestionHero";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import Countdown from "react-countdown";
-
-const renderer = ({ seconds, completed }) => {
-  if (completed) {
-    return <p className="answer-text">Time's up!</p>;
-  } else {
-    return <p className=" answer-text">{seconds} seconds left</p>;
-  }
-};
 
 const DailyQuestion = ({
   isConnected,
@@ -19,14 +11,23 @@ const DailyQuestion = ({
   network_matchain,
   chainId,
 }) => {
-  const [unlock, setUnlock] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [answered, setAnswered] = useState(false);
-  const [timer, setTimer] = useState(false);
+  /* ─────────────────────────
+     STATE
+  ──────────────────────────*/
+  const [unlock, setUnlock] = useState(false); // has the user unlocked the Q?
+  const [selected, setSelected] = useState(null); // which answer index?
+  const [answered, setAnswered] = useState(false); // has the user submitted?
+  const [timerDone, setTimerDone] = useState(false); // did the countdown finish?
 
+  // one‑time finish timestamp for the countdown (15 s after unlocking)
+  const finishAtRef = useRef(null);
+
+  /* ─────────────────────────
+     DATA
+  ──────────────────────────*/
   const answers = [
     {
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.Reiciendis quis repellat quam fugiat voluptatum nobis aliquid abmollitia similique. Delectus!",
+      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.Reiciendis quis repellat quam fugiat voluptatum nobis aliquid ab mollitia similique. Delectus!",
       correct: false,
     },
     {
@@ -39,30 +40,56 @@ const DailyQuestion = ({
     },
   ];
 
+  /* ─────────────────────────
+     NETWORK HANDLER
+  ──────────────────────────*/
   const handleEthPool = async () => {
     if (window.WALLET_TYPE === "matchId") {
       network_matchain?.showChangeNetwork();
     } else {
-      await handleSwitchNetworkhook("0x38")
-        .then(() => {
-          handleSwitchNetwork("56");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      try {
+        await handleSwitchNetworkhook("0x38");
+        handleSwitchNetwork("56");
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 
-  console.log(timer);
-  
+  /* ─────────────────────────
+     START QUESTION
+  ──────────────────────────*/
+  const startQuestion = () => {
+    setUnlock(true);
+    setAnswered(false);
+    setSelected(null);
+    setTimerDone(false);
+    finishAtRef.current = Date.now() + 15_000; // 15 s target
+  };
+
+  const reveal = answered || timerDone; // true only after submit or timeout
+
+  const isSelectionCorrect = selected !== null && answers[selected].correct;
+
+  /* ─────────────────────────
+     COUNTDOWN RENDERER
+  ──────────────────────────*/
+  const renderer = ({ seconds, completed }) =>
+    completed ? (
+      <p className="answer-text">Time's up! Better luck next time</p>
+    ) : (
+      <p className="answer-text">{seconds} seconds left</p>
+    );
 
   return (
     <div className="d-flex flex-column align-items-center">
       <DailyQuestionHero />
-      <div class="custom-container">
-        <div class="row g-4 align-items-stretch mt-4">
-          <div class="col-md-12">
-            <div class="question-wrapper h-100 d-flex align-items-center justify-content-center">
+
+      <div className="custom-container">
+        <div className="row g-4 align-items-stretch mt-4">
+          {/* ── TOP BUTTON / QUESTION ───────────────────── */}
+          <div className="col-md-12">
+            <div className="question-wrapper h-100 d-flex align-items-center justify-content-center">
               {!isConnected ? (
                 <button
                   className="getpremium-btn px-3 py-2"
@@ -70,7 +97,7 @@ const DailyQuestion = ({
                 >
                   Connect Wallet
                 </button>
-              ) : isConnected && chainId != 56 ? (
+              ) : isConnected && chainId !== 56 ? (
                 <button
                   className="getpremium-btn px-3 py-2"
                   onClick={handleEthPool}
@@ -80,7 +107,7 @@ const DailyQuestion = ({
               ) : !unlock ? (
                 <button
                   className="getpremium-btn px-3 py-2"
-                  onClick={() => setUnlock(true)}
+                  onClick={startQuestion}
                 >
                   Unlock Question
                 </button>
@@ -93,59 +120,76 @@ const DailyQuestion = ({
               )}
             </div>
           </div>
+
+          {/* ── COUNTDOWN + ANSWERS ───────────────────── */}
           {unlock && (
-            <div class={`col-md-12 ${!unlock && "d-none"}`}>
-              <div
-                className="countdown-card mb-3"
-                style={{ pointerEvents: "none" }}
-              >
-                <Countdown
-                  date={Date.now() + 15000} // 15 seconds from now
-                  renderer={renderer}
-                  onComplete={() => setTimer(true)}
-                />
-              </div>
-              <div class="answers-grid">
-                {answers.map((item, index) => (
-                  <div
-                    class={`answer-card ${
-                      ((selected !== null || timer) &&
-                        item.correct === false) ||
-                      answered
-                        ? "answer-card-incorrect"
-                        : ((selected !== null || timer) &&
-                            item.correct === true) ||
-                          answered
-                        ? "answer-card-correct"
-                        : ""
-                    } 
-                    ${answered && "disabled-answer"}
-                    ${selected === index && "selected-answer"}
-                    
-                    `}
-                    style={{
-                      pointerEvents: answered ? "none" : "auto",
-                      opacity: index === selected ? "1" : "0.8",
-                    }}
-                    key={index}
-                    onClick={() => {
-                      setSelected(index);
-                      // setAnswered(true);
-                    }}
-                  >
-                    <p class="answer-text">{item.text}</p>
-                  </div>
-                ))}
+            <div className="col-md-12">
+              {/*  A.  TIMER or RESULT MESSAGE  */}
+              {!reveal ? (
+                /* 1. Countdown still running */
+                <div
+                  className="countdown-card mb-3"
+                  style={{ pointerEvents: "none" }}
+                >
+                  <Countdown
+                    key={finishAtRef.current}
+                    date={finishAtRef.current}
+                    renderer={renderer}
+                    onComplete={() => setTimerDone(true)}
+                  />
+                </div>
+              ) : answered ? (
+                /* 2. Answer submitted → show correct / incorrect */
+                <div className="countdown-card mb-3 d-flex justify-content-center align-items-center">
+                  <p className="answer-text m-0">
+                    {isSelectionCorrect ? "✅ Correct!" : "❌ Incorrect"}
+                  </p>
+                </div>
+              ) : (
+                /* 3. Timer finished, no answer → still show “Time's up!” */
+                <div className="countdown-card mb-3 d-flex justify-content-center align-items-center">
+                  <p className="answer-text m-0">Time's up!</p>
+                </div>
+              )}
+
+              {/*  B.  ANSWERS GRID  */}
+              <div className="answers-grid">
+                {answers.map((item, index) => {
+                  const isSelected = selected === index;
+                  const isCorrect = item.correct;
+
+                  return (
+                    <div
+                      key={index}
+                      className={
+                        "answer-card " +
+                        (reveal && isCorrect ? "answer-card-correct " : "") +
+                        (reveal && !isCorrect ? "answer-card-incorrect " : "") +
+                        (answered || timerDone ? "disabled-answer " : "") +
+                        (isSelected ? "selected-answer" : "")
+                      }
+                      style={{
+                        pointerEvents: reveal ? "none" : "auto",
+                        opacity: isSelected ? 1 : 0.8,
+                      }}
+                      onClick={() => !reveal && setSelected(index)}
+                    >
+                      <p className="answer-text">{item.text}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
-          {unlock && (
+
+          {/* ── SUBMIT BUTTON ───────────────────── */}
+          {unlock && !reveal && (
             <div className="d-flex flex-column gap-2 w-100 align-items-center">
               {selected !== null && (
                 <span className="question-sure text-center">Are you sure?</span>
               )}
               <button
-                disabled={selected !== null ? false : true}
+                disabled={selected === null}
                 className="explore-btn px-3 py-2"
                 onClick={() => setAnswered(true)}
               >

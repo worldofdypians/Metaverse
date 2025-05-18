@@ -1,172 +1,177 @@
+/* ─────────────────────────────────────────
+   HERO
+─────────────────────────────────────────*/
 .daily-question-mainhero-wrapper {
-  min-height: 45vh !important;
-  background-image: linear-gradient(0deg, #080b2a 0%, rgba(8, 11, 42, 0.6) 100%),
-    url("https://cdn.worldofdypians.com/wod/earnHeroBg.webp") !important;
+  min-height: 45vh;
+  background: linear-gradient(0deg, #080b2a 0%, rgba(8, 11, 42, 0.6) 100%),
+    url("https://cdn.worldofdypians.com/wod/earnHeroBg.webp");
   background-position: top;
   background-repeat: no-repeat;
   background-size: contain;
 
-  @media only screen and (max-width: 991px) {
-    min-height: auto !important;
+  @media (max-width: 991px) {
+    min-height: auto;
   }
 
-  @media only screen and (max-width: 450px) {
-    background-image: linear-gradient(
-        180deg,
-        #080b2a 0%,
-        rgba(8, 11, 42, 0.01) 100%
-      ),
-      url("https://cdn.worldofdypians.com/wod/earnHeroBgMobile.webp") !important;
+  @media (max-width: 450px) {
+    background: linear-gradient(180deg, #080b2a 0%, rgba(8, 11, 42, 0.01) 100%),
+      url("https://cdn.worldofdypians.com/wod/earnHeroBgMobile.webp");
     background-position: center -100px;
-    background-repeat: no-repeat;
     background-size: 100%;
   }
 }
 
+/* ─────────────────────────────────────────
+   MAIN WRAPPER
+─────────────────────────────────────────*/
 .daily-question-wrapper {
-  margin-top: 150px;
-  // margin-bottom: 50px;
+  margin-top: 120px;
 
-  @media screen and (max-width: 786px) {
-    margin-top: 40px;
-    //   background-image: linear-gradient(
-    //     0deg,
-    //      #080b2a 0%,
-    //      rgba(8, 11, 42, 0.6) 100%
-    //    ),
-    //    url("./assets/earnHeroBgMobile.webp") !important;
-    //  background-position: top;
-    //  background-repeat: no-repeat;
-    //  background-size: cover;
+  @media (max-width: 786px) {
+    margin-top: 48px;
   }
 }
 
+/* ─────────────────────────────────────────
+   QUESTION
+─────────────────────────────────────────*/
 .question-wrapper {
-  border-radius: 8px;
-  border: 0.5px solid #dfdced;
-
-  padding: 30px;
-}
-
-.answers-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  @media screen and (max-width: 786px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  border-radius: 12px;
+  border: 1px solid rgba(223, 220, 237, 0.4);
+  padding: 48px 32px;
+  background: rgba(255, 255, 255, 0.02); // subtle panel bg
+  backdrop-filter: blur(2px);
 }
 
 .question-title {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
   font-weight: 700;
   color: #f0f8ff;
-  margin-bottom: 0;
+  margin: 0;
+  line-height: 1.3;
 }
+
 .question-sure {
   font-size: 1rem;
   font-weight: 500;
   color: #f0f8ff;
-  margin-bottom: 0;
 }
 
+/* ─────────────────────────────────────────
+   ANSWER GRID
+─────────────────────────────────────────*/
+.answers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─────────────────────────────────────────
+   ANSWER CARD
+─────────────────────────────────────────*/
 .answer-card {
-  border-radius: 8px;
-  border: 0.5px solid #dfdced;
-  padding: 20px;
-  // background: #c23644;
-  // background: #43b65e;
-  text-align: center;
-  transition: all 0.25s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  opacity: 0;
-  animation: fadeInLeft 1s ease forwards;
-}
-.countdown-card {
-  border-radius: 8px;
-  border: 0.5px solid #dfdced;
-  padding: 20px;
-  // background: #c23644;
-  // background: #43b65e;
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid rgba(223, 220, 237, 0.25);
+  padding: 28px 20px;
+  background: rgba(255, 255, 255, 0.04);
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-}
+  transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
 
-.answer-card-correct {
-  background: #43b65e !important;
-}
-
-.answer-card-incorrect {
-  background: #c23644 !important;
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 12px rgba(72, 139, 255, 0.35);
+  }
 }
 
 .answer-text {
   color: #dfdced;
-  text-align: center;
-  font-size: 18px;
-  font-style: normal;
+  font-size: 1rem;
   font-weight: 600;
-  line-height: normal;
-  margin-bottom: 0;
+  margin: 0;
+  line-height: 1.35;
 }
 
-.answer-card:hover {
-  transform: translateY(-5px);
-  background: #dfdced;
-  // box-shadow: 0 0 15px rgba(72, 139, 255, 0.7);
-  .answer-text {
-    color: #0e1236;
-  }
+/* State colours */
+.answer-card-correct {
+  background: #43b65e !important;
+}
+.answer-card-incorrect {
+  background: #c23644 !important;
 }
 
+/* selected but not yet revealed */
 .selected-answer {
-  transform: translateY(-5px);
   background: #dfdced;
-  // box-shadow: 0 0 15px rgba(72, 139, 255, 0.7);
   .answer-text {
     color: #0e1236;
   }
 }
 
-@keyframes fadeInLeft {
+/* disable interaction after reveal */
+.disabled-answer {
+  pointer-events: none;
+  opacity: 0.8;
+
+  .answer-text {
+    color: #dfdced;
+  }
+}
+
+/* ─────────────────────────────────────────
+   COUNTDOWN & RESULT CARD
+─────────────────────────────────────────*/
+.countdown-card {
+  border-radius: 12px;
+  border: 1px solid rgba(223, 220, 237, 0.25);
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ─────────────────────────────────────────
+   ANIMATIONS
+─────────────────────────────────────────*/
+@keyframes fadeInStagger {
   from {
     opacity: 0;
-    transform: translateX(-30px);
-    pointer-events: none;
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
+    transform: translateY(0);
   }
 }
 
-/* Staggered animation */
+.answer-card {
+  opacity: 0;
+  animation: fadeInStagger 0.6s forwards;
+}
 .answer-card:nth-child(1) {
   animation-delay: 0.1s;
 }
 .answer-card:nth-child(2) {
-  animation-delay: 0.3s;
+  animation-delay: 0.25s;
 }
 .answer-card:nth-child(3) {
-  animation-delay: 0.5s;
+  animation-delay: 0.4s;
 }
 
-.disabled-answer {
-  pointer-events: none !important;
-    p {
-    color: #dfdced !important;
-  }
-}
-
-.disabled-answer-selected {
-  pointer-events: none !important;
-  opacity: 1 !important;
-
+/* ─────────────────────────────────────────
+   UTILITIES
+─────────────────────────────────────────*/
+button.getpremium-btn,
+button.explore-btn {
+  min-width: 200px;
 }
