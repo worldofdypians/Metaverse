@@ -12,6 +12,7 @@ const MyRewardsPopupNew = ({
   bnbEarnUsd,
   skaleEarnUsd,
   seiEarnUsd,
+  vanarEarnUsd,
   coreEarnUsd,
   victionEarnUsd,
   allSkaleChests,
@@ -800,7 +801,7 @@ const MyRewardsPopupNew = ({
                   )
                 : getFormattedNumber(
                     Number(treasureRewardMoneyCore) +
-                    Number(treasureRewardMoneyVanar) +
+                      Number(treasureRewardMoneyVanar) +
                       Number(treasureRewardMoneySei) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
@@ -814,7 +815,7 @@ const MyRewardsPopupNew = ({
                       Number(kucoinEarnUsd) +
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
-                      // Number(dailyplayerData) +
+                      Number(vanarEarnUsd) +
                       // Number(dailyDataAmountCore) +
                       // Number(weeklyDataAmountCore) +
                       // Number(monthlyDataAmountCore) +
@@ -1118,7 +1119,8 @@ const MyRewardsPopupNew = ({
                       Number(coreEarnUsd) +
                       Number(kucoinEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(mantaEarnUsd),
+                      Number(mantaEarnUsd) +
+                      Number(vanarEarnUsd),
                     2
                   )}
             </span>
@@ -1682,6 +1684,19 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(coreEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Vanar
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(vanarEarnUsd, 2)}
                   </span>
                 </div>
               </div>
