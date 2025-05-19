@@ -40,7 +40,7 @@ const renderer2 = ({ hours, minutes }) => {
   );
 };
 
-const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
+const EventsPopup = ({ onClose, dummyEvent }) => {
   return (
     <OutsideClickHandler onOutsideClick={() => onClose()}>
       <div className="profile-event-popup p-4">
@@ -71,7 +71,6 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             style={{ cursor: "pointer" }}
             onClick={() => {
               onClose();
-              onClearAd();
             }}
           />
         </div>
