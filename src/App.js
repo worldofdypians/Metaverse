@@ -651,6 +651,8 @@ function App() {
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-08-16T14:00:00.000+02:00");
 
+  let vanarLastDay = new Date("2025-09-16T14:00:00.000+02:00");
+
   const placeholderplayerData = [
     {
       position: "0",
@@ -777,6 +779,11 @@ function App() {
   const [victionPrice, setVictionPrice] = useState(0);
   const [victionEarnToken, setVictionEarnToken] = useState(0);
   const [victionPoints, setVictionPoints] = useState(0);
+
+  const [vanarEarnUsd, setvanarEarnUsd] = useState(0);
+  const [vanarPrice, setvanarPrice] = useState(0);
+  const [vanarEarnToken, setvanarEarnToken] = useState(0);
+  const [vanarPoints, setvanarPoints] = useState(0);
 
   const [taikoEarnUsd, setTaikoEarnUsd] = useState(0);
   const [taikoPrice, setTaikoPrice] = useState(0);
@@ -1172,6 +1179,10 @@ function App() {
             return obj.betapassId === "sei";
           });
 
+          const vanarEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "vanar";
+          });
+
           const easy2stakeEvent = responseData.events.filter((obj) => {
             return obj.id === "easy2stakeEvent1";
           });
@@ -1334,6 +1345,20 @@ function App() {
             setSeiEarnPoints(pointsSei);
             setSeiEarnUsd(userEarnedusd);
             setSeiEarnToken(userEarnedusd / seiPrice);
+          }
+
+          if (vanarEvent && vanarEvent[0]) {
+            if (vanarEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
+
+            const userEarnedusd =
+              vanarEvent[0].reward.earn.total /
+              vanarEvent[0].reward.earn.multiplier;
+            const pointsVanar = vanarEvent[0].reward.earn.totalPoints;
+            setvanarPoints(pointsVanar);
+            setvanarEarnUsd(userEarnedusd);
+            setvanarEarnToken(userEarnedusd / vanarPrice);
           }
           if (matEvent && matEvent[0]) {
             // if (matEvent[0].reward.earn.totalPoints > 0) {
@@ -3741,6 +3766,14 @@ function App() {
       });
   };
 
+  const fetchVanarPrice = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/price/vanar-chain`)
+      .then((obj) => {
+        setvanarPrice(obj.data.price);
+      });
+  };
+
   const getWodBalance = async (address) => {
     if (address) {
       const tokenContract = new window.bscWeb3.eth.Contract(
@@ -3776,6 +3809,7 @@ function App() {
     fetchCFXPrice();
     // fetchMatchainPrice();
     fetchVictionPrice();
+    fetchVanarPrice();
     fetchEgldPrice();
     fetchImmutablePrice();
   }, []);
@@ -4652,37 +4686,37 @@ function App() {
     {
       title: "Vanar",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in VANRY Rewards",
       location: [-0.06784377896887378, 0.0839531421661377],
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "Live",
       type: "Treasure Hunt",
       rewardType: "VANRY",
       rewardAmount: "$20,000",
       infoType: "Treasure Hunt",
       backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
       image: "vanarArea.webp",
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
+      userEarnUsd: vanarEarnUsd,
+      userEarnCrypto: vanarEarnToken,
+      userEarnPoints: vanarPoints,
       popupInfo: {
         title: "Vanar",
         chain: "Vanar Network",
         linkState: "vanar",
         rewards: "VANRY",
-        status: "Coming Soon",
+        status: "Live",
         id: "event2",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in VANRY Rewards",
-        eventDuration: confluxLastDay,
+        eventDuration: vanarLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Live",
       },
     },
   ];
@@ -5833,6 +5867,7 @@ function App() {
                 bnbEarnUsd={bnbEarnUsd}
                 skaleEarnUsd={skaleEarnUsd}
                 seiEarnUsd={seiEarnUsd}
+                vanarEarnUsd={vanarEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
@@ -5923,6 +5958,7 @@ function App() {
                 bnbEarnUsd={bnbEarnUsd}
                 skaleEarnUsd={skaleEarnUsd}
                 seiEarnUsd={seiEarnUsd}
+                vanarEarnUsd={vanarEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
@@ -6464,6 +6500,7 @@ function App() {
                 bnbEarnUsd={bnbEarnUsd}
                 skaleEarnUsd={skaleEarnUsd}
                 seiEarnUsd={seiEarnUsd}
+                vanarEarnUsd={vanarEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
