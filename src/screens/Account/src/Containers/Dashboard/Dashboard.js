@@ -142,6 +142,7 @@ function Dashboard({
   dummyBetaPassData2,
   skaleEarnUsd,
   seiEarnUsd,
+  vanarEarnUsd,
   coreEarnUsd,
   victionEarnUsd,
   taikoEarnUsd,
@@ -6096,8 +6097,8 @@ function Dashboard({
                 Number(mantaEarnUsd) +
                 Number(coreEarnUsd) +
                 Number(seiEarnUsd) +
-                Number(taikoEarnUsd)
-                // Number(skaleEarnUsd) +
+                Number(taikoEarnUsd) +
+                Number(vanarEarnUsd)
                 // Number(coingeckoEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
@@ -6255,6 +6256,7 @@ function Dashboard({
             skaleEarnUsd={skaleEarnUsd}
             multiversEarnUsd={multiversEarnUsd}
             seiEarnUsd={seiEarnUsd}
+            vanarEarnUsd={vanarEarnUsd}
             victionEarnUsd={victionEarnUsd}
             mantaEarnUsd={mantaEarnUsd}
             taikoEarnUsd={taikoEarnUsd}
@@ -6909,6 +6911,7 @@ function Dashboard({
                 skaleEarnUsd={skaleEarnUsd}
                 multiversEarnUsd={multiversEarnUsd}
                 seiEarnUsd={seiEarnUsd}
+                vanarEarnUsd={vanarEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
