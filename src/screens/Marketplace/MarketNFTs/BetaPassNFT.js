@@ -73,6 +73,7 @@ const BetaPassNFT = ({
   const [taikoEarnUsd, setTaikoEarnUsd] = useState(0);
   const [cookieEarnUsd, setCookieEarnUsd] = useState(0);
   const [matChainEarnUsd, setmatChainEarnUsd] = useState(0);
+  const [vanarEarnUsd, setvanarEarnUsd] = useState(0);
 
   const benefits = [
     {
@@ -482,13 +483,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "vanar-mint-bg",
       wrapperClassName: "vanar-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$20,000 in VANRY rewards",
       rewardType: "VANRY",
-      userEarned: 0,
+      userEarned: vanarEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Coming Soon",
-      eventEndDate: "Coming Soon",
+      eventStartDate: "May. 19, 2025",
+      eventEndDate: "Sep. 16, 2025",
     },
   ];
 
@@ -617,7 +618,9 @@ const BetaPassNFT = ({
           const kucoinEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "kucoin";
           });
-
+          const vanarEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "vanar";
+          });
           if (coingeckoEvent && coingeckoEvent[0]) {
             const usdValue =
               coingeckoEvent[0].reward.earn.total /
@@ -644,6 +647,14 @@ const BetaPassNFT = ({
               kucoinEvent[0].reward.earn.multiplier;
             setUserEarnUsdKucoin(usdValue);
           }
+
+          if (vanarEvent && vanarEvent[0]) {
+            const usdValue =
+              vanarEvent[0].reward.earn.total /
+              vanarEvent[0].reward.earn.multiplier;
+            setvanarEarnUsd(usdValue);
+          }
+
           if (matEvent && matEvent[0]) {
             const userEarnedusd =
               matEvent[0].reward.earn.total /
