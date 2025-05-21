@@ -5998,6 +5998,7 @@ function Dashboard({
           <>
             <MyProfile
               wodBalance={wodBalance}
+              aiQuestionCompleted={false}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
