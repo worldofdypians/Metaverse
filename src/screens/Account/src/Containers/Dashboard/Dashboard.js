@@ -55,6 +55,7 @@ import {
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
+import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -466,6 +467,7 @@ function Dashboard({
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [showDailyQuestion, setShowDailyQuestion] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
 
@@ -6011,6 +6013,9 @@ function Dashboard({
               beastSiegeStatus={beastSiegeStatus}
               puzzleMadnessTimer={puzzleMadnessTimer}
               onGoldenpassClick={() => setgoldenPassPopup(true)}
+              onDailyQuestionClick={() => {
+                setShowDailyQuestion(true);
+              }}
               onShowRankPopup={() => {
                 handleFetchRecords("all");
               }}
@@ -6934,6 +6939,34 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
+
+        {showDailyQuestion && (
+          <OutsideClickHandler
+            onOutsideClick={() => setShowDailyQuestion(false)}
+          >
+            <div
+              className="popup-wrapper popup-active p-4 ai-popupbg d-flex flex-column"
+              id="aiQuestion"
+              style={{
+                minHeight: "460px",
+                pointerEvents: "auto",
+                overflowX: "auto",
+                width: "460px",
+              }}
+            >
+              <div className="d-flex align-items-center justify-content-end">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => setShowDailyQuestion(false)}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+              <AIQuestion />
+            </div>
+          </OutsideClickHandler>
+        )}
+
         {portfolio && (
           <OutsideClickHandler onOutsideClick={() => setPortfolio(false)}>
             <div
