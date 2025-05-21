@@ -25,7 +25,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 const renderer = ({ days, hours, minutes }) => {
   return (
     <h6 className="timer-text2 mb-0">
-      {days}d: {hours}h:{minutes}m 
+      {days}d: {hours}h:{minutes}m
     </h6>
   );
 };
@@ -57,6 +57,27 @@ const renderer4 = ({ hours, minutes, seconds }) => {
     <span className="beast-siege-timer">
       {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
     </span>
+  );
+};
+
+const rendererAI = ({ hours, minutes }) => {
+  return (
+    <div className="d-flex flex-column gap-2 justify-content-center align-items-center ">
+      <div className="timer-wrapper d-flex align-items-start gap-1 justify-content-center">
+        <div className="d-flex flex-column gap-1">
+          <h6 className="mint-time m-0">{hours < 10 ? "0" + hours : hours}H</h6>
+          {/* <span className="days">Hours</span> */}
+        </div>
+        <h6 className="mint-time m-0">:</h6>
+        <div className="d-flex flex-column gap-1">
+          <h6 className="mint-time m-0">
+            {minutes < 10 ? "0" + minutes : minutes}M
+          </h6>
+          {/* <span className="days">minutes</span> */}
+        </div>
+      </div>
+      <span className="timer-text2">Next in</span>
+    </div>
   );
 };
 
@@ -145,6 +166,7 @@ const MyProfile = ({
   userRankVanar,
   userVanarScore,
   userVanarStars,
+  aiQuestionCompleted,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -868,9 +890,7 @@ const MyProfile = ({
                     </div>
                   </div>
                 </NavLink>
-                <div
-                  className="wallet-address-wrapper2 p-2 w-100"
-                >
+                <div className="wallet-address-wrapper2 p-2 w-100">
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex gap-1 align-items-center">
                       <img
@@ -881,18 +901,15 @@ const MyProfile = ({
                         style={{ width: 24, height: 24 }}
                       />
                       <div className="d-flex flex-column">
-                        <span
-                          className="user-data-item-left"
-                         
-                        >
-                           Golden Pass 
+                        <span className="user-data-item-left">Golden Pass</span>
+                        <span className="user-data-item-left">
+                          {!isgoldenPassActive ? `Enable` : "Activated"}
                         </span>
-                        <span className="user-data-item-left">{!isgoldenPassActive ? `Enable` : "Activated"}</span>
                       </div>
                     </div>
 
                     <div className="d-flex">
-                     {!isgoldenPassActive ? (
+                      {!isgoldenPassActive ? (
                         <button
                           className="activate-btn2 px-3 py-1"
                           onClick={onGoldenpassClick}
@@ -1586,7 +1603,97 @@ const MyProfile = ({
                   />
                 </a>
               </div>
-              <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-12 mt-3">
+                <div className="ai-question-banner d-flex align-items-center gap-5 justify-content-between p-2">
+                  <div className="d-flex align-items-center gap-2 justify-content-between w-100">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/aiQuestionThumb.webp"
+                        }
+                        alt=""
+                        style={{ width: 44, height: 44 }}
+                      />
+                      <div className="d-flex flex-column">
+                        <span className="user-blue-rank">
+                          AI Daily Challenge
+                        </span>
+                        <span
+                          className="user-rank-text"
+                          style={{
+                            color: "#FFBA4E",
+                          }}
+                        >
+                          Powered by BNB Chain
+                        </span>
+                      </div>
+                    </div>
+                    {aiQuestionCompleted && (
+                      <Countdown
+                        date={Number(midnight)}
+                        renderer={rendererAI}
+                      />
+                    )}
+                    <div className={`d-flex flex-column gap-1 infotips-holder`}>
+                      <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot-small"></div>
+                        <span
+                          className="beast-siege-timer"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#fff",
+                          }}
+                        >
+                          Stars
+                        </span>
+                      </div>
+                      <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot-small"></div>
+                        <span
+                          className="beast-siege-timer"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#fff",
+                          }}
+                        >
+                          Points
+                        </span>
+                      </div>
+                      <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot-small"></div>
+                        <span
+                          className="beast-siege-timer"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#fff",
+                          }}
+                        >
+                          Rewards
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="d-flex align-items-center gap-2">
+                      {!aiQuestionCompleted ? (
+                        <button
+                          className="activate-btn px-3 py-1"
+                          onClick={onGoldenpassClick}
+                        >
+                          Unlock
+                        </button>
+                      ) : (
+                        <button className="activate-btn-yellow px-3 py-1">
+                          Completed
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="col-12 col-lg-6 mt-3">
                 <NavLink to="/account/prime">
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
@@ -1673,7 +1780,7 @@ const MyProfile = ({
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink
                   to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
