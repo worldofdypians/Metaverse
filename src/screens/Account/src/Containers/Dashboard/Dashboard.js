@@ -535,6 +535,7 @@ function Dashboard({
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
   const [adClicked, setadClicked] = useState("");
   const [goldenPassPopup, setgoldenPassPopup] = useState(false);
+  const [aiQuestionCompleted, setAiQuestionCompleted] = useState(false);
 
   const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
 
@@ -5199,7 +5200,39 @@ function Dashboard({
       return [];
     }
   };
-
+  const switchNetwork = async (hexChainId, chain) => {
+    if (window.ethereum) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        await handleSwitchNetworkhook(hexChainId)
+          .then(() => {
+            handleSwitchNetwork(chain);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        handleSwitchChainGateWallet(chain);
+      } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+        network_matchain?.showChangeNetwork();
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(chain);
+      }
+    } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(chain);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
   //todo
   const fetchAllMyNfts = async () => {
     countUserDailyBundles(userWallet ? userWallet : coinbase);
@@ -6000,7 +6033,7 @@ function Dashboard({
           <>
             <MyProfile
               wodBalance={wodBalance}
-              aiQuestionCompleted={false}
+              aiQuestionCompleted={aiQuestionCompleted}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
@@ -6954,15 +6987,30 @@ function Dashboard({
                 width: "460px",
               }}
             >
-              <div className="d-flex align-items-center justify-content-end">
+              <div className="d-flex align-items-center justify-content-end ai-popup-x-wrapper">
                 <img
-                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  src={"https://cdn.worldofdypians.com/wod/closeX.svg"}
                   onClick={() => setShowDailyQuestion(false)}
                   alt=""
-                  style={{ cursor: "pointer" }}
+                  className="ai-x"
                 />
               </div>
-              <AIQuestion />
+              <AIQuestion
+                onQuestionComplete={(value) => {
+                  setAiQuestionCompleted(value);
+                }}
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={chainId}
+                onConnectWallet={() => {
+                  setShowDailyQuestion(false);
+                  handleConnect();
+                }}
+                handleBnbPool={() => {
+                  switchNetwork("0x38", 56);
+                }}
+                email={email}
+              />
             </div>
           </OutsideClickHandler>
         )}

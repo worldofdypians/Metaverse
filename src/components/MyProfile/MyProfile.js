@@ -22,11 +22,14 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const renderer = ({ days, hours, minutes }) => {
+const renderer = ({ hours, minutes }) => {
   return (
-    <h6 className="timer-text2 mb-0">
-      {days}d: {hours}h:{minutes}m
-    </h6>
+    <div className="d-flex flex-column gap-2 justify-content-center align-items-center ">
+      <h6 className="timer-text2 mb-0">
+        {hours}h:{minutes}m
+      </h6>
+      <h6 className="timer-text2 mb-0">Next in</h6>
+    </div>
   );
 };
 
@@ -1605,7 +1608,7 @@ const MyProfile = ({
                 </a>
               </div>
               <div
-                className="col-12 col-lg-12 mt-3"
+                className="col-12 col-lg-6 mt-3"
                 onClick={onDailyQuestionClick}
               >
                 <div className="ai-question-banner d-flex align-items-center gap-5 justify-content-between p-2">
@@ -1633,52 +1636,51 @@ const MyProfile = ({
                       </div>
                     </div>
                     {aiQuestionCompleted && (
-                      <Countdown
-                        date={Number(midnight)}
-                        renderer={rendererAI}
-                      />
+                      <Countdown date={Number(midnight)} renderer={renderer} />
                     )}
-                    <div className={`d-flex flex-column gap-1 infotips-holder`}>
-                      <div className="d-flex align-items-center gap-1">
-                        <div className="yellow-dot-small"></div>
-                        <span
-                          className="beast-siege-timer"
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: 400,
-                            color: "#fff",
-                          }}
-                        >
-                          Stars
-                        </span>
+                    {!aiQuestionCompleted && (
+                      <div className={`d-flex flex-column infotips-holder`}>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot-small"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            Stars
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot-small"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            Points
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot-small"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            Rewards
+                          </span>
+                        </div>
                       </div>
-                      <div className="d-flex align-items-center gap-1">
-                        <div className="yellow-dot-small"></div>
-                        <span
-                          className="beast-siege-timer"
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: 400,
-                            color: "#fff",
-                          }}
-                        >
-                          Points
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-1">
-                        <div className="yellow-dot-small"></div>
-                        <span
-                          className="beast-siege-timer"
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: 400,
-                            color: "#fff",
-                          }}
-                        >
-                          Rewards
-                        </span>
-                      </div>
-                    </div>
+                    )}
 
                     <div className="d-flex align-items-center gap-2">
                       {!aiQuestionCompleted ? (
@@ -1697,7 +1699,7 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-              {/* <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-6 mt-3">
                 <NavLink to="/account/prime">
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
@@ -1744,7 +1746,7 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
+              {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
                     <div className="d-flex align-items-center gap-2">
