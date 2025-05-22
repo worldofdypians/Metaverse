@@ -1,62 +1,173 @@
 .aiLockedQuestion {
-    color: #fff;
-    text-align: center;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: "Montserrat";
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-    text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
 }
 
 .aiLockedDesc {
-    color: #eeedff;
-    text-align: center;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: "Montserrat";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px;
+  color: #eeedff;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .answer-outer-wrapper {
-    border-radius: 8px;
-    background: #3d4078;
-    cursor: pointer;
+  border-radius: 8px;
+  background: #3d4078;
+  cursor: pointer;
 }
 
 .answer-inner-wrapper {
-    border-radius: 8px;
-    background: #272456;
-    border-bottom: 4px solid #3d4078;
+  border-radius: 8px;
+  background: #272456;
+  border-bottom: 4px solid #3d4078;
 }
 
-.answer-inner-wrapper:hover, .answer-inner-wrapper-active {
-    background: #3d4078;
-    border-bottom: 4px solid #008EBF;
-border-radius: 8px;
-    .radio-button-option {
-        border: 2px solid #008EBF;
-    }
+.answer-inner-wrapper:hover,
+.answer-inner-wrapper-active {
+  background: #3d4078;
+  border-bottom: 4px solid #008ebf;
+  border-radius: 8px;
+  .radio-button-option {
+    border: 2px solid #008ebf;
+  }
+}
+.answer-inner-wrapper-answer {
+  border-radius: 8px;
+  background: #037da7;
+  border-bottom: 4px solid #3cbce8;
+}
+
+.answer-inner-wrapper-wrong {
+  border-radius: 8px;
+  background: #4d0819;
+  border-bottom: 4px solid #e31345;
 }
 
 .radio-button-option-selected {
-    width: 16px;
-    height: 16px;
-    border: 2px solid #87E0FF;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #87e0ff;
+  background: #037da7;
+  border-radius: 50%;
+}
+
+.radio-button-option-correct {
+  width: 16px;
+  height: 16px;
+  background: url("https://cdn.worldofdypians.com/wod/aiCorrect.png");
+  background-position: center;
+  border: none !important;
+  background-size: contain;
+}
+
+.radio-button-option-wrong {
+  width: 16px;
+  height: 16px;
+  background: url("https://cdn.worldofdypians.com/wod/aiError.png");
+  background-position: center;
+  border: none !important;
+  background-size: contain;
 }
 
 .radio-button-option {
-    width: 16px;
-    height: 16px;
-    border: 2px solid #3D4078;
-    border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #3d4078;
+  border-radius: 50%;
 }
 
-
 .aiLockedImg {
-    width: 324px;
-    height: 158px;
+  width: 324px;
+  height: 158px;
+}
+
+.ai-answer-result-wrapper {
+  background: url("https://cdn.worldofdypians.com/wod/aiQuestionResultBanner.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.aiAnswer-title {
+  color: #fff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.aiAnswer-desc {
+  color: #eeedff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 166.667% */
+}
+
+.ai-countdown-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+}
+
+.ai-progress-bar-bg {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background-color: #262859;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ai-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ed4d0 0%, #d4cf4e 100%);
+  transition: width 1s linear;
+}
+
+.ai-danger {
+  background: linear-gradient(90deg, #d44e4e 0%, #d46d4e 100%); /* red alert */
+}
+
+.ai-timer-text {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 0px 0px 12px 12px;
+  background: #262859;
+
+  justify-content: center;
+}
+
+.ai-popup-x-wrapper {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+  .ai-x {
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 2px;
+  }
 }
