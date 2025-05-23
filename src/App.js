@@ -1712,6 +1712,11 @@ function App() {
       window.config.nft_sei_address
     );
 
+    const vanarContract = new window.vanarWeb3.eth.Contract(
+      window.VANAR_NFT_ABI,
+      window.config.nft_vanar_address
+    );
+
     const confluxresult = await confluxContract.methods
       .totalSupply()
       .call()
@@ -1836,6 +1841,14 @@ function App() {
         return 0;
       });
 
+    const vanarresult = await vanarContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
 
     setTotalSupply(
@@ -1857,6 +1870,7 @@ function App() {
         parseInt(matresult) +
         parseInt(seiresult) +
         parseInt(kucoinresult) +
+        Number(vanarresult) +
         20002
     );
   };
@@ -5694,6 +5708,26 @@ function App() {
             }
           />
 
+           <Route
+            exact
+            path="/pool2"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="pool2"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
           <Route
             exact
             path="/token-claim"
@@ -6696,7 +6730,7 @@ function App() {
               />
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/shop/mint/vanar"
             element={
@@ -6740,7 +6774,7 @@ function App() {
               />
             }
           />
-          {/* <Route
+          <Route
             exact
             path="/shop/mint/matchain"
             element={
