@@ -209,6 +209,7 @@ const MarketMint = ({
   const [taikoNftsSold, setTaikoNftsSold] = useState(0);
   const [seiNftsSold, setSeiNftsSold] = useState(0);
   const [kucoinNftsSold, setKucoinNftsSold] = useState(0);
+  const [vanarNftsSold, setVanarNftsSold] = useState(0);
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
@@ -273,6 +274,20 @@ const MarketMint = ({
       window.config.nft_kucoin_address
     );
 
+    const vanarContract = new window.vanarWeb3.eth.Contract(
+      window.VANAR_NFT_ABI,
+      window.config.nft_vanar_address
+    );
+
+    const vanarresult = await vanarContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    setVanarNftsSold(vanarresult);
     const bnbresult = await bnbnftContract.methods
       .totalSupply()
       .call()
@@ -534,10 +549,11 @@ const MarketMint = ({
     } else if (location.pathname.includes("kucoin")) {
       setSelectedMint(kucoinData);
       setMintTitle("kucoin");
-    } else if (location.pathname.includes("vanar")) {
-      setSelectedMint(vanarData);
-      setMintTitle("vanar");
     }
+    // else if (location.pathname.includes("vanar")) {
+    //   setSelectedMint(vanarData);
+    //   setMintTitle("vanar");
+    // }
     getTotalSupply();
   }, [location]);
 
@@ -689,15 +705,15 @@ const MarketMint = ({
     //   data: immutableData,
     //   class: "mint-immutable",
     // },
-    {
-      title: "Vanar Pass",
-      eventId: "vanar",
-      desc: "Gain entry to metaverse, and join exclusive Vanar event with special ticket.",
-      img: "https://cdn.worldofdypians.com/wod/vanarMintSlide.webp",
-      data: vanarData,
-      class: "mint-core",
-      id: "vanar",
-    },
+    // {
+    //   title: "Vanar Pass",
+    //   eventId: "vanar",
+    //   desc: "Gain entry to metaverse, and join exclusive Vanar event with special ticket.",
+    //   img: "https://cdn.worldofdypians.com/wod/vanarMintSlide.webp",
+    //   data: vanarData,
+    //   class: "mint-core",
+    //   id: "vanar",
+    // },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -1004,7 +1020,7 @@ const MarketMint = ({
     window.scrollTo(0, 0);
     document.title = "NFT Mint";
   }, []);
-  
+
   return (
     <>
       <div
@@ -2604,6 +2620,22 @@ const MarketMint = ({
                           <span className="past-kucoin-mint-desc">
                             SOLD OUT
                           </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-vanar-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">Vanar Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-vanar-mint-amount">
+                            {getFormattedNumber(vanarNftsSold, 0)}
+                          </h6>
+                          <span className="past-vanar-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>
