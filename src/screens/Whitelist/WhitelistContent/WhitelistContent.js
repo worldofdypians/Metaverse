@@ -101,6 +101,7 @@ const WhitelistContent = ({
 }) => {
   const [timerFinished, settimerFinished] = useState(false);
   const [timerFinishedOTC, settimerFinishedOTC] = useState(false);
+  const [timerFinishedOTC2, settimerFinishedOTC2] = useState(false);
 
   const [timerFinishedPrivate, settimerFinishedPrivate] = useState(false);
   const [timerFinishedKol, settimerFinishedKol] = useState(false);
@@ -123,6 +124,13 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTC(true);
+        }
+      } else if (selectedRound.id == "otc2") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedOTC2(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedOTC2(true);
         }
       } else if (selectedRound.id == "private") {
         if (today.getTime() > cliffTime) {
@@ -280,6 +288,17 @@ const WhitelistContent = ({
                       />
                     ) : userClaimedTokens &&
                       Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "otc2" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTC2(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
                       selectedRound?.id === "private" ? (
                       <Countdown
                         date={Number(cliffTime)}
@@ -385,6 +404,46 @@ const WhitelistContent = ({
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
                   timerFinishedOTC === false
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                disabled={
+                  canClaim === false ||
+                  timerFinishedOTC === false ||
+                  Number(wodBalance) === 0
+                    ? true
+                    : false
+                }
+                onClick={handleClaim}
+              >
+                {claimLoading ? (
+                  <div
+                    className="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  ></div>
+                ) : claimStatus === "failed" ? (
+                  <>Failed</>
+                ) : claimStatus === "success" ? (
+                  <>Success</>
+                ) : (
+                  <>Claim</>
+                )}
+              </button>
+            )}
+
+            {isConnected && chainId === 56 && selectedRound?.id === "otc2" && (
+              <button
+                className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTC2 === false
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
