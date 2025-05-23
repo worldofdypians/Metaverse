@@ -984,7 +984,7 @@ const Marketplace = ({
                 <div className="col-12 col-lg-4 mt-0 mt-lg-4">
                   <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
-                      {getFormattedNumber(1272687, 0)}
+                      {getFormattedNumber(1500531, 0)}
                     </h6>
                     <span className="stats-desc">Total NFT Holders</span>
                   </div>
@@ -1551,7 +1551,7 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
+                  <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1568,7 +1568,10 @@ const Marketplace = ({
                         <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
                           <div className="mint-benefits-grid">
                             {benefits.map((item, index) => (
-                              <div className="d-flex align-items-center gap-2" key={index}>
+                              <div
+                                className="d-flex align-items-center gap-2"
+                                key={index}
+                              >
                                 <img
                                   src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                                   alt=""
@@ -1599,8 +1602,8 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div>  */}
-                  <div className="d-flex flex-column gap-2 w-100 h-100">
+                  </div>
+                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1667,7 +1670,7 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div>
+                  </div> */}
                   {/* <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/opbnbchain"}
