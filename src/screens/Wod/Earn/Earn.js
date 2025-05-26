@@ -126,11 +126,11 @@ const Earn = ({
     document.title = "Staking";
   }, []);
 
-  useEffect(() => {
-    if (isConnected && coinbase) {
-      handleSecondTask(coinbase);
-    }
-  }, [isConnected, coinbase]);
+  // useEffect(() => {
+  //   if (isConnected && coinbase) {
+  //     handleSecondTask(coinbase);
+  //   }
+  // }, [isConnected, coinbase]);
 
   useEffect(() => {
     if (nftPools && nftPools.length > 0) {

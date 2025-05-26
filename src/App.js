@@ -128,7 +128,7 @@ const binanceConnector = new Connector({
   supportedChainIds: [1, 56, 204, 169, 1030, 8453, 43114],
   rpc: {
     56: "https://bsc-dataseed.binance.org/",
-    1: window.config.infura_endpoint,
+    1: "https://mainnet.infura.io/v3/04ee2486b5344943b461abeb58fbffaf",
     204: window.config.opbnb_endpoint,
     169: window.config.manta_endpoint,
     1030: window.config.conflux_endpoint,
@@ -870,7 +870,7 @@ function App() {
   const handleFirstTask = async (wallet) => {
     if (wallet) {
       const result2 = await axios
-        .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
+        .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
         .catch((e) => {
           console.error(e);
         });
@@ -5440,7 +5440,7 @@ function App() {
   }, [allTimepieceNfts]);
 
   useEffect(() => {
-    if (loginListener !== 0 && userWallet !== undefined) {
+    if (loginListener !== 0 || userWallet !== undefined) {
       handleFirstTask(userWallet);
     }
   }, [loginListener, userWallet]);
@@ -5692,7 +5692,7 @@ function App() {
             }
           />
 
-           <Route
+          <Route
             exact
             path="/pool2"
             element={
@@ -6874,7 +6874,9 @@ function App() {
           <Route
             exact
             path="/trading-competition"
-            element={<TradingComp coinbase={coinbase} />}
+            element={
+              <TradingComp coinbase={coinbase} isConnected={isConnected} />
+            }
           />
           <Route
             exact
