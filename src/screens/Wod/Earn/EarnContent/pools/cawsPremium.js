@@ -61,7 +61,7 @@ const CawsDetailsPremium = ({
 
   const refreshStakes = () => {
     setnewStakes(newStakes + 1);
-    handleSecondTask(coinbase);
+    // handleSecondTask(coinbase);
   };
 
   const showPopup = () => {

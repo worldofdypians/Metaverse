@@ -8,6 +8,7 @@ const AIQuestion = ({
   coinbase,
   chainId,
   onConnectWallet,
+  onClose,
   email,
   handleBnbPool,
 }) => {
@@ -138,6 +139,7 @@ const AIQuestion = ({
             <NavLink
               className="explore-btn text-capitalize d-flex align-items-center gap-2 col-lg-4 py-2"
               to="/auth"
+              onClick={() => onClose()}
             >
               Log in
             </NavLink>

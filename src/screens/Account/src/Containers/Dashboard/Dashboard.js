@@ -4554,7 +4554,7 @@ function Dashboard({
 
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
+      .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
       .catch((e) => {
         console.error(e);
       });
@@ -5870,14 +5870,16 @@ function Dashboard({
   useEffect(() => {
     if ((coinbase && isConnected) || userWallet !== undefined) {
       fetchAllMyNfts();
-      // getmyCawsWodStakes();
+
       // getmyWodStakes();
     }
   }, [userWallet, isConnected, coinbase]);
 
-  // useEffect(() => {
-  //   getDypBalance(userWallet ? userWallet : coinbase);
-  // }, [account, userWallet, isConnected]);
+  useEffect(() => {
+    if (email && userWallet) {
+      handleFirstTask(userWallet);
+    }
+  }, [email, userWallet]);
 
   useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
@@ -7006,6 +7008,7 @@ function Dashboard({
                   setShowDailyQuestion(false);
                   handleConnect();
                 }}
+                onClose={() => setShowDailyQuestion(false)}
                 handleBnbPool={() => {
                   switchNetwork("0x38", 56);
                 }}

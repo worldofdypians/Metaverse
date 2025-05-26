@@ -3,19 +3,34 @@ import "./_campaigns.scss";
 import { NavLink } from "react-router-dom";
 import NewChallenges from "../../Game/NewChallenges";
 import TradingComp from "./TradingComp/TradingComp";
-import tradingCompBanner from "./TradingComp/assets/tradingCompBanner.png";
 
 const Campaigns = ({ coinbase }) => {
   const [popupEvent, setPopupEvent] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
   let today = new Date();
-  let binance_campaign_end_timestamp = 1745740370000;
+  let wod_campaign_end_timestamp = 1749545727000;
 
   const dummyBanner = [
     {
+      title: "World of Dypians Rising Heat Challenge",
+      status: today.getTime() > wod_campaign_end_timestamp ? "Expired" : "Live",
+      start_date: "May 26, 2025",
+      end_date: "Jun 10, 2025",
+      image: "https://cdn.worldofdypians.com/wod/wod-x-bnb-2.webp",
+      desc: `The World of Dypians: Rising Heat challenge is kicking off with $35,000 in rewards up for grabs. As temperatures climb, so does the competition. Take on exciting tasks, show your dedication, and unlock exclusive prizes as you gear up for a blazing summer ahead.<br/>
+    <ul><li>Trade a minimum of $20 in WOD</li>
+    <li>Login or Create a Game Account</li>
+    <li>Open at Least 10 Daily Bonus Chests </li>  
+     
+    </ul>
+    This campaign is your chance to get ahead of the heat, earn massive rewards, and connect with a growing community of players. Are you ready to rise with the season?
+   `,
+      link: "https://dappbay.bnbchain.org/campaign/389",
+      target: "_blank",
+    },
+    {
       title: "World of Dypians x Binance Wallet Campaign!",
-      status:
-        today.getTime() > binance_campaign_end_timestamp ? "Expired" : "Live",
+      status: "Expired",
       start_date: "Apr 24, 2025",
       end_date: "Apr 27, 2025",
       image: "https://cdn.worldofdypians.com/wod/binance-campagin-v2.webp",
@@ -35,7 +50,7 @@ const Campaigns = ({ coinbase }) => {
       status: "Live",
       start_date: "Apr 21, 2025",
       end_date: "Jul 14, 2025",
-      image: tradingCompBanner,
+      image: "https://cdn.worldofdypians.com/wod/tradingCompBanner.webp",
       desc: `Welcome to the Gathering Storm $WOD Trading Competition, a 12-week battle where only the best rise.<br/>
     <ul><li>$300,000 in total rewards</li>
     <li>Weekly prizes for the Top 30 traders</li>
@@ -50,9 +65,18 @@ const Campaigns = ({ coinbase }) => {
 
   const dummyData = [
     {
+      title: "World of Dypians Rising Heat Challenge",
+      status: today.getTime() > wod_campaign_end_timestamp ? "Expired" : "Live",
+      start_date: "May 26, 2025",
+      end_date: "Jun 10, 2025",
+      image: "https://cdn.worldofdypians.com/wod/wod-x-bnb-2.webp",
+
+      link: "https://dappbay.bnbchain.org/campaign/389",
+      target: "_blank",
+    },
+    {
       title: "World of Dypians x Binance Wallet Campaign!",
-      status:
-        today.getTime() > binance_campaign_end_timestamp ? "Expired" : "Live",
+      status: "Expired",
       start_date: "Apr 24, 2025",
       end_date: "Apr 27, 2025",
       image: "https://cdn.worldofdypians.com/wod/binance-campagin-v2.webp",
@@ -217,7 +241,7 @@ const Campaigns = ({ coinbase }) => {
                   <img
                     src={item.image}
                     alt="Campaign Banner"
-                    className="campaign-banner w-100"
+                    className="campaign-banner w-100 h-100"
                   />
                 </div>
                 <div className="col-12 col-lg-6">
