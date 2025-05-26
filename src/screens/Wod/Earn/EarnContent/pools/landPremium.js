@@ -101,7 +101,7 @@ const LandDetailsPremium = ({
   };
 
   const refreshStakes = () => {
-    handleSecondTask(coinbase);
+    // handleSecondTask(coinbase);
 
     setnewStakes(newStakes + 1);
   };
