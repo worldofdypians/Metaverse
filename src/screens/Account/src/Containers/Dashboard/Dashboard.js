@@ -5900,7 +5900,8 @@ function Dashboard({
       (dailyBonusPopup === true && dailyrewardpopup) ||
       leaderboard === true ||
       globalLeaderboard === true ||
-      genesisLeaderboard === true
+      genesisLeaderboard === true ||
+      showDailyQuestion === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -5914,6 +5915,7 @@ function Dashboard({
     leaderboard,
     globalLeaderboard,
     genesisLeaderboard,
+    showDailyQuestion,
   ]);
 
   const logoutItem = localStorage.getItem("logout");
@@ -6976,46 +6978,49 @@ function Dashboard({
         )}
 
         {showDailyQuestion && (
-          <OutsideClickHandler
-            onOutsideClick={() => setShowDailyQuestion(false)}
+          // <OutsideClickHandler
+          //   onOutsideClick={() => setShowDailyQuestion(false)}
+          // >
+          <div
+            className="popup-wrapper popup-active p-4 ai-popupbg d-flex flex-column"
+            id="aiQuestion"
+            style={{
+              minHeight: "460px",
+              pointerEvents: "auto",
+              overflowX: "auto",
+              width: "460px",
+            }}
           >
-            <div
-              className="popup-wrapper popup-active p-4 ai-popupbg d-flex flex-column"
-              id="aiQuestion"
-              style={{
-                minHeight: "460px",
-                pointerEvents: "auto",
-                overflowX: "auto",
-                width: "460px",
-              }}
-            >
-              <div className="d-flex align-items-center justify-content-end ai-popup-x-wrapper">
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/closeX.svg"}
-                  onClick={() => setShowDailyQuestion(false)}
-                  alt=""
-                  className="ai-x"
-                />
-              </div>
-              <AIQuestion
-                onQuestionComplete={(value) => {
-                  setAiQuestionCompleted(value);
-                }}
-                isConnected={isConnected}
-                coinbase={coinbase}
-                chainId={chainId}
-                onConnectWallet={() => {
-                  setShowDailyQuestion(false);
-                  handleConnect();
-                }}
-                onClose={() => setShowDailyQuestion(false)}
-                handleBnbPool={() => {
-                  switchNetwork("0x38", 56);
-                }}
-                email={email}
+            <div className="d-flex align-items-center justify-content-end ai-popup-x-wrapper">
+              <img
+                src={"https://cdn.worldofdypians.com/wod/closeX.svg"}
+                onClick={() => setShowDailyQuestion(false)}
+                alt=""
+                className="ai-x"
               />
             </div>
-          </OutsideClickHandler>
+            <AIQuestion
+              onQuestionComplete={(value) => {
+                setAiQuestionCompleted(value);
+              }}
+              isConnected={isConnected}
+              coinbase={coinbase}
+              chainId={chainId}
+              onConnectWallet={() => {
+                setShowDailyQuestion(false);
+                handleConnect();
+              }}
+              onClose={() => setShowDailyQuestion(false)}
+              handleBnbPool={() => {
+                switchNetwork("0x38", 56);
+              }}
+              email={email}
+              walletClient={walletClient}
+              publicClient={publicClient}
+              binanceW3WProvider={binanceW3WProvider}
+            />
+          </div>
+          // </OutsideClickHandler>
         )}
 
         {portfolio && (

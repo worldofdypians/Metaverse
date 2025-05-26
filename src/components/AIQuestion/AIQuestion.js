@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import "./_aiquestion.scss";
 import { useState, useEffect, useRef } from "react";
+import { ethers } from "ethers";
+import Web3 from "web3";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -11,6 +13,9 @@ const AIQuestion = ({
   onClose,
   email,
   handleBnbPool,
+  walletClient,
+  publicClient,
+  binanceW3WProvider,
 }) => {
   const answersOptions = [0, 1, 2];
   const totalTime = 25;
@@ -20,6 +25,8 @@ const AIQuestion = ({
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [confirmed, setConfirmed] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [unlockLoading, setUnlockLoading] = useState(false);
+  const [unlockStatus, setUnlockStatus] = useState("initial");
 
   const intervalRef = useRef(null);
   const handleConfirm = () => {
@@ -27,6 +34,105 @@ const AIQuestion = ({
     clearInterval(intervalRef.current);
     setConfirmed(true);
     setShowResult(true);
+  };
+
+  const handleUnlockQuestion = async () => {
+    setUnlockLoading(true);
+    setUnlockStatus("loading");
+    let web3 = new Web3(window.ethereum);
+    const contract_bnb = new web3.eth.Contract(
+      window.DAILY_BONUS_BNB_ABI,
+      window.config.daily_bonus_bnb_address
+    );
+
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      await contract_bnb.methods
+        .openChest()
+        .send({
+          from: coinbase,
+        })
+        .then(() => {
+          setUnlockLoading(false);
+          setUnlockStatus("success");
+
+          setTimeout(() => {
+            setStep(1);
+          }, 2000);
+        })
+        .catch((e) => {
+          window.alertify.error(e?.message);
+          setUnlockLoading(false);
+          setUnlockStatus("error");
+          setTimeout(() => {
+            setUnlockStatus("initial");
+          }, 3000);
+
+          console.error(e);
+        });
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: window.config.daily_bonus_bnb_address,
+            abi: window.DAILY_BONUS_BNB_ABI,
+            functionName: "openPremiumChest",
+            args: [],
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            setUnlockLoading(false);
+            setUnlockStatus("error");
+            setTimeout(() => {
+              setUnlockStatus("initial");
+            }, 3000);
+
+            console.error(e);
+          });
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setUnlockLoading(false);
+            setUnlockStatus("success");
+            setTimeout(() => {
+              setStep(1);
+            }, 2000);
+          }
+        }
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      const contract_bnb_binance = new ethers.Contract(
+        window.config.daily_bonus_bnb_address,
+        window.DAILY_BONUS_BNB_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse = await contract_bnb_binance.openChest().catch((e) => {
+        window.alertify.error(e?.message);
+        setUnlockLoading(false);
+        setUnlockStatus("error");
+        setTimeout(() => {
+          setUnlockStatus("initial");
+        }, 3000);
+
+        console.error(e);
+      });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setUnlockLoading(false);
+        setUnlockStatus("success");
+        setTimeout(() => {
+          setStep(1);
+        }, 2000);
+      }
+    }
   };
 
   const handleOptionClick = (value) => {
@@ -165,9 +271,31 @@ const AIQuestion = ({
           {isConnected && coinbase && email && chainId === 56 && (
             <button
               className="explore-btn text-capitalize d-flex align-items-center gap-2 col-lg-4 py-2"
-              onClick={() => setStep(1)}
+              onClick={() => handleUnlockQuestion()}
             >
-              Unlock Question
+              {unlockLoading ? (
+                <div className="d-flex align-items-center gap-2">
+                  Processing
+                  <div
+                    className="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  >
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              ) : unlockStatus === "initial" ? (
+                <>Unlock Question</>
+              ) : unlockStatus === "success" ? (
+                <>Success</>
+              ) : (
+                <>
+                  Failed{" "}
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
+                    alt=""
+                  />
+                </>
+              )}
             </button>
           )}
         </div>
