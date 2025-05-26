@@ -178,7 +178,7 @@ function AuthBNB({
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
 
-      .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
+      .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
 
       .catch((e) => {
         console.error(e);

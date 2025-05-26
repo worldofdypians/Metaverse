@@ -606,7 +606,7 @@ const StakeWodDetails2 = ({
       await staking
         .stake(amount, referrer)
         .then(() => {
-          handleSecondTask(coinbase);
+          // handleSecondTask(coinbase);
           setdepositLoading(false);
           setdepositStatus("success");
           refreshBalance();
@@ -702,7 +702,7 @@ const StakeWodDetails2 = ({
             });
 
           if (receipt) {
-            handleSecondTask(coinbase);
+            // handleSecondTask(coinbase);
             setdepositLoading(false);
             setdepositStatus("success");
             refreshBalance();
