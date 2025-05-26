@@ -37,7 +37,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const TradingComp = ({ coinbase }) => {
+const TradingComp = ({ coinbase, isConnected }) => {
   const [leaderboard, setLeaderboard] = useState("weekly");
   const [ranksPopup, setRanksPopup] = useState(false);
   const [airdropPopup, setAirdropPopup] = useState(false);
@@ -48,7 +48,18 @@ const TradingComp = ({ coinbase }) => {
   const [loading, setLoading] = useState(true);
   const [userStats, setUserStats] = useState([]);
 
-  console.log(1);
+  const handleFirstTask = async (wallet) => {
+    if (wallet) {
+      const result2 = await axios
+        .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
+        .catch((e) => {
+          console.error(e);
+        });
+      if (result2 && result2.status === 200) {
+        console.log(result2);
+      }
+    }
+  };
 
   const fetchUserStats = async () => {
     await axios
@@ -134,6 +145,12 @@ const TradingComp = ({ coinbase }) => {
       html.classList.remove("hidescroll");
     }
   }, [airdropPopup, tradingPopup, ranksPopup, compDetails, airdropDetails]);
+
+  useEffect(() => {
+    if (isConnected && coinbase) {
+      handleFirstTask(coinbase);
+    }
+  }, [isConnected, coinbase]);
 
   return (
     <>
