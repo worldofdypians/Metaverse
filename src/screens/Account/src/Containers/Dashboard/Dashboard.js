@@ -7006,6 +7006,7 @@ function Dashboard({
                   setShowDailyQuestion(false);
                   handleConnect();
                 }}
+                onClose={() => setShowDailyQuestion(false)}
                 handleBnbPool={() => {
                   switchNetwork("0x38", 56);
                 }}
