@@ -6981,45 +6981,53 @@ function Dashboard({
           // <OutsideClickHandler
           //   onOutsideClick={() => setShowDailyQuestion(false)}
           // >
-          <div
-            className="popup-wrapper popup-active p-4 ai-popupbg d-flex flex-column"
-            id="aiQuestion"
-            style={{
-              minHeight: "460px",
-              pointerEvents: "auto",
-              overflowX: "auto",
-              width: "460px",
-            }}
-          >
-            <div className="d-flex align-items-center justify-content-end ai-popup-x-wrapper">
-              <img
-                src={"https://cdn.worldofdypians.com/wod/closeX.svg"}
-                onClick={() => setShowDailyQuestion(false)}
-                alt=""
-                className="ai-x"
-              />
+          // <div
+          //   className="popup-wrapper popup-active p-4 ai-question-outer-wrapper d-flex flex-column"
+          //   id="aiQuestion"
+          //   style={{
+          //     minHeight: "460px",
+          //     pointerEvents: "auto",
+          //     overflowX: "auto",
+          //     width: "460px",
+          //   }}
+          // >
+          <div className={`package-popup-wrapper2 `}>
+            <div
+              className={`new-daily-bonus-popup d-flex flex-column gap-2 custom-container-width2 justify-content-center`}
+            >
+              <div className="ai-question-outer-wrapper custom-container-width2 position-relative p-0 p-lg-5 d-flex">
+                <div className="d-flex align-items-center justify-content-end ai-popup-x-wrapper">
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/closeX.svg"}
+                    onClick={() => setShowDailyQuestion(false)}
+                    alt=""
+                    className="ai-x"
+                  />
+                </div>
+                <AIQuestion
+                  onQuestionComplete={(value) => {
+                    setAiQuestionCompleted(value);
+                  }}
+                  isConnected={isConnected}
+                  coinbase={coinbase}
+                  chainId={chainId}
+                  onConnectWallet={() => {
+                    setShowDailyQuestion(false);
+                    handleConnect();
+                  }}
+                  onClose={() => setShowDailyQuestion(false)}
+                  handleBnbPool={() => {
+                    switchNetwork("0x38", 56);
+                  }}
+                  email={email}
+                  walletClient={walletClient}
+                  publicClient={publicClient}
+                  binanceW3WProvider={binanceW3WProvider}
+                />
+              </div>
             </div>
-            <AIQuestion
-              onQuestionComplete={(value) => {
-                setAiQuestionCompleted(value);
-              }}
-              isConnected={isConnected}
-              coinbase={coinbase}
-              chainId={chainId}
-              onConnectWallet={() => {
-                setShowDailyQuestion(false);
-                handleConnect();
-              }}
-              onClose={() => setShowDailyQuestion(false)}
-              handleBnbPool={() => {
-                switchNetwork("0x38", 56);
-              }}
-              email={email}
-              walletClient={walletClient}
-              publicClient={publicClient}
-              binanceW3WProvider={binanceW3WProvider}
-            />
           </div>
+
           // </OutsideClickHandler>
         )}
 

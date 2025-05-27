@@ -225,7 +225,7 @@ const AIQuestion = ({
     <div className="d-flex flex-column" style={{ flex: 1 }}>
       {step === 0 ? (
         <div
-          className="d-flex flex-column mt-2 gap-2 align-items-center justify-content-between"
+          className="d-flex flex-column my-4 gap-2 align-items-center justify-content-between"
           style={{ flex: 1 }}
         >
           <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
@@ -301,7 +301,7 @@ const AIQuestion = ({
         </div>
       ) : step === 1 ? (
         <div
-          className="d-flex mt-2 flex-column gap-2 align-items-center justify-content-between"
+          className="d-flex flex-column my-4 gap-2 align-items-center justify-content-between"
           style={{ flex: 1 }}
         >
           <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
