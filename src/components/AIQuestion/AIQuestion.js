@@ -28,7 +28,10 @@ const AIQuestion = ({
   const [unlockLoading, setUnlockLoading] = useState(false);
   const [unlockStatus, setUnlockStatus] = useState("initial");
 
+  const radius = 35;
+  const circumference = 2 * Math.PI * radius;
   const intervalRef = useRef(null);
+
   const handleConfirm = () => {
     if (selectedOption === undefined) return;
     clearInterval(intervalRef.current);
@@ -46,10 +49,32 @@ const AIQuestion = ({
     );
 
     if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      const gasPrice = await web3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+      const increasedGwei = parseInt(currentGwei) + 0.5;
+      console.log("increasedGwei", increasedGwei);
+
+      const transactionParameters = {
+        gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+      };
+
+      await contract_bnb.methods
+        .openChest()
+        .estimateGas({ from: coinbase })
+        .then((gas) => {
+          transactionParameters.gas = web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      console.log(transactionParameters);
+
       await contract_bnb.methods
         .openChest()
         .send({
           from: coinbase,
+          ...transactionParameters,
         })
         .then(() => {
           setUnlockLoading(false);
@@ -57,6 +82,7 @@ const AIQuestion = ({
 
           setTimeout(() => {
             setStep(1);
+            setUnlockStatus("initial");
           }, 2000);
         })
         .catch((e) => {
@@ -102,6 +128,7 @@ const AIQuestion = ({
             setUnlockStatus("success");
             setTimeout(() => {
               setStep(1);
+              setUnlockStatus("initial");
             }, 2000);
           }
         }
@@ -113,16 +140,38 @@ const AIQuestion = ({
         binanceW3WProvider.getSigner()
       );
 
-      const txResponse = await contract_bnb_binance.openChest().catch((e) => {
-        window.alertify.error(e?.message);
-        setUnlockLoading(false);
-        setUnlockStatus("error");
-        setTimeout(() => {
-          setUnlockStatus("initial");
-        }, 3000);
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 14),
+        "gwei"
+      );
 
-        console.error(e);
-      });
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      let gasLimit;
+      try {
+        gasLimit = await contract_bnb_binance.estimateGas.openChest();
+        transactionParameters.gasLimit = gasLimit;
+        console.log("transactionParameters", transactionParameters);
+      } catch (error) {
+        console.error(error);
+      }
+
+      const txResponse = await contract_bnb_binance
+        .openChest({ ...transactionParameters })
+        .catch((e) => {
+          window.alertify.error(e?.message);
+          setUnlockLoading(false);
+          setUnlockStatus("error");
+          setTimeout(() => {
+            setUnlockStatus("initial");
+          }, 3000);
+
+          console.error(e);
+        });
 
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -130,6 +179,7 @@ const AIQuestion = ({
         setUnlockStatus("success");
         setTimeout(() => {
           setStep(1);
+          setUnlockStatus("initial");
         }, 2000);
       }
     }
@@ -200,6 +250,15 @@ const AIQuestion = ({
     if (selectedOption === undefined || selectedAnswer === undefined) {
       setConfirmed(true);
       setShowResult(true);
+      // setTimeout(() => {
+      //   setSelectedAnswer(undefined);
+      //   setSelectedOption(undefined);
+      //   onQuestionComplete(false);
+      //   setStep(0);
+      //   setConfirmed(false);
+      //   setShowResult(false);
+      //   setTimeLeft(totalTime);
+      // }, 2000);
     }
   };
   useEffect(() => {
@@ -219,13 +278,57 @@ const AIQuestion = ({
     }
   }, [timeLeft, confirmed, step]);
 
-  const progressPercent = (timeLeft / totalTime) * 100;
+  const progress = timeLeft / totalTime;
+  const dashOffset = circumference * (1 - progress);
 
   return (
-    <div className="d-flex flex-column" style={{ flex: 1 }}>
+    <div
+      className="d-flex flex-column p-lg-3 p-5 justify-content-between gap-3"
+      style={{ flex: 1 }}
+    >
+      <div className="d-flex pt-lg-2 pt-3 align-items-center gap-2 justify-content-between">
+        <button
+          className={
+            chainId === 56
+              ? "ai-chain-button-active py-2 px-3 col-lg-3"
+              : "ai-chain-button py-2 px-3 col-lg-3"
+          }
+          onClick={() => {
+            handleBnbPool("0x38", 56);
+          }}
+        >
+          <div className="d-flex align-items-center gap-2 justify-content-between">
+            <img
+              src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+              alt=""
+              className="ai-chain-icon"
+            />
+            BNB CHAIN
+          </div>
+        </button>
+        <button
+          className={
+            chainId === 204
+              ? "ai-chain-button-active py-2 px-3 col-lg-3"
+              : "ai-chain-button py-2 px-3 col-lg-3"
+          }
+          onClick={() => {
+            handleBnbPool("0xcc", 204);
+          }}
+        >
+          <div className="d-flex align-items-center gap-2 justify-content-between">
+            <img
+              src={"https://cdn.worldofdypians.com/wod/opbnbChain.png"}
+              alt=""
+              className="ai-chain-icon"
+            />
+            OPBNB
+          </div>
+        </button>
+      </div>
       {step === 0 ? (
         <div
-          className="d-flex flex-column my-4 gap-2 align-items-center justify-content-between"
+          className="d-flex flex-column gap-2 align-items-center justify-content-between"
           style={{ flex: 1 }}
         >
           <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
@@ -234,16 +337,24 @@ const AIQuestion = ({
               alt=""
               className="aiLockedImg"
             />
-            <span className="aiLockedQuestion">
-              A Hidden question <br /> awaits
-            </span>
+            <span className="aiLockedQuestion">A Hidden question awaits</span>
             <span className="aiLockedDesc">
-              Sign the transaction to reveal your daily question
+              {!email && coinbase
+                ? "Login to your game account"
+                : !isConnected && !coinbase
+                ? "Connect your wallet to unlock the question"
+                : isConnected &&
+                  coinbase &&
+                  email &&
+                  chainId !== 56 &&
+                  chainId !== 204
+                ? "Switch to BNB Chain or opBNB to unlock the challenge"
+                : "Sign the transaction to unlock your daily challenge"}
             </span>
           </div>
           {!email && coinbase && (
             <NavLink
-              className="explore-btn text-capitalize d-flex align-items-center gap-2 col-lg-4 py-2"
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
               to="/auth"
               onClick={() => onClose()}
             >
@@ -252,61 +363,70 @@ const AIQuestion = ({
           )}
           {!isConnected && !coinbase && (
             <button
-              className="explore-btn text-capitalize d-flex align-items-center gap-2 col-lg-4 py-2"
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
               onClick={onConnectWallet}
             >
-              Connect Wallet
+              Connect
             </button>
           )}
 
-          {isConnected && coinbase && email && chainId !== 56 && (
-            <button
-              className="fail-button-gov text-capitalize d-flex align-items-center gap-2 py-2"
-              onClick={() => handleBnbPool()}
-            >
-              Switch To BNB Chain
-            </button>
-          )}
+          {isConnected &&
+            coinbase &&
+            email &&
+            chainId !== 56 &&
+            chainId !== 204 && (
+              <button
+                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
+                onClick={() => {
+                  handleBnbPool("0x38", 56);
+                }}
+              >
+                Switch
+              </button>
+            )}
 
-          {isConnected && coinbase && email && chainId === 56 && (
-            <button
-              className="explore-btn text-capitalize d-flex align-items-center gap-2 col-lg-4 py-2"
-              onClick={() => handleUnlockQuestion()}
-            >
-              {unlockLoading ? (
-                <div className="d-flex align-items-center gap-2">
-                  Processing
-                  <div
-                    className="spinner-border spinner-border-sm text-light"
-                    role="status"
-                  >
-                    <span className="visually-hidden">Loading...</span>
+          {isConnected &&
+            coinbase &&
+            email &&
+            (chainId === 56 || chainId === 204) && (
+              <button
+                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
+                onClick={() => handleUnlockQuestion()}
+              >
+                {unlockLoading ? (
+                  <div className="d-flex align-items-center gap-2">
+                    Processing
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
                   </div>
-                </div>
-              ) : unlockStatus === "initial" ? (
-                <>Unlock Question</>
-              ) : unlockStatus === "success" ? (
-                <>Success</>
-              ) : (
-                <>
-                  Failed{" "}
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
-                    alt=""
-                  />
-                </>
-              )}
-            </button>
-          )}
+                ) : unlockStatus === "initial" ? (
+                  <>Unlock</>
+                ) : unlockStatus === "success" ? (
+                  <>Success</>
+                ) : (
+                  <>
+                    Failed{" "}
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
+                      alt=""
+                    />
+                  </>
+                )}
+              </button>
+            )}
         </div>
       ) : step === 1 ? (
         <div
-          className="d-flex flex-column my-4 gap-2 align-items-center justify-content-between"
+          className="d-flex flex-column gap-2 align-items-center justify-content-between"
           style={{ flex: 1 }}
         >
           <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
-            <div className="d-flex flex-column position-relative w-100">
-              <div className="ai-countdown-wrapper px-0">
+            <div className="d-flex flex-column position-relative w-100 align-items-center">
+              {/* <div className="ai-countdown-wrapper px-0">
                 <div className="ai-progress-bar-bg">
                   <div
                     className={`ai-progress-bar-fill ${
@@ -318,54 +438,137 @@ const AIQuestion = ({
               </div>
               <div className="ai-timer-text px-4 pb-1 d-flex align-items-center gap-1">
                 ⏱ {timeLeft === 0 ? "Timer ended" : `${timeLeft}s`}
+              </div> */}
+
+              <div className="ai-timer-container">
+                <svg className="ai-progress-ring" width="80" height="80">
+                  <circle
+                    className="ai-ring-bg"
+                    stroke="#343661"
+                    fill="transparent"
+                    r={radius}
+                    cx="40"
+                    cy="40"
+                  />
+                  <circle
+                    className={`ai-ring-progress ${
+                      timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+                    }`}
+                    stroke={
+                      timeLeft > 16
+                        ? "url(#gradient)"
+                        : timeLeft > 8
+                        ? "url(#gradient2)"
+                        : "url(#gradient3)"
+                    }
+                    fill="transparent"
+                    strokeWidth="8"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={dashOffset}
+                    r={radius}
+                    cx="40"
+                    cy="40"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="gradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stopColor="#D4CF4E" />
+                      <stop offset="100%" stopColor="#4ED4D0" />
+                    </linearGradient>
+
+                    <linearGradient
+                      id="gradient2"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stopColor="#D46D4E" />
+                      <stop offset="100%" stopColor="#FF1926" />
+                    </linearGradient>
+                    <linearGradient
+                      id="gradient3"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="100%"
+                    >
+                      <stop offset="0%" stopColor="#D44E4E" />
+                      <stop offset="100%" stopColor="#FF1926" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div
+                  className={`ai-timer-label ${
+                    timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+                  }`}
+                >
+                  {timeLeft === 0 ? (
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/ai-time.png"}
+                      alt=""
+                      className="ai-time-icon"
+                    />
+                  ) : (
+                    `${timeLeft}s`
+                  )}
+                </div>
               </div>
             </div>
             <span className="aiLockedQuestion text-capitalize my-2">
               Which was the first crypto introduced in the world?
             </span>
-            {answersOptions.map((option, index) => (
-              <div
-                key={index}
-                className={`answer-outer-wrapper w-100 ${
-                  (selectedAnswer !== undefined || timeLeft === 0) && "pe-none"
-                }`}
-                onClick={() => setSelectedOption(option)}
-              >
+            <div className="d-flex flex-xl-row flex-column mx-0 gap-3 w-100 justify-content-between">
+              {answersOptions.map((option, index) => (
                 <div
-                  className={`${getAnswerClass(
-                    option
-                  )} px-3 py-2 d-flex align-items-center justify-content-between`}
+                  key={index}
+                  className={`answer-outer-wrapper w-100 ${
+                    (selectedAnswer !== undefined || timeLeft === 0) &&
+                    "pe-none"
+                  }`}
+                  onClick={() => setSelectedOption(option)}
                 >
-                  <span className="answer-text">
-                    {option === 0
-                      ? "Bitcoin (BTC)"
-                      : option === 1
-                      ? "Ethereum (ETH)"
-                      : "Binance Coin (BNB)"}
-                  </span>
-                  <span className={getRadioClass(option)}></span>
+                  <div
+                    className={`${getAnswerClass(
+                      option
+                    )} px-3 py-3 d-flex align-items-center justify-content-between`}
+                  >
+                    <span className="answer-text">
+                      {option === 0
+                        ? "Bitcoin (BTC)"
+                        : option === 1
+                        ? "Ethereum (ETH)"
+                        : "Binance Coin (BNB)"}
+                    </span>
+                    <span className={getRadioClass(option)}></span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {selectedOption !== undefined &&
             selectedAnswer === undefined &&
             timeLeft > 0 && (
-              <div className="d-flex flex-column gap-1 align-items-center justify-content-between">
+              <div className="d-flex flex-column gap-1 align-items-center w-100 justify-content-between">
                 <span className="aiLockedDesc">Are you sure?</span>
                 <button
-                  className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2 mt-0"
+                  className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-3 justify-content-center py-2"
                   onClick={() => {
                     handleOptionClick(selectedOption);
                   }}
                 >
-                  Submit Answer
+                  Confirm
                 </button>
               </div>
             )}
           {(selectedAnswer !== undefined || showResult) && (
-            <div className="ai-answer-result-wrapper px-3 py-4  w-100 d-flex flex-column gap-2 align-items-center justify-content-between">
+            <div className=" px-3 py-4  w-100 d-flex flex-column gap-2 align-items-center justify-content-between">
               {selectedOption === selectedAnswer &&
               selectedAnswer !== undefined ? (
                 <>

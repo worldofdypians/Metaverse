@@ -8,6 +8,10 @@
   font-weight: 800;
   line-height: normal;
   text-transform: uppercase;
+
+  @media screen and (max-width: 500px) {
+    font-size: 15px;
+  }
 }
 
 .aiLockedDesc {
@@ -19,39 +23,46 @@
   font-style: normal;
   font-weight: 500;
   line-height: 20px;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 }
 
 .answer-outer-wrapper {
-  border-radius: 8px;
-  background: #3d4078;
+  // border-radius: 8px;
+  // background: #3d4078;
   cursor: pointer;
 }
 
 .answer-inner-wrapper {
-  border-radius: 8px;
-  background: #272456;
-  border-bottom: 4px solid #3d4078;
+  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapperbg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .answer-inner-wrapper:hover,
 .answer-inner-wrapper-active {
-  background: #3d4078;
-  border-bottom: 4px solid #008ebf;
-  border-radius: 8px;
+  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapper-activebg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   .radio-button-option {
     border: 2px solid #008ebf;
   }
 }
 .answer-inner-wrapper-answer {
-  border-radius: 8px;
-  background: #037da7;
-  border-bottom: 4px solid #3cbce8;
+  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapper-answerbg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .answer-inner-wrapper-wrong {
-  border-radius: 8px;
-  background: #4d0819;
-  border-bottom: 4px solid #e31345;
+  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapper-wrongbg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .radio-button-option-selected {
@@ -88,8 +99,12 @@
 }
 
 .aiLockedImg {
-  width: 324px;
+  width: auto;
   height: 158px;
+
+  @media screen and (max-width: 500px) {
+    height: 110px;
+  }
 }
 
 .ai-answer-result-wrapper {
@@ -161,8 +176,8 @@
 
 .ai-popup-x-wrapper {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 65px;
+  top: 20px;
 
   .ai-x {
     cursor: pointer;
@@ -170,4 +185,123 @@
     border-radius: 50%;
     padding: 2px;
   }
+
+  @media screen and (max-width: 500px) {
+    right: 30px;
+    top: 15px;
+  }
+}
+
+.ai-chain-button {
+  background: url("https://cdn.worldofdypians.com/wod/ai-chain-inactive.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  color: #c0c9ff;
+  font-family: "Montserrat";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  outline: none;
+}
+
+.ai-chain-button-active {
+  background: url("https://cdn.worldofdypians.com/wod/ai-chain-active.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  color: #3bd3ed;
+  font-family: "Montserrat";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  outline: none;
+}
+
+.ai-chain-icon {
+  width: 24px;
+  height: 24px;
+  @media screen and (max-width: 500px) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.ai-chain-button:hover {
+  filter: drop-shadow(0px 0px 10px rgba(0, 219, 222, 0.8));
+}
+
+.ai-main-button {
+  background: url("https://cdn.worldofdypians.com/wod/ai-main-button.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  color: #3bd3ed;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  outline: none;
+}
+
+.ai-timer-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.ai-progress-ring {
+  transform-origin: center;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.ai-ring-bg {
+  stroke-width: 10;
+  // opacity: 0.2;
+}
+
+.ai-ring-progress {
+  stroke-width: 10;
+  //  transform: rotate(-90deg);
+  transform: rotateY(-180deg) rotateZ(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.ai-timer-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.blinking {
+  animation: blink 1s infinite;
+}
+
+.ai-time-icon {
+  width: 36px;
+  height: 36px;
 }

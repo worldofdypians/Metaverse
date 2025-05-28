@@ -7016,8 +7016,8 @@ function Dashboard({
                     handleConnect();
                   }}
                   onClose={() => setShowDailyQuestion(false)}
-                  handleBnbPool={() => {
-                    switchNetwork("0x38", 56);
+                  handleBnbPool={(hex, dec) => {
+                    switchNetwork(hex, dec);
                   }}
                   email={email}
                   walletClient={walletClient}
