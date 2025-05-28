@@ -89,9 +89,9 @@
   @media screen and (max-width: 991px) {
     width: 100%;
     background-image: none;
-    background-image: url("https://cdn.worldofdypians.com/wod/ai-question-popup-img.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/ai-question-popup-img-mobile.webp");
     // background: #1a1c39;
-    height: 95%;
+    height: fit-content;
     border-radius: 12px;
   }
 }
