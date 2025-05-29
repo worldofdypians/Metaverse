@@ -3556,7 +3556,8 @@ function App() {
       !window.coin98 &&
       window.ethereum &&
       (window.ethereum.isMetaMask === true ||
-        window.ethereum.isTrust === true) &&
+        window.ethereum.isTrust === true ||
+        typeof window.okxwallet !== "undefined") &&
       !window.gatewallet &&
       window.WALLET_TYPE !== "binance" &&
       window.WALLET_TYPE !== "matchId" &&
@@ -5887,7 +5888,7 @@ function App() {
                 dailyBonuslistedNFTS={listedNFTS}
                 wodPrice={wodPrice}
                 onSuccessDeposit={() => {
-                  setCount55(count55 + 1);
+                  // setCount55(count55 + 1);
                   setTimeout(() => {
                     setIsPremium(true);
                   }, 2000);
@@ -5982,7 +5983,7 @@ function App() {
                 wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
-                  setCount55(count55 + 1);
+                  // setCount55(count55 + 1);
                   setTimeout(() => {
                     setIsPremium(true);
                   }, 2000);
@@ -6524,7 +6525,7 @@ function App() {
                 wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
-                  setCount55(count55 + 1);
+                  // setCount55(count55 + 1);
                   setTimeout(() => {
                     setIsPremium(true);
                   }, 2000);
