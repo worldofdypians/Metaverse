@@ -1364,8 +1364,8 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-8">
                 <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-end  align-items-lg-center justify-content-center justify-content-lg-between p-3">
-                  <div className="d-flex flex-row flex-lg-column gap-2 gap-lg-0">
-                    <h6 className="leaderboards-title">Leaderboards</h6>
+                  <div className="d-flex flex-row flex-lg-column align-items-center gap-2 gap-lg-0">
+                    <h6 className="leaderboards-title mb-0">Leaderboards</h6>
                     {/* <h6
                       className="leaderboards-title mb-0"
                       style={{ color: "#8C56FF" }}
@@ -1379,7 +1379,7 @@ const MyProfile = ({
                         onShowRankPopup();
                       }}
                     >
-                      <div className="d-flex align-items-center justify-content-between">
+                      <div className="d-flex gap-2 align-items-center justify-content-between">
                         <div className="d-flex flex-column">
                           <div className="d-flex">
                             <span className="user-data-item-right">
