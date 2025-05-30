@@ -111,8 +111,12 @@
   height: 35px;
 }
 
-.wallet-item-name {
-  font-size: 14px;
+.wallet-item-name { 
+  font-size: 11px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 60px;
 }
 
 .walletclose {

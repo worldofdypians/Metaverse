@@ -1895,7 +1895,7 @@ function App() {
     }
   }, [domainPopup]);
 
-  const web3Name = createWeb3Name();
+  // const web3Name = createWeb3Name();
 
   const searchDomain = async (domain) => {
     if (window.ethereum && window.WALLET_TYPE !== "binance") {
@@ -2178,7 +2178,6 @@ function App() {
         setIsConnected(true);
       });
       await window.getCoinbase().then((data) => {
-        console.log(data);
         setCoinbase(data);
       });
       setShowForms(true);
@@ -2253,20 +2252,40 @@ function App() {
       if (!window.gatewallet) {
         if (window.ethereum) {
           localStorage.setItem("logout", "false");
-          await window.connectWallet().then((data) => {
-            setIsConnected(data);
-          });
+          // await window.connectWallet().then((data) => {
+          //   setIsConnected(data);
+          // });
+          await window.ethereum?.enable();
+          console.log("Connected!");
 
-          await window.getCoinbase().then((data) => {
-            setCoinbase(data);
-          });
+          // await window.getCoinbase().then((data) => {
+          //   window.alertify.message(data.toString());
+
+          //   setCoinbase(data);
+          // });
+
+          const coinbase = await window.ethereum
+            .request({
+              method: "eth_accounts",
+            })
+            .catch((e) => {
+              console.error(e);
+              return [];
+            });
+
+          if (coinbase && coinbase.length > 0) {
+            window.coinbase_address = coinbase[0];
+            setCoinbase(coinbase[0].toLowerCase());
+            setIsConnected(true);
+          }
+
           if (isBnb === true) {
             setisBnbSuccess(true);
           }
           setwalletModal(false);
           setShowForms2(true);
           setSuccess(true);
-          checkConnection();
+          // checkConnection();
         } else
           window.alertify.error("No web3 detected. Please install Metamask!");
       }
@@ -3541,22 +3560,25 @@ function App() {
   }, [dataNonce, address]);
 
   useEffect(() => {
-    if (ethereum && !window.gatewallet) {
-      ethereum.on("chainChanged", checkNetworkId);
+    if (isConnected && coinbase) {
+      if (ethereum && !window.gatewallet) {
+        ethereum.on("chainChanged", checkNetworkId);
+      }
+      if (window.gatewallet) {
+        window.gatewallet.on("changed", checkNetworkId);
+      }
     }
-    if (window.gatewallet) {
-      window.gatewallet.on("changed", checkNetworkId);
-    }
-  }, [ethereum, nftCount]);
+  }, [ethereum, nftCount, isConnected, coinbase]);
 
   const logout = localStorage.getItem("logout");
-  // console.log(connector, library)
+
   useEffect(() => {
     if (
       !window.coin98 &&
       window.ethereum &&
       (window.ethereum.isMetaMask === true ||
-        window.ethereum.isTrust === true) &&
+        window.ethereum.isTrust === true ||
+        window.etherem.isOkxWallet === true) &&
       !window.gatewallet &&
       window.WALLET_TYPE !== "binance" &&
       window.WALLET_TYPE !== "matchId" &&
@@ -5152,11 +5174,16 @@ function App() {
   const handleDisconnect = async () => {
     if (!window.gatewallet) {
       localStorage.removeItem("connect-session");
-      await logoutUser();
+      if (window.WALLET_TYPE === "matchId") {
+        await logoutUser();
+      }
       setTimeout(() => {
-        checkBinanceData();
         window.disconnectWallet();
-        deactivate();
+        if (window.WALLET_TYPE === "matchId") {
+          deactivate();
+          checkBinanceData();
+        }
+
         localStorage.setItem("logout", "true");
         setSuccess(false);
         setCoinbase();
@@ -5178,41 +5205,49 @@ function App() {
     redirect_link
   ) {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
-          walletAddress
-        )}`,
-        {
-          headers: { Authorization: `Bearer ${authToken}` },
-        }
-      );
-
-      if (response.data.length === 0) {
-        const newUserResponse = await axios.post(
+      const response = await axios
+        .get(
           `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
             walletAddress
           )}`,
           {
-            tokenId: "",
-            nftAddress: "",
-            timestamp: Date.now(),
-            read: false,
-            offer: "no",
-            offerAccepted: "no",
-            buy: "no",
-            event: "no",
-            news: "no",
-            welcome: "yes",
-            update: "no",
-            title: "Welcome",
-            description:
-              "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
-            redirect_link: "",
-          },
-          {
             headers: { Authorization: `Bearer ${authToken}` },
           }
-        );
+        )
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (response.data.length === 0) {
+        const newUserResponse = await axios
+          .post(
+            `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+              walletAddress
+            )}`,
+            {
+              tokenId: "",
+              nftAddress: "",
+              timestamp: Date.now(),
+              read: false,
+              offer: "no",
+              offerAccepted: "no",
+              buy: "no",
+              event: "no",
+              news: "no",
+              welcome: "yes",
+              update: "no",
+              title: "Welcome",
+              description:
+                "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
+              redirect_link: "",
+            },
+            {
+              headers: { Authorization: `Bearer ${authToken}` },
+            }
+          )
+          .catch((e) => {
+            console.error(e);
+          });
 
         console.log("New user added:", newUserResponse.data);
         let lso = newUserResponse.sort((a, b) => {
@@ -5245,29 +5280,28 @@ function App() {
       });
   };
 
-  const getDomains = async () => {
-    if (coinbase) {
-      const name = await web3Name
-        .getDomainName({
-          address: coinbase,
-          queryChainIdList: [56],
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+  // const getDomains = async () => {
+  //   if (coinbase) {
+  //     const name = await web3Name
+  //       .getDomainName({
+  //         address: coinbase,
+  //         queryChainIdList: [56],
+  //       })
+  //       .catch((e) => {
+  //         console.error(e);
+  //       });
 
-      if (name && name !== null) {
-        setDomainName(name);
-        const metadata = await web3Name.getMetadata({ name: name });
-        setDomainMetaData(metadata);
-      } else {
-        setDomainMetaData(null);
-        setDomainName(null);
-      }
-    }
+  //     if (name && name !== null) {
+  //       setDomainName(name);
+  //       const metadata = await web3Name.getMetadata({ name: name });
+  //       setDomainMetaData(metadata);
+  //     } else {
+  //       setDomainMetaData(null);
+  //       setDomainName(null);
+  //     }
+  //   }
 
-    // console.log(name, "domain")
-  };
+  // };
   const fetchBscBalance = async () => {
     if (coinbase && networkId === 56 && window.ethereum) {
       const balance = await window.ethereum.request({
@@ -5339,7 +5373,7 @@ function App() {
   }, [coinbase, count55, isConnected]);
 
   useEffect(() => {
-    getDomains();
+    // getDomains();
     fetchBscBalance();
   }, [coinbase, isConnected, logout, successMessage, loadingDomain]);
 
@@ -5414,8 +5448,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    checkNetworkId();
-  }, [chain?.chainId, window.WALLET_TYPE]);
+    if (isConnected && coinbase) {
+      checkNetworkId();
+    }
+  }, [chain?.chainId, window.WALLET_TYPE, isConnected, coinbase]);
 
   useEffect(() => {
     fetchEthStaking();
@@ -5887,7 +5923,7 @@ function App() {
                 dailyBonuslistedNFTS={listedNFTS}
                 wodPrice={wodPrice}
                 onSuccessDeposit={() => {
-                  setCount55(count55 + 1);
+                  // setCount55(count55 + 1);
                   setTimeout(() => {
                     setIsPremium(true);
                   }, 2000);
@@ -5982,7 +6018,7 @@ function App() {
                 wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
-                  setCount55(count55 + 1);
+                  // setCount55(count55 + 1);
                   setTimeout(() => {
                     setIsPremium(true);
                   }, 2000);
@@ -6524,7 +6560,7 @@ function App() {
                 wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
-                  setCount55(count55 + 1);
+                  // setCount55(count55 + 1);
                   setTimeout(() => {
                     setIsPremium(true);
                   }, 2000);

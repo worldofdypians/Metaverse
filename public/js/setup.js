@@ -34865,9 +34865,18 @@ async function connectWallet() {
       if (window.ethereum.isMetaMask) {
         window.WALLET_TYPE = "metamask";
       }
-      let coinbase_address = await window.ethereum?.request({
-        method: "eth_accounts",
-      });
+      // let coinbase_address = await window.ethereum?.request({
+      //   method: "eth_accounts",
+      // });
+
+      let coinbase_address = await window.ethereum
+        .request({
+          method: "eth_accounts",
+        })
+        .catch((e) => {
+          console.error(e);
+          return [];
+        });
 
       window.coinbase_address = coinbase_address[0];
       onConnect();
@@ -34927,9 +34936,18 @@ async function getCoinbase() {
         throw new Error("User denied wallet connection!");
       }
     } else {
-      const coinbase = await window.ethereum.request({
-        method: "eth_accounts",
-      });
+      // const coinbase = await window.ethereum.request({
+      //   method: "eth_accounts",
+      // });
+
+      const coinbase = await window.ethereum
+        .request({
+          method: "eth_accounts",
+        })
+        .catch((e) => {
+          console.error(e);
+          return [];
+        });
 
       if (coinbase && coinbase.length > 0) {
         window.coinbase_address = coinbase[0];
