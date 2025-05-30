@@ -34871,7 +34871,7 @@ async function connectWallet() {
 
       let coinbase_address = await window.ethereum
         .request({
-          method: "eth_requestAccounts",
+          method: "eth_accounts",
         })
         .catch((e) => {
           console.error(e);
@@ -34942,7 +34942,7 @@ async function getCoinbase() {
 
       const coinbase = await window.ethereum
         .request({
-          method: "eth_requestAccounts",
+          method: "eth_accounts",
         })
         .catch((e) => {
           console.error(e);
