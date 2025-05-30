@@ -5186,7 +5186,9 @@ function App() {
         {
           headers: { Authorization: `Bearer ${authToken}` },
         }
-      );
+      ).catch((e) => {
+          console.error(e);
+        });
 
       if (response.data.length === 0) {
         const newUserResponse = await axios.post(
@@ -5213,7 +5215,9 @@ function App() {
           {
             headers: { Authorization: `Bearer ${authToken}` },
           }
-        );
+        ).catch((e) => {
+          console.error(e);
+        });
 
         console.log("New user added:", newUserResponse.data);
         let lso = newUserResponse.sort((a, b) => {
