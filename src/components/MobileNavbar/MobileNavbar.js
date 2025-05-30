@@ -208,7 +208,7 @@ const MobileNavbar = ({
                           : chainState === "bnb"
                           ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                           : chainState === "opbnb"
-                          ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                          ? "https://cdn.worldofdypians.com/wod/opbnbChain.png"
                           : chainState === "avax"
                           ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
                           : chainState === "base"
