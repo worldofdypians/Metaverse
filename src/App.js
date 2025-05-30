@@ -3550,14 +3550,14 @@ function App() {
   }, [ethereum, nftCount]);
 
   const logout = localStorage.getItem("logout");
-  // console.log(connector, library)
+   
   useEffect(() => {
     if (
       !window.coin98 &&
       window.ethereum &&
       (window.ethereum.isMetaMask === true ||
         window.ethereum.isTrust === true ||
-        typeof window.okxwallet !== "undefined") &&
+        window.etherem.isOkxWallet === true) &&
       !window.gatewallet &&
       window.WALLET_TYPE !== "binance" &&
       window.WALLET_TYPE !== "matchId" &&

@@ -1742,12 +1742,16 @@ const SingleNft = ({
   //to get the favorites count
   async function getFavoritesCount(tokenId, nftAddress) {
     try {
-      const data = await axios.get(
-        `https://api.worldofdypians.com/nft-favorite/${tokenId}/${nftAddress}`,
-        {
-          headers: { Authorization: `Bearer ${authToken}` },
-        }
-      );
+      const data = await axios
+        .get(
+          `https://api.worldofdypians.com/nft-favorite/${tokenId}/${nftAddress}`,
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
+        )
+        .catch((e) => {
+          console.error(e);
+        });
 
       // if (!response.ok) {
       //   throw new Error("Error fetching NFT favorites");
@@ -1759,7 +1763,6 @@ const SingleNft = ({
       return data.data.favoritesCount;
     } catch (error) {
       console.error("Error fetching NFT favorites:", error);
-      throw error;
     }
   }
 
