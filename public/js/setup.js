@@ -117,7 +117,7 @@ window.config = {
   ],
 
   opbnb_endpoint: "https://opbnb.publicnode.com",
-  core_endpoint: "https://1rpc.io/core",
+  core_endpoint: "https://rpc.coredao.org",
   viction_endpoint: "https://rpc.viction.xyz",
   sei_endpoint: "https://evm-rpc.sei-apis.com",
   immutable_endpoint: "https://rpc.immutable.com",
@@ -3949,13 +3949,27 @@ async function getMyNFTs(address, type = "") {
       window.config.nft_core_address
     );
 
-    const balance = await contract.methods.balanceOf(address).call();
+    // const balance = await contract.methods.balanceOf(address).call();
 
-    const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
-    );
+    // const tokens = await Promise.all(
+    //   range(0, balance - 1).map((i) =>
+    //     contract.methods.tokenOfOwnerByIndex(address, i).call()
+    //   )
+    // );
+
+    // return tokens;
+    const events = await contract
+      .getPastEvents("Transfer", {
+        filter: { to: address },
+        fromBlock: 0,
+        toBlock: "latest",
+      })
+      .catch((e) => {
+        console.error(e);
+        return [];
+      });
+
+    const tokens = events.length > 0 ? [events[0]?.returnValues.tokenId] : [];
 
     return tokens;
   } else if (type === "viction") {
