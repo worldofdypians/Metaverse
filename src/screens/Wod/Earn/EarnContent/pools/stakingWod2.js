@@ -491,14 +491,34 @@ const StakeWodDetails2 = ({
     if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
-      await reward_token_wod
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      let reward_token_Sc = new ethers.Contract(
+        reward_token_wod._address,
+        window.TOKEN_ABI,
+        signer
+      );
+
+      // await reward_token_wod
+      //   .approve(staking._address, amount)
+      //   .then(() => {
+      //     setdepositLoading(false);
+      //     setdepositStatus("deposit");
+      //     refreshBalance();
+      //     getApprovedAmount();
+      //   })
+      //   .catch((e) => {
+      //     setdepositLoading(false);
+      //     setdepositStatus("fail");
+      //     seterrorMsg(e?.message);
+      //     setTimeout(() => {
+      //       setdepositAmount("");
+      //       setdepositStatus("initial");
+      //       seterrorMsg("");
+      //     }, 10000);
+      //   });
+      const txResponse = await reward_token_Sc
         .approve(staking._address, amount)
-        .then(() => {
-          setdepositLoading(false);
-          setdepositStatus("deposit");
-          refreshBalance();
-          getApprovedAmount();
-        })
         .catch((e) => {
           setdepositLoading(false);
           setdepositStatus("fail");
@@ -509,6 +529,16 @@ const StakeWodDetails2 = ({
             seterrorMsg("");
           }, 10000);
         });
+
+      if (txResponse) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setdepositLoading(false);
+          setdepositStatus("deposit");
+          refreshBalance();
+          getApprovedAmount();
+        }
+      }
     } else if (window.WALLET_TYPE === "binance") {
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
@@ -530,13 +560,14 @@ const StakeWodDetails2 = ({
             seterrorMsg("");
           }, 10000);
         });
-
-      const txReceipt = await txResponse.wait();
-      if (txReceipt) {
-        setdepositLoading(false);
-        setdepositStatus("deposit");
-        refreshBalance();
-        getApprovedAmount();
+      if (txResponse) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setdepositLoading(false);
+          setdepositStatus("deposit");
+          refreshBalance();
+          getApprovedAmount();
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -598,15 +629,56 @@ const StakeWodDetails2 = ({
         return;
       }
 
+      // await staking
+      //   .stake(amount, referrer)
+      //   .then(() => {
+      //     // handleSecondTask(coinbase);
+      //     setdepositLoading(false);
+      //     setdepositStatus("success");
+      //     refreshBalance();
+      //     getApprovedAmount();
+      //     onSuccessfulStake();
+      //     setTimeout(() => {
+      //       setdepositStatus("initial");
+      //       setdepositAmount("");
+      //     }, 5000);
+      //   })
+      //   .catch((e) => {
+      //     setdepositLoading(false);
+      //     setdepositStatus("fail");
+      //     seterrorMsg(e?.message);
+      //     setTimeout(() => {
+      //       setdepositAmount("");
+      //       setdepositStatus("fail");
+      //       seterrorMsg("");
+      //     }, 10000);
+      //   });
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      let staking_Sc = new ethers.Contract(
+        staking._address,
+        window.CONSTANT_STAKING_WOD_ABI,
+        signer
+      );
+
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
 
       let referrer = window.config.ZERO_ADDRESS;
 
-      await staking
-        .stake(amount, referrer)
-        .then(() => {
-          // handleSecondTask(coinbase);
+      const txResponse = await staking_Sc.stake(amount, referrer).catch((e) => {
+        setdepositLoading(false);
+        setdepositStatus("fail");
+        seterrorMsg(e?.message);
+        setTimeout(() => {
+          setdepositAmount("");
+          setdepositStatus("fail");
+          seterrorMsg("");
+        }, 10000);
+      });
+      if (txResponse) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
           setdepositLoading(false);
           setdepositStatus("success");
           refreshBalance();
@@ -616,17 +688,8 @@ const StakeWodDetails2 = ({
             setdepositStatus("initial");
             setdepositAmount("");
           }, 5000);
-        })
-        .catch((e) => {
-          setdepositLoading(false);
-          setdepositStatus("fail");
-          seterrorMsg(e?.message);
-          setTimeout(() => {
-            setdepositAmount("");
-            setdepositStatus("fail");
-            seterrorMsg("");
-          }, 10000);
-        });
+        }
+      }
     } else if (window.WALLET_TYPE === "binance") {
       if (other_info) {
         window.$.alert("This pool no longer accepts deposits!");
@@ -655,17 +718,19 @@ const StakeWodDetails2 = ({
           seterrorMsg("");
         }, 10000);
       });
-      const txReceipt = await txResponse.wait();
-      if (txReceipt) {
-        setdepositLoading(false);
-        setdepositStatus("success");
-        refreshBalance();
-        getApprovedAmount();
-        onSuccessfulStake();
-        setTimeout(() => {
-          setdepositStatus("initial");
-          setdepositAmount("");
-        }, 5000);
+      if (txResponse) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setdepositLoading(false);
+          setdepositStatus("success");
+          refreshBalance();
+          getApprovedAmount();
+          onSuccessfulStake();
+          setTimeout(() => {
+            setdepositStatus("initial");
+            setdepositAmount("");
+          }, 5000);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -721,12 +786,59 @@ const StakeWodDetails2 = ({
   const handleWithdraw = async (e) => {
     // e.preventDefault();
     if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      // let amount = new BigNumber(withdrawAmount).times(1e18).toFixed(0);
+      // setwithdrawLoading(true);
+
+      // staking
+      //   .unstake(amount)
+      //   .then(() => {
+      //     setwithdrawLoading(false);
+      //     setwithdrawStatus("success");
+      //     refreshBalance();
+      //     onSuccessfulStake();
+      //     setTimeout(() => {
+      //       setwithdrawStatus("initial");
+      //       setwithdrawAmount("");
+      //     }, 5000);
+      //   })
+      //   .catch((e) => {
+      //     setwithdrawLoading(false);
+      //     setwithdrawStatus("failed");
+      //     seterrorMsg3(e?.message);
+
+      //     setTimeout(() => {
+      //       setwithdrawStatus("initial");
+      //       seterrorMsg3("");
+      //       setwithdrawAmount("");
+      //     }, 10000);
+      //   });
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      let staking_Sc = new ethers.Contract(
+        staking._address,
+        window.CONSTANT_STAKING_WOD_ABI,
+        signer
+      );
+
       let amount = new BigNumber(withdrawAmount).times(1e18).toFixed(0);
       setwithdrawLoading(true);
 
-      staking
-        .unstake(amount)
-        .then(() => {
+      const txResponse = staking_Sc.unstake(amount).catch((e) => {
+        setwithdrawLoading(false);
+        setwithdrawStatus("failed");
+        seterrorMsg3(e?.message);
+
+        setTimeout(() => {
+          setwithdrawStatus("initial");
+          seterrorMsg3("");
+          setwithdrawAmount("");
+        }, 10000);
+      });
+      if (txResponse) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
           setwithdrawLoading(false);
           setwithdrawStatus("success");
           refreshBalance();
@@ -735,18 +847,8 @@ const StakeWodDetails2 = ({
             setwithdrawStatus("initial");
             setwithdrawAmount("");
           }, 5000);
-        })
-        .catch((e) => {
-          setwithdrawLoading(false);
-          setwithdrawStatus("failed");
-          seterrorMsg3(e?.message);
-
-          setTimeout(() => {
-            setwithdrawStatus("initial");
-            seterrorMsg3("");
-            setwithdrawAmount("");
-          }, 10000);
-        });
+        }
+      }
     } else if (window.WALLET_TYPE === "binance") {
       let staking_Sc = new ethers.Contract(
         staking._address,
@@ -768,16 +870,18 @@ const StakeWodDetails2 = ({
           setwithdrawAmount("");
         }, 10000);
       });
-      const txReceipt = await txResponse.wait();
-      if (txReceipt) {
-        setwithdrawLoading(false);
-        setwithdrawStatus("success");
-        refreshBalance();
-        onSuccessfulStake();
-        setTimeout(() => {
-          setwithdrawStatus("initial");
-          setwithdrawAmount("");
-        }, 5000);
+      if (txResponse) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setwithdrawLoading(false);
+          setwithdrawStatus("success");
+          refreshBalance();
+          onSuccessfulStake();
+          setTimeout(() => {
+            setwithdrawStatus("initial");
+            setwithdrawAmount("");
+          }, 5000);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -831,9 +935,48 @@ const StakeWodDetails2 = ({
     // e.preventDefault();
     setclaimLoading(true);
     if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
-      staking
-        .claim()
-        .then(() => {
+      // staking
+      //   .claim()
+      //   .then(() => {
+      //     setclaimStatus("success");
+      //     setclaimLoading(false);
+      //     setpendingDivs(getFormattedNumber(0, 6));
+      //     refreshBalance();
+      //     setTimeout(() => {
+      //       setclaimStatus("initial");
+      //     }, 5000);
+      //   })
+      //   .catch((e) => {
+      //     setclaimStatus("failed");
+      //     setclaimLoading(false);
+      //     seterrorMsg2(e?.message);
+
+      //     setTimeout(() => {
+      //       setclaimStatus("initial");
+      //       seterrorMsg2("");
+      //     }, 10000);
+      //   });
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      let staking_Sc = new ethers.Contract(
+        staking._address,
+        window.CONSTANT_STAKING_WOD_ABI,
+        signer
+      );
+
+      const txResponse = staking_Sc.claim().catch((e) => {
+        setclaimStatus("failed");
+        setclaimLoading(false);
+        seterrorMsg2(e?.message);
+
+        setTimeout(() => {
+          setclaimStatus("initial");
+          seterrorMsg2("");
+        }, 10000);
+      });
+      if (txResponse) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
           setclaimStatus("success");
           setclaimLoading(false);
           setpendingDivs(getFormattedNumber(0, 6));
@@ -841,17 +984,8 @@ const StakeWodDetails2 = ({
           setTimeout(() => {
             setclaimStatus("initial");
           }, 5000);
-        })
-        .catch((e) => {
-          setclaimStatus("failed");
-          setclaimLoading(false);
-          seterrorMsg2(e?.message);
-
-          setTimeout(() => {
-            setclaimStatus("initial");
-            seterrorMsg2("");
-          }, 10000);
-        });
+        }
+      }
     } else if (window.WALLET_TYPE === "binance") {
       let staking_Sc = new ethers.Contract(
         staking._address,
@@ -869,15 +1003,17 @@ const StakeWodDetails2 = ({
           seterrorMsg2("");
         }, 10000);
       });
-      const txReceipt = await txResponse.wait();
-      if (txReceipt) {
-        setclaimStatus("success");
-        setclaimLoading(false);
-        setpendingDivs(getFormattedNumber(0, 6));
-        refreshBalance();
-        setTimeout(() => {
-          setclaimStatus("initial");
-        }, 5000);
+      if (txResponse) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setclaimStatus("success");
+          setclaimLoading(false);
+          setpendingDivs(getFormattedNumber(0, 6));
+          refreshBalance();
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -1016,27 +1152,56 @@ const StakeWodDetails2 = ({
     setreInvestStatus("invest");
     setreInvestLoading(true);
     if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
-      staking
-        .reInvest()
-        .then(() => {
-          setreInvestStatus("success");
-          setreInvestLoading(false);
-          setpendingDivs(getFormattedNumber(0, 6));
-          refreshBalance();
-          setTimeout(() => {
-            setreInvestStatus("initial");
-          }, 10000);
-        })
-        .catch((e) => {
-          setreInvestStatus("failed");
-          setreInvestLoading(false);
-          seterrorMsg2(e?.message);
+      // staking
+      //   .reInvest()
+      //   .then(() => {
+      //     setreInvestStatus("success");
+      //     setreInvestLoading(false);
+      //     setpendingDivs(getFormattedNumber(0, 6));
+      //     refreshBalance();
+      //     setTimeout(() => {
+      //       setreInvestStatus("initial");
+      //     }, 10000);
+      //   })
+      //   .catch((e) => {
+      //     setreInvestStatus("failed");
+      //     setreInvestLoading(false);
+      //     seterrorMsg2(e?.message);
 
-          setTimeout(() => {
-            setreInvestStatus("initial");
-            seterrorMsg2("");
-          }, 10000);
-        });
+      //     setTimeout(() => {
+      //       setreInvestStatus("initial");
+      //       seterrorMsg2("");
+      //     }, 10000);
+      //   });
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      let staking_Sc = new ethers.Contract(
+        staking._address,
+        window.CONSTANT_STAKING_WOD_ABI,
+        signer
+      );
+
+      const txResponse = staking_Sc.reInvest().catch((e) => {
+        setreInvestStatus("failed");
+        setreInvestLoading(false);
+        seterrorMsg2(e?.message);
+
+        setTimeout(() => {
+          setreInvestStatus("initial");
+          seterrorMsg2("");
+        }, 10000);
+      });
+      if(txResponse){
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setreInvestStatus("success");
+        setreInvestLoading(false);
+        setpendingDivs(getFormattedNumber(0, 6));
+        refreshBalance();
+        setTimeout(() => {
+          setreInvestStatus("initial");
+        }, 10000);
+      }}
     } else if (window.WALLET_TYPE === "binance") {
       let staking_Sc = new ethers.Contract(
         staking._address,
@@ -1054,6 +1219,7 @@ const StakeWodDetails2 = ({
           seterrorMsg2("");
         }, 10000);
       });
+      if(txResponse){
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
         setreInvestStatus("success");
@@ -1063,7 +1229,7 @@ const StakeWodDetails2 = ({
         setTimeout(() => {
           setreInvestStatus("initial");
         }, 10000);
-      }
+      }}
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
         const result = await walletClient
