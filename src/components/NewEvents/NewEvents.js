@@ -288,7 +288,7 @@ const NewEvents = ({
     setHasBoughtpuzzleMadness(true);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
-      puzzleMadness: false,
+      puzzleMadness: true,
     }));
     setpuzzleMadnessCountdown(Number(purchaseTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
     setPuzzleMadnessTimer(Number(purchaseTimestamp) * 1000);
