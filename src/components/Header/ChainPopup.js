@@ -60,7 +60,7 @@ const ChainPopup = ({
                 className={activeChain === "opbnb" ? "active-chain-btn" : ""}
               >
                 <img
-                  src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                  src={"https://cdn.worldofdypians.com/wod/opbnbChain.png"}
                   alt=""
                   width={20}
                   height={20}
