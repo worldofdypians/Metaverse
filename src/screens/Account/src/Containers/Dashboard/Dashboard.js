@@ -8,7 +8,7 @@ import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import NewEvents from "../../../../../components/NewEvents/NewEvents";
 import Web3 from "web3";
 import { ERC20_ABI } from "../../web3/abis";
-import _, { set } from "lodash";
+
 import GlobalLeaderboard from "../../../../../components/LeaderBoard/GlobalLeaderboard";
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
