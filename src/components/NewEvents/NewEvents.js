@@ -5045,6 +5045,12 @@ const NewEvents = ({
                                                 date={puzzleMadnessCountdown}
                                                 onComplete={() => {
                                                   setisFinishedPuzzle(true);
+                                                  setBeastSiegeStatus(
+                                                    (prevStatus) => ({
+                                                      ...prevStatus,
+                                                      puzzleMadness: false,
+                                                    })
+                                                  );
                                                 }}
                                               />
                                             </div>
