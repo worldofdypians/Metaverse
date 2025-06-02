@@ -30,7 +30,7 @@
 }
 
 .getwod-item {
-  width: 100%;
+  width: 200px;
   padding: 5px;
 }
 
@@ -300,6 +300,10 @@
   font-weight: 800;
   line-height: normal;
   text-transform: uppercase;
+
+    @media screen and (max-width: 500px) {
+    font-size: 14px;
+  }
 }
 
 .leaderboards-flag-wrapper {

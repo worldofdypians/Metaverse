@@ -3203,7 +3203,7 @@ const NewDailyBonus = ({
                               >
                                 <img
                                   src={
-                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                    "https://cdn.worldofdypians.com/wod/opbnbChain.png"
                                   }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
@@ -4353,7 +4353,7 @@ const NewDailyBonus = ({
                               >
                                 <img
                                   src={
-                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                    "https://cdn.worldofdypians.com/wod/opbnbChain.png"
                                   }
                                   alt=""
                                   style={{ width: 20, height: 20 }}

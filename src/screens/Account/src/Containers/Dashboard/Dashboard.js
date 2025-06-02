@@ -55,6 +55,7 @@ import {
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
+import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -466,6 +467,7 @@ function Dashboard({
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [showDailyQuestion, setShowDailyQuestion] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
 
@@ -533,6 +535,7 @@ function Dashboard({
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
   const [adClicked, setadClicked] = useState("");
   const [goldenPassPopup, setgoldenPassPopup] = useState(false);
+  const [aiQuestionCompleted, setAiQuestionCompleted] = useState(false);
 
   const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
 
@@ -5197,7 +5200,39 @@ function Dashboard({
       return [];
     }
   };
-
+  const switchNetwork = async (hexChainId, chain) => {
+    if (window.ethereum) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        await handleSwitchNetworkhook(hexChainId)
+          .then(() => {
+            handleSwitchNetwork(chain);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        handleSwitchChainGateWallet(chain);
+      } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+        network_matchain?.showChangeNetwork();
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(chain);
+      }
+    } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(chain);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
   //todo
   const fetchAllMyNfts = async () => {
     countUserDailyBundles(userWallet ? userWallet : coinbase);
@@ -5865,7 +5900,8 @@ function Dashboard({
       (dailyBonusPopup === true && dailyrewardpopup) ||
       leaderboard === true ||
       globalLeaderboard === true ||
-      genesisLeaderboard === true
+      genesisLeaderboard === true ||
+      showDailyQuestion === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -5879,6 +5915,7 @@ function Dashboard({
     leaderboard,
     globalLeaderboard,
     genesisLeaderboard,
+    showDailyQuestion,
   ]);
 
   const logoutItem = localStorage.getItem("logout");
@@ -6000,6 +6037,7 @@ function Dashboard({
           <>
             <MyProfile
               wodBalance={wodBalance}
+              aiQuestionCompleted={aiQuestionCompleted}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
@@ -6012,6 +6050,9 @@ function Dashboard({
               beastSiegeStatus={beastSiegeStatus}
               puzzleMadnessTimer={puzzleMadnessTimer}
               onGoldenpassClick={() => setgoldenPassPopup(true)}
+              onDailyQuestionClick={() => {
+                setShowDailyQuestion(true);
+              }}
               onShowRankPopup={() => {
                 handleFetchRecords("all");
               }}
@@ -6935,6 +6976,61 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
+
+        {showDailyQuestion && (
+          // <OutsideClickHandler
+          //   onOutsideClick={() => setShowDailyQuestion(false)}
+          // >
+          // <div
+          //   className="popup-wrapper popup-active p-4 ai-question-outer-wrapper d-flex flex-column"
+          //   id="aiQuestion"
+          //   style={{
+          //     minHeight: "460px",
+          //     pointerEvents: "auto",
+          //     overflowX: "auto",
+          //     width: "460px",
+          //   }}
+          // >
+          <div className={`package-popup-wrapper2 `}>
+            <div
+              className={`new-daily-bonus-popup d-flex flex-column gap-2 custom-container-width2 justify-content-center`}
+            >
+              <div className="ai-question-outer-wrapper custom-container-width2 position-relative p-0 p-lg-5 d-flex">
+                <div className="d-flex align-items-center justify-content-end ai-popup-x-wrapper">
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/closeX.svg"}
+                    onClick={() => setShowDailyQuestion(false)}
+                    alt=""
+                    className="ai-x"
+                  />
+                </div>
+                <AIQuestion
+                  onQuestionComplete={(value) => {
+                    setAiQuestionCompleted(value);
+                  }}
+                  isConnected={isConnected}
+                  coinbase={coinbase}
+                  chainId={chainId}
+                  onConnectWallet={() => {
+                    setShowDailyQuestion(false);
+                    handleConnect();
+                  }}
+                  onClose={() => setShowDailyQuestion(false)}
+                  handleBnbPool={(hex, dec) => {
+                    switchNetwork(hex, dec);
+                  }}
+                  email={email}
+                  walletClient={walletClient}
+                  publicClient={publicClient}
+                  binanceW3WProvider={binanceW3WProvider}
+                />
+              </div>
+            </div>
+          </div>
+
+          // </OutsideClickHandler>
+        )}
+
         {portfolio && (
           <OutsideClickHandler onOutsideClick={() => setPortfolio(false)}>
             <div

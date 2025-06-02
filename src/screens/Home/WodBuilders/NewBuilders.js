@@ -430,9 +430,7 @@ const NewBuilders = () => {
                 >
                   <img
                     src={
-                      item.icon.includes("changeNow")
-                        ? require("../../../components/MyProfile/changeNow.webp")
-                        : `https://cdn.worldofdypians.com/wod/${item.icon}`
+                      `https://cdn.worldofdypians.com/wod/${item.icon}`
                     }
                     width={45}
                     height={45}
