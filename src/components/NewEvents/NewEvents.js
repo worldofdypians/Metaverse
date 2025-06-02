@@ -288,7 +288,7 @@ const NewEvents = ({
     setHasBoughtpuzzleMadness(true);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
-      puzzleMadness: false,
+      puzzleMadness: true,
     }));
     setpuzzleMadnessCountdown(Number(purchaseTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
     setPuzzleMadnessTimer(Number(purchaseTimestamp) * 1000);
@@ -3626,34 +3626,35 @@ const NewEvents = ({
                             <span>Past</span>
                           </div>
                         </div>
-                        {// eventDuration === "Live" ||
-                        eventDuration === "Expired" && (
-                          <div className="d-flex align-items-center gap-2 mb-3">
-                            <div
-                              className={`${
-                                page === 1
-                                  ? "active-challenge-tab"
-                                  : "challenge-tab"
-                              } px-4 py-2 d-flex align-items-center justify-content-center`}
-                              onClick={() => {
-                                setPage(1);
-                              }}
-                            >
-                              <span>1</span>
-                            </div>
-                            <div
-                              className={`${
-                                page === 2
-                                  ? "active-challenge-tab"
-                                  : "challenge-tab"
-                              } px-4 py-2 d-flex align-items-center justify-content-center`}
-                              onClick={() => {
-                                setPage(2);
-                              }}
-                            >
-                              <span>2</span>
-                            </div>
-                            {/* <div
+                        {
+                          // eventDuration === "Live" ||
+                          eventDuration === "Expired" && (
+                            <div className="d-flex align-items-center gap-2 mb-3">
+                              <div
+                                className={`${
+                                  page === 1
+                                    ? "active-challenge-tab"
+                                    : "challenge-tab"
+                                } px-4 py-2 d-flex align-items-center justify-content-center`}
+                                onClick={() => {
+                                  setPage(1);
+                                }}
+                              >
+                                <span>1</span>
+                              </div>
+                              <div
+                                className={`${
+                                  page === 2
+                                    ? "active-challenge-tab"
+                                    : "challenge-tab"
+                                } px-4 py-2 d-flex align-items-center justify-content-center`}
+                                onClick={() => {
+                                  setPage(2);
+                                }}
+                              >
+                                <span>2</span>
+                              </div>
+                              {/* <div
                               className={`${
                                 page === 3
                                   ? "active-challenge-tab"
@@ -3665,8 +3666,9 @@ const NewEvents = ({
                             >
                               <span>3</span>
                             </div> */}
-                          </div>
-                        )}
+                            </div>
+                          )
+                        }
                       </div>
                     )}
                     {challenge === "treasure-hunt" ? (
@@ -5043,6 +5045,12 @@ const NewEvents = ({
                                                 date={puzzleMadnessCountdown}
                                                 onComplete={() => {
                                                   setisFinishedPuzzle(true);
+                                                  setBeastSiegeStatus(
+                                                    (prevStatus) => ({
+                                                      ...prevStatus,
+                                                      puzzleMadness: false,
+                                                    })
+                                                  );
                                                 }}
                                               />
                                             </div>

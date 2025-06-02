@@ -162,6 +162,11 @@ const NewBuilders = () => {
       backer: false,
     },
     {
+      name: "OKX Wallet",
+      icon: "okxConnect.svg",
+      backer: false,
+    },
+    {
       name: "Immutable",
       icon: "immutable.svg",
       banner: "immutableBanner.png",

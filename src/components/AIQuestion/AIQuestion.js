@@ -206,7 +206,7 @@ const AIQuestion = ({
       setConfirmed(false);
       setShowResult(false);
       setTimeLeft(totalTime);
-    }, 5000);
+    }, 10000);
   };
 
   const getAnswerClass = (option) => {

@@ -573,7 +573,6 @@ const GetPremiumPopup = ({
   };
 
   const handleUpdatePremiumUser = async (wallet) => {
-    
     await axios
       .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
       .catch((e) => {
@@ -1573,7 +1572,7 @@ const GetPremiumPopup = ({
             token,
             discountPercentageViction
           )
-        : chainId === 88
+        : chainId === 2040
         ? await window.getEstimatedTokenSubscriptionAmountVanar(
             token,
             discountPercentageVanar
@@ -1695,6 +1694,10 @@ const GetPremiumPopup = ({
                 setisApproved(true);
                 setapproveStatus("approveAmount");
               }
+            } else if (discountPercentage === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
             } else {
               setloadspinner(false);
               setisApproved(false);
@@ -2101,10 +2104,22 @@ const GetPremiumPopup = ({
     return window.cached_contracts[key + "-" + address.toLowerCase()];
   };
 
+  const getContractEVM = async ({ key, address = null, ABI = null }) => {
+    ABI = window[key + "_ABI"];
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    address = window.config[key.toLowerCase() + "_address"];
+    if (!window.cached_contracts[key + "-" + address.toLowerCase()]) {
+      window.cached_contracts[key + "-" + address?.toLowerCase()] =
+        new ethers.Contract(address, ABI, signer);
+    }
+    return window.cached_contracts[key + "-" + address.toLowerCase()];
+  };
+
   const handleSubscribe = async (e) => {
     const today = Date.now();
     if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
-      let subscriptionContract = await window.getContract({
+      let subscriptionContract = await getContractEVM({
         key:
           chainId === 1
             ? "SUBSCRIPTION_NEWETH"
@@ -2124,10 +2139,6 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_VANAR"
             : chainId === 169
             ? "SUBSCRIPTION_MANTA"
-            : chainId === 167000
-            ? "SUBSCRIPTION_TAIKO"
-            : chainId === 698
-            ? "SUBSCRIPTION_MAT"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
             : chainId === 1329
@@ -2137,14 +2148,41 @@ const GetPremiumPopup = ({
 
       setloadspinnerSub(true);
       if (chainId === 56 && nftPremium_total > 0) {
-        await window
+        const txResponse = await subscriptionContract
           .subscribeNFT(
             nftDiscountObject.nftAddress,
             nftPremium_tokenId,
             selectedSubscriptionToken,
-            price
+            price,
+            { from: coinbase }
           )
-          .then(async (data) => {
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            let cleanReason = "Transaction failed";
+
+            const fullMessage = e?.reason || e?.message || "";
+
+            const match = fullMessage.match(/execution reverted: ([^"]+)/);
+            if (match) {
+              cleanReason = match[1];
+            } else {
+              cleanReason = fullMessage;
+            }
+
+            setstatus(cleanReason);
+            window.alertify.error(cleanReason);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+        if (txResponse) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
@@ -2156,45 +2194,59 @@ const GetPremiumPopup = ({
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
-          })
-          .catch(() => {
-            setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
-
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
+          }
+        }
       } else if (
         chainId === 56 &&
         selectedSubscriptionToken.toLowerCase() ===
           "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
       ) {
-        await subscriptionContract.methods
-          .subscribeWithBNB()
-          .send({ from: await window.getCoinbase(), value: price })
-          .then(async (data) => {
-            setloadspinnerSub(false);
-            onSuccessDeposit();
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          })
+        // await subscriptionContract.methods
+        //   .subscribeWithBNB()
+        //   .send({ from: await window.getCoinbase(), value: price })
+        //   .then(() => {
+        //     setloadspinnerSub(false);
+        //     onSuccessDeposit();
+        //     handleUpdatePremiumUser(coinbase);
+        //     setapproveStatus("successsubscribe");
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   })
+        //   .catch((e) => {
+        //     setloadspinnerSub(false);
+        //     setapproveStatus("failsubscribe");
+        //     setstatus(e?.message);
+        //     window.alertify.error(e?.message);
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   });
+        const txResponse = await subscriptionContract
+          .subscribeWithBNB({ from: coinbase, value: price })
           .catch((e) => {
             setloadspinnerSub(false);
             setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
+            let cleanReason = "Transaction failed";
+
+            const fullMessage = e?.reason || e?.message || "";
+
+            const match = fullMessage.match(/execution reverted: ([^"]+)/);
+            if (match) {
+              cleanReason = match[1];
+            } else {
+              cleanReason = fullMessage;
+            }
+
+            setstatus(cleanReason);
+            window.alertify.error(cleanReason);
+
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -2202,214 +2254,49 @@ const GetPremiumPopup = ({
               setstatus("");
             }, 5000);
           });
+
+        if (txResponse) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+
+            onSuccessDeposit();
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          }
+        }
       } else if (chainId === 88 && nftPremium_totalViction > 0) {
-        await window
-          .subscribeNFTViction(
+        const txResponse = await subscriptionContract
+          .subscribeNFT(
             nftDiscountObjectViction.nftAddress,
             nftPremium_tokenIdViction,
             selectedSubscriptionToken,
-            price
+            price,
+            { from: coinbase }
           )
-          .then(async (data) => {
-            setloadspinnerSub(false);
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            onSuccessDeposit();
-            // await axios
-            //   .patch(
-            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            //     {
-            //       multiplier: "yes",
-            //       chain: "viction subscribeNFT",
-            //       premiumTimestamp: today.toString(),
-            //     },
-            //     {
-            //       headers: { Authorization: `Bearer ${authToken}` },
-            //     }
-            //   )
-            //   .then(() => {
-            //     getRankData();
-            //   })
-            //   .catch((e) => {
-            //     console.error(e);
-            //   });
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          })
-          .catch(() => {
-            setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
-
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
-      } else if (chainId === 2040 && nftPremium_totalVanar > 0) {
-        await window
-          .subscribeNFTVanar(
-            nftDiscountObjectVanar.nftAddress,
-            nftPremium_tokenIdVanar,
-            selectedSubscriptionToken,
-            price
-          )
-          .then(async (data) => {
-            setloadspinnerSub(false);
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            onSuccessDeposit();
-            // await axios
-            //   .patch(
-            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            //     {
-            //       multiplier: "yes",
-            //       chain: "viction subscribeNFT",
-            //       premiumTimestamp: today.toString(),
-            //     },
-            //     {
-            //       headers: { Authorization: `Bearer ${authToken}` },
-            //     }
-            //   )
-            //   .then(() => {
-            //     getRankData();
-            //   })
-            //   .catch((e) => {
-            //     console.error(e);
-            //   });
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          })
-          .catch(() => {
-            setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
-
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
-      } else if (chainId === 167000 && nftPremium_totalTaiko > 0) {
-        await window
-          .subscribeNFTTaiko(
-            nftDiscountObjectTaiko.nftAddress,
-            nftPremium_tokenIdTaiko,
-            selectedSubscriptionToken,
-            price
-          )
-          .then(async (data) => {
-            setloadspinnerSub(false);
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            onSuccessDeposit();
-            // await axios
-            //   .patch(
-            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-            //     {
-            //       multiplier: "yes",
-            //       chain: "taiko subscribeNFT",
-            //       premiumTimestamp: today.toString(),
-            //     },
-            //     {
-            //       headers: { Authorization: `Bearer ${authToken}` },
-            //     }
-            //   )
-            //   .then(() => {
-            //     getRankData();
-            //   })
-            //   .catch((e) => {
-            //     console.error(e);
-            //   });
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          })
-          .catch(() => {
-            setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
-
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
-      } else if (chainId === 698 && nftPremium_totalMat > 0) {
-        await window
-          .subscribeNFTMat(
-            nftDiscountObjectMat.nftAddress,
-            nftPremium_tokenIdMat,
-            selectedSubscriptionToken,
-            price
-          )
-          .then(async (data) => {
-            setloadspinnerSub(false);
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            onSuccessDeposit();
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          })
-          .catch(() => {
-            setloadspinnerSub(false);
-            setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
-
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          });
-      } else {
-        await subscriptionContract.methods
-          .subscribe(selectedSubscriptionToken, price)
-          .send({ from: await window.getCoinbase() })
-          .then(async (data) => {
-            setloadspinnerSub(false);
-            onSuccessDeposit();
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          })
           .catch((e) => {
             setloadspinnerSub(false);
             setapproveStatus("failsubscribe");
-            setstatus(e?.message);
-            window.alertify.error(e?.message);
+            let cleanReason = "Transaction failed";
+
+            const fullMessage = e?.reason || e?.message || "";
+
+            const match = fullMessage.match(/execution reverted: ([^"]+)/);
+            if (match) {
+              cleanReason = match[1];
+            } else {
+              cleanReason = fullMessage;
+            }
+
+            setstatus(cleanReason);
+            window.alertify.error(cleanReason);
+
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -2417,6 +2304,379 @@ const GetPremiumPopup = ({
               setstatus("");
             }, 5000);
           });
+
+        if (txResponse) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+
+            onSuccessDeposit();
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          }
+        }
+
+        // await window
+        //   .subscribeNFTViction(
+        //     nftDiscountObjectViction.nftAddress,
+        //     nftPremium_tokenIdViction,
+        //     selectedSubscriptionToken,
+        //     price
+        //   )
+        //   .then(() => {
+        //     setloadspinnerSub(false);
+        //     handleUpdatePremiumUser(coinbase);
+        //     setapproveStatus("successsubscribe");
+        //     onSuccessDeposit();
+
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   })
+        //   .catch(() => {
+        //     setloadspinnerSub(false);
+        //     setapproveStatus("failsubscribe");
+        //     setstatus(e?.message);
+        //     window.alertify.error(e?.message);
+
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   });
+      } else if (chainId === 2040 && nftPremium_totalVanar > 0) {
+        const txResponse = await subscriptionContract
+          .subscribeNFT(
+            nftDiscountObjectVanar.nftAddress,
+            nftPremium_tokenIdVanar,
+            selectedSubscriptionToken,
+            price,
+            { from: coinbase }
+          )
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            let cleanReason = "Transaction failed";
+
+            const fullMessage = e?.reason || e?.message || "";
+
+            const match = fullMessage.match(/execution reverted: ([^"]+)/);
+            if (match) {
+              cleanReason = match[1];
+            } else {
+              cleanReason = fullMessage;
+            }
+
+            setstatus(cleanReason);
+            window.alertify.error(cleanReason);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+
+        if (txResponse) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+
+            onSuccessDeposit();
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          }
+        }
+
+        // await window
+        //   .subscribeNFTVanar(
+        //     nftDiscountObjectVanar.nftAddress,
+        //     nftPremium_tokenIdVanar,
+        //     selectedSubscriptionToken,
+        //     price
+        //   )
+        //   .then(() => {
+        //     setloadspinnerSub(false);
+        //     handleUpdatePremiumUser(coinbase);
+        //     setapproveStatus("successsubscribe");
+        //     onSuccessDeposit();
+
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   })
+        //   .catch(() => {
+        //     setloadspinnerSub(false);
+        //     setapproveStatus("failsubscribe");
+        //     setstatus(e?.message);
+        //     window.alertify.error(e?.message);
+
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   });
+      } else if (chainId === 167000 && nftPremium_totalTaiko > 0) {
+        const txResponse = await subscriptionContract
+          .subscribeNFT(
+            nftDiscountObjectTaiko.nftAddress,
+            nftPremium_tokenIdTaiko,
+            selectedSubscriptionToken,
+            price,
+            { from: coinbase }
+          )
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            let cleanReason = "Transaction failed";
+
+            const fullMessage = e?.reason || e?.message || "";
+
+            const match = fullMessage.match(/execution reverted: ([^"]+)/);
+            if (match) {
+              cleanReason = match[1];
+            } else {
+              cleanReason = fullMessage;
+            }
+
+            setstatus(cleanReason);
+            window.alertify.error(cleanReason);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+
+        if (txResponse) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+
+            onSuccessDeposit();
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          }
+        }
+
+        // await window
+        //   .subscribeNFTTaiko(
+        //     nftDiscountObjectTaiko.nftAddress,
+        //     nftPremium_tokenIdTaiko,
+        //     selectedSubscriptionToken,
+        //     price
+        //   )
+        //   .then(() => {
+        //     setloadspinnerSub(false);
+        //     handleUpdatePremiumUser(coinbase);
+        //     setapproveStatus("successsubscribe");
+        //     onSuccessDeposit();
+
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   })
+        //   .catch(() => {
+        //     setloadspinnerSub(false);
+        //     setapproveStatus("failsubscribe");
+        //     setstatus(e?.message);
+        //     window.alertify.error(e?.message);
+
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   });
+      } else if (chainId === 698 && nftPremium_totalMat > 0) {
+        const txResponse = await subscriptionContract
+          .subscribeNFT(
+            nftDiscountObjectMat.nftAddress,
+            nftPremium_tokenIdMat,
+            selectedSubscriptionToken,
+            price,
+            { from: coinbase }
+          )
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            let cleanReason = "Transaction failed";
+
+            const fullMessage = e?.reason || e?.message || "";
+
+            const match = fullMessage.match(/execution reverted: ([^"]+)/);
+            if (match) {
+              cleanReason = match[1];
+            } else {
+              cleanReason = fullMessage;
+            }
+
+            setstatus(cleanReason);
+            window.alertify.error(cleanReason);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+
+        if (txResponse) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+
+            onSuccessDeposit();
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          }
+        }
+        // await window
+        //   .subscribeNFTMat(
+        //     nftDiscountObjectMat.nftAddress,
+        //     nftPremium_tokenIdMat,
+        //     selectedSubscriptionToken,
+        //     price
+        //   )
+        //   .then(() => {
+        //     setloadspinnerSub(false);
+        //     handleUpdatePremiumUser(coinbase);
+        //     setapproveStatus("successsubscribe");
+        //     onSuccessDeposit();
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   })
+        //   .catch(() => {
+        //     setloadspinnerSub(false);
+        //     setapproveStatus("failsubscribe");
+        //     setstatus(e?.message);
+        //     window.alertify.error(e?.message);
+
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   });
+      } else {
+        const txResponse = await subscriptionContract
+          .subscribe(selectedSubscriptionToken, price, { from: coinbase })
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+
+            let cleanReason = "Transaction failed";
+
+            const fullMessage = e?.reason || e?.message || "";
+
+            const match = fullMessage.match(/execution reverted: ([^"]+)/);
+            if (match) {
+              cleanReason = match[1];
+            } else {
+              cleanReason = fullMessage;
+            }
+
+            setstatus(cleanReason);
+            window.alertify.error(cleanReason);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+        if (txResponse) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinnerSub(false);
+            onSuccessDeposit();
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          }
+        }
+        // await subscriptionContract.methods
+        //   .subscribe(selectedSubscriptionToken, price)
+        //   .send({ from: await window.getCoinbase() })
+        //   .then(() => {
+        //     setloadspinnerSub(false);
+        //     onSuccessDeposit();
+        //     handleUpdatePremiumUser(coinbase);
+        //     setapproveStatus("successsubscribe");
+
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   })
+        //   .catch((e) => {
+        //     setloadspinnerSub(false);
+        //     setapproveStatus("failsubscribe");
+        //     setstatus(e?.message);
+        //     window.alertify.error(e?.message);
+        //     setTimeout(() => {
+        //       setloadspinnerSub(false);
+        //       setloadspinner(false);
+        //       setapproveStatus("initial");
+        //       setstatus("");
+        //     }, 5000);
+        //   });
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -2825,24 +3085,6 @@ const GetPremiumPopup = ({
           onSuccessDeposit();
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
-          // await axios
-          //   .patch(
-          //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-          //     {
-          //       multiplier: "yes",
-          //       chain: chainId.toString(),
-          //       premiumTimestamp: today.toString(),
-          //     },
-          //     {
-          //       headers: { Authorization: `Bearer ${authToken}` },
-          //     }
-          //   )
-          //   .then(() => {
-          //     getRankData();
-          //   })
-          //   .catch((e) => {
-          //     console.error(e);
-          //   });
 
           setTimeout(() => {
             setloadspinnerSub(false);
