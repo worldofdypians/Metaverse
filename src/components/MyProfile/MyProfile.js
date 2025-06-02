@@ -907,7 +907,7 @@ const MyProfile = ({
                       <div className="d-flex flex-column">
                         <span className="user-data-item-left">Golden Pass</span>
                         <span className="user-data-item-left">
-                          {!isgoldenPassActive ? `Enable` : "Activated"}
+                          {!isgoldenPassActive ? `` : "Activated"}
                         </span>
                       </div>
                     </div>
