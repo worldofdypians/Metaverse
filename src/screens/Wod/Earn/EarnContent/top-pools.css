@@ -427,6 +427,7 @@
   justify-content: flex-start;
   gap: 5px;
   cursor: pointer;
+  white-space: nowrap !important;
 }
 
 .mybalance-text {
