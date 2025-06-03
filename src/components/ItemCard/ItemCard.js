@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./_itemcard.scss";
 import ComfirmationModal from "../../screens/Marketplace/MarketNFTs/ConfirmationModal";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import _ from "lodash";
+
 import { useLocation } from "react-router-dom";
 import Toast from "../../components/Toast/Toast";
 
