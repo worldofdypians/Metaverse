@@ -60,7 +60,7 @@ const WodPartners = ({ full }) => {
       name: "Binance Wallet",
       icon: "binanceWalletUpdated.svg",
     },
-        {
+    {
       name: "OKX Wallet",
       icon: "okxConnect.svg",
     },
@@ -297,6 +297,10 @@ const WodPartners = ({ full }) => {
       name: "ChangeNOW",
       icon: "changeNow.webp",
     },
+    {
+      name: "BloFin",
+      icon: "blofinBuywod.png",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
@@ -336,7 +340,7 @@ const WodPartners = ({ full }) => {
                     <img
                       src={
                         partner.icon.includes("changeNow")
-                          ? require("../../../components/MyProfile/changeNow.webp")
+                          ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
                           : `https://cdn.worldofdypians.com/wod/${partner.icon}`
                       }
                       alt=""

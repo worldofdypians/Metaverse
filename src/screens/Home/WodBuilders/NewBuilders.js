@@ -413,6 +413,10 @@ const NewBuilders = () => {
       name: "ChangeNOW",
       icon: "changeNow.webp",
     },
+    {
+      name: "BloFin",
+      icon: "blofinBuywod.png",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
@@ -431,7 +435,7 @@ const NewBuilders = () => {
                   <img
                     src={
                       item.icon.includes("changeNow")
-                        ? require("../../../components/MyProfile/changeNow.webp")
+                        ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
                         : `https://cdn.worldofdypians.com/wod/${item.icon}`
                     }
                     width={45}

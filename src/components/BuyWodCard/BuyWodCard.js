@@ -19,7 +19,7 @@ const BuyWodCard = ({ item }) => {
         <img
           src={
             item.logo.includes("changeNow")
-              ? require("../MyProfile/changeNow.webp")
+              ? 'https://cdn.worldofdypians.com/wod/changeNow.webp'
               : `https://cdn.worldofdypians.com/wod/${item.logo}`
           }
           alt=""

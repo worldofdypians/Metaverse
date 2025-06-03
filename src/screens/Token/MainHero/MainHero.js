@@ -49,6 +49,11 @@ const MainHero = ({ scrollInto }) => {
       logo: "changeNowExchange.svg",
       link: "https://changenow.io/currencies/world-of-dypians",
     },
+    {
+      title: "BloFin",
+      logo: "blofinExchange.png",
+      link: "https://blofin.com/spot/WOD-USDT",
+    },
   ];
 
   return (
