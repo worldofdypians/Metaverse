@@ -594,7 +594,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               // Handle other errors normally
               window.alertify.error(e?.message);
@@ -695,7 +695,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000);
+              }, 5000);
             } else {
               // Handle other errors normally
               window.alertify.error(e?.message);
@@ -774,7 +774,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               window.alertify.error(e?.message);
               onChestStatus("error");
@@ -837,7 +837,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               console.error(e);
               window.alertify.error(e?.message);
@@ -904,7 +904,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               window.alertify.error(e?.message);
               onChestStatus("error");
@@ -967,7 +967,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               console.error(e);
               window.alertify.error(e?.message);
