@@ -571,7 +571,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -672,7 +676,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -751,7 +759,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -814,7 +826,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -881,7 +897,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -944,7 +964,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
