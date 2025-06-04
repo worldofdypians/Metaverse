@@ -2183,9 +2183,6 @@ const Portfolio = ({
                         href="https://www.kucoin.com/trade/WOD-USDT"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
@@ -2202,9 +2199,6 @@ const Portfolio = ({
                         href="https://www.gate.io/trade/WOD_USDT"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
@@ -2222,9 +2216,6 @@ const Portfolio = ({
                         href="https://www.mexc.com/exchange/WOD_USDT"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
@@ -2241,9 +2232,6 @@ const Portfolio = ({
                         href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
@@ -2260,9 +2248,6 @@ const Portfolio = ({
                         href="https://www.binance.com/en/download"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
@@ -2279,9 +2264,6 @@ const Portfolio = ({
                         href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
@@ -2298,9 +2280,6 @@ const Portfolio = ({
                         href="https://thena.fi/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8&swapType=1"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
@@ -2317,9 +2296,6 @@ const Portfolio = ({
                         href="https://short.trustwallet.com/app-download"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
@@ -2336,9 +2312,6 @@ const Portfolio = ({
                         href="https://changenow.io/currencies/world-of-dypians"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
@@ -2355,9 +2328,6 @@ const Portfolio = ({
                         href="https://blofin.com/spot/WOD-USDT"
                         target="_blank"
                         rel="noreferrer"
-                        onClick={() => {
-                          setshowBuyTooltip(false);
-                        }}
                         className="getwod-item"
                       >
                         <h6 className="bottomitems mb-0">
