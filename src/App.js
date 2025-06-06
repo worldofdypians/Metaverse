@@ -373,7 +373,7 @@ function App() {
     167000: {
       chainId: 167000,
       chainName: "Taiko Mainnet",
-      rpcUrls: ["https://rpc.taiko.xyz"],
+      rpcUrls: ["https://rpc.mainnet.taiko.xyz"],
       nativeCurrency: {
         symbol: "eth",
         decimals: 18,

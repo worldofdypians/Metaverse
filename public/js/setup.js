@@ -102,7 +102,7 @@ window.config = {
   bsc_testnet_endpoint: "https://bsc-testnet-rpc.publicnode.com",
 
   manta_endpoint: "https://pacific-rpc.manta.network/http",
-  taiko_endpoint: "https://rpc.taiko.xyz",
+  taiko_endpoint: "https://rpc.mainnet.taiko.xyz",
 
   skale_endpoint: "https://mainnet.skalenodes.com/v1/green-giddy-denebola",
   mat_endpoint: "https://rpc.matchain.io",
