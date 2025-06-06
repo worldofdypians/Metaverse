@@ -291,7 +291,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                         />
                       )}
                       {expired && (
-                        <h6 className="loyalty-timer mb-0">Season two</h6>
+                        <h6 className="loyalty-timer mb-0">Season three</h6>
                       )}
                       <span className="loyalty-time-left">
                         {expired ? "Coming soon" : "Time left"}
