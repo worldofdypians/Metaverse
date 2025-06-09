@@ -11,7 +11,7 @@ const WodBitGet = () => {
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-2 px-lg-0">
       <div className="custom-container  my-5 py-0 py-lg-5">
         <div className="row mb-5 pb-5">
-          <div className="col-12 col-lg-6">
+          <div className="col-12 col-lg-6 d-flex flex-column gap-2">
             <img
               src={"https://cdn.worldofdypians.com/wod/wodBitgetBanner.webp"}
               alt="Campaign Banner"
@@ -27,10 +27,10 @@ const WodBitGet = () => {
                 Jun 10, 2025 - Jun 13, 2025
               </span>
             </div>
-            <hr className="campaign-banner-divider" />
+            <hr className="campaign-banner-divider m-0" />
           </div>
           <div className="col-12 col-lg-6">
-            <div className="d-flex flex-column justify-content-between h-100">
+            <div className="d-flex flex-column gap-3 justify-content-between h-100">
               <div className="d-flex align-items-center justify-content-between mt-3 mt-lg-0">
                 <h6 className="campaign-banner-title mb-0">
                   First 5,000 new users share $50,000
@@ -90,7 +90,9 @@ const WodBitGet = () => {
                 </div>
               </NavLink>
               <NavLink
-                to={"https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"}
+                to={
+                  "https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                }
                 target="_blank"
               >
                 <div
