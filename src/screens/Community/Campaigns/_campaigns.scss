@@ -1,86 +1,145 @@
-.campaign-banner-title{
-    color: #EEEDFF;
-    font-family: "Montserrat";
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 27px; /* 112.5% */
-    @media screen and (max-width: 786px) {
-        font-size: 20px;
-    }
+.campaign-banner-title {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 27px;
+
+  /* 112.5% */
+  @media screen and (max-width: 786px) {
+    font-size: 20px;
+  }
 }
 
-
-.campaign-banner{
-    border-radius: 16px;
+.campaign-banner {
+  border-radius: 16px;
 }
 
-.campaign-banner-divider{
-    border-top: 1px solid rgba(255, 255, 255, 0.54);
-    width: 100%;
+.campaign-banner-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.54);
+  width: 100%;
 }
 
-.campaign-item-image{
-    aspect-ratio: 2.15/1;
-    border-radius: 16px;
-    object-fit: cover;
+.campaign-item-image {
+  aspect-ratio: 2.15/1;
+  border-radius: 16px;
+  object-fit: cover;
 }
 
-.campaign-banner-date{
-    color: #FFD37E;
-    font-family: "Montserrat";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px; /* 150% */
+.campaign-banner-date {
+  color: #ffd37e;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  /* 150% */
 }
 
-.campaign-banner-desc{
-    color: rgba(238, 237, 255, 0.80);
-    font-family: "Montserrat";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px; /* 150% */
+.campaign-banner-date-turqoise {
+  color: #18ffff;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 }
 
-.campaign-items-grid{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 24px;
+.turqoise-calendar-icon {
+  width: 24px;
+  height: 24px;
+}
 
-    @media screen and (max-width: 786px) {
-        grid-template-columns: repeat(1, 1fr);
-    }
+.yellow-campaign-title {
+  color: #f3bf09;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.wod-bitget-accordion-header {
+  border-radius: 8px !important;
+  border: 0.5px solid #4c4d65 !important;
+  background: #1f1f41 !important;
+  color: #c0c9ff !important;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.wod-bitget-accordion-header::after {
+    transform: rotate(270deg) !important;
+}
+
+.wod-bitget-accordion-body-text {
+  color: rgba(192, 201, 255, 0.5);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.campaign-banner-desc {
+  color: rgba(238, 237, 255, 0.8);
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.wod-bitget-accordion {
+  border-radius: 8px !important;
+  background: rgba(76, 77, 101, 0.1) !important;
+  border: none !important;
+}
+
+.wod-bitget-accordion-item {
+  background: transparent;
+  border: none;
+  --bs-accordion-border-width: 0 !important;
+}
+
+.campaign-items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .campaign-item {
-    padding: 10px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-
-
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 5px;
 }
 
 .campaign-item:hover {
-    border: 1px solid rgba(255, 255, 255, 0.54);
-    
+  border: 1px solid rgba(255, 255, 255, 0.54);
 }
 
-.campaign-item-title{
-    color: #EEEDFF;
-    font-family: "Montserrat";
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 27px; /* 135% */
+.campaign-item-title {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 27px;
+  /* 135% */
 }
 
-.campaign-item-date{
-    color: #AAA9BF;
-    font-family: "Montserrat";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px; /* 150% */
+.campaign-item-date {
+  color: #aaa9bf;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  /* 150% */
 }
