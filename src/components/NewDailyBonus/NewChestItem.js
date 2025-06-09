@@ -571,7 +571,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -594,7 +598,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               // Handle other errors normally
               window.alertify.error(e?.message);
@@ -672,7 +676,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -695,7 +703,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000);
+              }, 5000);
             } else {
               // Handle other errors normally
               window.alertify.error(e?.message);
@@ -751,7 +759,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -774,7 +786,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               window.alertify.error(e?.message);
               onChestStatus("error");
@@ -814,7 +826,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -837,7 +853,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               console.error(e);
               window.alertify.error(e?.message);
@@ -881,7 +897,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -904,7 +924,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               window.alertify.error(e?.message);
               onChestStatus("error");
@@ -944,7 +964,11 @@ const NewChestItem = ({
               let receipt = null;
               const web3 = new Web3(window.ethereum);
               const interval = setInterval(async () => {
-                receipt = await web3.eth.getTransactionReceipt(transactionHash);
+                receipt = await web3.eth
+                  .getTransactionReceipt(transactionHash)
+                  .catch((error) => {
+                    console.log(error);
+                  });
                 if (receipt) {
                   clearInterval(interval);
                   if (receipt.status) {
@@ -967,7 +991,7 @@ const NewChestItem = ({
                     setClaimingChest(false);
                   }
                 }
-              }, 2000); // Poll every 2 seconds
+              }, 5000); // Poll every 2 seconds
             } else {
               console.error(e);
               window.alertify.error(e?.message);

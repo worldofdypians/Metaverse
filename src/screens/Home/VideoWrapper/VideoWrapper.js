@@ -63,9 +63,7 @@ const VideoWrapper = ({
     {
       title: "Binance Wallet",
       logo: "binanceWalletUpdated.svg",
-      link: "https://www.binance.com/en/download"
-
-
+      link: "https://www.binance.com/en/download",
     },
     {
       title: "PancakeSwap",
@@ -86,6 +84,11 @@ const VideoWrapper = ({
       title: "ChangeNOW",
       logo: "changeNow.jpg",
       link: "https://changenow.io/currencies/world-of-dypians",
+    },
+    {
+      title: "BloFin",
+      logo: "blofinBuywod.png",
+      link: "https://blofin.com/spot/WOD-USDT",
     },
   ];
 

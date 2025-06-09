@@ -4099,6 +4099,7 @@ function Dashboard({
     setDailyRecordsCore([]);
     setDailyRecordsViction([]);
     setDailyRecordsSkale([]);
+    setDailyRecordsVanar([]);
   };
 
   const handleResetRecordsStars = () => {
