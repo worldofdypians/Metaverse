@@ -8,14 +8,14 @@ const Campaigns = ({ coinbase }) => {
   const [popupEvent, setPopupEvent] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
   let today = new Date();
-  let wod_campaign_end_timestamp = 1749545727000;
+  let wod_campaign_end_timestamp = 1749477533000;
 
   const dummyBanner = [
     {
       title: "World of Dypians Rising Heat Challenge",
       status: today.getTime() > wod_campaign_end_timestamp ? "Expired" : "Live",
       start_date: "May 26, 2025",
-      end_date: "Jun 10, 2025",
+      end_date: "Jun 09, 2025",
       image: "https://cdn.worldofdypians.com/wod/wod-x-bnb-2.webp",
       desc: `The World of Dypians: Rising Heat challenge is kicking off with $35,000 in rewards up for grabs. As temperatures climb, so does the competition. Take on exciting tasks, show your dedication, and unlock exclusive prizes as you gear up for a blazing summer ahead.<br/>
     <ul><li>Trade a minimum of $20 in WOD</li>
@@ -68,7 +68,7 @@ const Campaigns = ({ coinbase }) => {
       title: "World of Dypians Rising Heat Challenge",
       status: today.getTime() > wod_campaign_end_timestamp ? "Expired" : "Live",
       start_date: "May 26, 2025",
-      end_date: "Jun 10, 2025",
+      end_date: "Jun 09, 2025",
       image: "https://cdn.worldofdypians.com/wod/wod-x-bnb-2.webp",
 
       link: "https://dappbay.bnbchain.org/campaign/389",
