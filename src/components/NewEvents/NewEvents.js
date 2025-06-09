@@ -284,6 +284,13 @@ const NewEvents = ({
         puzzleMadness: false,
       }));
       return;
+    } else if (Number(purchaseTimestamp) < now.getTime() / 1000) {
+      setHasBoughtpuzzleMadness(false);
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        puzzleMadness: false,
+      }));
+      return;
     }
     setHasBoughtpuzzleMadness(true);
     setBeastSiegeStatus((prevStatus) => ({

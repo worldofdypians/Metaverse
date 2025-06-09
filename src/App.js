@@ -374,7 +374,7 @@ function App() {
     167000: {
       chainId: 167000,
       chainName: "Taiko Mainnet",
-      rpcUrls: ["https://rpc.taiko.xyz"],
+      rpcUrls: ["https://rpc.mainnet.taiko.xyz"],
       nativeCurrency: {
         symbol: "eth",
         decimals: 18,
@@ -4728,7 +4728,7 @@ function App() {
       location: [-0.06784377896887378, 0.0839531421661377],
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Live",
+      eventDate: "May 19, 2025",
       type: "Treasure Hunt",
       rewardType: "VANRY",
       rewardAmount: "$20,000",
@@ -4753,7 +4753,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Live",
+        eventDate: "May 19, 2025",
       },
     },
   ];

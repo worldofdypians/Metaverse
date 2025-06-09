@@ -2179,151 +2179,169 @@ const Portfolio = ({
                       <div className="sidebar-separator2 my-1"></div>
                     </div>
                     <div className="row mx-0 w-100">
-                    <a
-                      href="https://www.kucoin.com/trade/WOD-USDT"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems mb-0">
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"
-                          }
-                          className="buywodimg"
-                        />
-                        KuCoin
-                      </h6>
-                    </a>
-                    <a
-                      href="https://www.gate.io/trade/WOD_USDT"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems mb-0">
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/gateBuyWod.svg"
-                          }
-                          className="buywodimg"
-                        />
-                        Gate.io
-                      </h6>
-                    </a>
-                    <a
-                      href="https://www.mexc.com/exchange/WOD_USDT"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems mb-0">
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"
-                          }
-                          className="buywodimg"
-                        />
-                        MEXC Global
-                      </h6>
-                    </a>
-                    <a
-                      href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems mb-0">
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/bitpandaLogo.svg"
-                          }
-                          className="buywodimg"
-                        />
-                        Bitpanda
-                      </h6>
-                    </a>
-                    <a
-                      href="https://www.binance.com/en/download"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems mb-0">
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"
-                          }
-                          className="buywodimg"
-                        />
-                        Binance Wallet
-                      </h6>
-                    </a>
-                    <a
-                      href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems mb-0">
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
-                          }
-                          className="buywodimg"
-                        />
-                        PancakeSwap
-                      </h6>
-                    </a>
-                    <a
-                      href="https://thena.fi/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8&swapType=1"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems mb-0">
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/thenaBuyWod.svg"
-                          }
-                          className="buywodimg"
-                        />
-                        THENA
-                      </h6>
-                    </a>
-                    <a
-                      href="https://short.trustwallet.com/app-download"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems mb-0">
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
-                          }
-                          className="buywodimg"
-                        />
-                        TrustWallet
-                      </h6>
-                    </a>
-                    <a
-                      href="https://changenow.io/currencies/world-of-dypians"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems mb-0">
-                        <img
-                          src={'https://cdn.worldofdypians.com/wod/changeNow.webp'}
-                          className="buywodimg"
-                        />
-                        ChangeNOW
-                      </h6>
-                    </a>
-                  </div>
-                  </div>
+                      <a
+                        href="https://www.kucoin.com/trade/WOD-USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          KuCoin
+                        </h6>
+                      </a>
+                      <a
+                        href="https://www.gate.io/trade/WOD_USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/gateBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          Gate.io
+                        </h6>
+                      </a>
 
+                      <a
+                        href="https://www.mexc.com/exchange/WOD_USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          MEXC Global
+                        </h6>
+                      </a>
+                      <a
+                        href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/bitpandaLogo.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          Bitpanda
+                        </h6>
+                      </a>
+                      <a
+                        href="https://www.binance.com/en/download"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          Binance Wallet
+                        </h6>
+                      </a>
+                      <a
+                        href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          PancakeSwap
+                        </h6>
+                      </a>
+                      <a
+                        href="https://thena.fi/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8&swapType=1"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/thenaBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          THENA
+                        </h6>
+                      </a>
+                      <a
+                        href="https://short.trustwallet.com/app-download"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          TrustWallet
+                        </h6>
+                      </a>
+                      <a
+                        href="https://changenow.io/currencies/world-of-dypians"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/changeNow.webp"
+                            }
+                            className="buywodimg"
+                          />
+                          ChangeNOW
+                        </h6>
+                      </a>
+                      <a
+                        href="https://blofin.com/spot/WOD-USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/blofinBuywod.png"
+                            }
+                            className="buywodimg"
+                          />
+                          BloFin
+                        </h6>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               )}
 

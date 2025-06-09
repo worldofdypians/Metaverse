@@ -60,7 +60,7 @@ const WodPartners = ({ full }) => {
       name: "Binance Wallet",
       icon: "binanceWalletUpdated.svg",
     },
-        {
+    {
       name: "OKX Wallet",
       icon: "okxConnect.svg",
     },
@@ -296,6 +296,10 @@ const WodPartners = ({ full }) => {
     {
       name: "ChangeNOW",
       icon: "changeNow.webp",
+    },
+    {
+      name: "BloFin",
+      icon: "blofinBuywod.png",
     },
   ];
 

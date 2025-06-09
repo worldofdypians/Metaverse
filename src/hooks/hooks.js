@@ -155,7 +155,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       symbol: "ETH", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: ["https://rpc.taiko.xyz"],
+    rpcUrls: ["https://rpc.mainnet.taiko.xyz"],
     blockExplorerUrls: ["https://taikoscan.io"],
   };
 
