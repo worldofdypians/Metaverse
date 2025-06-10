@@ -9,7 +9,7 @@ const Campaigns = ({ coinbase }) => {
   const [popupActive, setPopupActive] = useState(false);
   let today = new Date();
   let wod_campaign_end_timestamp = 1749477533000;
-  let wod_bitget_campaign_end_timestamp = 1749816294000;
+  let wod_bitget_campaign_end_timestamp = 1752148728000;
 
   const dummyBanner = [
     {
@@ -36,7 +36,7 @@ const Campaigns = ({ coinbase }) => {
           ? "Expired"
           : "Live",
       start_date: "Jun 10, 2025",
-      end_date: "Jun 13, 2025",
+      end_date: "Jul 10, 2025",
       image: "https://cdn.worldofdypians.com/wod/wodBitgetBanner.webp",
       desc: `To celebrate the WOD on-chain listing on Bitget, we have launched an exclusive campaign for new users! <br/>
       <ul><li>Register a new account on Bitget and complete verification.</li>

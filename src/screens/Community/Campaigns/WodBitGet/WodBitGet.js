@@ -24,7 +24,7 @@ const WodBitGet = () => {
                 className="turqoise-calendar-icon"
               />
               <span className="campaign-banner-date-turqoise">
-                Jun 10, 2025 - Jun 13, 2025
+                Jun 10, 2025 - Jul 10, 2025
               </span>
             </div>
             <hr className="campaign-banner-divider m-0" />
