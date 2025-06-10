@@ -140,6 +140,13 @@ const NewBuilders = () => {
       backer: false,
     },
     {
+      name: "Bitget",
+      icon: "bitgetRound.png",
+      // banner: "bitgetBanner.png",
+      // link: "https://twitter.com/BitgetGlobal/status/1651888989098455043",
+      backer: false,
+    },
+    {
       name: "Easy2Stake",
       icon: "easy2stakeIcon.svg",
       banner: "easy2stakeBanner.png",
