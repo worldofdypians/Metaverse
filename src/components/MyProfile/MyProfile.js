@@ -651,6 +651,25 @@ const MyProfile = ({
                                         MEXC Global
                                       </h6>
                                     </a>
+                                      <a
+                                      href="https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      onClick={() => {
+                                        setshowBuyTooltip(false);
+                                      }}
+                                      className="getwod-item"
+                                    >
+                                      <h6 className="bottomitems mb-0">
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/bitgetRound.png"
+                                          }
+                                          className="buywodimg"
+                                        />
+                                        Bitget
+                                      </h6>
+                                    </a>
                                     <a
                                       href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
                                       target="_blank"
