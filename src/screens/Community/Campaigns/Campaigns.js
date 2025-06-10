@@ -9,7 +9,7 @@ const Campaigns = ({ coinbase }) => {
   const [popupActive, setPopupActive] = useState(false);
   let today = new Date();
   let wod_campaign_end_timestamp = 1749477533000;
-  let wod_bitget_campaign_end_timestamp = 1749545727000;
+  let wod_bitget_campaign_end_timestamp = 1749816294000;
 
   const dummyBanner = [
     {
