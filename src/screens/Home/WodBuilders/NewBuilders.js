@@ -424,6 +424,10 @@ const NewBuilders = () => {
       name: "BloFin",
       icon: "blofinBuywod.png",
     },
+        {
+      name: "JOY",
+      icon: "joy.png",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
