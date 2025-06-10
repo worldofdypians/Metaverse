@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const WodBitGet = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "WoD x BitGet";
+    document.title = "WoD x Bitget";
   }, []);
 
   return (

@@ -56,6 +56,11 @@ const VideoWrapper = ({
       link: "https://www.mexc.com/exchange/WOD_USDT",
     },
     {
+      title: "Bitget",
+      logo: "bitgetRound.png",
+      link: "https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+    {
       title: "Bitpanda",
       logo: "bitpandaLogo.svg",
       link: "https://www.bitpanda.com/en/prices/world-of-dypians-wod",
