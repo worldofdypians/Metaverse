@@ -90,6 +90,10 @@ const WodPartners = ({ full }) => {
       icon: "mexcIcon.svg",
     },
     {
+      name: "Bitget",
+      icon: "bitgetRound.png",
+    },
+    {
       name: "Easy2Stake",
       icon: "easy2stakeIcon.svg",
     },
@@ -300,6 +304,10 @@ const WodPartners = ({ full }) => {
     {
       name: "BloFin",
       icon: "blofinBuywod.png",
+    },
+            {
+      name: "JOY",
+      icon: "joy.png",
     },
   ];
 
