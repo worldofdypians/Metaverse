@@ -392,7 +392,7 @@ const VideoWrapper = ({
                 alt=""
               />
             </div>
-            <div className="d-flex flex-column gap-2 buy-wod-items-wrapper">
+            <div className="gap-2 buy-wod-items-wrapper">
               {exchanges.map((item, index) => (
                 <BuyWodCard item={item} key={index} />
               ))}
