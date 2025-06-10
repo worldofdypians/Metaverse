@@ -338,7 +338,7 @@ const WodPartners = ({ full }) => {
                 <div
                   key={index}
                   className="d-flex align-items-center flex-column gap-2 mb-3 mb-lg-0"
-                  // style={{ width: "103px" }}
+                  style={{ width: "103px" }}
                 >
                   <div className="partner-logo-container">
                     <img
@@ -349,17 +349,12 @@ const WodPartners = ({ full }) => {
                       }
                       alt=""
                       style={{
-                        width: "45px",
-                        height: "45px",
+                        width: "60px",
+                        height: "60px",
                       }}
                     />
                   </div>
-                  <h6
-                    className="mb-0 small-partners-title"
-                    style={{ fontWeight: "400" }}
-                  >
-                    {partner.name}
-                  </h6>
+                  <h6 className="mb-0 small-partners-title">{partner.name}</h6>
                 </div>
               ))}
           </div>

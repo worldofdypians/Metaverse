@@ -11,31 +11,30 @@ const BuyWodCard = ({ item }) => {
       to={item.link}
       target="_blank"
       rel="noreferrer"
-      className="buy-wod-card p-3 d-flex align-items-center justify-content-between"
+      className="buy-wod-card p-3 d-flex align-items-center justify-content-center"
       onMouseEnter={() => setSwitchArrow(true)}
       onMouseLeave={() => setSwitchArrow(false)}
     >
-      <div className="d-flex align-items-center gap-2">
+      <div className="d-flex flex-column align-items-center gap-2">
         <img
           src={
             item.logo.includes("changeNow")
-              ? 'https://cdn.worldofdypians.com/wod/changeNow.webp'
+              ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
               : `https://cdn.worldofdypians.com/wod/${item.logo}`
           }
           alt=""
-          
           style={{ width: 32, height: 32 }}
         />
         <h6 className="mb-0 buy-wod-title">{item.title}</h6>
       </div>
-      <img
+      {/* <img
         src={
           switchArrow
             ? "https://cdn.worldofdypians.com/wod/blueArrowBuyWod.svg"
             : "https://cdn.worldofdypians.com/wod/whiteArrowBuyWod.svg"
         }
         alt=""
-      />
+      /> */}
     </NavLink>
   );
 };
