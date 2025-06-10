@@ -305,6 +305,10 @@ const WodPartners = ({ full }) => {
       name: "BloFin",
       icon: "blofinBuywod.png",
     },
+            {
+      name: "JOY",
+      icon: "joy.png",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
