@@ -5503,6 +5503,9 @@ function App() {
       >
         {!location.pathname.includes("ai-agent") &&
           !location.pathname.includes("staking") &&
+          !location.pathname.includes("bridge") &&
+          !location.pathname.includes("token-claim") &&
+          !location.pathname.includes("account") &&
           !location.pathname.includes("trading-competition") &&
           !location.pathname.includes("auth") &&
           !location.pathname.includes("map") &&
