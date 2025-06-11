@@ -80,11 +80,11 @@
 
 
 .ai-question-outer-wrapper {
-  background-image: url("https://cdn.worldofdypians.com/wod/ai-question-popup-img.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/ai-question-outer-border.webp");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   // height: 80%;
-  overflow: hidden;
+  overflow: visible;
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5)) !important;
   @media screen and (max-width: 991px) {
     width: 100%;
@@ -94,6 +94,38 @@
     height: fit-content;
     border-radius: 12px;
   }
+}
+
+.ai-question-header-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    top: -55px;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, 0);
+}
+
+.ai-question-header-img {
+  height: 78px;
+}
+
+.ai-question-footer-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    bottom: -10px;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, 0);
+}
+
+.ai-question-footer-img {
+  height: 50px;
 }
 
 .rewards-container-outer {

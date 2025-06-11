@@ -6997,6 +6997,14 @@ function Dashboard({
               className={`new-daily-bonus-popup d-flex flex-column gap-2 custom-container-width2 justify-content-center`}
             >
               <div className="ai-question-outer-wrapper custom-container-width2 position-relative p-0 p-lg-5 d-flex">
+                <div className="ai-question-header-wrapper">
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/ai-daily-question-header.webp"
+                    }
+                    className="ai-question-header-img"
+                  />
+                </div>
                 <div className="d-flex align-items-center justify-content-end ai-popup-x-wrapper">
                   <img
                     src={"https://cdn.worldofdypians.com/wod/closeX.svg"}
@@ -7025,6 +7033,14 @@ function Dashboard({
                   publicClient={publicClient}
                   binanceW3WProvider={binanceW3WProvider}
                 />
+                <div className="ai-question-footer-wrapper">
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/ai-question-button-bottom.webp"
+                    }
+                    className="ai-question-footer-img"
+                  />
+                </div>
               </div>
             </div>
           </div>

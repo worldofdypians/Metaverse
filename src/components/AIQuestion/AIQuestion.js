@@ -286,6 +286,7 @@ const AIQuestion = ({
       className="d-flex flex-column p-lg-3 p-5 justify-content-between gap-3"
       style={{ flex: 1 }}
     >
+ 
       <div className="d-flex pt-lg-2 pt-3 align-items-center gap-2 justify-content-between">
         <button
           className={
