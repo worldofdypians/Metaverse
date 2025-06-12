@@ -253,34 +253,27 @@ const WhitelistContent = ({
               {/* <img src={bridgeIcon} width={30} height={30} alt="" /> */}
             </div>
             <div className="whitelist-input-wrapper d-flex flex-column gap-2 p-3">
-              {selectedRound?.id !== "special-otc" &&
-                selectedRound?.id !== "bonus-otc" && (
-                  <div className="d-flex align-items-center gap-2 justify-content-between">
-                    <div className="d-flex flex-column">
-                      <span className="whitelist-upper-txt">
-                        {getFormattedNumber(totalVestedTokens)}
-                      </span>
-                      <span className="whitelist-bottom-txt">Total WOD</span>
-                    </div>
+              <div className="d-flex align-items-center gap-2 justify-content-between">
+                <div className="d-flex flex-column">
+                  <span className="whitelist-upper-txt">
+                    {getFormattedNumber(totalVestedTokens)}
+                  </span>
+                  <span className="whitelist-bottom-txt">Total WOD</span>
+                </div>
 
-                    <div className="d-flex flex-column">
-                      <span className="whitelist-upper-txt">
-                        {getFormattedNumber(userClaimedTokens, 2)}
-                      </span>
-                      <span className="whitelist-bottom-txt">WOD Withdrew</span>
-                    </div>
-                    <div className="d-flex flex-column">
-                      <span className="whitelist-upper-txt">
-                        {getFormattedNumber(
-                          totalVestedTokens - userClaimedTokens
-                        )}
-                      </span>
-                      <span className="whitelist-bottom-txt">
-                        WOD Remaining
-                      </span>
-                    </div>
-                  </div>
-                )}
+                <div className="d-flex flex-column">
+                  <span className="whitelist-upper-txt">
+                    {getFormattedNumber(userClaimedTokens, 2)}
+                  </span>
+                  <span className="whitelist-bottom-txt">WOD Withdrew</span>
+                </div>
+                <div className="d-flex flex-column">
+                  <span className="whitelist-upper-txt">
+                    {getFormattedNumber(totalVestedTokens - userClaimedTokens)}
+                  </span>
+                  <span className="whitelist-bottom-txt">WOD Remaining</span>
+                </div>
+              </div>
 
               <div className="whitelist-input-upper-wrapper p-2">
                 <div className="d-flex align-items-center gap-2 justify-content-between">
