@@ -102,6 +102,8 @@ const WhitelistContent = ({
   const [timerFinished, settimerFinished] = useState(false);
   const [timerFinishedOTC, settimerFinishedOTC] = useState(false);
   const [timerFinishedOTC2, settimerFinishedOTC2] = useState(false);
+  const [timerFinishedOTCBonus, settimerFinishedOTCBonus] = useState(false);
+  const [timerFinishedOTCSpecial, settimerFinishedOTCSpecial] = useState(false);
 
   const [timerFinishedPrivate, settimerFinishedPrivate] = useState(false);
   const [timerFinishedKol, settimerFinishedKol] = useState(false);
@@ -131,6 +133,20 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTC2(true);
+        }
+      } else if (selectedRound.id == "special-otc") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedOTCSpecial(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedOTCSpecial(true);
+        }
+      } else if (selectedRound.id == "bonus-otc") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedOTCBonus(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedOTCBonus(true);
         }
       } else if (selectedRound.id == "private") {
         if (today.getTime() > cliffTime) {
@@ -237,27 +253,34 @@ const WhitelistContent = ({
               {/* <img src={bridgeIcon} width={30} height={30} alt="" /> */}
             </div>
             <div className="whitelist-input-wrapper d-flex flex-column gap-2 p-3">
-              <div className="d-flex align-items-center gap-2 justify-content-between">
-                <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">
-                    {getFormattedNumber(totalVestedTokens)}
-                  </span>
-                  <span className="whitelist-bottom-txt">Total WOD</span>
-                </div>
+              {selectedRound?.id !== "special-otc" &&
+                selectedRound?.id !== "bonus-otc" && (
+                  <div className="d-flex align-items-center gap-2 justify-content-between">
+                    <div className="d-flex flex-column">
+                      <span className="whitelist-upper-txt">
+                        {getFormattedNumber(totalVestedTokens)}
+                      </span>
+                      <span className="whitelist-bottom-txt">Total WOD</span>
+                    </div>
 
-                <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">
-                    {getFormattedNumber(userClaimedTokens, 2)}
-                  </span>
-                  <span className="whitelist-bottom-txt">WOD Withdrew</span>
-                </div>
-                <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">
-                    {getFormattedNumber(totalVestedTokens - userClaimedTokens)}
-                  </span>
-                  <span className="whitelist-bottom-txt">WOD Remaining</span>
-                </div>
-              </div>
+                    <div className="d-flex flex-column">
+                      <span className="whitelist-upper-txt">
+                        {getFormattedNumber(userClaimedTokens, 2)}
+                      </span>
+                      <span className="whitelist-bottom-txt">WOD Withdrew</span>
+                    </div>
+                    <div className="d-flex flex-column">
+                      <span className="whitelist-upper-txt">
+                        {getFormattedNumber(
+                          totalVestedTokens - userClaimedTokens
+                        )}
+                      </span>
+                      <span className="whitelist-bottom-txt">
+                        WOD Remaining
+                      </span>
+                    </div>
+                  </div>
+                )}
 
               <div className="whitelist-input-upper-wrapper p-2">
                 <div className="d-flex align-items-center gap-2 justify-content-between">
@@ -294,6 +317,28 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedOTC2(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "special-otc" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTCSpecial(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "bonus-otc" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTCBonus(true);
                           onTimerFinished(true);
                         }}
                       />
@@ -453,7 +498,7 @@ const WhitelistContent = ({
                 }`}
                 disabled={
                   canClaim === false ||
-                  timerFinishedOTC === false ||
+                  timerFinishedOTC2 === false ||
                   Number(wodBalance) === 0
                     ? true
                     : false
@@ -474,6 +519,90 @@ const WhitelistContent = ({
                 )}
               </button>
             )}
+
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "special-otc" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTCSpecial === false
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedOTCSpecial === false ||
+                    Number(wodBalance) === 0
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "bonus-otc" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTCBonus === false
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedOTCBonus === false ||
+                    Number(wodBalance) === 0
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
 
             {isConnected &&
               chainId === 56 &&

@@ -169,6 +169,9 @@ window.config = {
   vesting_special_address: "0x89e17d1b7dd50dea02f082c88bd0a3e380f338b8",
   otc_address: "0x9e366d29486b042b09bbabd3dd5e09271453275d",
   otc2_address: "0x8a3a80d4a3b1c6c534f0016c1d834d7d60b32bcf",
+  otcbonus_address: "0xc828b41f27c6766fcc5c9f5b00321acd11f3e710",
+  otcspecial_address: "0xd9d30dcf8dceaf4da5444cac87bea4ea965351e4",
+
 
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
