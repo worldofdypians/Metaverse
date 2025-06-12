@@ -5754,6 +5754,46 @@ function App() {
 
           <Route
             exact
+            path="/special-otc"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="special-otc"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/bonus-otc"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="bonus-otc"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+          <Route
+            exact
             path="/token-claim"
             element={
               <Release
