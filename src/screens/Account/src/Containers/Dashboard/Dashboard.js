@@ -6994,7 +6994,7 @@ function Dashboard({
           // >
           <div className={`package-popup-wrapper2 `}>
             <div
-              className={`new-daily-bonus-popup d-flex flex-column gap-2 custom-container-width2 justify-content-center`}
+              className={`new-daily-bonus-popup overflow-visible d-flex flex-column gap-2 custom-container-width2 justify-content-center`}
             >
               <div className="ai-question-outer-wrapper custom-container-width2 position-relative p-0 p-lg-5 d-flex">
                 <div className="ai-question-header-wrapper">
@@ -7017,6 +7017,7 @@ function Dashboard({
                   onQuestionComplete={(value) => {
                     setAiQuestionCompleted(value);
                   }}
+                  username={data?.getPlayer?.displayName ?? "Player"}
                   isConnected={isConnected}
                   coinbase={coinbase}
                   chainId={chainId}
@@ -7024,7 +7025,10 @@ function Dashboard({
                     setShowDailyQuestion(false);
                     handleConnect();
                   }}
-                  onClose={() => setShowDailyQuestion(false)}
+                  onClose={() => {
+                    setShowDailyQuestion(false);
+                    html.classList.remove("hidescroll");
+                  }}
                   handleBnbPool={(hex, dec) => {
                     switchNetwork(hex, dec);
                   }}
@@ -7033,14 +7037,6 @@ function Dashboard({
                   publicClient={publicClient}
                   binanceW3WProvider={binanceW3WProvider}
                 />
-                <div className="ai-question-footer-wrapper">
-                  <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/ai-question-button-bottom.webp"
-                    }
-                    className="ai-question-footer-img"
-                  />
-                </div>
               </div>
             </div>
           </div>

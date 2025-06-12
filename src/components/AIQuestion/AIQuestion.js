@@ -16,6 +16,7 @@ const AIQuestion = ({
   walletClient,
   publicClient,
   binanceW3WProvider,
+  username,
 }) => {
   const answersOptions = [0, 1, 2, 3];
   const totalTime = 25;
@@ -27,6 +28,7 @@ const AIQuestion = ({
   const [showResult, setShowResult] = useState(false);
   const [unlockLoading, setUnlockLoading] = useState(false);
   const [unlockStatus, setUnlockStatus] = useState("initial");
+  const [activeClass, setActiveClass] = useState("");
 
   const radius = 35;
   const circumference = 2 * Math.PI * radius;
@@ -285,70 +287,185 @@ const AIQuestion = ({
     <div className="d-flex w-100 gap-2">
       <div className="d-flex flex-column gap-2 col-lg-3 position-relative">
         <div className="ai-oryn-top">
-          <img src={'https://cdn.worldofdypians.com/wod/ai-oryn-border.webp'} alt='' className="ai-oryn-border" />
-          <span className="ai-oryn-text">Hi there</span>
-          <span className="ai-oryn-text">I am Oryn</span>
-          <span className="ai-oryn-text">How do you feel today?</span>
-
+          <img
+            src={"https://cdn.worldofdypians.com/wod/ai-oryn-border.webp"}
+            alt=""
+            className="ai-oryn-border"
+          />
+          <span className="ai-oryn-text">
+            Hi <span className="ai-username">{username},</span>
+          </span>
+          <span className="ai-oryn-text">Are you feeling lucky today?</span>
         </div>
-        <div className="ai-oryn-bottom"></div>
-
+        <div className="ai-oryn-bottom">
+          <div className="d-flex flex-column gap-2 p-4">
+            <span className="ai-oryn-bottom-txt">
+              Oryn is an AI Agent in World of Dypians powered by BNB Chain.
+            </span>
+            <span className="ai-oryn-bottom-txt">It offers:</span>
+            <ul className="ai-oryn-bottom-txt">
+              <li>Strategic insights</li>
+              <li>Mission support</li>
+              <li>Combat strategy</li>
+              <li>Learning assistance</li>
+              <li>Real-time guidance</li>
+              <li>Adaptive gameplay tips</li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div
-        className="d-flex flex-column justify-content-between gap-3"
+        className="d-flex flex-column justify-content-between"
         style={{ flex: 1 }}
       >
-        <div className="d-flex pt-lg-2 pt-3 align-items-center gap-2 justify-content-between">
-          <button
-            className={
-              chainId === 56
-                ? "ai-chain-button-active py-2 px-3"
-                : "ai-chain-button py-2 px-3"
-            }
-            onClick={() => {
-              handleBnbPool("0x38", 56);
-            }}
-          >
-            <div className="d-flex align-items-center gap-2 justify-content-between">
-              {/* <img
-              src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
-              alt=""
-              className="ai-chain-icon"
-            /> */}
-              BNB CHAIN
+        <div className="d-flex align-items-center gap-2 justify-content-between w-100">
+          <div className="d-flex w-100 align-items-center gap-2 justify-content-start">
+            <button
+              className={
+                chainId === 56
+                  ? "ai-chain-button-active py-3 px-3 col-lg-4"
+                  : "ai-chain-button py-3 px-3 col-lg-4"
+              }
+              onClick={() => {
+                handleBnbPool("0x38", 56);
+              }}
+            >
+              <div className="d-flex align-items-center gap-2 justify-content-between">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                  alt=""
+                  className="ai-chain-icon"
+                />
+                BNB CHAIN
+              </div>
+            </button>
+            <button
+              className={
+                chainId === 204
+                  ? "ai-chain-button-active py-3 px-3 col-lg-4"
+                  : "ai-chain-button py-3 px-3 col-lg-4"
+              }
+              onClick={() => {
+                handleBnbPool("0xcc", 204);
+              }}
+            >
+              <div className="d-flex align-items-center gap-2 justify-content-between">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/opbnbChain.png"}
+                  alt=""
+                  className="ai-chain-icon"
+                />
+                OPBNB
+              </div>
+            </button>
+            {/* <button className={"ai-chain-button py-3 px-3"}>
+              <div className="d-flex align-items-center gap-2 justify-content-between">
+                Coming Soon
+              </div>
+            </button> */}
+          </div>
+          <div className="ai-rewards-info">
+            <div className="d-flex align-items-center px-3 py-2 gap-2">
+              <div
+                className="d-flex flex-column align-items-center gap-1"
+                onMouseOver={() => {
+                  setActiveClass("stars");
+                }}
+                onMouseLeave={() => {
+                  setActiveClass("");
+                }}
+              >
+                <img
+                  src={
+                    "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
+                  }
+                  alt=""
+                  className={
+                    activeClass === "stars"
+                      ? "ai-reward-logo-active"
+                      : "ai-reward-logo"
+                  }
+                />
+                <span
+                  className={
+                    activeClass === "stars"
+                      ? "ai-rewards-title-active"
+                      : "ai-rewards-title"
+                  }
+                >
+                  STARS
+                </span>
+              </div>
+              <div
+                className="d-flex flex-column align-items-center gap-1"
+                onMouseOver={() => {
+                  setActiveClass("points");
+                }}
+                onMouseLeave={() => {
+                  setActiveClass("");
+                }}
+              >
+                <img
+                  src={
+                    "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
+                  }
+                  alt=""
+                  className={
+                    activeClass === "points"
+                      ? "ai-reward-logo-active"
+                      : "ai-reward-logo"
+                  }
+                />
+                <span
+                  className={
+                    activeClass === "points"
+                      ? "ai-rewards-title-active"
+                      : "ai-rewards-title"
+                  }
+                >
+                  POINTS
+                </span>
+              </div>
+              <div
+                className="d-flex flex-column align-items-center gap-1"
+                onMouseOver={() => {
+                  setActiveClass("rewards");
+                }}
+                onMouseLeave={() => {
+                  setActiveClass("");
+                }}
+              >
+                <img
+                  src={
+                    "https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
+                  }
+                  alt=""
+                  className={
+                    activeClass === "rewards"
+                      ? "ai-reward-logo-active"
+                      : "ai-reward-logo"
+                  }
+                />
+                <span
+                  className={
+                    activeClass === "rewards"
+                      ? "ai-rewards-title-active"
+                      : "ai-rewards-title"
+                  }
+                >
+                  REWARDS
+                </span>
+              </div>
             </div>
-          </button>
-          <button
-            className={
-              chainId === 204
-                ? "ai-chain-button-active py-2 px-3"
-                : "ai-chain-button py-2 px-3"
-            }
-            onClick={() => {
-              handleBnbPool("0xcc", 204);
-            }}
-          >
-            <div className="d-flex align-items-center gap-2 justify-content-between">
-              {/* <img
-              src={"https://cdn.worldofdypians.com/wod/opbnbChain.png"}
-              alt=""
-              className="ai-chain-icon"
-            /> */}
-              OPBNB
-            </div>
-          </button>
+          </div>
         </div>
+        <div className="ai-separator"></div>
         {step === 0 ? (
           <div
             className="d-flex flex-column gap-2 align-items-center justify-content-between"
             style={{ flex: 1 }}
           >
-            <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
-              <img
-                src={"https://cdn.worldofdypians.com/wod/aiLocked.webp"}
-                alt=""
-                className="aiLockedImg"
-              />
+            <div className="ai-answer-result-wrapper px-3 py-4  w-100 d-flex flex-column gap-2 align-items-center justify-content-between">
               <span className="aiLockedQuestion">A Hidden question awaits</span>
               <span className="aiLockedDesc">
                 {!email && coinbase
@@ -364,72 +481,6 @@ const AIQuestion = ({
                   : "Sign the transaction to unlock your daily challenge"}
               </span>
             </div>
-            {!email && coinbase && (
-              <NavLink
-                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-                to="/auth"
-                onClick={() => onClose()}
-              >
-                Log in
-              </NavLink>
-            )}
-            {!isConnected && !coinbase && (
-              <button
-                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-                onClick={onConnectWallet}
-              >
-                Connect
-              </button>
-            )}
-
-            {isConnected &&
-              coinbase &&
-              email &&
-              chainId !== 56 &&
-              chainId !== 204 && (
-                <button
-                  className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-                  onClick={() => {
-                    handleBnbPool("0x38", 56);
-                  }}
-                >
-                  Switch
-                </button>
-              )}
-
-            {isConnected &&
-              coinbase &&
-              email &&
-              (chainId === 56 || chainId === 204) && (
-                <button
-                  className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-                  onClick={() => handleUnlockQuestion()}
-                >
-                  {unlockLoading ? (
-                    <div className="d-flex align-items-center gap-2">
-                      Processing
-                      <div
-                        className="spinner-border spinner-border-sm text-light"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                    </div>
-                  ) : unlockStatus === "initial" ? (
-                    <>Unlock</>
-                  ) : unlockStatus === "success" ? (
-                    <>Success</>
-                  ) : (
-                    <>
-                      Failed{" "}
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
-                        alt=""
-                      />
-                    </>
-                  )}
-                </button>
-              )}
           </div>
         ) : step === 1 ? (
           <div
@@ -615,6 +666,80 @@ const AIQuestion = ({
         ) : (
           <></>
         )}
+      </div>
+      <div className="ai-question-footer-wrapper">
+        {!email && coinbase && (
+          <NavLink
+            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+            to="/auth"
+            onClick={() => onClose()}
+          >
+            Log in
+          </NavLink>
+        )}
+        {!isConnected && !coinbase && (
+          <button
+            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+            onClick={onConnectWallet}
+          >
+            Connect
+          </button>
+        )}
+
+        {isConnected &&
+          coinbase &&
+          email &&
+          chainId !== 56 &&
+          chainId !== 204 && (
+            <button
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              onClick={() => {
+                handleBnbPool("0x38", 56);
+              }}
+            >
+              Switch
+            </button>
+          )}
+
+        {isConnected &&
+          coinbase &&
+          email &&
+          (chainId === 56 || chainId === 204) && (
+            <button
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              onClick={() => handleUnlockQuestion()}
+            >
+              {unlockLoading ? (
+                <div className="d-flex align-items-center gap-2">
+                  Processing
+                  <div
+                    className="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  >
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              ) : unlockStatus === "initial" ? (
+                <>Unlock</>
+              ) : unlockStatus === "success" ? (
+                <>Success</>
+              ) : (
+                <>
+                  Failed{" "}
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
+                    alt=""
+                  />
+                </>
+              )}
+            </button>
+          )}
+        <img
+          src={
+            "https://cdn.worldofdypians.com/wod/ai-question-button-bottom.webp"
+          }
+          className="ai-question-footer-img"
+        />
       </div>
     </div>
   );
