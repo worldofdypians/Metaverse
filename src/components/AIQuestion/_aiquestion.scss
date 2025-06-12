@@ -34,8 +34,17 @@
   cursor: pointer;
 }
 
+.ai-question-text-wrapper {
+    background: url("https://cdn.worldofdypians.com/wod/ai-question-txt-wrapper.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  padding: 20px;
+}
+
 .answer-inner-wrapper {
-  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapperbg.png");
+  background: url("https://cdn.worldofdypians.com/wod/ai-option-bg.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -43,7 +52,7 @@
 
 .answer-inner-wrapper:hover,
 .answer-inner-wrapper-active {
-  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapper-activebg.png");
+  background: url("https://cdn.worldofdypians.com/wod/ai-option-bg.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -52,14 +61,14 @@
   }
 }
 .answer-inner-wrapper-answer {
-  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapper-answerbg.png");
+  background: url("https://cdn.worldofdypians.com/wod/ai-option-bg.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
 .answer-inner-wrapper-wrong {
-  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapper-wrongbg.png");
+  background: url("https://cdn.worldofdypians.com/wod/ai-option-bg.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -108,12 +117,38 @@
 }
 
 .ai-answer-result-wrapper {
-  background: url("https://cdn.worldofdypians.com/wod/aiQuestionResultBanner.webp");
+  background: url("https://cdn.worldofdypians.com/wod/ai-answer-txt-wrapper.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
+.options-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+}
+.ai-oryn-top {
+    background: url("https://cdn.worldofdypians.com/wod/ai-oryn-txt-wrapper.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+.ai-oryn-border {
+  position: absolute;
+    height: 150px;
+    bottom: 2px;
+    transform: translate(-37%, 21%);
+}
+
+.ai-oryn-text {
+  color: #fff;
+    text-align: end;
+}
 .aiAnswer-title {
   color: #fff;
   text-align: center;
@@ -193,7 +228,7 @@
 }
 
 .ai-chain-button {
-  background: url("https://cdn.worldofdypians.com/wod/ai-chain-inactive.png");
+  background: url("https://cdn.worldofdypians.com/wod/ai-chain-active2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;
@@ -208,7 +243,7 @@
 }
 
 .ai-chain-button-active {
-  background: url("https://cdn.worldofdypians.com/wod/ai-chain-active.png");
+  background: url("https://cdn.worldofdypians.com/wod/ai-chain-active2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: center;

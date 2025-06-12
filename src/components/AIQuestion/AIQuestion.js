@@ -17,7 +17,7 @@ const AIQuestion = ({
   publicClient,
   binanceW3WProvider,
 }) => {
-  const answersOptions = [0, 1, 2];
+  const answersOptions = [0, 1, 2, 3];
   const totalTime = 25;
   const [step, setStep] = useState(0);
   const [selectedOption, setSelectedOption] = useState(undefined);
@@ -282,152 +282,163 @@ const AIQuestion = ({
   const dashOffset = circumference * (1 - progress);
 
   return (
-    <div
-      className="d-flex flex-column p-lg-3 p-5 justify-content-between gap-3"
-      style={{ flex: 1 }}
-    >
- 
-      <div className="d-flex pt-lg-2 pt-3 align-items-center gap-2 justify-content-between">
-        <button
-          className={
-            chainId === 56
-              ? "ai-chain-button-active py-2 px-3 col-lg-3"
-              : "ai-chain-button py-2 px-3 col-lg-3"
-          }
-          onClick={() => {
-            handleBnbPool("0x38", 56);
-          }}
-        >
-          <div className="d-flex align-items-center gap-2 justify-content-between">
-            <img
+    <div className="d-flex w-100 gap-2">
+      <div className="d-flex flex-column gap-2 col-lg-3 position-relative">
+        <div className="ai-oryn-top">
+          <img src={'https://cdn.worldofdypians.com/wod/ai-oryn-border.webp'} alt='' className="ai-oryn-border" />
+          <span className="ai-oryn-text">Hi there</span>
+          <span className="ai-oryn-text">I am Oryn</span>
+          <span className="ai-oryn-text">How do you feel today?</span>
+
+        </div>
+        <div className="ai-oryn-bottom"></div>
+
+      </div>
+      <div
+        className="d-flex flex-column justify-content-between gap-3"
+        style={{ flex: 1 }}
+      >
+        <div className="d-flex pt-lg-2 pt-3 align-items-center gap-2 justify-content-between">
+          <button
+            className={
+              chainId === 56
+                ? "ai-chain-button-active py-2 px-3"
+                : "ai-chain-button py-2 px-3"
+            }
+            onClick={() => {
+              handleBnbPool("0x38", 56);
+            }}
+          >
+            <div className="d-flex align-items-center gap-2 justify-content-between">
+              {/* <img
               src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
               alt=""
               className="ai-chain-icon"
-            />
-            BNB CHAIN
-          </div>
-        </button>
-        <button
-          className={
-            chainId === 204
-              ? "ai-chain-button-active py-2 px-3 col-lg-3"
-              : "ai-chain-button py-2 px-3 col-lg-3"
-          }
-          onClick={() => {
-            handleBnbPool("0xcc", 204);
-          }}
-        >
-          <div className="d-flex align-items-center gap-2 justify-content-between">
-            <img
+            /> */}
+              BNB CHAIN
+            </div>
+          </button>
+          <button
+            className={
+              chainId === 204
+                ? "ai-chain-button-active py-2 px-3"
+                : "ai-chain-button py-2 px-3"
+            }
+            onClick={() => {
+              handleBnbPool("0xcc", 204);
+            }}
+          >
+            <div className="d-flex align-items-center gap-2 justify-content-between">
+              {/* <img
               src={"https://cdn.worldofdypians.com/wod/opbnbChain.png"}
               alt=""
               className="ai-chain-icon"
-            />
-            OPBNB
-          </div>
-        </button>
-      </div>
-      {step === 0 ? (
-        <div
-          className="d-flex flex-column gap-2 align-items-center justify-content-between"
-          style={{ flex: 1 }}
-        >
-          <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
-            <img
-              src={"https://cdn.worldofdypians.com/wod/aiLocked.webp"}
-              alt=""
-              className="aiLockedImg"
-            />
-            <span className="aiLockedQuestion">A Hidden question awaits</span>
-            <span className="aiLockedDesc">
-              {!email && coinbase
-                ? "Login to your game account"
-                : !isConnected && !coinbase
-                ? "Connect your wallet to unlock the question"
-                : isConnected &&
-                  coinbase &&
-                  email &&
-                  chainId !== 56 &&
-                  chainId !== 204
-                ? "Switch to BNB Chain or opBNB to unlock the challenge"
-                : "Sign the transaction to unlock your daily challenge"}
-            </span>
-          </div>
-          {!email && coinbase && (
-            <NavLink
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-              to="/auth"
-              onClick={() => onClose()}
-            >
-              Log in
-            </NavLink>
-          )}
-          {!isConnected && !coinbase && (
-            <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-              onClick={onConnectWallet}
-            >
-              Connect
-            </button>
-          )}
-
-          {isConnected &&
-            coinbase &&
-            email &&
-            chainId !== 56 &&
-            chainId !== 204 && (
-              <button
-                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-                onClick={() => {
-                  handleBnbPool("0x38", 56);
-                }}
-              >
-                Switch
-              </button>
-            )}
-
-          {isConnected &&
-            coinbase &&
-            email &&
-            (chainId === 56 || chainId === 204) && (
-              <button
-                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-                onClick={() => handleUnlockQuestion()}
-              >
-                {unlockLoading ? (
-                  <div className="d-flex align-items-center gap-2">
-                    Processing
-                    <div
-                      className="spinner-border spinner-border-sm text-light"
-                      role="status"
-                    >
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                  </div>
-                ) : unlockStatus === "initial" ? (
-                  <>Unlock</>
-                ) : unlockStatus === "success" ? (
-                  <>Success</>
-                ) : (
-                  <>
-                    Failed{" "}
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
-                      alt=""
-                    />
-                  </>
-                )}
-              </button>
-            )}
+            /> */}
+              OPBNB
+            </div>
+          </button>
         </div>
-      ) : step === 1 ? (
-        <div
-          className="d-flex flex-column gap-2 align-items-center justify-content-between"
-          style={{ flex: 1 }}
-        >
-          <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
-            <div className="d-flex flex-column position-relative w-100 align-items-center">
-              {/* <div className="ai-countdown-wrapper px-0">
+        {step === 0 ? (
+          <div
+            className="d-flex flex-column gap-2 align-items-center justify-content-between"
+            style={{ flex: 1 }}
+          >
+            <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
+              <img
+                src={"https://cdn.worldofdypians.com/wod/aiLocked.webp"}
+                alt=""
+                className="aiLockedImg"
+              />
+              <span className="aiLockedQuestion">A Hidden question awaits</span>
+              <span className="aiLockedDesc">
+                {!email && coinbase
+                  ? "Login to your game account"
+                  : !isConnected && !coinbase
+                  ? "Connect your wallet to unlock the question"
+                  : isConnected &&
+                    coinbase &&
+                    email &&
+                    chainId !== 56 &&
+                    chainId !== 204
+                  ? "Switch to BNB Chain or opBNB to unlock the challenge"
+                  : "Sign the transaction to unlock your daily challenge"}
+              </span>
+            </div>
+            {!email && coinbase && (
+              <NavLink
+                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
+                to="/auth"
+                onClick={() => onClose()}
+              >
+                Log in
+              </NavLink>
+            )}
+            {!isConnected && !coinbase && (
+              <button
+                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
+                onClick={onConnectWallet}
+              >
+                Connect
+              </button>
+            )}
+
+            {isConnected &&
+              coinbase &&
+              email &&
+              chainId !== 56 &&
+              chainId !== 204 && (
+                <button
+                  className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
+                  onClick={() => {
+                    handleBnbPool("0x38", 56);
+                  }}
+                >
+                  Switch
+                </button>
+              )}
+
+            {isConnected &&
+              coinbase &&
+              email &&
+              (chainId === 56 || chainId === 204) && (
+                <button
+                  className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
+                  onClick={() => handleUnlockQuestion()}
+                >
+                  {unlockLoading ? (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border spinner-border-sm text-light"
+                        role="status"
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  ) : unlockStatus === "initial" ? (
+                    <>Unlock</>
+                  ) : unlockStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>
+                      Failed{" "}
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
+                        alt=""
+                      />
+                    </>
+                  )}
+                </button>
+              )}
+          </div>
+        ) : step === 1 ? (
+          <div
+            className="d-flex flex-column gap-2 align-items-center justify-content-between"
+            style={{ flex: 1 }}
+          >
+            <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
+              <div className="d-flex flex-column position-relative w-100 align-items-center">
+                {/* <div className="ai-countdown-wrapper px-0">
                 <div className="ai-progress-bar-bg">
                   <div
                     className={`ai-progress-bar-fill ${
@@ -441,164 +452,170 @@ const AIQuestion = ({
                 ⏱ {timeLeft === 0 ? "Timer ended" : `${timeLeft}s`}
               </div> */}
 
-              <div className="ai-timer-container">
-                <svg className="ai-progress-ring" width="80" height="80">
-                  <circle
-                    className="ai-ring-bg"
-                    stroke="#343661"
-                    fill="transparent"
-                    r={radius}
-                    cx="40"
-                    cy="40"
-                  />
-                  <circle
-                    className={`ai-ring-progress ${
+                <div className="ai-timer-container">
+                  <svg className="ai-progress-ring" width="80" height="80">
+                    <circle
+                      className="ai-ring-bg"
+                      stroke="#343661"
+                      fill="transparent"
+                      r={radius}
+                      cx="40"
+                      cy="40"
+                    />
+                    <circle
+                      className={`ai-ring-progress ${
+                        timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+                      }`}
+                      stroke={
+                        timeLeft > 16
+                          ? "url(#gradient)"
+                          : timeLeft > 8
+                          ? "url(#gradient2)"
+                          : "url(#gradient3)"
+                      }
+                      fill="transparent"
+                      strokeWidth="8"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={dashOffset}
+                      r={radius}
+                      cx="40"
+                      cy="40"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="gradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="#D4CF4E" />
+                        <stop offset="100%" stopColor="#4ED4D0" />
+                      </linearGradient>
+
+                      <linearGradient
+                        id="gradient2"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="#D46D4E" />
+                        <stop offset="100%" stopColor="#FF1926" />
+                      </linearGradient>
+                      <linearGradient
+                        id="gradient3"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="#D44E4E" />
+                        <stop offset="100%" stopColor="#FF1926" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div
+                    className={`ai-timer-label ${
                       timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
                     }`}
-                    stroke={
-                      timeLeft > 16
-                        ? "url(#gradient)"
-                        : timeLeft > 8
-                        ? "url(#gradient2)"
-                        : "url(#gradient3)"
-                    }
-                    fill="transparent"
-                    strokeWidth="8"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={dashOffset}
-                    r={radius}
-                    cx="40"
-                    cy="40"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="gradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#D4CF4E" />
-                      <stop offset="100%" stopColor="#4ED4D0" />
-                    </linearGradient>
-
-                    <linearGradient
-                      id="gradient2"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#D46D4E" />
-                      <stop offset="100%" stopColor="#FF1926" />
-                    </linearGradient>
-                    <linearGradient
-                      id="gradient3"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#D44E4E" />
-                      <stop offset="100%" stopColor="#FF1926" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <div
-                  className={`ai-timer-label ${
-                    timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
-                  }`}
-                >
-                  {timeLeft === 0 ? (
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/ai-time.png"}
-                      alt=""
-                      className="ai-time-icon"
-                    />
-                  ) : (
-                    `${timeLeft}s`
-                  )}
-                </div>
-              </div>
-            </div>
-            <span className="aiLockedQuestion text-capitalize my-2">
-              Which was the first crypto introduced in the world?
-            </span>
-            <div className="d-flex flex-xl-row flex-column mx-0 gap-3 w-100 justify-content-between">
-              {answersOptions.map((option, index) => (
-                <div
-                  key={index}
-                  className={`answer-outer-wrapper w-100 ${
-                    (selectedAnswer !== undefined || timeLeft === 0) &&
-                    "pe-none"
-                  }`}
-                  onClick={() => setSelectedOption(option)}
-                >
-                  <div
-                    className={`${getAnswerClass(
-                      option
-                    )} px-3 py-3 d-flex align-items-center justify-content-between`}
                   >
-                    <span className="answer-text">
-                      {option === 0
-                        ? "Bitcoin (BTC)"
-                        : option === 1
-                        ? "Ethereum (ETH)"
-                        : "Binance Coin (BNB)"}
-                    </span>
-                    <span className={getRadioClass(option)}></span>
+                    {timeLeft === 0 ? (
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/ai-time.png"}
+                        alt=""
+                        className="ai-time-icon"
+                      />
+                    ) : (
+                      `${timeLeft}s`
+                    )}
                   </div>
                 </div>
-              ))}
+              </div>
+              <div className="ai-question-text-wrapper">
+                <span className="aiLockedQuestion text-capitalize my-2">
+                  Which was the first crypto introduced in the world?
+                </span>
+              </div>
+              <div className="options-wrapper gap-3 w-100">
+                {answersOptions.map((option, index) => (
+                  <div
+                    key={index}
+                    className={`answer-outer-wrapper w-100 ${
+                      (selectedAnswer !== undefined || timeLeft === 0) &&
+                      "pe-none"
+                    }`}
+                    onClick={() => setSelectedOption(option)}
+                  >
+                    <div
+                      className={`${getAnswerClass(
+                        option
+                      )} px-3 py-3 d-flex align-items-center justify-content-between`}
+                    >
+                      <span className="answer-text">{index + 1}</span>
+                      <span className="answer-text">
+                        {option === 0
+                          ? "Bitcoin (BTC)"
+                          : option === 1
+                          ? "Ethereum (ETH)"
+                          : option === 2
+                          ? "Solana (SOL)"
+                          : "Binance Coin (BNB)"}
+                      </span>
+                      <span className={getRadioClass(option)}></span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {selectedOption !== undefined &&
-            selectedAnswer === undefined &&
-            timeLeft > 0 && (
-              <div className="d-flex flex-column gap-1 align-items-center w-100 justify-content-between">
-                <span className="aiLockedDesc">Are you sure?</span>
-                <button
-                  className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-3 justify-content-center py-2"
-                  onClick={() => {
-                    handleOptionClick(selectedOption);
-                  }}
-                >
-                  Confirm
-                </button>
+            {selectedOption !== undefined &&
+              selectedAnswer === undefined &&
+              timeLeft > 0 && (
+                <div className="d-flex flex-column gap-1 align-items-center w-100 justify-content-between">
+                  <span className="aiLockedDesc">Are you sure?</span>
+                  <button
+                    className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-3 justify-content-center py-2"
+                    onClick={() => {
+                      handleOptionClick(selectedOption);
+                    }}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              )}
+            {(selectedAnswer !== undefined || showResult) && (
+              <div className="ai-answer-result-wrapper px-3 py-4  w-100 d-flex flex-column gap-2 align-items-center justify-content-between">
+                {selectedOption === selectedAnswer &&
+                selectedAnswer !== undefined ? (
+                  <>
+                    <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
+                    <span className="aiAnswer-desc">
+                      You have earned 54 Stars
+                    </span>
+                  </>
+                ) : selectedAnswer === undefined && timeLeft === 0 ? (
+                  <>
+                    <span className="aiAnswer-title">❌ TIME'S UP!</span>
+                    <span className="aiAnswer-desc">
+                      Try again tomorrow for a chance to win rewards
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="aiAnswer-title">
+                      🍀 Better Luck Next Time 🍀
+                    </span>
+                    <span className="aiAnswer-desc"></span>
+                  </>
+                )}
               </div>
             )}
-          {(selectedAnswer !== undefined || showResult) && (
-            <div className=" px-3 py-4  w-100 d-flex flex-column gap-2 align-items-center justify-content-between">
-              {selectedOption === selectedAnswer &&
-              selectedAnswer !== undefined ? (
-                <>
-                  <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
-                  <span className="aiAnswer-desc">
-                    You have earned 54 Stars
-                  </span>
-                </>
-              ) : selectedAnswer === undefined && timeLeft === 0 ? (
-                <>
-                  <span className="aiAnswer-title">❌ TIME'S UP!</span>
-                  <span className="aiAnswer-desc">
-                    Try again tomorrow for a chance to win rewards
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span className="aiAnswer-title">
-                    🍀 Better Luck Next Time 🍀
-                  </span>
-                  <span className="aiAnswer-desc"></span>
-                </>
-              )}
-            </div>
-          )}
-        </div>
-      ) : (
-        <></>
-      )}
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 };
