@@ -478,6 +478,7 @@ function App() {
   } = useQuery(GET_PLAYER, {
     fetchPolicy: "network-only",
   });
+  
 
   const [monthlyPlayers, setMonthlyPlayers] = useState(0);
   const [percent, setPercent] = useState(0);
@@ -5507,6 +5508,10 @@ function App() {
           !location.pathname.includes("token-claim") &&
           !location.pathname.includes("account") &&
           !location.pathname.includes("trading-competition") &&
+          !location.pathname.includes("bonus-otc") &&
+          !location.pathname.includes("special-otc") &&
+          !location.pathname.includes("pool") &&
+          !location.pathname.includes("pool2") &&
           !location.pathname.includes("auth") &&
           !location.pathname.includes("map") &&
           !location.pathname.includes("player") &&
