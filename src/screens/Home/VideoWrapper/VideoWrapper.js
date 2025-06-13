@@ -111,7 +111,7 @@ const VideoWrapper = ({
       class: "earnClass",
     },
     {
-      link: "/trading-competition",
+      link: "/wod-bitget",
       title: "",
       desc: "",
       class: "campaignClass",
@@ -133,7 +133,7 @@ const VideoWrapper = ({
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: false,
-    initialSlide: 0,
+    initialSlide: 2,
     beforeChange: (current, next) => {
       setActiveSlide(next);
       setShowFirstNext(current);
@@ -181,7 +181,7 @@ const VideoWrapper = ({
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          initialSlide: 0,
+          initialSlide: 2,
           dots: false,
           infinite: true,
           autoplay: true,
@@ -189,6 +189,18 @@ const VideoWrapper = ({
       },
     ],
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 480) {
+        betaSlider.current?.slickGoTo(2);
+      }
+    };
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [betaSlider?.current]);
 
   useEffect(() => {
     if (modal === true || buyWodPopup === true) {
