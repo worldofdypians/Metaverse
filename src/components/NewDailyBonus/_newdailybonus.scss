@@ -7,6 +7,7 @@
   pointer-events: auto;
   overflow-x: auto;
   width: fit-content;
+  max-width: 1144px;
 }
 
 .new-daily-bonus-popup {
@@ -88,8 +89,6 @@
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5)) !important;
   @media screen and (max-width: 991px) {
     width: 100%;
-    background-image: none;
-    background-image: url("https://cdn.worldofdypians.com/wod/ai-question-popup-img-mobile.webp");
     // background: #1a1c39;
     height: fit-content;
     border-radius: 12px;
