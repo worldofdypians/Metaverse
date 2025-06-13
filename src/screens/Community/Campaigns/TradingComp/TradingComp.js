@@ -61,6 +61,12 @@ const TradingComp = ({ coinbase, isConnected }) => {
     }
   };
 
+  // const postToTwitter = () => {
+  //   const tweetText = encodeURIComponent("Check out this cool app! 🚀");
+  //   const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+  //   window.open(tweetUrl, "_blank");
+  // };
+
   const fetchUserStats = async () => {
     await axios
       .get(`https://api.worldofdypians.com/api/lb-rank/${coinbase}`)
@@ -477,6 +483,8 @@ const TradingComp = ({ coinbase, isConnected }) => {
                   </span>
                   <img src={tradingCompChest} alt="" />
                 </NavLink>
+
+                {/* <button onClick={postToTwitter}>Post on Twitter</button> */}
               </div>
             </div>
           </div>
