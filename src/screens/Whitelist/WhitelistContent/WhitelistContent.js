@@ -844,7 +844,7 @@ const WhitelistContent = ({
               </div>
               <div className="whitelist-balance-wrapper p-2 mt-5">
                 <div className="d-flex align-items-center justify-content-between">
-                  <span className="user-whitelist-balance">Recieve</span>
+                  <span className="user-whitelist-balance">Receive</span>
                   <img src={tooltip} alt="" />
                 </div>
                 <div className="d-flex align-items-center justify-content-between mt-3">
