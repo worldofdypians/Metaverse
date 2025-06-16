@@ -23,7 +23,7 @@ const AIQuestion = ({
   const answers = ["A", "B", "C", "D"];
 
   const totalTime = 25;
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [timeLeft, setTimeLeft] = useState(totalTime);
@@ -296,7 +296,10 @@ const AIQuestion = ({
             className="ai-oryn-border"
           />
           <span className="ai-oryn-text">
-            Hi <span className="ai-username ai-username text-uppercase">{username},</span>
+            Hi{" "}
+            <span className="ai-username ai-username text-uppercase">
+              {username},
+            </span>
           </span>
           <span className="ai-oryn-text">Are you feeling lucky today?</span>
         </div>
@@ -319,87 +322,85 @@ const AIQuestion = ({
                 <div className="d-flex align-items-center w-100 justify-content-between">
                   <span className="ai-timer-title">Timer</span>
                   {/* {(selectedAnswer === undefined || !showResult) && ( */}
-                    <div className="ai-timer-container">
-                      <svg className="ai-progress-ring" width="60" height="60">
-                        <circle
-                          className="ai-ring-bg"
-                          stroke="#343661"
-                          fill="transparent"
-                          r={radius}
-                          cx="30"
-                          cy="30"
-                        />
-                        <circle
-                          className={`ai-ring-progress ${
-                            timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
-                          }`}
-                          stroke={
-                            timeLeft > 16
-                              ? "url(#gradient)"
-                              : timeLeft > 8
-                              ? "url(#gradient2)"
-                              : "url(#gradient3)"
-                          }
-                          fill="transparent"
-                          strokeWidth="4"
-                          strokeDasharray={circumference}
-                          strokeDashoffset={dashOffset}
-                          r={radius}
-                          cx="30"
-                          cy="30"
-                        />
-                        <defs>
-                          <linearGradient
-                            id="gradient"
-                            x1="0%"
-                            y1="0%"
-                            x2="100%"
-                            y2="100%"
-                          >
-                            <stop offset="0%" stopColor="#D4CF4E" />
-                            <stop offset="100%" stopColor="#4ED4D0" />
-                          </linearGradient>
-
-                          <linearGradient
-                            id="gradient2"
-                            x1="0%"
-                            y1="0%"
-                            x2="100%"
-                            y2="100%"
-                          >
-                            <stop offset="0%" stopColor="#D46D4E" />
-                            <stop offset="100%" stopColor="#FF1926" />
-                          </linearGradient>
-                          <linearGradient
-                            id="gradient3"
-                            x1="0%"
-                            y1="0%"
-                            x2="100%"
-                            y2="100%"
-                          >
-                            <stop offset="0%" stopColor="#D44E4E" />
-                            <stop offset="100%" stopColor="#FF1926" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                      <div
-                        className={`ai-timer-label ${
+                  <div className="ai-timer-container">
+                    <svg className="ai-progress-ring" width="60" height="60">
+                      <circle
+                        className="ai-ring-bg"
+                        stroke="#343661"
+                        fill="transparent"
+                        r={radius}
+                        cx="30"
+                        cy="30"
+                      />
+                      <circle
+                        className={`ai-ring-progress ${
                           timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
                         }`}
-                      >
-                        {timeLeft === 0 ? (
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/ai-time.png"
-                            }
-                            alt=""
-                            className="ai-time-icon"
-                          />
-                        ) : (
-                          `${timeLeft}s`
-                        )}
-                      </div>
+                        stroke={
+                          timeLeft > 16
+                            ? "url(#gradient)"
+                            : timeLeft > 8
+                            ? "url(#gradient2)"
+                            : "url(#gradient3)"
+                        }
+                        fill="transparent"
+                        strokeWidth="4"
+                        strokeDasharray={circumference}
+                        strokeDashoffset={dashOffset}
+                        r={radius}
+                        cx="30"
+                        cy="30"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="gradient"
+                          x1="0%"
+                          y1="0%"
+                          x2="100%"
+                          y2="100%"
+                        >
+                          <stop offset="0%" stopColor="#D4CF4E" />
+                          <stop offset="100%" stopColor="#4ED4D0" />
+                        </linearGradient>
+
+                        <linearGradient
+                          id="gradient2"
+                          x1="0%"
+                          y1="0%"
+                          x2="100%"
+                          y2="100%"
+                        >
+                          <stop offset="0%" stopColor="#D46D4E" />
+                          <stop offset="100%" stopColor="#FF1926" />
+                        </linearGradient>
+                        <linearGradient
+                          id="gradient3"
+                          x1="0%"
+                          y1="0%"
+                          x2="100%"
+                          y2="100%"
+                        >
+                          <stop offset="0%" stopColor="#D44E4E" />
+                          <stop offset="100%" stopColor="#FF1926" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                    <div
+                      className={`ai-timer-label ${
+                        timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+                      }`}
+                    >
+                      {timeLeft === 0 ? (
+                        <img
+                          src={"https://cdn.worldofdypians.com/wod/ai-time.png"}
+                          alt=""
+                          className="ai-time-icon"
+                        />
+                      ) : (
+                        `${timeLeft}s`
+                      )}
                     </div>
+                  </div>
                   {/* )} */}
                 </div>
               </div>
@@ -636,107 +637,108 @@ const AIQuestion = ({
             } ai-answer-result-wrapper px-3 py-2 d-flex flex-column align-items-center justify-content-center`}
           >
             {
-            // step === 1 ? (
-            //   <>
-            //     {timeLeft !== 0 &&
-            //       (selectedAnswer === undefined || !showResult) && (
-            //         <div className="ai-timer-container">
-            //           <svg className="ai-progress-ring" width="60" height="60">
-            //             <circle
-            //               className="ai-ring-bg"
-            //               stroke="#343661"
-            //               fill="transparent"
-            //               r={radius}
-            //               cx="30"
-            //               cy="30"
-            //             />
-            //             <circle
-            //               className={`ai-ring-progress ${
-            //                 timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
-            //               }`}
-            //               stroke={
-            //                 timeLeft > 16
-            //                   ? "url(#gradient)"
-            //                   : timeLeft > 8
-            //                   ? "url(#gradient2)"
-            //                   : "url(#gradient3)"
-            //               }
-            //               fill="transparent"
-            //               strokeWidth="4"
-            //               strokeDasharray={circumference}
-            //               strokeDashoffset={dashOffset}
-            //               r={radius}
-            //               cx="30"
-            //               cy="30"
-            //             />
-            //             <defs>
-            //               <linearGradient
-            //                 id="gradient"
-            //                 x1="0%"
-            //                 y1="0%"
-            //                 x2="100%"
-            //                 y2="100%"
-            //               >
-            //                 <stop offset="0%" stopColor="#D4CF4E" />
-            //                 <stop offset="100%" stopColor="#4ED4D0" />
-            //               </linearGradient>
+              // step === 1 ? (
+              //   <>
+              //     {timeLeft !== 0 &&
+              //       (selectedAnswer === undefined || !showResult) && (
+              //         <div className="ai-timer-container">
+              //           <svg className="ai-progress-ring" width="60" height="60">
+              //             <circle
+              //               className="ai-ring-bg"
+              //               stroke="#343661"
+              //               fill="transparent"
+              //               r={radius}
+              //               cx="30"
+              //               cy="30"
+              //             />
+              //             <circle
+              //               className={`ai-ring-progress ${
+              //                 timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+              //               }`}
+              //               stroke={
+              //                 timeLeft > 16
+              //                   ? "url(#gradient)"
+              //                   : timeLeft > 8
+              //                   ? "url(#gradient2)"
+              //                   : "url(#gradient3)"
+              //               }
+              //               fill="transparent"
+              //               strokeWidth="4"
+              //               strokeDasharray={circumference}
+              //               strokeDashoffset={dashOffset}
+              //               r={radius}
+              //               cx="30"
+              //               cy="30"
+              //             />
+              //             <defs>
+              //               <linearGradient
+              //                 id="gradient"
+              //                 x1="0%"
+              //                 y1="0%"
+              //                 x2="100%"
+              //                 y2="100%"
+              //               >
+              //                 <stop offset="0%" stopColor="#D4CF4E" />
+              //                 <stop offset="100%" stopColor="#4ED4D0" />
+              //               </linearGradient>
 
-            //               <linearGradient
-            //                 id="gradient2"
-            //                 x1="0%"
-            //                 y1="0%"
-            //                 x2="100%"
-            //                 y2="100%"
-            //               >
-            //                 <stop offset="0%" stopColor="#D46D4E" />
-            //                 <stop offset="100%" stopColor="#FF1926" />
-            //               </linearGradient>
-            //               <linearGradient
-            //                 id="gradient3"
-            //                 x1="0%"
-            //                 y1="0%"
-            //                 x2="100%"
-            //                 y2="100%"
-            //               >
-            //                 <stop offset="0%" stopColor="#D44E4E" />
-            //                 <stop offset="100%" stopColor="#FF1926" />
-            //               </linearGradient>
-            //             </defs>
-            //           </svg>
-            //           <div
-            //             className={`ai-timer-label ${
-            //               timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
-            //             }`}
-            //           >
-            //             {timeLeft === 0 ? <></> : `${timeLeft}s`}
-            //           </div>
-            //         </div>
-            //       )}
-            //   </>
-            // ) : 
-            step === 0 ? (
-              <>
-                {" "}
-                <span className="aiLockedQuestion">
-                  A Hidden question awaits
-                </span>
-                <span className="aiLockedDesc">
-                  {!email && coinbase
-                    ? "Login to your game account"
-                    : !isConnected && !coinbase
-                    ? "Connect your wallet to unlock the question"
-                    : isConnected &&
-                      coinbase &&
-                      email &&
-                      chainId !== 56 &&
-                      chainId !== 204
-                    ? "Switch to BNB Chain or opBNB to unlock the challenge"
-                    : "Sign the transaction to unlock your daily challenge"}
-                </span>
-              </>
-            ) : (
-              <></>
-            )}
+              //               <linearGradient
+              //                 id="gradient2"
+              //                 x1="0%"
+              //                 y1="0%"
+              //                 x2="100%"
+              //                 y2="100%"
+              //               >
+              //                 <stop offset="0%" stopColor="#D46D4E" />
+              //                 <stop offset="100%" stopColor="#FF1926" />
+              //               </linearGradient>
+              //               <linearGradient
+              //                 id="gradient3"
+              //                 x1="0%"
+              //                 y1="0%"
+              //                 x2="100%"
+              //                 y2="100%"
+              //               >
+              //                 <stop offset="0%" stopColor="#D44E4E" />
+              //                 <stop offset="100%" stopColor="#FF1926" />
+              //               </linearGradient>
+              //             </defs>
+              //           </svg>
+              //           <div
+              //             className={`ai-timer-label ${
+              //               timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+              //             }`}
+              //           >
+              //             {timeLeft === 0 ? <></> : `${timeLeft}s`}
+              //           </div>
+              //         </div>
+              //       )}
+              //   </>
+              // ) :
+              step === 0 ? (
+                <>
+                  {" "}
+                  <span className="aiLockedQuestion">
+                    A Hidden question awaits
+                  </span>
+                  <span className="aiLockedDesc">
+                    {!email && coinbase
+                      ? "Login to your game account"
+                      : !isConnected && !coinbase
+                      ? "Connect your wallet to unlock the question"
+                      : isConnected &&
+                        coinbase &&
+                        email &&
+                        chainId !== 56 &&
+                        chainId !== 204
+                      ? "Switch to BNB Chain or opBNB to unlock the challenge"
+                      : "Sign the transaction to unlock your daily challenge"}
+                  </span>
+                </>
+              ) : (
+                <></>
+              )
+            }
             {/* {selectedOption !== undefined &&
               selectedAnswer === undefined &&
               timeLeft > 0 && (
@@ -888,10 +890,21 @@ const AIQuestion = ({
           <></>
         )}*/}
       </div>
-      <div className="ai-question-footer-wrapper">
+      <div
+        className={
+          (selectedOption === undefined &&
+            selectedAnswer === undefined &&
+            step === 1) ||
+          timeLeft === 0
+            ? "ai-question-footer-wrapper-disabled"
+            : unlockStatus === "error"
+            ? "ai-question-footer-wrapper-error"
+            : "ai-question-footer-wrapper"
+        }
+      >
         {!email && coinbase && (
           <NavLink
-            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
             to="/auth"
             onClick={() => onClose()}
           >
@@ -900,7 +913,7 @@ const AIQuestion = ({
         )}
         {!isConnected && !coinbase && (
           <button
-            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
             onClick={onConnectWallet}
           >
             Connect
@@ -913,7 +926,7 @@ const AIQuestion = ({
           chainId !== 56 &&
           chainId !== 204 && (
             <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => {
                 handleBnbPool("0x38", 56);
               }}
@@ -928,7 +941,7 @@ const AIQuestion = ({
           (chainId === 56 || chainId === 204) &&
           step === 0 && (
             <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => handleUnlockQuestion()}
             >
               {unlockLoading ? (
@@ -962,7 +975,7 @@ const AIQuestion = ({
           (chainId === 56 || chainId === 204) &&
           step === 1 && (
             <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => {
                 handleOptionClick(selectedOption);
               }}
@@ -975,12 +988,12 @@ const AIQuestion = ({
               Confirm
             </button>
           )}
-        <img
+        {/* <img
           src={
             "https://cdn.worldofdypians.com/wod/ai-question-button-bottom.webp"
           }
           className="ai-question-footer-img"
-        />
+        /> */}
       </div>
     </div>
   );
