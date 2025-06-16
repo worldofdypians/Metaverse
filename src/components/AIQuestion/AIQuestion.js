@@ -3,6 +3,7 @@ import "./_aiquestion.scss";
 import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import Web3 from "web3";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -16,10 +17,13 @@ const AIQuestion = ({
   walletClient,
   publicClient,
   binanceW3WProvider,
+  username,
 }) => {
-  const answersOptions = [0, 1, 2];
+  const answersOptions = [0, 1, 2, 3];
+  const answers = ["A", "B", "C", "D"];
+
   const totalTime = 25;
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [timeLeft, setTimeLeft] = useState(totalTime);
@@ -27,8 +31,9 @@ const AIQuestion = ({
   const [showResult, setShowResult] = useState(false);
   const [unlockLoading, setUnlockLoading] = useState(false);
   const [unlockStatus, setUnlockStatus] = useState("initial");
+  const [activeClass, setActiveClass] = useState("");
 
-  const radius = 35;
+  const radius = 25;
   const circumference = 2 * Math.PI * radius;
   const intervalRef = useRef(null);
 
@@ -282,151 +287,510 @@ const AIQuestion = ({
   const dashOffset = circumference * (1 - progress);
 
   return (
-    <div
-      className="d-flex flex-column p-lg-3 p-5 justify-content-between gap-3"
-      style={{ flex: 1 }}
-    >
-      <div className="d-flex pt-lg-2 pt-3 align-items-center gap-2 justify-content-between">
-        <button
-          className={
-            chainId === 56
-              ? "ai-chain-button-active py-2 px-3 col-lg-3"
-              : "ai-chain-button py-2 px-3 col-lg-3"
-          }
-          onClick={() => {
-            handleBnbPool("0x38", 56);
-          }}
-        >
-          <div className="d-flex align-items-center gap-2 justify-content-between">
-            <img
-              src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
-              alt=""
-              className="ai-chain-icon"
-            />
-            BNB CHAIN
-          </div>
-        </button>
-        <button
-          className={
-            chainId === 204
-              ? "ai-chain-button-active py-2 px-3 col-lg-3"
-              : "ai-chain-button py-2 px-3 col-lg-3"
-          }
-          onClick={() => {
-            handleBnbPool("0xcc", 204);
-          }}
-        >
-          <div className="d-flex align-items-center gap-2 justify-content-between">
-            <img
-              src={"https://cdn.worldofdypians.com/wod/opbnbChain.png"}
-              alt=""
-              className="ai-chain-icon"
-            />
-            OPBNB
-          </div>
-        </button>
-      </div>
-      {step === 0 ? (
-        <div
-          className="d-flex flex-column gap-2 align-items-center justify-content-between"
-          style={{ flex: 1 }}
-        >
-          <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
-            <img
-              src={"https://cdn.worldofdypians.com/wod/aiLocked.webp"}
-              alt=""
-              className="aiLockedImg"
-            />
-            <span className="aiLockedQuestion">A Hidden question awaits</span>
-            <span className="aiLockedDesc">
-              {!email && coinbase
-                ? "Login to your game account"
-                : !isConnected && !coinbase
-                ? "Connect your wallet to unlock the question"
-                : isConnected &&
-                  coinbase &&
-                  email &&
-                  chainId !== 56 &&
-                  chainId !== 204
-                ? "Switch to BNB Chain or opBNB to unlock the challenge"
-                : "Sign the transaction to unlock your daily challenge"}
+    <div className="d-flex w-100 gap-2">
+      <div className="d-none d-lg-flex d-md-flex flex-column gap-2 col-lg-3 col-md-4 position-relative">
+        <div className="ai-oryn-top">
+          <img
+            src={"https://cdn.worldofdypians.com/wod/ai-oryn-border.webp"}
+            alt=""
+            className="ai-oryn-border"
+          />
+          <span className="ai-oryn-text">
+            Hi <span className="ai-username ai-username text-uppercase">{username},</span>
+          </span>
+          <span className="ai-oryn-text">Are you feeling lucky today?</span>
+        </div>
+        <div className="ai-oryn-bottom">
+          <div className="d-flex flex-column gap-2 p-4">
+            <span className="ai-oryn-bottom-txt">
+              Oryn is an AI Agent in World of Dypians powered by BNB Chain.
             </span>
-          </div>
-          {!email && coinbase && (
-            <NavLink
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-              to="/auth"
-              onClick={() => onClose()}
-            >
-              Log in
-            </NavLink>
-          )}
-          {!isConnected && !coinbase && (
-            <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-              onClick={onConnectWallet}
-            >
-              Connect
-            </button>
-          )}
+            <span className="ai-oryn-bottom-txt">It offers:</span>
+            <ul className="ai-oryn-bottom-txt">
+              <li>Strategic insights</li>
+              <li>Mission support</li>
+              <li>Combat strategy</li>
+              <li>Learning assistance</li>
+              <li>Real-time guidance</li>
+              <li>Adaptive gameplay tips</li>
+            </ul>
+            {step === 1 && (
+              <div className="ai-timer-bg-wrapper p-3">
+                <div className="d-flex align-items-center w-100 justify-content-between">
+                  <span className="ai-timer-title">Timer</span>
+                  {/* {(selectedAnswer === undefined || !showResult) && ( */}
+                    <div className="ai-timer-container">
+                      <svg className="ai-progress-ring" width="60" height="60">
+                        <circle
+                          className="ai-ring-bg"
+                          stroke="#343661"
+                          fill="transparent"
+                          r={radius}
+                          cx="30"
+                          cy="30"
+                        />
+                        <circle
+                          className={`ai-ring-progress ${
+                            timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+                          }`}
+                          stroke={
+                            timeLeft > 16
+                              ? "url(#gradient)"
+                              : timeLeft > 8
+                              ? "url(#gradient2)"
+                              : "url(#gradient3)"
+                          }
+                          fill="transparent"
+                          strokeWidth="4"
+                          strokeDasharray={circumference}
+                          strokeDashoffset={dashOffset}
+                          r={radius}
+                          cx="30"
+                          cy="30"
+                        />
+                        <defs>
+                          <linearGradient
+                            id="gradient"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                          >
+                            <stop offset="0%" stopColor="#D4CF4E" />
+                            <stop offset="100%" stopColor="#4ED4D0" />
+                          </linearGradient>
 
-          {isConnected &&
-            coinbase &&
-            email &&
-            chainId !== 56 &&
-            chainId !== 204 && (
+                          <linearGradient
+                            id="gradient2"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                          >
+                            <stop offset="0%" stopColor="#D46D4E" />
+                            <stop offset="100%" stopColor="#FF1926" />
+                          </linearGradient>
+                          <linearGradient
+                            id="gradient3"
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                          >
+                            <stop offset="0%" stopColor="#D44E4E" />
+                            <stop offset="100%" stopColor="#FF1926" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                      <div
+                        className={`ai-timer-label ${
+                          timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+                        }`}
+                      >
+                        {timeLeft === 0 ? (
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/ai-time.png"
+                            }
+                            alt=""
+                            className="ai-time-icon"
+                          />
+                        ) : (
+                          `${timeLeft}s`
+                        )}
+                      </div>
+                    </div>
+                  {/* )} */}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      <div
+        className="d-flex flex-column gap-4 justify-content-between overflow-auto"
+        style={{ flex: 1 }}
+      >
+        <div className="d-flex flex-column w-100">
+          <div className="d-flex align-items-center gap-2 justify-content-between w-100 overflow-auto">
+            <div className="d-flex w-100 align-items-center gap-2 justify-content-start ">
               <button
-                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
+                className={
+                  chainId === 56
+                    ? "ai-chain-button-active py-3 px-3 col-lg-4"
+                    : "ai-chain-button py-3 px-3 col-lg-4"
+                }
                 onClick={() => {
                   handleBnbPool("0x38", 56);
                 }}
               >
-                Switch
+                <div className="d-flex align-items-center gap-2 justify-content-between">
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                    alt=""
+                    className="ai-chain-icon"
+                  />
+                  BNB CHAIN
+                </div>
               </button>
-            )}
-
-          {isConnected &&
-            coinbase &&
-            email &&
-            (chainId === 56 || chainId === 204) && (
               <button
-                className="ai-main-button text-uppercase d-flex align-items-center gap-2 px-lg-0 px-4 col-lg-3 justify-content-center py-2"
-                onClick={() => handleUnlockQuestion()}
+                className={
+                  chainId === 204
+                    ? "ai-chain-button-active py-3 px-3 col-lg-4"
+                    : "ai-chain-button py-3 px-3 col-lg-4"
+                }
+                onClick={() => {
+                  handleBnbPool("0xcc", 204);
+                }}
               >
-                {unlockLoading ? (
-                  <div className="d-flex align-items-center gap-2">
-                    Processing
-                    <div
-                      className="spinner-border spinner-border-sm text-light"
-                      role="status"
-                    >
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                  </div>
-                ) : unlockStatus === "initial" ? (
-                  <>Unlock</>
-                ) : unlockStatus === "success" ? (
-                  <>Success</>
-                ) : (
-                  <>
-                    Failed{" "}
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
-                      alt=""
-                    />
-                  </>
-                )}
+                <div className="d-flex align-items-center gap-2 justify-content-between">
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/opbnbChain.png"}
+                    alt=""
+                    className="ai-chain-icon"
+                  />
+                  OPBNB
+                </div>
               </button>
-            )}
+              {/* <button className={"ai-chain-button py-3 px-3"}>
+              <div className="d-flex align-items-center gap-2 justify-content-between">
+                Coming Soon
+              </div>
+            </button> */}
+            </div>
+            <div className="ai-rewards-info">
+              <div className="d-flex align-items-center px-3 py-2 gap-2">
+                <div
+                  className="d-flex flex-column align-items-center gap-1"
+                  onMouseOver={() => {
+                    setActiveClass("stars");
+                  }}
+                  onMouseLeave={() => {
+                    setActiveClass("");
+                  }}
+                >
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
+                    }
+                    alt=""
+                    className={
+                      activeClass === "stars"
+                        ? "ai-reward-logo-active"
+                        : "ai-reward-logo"
+                    }
+                  />
+                  <div className="d-flex flex-column">
+                    {/* <span className={"ai-rewards-stars"}>180</span> */}
+                    <span
+                      className={
+                        activeClass === "stars"
+                          ? "ai-rewards-title-active"
+                          : "ai-rewards-title"
+                      }
+                    >
+                      STARS
+                    </span>
+                  </div>
+                </div>
+                <div
+                  className="d-flex flex-column align-items-center gap-1"
+                  onMouseOver={() => {
+                    setActiveClass("points");
+                  }}
+                  onMouseLeave={() => {
+                    setActiveClass("");
+                  }}
+                >
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
+                    }
+                    alt=""
+                    className={
+                      activeClass === "points"
+                        ? "ai-reward-logo-active"
+                        : "ai-reward-logo"
+                    }
+                  />
+                  <div className="d-flex flex-column">
+                    {/* <span className={"ai-rewards-points"}>
+                      {getFormattedNumber(23200, 0)}
+                    </span> */}
+                    <span
+                      className={
+                        activeClass === "points"
+                          ? "ai-rewards-title-active"
+                          : "ai-rewards-title"
+                      }
+                    >
+                      POINTS
+                    </span>
+                  </div>
+                </div>
+                <div
+                  className="d-flex flex-column align-items-center gap-1"
+                  onMouseOver={() => {
+                    setActiveClass("rewards");
+                  }}
+                  onMouseLeave={() => {
+                    setActiveClass("");
+                  }}
+                >
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
+                    }
+                    alt=""
+                    className={
+                      activeClass === "rewards"
+                        ? "ai-reward-logo-active"
+                        : "ai-reward-logo"
+                    }
+                  />
+                  <div className="d-flex flex-column">
+                    {/* <span className={"ai-rewards-money"}>$1.5</span> */}
+                    <span
+                      className={
+                        activeClass === "rewards"
+                          ? "ai-rewards-title-active"
+                          : "ai-rewards-title"
+                      }
+                    >
+                      REWARDS
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="ai-separator my-3"></div>
         </div>
-      ) : step === 1 ? (
+        {/* {step === 0 ? ( */}
         <div
-          className="d-flex flex-column gap-2 align-items-center justify-content-between"
+          className="d-flex flex-column gap-4 align-items-center"
           style={{ flex: 1 }}
         >
-          <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
-            <div className="d-flex flex-column position-relative w-100 align-items-center">
-              {/* <div className="ai-countdown-wrapper px-0">
+          <div className="ai-answer-option-wrapper p-4 pt-0 position-relative w-100">
+            <div className="ai-question-text-wrapper">
+              <span className="aiLockedQuestion text-capitalize my-2">
+                {step === 0
+                  ? ""
+                  : step === 1
+                  ? "Which was the first crypto introduced in the world?"
+                  : ""}
+              </span>
+            </div>
+            <div className="options-wrapper gap-3 w-100">
+              {answersOptions.map((option, index) => (
+                <div
+                  key={index}
+                  className={`answer-outer-wrapper w-100 ${
+                    (selectedAnswer !== undefined ||
+                      timeLeft === 0 ||
+                      step === 0) &&
+                    "pe-none"
+                  }`}
+                  onClick={() => {
+                    step === 1 && setSelectedOption(option);
+                  }}
+                >
+                  <div
+                    className={`${getAnswerClass(
+                      option
+                    )} px-3 py-3 d-flex align-items-center justify-content-between`}
+                  >
+                    <span className="answer-text">
+                      {step === 0 ? "" : answers[index]}
+                    </span>
+                    <span className="answer-text">
+                      {step === 0
+                        ? ""
+                        : option === 0
+                        ? "Bitcoin (BTC)"
+                        : option === 1
+                        ? "Ethereum (ETH)"
+                        : option === 2
+                        ? "Solana (SOL)"
+                        : "Binance Coin (BNB)"}
+                    </span>
+                    {step === 1 && (
+                      <span className={getRadioClass(option)}></span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            className={` ${
+              selectedAnswer === undefined && timeLeft === 0
+                ? "ai-answer-result-error-wrapper"
+                : selectedOption === selectedAnswer &&
+                  selectedAnswer !== undefined
+                ? "ai-answer-result-success-wrapper"
+                : selectedOption !== selectedAnswer &&
+                  selectedAnswer !== undefined
+                ? "ai-answer-result-error-wrapper"
+                : ""
+            } ai-answer-result-wrapper px-3 py-2 d-flex flex-column align-items-center justify-content-center`}
+          >
+            {
+            // step === 1 ? (
+            //   <>
+            //     {timeLeft !== 0 &&
+            //       (selectedAnswer === undefined || !showResult) && (
+            //         <div className="ai-timer-container">
+            //           <svg className="ai-progress-ring" width="60" height="60">
+            //             <circle
+            //               className="ai-ring-bg"
+            //               stroke="#343661"
+            //               fill="transparent"
+            //               r={radius}
+            //               cx="30"
+            //               cy="30"
+            //             />
+            //             <circle
+            //               className={`ai-ring-progress ${
+            //                 timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+            //               }`}
+            //               stroke={
+            //                 timeLeft > 16
+            //                   ? "url(#gradient)"
+            //                   : timeLeft > 8
+            //                   ? "url(#gradient2)"
+            //                   : "url(#gradient3)"
+            //               }
+            //               fill="transparent"
+            //               strokeWidth="4"
+            //               strokeDasharray={circumference}
+            //               strokeDashoffset={dashOffset}
+            //               r={radius}
+            //               cx="30"
+            //               cy="30"
+            //             />
+            //             <defs>
+            //               <linearGradient
+            //                 id="gradient"
+            //                 x1="0%"
+            //                 y1="0%"
+            //                 x2="100%"
+            //                 y2="100%"
+            //               >
+            //                 <stop offset="0%" stopColor="#D4CF4E" />
+            //                 <stop offset="100%" stopColor="#4ED4D0" />
+            //               </linearGradient>
+
+            //               <linearGradient
+            //                 id="gradient2"
+            //                 x1="0%"
+            //                 y1="0%"
+            //                 x2="100%"
+            //                 y2="100%"
+            //               >
+            //                 <stop offset="0%" stopColor="#D46D4E" />
+            //                 <stop offset="100%" stopColor="#FF1926" />
+            //               </linearGradient>
+            //               <linearGradient
+            //                 id="gradient3"
+            //                 x1="0%"
+            //                 y1="0%"
+            //                 x2="100%"
+            //                 y2="100%"
+            //               >
+            //                 <stop offset="0%" stopColor="#D44E4E" />
+            //                 <stop offset="100%" stopColor="#FF1926" />
+            //               </linearGradient>
+            //             </defs>
+            //           </svg>
+            //           <div
+            //             className={`ai-timer-label ${
+            //               timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+            //             }`}
+            //           >
+            //             {timeLeft === 0 ? <></> : `${timeLeft}s`}
+            //           </div>
+            //         </div>
+            //       )}
+            //   </>
+            // ) : 
+            step === 0 ? (
+              <>
+                {" "}
+                <span className="aiLockedQuestion">
+                  A Hidden question awaits
+                </span>
+                <span className="aiLockedDesc">
+                  {!email && coinbase
+                    ? "Login to your game account"
+                    : !isConnected && !coinbase
+                    ? "Connect your wallet to unlock the question"
+                    : isConnected &&
+                      coinbase &&
+                      email &&
+                      chainId !== 56 &&
+                      chainId !== 204
+                    ? "Switch to BNB Chain or opBNB to unlock the challenge"
+                    : "Sign the transaction to unlock your daily challenge"}
+                </span>
+              </>
+            ) : (
+              <></>
+            )}
+            {/* {selectedOption !== undefined &&
+              selectedAnswer === undefined &&
+              timeLeft > 0 && (
+                <>
+                  <span className="aiLockedDesc">Are you sure?</span>
+                  <button
+                    className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-3 justify-content-center py-2"
+                    onClick={() => {
+                      handleOptionClick(selectedOption);
+                    }}
+                  >
+                    Confirm
+                  </button>
+                </>
+              )} */}
+            {(selectedAnswer !== undefined || showResult) && (
+              <>
+                {selectedOption === selectedAnswer &&
+                selectedAnswer !== undefined ? (
+                  <>
+                    <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
+                    <span className="aiAnswer-desc">
+                      You have earned 54 Stars
+                    </span>
+                  </>
+                ) : selectedAnswer === undefined && timeLeft === 0 ? (
+                  <>
+                    <span className="aiAnswer-title">❌ TIME'S UP!</span>
+                    <span className="aiAnswer-desc">
+                      Try again tomorrow for a chance to win rewards
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="aiAnswer-title">
+                      🍀 Better Luck Next Time 🍀
+                    </span>
+                    <span className="aiAnswer-desc">
+                      Try again tomorrow for a chance to win rewards
+                    </span>
+                  </>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+        {/* ) : step === 1 ? (
+          <div
+            className="d-flex flex-column gap-2 align-items-center justify-content-between"
+            style={{ flex: 1 }}
+          >
+            <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
+              <div className="d-flex flex-column position-relative w-100 align-items-center">
+                <div className="ai-countdown-wrapper px-0">
                 <div className="ai-progress-bar-bg">
                   <div
                     className={`ai-progress-bar-fill ${
@@ -438,166 +802,186 @@ const AIQuestion = ({
               </div>
               <div className="ai-timer-text px-4 pb-1 d-flex align-items-center gap-1">
                 ⏱ {timeLeft === 0 ? "Timer ended" : `${timeLeft}s`}
-              </div> */}
-
-              <div className="ai-timer-container">
-                <svg className="ai-progress-ring" width="80" height="80">
-                  <circle
-                    className="ai-ring-bg"
-                    stroke="#343661"
-                    fill="transparent"
-                    r={radius}
-                    cx="40"
-                    cy="40"
-                  />
-                  <circle
-                    className={`ai-ring-progress ${
-                      timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+              </div> 
+              </div>
+              <div className="ai-question-text-wrapper">
+                <span className="aiLockedQuestion text-capitalize my-2">
+                  Which was the first crypto introduced in the world?
+                </span>
+              </div>
+              <div className="options-wrapper gap-3 w-100">
+                {answersOptions.map((option, index) => (
+                  <div
+                    key={index}
+                    className={`answer-outer-wrapper w-100 ${
+                      (selectedAnswer !== undefined || timeLeft === 0) &&
+                      "pe-none"
                     }`}
-                    stroke={
-                      timeLeft > 16
-                        ? "url(#gradient)"
-                        : timeLeft > 8
-                        ? "url(#gradient2)"
-                        : "url(#gradient3)"
-                    }
-                    fill="transparent"
-                    strokeWidth="8"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={dashOffset}
-                    r={radius}
-                    cx="40"
-                    cy="40"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="gradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
+                    onClick={() => setSelectedOption(option)}
+                  >
+                    <div
+                      className={`${getAnswerClass(
+                        option
+                      )} px-3 py-3 d-flex align-items-center justify-content-between`}
                     >
-                      <stop offset="0%" stopColor="#D4CF4E" />
-                      <stop offset="100%" stopColor="#4ED4D0" />
-                    </linearGradient>
-
-                    <linearGradient
-                      id="gradient2"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#D46D4E" />
-                      <stop offset="100%" stopColor="#FF1926" />
-                    </linearGradient>
-                    <linearGradient
-                      id="gradient3"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#D44E4E" />
-                      <stop offset="100%" stopColor="#FF1926" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <div
-                  className={`ai-timer-label ${
-                    timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
-                  }`}
-                >
-                  {timeLeft === 0 ? (
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/ai-time.png"}
-                      alt=""
-                      className="ai-time-icon"
-                    />
-                  ) : (
-                    `${timeLeft}s`
-                  )}
-                </div>
+                      <span className="answer-text">{index + 1}</span>
+                      <span className="answer-text">
+                        {option === 0
+                          ? "Bitcoin (BTC)"
+                          : option === 1
+                          ? "Ethereum (ETH)"
+                          : option === 2
+                          ? "Solana (SOL)"
+                          : "Binance Coin (BNB)"}
+                      </span>
+                      <span className={getRadioClass(option)}></span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-            <span className="aiLockedQuestion text-capitalize my-2">
-              Which was the first crypto introduced in the world?
-            </span>
-            <div className="d-flex flex-xl-row flex-column mx-0 gap-3 w-100 justify-content-between">
-              {answersOptions.map((option, index) => (
-                <div
-                  key={index}
-                  className={`answer-outer-wrapper w-100 ${
-                    (selectedAnswer !== undefined || timeLeft === 0) &&
-                    "pe-none"
-                  }`}
-                  onClick={() => setSelectedOption(option)}
-                >
-                  <div
-                    className={`${getAnswerClass(
-                      option
-                    )} px-3 py-3 d-flex align-items-center justify-content-between`}
-                  >
-                    <span className="answer-text">
-                      {option === 0
-                        ? "Bitcoin (BTC)"
-                        : option === 1
-                        ? "Ethereum (ETH)"
-                        : "Binance Coin (BNB)"}
-                    </span>
-                    <span className={getRadioClass(option)}></span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {selectedOption !== undefined &&
-            selectedAnswer === undefined &&
-            timeLeft > 0 && (
-              <div className="d-flex flex-column gap-1 align-items-center w-100 justify-content-between">
-                <span className="aiLockedDesc">Are you sure?</span>
-                <button
-                  className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-3 justify-content-center py-2"
-                  onClick={() => {
-                    handleOptionClick(selectedOption);
-                  }}
-                >
-                  Confirm
-                </button>
+            {selectedOption !== undefined &&
+              selectedAnswer === undefined &&
+              timeLeft > 0 && (
+                <div className="d-flex flex-column gap-1 align-items-center w-100 justify-content-between">
+                  <span className="aiLockedDesc">Are you sure?</span>
+                  <button
+                    className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-3 justify-content-center py-2"
+                    onClick={() => {
+                      handleOptionClick(selectedOption);
+                    }}
+                  >
+                    Confirm
+                  </button>
+                </div>
+              )}
+            {(selectedAnswer !== undefined || showResult) && (
+              <div className="ai-answer-result-wrapper px-3 py-4  w-100 d-flex flex-column gap-2 align-items-center justify-content-between">
+                {selectedOption === selectedAnswer &&
+                selectedAnswer !== undefined ? (
+                  <>
+                    <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
+                    <span className="aiAnswer-desc">
+                      You have earned 54 Stars
+                    </span>
+                  </>
+                ) : selectedAnswer === undefined && timeLeft === 0 ? (
+                  <>
+                    <span className="aiAnswer-title">❌ TIME'S UP!</span>
+                    <span className="aiAnswer-desc">
+                      Try again tomorrow for a chance to win rewards
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="aiAnswer-title">
+                      🍀 Better Luck Next Time 🍀
+                    </span>
+                    <span className="aiAnswer-desc"></span>
+                  </>
+                )}
               </div>
             )}
-          {(selectedAnswer !== undefined || showResult) && (
-            <div className=" px-3 py-4  w-100 d-flex flex-column gap-2 align-items-center justify-content-between">
-              {selectedOption === selectedAnswer &&
-              selectedAnswer !== undefined ? (
-                <>
-                  <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
-                  <span className="aiAnswer-desc">
-                    You have earned 54 Stars
-                  </span>
-                </>
-              ) : selectedAnswer === undefined && timeLeft === 0 ? (
-                <>
-                  <span className="aiAnswer-title">❌ TIME'S UP!</span>
-                  <span className="aiAnswer-desc">
-                    Try again tomorrow for a chance to win rewards
-                  </span>
-                </>
+          </div>
+        ) : (
+          <></>
+        )}*/}
+      </div>
+      <div className="ai-question-footer-wrapper">
+        {!email && coinbase && (
+          <NavLink
+            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+            to="/auth"
+            onClick={() => onClose()}
+          >
+            Log in
+          </NavLink>
+        )}
+        {!isConnected && !coinbase && (
+          <button
+            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+            onClick={onConnectWallet}
+          >
+            Connect
+          </button>
+        )}
+
+        {isConnected &&
+          coinbase &&
+          email &&
+          chainId !== 56 &&
+          chainId !== 204 && (
+            <button
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              onClick={() => {
+                handleBnbPool("0x38", 56);
+              }}
+            >
+              Switch
+            </button>
+          )}
+
+        {isConnected &&
+          coinbase &&
+          email &&
+          (chainId === 56 || chainId === 204) &&
+          step === 0 && (
+            <button
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              onClick={() => handleUnlockQuestion()}
+            >
+              {unlockLoading ? (
+                <div className="d-flex align-items-center gap-2">
+                  Processing
+                  <div
+                    className="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  >
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              ) : unlockStatus === "initial" ? (
+                <>Unlock</>
+              ) : unlockStatus === "success" ? (
+                <>Success</>
               ) : (
                 <>
-                  <span className="aiAnswer-title">
-                    🍀 Better Luck Next Time 🍀
-                  </span>
-                  <span className="aiAnswer-desc"></span>
+                  Failed{" "}
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
+                    alt=""
+                  />
                 </>
               )}
-            </div>
+            </button>
           )}
-        </div>
-      ) : (
-        <></>
-      )}
+        {isConnected &&
+          coinbase &&
+          email &&
+          (chainId === 56 || chainId === 204) &&
+          step === 1 && (
+            <button
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              onClick={() => {
+                handleOptionClick(selectedOption);
+              }}
+              disabled={
+                (selectedOption === undefined &&
+                  selectedAnswer === undefined) ||
+                timeLeft === 0
+              }
+            >
+              Confirm
+            </button>
+          )}
+        <img
+          src={
+            "https://cdn.worldofdypians.com/wod/ai-question-button-bottom.webp"
+          }
+          className="ai-question-footer-img"
+        />
+      </div>
     </div>
   );
 };

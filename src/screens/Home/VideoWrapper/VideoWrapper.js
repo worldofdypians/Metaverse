@@ -56,6 +56,11 @@ const VideoWrapper = ({
       link: "https://www.mexc.com/exchange/WOD_USDT",
     },
     {
+      title: "Bitget",
+      logo: "bitgetRound.png",
+      link: "https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+    {
       title: "Bitpanda",
       logo: "bitpandaLogo.svg",
       link: "https://www.bitpanda.com/en/prices/world-of-dypians-wod",
@@ -106,7 +111,7 @@ const VideoWrapper = ({
       class: "earnClass",
     },
     {
-      link: "/trading-competition",
+      link: "/wod-bitget",
       title: "",
       desc: "",
       class: "campaignClass",
@@ -128,7 +133,7 @@ const VideoWrapper = ({
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: false,
-    initialSlide: 0,
+    initialSlide: 2,
     beforeChange: (current, next) => {
       setActiveSlide(next);
       setShowFirstNext(current);
@@ -176,7 +181,7 @@ const VideoWrapper = ({
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          initialSlide: 0,
+          initialSlide: 2,
           dots: false,
           infinite: true,
           autoplay: true,
@@ -184,6 +189,18 @@ const VideoWrapper = ({
       },
     ],
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 480) {
+        betaSlider.current?.slickGoTo(2);
+      }
+    };
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [betaSlider?.current]);
 
   useEffect(() => {
     if (modal === true || buyWodPopup === true) {
@@ -387,7 +404,7 @@ const VideoWrapper = ({
                 alt=""
               />
             </div>
-            <div className="d-flex flex-column gap-2 buy-wod-items-wrapper">
+            <div className="gap-2 buy-wod-items-wrapper">
               {exchanges.map((item, index) => (
                 <BuyWodCard item={item} key={index} />
               ))}

@@ -7,7 +7,7 @@ import getFormattedNumber from "../../../../Caws/functions/get-formatted-number"
 const TradingPopup = ({ onClose, coinbase }) => {
   const [leaderboardWeek, setLeaderboardWeek] = useState(1);
   const [loading, setLoading] = useState(false);
-  const currentWeek = 6;
+  const currentWeek = 8;
   const leaderboardArray = Array.from({ length: 12 }, (_, i) => i + 1);
   const [participants, setParticipants] = useState([]);
 

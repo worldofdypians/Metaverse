@@ -98,6 +98,10 @@
   font-weight: 600;
   margin: 0;
   line-height: 1.35;
+
+    @media (max-width: 992px) {
+    font-size: 13px;
+  }
 }
 
 /* State colours */

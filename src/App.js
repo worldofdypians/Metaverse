@@ -96,6 +96,7 @@ import { useMatchChain } from "@matchain/matchid-sdk-react/hooks";
 import { http, createPublicClient } from "viem";
 import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
 import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.js";
+import WodBitGet from "./screens/Community/Campaigns/WodBitGet/WodBitGet.js";
 import DailyQuestion from "./screens/DailyQuestion/DailyQuestion.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
@@ -5503,6 +5504,9 @@ function App() {
       >
         {!location.pathname.includes("ai-agent") &&
           !location.pathname.includes("staking") &&
+          !location.pathname.includes("bridge") &&
+          !location.pathname.includes("token-claim") &&
+          !location.pathname.includes("account") &&
           !location.pathname.includes("trading-competition") &&
           !location.pathname.includes("auth") &&
           !location.pathname.includes("map") &&
@@ -5756,6 +5760,46 @@ function App() {
                 }}
                 coinbase={coinbase}
                 type="pool2"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/special-otc"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="special-otc"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/bonus-otc"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="bonus-otc"
                 network_matchain={chain}
                 walletClient={walletClient}
                 binanceW3WProvider={library}
@@ -6930,6 +6974,8 @@ function App() {
               <TradingComp coinbase={coinbase} isConnected={isConnected} />
             }
           />
+
+          <Route exact path="/wod-bitget" element={<WodBitGet />} />
           <Route
             exact
             path="/governance/proposal/:proposalId"
