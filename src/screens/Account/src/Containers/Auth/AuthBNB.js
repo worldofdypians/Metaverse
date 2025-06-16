@@ -362,20 +362,24 @@ function AuthBNB({
                     </>
                   )}
                 </LoginCardBNB>
-                <div className="d-flex justify-content-end buttonwrapper-bnb-alliance">
-                  <a
-                    href="https://medium.com/@worldofdypians/create-world-of-dypians-account-tutorial-9bceb9f13f9d"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
-                  >
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/mediumLogo.svg"}
-                      alt=""
-                    />{" "}
-                    Create Account Tutorial
-                  </a>
-                </div>
+                {type === "bnb" && (
+                  <div className="d-flex justify-content-end buttonwrapper-bnb-alliance">
+                    <a
+                      href="https://medium.com/@worldofdypians/create-world-of-dypians-account-tutorial-9bceb9f13f9d"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
+                    >
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/mediumLogo.svg"
+                        }
+                        alt=""
+                      />{" "}
+                      Create Account Tutorial
+                    </a>
+                  </div>
+                )}
                 <ErrorAlert error={loginError} />
               </div>
             </div>
