@@ -61,6 +61,7 @@ function AuthBNB({
   handleConnect,
   isSuccess,
   onWalletLinkComplete,
+  type,
 }) {
   const { isAuthenticated, loginError, setLoginValues, playerId, email } =
     useAuth();
@@ -224,153 +225,159 @@ function AuthBNB({
   // }
 
   return (
-    <div className="mx-0 container-nft w-100 container-fluid d-flex align-items-start px-0 px-lg-5 flex-column">
-      <div className="d-flex flex-column container-lg gap-2 w-100">
-        <div className="nft-page-wrapper bg-transparent d-flex flex-column flex-lg-row gap-3 mb-3">
-          <div className="d-flex flex-column gap-4 col-12 col-md-12 col-lg-8 mt-0">
-            <div className="p-3 nft-page-wrapperbnb h-100"></div>
-            <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center gap-0 gap-lg-1 gap-md-1 ">
-              <span className="detailsgreen-txt text-white">
-                For any issues submit a ticket on:{" "}
-              </span>
-              <a
-                href="https://discord.gg/worldofdypians"
-                className="detailsgreen-txt d-flex"
-                target="_blank"
-                rel="noreferrer"
-              >
-                World of Dypians Discord
-              </a>
+    <div className="container-fluid earn-hero-wrapper2 position-relative d-flex align-items-center flex-column justify-content-end gap-5">
+      <div className="container-nft2 d-flex flex-column align-items-start px-lg-4 px-2 position-relative">
+        <div className="d-flex flex-column container-lg gap-2 w-100">
+          <div className="nft-page-wrapper bg-transparent d-flex flex-column flex-lg-row gap-3 mb-3">
+            <div className="d-flex flex-column gap-4 col-12 col-md-12 col-lg-8 mt-0">
+              <div className={`p-3 nft-page-wrapper${type} h-100`}></div>
+              <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center gap-0 gap-lg-1 gap-md-1 ">
+                <span className="detailsgreen-txt text-white">
+                  For any issues submit a ticket on:{" "}
+                </span>
+                <a
+                  href="https://discord.gg/worldofdypians"
+                  className="detailsgreen-txt d-flex"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  World of Dypians Discord
+                </a>
+              </div>
             </div>
-          </div>
-          <div className="col-12 col-md-12 col-lg-4 mt-0 px-0 px-lg-2">
-            <div className="d-flex flex-column gap-5 gap-lg-2 gap-md-2">
-              <LoginCardBNB
-                containerStyles={{
-                  height: 500,
-                }}
-                cardStyles={{
-                  height:
-                    linkWallet === true || value === 0 ? "100%" : "fit-content",
-                }}
-              >
-                {successLink === false && (
-                  <div className="mt-3">
-                    <ul className="timeline m-0 p-0" id="timeline">
-                      <li className="col-3 li complete">
-                        <div className="status">
-                          <span className="text-white statusIndex">1</span>
-                          <h4 className="listtext"> Register </h4>
-                        </div>
-                      </li>
-                      <li className={`col-3 li ${showVerify && "complete"} `}>
-                        <div className="status">
-                          <span className="text-white statusIndex">2</span>
-                          <h4 className="listtext"> Verify </h4>
-                        </div>
-                      </li>
-                      <li
-                        className={`col-3 li ${playerCreation && "complete"} `}
-                      >
-                        <div className="status">
-                          <span className="text-white statusIndex">3</span>
-                          <h4 className="listtext"> Profile </h4>
-                        </div>
-                      </li>
-                      <li
-                        className={`col-2 li ${linkWallet && "complete"}`}
-                        style={{ width: 0 }}
-                      >
-                        <div className="status">
-                          <span className="text-white statusIndex">4</span>
-                          <h4
-                            className="listtext"
-                            style={{
-                              width: 0,
-                              whiteSpace: "nowrap",
-                              left: "-17px",
+            <div className="col-12 col-md-12 col-lg-4 mt-0 px-0 px-lg-2">
+              <div className="d-flex flex-column gap-5 gap-lg-2 gap-md-2">
+                <LoginCardBNB
+                  containerStyles={{
+                    height: 500,
+                  }}
+                  cardStyles={{
+                    height:
+                      linkWallet === true || value === 0
+                        ? "100%"
+                        : "fit-content",
+                  }}
+                >
+                  {successLink === false && (
+                    <div className="mt-3">
+                      <ul className="timeline m-0 p-0" id="timeline">
+                        <li className="col-3 li complete">
+                          <div className="status">
+                            <span className="text-white statusIndex">1</span>
+                            <h4 className="listtext"> Register </h4>
+                          </div>
+                        </li>
+                        <li className={`col-3 li ${showVerify && "complete"} `}>
+                          <div className="status">
+                            <span className="text-white statusIndex">2</span>
+                            <h4 className="listtext"> Verify </h4>
+                          </div>
+                        </li>
+                        <li
+                          className={`col-3 li ${
+                            playerCreation && "complete"
+                          } `}
+                        >
+                          <div className="status">
+                            <span className="text-white statusIndex">3</span>
+                            <h4 className="listtext"> Profile </h4>
+                          </div>
+                        </li>
+                        <li
+                          className={`col-2 li ${linkWallet && "complete"}`}
+                          style={{ width: 0 }}
+                        >
+                          <div className="status">
+                            <span className="text-white statusIndex">4</span>
+                            <h4
+                              className="listtext"
+                              style={{
+                                width: 0,
+                                whiteSpace: "nowrap",
+                                left: "-17px",
+                              }}
+                            >
+                              Link Wallet
+                            </h4>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                  {playerCreation === true ? (
+                    <PlayerCreationBNB
+                      linkWallet={linkWallet}
+                      onLinkWallet={handleLinkWallet}
+                      successLink={successLink}
+                      onShowLinkWallet={() => {
+                        setLinkWallet(true);
+                      }}
+                    />
+                  ) : playerCreation === false && forgotPassword === true ? (
+                    <ForgotPasswordBNB
+                      onSuccess={() => {
+                        setforgotPassword(false);
+                        handleChange("click", 0);
+                      }}
+                    />
+                  ) : (
+                    <>
+                      {value === 0 &&
+                        playerCreation === false &&
+                        forgotPassword === false && (
+                          <LoginBNB
+                            onForgetPassword={() => {
+                              setforgotPassword(true);
                             }}
-                          >
-                            Link Wallet
-                          </h4>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-                {playerCreation === true ? (
-                  <PlayerCreationBNB
-                    linkWallet={linkWallet}
-                    onLinkWallet={handleLinkWallet}
-                    successLink={successLink}
-                    onShowLinkWallet={() => {
-                      setLinkWallet(true);
-                    }}
-                  />
-                ) : playerCreation === false && forgotPassword === true ? (
-                  <ForgotPasswordBNB
-                    onSuccess={() => {
-                      setforgotPassword(false);
-                      handleChange("click", 0);
-                    }}
-                  />
-                ) : (
-                  <>
-                    {value === 0 &&
-                      playerCreation === false &&
-                      forgotPassword === false && (
-                        <LoginBNB
-                          onForgetPassword={() => {
-                            setforgotPassword(true);
+                            onLoginTry={() => {
+                              setisLogin(true);
+                            }}
+                            onSuccessLogin={() => {
+                              handleManageLoginStates();
+                              handleFirstTask(coinbase);
+                            }}
+                            handleGoToSignup={() => {
+                              handleChange("click", 1);
+                            }}
+                          />
+                        )}
+
+                      {value === 1 && playerCreation === false && (
+                        <SingUpBNB
+                          onUserExists={() => {
+                            handleChange("click", 0);
                           }}
-                          onLoginTry={() => {
-                            setisLogin(true);
+                          onVerifySuccess={() => {
+                            setplayerCreation(true);
                           }}
-                          onSuccessLogin={() => {
-                            handleManageLoginStates();
-                            handleFirstTask(coinbase);
+                          isLogin={isLogin}
+                          handleGoToLogin={() => {
+                            handleChange("click", 0);
                           }}
-                          handleGoToSignup={() => {
-                            handleChange("click", 1);
+                          onShowVerify={(value) => {
+                            setShowVerify(value);
                           }}
                         />
                       )}
-
-                    {value === 1 && playerCreation === false && (
-                      <SingUpBNB
-                        onUserExists={() => {
-                          handleChange("click", 0);
-                        }}
-                        onVerifySuccess={() => {
-                          setplayerCreation(true);
-                        }}
-                        isLogin={isLogin}
-                        handleGoToLogin={() => {
-                          handleChange("click", 0);
-                        }}
-                        onShowVerify={(value) => {
-                          setShowVerify(value);
-                        }}
-                      />
-                    )}
-                  </>
-                )}
-              </LoginCardBNB>
-              <div className="d-flex justify-content-end buttonwrapper-bnb-alliance">
-                <a
-                  href="https://medium.com/@worldofdypians/create-world-of-dypians-account-tutorial-9bceb9f13f9d"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
-                >
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/mediumLogo.svg"}
-                    alt=""
-                  />{" "}
-                  Create Account Tutorial
-                </a>
+                    </>
+                  )}
+                </LoginCardBNB>
+                <div className="d-flex justify-content-end buttonwrapper-bnb-alliance">
+                  <a
+                    href="https://medium.com/@worldofdypians/create-world-of-dypians-account-tutorial-9bceb9f13f9d"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
+                  >
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/mediumLogo.svg"}
+                      alt=""
+                    />{" "}
+                    Create Account Tutorial
+                  </a>
+                </div>
+                <ErrorAlert error={loginError} />
               </div>
-              <ErrorAlert error={loginError} />
             </div>
           </div>
         </div>

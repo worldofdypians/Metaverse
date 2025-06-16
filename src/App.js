@@ -5955,9 +5955,31 @@ function App() {
                   setisBnb(true);
                   setwalletModal(true);
                 }}
+                type='bnb'
               />
             }
           />
+
+          <Route
+            exact
+            path="/wod-okxwallet"
+            element={
+              <AuthBNB
+                isConnected={isConnected}
+                coinbase={coinbase}
+                isSuccess={isBnbSuccess}
+                onWalletLinkComplete={() => {
+                  setisBnbSuccess(false);
+                }}
+                handleConnect={() => {
+                  setisBnb(true);
+                  setwalletModal(true);
+                }}
+                type='okx'
+              />
+            }
+          />
+          
           <Route exact path="/forgotPassword" element={<ForgotPassword />} />
           <Route exact path="/ResetPassword" element={<ResetPassword />} />
           <Route exact path="/player" element={<PlayerCreation />} />
