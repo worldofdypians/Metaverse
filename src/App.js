@@ -5956,6 +5956,9 @@ function App() {
                   setwalletModal(true);
                 }}
                 type="bnb"
+                onSuccessLogin={() => {
+                  refetchPlayer();
+                }}
               />
             }
           />
@@ -5974,6 +5977,9 @@ function App() {
                 handleConnect={() => {
                   setisBnb(true);
                   setwalletModal(true);
+                }}
+                onSuccessLogin={() => {
+                  refetchPlayer();
                 }}
                 type="okx"
               />

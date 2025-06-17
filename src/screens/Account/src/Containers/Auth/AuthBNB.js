@@ -62,6 +62,7 @@ function AuthBNB({
   isSuccess,
   onWalletLinkComplete,
   type,
+  onSuccessLogin,
 }) {
   const { isAuthenticated, loginError, setLoginValues, playerId, email } =
     useAuth();
@@ -181,16 +182,37 @@ function AuthBNB({
   };
 
   const handleFirstTask = async (wallet) => {
-    const result2 = await axios
+    // const result2 = await axios
 
-      .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+    //   .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+
+    //   .catch((e) => {
+    //     console.error(e);
+    //   });
+
+    const result3 = await axios
+
+      .get(`https://api.worldofdypians.com/api/okx/${wallet}`)
 
       .catch((e) => {
         console.error(e);
       });
 
-    if (result2 && result2.status === 200) {
-      console.log(result2);
+    // const result4 = await axios
+
+    //   .get(`https://api.worldofdypians.com/api/okx/task3/status?address=${wallet}`)
+
+    //   .catch((e) => {
+    //     console.error(e);
+    //   });
+
+    if (
+      // result2 &&
+      // result2.status === 200 &&
+      result3 &&
+      result3.status === 200
+    ) {
+      console.log(result3);
       setsuccessLink(true);
       setTimeout(() => {
         // window.location.reload();
@@ -339,6 +361,7 @@ function AuthBNB({
                             onSuccessLogin={() => {
                               handleManageLoginStates();
                               handleFirstTask(coinbase);
+                              onSuccessLogin();
                             }}
                             handleGoToSignup={() => {
                               handleChange("click", 1);

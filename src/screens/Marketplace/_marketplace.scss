@@ -628,11 +628,10 @@
   }
 }
 
-.banned-account-wrapper{
+.banned-account-wrapper {
   background: #ad020b;
   border-radius: 12px;
 }
-
 
 .slider-container {
   max-width: 100vw;
@@ -692,7 +691,7 @@
 }
 
 .marketplace-banner {
-  background: url('https://cdn.worldofdypians.com/wod/marketplaceBanner.webp');
+  background: url("https://cdn.worldofdypians.com/wod/marketplaceBanner.webp");
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -1330,7 +1329,7 @@
 }
 
 .nft-page-wrapperbnb {
-  background: url('https://cdn.worldofdypians.com/wod/wodbnb.webp');
+  background: url("https://cdn.worldofdypians.com/wod/wodbnb.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -1339,7 +1338,7 @@
 
   @media screen and (max-width: 991px) {
     aspect-ratio: 20/12;
-    background: url('https://cdn.worldofdypians.com/wod/bnbprogramBgMobile.webp');
+    background: url("https://cdn.worldofdypians.com/wod/bnbprogramBgMobile.webp");
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: contain !important;
@@ -1350,7 +1349,7 @@
 }
 
 .nft-page-wrapperokx {
-  background: url('https://cdn.worldofdypians.com/wod/wod-okx-wallet-campaign.jpg');
+  background: url("https://cdn.worldofdypians.com/wod/wod-x-wallet2.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -1358,8 +1357,8 @@
   border-radius: 10px;
 
   @media screen and (max-width: 991px) {
-    aspect-ratio: 20/12;
-    background: url('https://cdn.worldofdypians.com/wod/wod-okx-wallet-campaign.jpg');
+    aspect-ratio: 30 / 12;
+    background: url("https://cdn.worldofdypians.com/wod/wod-x-wallet-mobile3.webp");
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: contain !important;
@@ -1368,7 +1367,6 @@
     justify-content: center;
   }
 }
-
 
 .nft-page-title {
   font-style: normal;
@@ -1383,8 +1381,6 @@
     font-size: 28px;
   }
 }
-
- 
 
 .coingecko-nft-number {
   color: #f2f2f2;
@@ -1548,8 +1544,6 @@
     background-position: bottom;
   }
 }
- 
- 
 
 .new-caws-stake-wrapper {
   border-radius: 20px;
@@ -1721,8 +1715,6 @@
   }
 }
 
- 
-
 .events-page-status-tag-live {
   background: #18ffff;
   border-radius: 8px;
@@ -1819,7 +1811,6 @@
     width: 100%;
   }
 }
-
 
 .market-stake-tvl {
   font-weight: 800;
@@ -1935,8 +1926,6 @@
   left: 0;
 }
 
-
-
 .golden-pass-popup {
   width: 40% !important;
   height: 80% !important;
@@ -1965,9 +1954,6 @@
     height: 95% !important;
   }
 }
-
-
-
 
 .package-popup {
   pointer-events: auto !important;
@@ -2477,7 +2463,6 @@
   }
 }
 
-
 .past-sei-mint {
   background-image: url("https://cdn.worldofdypians.com/wod/seiPastMint.webp");
   width: 100%;
@@ -2516,8 +2501,6 @@
     aspect-ratio: 1/1;
   }
 }
-
-
 
 .past-bnb-mint {
   background-image: url("https://cdn.worldofdypians.com/wod/bnbMintDesktop.webp");
@@ -2657,10 +2640,8 @@
   }
 }
 
-
-
 .past-sei-mint-amount {
-  color: #BE2C2C;
+  color: #be2c2c;
   text-align: center;
   font-size: 40px;
   font-style: normal;
@@ -2684,7 +2665,7 @@
 }
 
 .past-vanar-mint-amount {
-  color: #24AF92;
+  color: #24af92;
   text-align: center;
   font-size: 40px;
   font-style: normal;
@@ -2788,8 +2769,6 @@
   }
 }
 
-
-
 .past-sei-mint-desc {
   color: #fff;
   text-shadow: 0px 3px 4px rgba(190, 44, 44, 0.7);
@@ -2828,7 +2807,6 @@
     font-size: 26px;
   }
 }
-
 
 .past-core-mint-desc {
   color: #fff;
@@ -2941,8 +2919,6 @@
     height: 80%;
   }
 }
-
-
 
 .new-popup-title-wrapper {
   border-radius: 10px;
@@ -3110,8 +3086,6 @@
   }
 }
 
- 
-
 .join-up {
   transform: translateY(-210px);
 }
@@ -3230,7 +3204,7 @@
 }
 
 .mybetaearnings {
-  background: url('https://cdn.worldofdypians.com/wod/betaMyEarnings.png');
+  background: url("https://cdn.worldofdypians.com/wod/betaMyEarnings.png");
   background-size: 100% 100%;
   position: absolute;
   left: 0;
@@ -3311,12 +3285,20 @@
 
 .kucoin-eventwrapper {
   border-radius: 20px;
-  background: linear-gradient(to bottom, #181B38 0%, rgba(11, 212, 165, 0.5) 168.67%);
+  background: linear-gradient(
+    to bottom,
+    #181b38 0%,
+    rgba(11, 212, 165, 0.5) 168.67%
+  );
 }
 
 .vanar-eventwrapper {
   border-radius: 20px;
-  background: linear-gradient(to bottom, #181B38 0%, rgba(5, 156, 121, 0.5) 168.67%);
+  background: linear-gradient(
+    to bottom,
+    #181b38 0%,
+    rgba(5, 156, 121, 0.5) 168.67%
+  );
 }
 
 .gate-eventwrapper {
@@ -3728,7 +3710,7 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
-  background: url('https://cdn.worldofdypians.com/wod/wod-bitget-slider-banner.webp');
+  background: url("https://cdn.worldofdypians.com/wod/wod-bitget-slider-banner.webp");
   // background: url(https://cdn.worldofdypians.com/wod/tokenBg.webp);
   background-position: center;
   background-repeat: no-repeat;
@@ -3798,39 +3780,37 @@
   background-size: cover;
 }
 
-.ai-grid{
+.ai-grid {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-width: 100%;
-padding: 16px;
-@media screen and (max-width: 1550px) {
-  padding: 12px;
-}
-padding: 16px;
-@media screen and (max-width: 500px) {
-  padding: 10px;
+  width: 100%;
+  padding: 16px;
+  @media screen and (max-width: 1550px) {
+    padding: 12px;
+  }
+  padding: 16px;
+  @media screen and (max-width: 500px) {
+    padding: 10px;
+  }
 }
 
-}
-
-.ai-tab-wrapper{
+.ai-tab-wrapper {
   width: 100%;
   border-radius: 10px;
   border: 1px solid #b8b8e0;
-  transition: all .25s;
-  img{
+  transition: all 0.25s;
+  img {
     width: 100%;
     // height: 138px;
   }
 }
 
-.ai-tab-wrapper:hover{
+.ai-tab-wrapper:hover {
   border: 1px solid #f3bf09 !important;
 }
 
-
-.bottom-dark-wrapper-position{
+.bottom-dark-wrapper-position {
   position: absolute !important;
   bottom: 0;
   pointer-events: none !important;
@@ -4269,7 +4249,6 @@ padding: 16px;
   }
 }
 
-
 .popup-active {
   box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
   top: 0% !important;
@@ -4559,14 +4538,13 @@ padding: 16px;
   }
 }
 
-
 .premium-gold-popup {
   border-radius: 10px;
- 
-    background-image: url("https://cdn.worldofdypians.com/wod/standardBgMobile.webp");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+
+  background-image: url("https://cdn.worldofdypians.com/wod/standardBgMobile.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .benefits-title-wrapper {
@@ -4610,7 +4588,7 @@ padding: 16px;
   font-weight: 500;
   line-height: normal;
   @media screen and (max-width: 786px) {
-   display: none;
+    display: none;
   }
 }
 
@@ -4757,7 +4735,11 @@ padding: 16px;
 
 .upcoming-kucoin-event {
   border-radius: 20px;
-  background: linear-gradient(90deg, #181B38 0%, rgba(11, 212, 165, 0.5) 168.67%) !important;
+  background: linear-gradient(
+    90deg,
+    #181b38 0%,
+    rgba(11, 212, 165, 0.5) 168.67%
+  ) !important;
 }
 .upcoming-base-event {
   border-radius: 20px;
@@ -4881,7 +4863,7 @@ padding: 16px;
   font-weight: 800;
 }
 
-.rank-chain-stats{
+.rank-chain-stats {
   position: absolute;
   @media screen and (max-width: 786px) {
     position: relative;
