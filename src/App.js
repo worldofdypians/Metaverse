@@ -478,7 +478,6 @@ function App() {
   } = useQuery(GET_PLAYER, {
     fetchPolicy: "network-only",
   });
-  
 
   const [monthlyPlayers, setMonthlyPlayers] = useState(0);
   const [percent, setPercent] = useState(0);
@@ -5517,6 +5516,7 @@ function App() {
           !location.pathname.includes("player") &&
           !location.pathname.includes("ResetPassword") &&
           !location.pathname.includes("forgotPassword") &&
+          !location.pathname.includes("wod-okxwallet") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -5955,9 +5955,37 @@ function App() {
                   setisBnb(true);
                   setwalletModal(true);
                 }}
+                type="bnb"
+                onSuccessLogin={() => {
+                  refetchPlayer();
+                }}
               />
             }
           />
+
+          <Route
+            exact
+            path="/wod-okxwallet"
+            element={
+              <AuthBNB
+                isConnected={isConnected}
+                coinbase={coinbase}
+                isSuccess={isBnbSuccess}
+                onWalletLinkComplete={() => {
+                  setisBnbSuccess(false);
+                }}
+                handleConnect={() => {
+                  setisBnb(true);
+                  setwalletModal(true);
+                }}
+                onSuccessLogin={() => {
+                  refetchPlayer();
+                }}
+                type="okx"
+              />
+            }
+          />
+
           <Route exact path="/forgotPassword" element={<ForgotPassword />} />
           <Route exact path="/ResetPassword" element={<ResetPassword />} />
           <Route exact path="/player" element={<PlayerCreation />} />
