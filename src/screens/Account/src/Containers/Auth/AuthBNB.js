@@ -136,6 +136,10 @@ function AuthBNB({
     }
   }, [isSuccess, isConnected]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setLoginValues(() => {
@@ -226,11 +230,11 @@ function AuthBNB({
 
   return (
     <div className="container-fluid earn-hero-wrapper2 position-relative d-flex align-items-center flex-column justify-content-end gap-5">
-      <div className="container-nft2 d-flex flex-column align-items-start px-lg-4 px-2 position-relative">
+      <div className="container-nft2 d-flex flex-column align-items-start px-lg-4 px-0 position-relative">
         <div className="d-flex flex-column container-lg gap-2 w-100">
           <div className="nft-page-wrapper bg-transparent d-flex flex-column flex-lg-row gap-3 mb-3">
             <div className="d-flex flex-column gap-4 col-12 col-md-12 col-lg-8 mt-0">
-              <div className={`p-3 nft-page-wrapper${type} h-100`}></div>
+              <div className={`p-lg-3 nft-page-wrapper${type} h-100`}></div>
               <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center gap-0 gap-lg-1 gap-md-1 ">
                 <span className="detailsgreen-txt text-white">
                   For any issues submit a ticket on:{" "}
