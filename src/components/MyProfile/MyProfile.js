@@ -709,6 +709,25 @@ const MyProfile = ({
                                       </h6>
                                     </a>
                                     <a
+                                      href="https://web3.okx.com/token/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      onClick={() => {
+                                        setshowBuyTooltip(false);
+                                      }}
+                                      className="getwod-item"
+                                    >
+                                      <h6 className="bottomitems mb-0">
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/okxConnect.svg"
+                                          }
+                                          className="buywodimg"
+                                        />
+                                        OKX Wallet
+                                      </h6>
+                                    </a>
+                                    <a
                                       href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
                                       target="_blank"
                                       rel="noreferrer"
