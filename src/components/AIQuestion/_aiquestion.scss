@@ -195,8 +195,11 @@
 
 .ai-oryn-border {
   position: absolute;
+  background-image: url('./ai-oryn-border2.webp');
   height: 200px;
   bottom: 2px;
+  min-width: 235px;
+  background-size: 100% 100%;
   transform: translate(-71%, 3%);
   @media screen and (max-width: 1210px) {
     height: 120px;
@@ -206,6 +209,15 @@
     height: 130px;
     transform: translate(-84%, 3%);
   }
+}
+
+.oryn-inner-border{
+      background: rgba(127, 17, 224, 0.5);
+    border-radius: 50%;
+    width: 115px;
+    height: 115px;
+    position: relative;
+    bottom: 5px;
 }
 
 .ai-oryn-text {

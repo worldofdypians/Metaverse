@@ -4,6 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import Web3 from "web3";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import orynBorder from "./ai-oryn-border2.webp";
+import { Canvas } from "@react-three/fiber";
+import { QuestionExperience } from "../../screens/NewAgent/components/QuestionExperience";
+import { Experience } from "../../screens/NewAgent/components/Experience";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -32,6 +36,11 @@ const AIQuestion = ({
   const [unlockLoading, setUnlockLoading] = useState(false);
   const [unlockStatus, setUnlockStatus] = useState("initial");
   const [activeClass, setActiveClass] = useState("");
+  const [playAudio, setPlayAudio] = useState(false);
+  const [sound, setSound] = useState(false);
+  const [count, setCount] = useState(0);
+  const [audioFile, setAudioFile] = useState(null);
+  const [jsonFile, setJsonFile] = useState(null);
 
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
@@ -290,11 +299,33 @@ const AIQuestion = ({
     <div className="d-flex w-100 gap-2">
       <div className="d-none d-lg-flex d-md-flex flex-column gap-2 col-lg-3 col-md-4 position-relative">
         <div className="ai-oryn-top">
-          <img
-            src={"https://cdn.worldofdypians.com/wod/ai-oryn-border.webp"}
+          <div
+            // src={orynBorder}
+            // src={"https://cdn.worldofdypians.com/wod/ai-oryn-border.webp"}
             alt=""
-            className="ai-oryn-border"
-          />
+            className="ai-oryn-border d-flex align-items-center justify-content-center"
+          >
+            <div className="oryn-inner-border">
+              <Canvas
+                shadows
+                camera={{ near: 0.01, far: 1000, position: [0, 0, 10] }}
+                style={{
+                  height: "100%",
+                  borderRadius: "50%",
+                  pointerEvents: "none",
+                }}
+              >
+                <QuestionExperience
+                  playAudio={playAudio}
+                  setPlayAudio={setPlayAudio}
+                  count={count}
+                  audioFile={audioFile}
+                  jsonFile={jsonFile}
+                  sound={sound}
+                />
+              </Canvas>
+            </div>
+          </div>
           <span className="ai-oryn-text">
             Hi{" "}
             <span className="ai-username ai-username text-uppercase">
@@ -770,6 +801,13 @@ const AIQuestion = ({
                     <span className="aiAnswer-desc">
                       Try again tomorrow for a chance to win rewards
                     </span>
+                  </>
+                ) : selectedAnswer !== undefined || selectedOption !== undefined ? (
+                  <>
+                    <span className="aiAnswer-title">
+                      Is this your final answer?
+                    </span>
+                   
                   </>
                 ) : (
                   <>
