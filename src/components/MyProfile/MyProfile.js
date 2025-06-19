@@ -1628,10 +1628,10 @@ const MyProfile = ({
                     AI Daily Challenge
                   </h6>
 
-                  <div className="d-flex flex-column">
-                    {aiQuestionCompleted && (
+                  <div className="d-flex">
+                    {/* {aiQuestionCompleted && (
                       <Countdown date={Number(midnight)} renderer={renderer} />
-                    )}
+                    )} */}
                     {!aiQuestionCompleted && (
                       <div className={`d-flex flex-column infotips-holder`}>
                         <div className="d-flex align-items-center gap-1">
@@ -1674,6 +1674,40 @@ const MyProfile = ({
                           </span>
                         </div>
                       </div>
+                    )}
+                    {aiQuestionCompleted ? (
+                      //   <div className="d-flex flex-column gap-1">
+                      //   <span className="beast-siege-ends-in">Available until:</span>
+                      //   <Countdown renderer={renderer4} date={midnight} />
+                      // </div>
+                      <>
+                        <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
+                          <div className="ready-circle-ai d-flex flex-column gap-1">
+                            <Countdown
+                              renderer={renderer4}
+                              date={midnight}
+                            />
+                          </div>
+                          <span className="new-time-remaining">
+                            Time Remaining
+                          </span>
+                        </div>
+                        <div className="d-flex d-lg-none">
+                          <Countdown
+                            renderer={renderer4}
+                            date={midnight}
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="ready-circle d-none d-lg-flex">
+                          <span className="beast-siege-timer">Ready</span>
+                        </div>
+                        <span className="beast-siege-timer d-flex d-lg-none">
+                          Ready
+                        </span>
+                      </>
                     )}
                   </div>
                   <img
