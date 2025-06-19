@@ -338,16 +338,16 @@ const AIQuestion = ({
         <div className="ai-oryn-bottom">
           <div className="d-flex flex-column gap-2 p-4">
             <span className="ai-oryn-bottom-txt">
-              Oryn is an AI Agent in World of Dypians powered by BNB Chain.
+              A daily challenge where each player can unlock a AI question for a
+              chance to win!
             </span>
-            <span className="ai-oryn-bottom-txt">It offers:</span>
-            <ul className="ai-oryn-bottom-txt">
-              <li>Strategic insights</li>
-              <li>Mission support</li>
-              <li>Combat strategy</li>
-              <li>Learning assistance</li>
-              <li>Real-time guidance</li>
-              <li>Adaptive gameplay tips</li>
+            <span className="ai-oryn-bottom-txt">Notes:</span>
+            <ul className="ai-oryn-bottom-txt ps-3">
+              <li>🔹 Daily opportunity </li>
+              <li>🔹 Available on BNB & opBNB</li>
+              <li>🔹 Sign the transaction </li>
+              <li>🔹 Answer in 20 seconds</li>
+              <li>🔹 Win different rewards</li>
             </ul>
             {step === 1 && (
               <div className="ai-timer-bg-wrapper p-3">
@@ -391,8 +391,8 @@ const AIQuestion = ({
                           x2="100%"
                           y2="100%"
                         >
-                          <stop offset="0%" stopColor="#D4CF4E" />
-                          <stop offset="100%" stopColor="#4ED4D0" />
+                          <stop offset="0%" stopColor="#EEBE50" />
+                          <stop offset="100%" stopColor="#EFCB86" />
                         </linearGradient>
 
                         <linearGradient
@@ -791,6 +791,7 @@ const AIQuestion = ({
             {!showSelect &&
             selectedOption === undefined &&
             selectedAnswer === undefined &&
+            step === 1 &&
             timeLeft !== 0 ? (
               <>
                 <span className="aiAnswer-title">Select your answer</span>
@@ -798,13 +799,14 @@ const AIQuestion = ({
             ) : showSelect &&
               selectedOption !== undefined &&
               selectedAnswer === undefined &&
-              timeLeft !== 0 ? (
+              timeLeft !== 0 &&
+              step === 1 ? (
               <>
                 <span className="aiAnswer-title">
                   Is this your final answer?
                 </span>
               </>
-            ) : selectedAnswer === undefined && timeLeft === 0 ? (
+            ) : selectedAnswer === undefined && timeLeft === 0 && step === 1 ? (
               <>
                 <span className="aiAnswer-title">❌ TIME'S UP!</span>
                 <span className="aiAnswer-desc">
@@ -812,12 +814,13 @@ const AIQuestion = ({
                 </span>
               </>
             ) : selectedOption === selectedAnswer &&
-              selectedAnswer !== undefined ? (
+              selectedAnswer !== undefined &&
+              step === 1 ? (
               <>
                 <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
                 <span className="aiAnswer-desc">You have earned 54 Stars</span>
               </>
-            ) : (
+            ) : step === 1 ? (
               <>
                 <span className="aiAnswer-title">
                   🍀 Better Luck Next Time 🍀
@@ -826,6 +829,8 @@ const AIQuestion = ({
                   Try again tomorrow for a chance to win rewards
                 </span>
               </>
+            ) : (
+              <></>
             )}
           </div>
         </div>

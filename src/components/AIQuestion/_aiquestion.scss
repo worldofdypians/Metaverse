@@ -47,6 +47,7 @@
   transform: translate(-50%, 0);
   left: 50%;
   width: calc(100% - 20px);
+  min-height: 78px;
 }
 
 .answer-inner-wrapper {
@@ -251,12 +252,13 @@
 }
 
 .ai-oryn-bottom-txt {
-  color: #6c7caf;
+  color: #8D98BC;
   font-family: "Montserrat";
   font-size: 13px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  list-style-type: none;
 }
 
 .aiAnswer-desc {
