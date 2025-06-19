@@ -254,7 +254,7 @@
 .ai-oryn-bottom-txt {
   color: #8D98BC;
   font-family: "Montserrat";
-  font-size: 13px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -493,7 +493,7 @@ line-height: normal;
 }
 
 .ai-rewards-title-active {
-  color: #fff;
+  color: #F3C009;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
@@ -502,15 +502,19 @@ line-height: normal;
 }
 
 .ai-reward-logo {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   filter: brightness(0.4);
+  position: absolute;
+    left: -5px;
 }
 
 .ai-reward-logo-active {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   filter: brightness(1);
+  position: absolute;
+    left: -5px;
 }
 
 .ai-separator {
@@ -524,6 +528,13 @@ line-height: normal;
 .ai-rewards-info {
   border-radius: 20px;
   border: 1px solid #255678;
+  background: rgba(15, 23, 47, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+.ai-rewards-info-active {
+  border-radius: 20px;
+  border: 1px solid #F3C009;
   background: rgba(15, 23, 47, 0.8);
   backdrop-filter: blur(2px);
 }

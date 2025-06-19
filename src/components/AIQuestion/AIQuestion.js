@@ -26,7 +26,7 @@ const AIQuestion = ({
   const answersOptions = [0, 1, 2, 3];
   const answers = ["A", "B", "C", "D"];
 
-  const totalTime = 25;
+  const totalTime = 20;
   const [step, setStep] = useState(0);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
@@ -297,7 +297,7 @@ const AIQuestion = ({
   const dashOffset = circumference * (1 - progress);
 
   return (
-    <div className="d-flex w-100 gap-2">
+    <div className="d-flex w-100 gap-4">
       <div className="d-none d-lg-flex d-md-flex flex-column gap-2 col-lg-3 col-md-4 position-relative">
         <div className="ai-oryn-top">
           <div
@@ -336,172 +336,33 @@ const AIQuestion = ({
           <span className="ai-oryn-text">Are you feeling lucky today?</span>
         </div>
         <div className="ai-oryn-bottom">
-          <div className="d-flex flex-column gap-2 p-4">
-            <span className="ai-oryn-bottom-txt">
-              A daily challenge where each player can unlock a AI question for a
-              chance to win!
-            </span>
-            <span className="ai-oryn-bottom-txt">Notes:</span>
-            <ul className="ai-oryn-bottom-txt ps-3">
-              <li>🔹 Daily opportunity </li>
-              <li>🔹 Available on BNB & opBNB</li>
-              <li>🔹 Sign the transaction </li>
-              <li>🔹 Answer in 20 seconds</li>
-              <li>🔹 Win different rewards</li>
-            </ul>
-            {step === 1 && (
-              <div className="ai-timer-bg-wrapper p-3">
-                <div className="d-flex align-items-center w-100 justify-content-between">
-                  <span className="ai-timer-title">Timer</span>
-                  {/* {(selectedAnswer === undefined || !showResult) && ( */}
-                  <div className="ai-timer-container">
-                    <svg className="ai-progress-ring" width="60" height="60">
-                      <circle
-                        className="ai-ring-bg"
-                        stroke="#343661"
-                        fill="transparent"
-                        r={radius}
-                        cx="30"
-                        cy="30"
-                      />
-                      <circle
-                        className={`ai-ring-progress ${
-                          timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
-                        }`}
-                        stroke={
-                          timeLeft > 16
-                            ? "url(#gradient)"
-                            : timeLeft > 8
-                            ? "url(#gradient2)"
-                            : "url(#gradient3)"
-                        }
-                        fill="transparent"
-                        strokeWidth="4"
-                        strokeDasharray={circumference}
-                        strokeDashoffset={dashOffset}
-                        r={radius}
-                        cx="30"
-                        cy="30"
-                      />
-                      <defs>
-                        <linearGradient
-                          id="gradient"
-                          x1="0%"
-                          y1="0%"
-                          x2="100%"
-                          y2="100%"
-                        >
-                          <stop offset="0%" stopColor="#EEBE50" />
-                          <stop offset="100%" stopColor="#EFCB86" />
-                        </linearGradient>
-
-                        <linearGradient
-                          id="gradient2"
-                          x1="0%"
-                          y1="0%"
-                          x2="100%"
-                          y2="100%"
-                        >
-                          <stop offset="0%" stopColor="#D46D4E" />
-                          <stop offset="100%" stopColor="#FF1926" />
-                        </linearGradient>
-                        <linearGradient
-                          id="gradient3"
-                          x1="0%"
-                          y1="0%"
-                          x2="100%"
-                          y2="100%"
-                        >
-                          <stop offset="0%" stopColor="#D44E4E" />
-                          <stop offset="100%" stopColor="#FF1926" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                    <div
-                      className={`ai-timer-label ${
-                        timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
-                      }`}
-                    >
-                      {timeLeft === 0 ? (
-                        <img
-                          src={"https://cdn.worldofdypians.com/wod/ai-time.png"}
-                          alt=""
-                          className="ai-time-icon"
-                        />
-                      ) : (
-                        `${timeLeft}s`
-                      )}
-                    </div>
-                  </div>
-                  {/* )} */}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      <div
-        className="d-flex flex-column gap-4 justify-content-between overflow-auto"
-        style={{ flex: 1 }}
-      >
-        <div className="d-flex flex-column w-100">
-          <div className="d-flex align-items-center gap-2 justify-content-between w-100 overflow-auto">
-            <div className="d-flex w-100 align-items-center gap-2 justify-content-start ">
-              <button
-                className={
-                  chainId === 56
-                    ? "ai-chain-button-active py-3 px-3 col-lg-4"
-                    : "ai-chain-button py-3 px-3 col-lg-4"
-                }
-                onClick={() => {
-                  handleBnbPool("0x38", 56);
-                }}
-              >
-                <div className="d-flex align-items-center gap-2 justify-content-between">
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
-                    alt=""
-                    className="ai-chain-icon"
-                  />
-                  BNB CHAIN
-                </div>
-              </button>
-              <button
-                className={
-                  chainId === 204
-                    ? "ai-chain-button-active py-3 px-3 col-lg-4"
-                    : "ai-chain-button py-3 px-3 col-lg-4"
-                }
-                onClick={() => {
-                  handleBnbPool("0xcc", 204);
-                }}
-              >
-                <div className="d-flex align-items-center gap-2 justify-content-between">
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/opbnbChain.png"}
-                    alt=""
-                    className="ai-chain-icon"
-                  />
-                  OPBNB
-                </div>
-              </button>
-              {/* <button className={"ai-chain-button py-3 px-3"}>
-              <div className="d-flex align-items-center gap-2 justify-content-between">
-                Coming Soon
-              </div>
-            </button> */}
+          <div className="d-flex flex-column gap-2 p-4 h-100 justify-content-between">
+            <div className=" gap-2 d-flex flex-column">
+              <span className="ai-oryn-bottom-txt">
+                A daily challenge where each player can unlock a AI question for
+                a chance to win!
+              </span>
+              <span className="ai-oryn-bottom-txt">Notes:</span>
+              <ul className="ai-oryn-bottom-txt ps-0">
+                <li>🔹 Daily opportunity </li>
+                <li>🔹 Available on BNB & opBNB</li>
+                <li>🔹 Sign the transaction </li>
+                <li>🔹 Answer in 20 seconds</li>
+                <li>🔹 Win different rewards</li>
+              </ul>
             </div>
-            <div className="ai-rewards-info">
+            {/* {step === 1 && ( */}
+            <div
+              className="ai-rewards-info"
+              onMouseOver={() => {
+                setActiveClass("stars");
+              }}
+              onMouseLeave={() => {
+                setActiveClass("");
+              }}
+            >
               <div className="d-flex align-items-center px-3 py-2 gap-2">
-                <div
-                  className="d-flex flex-column align-items-center gap-1"
-                  onMouseOver={() => {
-                    setActiveClass("stars");
-                  }}
-                  onMouseLeave={() => {
-                    setActiveClass("");
-                  }}
-                >
+                <div className="d-flex align-items-center gap-1">
                   <img
                     src={
                       "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
@@ -518,23 +379,27 @@ const AIQuestion = ({
                     <span
                       className={
                         activeClass === "stars"
-                          ? "ai-rewards-title-active"
-                          : "ai-rewards-title"
+                          ? "ai-rewards-title-active ps-3"
+                          : "ai-rewards-title ps-3"
                       }
                     >
                       STARS
                     </span>
                   </div>
                 </div>
-                <div
-                  className="d-flex flex-column align-items-center gap-1"
-                  onMouseOver={() => {
-                    setActiveClass("points");
-                  }}
-                  onMouseLeave={() => {
-                    setActiveClass("");
-                  }}
-                >
+              </div>
+            </div>
+            <div
+              className="ai-rewards-info"
+              onMouseOver={() => {
+                setActiveClass("points");
+              }}
+              onMouseLeave={() => {
+                setActiveClass("");
+              }}
+            >
+              <div className="d-flex align-items-center px-3 py-2 gap-2">
+                <div className="d-flex align-items-center gap-1">
                   <img
                     src={
                       "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
@@ -553,23 +418,27 @@ const AIQuestion = ({
                     <span
                       className={
                         activeClass === "points"
-                          ? "ai-rewards-title-active"
-                          : "ai-rewards-title"
+                          ? "ai-rewards-title-active ps-3"
+                          : "ai-rewards-title ps-3"
                       }
                     >
                       POINTS
                     </span>
                   </div>
                 </div>
-                <div
-                  className="d-flex flex-column align-items-center gap-1"
-                  onMouseOver={() => {
-                    setActiveClass("rewards");
-                  }}
-                  onMouseLeave={() => {
-                    setActiveClass("");
-                  }}
-                >
+              </div>
+            </div>
+            <div
+              className="ai-rewards-info"
+              onMouseOver={() => {
+                setActiveClass("rewards");
+              }}
+              onMouseLeave={() => {
+                setActiveClass("");
+              }}
+            >
+              <div className="d-flex align-items-center px-3 py-2 gap-2">
+                <div className="d-flex align-items-center gap-1">
                   <img
                     src={
                       "https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
@@ -586,14 +455,155 @@ const AIQuestion = ({
                     <span
                       className={
                         activeClass === "rewards"
-                          ? "ai-rewards-title-active"
-                          : "ai-rewards-title"
+                          ? "ai-rewards-title-active ps-3"
+                          : "ai-rewards-title ps-3"
                       }
                     >
                       REWARDS
                     </span>
                   </div>
                 </div>
+              </div>
+            </div>
+            {/* )} */}
+          </div>
+        </div>
+      </div>
+      <div
+        className="d-flex flex-column gap-4 justify-content-between overflow-auto"
+        style={{ flex: 1 }}
+      >
+        <div className="d-flex flex-column w-100">
+          <div className="d-flex align-items-center gap-2 justify-content-between w-100 overflow-auto">
+            <div className="d-flex w-100 align-items-center gap-3 justify-content-start">
+              <button
+                className={
+                  chainId === 56
+                    ? "ai-chain-button-active py-3 px-3 col-lg-4"
+                    : "ai-chain-button py-3 px-3 col-lg-4"
+                }
+                onClick={() => {
+                  handleBnbPool("0x38", 56);
+                }}
+              >
+                <div className="d-flex align-items-center gap-2 justify-content-center">
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                    alt=""
+                    className="ai-chain-icon"
+                  />
+                  BNB CHAIN
+                </div>
+              </button>
+              <button
+                className={
+                  chainId === 204
+                    ? "ai-chain-button-active py-3 px-3 col-lg-4"
+                    : "ai-chain-button py-3 px-3 col-lg-4"
+                }
+                onClick={() => {
+                  handleBnbPool("0xcc", 204);
+                }}
+              >
+                <div className="d-flex align-items-center gap-2 justify-content-center">
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/opbnbChain.png"}
+                    alt=""
+                    className="ai-chain-icon"
+                  />
+                  OPBNB
+                </div>
+              </button>
+              {/* <button className={"ai-chain-button py-3 px-3"}>
+              <div className="d-flex align-items-center gap-2 justify-content-between">
+                Coming Soon
+              </div>
+            </button> */}
+            </div>
+            <div className="ai-timer-bg-wrapper px-3 py-1">
+              <div className="d-flex align-items-center w-100 gap-4 justify-content-between">
+                <span className="ai-timer-title text-uppercase">Timer</span>
+                {/* {(selectedAnswer === undefined || !showResult) && ( */}
+                <div className="ai-timer-container">
+                  <svg className="ai-progress-ring" width="60" height="60">
+                    <circle
+                      className="ai-ring-bg"
+                      stroke="#343661"
+                      fill="transparent"
+                      r={radius}
+                      cx="30"
+                      cy="30"
+                    />
+                    <circle
+                      className={`ai-ring-progress ${
+                        timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+                      }`}
+                      stroke={
+                        timeLeft > 16
+                          ? "url(#gradient)"
+                          : timeLeft > 8
+                          ? "url(#gradient2)"
+                          : "url(#gradient3)"
+                      }
+                      fill="transparent"
+                      strokeWidth="4"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={dashOffset}
+                      r={radius}
+                      cx="30"
+                      cy="30"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="gradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="#EEBE50" />
+                        <stop offset="100%" stopColor="#EFCB86" />
+                      </linearGradient>
+
+                      <linearGradient
+                        id="gradient2"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="#D46D4E" />
+                        <stop offset="100%" stopColor="#FF1926" />
+                      </linearGradient>
+                      <linearGradient
+                        id="gradient3"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="#D44E4E" />
+                        <stop offset="100%" stopColor="#FF1926" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div
+                    className={`ai-timer-label ${
+                      timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
+                    }`}
+                  >
+                    {timeLeft === 0 ? (
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/ai-time.png"}
+                        alt=""
+                        className="ai-time-icon"
+                      />
+                    ) : (
+                      `${timeLeft}s`
+                    )}
+                  </div>
+                </div>
+                {/* )} */}
               </div>
             </div>
           </div>
@@ -632,10 +642,10 @@ const AIQuestion = ({
                   <div
                     className={`${getAnswerClass(
                       option
-                    )} px-3 py-3 d-flex align-items-center justify-content-between`}
+                    )} px-4 py-3 d-flex align-items-center justify-content-between`}
                   >
                     <span className="answer-text">
-                      {step === 0 ? "" : answers[index]}
+                      {answers[index] + ":"}
                     </span>
                     <span className="answer-text">
                       {step === 0
@@ -1004,7 +1014,7 @@ const AIQuestion = ({
                   </div>
                 </div>
               ) : unlockStatus === "initial" ? (
-                <>Unlock</>
+                <>Show</>
               ) : unlockStatus === "success" ? (
                 <>Success</>
               ) : (
