@@ -27,7 +27,7 @@ const AIQuestion = ({
   const answers = ["A", "B", "C", "D"];
 
   const totalTime = 25;
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [timeLeft, setTimeLeft] = useState(totalTime);
@@ -928,10 +928,21 @@ const AIQuestion = ({
           <></>
         )}*/}
       </div>
-      <div className="ai-question-footer-wrapper">
+      <div
+        className={
+          (selectedOption === undefined &&
+            selectedAnswer === undefined &&
+            step === 1) ||
+          timeLeft === 0
+            ? "ai-question-footer-wrapper-disabled"
+            : unlockStatus === "error"
+            ? "ai-question-footer-wrapper-error"
+            : "ai-question-footer-wrapper"
+        }
+      >
         {!email && coinbase && (
           <NavLink
-            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
             to="/auth"
             onClick={() => onClose()}
           >
@@ -940,7 +951,7 @@ const AIQuestion = ({
         )}
         {!isConnected && !coinbase && (
           <button
-            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+            className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
             onClick={onConnectWallet}
           >
             Connect
@@ -953,7 +964,7 @@ const AIQuestion = ({
           chainId !== 56 &&
           chainId !== 204 && (
             <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => {
                 handleBnbPool("0x38", 56);
               }}
@@ -968,7 +979,7 @@ const AIQuestion = ({
           (chainId === 56 || chainId === 204) &&
           step === 0 && (
             <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => handleUnlockQuestion()}
             >
               {unlockLoading ? (
@@ -1002,7 +1013,7 @@ const AIQuestion = ({
           (chainId === 56 || chainId === 204) &&
           step === 1 && (
             <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-2 justify-content-center py-2"
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => {
                 handleOptionClick(selectedOption);
               }}
@@ -1015,12 +1026,12 @@ const AIQuestion = ({
               Confirm
             </button>
           )}
-        <img
+        {/* <img
           src={
             "https://cdn.worldofdypians.com/wod/ai-question-button-bottom.webp"
           }
           className="ai-question-footer-img"
-        />
+        /> */}
       </div>
     </div>
   );
