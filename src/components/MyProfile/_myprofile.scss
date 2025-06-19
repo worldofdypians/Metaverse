@@ -765,6 +765,16 @@
   border: 0.5px solid #c23f62;
   background: rgba(128, 32, 96, 0.2);
   cursor: pointer;
+  .wod-balance-txt {
+    text-overflow: ellipsis;
+    width: 100px;
+    overflow: hidden;
+        color: #eeedff;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 16px;   }
   h6 {
     color: #eeedff;
     font-family: "Montserrat";

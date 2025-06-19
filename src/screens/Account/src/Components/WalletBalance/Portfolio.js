@@ -243,9 +243,11 @@ const Portfolio = ({
       }, 2000);
     } else if (sortValue === "eth") {
       setFilterTitle("");
-    } else if (sortValue === "balance") {
-      setFilterTitle("Balance");
-    } else if (sortValue === "offers") {
+    }
+    //  else if (sortValue === "balance") {
+    //   setFilterTitle("Balance");
+    // } 
+    else if (sortValue === "offers") {
       setLoading(true);
       setFilterTitle("Offers");
       setmyOffersFiltered(myOffers);
@@ -1566,7 +1568,7 @@ const Portfolio = ({
                 >
                   Offers made
                 </h6>
-                <h6
+                {/* <h6
                   className={`account-nft-sort ${
                     filterTitle === "Balance" && "nft-sort-selected"
                   } `}
@@ -1576,7 +1578,7 @@ const Portfolio = ({
                   }}
                 >
                   Balance
-                </h6>
+                </h6> */}
               </div>
 
               {filterTitle === "Favorites" && loading === false && (
@@ -2156,7 +2158,7 @@ const Portfolio = ({
                   )}
                 </div>
               )}
-
+{/* 
               {filterTitle === "Balance" && loading === false && (
                 <div className="d-flex flex-column  justify-content-center gap-2">
                   <div className="d-flex flex-row gap-2 align-items-center">
@@ -2343,7 +2345,7 @@ const Portfolio = ({
                     </div>
                   </div>
                 </div>
-              )}
+              )} */}
 
               {loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||
