@@ -41,6 +41,7 @@ const AIQuestion = ({
   const [count, setCount] = useState(0);
   const [audioFile, setAudioFile] = useState(null);
   const [jsonFile, setJsonFile] = useState(null);
+  const [showSelect, setShowSelect] = useState(false);
 
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
@@ -604,7 +605,7 @@ const AIQuestion = ({
           style={{ flex: 1 }}
         >
           <div className="ai-answer-option-wrapper p-4 pt-0 position-relative w-100">
-            <div className="ai-question-text-wrapper">
+            <div className="ai-question-text-wrapper justify-content-center">
               <span className="aiLockedQuestion text-capitalize my-2">
                 {step === 0
                   ? ""
@@ -625,6 +626,7 @@ const AIQuestion = ({
                   }`}
                   onClick={() => {
                     step === 1 && setSelectedOption(option);
+                    setShowSelect(true);
                   }}
                 >
                   <div
@@ -785,40 +787,44 @@ const AIQuestion = ({
                   </button>
                 </>
               )} */}
-            {(selectedAnswer !== undefined || showResult) && (
+
+            {!showSelect &&
+            selectedOption === undefined &&
+            selectedAnswer === undefined &&
+            timeLeft !== 0 ? (
               <>
-                {selectedOption === selectedAnswer &&
-                selectedAnswer !== undefined ? (
-                  <>
-                    <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
-                    <span className="aiAnswer-desc">
-                      You have earned 54 Stars
-                    </span>
-                  </>
-                ) : selectedAnswer === undefined && timeLeft === 0 ? (
-                  <>
-                    <span className="aiAnswer-title">❌ TIME'S UP!</span>
-                    <span className="aiAnswer-desc">
-                      Try again tomorrow for a chance to win rewards
-                    </span>
-                  </>
-                ) : selectedAnswer !== undefined || selectedOption !== undefined ? (
-                  <>
-                    <span className="aiAnswer-title">
-                      Is this your final answer?
-                    </span>
-                   
-                  </>
-                ) : (
-                  <>
-                    <span className="aiAnswer-title">
-                      🍀 Better Luck Next Time 🍀
-                    </span>
-                    <span className="aiAnswer-desc">
-                      Try again tomorrow for a chance to win rewards
-                    </span>
-                  </>
-                )}
+                <span className="aiAnswer-title">Select your answer</span>
+              </>
+            ) : showSelect &&
+              selectedOption !== undefined &&
+              selectedAnswer === undefined &&
+              timeLeft !== 0 ? (
+              <>
+                <span className="aiAnswer-title">
+                  Is this your final answer?
+                </span>
+              </>
+            ) : selectedAnswer === undefined && timeLeft === 0 ? (
+              <>
+                <span className="aiAnswer-title">❌ TIME'S UP!</span>
+                <span className="aiAnswer-desc">
+                  Try again tomorrow for a chance to win rewards
+                </span>
+              </>
+            ) : selectedOption === selectedAnswer &&
+              selectedAnswer !== undefined ? (
+              <>
+                <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
+                <span className="aiAnswer-desc">You have earned 54 Stars</span>
+              </>
+            ) : (
+              <>
+                <span className="aiAnswer-title">
+                  🍀 Better Luck Next Time 🍀
+                </span>
+                <span className="aiAnswer-desc">
+                  Try again tomorrow for a chance to win rewards
+                </span>
               </>
             )}
           </div>
@@ -1016,6 +1022,7 @@ const AIQuestion = ({
               className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => {
                 handleOptionClick(selectedOption);
+                setShowSelect(false);
               }}
               disabled={
                 (selectedOption === undefined &&
