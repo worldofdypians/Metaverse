@@ -516,7 +516,7 @@ const MyProfile = ({
                               alt=""
                             />
                           )}
-                        {!domainName &&
+                        {/* {!domainName &&
                           isConnected &&
                           address &&
                           email &&
@@ -539,8 +539,8 @@ const MyProfile = ({
                                 // onClick={onDomainClick}
                               />
                             </a>
-                          )}
-                        {!domainName &&
+                          )} */}
+                        {/* {!domainName &&
                           isConnected &&
                           address &&
                           email &&
@@ -563,7 +563,7 @@ const MyProfile = ({
                                 // onClick={onDomainClick}
                               />
                             </a>
-                          )}
+                          )} */}
                       </div>
                     </div>
                     {(isConnected &&
