@@ -222,7 +222,7 @@
   }
 }
 .wod-domain-name-wrapper {
-  background-image: url("https://cdn.worldofdypians.com/wod/domainNameBg.svg");
+  background-image: url("https://cdn.worldofdypians.com/wod/domainNameBg.webp");
   border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -240,20 +240,20 @@
 }
 
 .wod-domain-icon {
-  width: 70px;
-  @media screen and (max-width: 786px) {
-    width: 120px;
-  }
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+ 
 }
 
 .wod-domain-name-span {
-  color: #fff;
+  color: #f3bf09;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  width: 80%;
+  // width: 80%;
 }
 
 .new-special-rewards-wrapper:hover {
@@ -301,7 +301,7 @@
   line-height: normal;
   text-transform: uppercase;
 
-    @media screen and (max-width: 500px) {
+  @media screen and (max-width: 500px) {
     font-size: 14px;
   }
 }
@@ -310,7 +310,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
-    @media screen and (max-width: 480px) {
+  @media screen and (max-width: 480px) {
     grid-template-columns: repeat(1, 1fr);
   }
 }
@@ -576,7 +576,14 @@
   position: absolute;
   right: 20px;
   bottom: 0;
-  width: 22%;
+  width: 28%;
+}
+
+.ai-question-img {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  width: 21%;
 }
 
 .daily-progress-wrapper {

@@ -1481,7 +1481,7 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-5 mt-3">
                 <div
                   className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
                   onClick={openMyRewards}
@@ -1552,89 +1552,23 @@ const MyProfile = ({
                   />
                 </div>
               </div>
-              <div className="col-12 col-lg-3 mt-3">
+              <div className="col-12 col-lg-4 mt-3">
                 <div
-                  className="new-special-rewards-wrapper d-flex flex-column justify-content-between p-3 h-100"
-                  onClick={openSpecialRewards}
+                  className="ai-question-banner d-flex position-relative flex-column justify-content-between p-3 h-100"
+                  onClick={onDailyQuestionClick}
                 >
-                  <h6 className="special-rewards-title">Special Rewards</h6>
-                  <div className="d-flex flex-column">
-                    <h6 className="special-rewards-total mb-0">
-                      ${getFormattedNumber(specialRewards)}
-                    </h6>
-                    <span className="special-rewards-total-span">Rewards</span>
-                  </div>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/redArrow.svg"}
-                    width={20}
-                    height={20}
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div className="col-12 col-lg-3 mt-3">
-                <a
-                  href="https://wod.space.id"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="wod-domain-name-wrapper d-flex align-items-center justify-content-between gap-2 p-3"
-                >
-                  <div className="d-flex flex-column justify-content-between h-100">
-                    <h6
-                      className="special-rewards-title"
-                      style={{ color: "#FFD9F1" }}
-                    >
-                      .WOD
-                    </h6>
-                    <span className="wod-domain-name-span">
-                      Claim Your Identity
-                    </span>
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/wodDomainArrow.svg"
-                      }
-                      width={20}
-                      height={20}
-                      alt=""
-                    />
-                  </div>
                   <img
                     src={
-                      "https://cdn.worldofdypians.com/wod/domainNameIcon.png"
+                      "https://cdn.worldofdypians.com/wod/aiQuestion-oryn.webp"
                     }
-                    className="wod-domain-icon"
+                    className="ai-question-img"
                     alt=""
                   />
-                </a>
-              </div>
-              <div
-                className="col-12 col-lg-6 mt-3"
-                onClick={onDailyQuestionClick}
-              >
-                <div className="ai-question-banner d-flex align-items-center gap-5 justify-content-between p-2">
-                  <div className="d-flex align-items-center gap-2 justify-content-between w-100">
-                    <div className="d-flex align-items-center gap-2">
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/aiQuestionThumb.webp"
-                        }
-                        alt=""
-                        style={{ width: 44, height: 44 }}
-                      />
-                      <div className="d-flex flex-column">
-                        <span className="user-blue-rank">
-                          AI Daily Challenge
-                        </span>
-                        <span
-                          className="user-rank-text"
-                          style={{
-                            color: "#FFBA4E",
-                          }}
-                        >
-                          Powered by BNB Chain
-                        </span>
-                      </div>
-                    </div>
+                  <h6 className="special-rewards-title text-white">
+                    AI Daily Challenge
+                  </h6>
+
+                  <div className="d-flex flex-column">
                     {aiQuestionCompleted && (
                       <Countdown date={Number(midnight)} renderer={renderer} />
                     )}
@@ -1681,23 +1615,102 @@ const MyProfile = ({
                         </div>
                       </div>
                     )}
+                  </div>
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/wingStormArrow.svg"
+                    }
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className="col-12 col-lg-3 mt-3">
+                <div
+                  className="new-special-rewards-wrapper position-relative d-flex flex-column justify-content-between p-3 h-100"
+                  onClick={openSpecialRewards}
+                >
+                  <h6 className="special-rewards-title">Special Rewards</h6>
+                  <div className="d-flex flex-column">
+                    <h6 className="special-rewards-total mb-0">
+                      ${getFormattedNumber(specialRewards)}
+                    </h6>
+                    <span className="special-rewards-total-span">Rewards</span>
+                  </div>
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/redArrow.svg"}
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
+                </div>
+              </div>
+              {/* <div className="col-12 col-lg-3 mt-3">
+                <a
+                  href="https://wod.space.id"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="wod-domain-name-wrapper d-flex align-items-center justify-content-between gap-2 p-3"
+                >
+                  <div className="d-flex flex-column justify-content-between h-100">
+                    <h6
+                      className="special-rewards-title"
+                      style={{ color: "#FFD9F1" }}
+                    >
+                      .WOD
+                    </h6>
+                    <span className="wod-domain-name-span">
+                      Claim Your Identity
+                    </span>
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/wodDomainArrow.svg"
+                      }
+                      width={20}
+                      height={20}
+                      alt=""
+                    />
+                  </div>
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/domainNameIcon.png"
+                    }
+                    className="wod-domain-icon"
+                    alt=""
+                  />
+                </a>
+              </div> */}
 
-                    <div className="d-flex align-items-center gap-2">
-                      {!aiQuestionCompleted ? (
-                        <button
-                          className="activate-btn px-3 py-1"
-                          onClick={onGoldenpassClick}
-                        >
-                          Unlock
-                        </button>
-                      ) : (
-                        <button className="activate-btn-yellow px-3 py-1">
-                          Completed
-                        </button>
-                      )}
+              <div className="col-12 col-lg-6 mt-3">
+                <a
+                  href="https://wod.space.id"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="wod-domain-name-wrapper h-auto d-flex align-items-center justify-content-between gap-2 p-2 pe-3"
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/domainNameIcon.png"
+                      }
+                      className="wod-domain-icon"
+                      alt=""
+                    />
+                    <div className="d-flex flex-column justify-content-between h-100 mb-0">
+                      <h6
+                        className="special-rewards-title mb-0"
+                        style={{ color: "#FFD9F1", fontSize: "15px" }}
+                      >
+                        .WOD Domain
+                      </h6>
+                      <span className="wod-domain-name-span">
+                        Claim Your Identity
+                      </span>
                     </div>
                   </div>
-                </div>
+                  <button className="get-wodname-button px-3">Get</button>
+                </a>
               </div>
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink to="/account/prime">
