@@ -113,6 +113,7 @@ border: 2px solid #fff;
   background-position: center;
   border: none !important;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .radio-button-option-wrong {
@@ -122,6 +123,7 @@ border: 2px solid #fff;
   background-position: center;
   border: none !important;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .radio-button-option {
@@ -438,6 +440,10 @@ border: 2px solid #fff;
   line-height: normal;
 }
 
+.ai-question-confirm-answer:hover { 
+background: linear-gradient(90deg, #008EBF 0%, #00B7CC 100%);
+}
+
 .ai-timer-container {
   width: 60px;
   height: 60px;
@@ -583,3 +589,30 @@ border: 2px solid #fff;
   width: 25px;
   height: 25px;
 }
+
+/* Typing effect keyframes */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+
+// .question, .option {
+//   overflow: hidden;
+//   white-space: nowrap;
+//   width: 0;
+//   animation: typing 1.5s steps(40, end) forwards;
+//   text-align: center;
+// }
+
+
+// #option1 { animation-delay: 1.5s; }
+// #option2 { animation-delay: 2.5s; }
+// #option3 { animation-delay: 3.5s; }
+// #option4 { animation-delay: 4.5s; }
+
+
+// #question {
+//   animation-delay: 0s;
+// }
+

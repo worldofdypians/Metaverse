@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import Web3 from "web3";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import orynBorder from "./ai-oryn-border2.webp";
+// import orynBorder from "./ai-oryn-border2.webp";
 import { Canvas } from "@react-three/fiber";
 import { QuestionExperience } from "../../screens/NewAgent/components/QuestionExperience";
 import { Experience } from "../../screens/NewAgent/components/Experience";
@@ -27,9 +27,15 @@ const AIQuestion = ({
   const answers = ["A", "B", "C", "D"];
 
   const totalTime = 20;
-  const [step, setStep] = useState(1);
+
+  const TYPING_SPEED_PER_CHAR = 0.05; // seconds per character
+  const BASE_DELAY = 1.5;
+
+  const [step, setStep] = useState(0);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
+  const [optionsClickable, setOptionsClickable] = useState(false);
+
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [confirmed, setConfirmed] = useState(false);
   const [showResult, setShowResult] = useState(false);
@@ -279,7 +285,7 @@ const AIQuestion = ({
     }
   };
   useEffect(() => {
-    if (step === 1) {
+    if (step === 1 && optionsClickable) {
       if (confirmed || timeLeft === 0) return;
       intervalRef.current = setInterval(() => {
         setTimeLeft((prev) => {
@@ -293,7 +299,31 @@ const AIQuestion = ({
 
       return () => clearInterval(intervalRef.current);
     }
-  }, [timeLeft, confirmed, step]);
+  }, [timeLeft, confirmed, step, optionsClickable]);
+
+  useEffect(() => {
+    if (step === 1) {
+      const totalTypingTime =
+        BASE_DELAY +
+        answersOptions.reduce((acc, option) => {
+          const text =
+            option === 0
+              ? "Bitcoin (BTC)"
+              : option === 1
+              ? "Ethereum (ETH)"
+              : option === 2
+              ? "Solana (SOL)"
+              : "Binance Coin (BNB)";
+          return acc + text.length * TYPING_SPEED_PER_CHAR;
+        }, 0);
+
+      setTimeout(() => {
+        setOptionsClickable(true);
+      }, totalTypingTime * 1000);
+    }
+
+    // return () => clearTimeout(timer);
+  }, [step, answersOptions]);
 
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
@@ -354,13 +384,19 @@ const AIQuestion = ({
             </div>
             {/* {step === 1 && ( */}
             <div
-              className="ai-rewards-info"
-              onMouseOver={() => {
-                setActiveClass("stars");
-              }}
-              onMouseLeave={() => {
-                setActiveClass("");
-              }}
+              className={
+                selectedOption === selectedAnswer &&
+                selectedAnswer !== undefined &&
+                step === 1
+                  ? "ai-rewards-info-active"
+                  : "ai-rewards-info"
+              }
+              // onMouseOver={() => {
+              //   setActiveClass("stars");
+              // }}
+              // onMouseLeave={() => {
+              //   setActiveClass("");
+              // }}
             >
               <div className="d-flex align-items-center px-3 py-2 gap-2">
                 <div className="d-flex align-items-center gap-1">
@@ -370,7 +406,12 @@ const AIQuestion = ({
                     }
                     alt=""
                     className={
-                      activeClass === "stars"
+                      activeClass === "stars" ||
+                      step === 0 ||
+                      (selectedOption === selectedAnswer &&
+                        selectedAnswer !== undefined &&
+                        step === 1) ||
+                      (selectedAnswer === undefined && step === 1)
                         ? "ai-reward-logo-active"
                         : "ai-reward-logo"
                     }
@@ -379,7 +420,11 @@ const AIQuestion = ({
                     {/* <span className={"ai-rewards-stars"}>180</span> */}
                     <span
                       className={
-                        activeClass === "stars"
+                        activeClass === "stars" ||
+                        // step === 0 ||
+                        (selectedOption === selectedAnswer &&
+                          selectedAnswer !== undefined &&
+                          step === 1)
                           ? "ai-rewards-title-active ps-3"
                           : "ai-rewards-title ps-3"
                       }
@@ -392,12 +437,12 @@ const AIQuestion = ({
             </div>
             <div
               className="ai-rewards-info"
-              onMouseOver={() => {
-                setActiveClass("points");
-              }}
-              onMouseLeave={() => {
-                setActiveClass("");
-              }}
+              // onMouseOver={() => {
+              //   setActiveClass("points");
+              // }}
+              // onMouseLeave={() => {
+              //   setActiveClass("");
+              // }}
             >
               <div className="d-flex align-items-center px-3 py-2 gap-2">
                 <div className="d-flex align-items-center gap-1">
@@ -407,7 +452,9 @@ const AIQuestion = ({
                     }
                     alt=""
                     className={
-                      activeClass === "points"
+                      activeClass === "points" ||
+                      step === 0 ||
+                      (selectedAnswer === undefined && step === 1)
                         ? "ai-reward-logo-active"
                         : "ai-reward-logo"
                     }
@@ -419,7 +466,9 @@ const AIQuestion = ({
                     <span
                       className={
                         activeClass === "points"
-                          ? "ai-rewards-title-active ps-3"
+                          ? //|| step === 0 ||
+                            // (selectedAnswer !== undefined && step === 1)
+                            "ai-rewards-title-active ps-3"
                           : "ai-rewards-title ps-3"
                       }
                     >
@@ -431,12 +480,12 @@ const AIQuestion = ({
             </div>
             <div
               className="ai-rewards-info"
-              onMouseOver={() => {
-                setActiveClass("rewards");
-              }}
-              onMouseLeave={() => {
-                setActiveClass("");
-              }}
+              // onMouseOver={() => {
+              //   setActiveClass("rewards");
+              // }}
+              // onMouseLeave={() => {
+              //   setActiveClass("");
+              // }}
             >
               <div className="d-flex align-items-center px-3 py-2 gap-2">
                 <div className="d-flex align-items-center gap-1">
@@ -446,7 +495,9 @@ const AIQuestion = ({
                     }
                     alt=""
                     className={
-                      activeClass === "rewards"
+                      activeClass === "rewards" ||
+                      step === 0 ||
+                      (selectedAnswer === undefined && step === 1)
                         ? "ai-reward-logo-active"
                         : "ai-reward-logo"
                     }
@@ -456,7 +507,9 @@ const AIQuestion = ({
                     <span
                       className={
                         activeClass === "rewards"
-                          ? "ai-rewards-title-active ps-3"
+                          ? // ||step === 0 ||
+                            // (selectedAnswer !== undefined && step === 1)
+                            "ai-rewards-title-active ps-3"
                           : "ai-rewards-title ps-3"
                       }
                     >
@@ -617,7 +670,7 @@ const AIQuestion = ({
         >
           <div className="ai-answer-option-wrapper p-4 pt-0 position-relative w-100">
             <div className="ai-question-text-wrapper justify-content-center align-items-center">
-              <span className="aiLockedQuestion text-capitalize ">
+              <span className="aiLockedQuestion text-capitalize " id="question">
                 {step === 0
                   ? ""
                   : step === 1
@@ -626,43 +679,96 @@ const AIQuestion = ({
               </span>
             </div>
             <div className="options-wrapper gap-3 w-100">
-              {answersOptions.map((option, index) => (
-                <div
-                  key={index}
-                  className={`answer-outer-wrapper w-100 ${
-                    (selectedAnswer !== undefined ||
-                      timeLeft === 0 ||
-                      step === 0) &&
-                    "pe-none"
-                  }`}
-                  onClick={() => {
-                    step === 1 && setSelectedOption(option);
-                    setShowSelect(true);
-                  }}
-                >
+              {answersOptions.map((option, index) => {
+                const text =
+                  step === 1
+                    ? option === 0
+                      ? "Bitcoin (BTC)"
+                      : option === 1
+                      ? "Ethereum (ETH)"
+                      : option === 2
+                      ? "Solana (SOL)"
+                      : "Binance Coin (BNB)"
+                    : "";
+
+                // Use actual character length of previous options to calculate delay
+                const delayBeforeThisOption =
+                  step === 1
+                    ? answersOptions
+                        .slice(0, index)
+                        .reduce((acc, prevOption) => {
+                          const prevText =
+                            prevOption === 0
+                              ? "Bitcoin (BTC)"
+                              : prevOption === 1
+                              ? "Ethereum (ETH)"
+                              : prevOption === 2
+                              ? "Solana (SOL)"
+                              : "Binance Coin (BNB)";
+                          return acc + prevText.length * TYPING_SPEED_PER_CHAR;
+                        }, BASE_DELAY)
+                    : 0;
+
+                const animationDuration =
+                  step === 1 ? text.length * TYPING_SPEED_PER_CHAR : 0;
+
+                return (
                   <div
-                    className={`${getAnswerClass(
-                      option
-                    )} px-4 py-3 d-flex align-items-center justify-content-between`}
+                    key={index}
+                    className={`answer-outer-wrapper w-100 ${
+                      (!optionsClickable ||
+                        selectedAnswer !== undefined ||
+                        timeLeft === 0 ||
+                        step === 0) &&
+                      "pe-none"
+                    }`}
+                    onClick={() => {
+                      step === 1 && setSelectedOption(option);
+                      setShowSelect(true);
+                    }}
                   >
-                    <span className="answer-text">{answers[index] + ":"}</span>
-                    <span className="answer-text">
-                      {step === 0
-                        ? ""
-                        : option === 0
-                        ? "Bitcoin (BTC)"
-                        : option === 1
-                        ? "Ethereum (ETH)"
-                        : option === 2
-                        ? "Solana (SOL)"
-                        : "Binance Coin (BNB)"}
-                    </span>
-                    {step === 1 && (
-                      <span className={getRadioClass(option)}></span>
-                    )}
+                    <div
+                      className={`${getAnswerClass(
+                        option
+                      )} px-4 py-3 d-flex align-items-center justify-content-between`}
+                    >
+                      <div className="d-flex align-items-center gap-3">
+                        <span className="answer-text">
+                          {answers[index] + ":"}
+                        </span>
+                        <span
+                          className="answer-text option"
+                          id={`option${index + 1}`}
+                          style={{
+                            animation:
+                              step === 1
+                                ? `typing ${animationDuration}s steps(${text.length}, end) forwards`
+                                : "none",
+                            animationDelay: `${delayBeforeThisOption}s`,
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            display: "inline-block",
+                            width: step === 1 ? "0" : "auto",
+                          }}
+                        >
+                          {step === 0
+                            ? ""
+                            : option === 0
+                            ? "Bitcoin (BTC)"
+                            : option === 1
+                            ? "Ethereum (ETH)"
+                            : option === 2
+                            ? "Solana (SOL)"
+                            : "Binance Coin (BNB)"}
+                        </span>
+                      </div>
+                      {step === 1 && (
+                        <span className={getRadioClass(option)}></span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
           <div
@@ -951,35 +1057,45 @@ const AIQuestion = ({
       </div>
       <div
         className={
-          // (selectedOption === undefined &&
-          //   selectedAnswer === undefined &&
-          //   step === 1) ||
-          // timeLeft === 0
-          //   ? "ai-question-footer-wrapper-disabled"
-          //   : unlockStatus === "error" || (selectedAnswer === undefined && timeLeft === 0 && step === 1)
-          //   ? "ai-question-footer-wrapper-error"
-          //   : "ai-question-footer-wrapper"
-          (chainId !== 56 && chainId !== 204) ||
-          (selectedOption === undefined &&
-            selectedAnswer === undefined &&
-            step === 1 &&
-            timeLeft === 0) ||
-          unlockStatus === "error" ||
-          (selectedOption !== selectedAnswer &&
-            selectedAnswer !== undefined &&
-            step === 1)
-            ? "ai-question-footer-wrapper-error"
+          isConnected &&
+          coinbase &&
+          email &&
+          (chainId === 56 || chainId === 204) &&
+          step === 0
+            ? "ai-question-footer-wrapper"
+            : // (selectedOption === undefined &&
+            //   selectedAnswer === undefined &&
+            //   step === 1) ||
+            // timeLeft === 0
+            //   ? "ai-question-footer-wrapper-disabled"
+            //   : unlockStatus === "error" || (selectedAnswer === undefined && timeLeft === 0 && step === 1)
+            //   ? "ai-question-footer-wrapper-error"
+            //   : "ai-question-footer-wrapper"
+            (chainId !== 56 && chainId !== 204) ||
+              (selectedOption === undefined &&
+                selectedAnswer === undefined &&
+                step === 1 &&
+                timeLeft === 0) ||
+              unlockStatus === "error" ||
+              (selectedOption !== selectedAnswer &&
+                selectedAnswer !== undefined &&
+                step === 1)
+            ? "ai-question-footer-wrapper-error pe-none"
             : selectedOption !== selectedAnswer &&
               selectedAnswer === undefined &&
               selectedOption !== undefined &&
               timeLeft === 0 &&
               step === 1
-            ? "ai-question-footer-wrapper-error"
+            ? "ai-question-footer-wrapper-error pe-none"
             : (selectedOption === undefined &&
                 selectedAnswer === undefined &&
                 step === 1) ||
               timeLeft === 0
             ? "ai-question-footer-wrapper-disabled"
+            : selectedOption === selectedAnswer &&
+              selectedAnswer !== undefined &&
+              step === 1
+            ? "ai-question-footer-wrapper-active"
             : "ai-question-footer-wrapper-disabled"
         }
       >
