@@ -21,6 +21,7 @@ const AIQuestion = ({
   walletClient,
   publicClient,
   binanceW3WProvider,
+  address,
   username,
 }) => {
   const answersOptions = [0, 1, 2, 3];
@@ -576,7 +577,9 @@ const AIQuestion = ({
             </div>
             <div className="ai-timer-bg-wrapper px-3 py-1 col-lg-3">
               <div className="d-flex align-items-center w-100 gap-4 justify-content-between">
-                <span className="ai-timer-title text-uppercase">Timer</span>
+                <span className="ai-timer-title text-uppercase">
+                  {timeLeft > 0 ? "Timer" : "Time's Up!"}
+                </span>
                 {/* {(selectedAnswer === undefined || !showResult) && ( */}
                 <div className="ai-timer-container">
                   <svg className="ai-progress-ring" width="60" height="60">
@@ -784,124 +787,37 @@ const AIQuestion = ({
                 : ""
             } ai-answer-result-wrapper px-3 py-2 d-flex flex-column align-items-center justify-content-center`}
           >
-            {
-              // step === 1 ? (
-              //   <>
-              //     {timeLeft !== 0 &&
-              //       (selectedAnswer === undefined || !showResult) && (
-              //         <div className="ai-timer-container">
-              //           <svg className="ai-progress-ring" width="60" height="60">
-              //             <circle
-              //               className="ai-ring-bg"
-              //               stroke="#343661"
-              //               fill="transparent"
-              //               r={radius}
-              //               cx="30"
-              //               cy="30"
-              //             />
-              //             <circle
-              //               className={`ai-ring-progress ${
-              //                 timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
-              //               }`}
-              //               stroke={
-              //                 timeLeft > 16
-              //                   ? "url(#gradient)"
-              //                   : timeLeft > 8
-              //                   ? "url(#gradient2)"
-              //                   : "url(#gradient3)"
-              //               }
-              //               fill="transparent"
-              //               strokeWidth="4"
-              //               strokeDasharray={circumference}
-              //               strokeDashoffset={dashOffset}
-              //               r={radius}
-              //               cx="30"
-              //               cy="30"
-              //             />
-              //             <defs>
-              //               <linearGradient
-              //                 id="gradient"
-              //                 x1="0%"
-              //                 y1="0%"
-              //                 x2="100%"
-              //                 y2="100%"
-              //               >
-              //                 <stop offset="0%" stopColor="#D4CF4E" />
-              //                 <stop offset="100%" stopColor="#4ED4D0" />
-              //               </linearGradient>
-
-              //               <linearGradient
-              //                 id="gradient2"
-              //                 x1="0%"
-              //                 y1="0%"
-              //                 x2="100%"
-              //                 y2="100%"
-              //               >
-              //                 <stop offset="0%" stopColor="#D46D4E" />
-              //                 <stop offset="100%" stopColor="#FF1926" />
-              //               </linearGradient>
-              //               <linearGradient
-              //                 id="gradient3"
-              //                 x1="0%"
-              //                 y1="0%"
-              //                 x2="100%"
-              //                 y2="100%"
-              //               >
-              //                 <stop offset="0%" stopColor="#D44E4E" />
-              //                 <stop offset="100%" stopColor="#FF1926" />
-              //               </linearGradient>
-              //             </defs>
-              //           </svg>
-              //           <div
-              //             className={`ai-timer-label ${
-              //               timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
-              //             }`}
-              //           >
-              //             {timeLeft === 0 ? <></> : `${timeLeft}s`}
-              //           </div>
-              //         </div>
-              //       )}
-              //   </>
-              // ) :
-              step === 0 ? (
-                <>
-                  {" "}
-                  {/* <span className="aiLockedDesc">
+            {step === 0 ? (
+              <>
+                {/* <span className="aiLockedDesc">
                     A Hidden question awaits
                   </span> */}
-                  <span className="aiLockedDesc">
-                    {!email && coinbase
-                      ? "Login to your game account"
-                      : !isConnected && !coinbase
-                      ? "Connect your wallet to show the question"
-                      : isConnected &&
-                        coinbase &&
-                        email &&
-                        chainId !== 56 &&
-                        chainId !== 204
-                      ? "Switch to BNB Chain or opBNB to show the question"
-                      : "Complete the transaction to show the question"}
-                  </span>
-                </>
-              ) : (
-                <></>
-              )
-            }
-            {/* {selectedOption !== undefined &&
-              selectedAnswer === undefined &&
-              timeLeft > 0 && (
-                <>
-                  <span className="aiLockedDesc">Are you sure?</span>
-                  <button
-                    className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-3 justify-content-center py-2"
-                    onClick={() => {
-                      handleOptionClick(selectedOption);
-                    }}
-                  >
-                    Confirm
-                  </button>
-                </>
-              )} */}
+                <span className="aiLockedDesc">
+                  {!email && coinbase
+                    ? "Login to your game account"
+                    : !isConnected && !coinbase
+                    ? "Connect your wallet to show the question"
+                    : isConnected &&
+                      coinbase &&
+                      address &&
+                      address.toLowerCase() === coinbase.toLowerCase() &&
+                      email &&
+                      chainId !== 56 &&
+                      chainId !== 204
+                    ? "Switch to BNB Chain or opBNB to show the question"
+                    : isConnected &&
+                      coinbase &&
+                      email &&
+                      address &&
+                      (chainId === 56 || chainId === 204) &&
+                      address.toLowerCase() !== coinbase.toLowerCase()
+                    ? "Use the wallet associated to your game account."
+                    : "Complete the transaction to show the question"}
+                </span>
+              </>
+            ) : (
+              <></>
+            )}
 
             {!showSelect &&
             selectedOption === undefined &&
@@ -950,119 +866,23 @@ const AIQuestion = ({
             )}
           </div>
         </div>
-        {/* ) : step === 1 ? (
-          <div
-            className="d-flex flex-column gap-2 align-items-center justify-content-between"
-            style={{ flex: 1 }}
-          >
-            <div className="d-flex flex-column gap-3 align-items-center justify-content-between">
-              <div className="d-flex flex-column position-relative w-100 align-items-center">
-                <div className="ai-countdown-wrapper px-0">
-                <div className="ai-progress-bar-bg">
-                  <div
-                    className={`ai-progress-bar-fill ${
-                      timeLeft <= 10 ? "ai-danger" : ""
-                    }`}
-                    style={{ width: `${progressPercent}%` }}
-                  ></div>
-                </div>
-              </div>
-              <div className="ai-timer-text px-4 pb-1 d-flex align-items-center gap-1">
-                ⏱ {timeLeft === 0 ? "Timer ended" : `${timeLeft}s`}
-              </div> 
-              </div>
-              <div className="ai-question-text-wrapper">
-                <span className="aiLockedQuestion text-capitalize my-2">
-                  Which was the first crypto introduced in the world?
-                </span>
-              </div>
-              <div className="options-wrapper gap-3 w-100">
-                {answersOptions.map((option, index) => (
-                  <div
-                    key={index}
-                    className={`answer-outer-wrapper w-100 ${
-                      (selectedAnswer !== undefined || timeLeft === 0) &&
-                      "pe-none"
-                    }`}
-                    onClick={() => setSelectedOption(option)}
-                  >
-                    <div
-                      className={`${getAnswerClass(
-                        option
-                      )} px-3 py-3 d-flex align-items-center justify-content-between`}
-                    >
-                      <span className="answer-text">{index + 1}</span>
-                      <span className="answer-text">
-                        {option === 0
-                          ? "Bitcoin (BTC)"
-                          : option === 1
-                          ? "Ethereum (ETH)"
-                          : option === 2
-                          ? "Solana (SOL)"
-                          : "Binance Coin (BNB)"}
-                      </span>
-                      <span className={getRadioClass(option)}></span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {selectedOption !== undefined &&
-              selectedAnswer === undefined &&
-              timeLeft > 0 && (
-                <div className="d-flex flex-column gap-1 align-items-center w-100 justify-content-between">
-                  <span className="aiLockedDesc">Are you sure?</span>
-                  <button
-                    className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-3 justify-content-center py-2"
-                    onClick={() => {
-                      handleOptionClick(selectedOption);
-                    }}
-                  >
-                    Confirm
-                  </button>
-                </div>
-              )}
-            {(selectedAnswer !== undefined || showResult) && (
-              <div className="ai-answer-result-wrapper px-3 py-4  w-100 d-flex flex-column gap-2 align-items-center justify-content-between">
-                {selectedOption === selectedAnswer &&
-                selectedAnswer !== undefined ? (
-                  <>
-                    <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
-                    <span className="aiAnswer-desc">
-                      You have earned 54 Stars
-                    </span>
-                  </>
-                ) : selectedAnswer === undefined && timeLeft === 0 ? (
-                  <>
-                    <span className="aiAnswer-title">❌ TIME'S UP!</span>
-                    <span className="aiAnswer-desc">
-                      Try again tomorrow for a chance to win rewards
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="aiAnswer-title">
-                      🍀 Better Luck Next Time 🍀
-                    </span>
-                    <span className="aiAnswer-desc"></span>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-        ) : (
-          <></>
-        )}*/}
       </div>
       <div
         className={
           isConnected &&
           coinbase &&
           email &&
+          address &&
+          coinbase.toLowerCase() === address.toLowerCase() &&
           (chainId === 56 || chainId === 204) &&
           step === 0
             ? "ai-question-footer-wrapper"
+            : coinbase &&
+              isConnected &&
+              address &&
+              coinbase.toLowerCase() !== address.toLowerCase() &&
+              email
+            ? "ai-question-footer-wrapper-error"
             : // (selectedOption === undefined &&
             //   selectedAnswer === undefined &&
             //   step === 1) ||
@@ -1134,6 +954,8 @@ const AIQuestion = ({
 
         {isConnected &&
           coinbase &&
+          address &&
+          coinbase.toLowerCase() === address.toLowerCase() &&
           email &&
           (chainId === 56 || chainId === 204) &&
           step === 0 && (
@@ -1170,6 +992,8 @@ const AIQuestion = ({
         {isConnected &&
           coinbase &&
           email &&
+          address &&
+          coinbase.toLowerCase() === address.toLowerCase() &&
           (chainId === 56 || chainId === 204) &&
           step === 1 && (
             <button
@@ -1202,6 +1026,20 @@ const AIQuestion = ({
                   step === 1
                 ? "IN PROGRESS"
                 : "TIME'S UP"}
+            </button>
+          )}
+
+        {isConnected &&
+          coinbase &&
+          email &&
+          address &&
+          (chainId === 56 || chainId === 204) &&
+          coinbase.toLowerCase() !== address.toLowerCase() && (
+            <button
+              disabled
+              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
+            >
+              Switch
             </button>
           )}
         {/* <img
