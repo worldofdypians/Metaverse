@@ -27,7 +27,7 @@ const AIQuestion = ({
   const answers = ["A", "B", "C", "D"];
 
   const totalTime = 20;
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [timeLeft, setTimeLeft] = useState(totalTime);
@@ -204,6 +204,8 @@ const AIQuestion = ({
     handleConfirm();
     const isCorrect = Math.random() < 0.5;
 
+    setShowSelect(false);
+
     if (isCorrect) {
       setSelectedAnswer(value);
     } else {
@@ -295,7 +297,6 @@ const AIQuestion = ({
 
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
-
   return (
     <div className="d-flex w-100 gap-4">
       <div className="d-none d-lg-flex d-md-flex flex-column gap-2 col-lg-3 col-md-4 position-relative">
@@ -520,7 +521,7 @@ const AIQuestion = ({
               </div>
             </button> */}
             </div>
-            <div className="ai-timer-bg-wrapper px-3 py-1">
+            <div className="ai-timer-bg-wrapper px-3 py-1 col-lg-3">
               <div className="d-flex align-items-center w-100 gap-4 justify-content-between">
                 <span className="ai-timer-title text-uppercase">Timer</span>
                 {/* {(selectedAnswer === undefined || !showResult) && ( */}
@@ -615,8 +616,8 @@ const AIQuestion = ({
           style={{ flex: 1 }}
         >
           <div className="ai-answer-option-wrapper p-4 pt-0 position-relative w-100">
-            <div className="ai-question-text-wrapper justify-content-center">
-              <span className="aiLockedQuestion text-capitalize my-2">
+            <div className="ai-question-text-wrapper justify-content-center align-items-center">
+              <span className="aiLockedQuestion text-capitalize ">
                 {step === 0
                   ? ""
                   : step === 1
@@ -644,9 +645,7 @@ const AIQuestion = ({
                       option
                     )} px-4 py-3 d-flex align-items-center justify-content-between`}
                   >
-                    <span className="answer-text">
-                      {answers[index] + ":"}
-                    </span>
+                    <span className="answer-text">{answers[index] + ":"}</span>
                     <span className="answer-text">
                       {step === 0
                         ? ""
@@ -761,21 +760,21 @@ const AIQuestion = ({
               step === 0 ? (
                 <>
                   {" "}
-                  <span className="aiLockedQuestion">
+                  {/* <span className="aiLockedDesc">
                     A Hidden question awaits
-                  </span>
+                  </span> */}
                   <span className="aiLockedDesc">
                     {!email && coinbase
                       ? "Login to your game account"
                       : !isConnected && !coinbase
-                      ? "Connect your wallet to unlock the question"
+                      ? "Connect your wallet to show the question"
                       : isConnected &&
                         coinbase &&
                         email &&
                         chainId !== 56 &&
                         chainId !== 204
-                      ? "Switch to BNB Chain or opBNB to unlock the challenge"
-                      : "Sign the transaction to unlock your daily challenge"}
+                      ? "Switch to BNB Chain or opBNB to show the question"
+                      : "Complete the transaction to show the question"}
                   </span>
                 </>
               ) : (
@@ -812,31 +811,32 @@ const AIQuestion = ({
               timeLeft !== 0 &&
               step === 1 ? (
               <>
-                <span className="aiAnswer-title">
-                  Is this your final answer?
+                <span className="w-100 px-4 aiAnswer-title d-flex align-items-center gap-2 justify-content-between">
+                  You are going with '{answers[selectedOption]}'..Final answer?
+                  <button
+                    className="ai-question-confirm-answer px-3"
+                    onClick={() => handleOptionClick(selectedOption)}
+                  >
+                    Yes
+                  </button>
                 </span>
               </>
             ) : selectedAnswer === undefined && timeLeft === 0 && step === 1 ? (
               <>
-                <span className="aiAnswer-title">❌ TIME'S UP!</span>
-                <span className="aiAnswer-desc">
-                  Try again tomorrow for a chance to win rewards
+                <span className="aiAnswer-title">
+                  🐌 Too slow! Try again tomorrow.
                 </span>
               </>
             ) : selectedOption === selectedAnswer &&
               selectedAnswer !== undefined &&
               step === 1 ? (
               <>
-                <span className="aiAnswer-title">🎉 CONGRATS 🎉</span>
-                <span className="aiAnswer-desc">You have earned 54 Stars</span>
+                <span className="aiAnswer-title">You have earned 54 Stars</span>
               </>
             ) : step === 1 ? (
               <>
                 <span className="aiAnswer-title">
                   🍀 Better Luck Next Time 🍀
-                </span>
-                <span className="aiAnswer-desc">
-                  Try again tomorrow for a chance to win rewards
                 </span>
               </>
             ) : (
@@ -951,14 +951,36 @@ const AIQuestion = ({
       </div>
       <div
         className={
+          // (selectedOption === undefined &&
+          //   selectedAnswer === undefined &&
+          //   step === 1) ||
+          // timeLeft === 0
+          //   ? "ai-question-footer-wrapper-disabled"
+          //   : unlockStatus === "error" || (selectedAnswer === undefined && timeLeft === 0 && step === 1)
+          //   ? "ai-question-footer-wrapper-error"
+          //   : "ai-question-footer-wrapper"
+          (chainId !== 56 && chainId !== 204) ||
           (selectedOption === undefined &&
             selectedAnswer === undefined &&
-            step === 1) ||
-          timeLeft === 0
-            ? "ai-question-footer-wrapper-disabled"
-            : unlockStatus === "error"
+            step === 1 &&
+            timeLeft === 0) ||
+          unlockStatus === "error" ||
+          (selectedOption !== selectedAnswer &&
+            selectedAnswer !== undefined &&
+            step === 1)
             ? "ai-question-footer-wrapper-error"
-            : "ai-question-footer-wrapper"
+            : selectedOption !== selectedAnswer &&
+              selectedAnswer === undefined &&
+              selectedOption !== undefined &&
+              timeLeft === 0 &&
+              step === 1
+            ? "ai-question-footer-wrapper-error"
+            : (selectedOption === undefined &&
+                selectedAnswer === undefined &&
+                step === 1) ||
+              timeLeft === 0
+            ? "ai-question-footer-wrapper-disabled"
+            : "ai-question-footer-wrapper-disabled"
         }
       >
         {!email && coinbase && (
@@ -985,7 +1007,7 @@ const AIQuestion = ({
           chainId !== 56 &&
           chainId !== 204 && (
             <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
+              className="ai-main-button text-white text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => {
                 handleBnbPool("0x38", 56);
               }}
@@ -1002,6 +1024,7 @@ const AIQuestion = ({
             <button
               className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => handleUnlockQuestion()}
+              style={{ color: unlockStatus === "error" ? "#fff" : "" }}
             >
               {unlockLoading ? (
                 <div className="d-flex align-items-center gap-2">
@@ -1035,17 +1058,34 @@ const AIQuestion = ({
           step === 1 && (
             <button
               className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
-              onClick={() => {
-                handleOptionClick(selectedOption);
-                setShowSelect(false);
-              }}
-              disabled={
-                (selectedOption === undefined &&
-                  selectedAnswer === undefined) ||
-                timeLeft === 0
-              }
+              disabled
             >
-              Confirm
+              {selectedOption === undefined &&
+              selectedAnswer === undefined &&
+              step === 1 &&
+              timeLeft === 0
+                ? "TIME'S UP"
+                : unlockStatus === "error"
+                ? "FAIL"
+                : selectedOption !== selectedAnswer &&
+                  selectedAnswer !== undefined &&
+                  step === 1
+                ? "FAIL"
+                : selectedOption === undefined &&
+                  selectedAnswer === undefined &&
+                  step === 1
+                ? "IN PROGRESS"
+                : selectedOption === selectedAnswer &&
+                  selectedAnswer !== undefined &&
+                  step === 1
+                ? "CONGRATS"
+                : selectedOption !== selectedAnswer &&
+                  selectedAnswer === undefined &&
+                  selectedOption !== undefined &&
+                  timeLeft > 0 &&
+                  step === 1
+                ? "IN PROGRESS"
+                : "TIME'S UP"}
             </button>
           )}
         {/* <img

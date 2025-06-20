@@ -136,7 +136,7 @@
   height: 50px;
 }
 
-.ai-question-footer-wrapper:hover {
+.ai-question-footer-wrapper:hover, .ai-question-footer-wrapper-active {
   background: url("https://cdn.worldofdypians.com/wod/ai-main-button-active.webp");
   background-position: center;
   background-repeat: no-repeat;
