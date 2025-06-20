@@ -19,7 +19,7 @@ const Campaigns = ({ coinbase }) => {
       start_date: "Jun 18, 2025",
       end_date: "Jul 18, 2025",
       image: "https://cdn.worldofdypians.com/wod/wod-x-wallet2.webp",
-      desc: `To celebrate our campaign with OKX Wallet, we’re giving away $150,000 in WOD to the first 15,000 users who complete all steps:<br/>
+      desc: `To celebrate our campaign with OKX Wallet, we're giving away $150,000 in WOD to the first 15,000 users who complete all steps:<br/>
     <ul><li>Follow World of Dypians on X</li>
     <li>Swap at least $25 in WOD using OKX Wallet</li>
     <li>Login or create a game account and link your wallet </li>
@@ -56,7 +56,7 @@ const Campaigns = ({ coinbase }) => {
       image: "https://cdn.worldofdypians.com/wod/wodBitgetBanner.webp",
       desc: `To celebrate the WOD on-chain listing on Bitget, we have launched an exclusive campaign for new users! <br/>
       <ul><li>Register a new account on Bitget and complete verification.</li>
-      <li>Trade at least $2 worth of WOD on Bitget Onchain.</li>
+      <li>Trade at least $5 worth of WOD on Bitget Onchain.</li>
       <li>Submit your UID so we can verify your participation.</li>
       </ul>
      The first 5,000 users to complete all tasks will each receive $10 guaranteed!
