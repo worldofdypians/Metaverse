@@ -15,14 +15,14 @@
 }
 
 .aiLockedDesc {
-  color: #707da4;
+  color: #FFF;
   text-align: center;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  font-family: "Montserrat";
-  font-size: 13px;
+  font-family: Montserrat;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 20px;
+  font-weight: 600;
+  line-height: normal;
 
   @media screen and (max-width: 500px) {
     font-size: 12px;
@@ -46,7 +46,8 @@
   top: -25px;
   transform: translate(-50%, 0);
   left: 50%;
-  width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  width: 100%;
   min-height: 78px;
 }
 
@@ -63,15 +64,15 @@
 .answer-inner-wrapper:hover,
 .answer-inner-wrapper-active {
   background-image: url("https://cdn.worldofdypians.com/wod/ai-option-bg.webp");
-  background-color: #001b35;
+  background-color: #ff7c00;
   background-blend-mode: luminosity;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   min-height: 55px;
 
-  .radio-button-option {
-    border: 2px solid #008ebf;
+  .radio-button-option { 
+    border: 2px solid #ff7c00; 
   }
 }
 
@@ -100,8 +101,8 @@
 .radio-button-option-selected {
   width: 16px;
   height: 16px;
-  border: 2px solid #87e0ff;
-  background: #037da7;
+border: 2px solid #fff;
+    background: #ff7c00;
   border-radius: 50%;
 }
 
@@ -112,6 +113,7 @@
   background-position: center;
   border: none !important;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .radio-button-option-wrong {
@@ -121,6 +123,7 @@
   background-position: center;
   border: none !important;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .radio-button-option {
@@ -202,23 +205,25 @@
   min-width: 235px;
   background-size: 100% 100%;
   transform: translate(-71%, 3%);
+
   @media screen and (max-width: 1210px) {
     height: 120px;
     transform: translate(-84%, 3%);
   }
+
   @media screen and (max-width: 991px) {
     height: 130px;
     transform: translate(-84%, 3%);
   }
 }
 
-.oryn-inner-border{
-      background: rgba(127, 17, 224, 0.5);
-    border-radius: 50%;
-    width: 115px;
-    height: 115px;
-    position: relative;
-    bottom: 5px;
+.oryn-inner-border {
+  background: rgba(127, 17, 224, 0.5);
+  border-radius: 50%;
+  width: 115px;
+  height: 115px;
+  position: relative;
+  bottom: 5px;
 }
 
 .ai-oryn-text {
@@ -245,7 +250,7 @@
   color: #fff;
   text-align: center;
   font-family: "Montserrat";
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -254,7 +259,7 @@
 .ai-oryn-bottom-txt {
   color: #8D98BC;
   font-family: "Montserrat";
-  font-size: 13px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -365,18 +370,22 @@
 
 .ai-timer-bg-wrapper {
   border-radius: 20px;
-border: 1px solid #EFCB86;
-background: rgba(239, 203, 134, 0.05);
-backdrop-filter: blur(2px);
+  border: 1px solid #EFCB86;
+  background: rgba(239, 203, 134, 0.05);
+  backdrop-filter: blur(2px);
+  min-height: 56px;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .ai-timer-title {
   color: #EFCB86;
-font-family: Montserrat;
-font-size: 15px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+  font-family: Montserrat;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .ai-chain-icon {
@@ -406,10 +415,10 @@ line-height: normal;
 
 .ai-main-button {
   background: transparent;
-  color: #3bd3ed;
+  color: #fff;
   text-align: center;
   font-family: "Montserrat";
-  font-size: 15px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -418,10 +427,29 @@ line-height: normal;
   position: absolute;
 }
 
+.ai-question-confirm-answer {
+  background: linear-gradient(90deg, #13243A 0%, #273F5E 100%);
+  border-radius: 6px;
+  border: none;
+  color: #FFF;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.ai-question-confirm-answer:hover { 
+background: linear-gradient(90deg, #008EBF 0%, #00B7CC 100%);
+}
+
 .ai-timer-container {
-  position: relative;
   width: 60px;
   height: 60px;
+  scale: 0.8;
+  position: absolute;
+  right: 0;
 }
 
 .ai-progress-ring {
@@ -493,7 +521,7 @@ line-height: normal;
 }
 
 .ai-rewards-title-active {
-  color: #fff;
+  color: #F3C009;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
@@ -502,15 +530,19 @@ line-height: normal;
 }
 
 .ai-reward-logo {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   filter: brightness(0.4);
+  position: absolute;
+  left: -5px;
 }
 
 .ai-reward-logo-active {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   filter: brightness(1);
+  position: absolute;
+  left: -5px;
 }
 
 .ai-separator {
@@ -524,6 +556,13 @@ line-height: normal;
 .ai-rewards-info {
   border-radius: 20px;
   border: 1px solid #255678;
+  background: rgba(15, 23, 47, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+.ai-rewards-info-active {
+  border-radius: 20px;
+  border: 1px solid #F3C009;
   background: rgba(15, 23, 47, 0.8);
   backdrop-filter: blur(2px);
 }
@@ -550,3 +589,30 @@ line-height: normal;
   width: 25px;
   height: 25px;
 }
+
+/* Typing effect keyframes */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+
+// .question, .option {
+//   overflow: hidden;
+//   white-space: nowrap;
+//   width: 0;
+//   animation: typing 1.5s steps(40, end) forwards;
+//   text-align: center;
+// }
+
+
+// #option1 { animation-delay: 1.5s; }
+// #option2 { animation-delay: 2.5s; }
+// #option3 { animation-delay: 3.5s; }
+// #option4 { animation-delay: 4.5s; }
+
+
+// #question {
+//   animation-delay: 0s;
+// }
+

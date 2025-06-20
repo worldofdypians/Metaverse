@@ -111,9 +111,9 @@ window.config = {
   conflux_endpoint: "https://evm.confluxrpc.com/",
   base_endpoint: "https://mainnet.base.org",
   all_base_endpoints: [
-    "https://mainnet.base.org",
     "https://1rpc.io/base",
     "https://base-rpc.publicnode.com",
+    "https://mainnet.base.org",
   ],
 
   opbnb_endpoint: "https://opbnb.publicnode.com",
@@ -171,7 +171,6 @@ window.config = {
   otc2_address: "0x8a3a80d4a3b1c6c534f0016c1d834d7d60b32bcf",
   otcbonus_address: "0xc828b41f27c6766fcc5c9f5b00321acd11f3e710",
   otcspecial_address: "0xd9d30dcf8dceaf4da5444cac87bea4ea965351e4",
-
 
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",

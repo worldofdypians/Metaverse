@@ -7000,7 +7000,7 @@ function Dashboard({
                 <div className="ai-question-header-wrapper">
                   <img
                     src={
-                      "https://cdn.worldofdypians.com/wod/ai-daily-question-header2.webp"
+                      "https://cdn.worldofdypians.com/wod/ai-question-header-img2.webp"
                     }
                     className="ai-question-header-img"
                   />
