@@ -424,9 +424,17 @@ const NewBuilders = () => {
       name: "BloFin",
       icon: "blofinBuywod.png",
     },
-        {
+    {
       name: "JOY",
       icon: "joy.png",
+    },
+    {
+      name: "CARV",
+      icon: "carv.png",
+    },
+    {
+      name: "XPIN Network",
+      icon: "xpin.png",
     },
   ];
   return (
