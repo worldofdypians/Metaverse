@@ -7018,6 +7018,7 @@ function Dashboard({
                     setAiQuestionCompleted(value);
                   }}
                   username={data?.getPlayer?.displayName ?? "Player"}
+                  address={data?.getPlayer?.wallet?.publicAddress}
                   isConnected={isConnected}
                   coinbase={coinbase}
                   chainId={chainId}
