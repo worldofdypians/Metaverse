@@ -8,6 +8,12 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import { Canvas } from "@react-three/fiber";
 import { QuestionExperience } from "../../screens/NewAgent/components/QuestionExperience";
 import { Experience } from "../../screens/NewAgent/components/Experience";
+import clickSound from "./sounds/click.mp3";
+import drumrollSound from "./sounds/drumroll.mp3";
+import failSound from "./sounds/fail.mp3";
+import gamestartSound from "./sounds/gamestart.mp3";
+import successSound from "./sounds/success.mp3";
+import timerEndedSound from "./sounds/timerEnded.mp3";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -23,6 +29,8 @@ const AIQuestion = ({
   binanceW3WProvider,
   username,
 }) => {
+  // new Audio(successSound).play();
+
   const answersOptions = [0, 1, 2, 3];
   const answers = ["A", "B", "C", "D"];
 
@@ -48,6 +56,7 @@ const AIQuestion = ({
   const [audioFile, setAudioFile] = useState(null);
   const [jsonFile, setJsonFile] = useState(null);
   const [showSelect, setShowSelect] = useState(false);
+  const [pause, setPause] = useState(false);
 
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
@@ -100,6 +109,7 @@ const AIQuestion = ({
         .then(() => {
           setUnlockLoading(false);
           setUnlockStatus("success");
+          new Audio(gamestartSound).play();
 
           setTimeout(() => {
             setStep(1);
@@ -207,19 +217,27 @@ const AIQuestion = ({
   };
 
   const handleOptionClick = (value) => {
-    handleConfirm();
-    const isCorrect = Math.random() < 0.5;
+    setPause(true);
+    new Audio(drumrollSound).play();
 
-    setShowSelect(false);
+    setTimeout(() => {
+      handleConfirm();
+      const isCorrect = Math.random() < 0.5;
 
-    if (isCorrect) {
-      setSelectedAnswer(value);
-    } else {
-      const otherOptions = answersOptions.filter((opt) => opt !== value);
-      const randomWrong =
-        otherOptions[Math.floor(Math.random() * otherOptions.length)];
-      setSelectedAnswer(randomWrong);
-    }
+      setShowSelect(false);
+
+      if (isCorrect) {
+        setSelectedAnswer(value);
+        new Audio(successSound).play();
+      } else {
+        const otherOptions = answersOptions.filter((opt) => opt !== value);
+        const randomWrong =
+          otherOptions[Math.floor(Math.random() * otherOptions.length)];
+        setSelectedAnswer(randomWrong);
+        new Audio(failSound).play();
+      }
+      setPause(false);
+    }, 2000);
     onQuestionComplete(true);
     setTimeout(() => {
       setSelectedAnswer(undefined);
@@ -324,6 +342,12 @@ const AIQuestion = ({
 
     // return () => clearTimeout(timer);
   }, [step, answersOptions]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      new Audio(timerEndedSound).play();
+    }
+  }, [timeLeft]);
 
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
@@ -725,6 +749,7 @@ const AIQuestion = ({
                     onClick={() => {
                       step === 1 && setSelectedOption(option);
                       setShowSelect(true);
+                      new Audio(clickSound).play();
                     }}
                   >
                     <div
@@ -923,7 +948,16 @@ const AIQuestion = ({
                     className="ai-question-confirm-answer px-3"
                     onClick={() => handleOptionClick(selectedOption)}
                   >
-                    Yes
+                    {pause ? (
+                      <div
+                        className="spinner-border spinner-border-sm text-light"
+                        role="status"
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    ) : (
+                      "Yes"
+                    )}
                   </button>
                 </span>
               </>
