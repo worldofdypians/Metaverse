@@ -238,7 +238,7 @@ const AIQuestion = ({
         setAvatarState("correct")
         setTimeout(() => {
           setAvatarState("idle")
-        }, 1680);
+        }, 3360);
       } else {
         const otherOptions = answersOptions.filter((opt) => opt !== value);
         const randomWrong =
@@ -248,7 +248,7 @@ const AIQuestion = ({
          setAvatarState("wrong")
         setTimeout(() => {
           setAvatarState("idle")
-        }, 1680);
+        }, 3360);
       }
       setPause(false);
     }, 2000);
@@ -363,7 +363,7 @@ const AIQuestion = ({
       setAvatarState("time")
       setTimeout(() => {
         setAvatarState("idle")
-      }, 1680);
+      }, 3360);
     }
   }, [timeLeft]);
 
