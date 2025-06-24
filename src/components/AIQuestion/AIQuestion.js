@@ -925,20 +925,27 @@ const AIQuestion = ({
             //   : unlockStatus === "error" || (selectedAnswer === undefined && timeLeft === 0 && step === 1)
             //   ? "ai-question-footer-wrapper-error"
             //   : "ai-question-footer-wrapper"
-            (chainId !== 56 && chainId !== 204) ||
-              (selectedOption === undefined &&
-                selectedAnswer === undefined &&
-                step === 1 &&
-                timeLeft === 0) ||
+            chainId !== 56 &&
+              chainId !== 204 &&
+              coinbase &&
+              isConnected &&
+              selectedOption === undefined &&
+              selectedAnswer === undefined &&
+              step === 1 &&
+              timeLeft === 0
+            ? "ai-question-footer-wrapper-error pe-none"
+            : (chainId !== 56 && chainId !== 204 && coinbase && isConnected) ||
               unlockStatus === "error" ||
               (selectedOption !== selectedAnswer &&
                 selectedAnswer !== undefined &&
                 step === 1)
-            ? "ai-question-footer-wrapper-error pe-none"
+            ? "ai-question-footer-wrapper-error"
             : selectedOption !== selectedAnswer &&
               selectedAnswer === undefined &&
               selectedOption !== undefined &&
               timeLeft === 0 &&
+              coinbase &&
+              isConnected &&
               step === 1
             ? "ai-question-footer-wrapper-error pe-none"
             : (selectedOption === undefined &&
@@ -950,6 +957,8 @@ const AIQuestion = ({
               selectedAnswer !== undefined &&
               step === 1
             ? "ai-question-footer-wrapper-active"
+            : !isConnected || !email
+            ? "ai-question-footer-wrapper"
             : "ai-question-footer-wrapper-disabled"
         }
       >

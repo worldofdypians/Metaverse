@@ -1625,7 +1625,7 @@ const MyProfile = ({
                     alt=""
                   />
                   <h6 className="special-rewards-title text-white">
-                    AI Daily Challenge
+                    QUESTION OF THE DAY
                   </h6>
 
                   <div className="d-flex">
@@ -1683,20 +1683,14 @@ const MyProfile = ({
                       <>
                         <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
                           <div className="ready-circle-ai d-flex flex-column gap-1">
-                            <Countdown
-                              renderer={renderer4}
-                              date={midnight}
-                            />
+                            <Countdown renderer={renderer4} date={midnight} />
                           </div>
                           <span className="new-time-remaining">
                             Time Remaining
                           </span>
                         </div>
                         <div className="d-flex d-lg-none">
-                          <Countdown
-                            renderer={renderer4}
-                            date={midnight}
-                          />
+                          <Countdown renderer={renderer4} date={midnight} />
                         </div>
                       </>
                     ) : (
