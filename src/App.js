@@ -5584,8 +5584,7 @@ function App() {
                 isConnected={isConnected}
                 handleSwitchNetwork={handleSwitchNetwork}
                 network_matchain={chain}
-          chainId={networkId}
-
+                chainId={networkId}
                 onConnectWallet={() => {
                   setwalletModal(true);
                 }}
