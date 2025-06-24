@@ -6996,7 +6996,7 @@ function Dashboard({
             <div
               className={`new-daily-bonus-popup overflow-visible d-flex flex-column gap-2 custom-container-width2 justify-content-center`}
             >
-              <div className="ai-question-outer-wrapper custom-container-width2 position-relative p-5 d-flex">
+              <div className="ai-question-outer-wrapper custom-container-width2 position-relative p-lg-5 p-3 d-flex">
                 <div className="ai-question-header-wrapper">
                   <img
                     src={
