@@ -235,9 +235,9 @@ const AIQuestion = ({
       if (isCorrect) {
         setSelectedAnswer(value);
         new Audio(successSound).play();
-        setAvatarState("correct")
+        setAvatarState("correct");
         setTimeout(() => {
-          setAvatarState("idle")
+          setAvatarState("idle");
         }, 3360);
       } else {
         const otherOptions = answersOptions.filter((opt) => opt !== value);
@@ -245,9 +245,9 @@ const AIQuestion = ({
           otherOptions[Math.floor(Math.random() * otherOptions.length)];
         setSelectedAnswer(randomWrong);
         new Audio(failSound).play();
-         setAvatarState("wrong")
+        setAvatarState("wrong");
         setTimeout(() => {
-          setAvatarState("idle")
+          setAvatarState("idle");
         }, 3360);
       }
       setPause(false);
@@ -360,9 +360,9 @@ const AIQuestion = ({
   useEffect(() => {
     if (timeLeft === 0) {
       new Audio(timerEndedSound).play();
-      setAvatarState("time")
+      setAvatarState("time");
       setTimeout(() => {
-        setAvatarState("idle")
+        setAvatarState("idle");
       }, 3360);
     }
   }, [timeLeft]);
@@ -486,6 +486,10 @@ const AIQuestion = ({
                           : "ai-rewards-title ps-3"
                       }
                     >
+                      {selectedOption === selectedAnswer &&
+                        selectedAnswer !== undefined &&
+                        step === 1 &&
+                        "530 "}
                       STARS
                     </span>
                   </div>
@@ -890,8 +894,15 @@ const AIQuestion = ({
               timeLeft !== 0 &&
               step === 1 ? (
               <>
-                <span className="w-100 px-4 aiAnswer-title d-flex align-items-center gap-2 justify-content-between">
-                  You are going with '{answers[selectedOption]}'..Final answer?
+                <span className="w-100 px-4 aiAnswer-title d-flex align-items-center gap-2 justify-content-center">
+                  You are going with
+                  <span
+                    className="aiAnswer-title m-0"
+                    style={{ color: "#ffd37e" }}
+                  >
+                    '{answers[selectedOption]}'
+                  </span>
+                  ..Final answer?
                   <button
                     className="ai-question-confirm-answer px-3"
                     onClick={() => handleOptionClick(selectedOption)}
@@ -919,7 +930,9 @@ const AIQuestion = ({
               selectedAnswer !== undefined &&
               step === 1 ? (
               <>
-                <span className="aiAnswer-title">You have earned 54 Stars</span>
+                <span className="aiAnswer-title">
+                  🎉 You have earned 530 Stars 🎉
+                </span>
               </>
             ) : step === 1 ? (
               <>
