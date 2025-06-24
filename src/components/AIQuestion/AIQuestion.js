@@ -631,7 +631,7 @@ const AIQuestion = ({
               </div>
             </button> */}
             </div>
-            <div className="ai-timer-bg-wrapper px-3 py-1 col-lg-3">
+            <div className="ai-timer-bg-wrapper px-3 py-1 col-lg-3 col-md-4 col-sm-3 col-4">
               <div className="d-flex align-items-center w-100 gap-4 justify-content-between">
                 <span className="ai-timer-title text-uppercase">
                   {timeLeft > 0 ? "Timer" : "Time's Up!"}

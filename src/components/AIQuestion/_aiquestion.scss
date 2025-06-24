@@ -49,6 +49,13 @@
   max-width: calc(100% - 20px);
   width: 100%;
   min-height: 78px;
+
+  @media screen and (max-width: 500px) {
+    padding: 10px;
+    min-height: 60px;
+    max-width: 100%;
+
+  }
 }
 
 .answer-inner-wrapper {
@@ -71,8 +78,8 @@
   background-size: 100% 100%;
   min-height: 55px;
 
-  .radio-button-option { 
-    border: 2px solid #ff7c00; 
+  .radio-button-option {
+    border: 2px solid #ff7c00;
   }
 }
 
@@ -101,8 +108,8 @@
 .radio-button-option-selected {
   width: 16px;
   height: 16px;
-border: 2px solid #fff;
-    background: #ff7c00;
+  border: 2px solid #fff;
+  background: #ff7c00;
   border-radius: 50%;
 }
 
@@ -149,6 +156,12 @@ border: 2px solid #fff;
   background-size: 100% 100%;
   width: calc(100% - 60px);
   min-height: 76px;
+
+   @media screen and (max-width: 500px) { 
+    min-height: auto;
+    width: 100%;
+
+  }
 }
 
 .ai-answer-result-success-wrapper {
@@ -332,8 +345,8 @@ border: 2px solid #fff;
   }
 
   @media screen and (max-width: 500px) {
-    right: 30px;
-    top: 15px;
+    right: 0px;
+    top: -20px;
   }
 }
 
@@ -440,8 +453,8 @@ border: 2px solid #fff;
   line-height: normal;
 }
 
-.ai-question-confirm-answer:hover { 
-background: linear-gradient(90deg, #008EBF 0%, #00B7CC 100%);
+.ai-question-confirm-answer:hover {
+  background: linear-gradient(90deg, #008EBF 0%, #00B7CC 100%);
 }
 
 .ai-timer-container {
@@ -592,8 +605,13 @@ background: linear-gradient(90deg, #008EBF 0%, #00B7CC 100%);
 
 /* Typing effect keyframes */
 @keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 
@@ -616,7 +634,7 @@ background: linear-gradient(90deg, #008EBF 0%, #00B7CC 100%);
 //   animation-delay: 0s;
 // }
 
-.oryn-avatar{
+.oryn-avatar {
   width: 100%;
   height: 100%;
   border-radius: 50%;
