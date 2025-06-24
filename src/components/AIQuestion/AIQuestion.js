@@ -8,12 +8,16 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import { Canvas } from "@react-three/fiber";
 import { QuestionExperience } from "../../screens/NewAgent/components/QuestionExperience";
 import { Experience } from "../../screens/NewAgent/components/Experience";
-import clickSound from "./sounds/click.mp3";
-import drumrollSound from "./sounds/drumroll.mp3";
-import failSound from "./sounds/fail.mp3";
-import gamestartSound from "./sounds/gamestart.mp3";
-import successSound from "./sounds/success.mp3";
-import timerEndedSound from "./sounds/timerEnded.mp3";
+import clickSound from "./assets/click.mp3";
+import drumrollSound from "./assets/drumroll.mp3";
+import failSound from "./assets/fail.mp3";
+import gamestartSound from "./assets/gamestart.mp3";
+import successSound from "./assets/success.mp3";
+import timerEndedSound from "./assets/timerEnded.mp3";
+import avatarCorrect from "./assets/avatarCorrect.gif";
+import avatarWrong from "./assets/avatarWrong.gif";
+import avatarIdle from "./assets/avatarIdle.gif";
+import avatarTime from "./assets/avatarTime.gif";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -58,6 +62,7 @@ const AIQuestion = ({
   const [jsonFile, setJsonFile] = useState(null);
   const [showSelect, setShowSelect] = useState(false);
   const [pause, setPause] = useState(false);
+  const [avatarState, setAvatarState] = useState("idle");
 
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
@@ -230,12 +235,20 @@ const AIQuestion = ({
       if (isCorrect) {
         setSelectedAnswer(value);
         new Audio(successSound).play();
+        setAvatarState("correct")
+        setTimeout(() => {
+          setAvatarState("idle")
+        }, 1680);
       } else {
         const otherOptions = answersOptions.filter((opt) => opt !== value);
         const randomWrong =
           otherOptions[Math.floor(Math.random() * otherOptions.length)];
         setSelectedAnswer(randomWrong);
         new Audio(failSound).play();
+         setAvatarState("wrong")
+        setTimeout(() => {
+          setAvatarState("idle")
+        }, 1680);
       }
       setPause(false);
     }, 2000);
@@ -347,6 +360,10 @@ const AIQuestion = ({
   useEffect(() => {
     if (timeLeft === 0) {
       new Audio(timerEndedSound).play();
+      setAvatarState("time")
+      setTimeout(() => {
+        setAvatarState("idle")
+      }, 1680);
     }
   }, [timeLeft]);
 
@@ -363,7 +380,7 @@ const AIQuestion = ({
             className="ai-oryn-border d-flex align-items-center justify-content-center"
           >
             <div className="oryn-inner-border">
-              <Canvas
+              {/* <Canvas
                 shadows
                 camera={{ near: 0.01, far: 1000, position: [0, 0, 10] }}
                 style={{
@@ -380,7 +397,22 @@ const AIQuestion = ({
                   jsonFile={jsonFile}
                   sound={sound}
                 />
-              </Canvas>
+              </Canvas> */}
+              <img
+                src={
+                  avatarState === "idle"
+                    ? avatarIdle
+                    : avatarState === "correct"
+                    ? avatarCorrect
+                    : avatarState === "wrong"
+                    ? avatarWrong
+                    : avatarState === "time"
+                    ? avatarTime
+                    : avatarIdle
+                }
+                className="oryn-avatar"
+                alt=""
+              />
             </div>
           </div>
           <span className="ai-oryn-text">
