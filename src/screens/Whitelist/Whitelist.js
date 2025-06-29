@@ -17,6 +17,7 @@ import {
   OTC2_ABI,
   OTCBONUS_ABI,
   OTCSPECIAL_ABI,
+  OTCPOOLBONUS_ABI,
 } from "./abis";
 import Countdown from "react-countdown";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
@@ -53,6 +54,7 @@ const Whitelist = ({
 
   const [cliffTimeOtcBonus, setcliffTimeOtcBonus] = useState(0);
   const [cliffTimeOtcSpecial, setcliffTimeOtcSpecial] = useState(0);
+  const [cliffTimeOtcPoolBonus, setcliffTimeOtcPoolBonus] = useState(0);
 
   const [releaseProcent, setreleaseProcent] = useState(0);
   const [pendingTokens, setpendingTokens] = useState(0);
@@ -71,6 +73,12 @@ const Whitelist = ({
   const [userClaimedTokensOTCSpecial, setuserClaimedTokensOTCSpecial] =
     useState(0);
   const [userVestedTokensOTCSpecial, setuserVestedTokensOTCSpecial] =
+    useState(0);
+
+  const [pendingTokensOTCPoolBonus, setpendingTokensOTCPoolBonus] = useState(0);
+  const [userClaimedTokensOTCPoolBonus, setuserClaimedTokensOTCPoolBonus] =
+    useState(0);
+  const [userVestedTokensOTCPoolBonus, setuserVestedTokensOTCPoolBonus] =
     useState(0);
 
   const [pendingTokensOTCBonus, setpendingTokensOTCBonus] = useState(0);
@@ -110,6 +118,12 @@ const Whitelist = ({
   const [canClaimOTCSpecial, setcanClaimOTCSpecial] = useState(false);
   const [claimLoadingOTCSpecial, setclaimLoadingOTCSpecial] = useState(false);
   const [claimStatusOTCSpecial, setclaimStatusOTCSpecial] = useState("initial");
+
+  const [canClaimOTCPoolBonus, setcanClaimOTCPoolBonus] = useState(false);
+  const [claimLoadingOTCPoolBonus, setclaimLoadingOTCPoolBonus] =
+    useState(false);
+  const [claimStatusOTCPoolBonus, setclaimStatusOTCPoolBonus] =
+    useState("initial");
 
   const [canClaimPrivate, setcanClaimPrivate] = useState(false);
   const [claimLoadingPrivate, setclaimLoadingPrivate] = useState(false);
@@ -166,6 +180,11 @@ const Whitelist = ({
     const otcScSpecial = new window.bscWeb3.eth.Contract(
       OTCSPECIAL_ABI,
       window.config.otcspecial_address
+    );
+
+    const otcScPoolBonus = new window.bscWeb3.eth.Contract(
+      OTCPOOLBONUS_ABI,
+      window.config.otcpoolbonus_address
     );
 
     const privateSc = new window.bscWeb3.eth.Contract(
@@ -277,6 +296,19 @@ const Whitelist = ({
     }
 
     setcanClaimOTCSpecial(Number(availableTGE_OTCSpecial) === 1);
+
+    let availableTGE_OTCPoolBonus = 0;
+    if (coinbase) {
+      availableTGE_OTCPoolBonus = await otcScPoolBonus.methods
+        .availableTGE(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+    }
+
+    setcanClaimOTCPoolBonus(Number(availableTGE_OTCPoolBonus) === 1);
 
     let availableTGEPrivate = 0;
     if (coinbase) {
@@ -414,6 +446,23 @@ const Whitelist = ({
     ).toFixed(6);
     setcanClaimOTCSpecial(tokensToClaimAmountOTCSpecial_formatted > 0);
     setpendingTokensOTCSpecial(tokensToClaimAmountOTCSpecial_formatted);
+
+    let tokensToClaimAmountOTCPoolBonus = 0;
+    if (coinbase) {
+      tokensToClaimAmountOTCPoolBonus = await otcScPoolBonus.methods
+        .getPendingUnlocked(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+    }
+
+    const tokensToClaimAmountOTCPoolBonus_formatted = new window.BigNumber(
+      tokensToClaimAmountOTCPoolBonus / 1e18
+    ).toFixed(6);
+    setcanClaimOTCPoolBonus(tokensToClaimAmountOTCPoolBonus_formatted > 0);
+    setpendingTokensOTCPoolBonus(tokensToClaimAmountOTCPoolBonus_formatted);
 
     let tokensToClaimAmountPrivate = 0;
     if (coinbase) {
@@ -571,6 +620,25 @@ const Whitelist = ({
       );
     }
 
+    let totalClaimedTokensByUserOTCPoolBonus = 0;
+    if (coinbase) {
+      totalClaimedTokensByUserOTCPoolBonus = await otcScPoolBonus.methods
+        .claimedTokens(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const totalClaimedTokensByUserOTCPoolBonus_formatted =
+        new window.BigNumber(
+          totalClaimedTokensByUserOTCPoolBonus / 1e18
+        ).toFixed(6);
+
+      setuserClaimedTokensOTCPoolBonus(
+        totalClaimedTokensByUserOTCPoolBonus_formatted
+      );
+    }
+
     let totalClaimedTokensByUserPrivate = 0;
     if (coinbase) {
       totalClaimedTokensByUserPrivate = await privateSc.methods
@@ -713,6 +781,25 @@ const Whitelist = ({
       );
     }
 
+    let totalVestedTokensPerUserOTCPoolBonus = 0;
+    if (coinbase) {
+      totalVestedTokensPerUserOTCPoolBonus = await otcScPoolBonus.methods
+        .vestedTokens(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const totalVestedTokensPerUserOTCPoolBonus_formatted =
+        new window.BigNumber(
+          totalVestedTokensPerUserOTCPoolBonus / 1e18
+        ).toFixed(6);
+
+      setuserVestedTokensOTCSpecial(
+        totalVestedTokensPerUserOTCPoolBonus_formatted
+      );
+    }
+
     let totalVestedTokensPerUserPrivate = 0;
     if (coinbase) {
       totalVestedTokensPerUserPrivate = await privateSc.methods
@@ -836,6 +923,11 @@ const Whitelist = ({
       window.config.otcspecial_address
     );
 
+    const otcScPoolBonus = new window.bscWeb3.eth.Contract(
+      OTCPOOLBONUS_ABI,
+      window.config.otcpoolbonus_address
+    );
+
     const privateSc = new window.bscWeb3.eth.Contract(
       PRIVATE_ABI,
       window.config.private_address
@@ -894,6 +986,14 @@ const Whitelist = ({
         return 0;
       });
 
+    const lastClaimedTimeOTCPoolBonus = await otcScPoolBonus.methods
+      .lastClaimedTime(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     const lastClaimedTimePrivate = await privateSc.methods
       .lastClaimedTime(coinbase)
       .call()
@@ -932,6 +1032,7 @@ const Whitelist = ({
 
     setcliffTimeOtcBonus(Number(lastClaimedTimeOTCBonus * 1000));
     setcliffTimeOtcSpecial(Number(lastClaimedTimeOTCSpecial * 1000));
+    setcliffTimeOtcPoolBonus(Number(lastClaimedTimeOTCPoolBonus * 1000));
 
     // } else {
     //   setcliffTimeOtc(0);
@@ -1703,6 +1804,149 @@ const Whitelist = ({
     }
   };
 
+  const handleClaimOTCPoolBonus = async () => {
+    console.log("otc pool bonus");
+    setclaimLoadingOTCPoolBonus(true);
+    if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        const result = await walletClient
+          .writeContract({
+            address: window.config.otcpoolbonus_address,
+            abi: OTCPOOLBONUS_ABI,
+            functionName: "claim",
+            args: [],
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.shortMessage);
+
+            setclaimStatusOTCPoolBonus("failed");
+            setclaimLoadingOTCPoolBonus(false);
+            setTimeout(() => {
+              setclaimStatusOTCPoolBonus("initial");
+            }, 5000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatusOTCPoolBonus("success");
+            setclaimLoadingOTCPoolBonus(false);
+
+            setTimeout(() => {
+              setclaimStatusOTCPoolBonus("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      const otcScPoolBonus = new ethers.Contract(
+        window.config.otcpoolbonus_address,
+        OTCPOOLBONUS_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      const txResponse = await otcScPoolBonus
+        .claim({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusOTCPoolBonus("failed");
+          setclaimLoadingOTCPoolBonus(false);
+          setTimeout(() => {
+            setclaimStatusOTCPoolBonus("initial");
+          }, 5000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setclaimStatusOTCPoolBonus("success");
+        setclaimLoadingOTCPoolBonus(false);
+
+        setTimeout(() => {
+          setclaimStatusOTCPoolBonus("initial");
+          getInfo();
+          getInfoTimer();
+        }, 5000);
+      }
+    } else {
+      let web3 = new Web3(window.ethereum);
+
+      const otcScPoolBonus = new web3.eth.Contract(
+        OTCPOOLBONUS_ABI,
+        window.config.otcpoolbonus_address
+      );
+
+      const gasPrice = await window.bscWeb3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+      // const increasedGwei = parseInt(currentGwei) + 2;
+      // console.log("increasedGwei", increasedGwei);
+
+      const transactionParameters = {
+        gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+      };
+
+      await otcScPoolBonus.methods
+        .claim()
+        .estimateGas({ from: await window.getCoinbase() })
+        .then((gas) => {
+          transactionParameters.gas = web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      await otcScPoolBonus.methods
+        .claim()
+        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .then(() => {
+          setclaimStatusOTCPoolBonus("success");
+          setclaimLoadingOTCPoolBonus(false);
+
+          setTimeout(() => {
+            setclaimStatusOTCPoolBonus("initial");
+            getInfo();
+            getInfoTimer();
+          }, 5000);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatusOTCPoolBonus("failed");
+          setclaimLoadingOTCPoolBonus(false);
+          setTimeout(() => {
+            setclaimStatusOTCPoolBonus("initial");
+          }, 5000);
+        });
+    }
+  };
+
   const handleClaimPrivate = async () => {
     console.log("private");
 
@@ -2149,6 +2393,8 @@ const Whitelist = ({
               ? pendingTokensOTC2
               : type === "special-otc"
               ? pendingTokensOTCSpecial
+              : type === "pool-bonus"
+              ? pendingTokensOTCPoolBonus
               : type === "bonus-otc"
               ? pendingTokensOTCBonus
               : selectedRound?.id === "seed"
@@ -2168,6 +2414,8 @@ const Whitelist = ({
               ? userClaimedTokensOTC2
               : type === "special-otc"
               ? userClaimedTokensOTCSpecial
+              : type === "pool-bonus"
+              ? userClaimedTokensOTCPoolBonus
               : type === "bonus-otc"
               ? userClaimedTokensOTCBonus
               : selectedRound?.id === "seed"
@@ -2187,6 +2435,8 @@ const Whitelist = ({
               ? userVestedTokensOTC2
               : type === "special-otc"
               ? userVestedTokensOTCSpecial
+              : type === "pool-bonus"
+              ? userVestedTokensOTCPoolBonus
               : type === "bonus-otc"
               ? userVestedTokensOTCBonus
               : selectedRound?.id === "seed"
@@ -2206,6 +2456,8 @@ const Whitelist = ({
               ? handleClaimOTC2()
               : type === "special-otc"
               ? handleClaimOTCSpecial()
+              : type === "pool-bonus"
+              ? handleClaimOTCPoolBonus()
               : type === "bonus-otc"
               ? handleClaimOTCBonus()
               : selectedRound?.id === "seed"
@@ -2223,6 +2475,8 @@ const Whitelist = ({
               ? claimStatusOTC2
               : type === "special-otc"
               ? claimStatusOTCSpecial
+              : type === "pool-bonus"
+              ? claimStatusOTCPoolBonus
               : type === "bonus-otc"
               ? claimStatusOTCBonus
               : selectedRound?.id === "seed"
@@ -2242,6 +2496,8 @@ const Whitelist = ({
               ? claimLoadingOTC2
               : type === "special-otc"
               ? claimLoadingOTCSpecial
+              : type === "pool-bonus"
+              ? claimLoadingOTCPoolBonus
               : type === "bonus-otc"
               ? claimLoadingOTCBonus
               : selectedRound?.id === "seed"
@@ -2262,6 +2518,8 @@ const Whitelist = ({
               ? canClaimOTC2
               : type === "special-otc"
               ? canClaimOTCSpecial
+              : type === "pool-bonus"
+              ? canClaimOTCPoolBonus
               : type === "bonus-otc"
               ? canClaimOTCBonus
               : selectedRound?.id === "seed"
@@ -2281,6 +2539,8 @@ const Whitelist = ({
               ? setcanClaimOTC2(value)
               : type === "special-otc"
               ? setcanClaimOTCSpecial(value)
+              : type === "pool-bonus"
+              ? setcanClaimOTCPoolBonus(value)
               : type === "bonus-otc"
               ? setcanClaimOTCBonus(value)
               : selectedRound?.id === "seed"
@@ -2301,6 +2561,8 @@ const Whitelist = ({
               ? cliffTimeOtc2
               : type === "special-otc"
               ? cliffTimeOtcSpecial
+              : type === "pool-bonus"
+              ? cliffTimeOtcPoolBonus
               : type === "bonus-otc"
               ? cliffTimeOtcBonus
               : selectedRound?.id === "seed"
