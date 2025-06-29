@@ -13,6 +13,10 @@ import drumrollSound from "./assets/drumroll.mp3";
 import failSound from "./assets/fail.mp3";
 import gamestartSound from "./assets/gamestart.mp3";
 import successSound from "./assets/success.mp3";
+import suspenseSound from "./assets/suspense.mp3";
+import suspenseful1Sound from "./assets/suspenseful1.mp3";
+import suspenseful2Sound from "./assets/suspenseful2.mp3";
+
 import timerEndedSound from "./assets/timerEnded.mp3";
 import avatarCorrect from "./assets/avatarCorrect.gif";
 import avatarWrong from "./assets/avatarWrong.gif";
@@ -44,7 +48,7 @@ const AIQuestion = ({
   const TYPING_SPEED_PER_CHAR = 0.05; // seconds per character
   const BASE_DELAY = 1.5;
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [optionsClickable, setOptionsClickable] = useState(false);
@@ -63,6 +67,8 @@ const AIQuestion = ({
   const [showSelect, setShowSelect] = useState(false);
   const [pause, setPause] = useState(false);
   const [avatarState, setAvatarState] = useState("idle");
+
+  const suspenseMusic = new Audio(suspenseful1Sound);
 
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
@@ -224,6 +230,7 @@ const AIQuestion = ({
 
   const handleOptionClick = (value) => {
     setPause(true);
+    suspenseMusic?.pause();
     new Audio(drumrollSound).play();
 
     setTimeout(() => {
@@ -235,9 +242,9 @@ const AIQuestion = ({
       if (isCorrect) {
         setSelectedAnswer(value);
         new Audio(successSound).play();
-        setAvatarState("correct")
+        setAvatarState("correct");
         setTimeout(() => {
-          setAvatarState("idle")
+          setAvatarState("idle");
         }, 3360);
       } else {
         const otherOptions = answersOptions.filter((opt) => opt !== value);
@@ -245,9 +252,9 @@ const AIQuestion = ({
           otherOptions[Math.floor(Math.random() * otherOptions.length)];
         setSelectedAnswer(randomWrong);
         new Audio(failSound).play();
-         setAvatarState("wrong")
+        setAvatarState("wrong");
         setTimeout(() => {
-          setAvatarState("idle")
+          setAvatarState("idle");
         }, 3360);
       }
       setPause(false);
@@ -360,10 +367,14 @@ const AIQuestion = ({
   useEffect(() => {
     if (timeLeft === 0) {
       new Audio(timerEndedSound).play();
-      setAvatarState("time")
+      setAvatarState("time");
       setTimeout(() => {
-        setAvatarState("idle")
+        setAvatarState("idle");
       }, 3360);
+    }
+
+    if (timeLeft === 19) {
+      suspenseMusic?.play();
     }
   }, [timeLeft]);
 
