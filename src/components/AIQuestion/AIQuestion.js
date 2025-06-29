@@ -68,7 +68,11 @@ const AIQuestion = ({
   const [pause, setPause] = useState(false);
   const [avatarState, setAvatarState] = useState("idle");
 
-  const suspenseMusic = new Audio(suspenseful1Sound);
+  const suspenseMusicRef = useRef(null);
+
+  useEffect(() => {
+    suspenseMusicRef.current = new Audio(suspenseful1Sound);
+  }, []);
 
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
@@ -230,7 +234,8 @@ const AIQuestion = ({
 
   const handleOptionClick = (value) => {
     setPause(true);
-    suspenseMusic?.pause();
+    suspenseMusicRef.current?.pause();
+    suspenseMusicRef.current.currentTime = 0;
     new Audio(drumrollSound).play();
 
     setTimeout(() => {
@@ -358,6 +363,7 @@ const AIQuestion = ({
 
       setTimeout(() => {
         setOptionsClickable(true);
+        suspenseMusicRef.current?.play();
       }, totalTypingTime * 1000);
     }
 
@@ -366,15 +372,15 @@ const AIQuestion = ({
 
   useEffect(() => {
     if (timeLeft === 0) {
+      suspenseMusicRef.current?.pause();
+      suspenseMusicRef.current.currentTime = 0;
+
       new Audio(timerEndedSound).play();
+
       setAvatarState("time");
       setTimeout(() => {
         setAvatarState("idle");
       }, 3360);
-    }
-
-    if (timeLeft === 19) {
-      suspenseMusic?.play();
     }
   }, [timeLeft]);
 
