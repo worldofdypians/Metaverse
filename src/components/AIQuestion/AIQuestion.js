@@ -75,6 +75,65 @@ const AIQuestion = ({
   const circumference = 2 * Math.PI * radius;
   const intervalRef = useRef(null);
 
+
+const messages = [
+   "Are you feeling smart today?",
+  "Let’s see what your brain can do",
+  "Today's challenge awaits you!",
+  "Your brain is under pressure!",
+  "Think you can crack this one?",
+  "Time to earn your bragging rights",
+  "Only the sharp survive today",
+  "Let's put you to the test now",
+  "Is your brain warmed up yet?",
+  "Can you handle today's quiz?",
+  "Ready to prove your skills?",
+  "This one’s not for the weak!",
+  "One question. All the glory.",
+  "Get ready, genius in action!",
+  "Let’s find out who you are!",
+  "Do you dare to take this on?",
+  "Test your limits right now!",
+  "Brains or luck—pick one now!",
+  "Your fate rests on this quiz",
+  "Sharpen up. It's game time!",
+  "No mercy in today’s round!",
+  "You vs the unknown begins!",
+  "Don’t choke on this one 😈",
+  "Dare to challenge the odds?",
+  "Mind games start right here!",
+  "Let’s heat up those neurons!",
+  "A true test of your wits 🔥",
+  "Think fast or fall behind!",
+  "Big brain moves only today!",
+  "Can you outsmart the game?"
+];
+
+const [dailyMessage, setDailyMessage] = useState("");
+
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0]; // e.g. "2025-06-30"
+    const saved = JSON.parse(localStorage.getItem("dailyMessage")) || {};
+
+    if (saved.date === today && saved.message) {
+      // Use saved message for today
+      setDailyMessage(saved.message);
+    } else {
+      // Pick a new message
+      const randomMessage =
+        messages[Math.floor(Math.random() * messages.length)];
+
+      setDailyMessage(randomMessage);
+
+      localStorage.setItem(
+        "dailyMessage",
+        JSON.stringify({ date: today, message: randomMessage })
+      );
+    }
+  }, []);
+
+
+
   const handleConfirm = () => {
     if (selectedOption === undefined) return;
     clearInterval(intervalRef.current);
@@ -442,7 +501,7 @@ const AIQuestion = ({
               {username},
             </span>
           </span>
-          <span className="ai-oryn-text">Are you feeling lucky today?</span>
+          <span className="ai-oryn-text">{dailyMessage}</span>
         </div>
         <div className="ai-oryn-bottom">
           <div className="d-flex flex-column gap-2 p-4 h-100 justify-content-between">
