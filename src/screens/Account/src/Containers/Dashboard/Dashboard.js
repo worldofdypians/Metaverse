@@ -1,23 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { ethers } from "ethers";
 import { GENERATE_NONCE, GET_PLAYER, VERIFY_WALLET } from "./Dashboard.schema";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import NewEvents from "../../../../../components/NewEvents/NewEvents";
 import Web3 from "web3";
-import { ERC20_ABI } from "../../web3/abis";
 
 import GlobalLeaderboard from "../../../../../components/LeaderBoard/GlobalLeaderboard";
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
 import axios from "axios";
-import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
+// import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 import OutsideClickHandler from "react-outside-click-handler";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import MyBalance from "../../Components/WalletBalance/MyBalance";
+// import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
@@ -41,7 +39,7 @@ import Countdown from "react-countdown";
 import {
   baseStars,
   bnbStars,
-  mantaStars,
+  // mantaStars,
   monthlyStarPrizes,
   monthlyExtraStarPrizes,
   skaleStars,
@@ -111,27 +109,27 @@ function Dashboard({
   chainId,
   coinbase,
   handleConnect,
-  myCawsWodStakes,
-  landStaked,
+  // myCawsWodStakes,
+  // landStaked,
   ethTokenData,
   dypTokenData,
-  onSigninClick,
+  // onSigninClick,
   onSyncClick,
-  onLogoutClick,
-  availableTime,
+  // onLogoutClick,
+  // availableTime,
   success,
   handleSwitchNetwork,
   domainName,
   handleOpenDomains,
-  dogePrice,
+  // dogePrice,
   handleSwitchChain,
   onSubscribeSuccess,
   isPremium,
-  dyptokenDatabnb,
+  // dyptokenDatabnb,
   baseEarnUSD,
   logoutCount,
-  handleConnectBinance,
-  handleConnectionPassport,
+  // handleConnectBinance,
+  // handleConnectionPassport,
   binanceW3WProvider,
   binanceWallet,
   handleSwitchChainBinanceWallet,
@@ -158,8 +156,8 @@ function Dashboard({
   matEarnUsd,
   wodBalance,
   wodPrice,
-  showSync,
-  onCloseSync,
+  // showSync,
+  // onCloseSync,
   easy2StakeEarnUsd,
   midleEarnUsd,
   coingeckoEarnUsd,
@@ -174,13 +172,13 @@ function Dashboard({
   network_matchain,
   syncStatus,
 }) {
-  const { email, logout } = useAuth();
+  const { email } = useAuth();
   const { eventId } = useParams();
-  const override = {
-    display: "block",
-    margin: "auto",
-    borderColor: "#554fd8",
-  };
+  // const override = {
+  //   display: "block",
+  //   margin: "auto",
+  //   borderColor: "#554fd8",
+  // };
 
   const {
     data,
@@ -211,59 +209,59 @@ function Dashboard({
     "therockhidder@gmail.com",
   ];
 
-  const chainDropdowns = [
-    {
-      name: "Ethereum",
-      symbol: "eth",
-    },
-    {
-      name: "BNB Chain",
-      symbol: "bnb",
-    },
+  // const chainDropdowns = [
+  //   {
+  //     name: "Ethereum",
+  //     symbol: "eth",
+  //   },
+  //   {
+  //     name: "BNB Chain",
+  //     symbol: "bnb",
+  //   },
 
-    {
-      name: "Avalanche",
-      symbol: "wavax",
-    },
-    {
-      name: "Conflux",
-      symbol: "conflux",
-    },
-    {
-      name: "Base",
-      symbol: "base",
-    },
-    {
-      name: "SKALE",
-      symbol: "skale",
-    },
-    {
-      name: "CORE",
-      symbol: "core",
-    },
-    {
-      name: "Viction",
-      symbol: "viction",
-    },
+  //   {
+  //     name: "Avalanche",
+  //     symbol: "wavax",
+  //   },
+  //   {
+  //     name: "Conflux",
+  //     symbol: "conflux",
+  //   },
+  //   {
+  //     name: "Base",
+  //     symbol: "base",
+  //   },
+  //   {
+  //     name: "SKALE",
+  //     symbol: "skale",
+  //   },
+  //   {
+  //     name: "CORE",
+  //     symbol: "core",
+  //   },
+  //   {
+  //     name: "Viction",
+  //     symbol: "viction",
+  //   },
 
-    {
-      name: "Manta",
-      symbol: "manta",
-    },
+  //   {
+  //     name: "Manta",
+  //     symbol: "manta",
+  //   },
 
-    {
-      name: "Taiko",
-      symbol: "taiko",
-    },
-    {
-      name: "Matchain",
-      symbol: "matchain",
-    },
-    {
-      name: "SEI",
-      symbol: "sei",
-    },
-  ];
+  //   {
+  //     name: "Taiko",
+  //     symbol: "taiko",
+  //   },
+  //   {
+  //     name: "Matchain",
+  //     symbol: "matchain",
+  //   },
+  //   {
+  //     name: "SEI",
+  //     symbol: "sei",
+  //   },
+  // ];
 
   const chestImagesBnb = [
     "0",
@@ -590,6 +588,10 @@ function Dashboard({
   const [allMantaChests, setallMantaChests] = useState([]);
   const [allBaseChests, setallBaseChests] = useState([]);
   const [allMatChests, setallMatChests] = useState([]);
+  const [aiQuestionObject, setAiQuestionObject] = useState({
+    question: "",
+    options: [],
+  });
 
   const [countdown, setcountdown] = useState();
   const [countdown3500, setcountdown3500] = useState();
@@ -5190,6 +5192,29 @@ function Dashboard({
     }
   };
 
+  const getAIQuestion = async (chain, txHash) => {
+    const data = {
+      walletAddress: coinbase,
+      email: email,
+      chain: chain,
+      txHash: txHash,
+    };
+
+    const result = await axios
+      .post(`https://api.worldofdypians.com/api/qa/request`, data)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+     
+      setAiQuestionObject({
+        question: result.data.question,
+        options: result.data.answers,
+      });
+    }
+  };
+
   const handleShowSyncModal = () => {
     onSyncClick();
   };
@@ -7037,6 +7062,10 @@ function Dashboard({
                   walletClient={walletClient}
                   publicClient={publicClient}
                   binanceW3WProvider={binanceW3WProvider}
+                  onQuestionUnlocked={(chain, hash) => {
+                    getAIQuestion(chain, hash);
+                  }}
+                  aiQuestionObject={aiQuestionObject}
                 />
               </div>
             </div>

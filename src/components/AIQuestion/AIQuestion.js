@@ -4,10 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import Web3 from "web3";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-// import orynBorder from "./ai-oryn-border2.webp";
-import { Canvas } from "@react-three/fiber";
-import { QuestionExperience } from "../../screens/NewAgent/components/QuestionExperience";
-import { Experience } from "../../screens/NewAgent/components/Experience";
 import clickSound from "./assets/click.mp3";
 import drumrollSound from "./assets/drumroll.mp3";
 import failSound from "./assets/fail.mp3";
@@ -33,6 +29,8 @@ const AIQuestion = ({
   binanceW3WProvider,
   address,
   username,
+  onQuestionUnlocked,
+  aiQuestionObject,
 }) => {
   // new Audio(successSound).play();
 
@@ -55,11 +53,6 @@ const AIQuestion = ({
   const [unlockLoading, setUnlockLoading] = useState(false);
   const [unlockStatus, setUnlockStatus] = useState("initial");
   const [activeClass, setActiveClass] = useState("");
-  const [playAudio, setPlayAudio] = useState(false);
-  const [sound, setSound] = useState(false);
-  const [count, setCount] = useState(0);
-  const [audioFile, setAudioFile] = useState(null);
-  const [jsonFile, setJsonFile] = useState(null);
   const [showSelect, setShowSelect] = useState(false);
   const [pause, setPause] = useState(false);
   const [avatarState, setAvatarState] = useState("idle");
@@ -112,9 +105,13 @@ const AIQuestion = ({
           from: coinbase,
           ...transactionParameters,
         })
-        .then(() => {
+        .then((data) => {
           setUnlockLoading(false);
           setUnlockStatus("success");
+          onQuestionUnlocked(
+            chainId === 56 ? "bnb" : "opbnb",
+            data.transactionHash
+          );
           new Audio(gamestartSound).play();
 
           setTimeout(() => {
@@ -161,6 +158,7 @@ const AIQuestion = ({
             });
 
           if (receipt) {
+            onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
             setUnlockLoading(false);
             setUnlockStatus("success");
             setTimeout(() => {
@@ -212,6 +210,7 @@ const AIQuestion = ({
 
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
+        onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
         setUnlockLoading(false);
         setUnlockStatus("success");
         setTimeout(() => {
@@ -289,6 +288,7 @@ const AIQuestion = ({
   };
 
   const getRadioClass = (option) => {
+    console.log(selectedOption, option);
     if (!confirmed) {
       return selectedOption === option
         ? "radio-button-option-selected"
@@ -337,15 +337,8 @@ const AIQuestion = ({
     if (step === 1) {
       const totalTypingTime =
         BASE_DELAY +
-        answersOptions.reduce((acc, option) => {
-          const text =
-            option === 0
-              ? "Bitcoin (BTC)"
-              : option === 1
-              ? "Ethereum (ETH)"
-              : option === 2
-              ? "Solana (SOL)"
-              : "Binance Coin (BNB)";
+        aiQuestionObject.options.reduce((acc, option) => {
+          const text = option;
           return acc + text.length * TYPING_SPEED_PER_CHAR;
         }, 0);
 
@@ -734,40 +727,23 @@ const AIQuestion = ({
           <div className="ai-answer-option-wrapper p-4 pt-0 position-relative w-100">
             <div className="ai-question-text-wrapper justify-content-center align-items-center">
               <span className="aiLockedQuestion text-capitalize " id="question">
-                {step === 0
-                  ? ""
-                  : step === 1
-                  ? "Which was the first crypto introduced in the world?"
-                  : ""}
+                {step === 0 ? "" : step === 1 ? aiQuestionObject.question : ""}
               </span>
             </div>
             <div className="options-wrapper gap-3 w-100">
-              {answersOptions.map((option, index) => {
-                const text =
-                  step === 1
-                    ? option === 0
-                      ? "Bitcoin (BTC)"
-                      : option === 1
-                      ? "Ethereum (ETH)"
-                      : option === 2
-                      ? "Solana (SOL)"
-                      : "Binance Coin (BNB)"
-                    : "";
+              {(aiQuestionObject.options.length > 0
+                ? aiQuestionObject.options
+                : Array(4).fill("")
+              ).map((option, index) => {
+                const text = step === 1 ? option : "";
 
-                // Use actual character length of previous options to calculate delay
                 const delayBeforeThisOption =
                   step === 1
-                    ? answersOptions
+                    ? aiQuestionObject.options
                         .slice(0, index)
                         .reduce((acc, prevOption) => {
-                          const prevText =
-                            prevOption === 0
-                              ? "Bitcoin (BTC)"
-                              : prevOption === 1
-                              ? "Ethereum (ETH)"
-                              : prevOption === 2
-                              ? "Solana (SOL)"
-                              : "Binance Coin (BNB)";
+                          const prevText = prevOption;
+
                           return acc + prevText.length * TYPING_SPEED_PER_CHAR;
                         }, BASE_DELAY)
                     : 0;
@@ -786,14 +762,15 @@ const AIQuestion = ({
                       "pe-none"
                     }`}
                     onClick={() => {
-                      step === 1 && setSelectedOption(option);
+                      step === 1 && setSelectedOption(answers[index]);
                       setShowSelect(true);
+
                       new Audio(clickSound).play();
                     }}
                   >
                     <div
                       className={`${getAnswerClass(
-                        option
+                        answers[index]
                       )} px-4 py-3 d-flex align-items-center justify-content-between`}
                     >
                       <div className="d-flex align-items-center gap-3">
@@ -810,24 +787,16 @@ const AIQuestion = ({
                                 : "none",
                             animationDelay: `${delayBeforeThisOption}s`,
                             overflow: "hidden",
-                            whiteSpace: "nowrap",
+                            // whiteSpace: "nowrap",
                             display: "inline-block",
                             width: step === 1 ? "0" : "auto",
                           }}
                         >
-                          {step === 0
-                            ? ""
-                            : option === 0
-                            ? "Bitcoin (BTC)"
-                            : option === 1
-                            ? "Ethereum (ETH)"
-                            : option === 2
-                            ? "Solana (SOL)"
-                            : "Binance Coin (BNB)"}
+                          {step === 0 ? "" : option}
                         </span>
                       </div>
                       {step === 1 && (
-                        <span className={getRadioClass(option)}></span>
+                        <span className={getRadioClass(answers[index])}></span>
                       )}
                     </div>
                   </div>
@@ -837,7 +806,12 @@ const AIQuestion = ({
           </div>
           <div
             className={` ${
-              selectedAnswer === undefined && timeLeft === 0
+              (chainId !== 56 && chainId !== 204) ||
+              !email ||
+              !isConnected ||
+              !coinbase
+                ? "ai-answer-result-warning-wrapper"
+                : selectedAnswer === undefined && timeLeft === 0
                 ? "ai-answer-result-error-wrapper"
                 : selectedOption === selectedAnswer &&
                   selectedAnswer !== undefined
@@ -900,7 +874,7 @@ const AIQuestion = ({
                     className="aiAnswer-title m-0"
                     style={{ color: "#ffd37e" }}
                   >
-                    '{answers[selectedOption]}'
+                    '{selectedOption}'
                   </span>
                   ..Final answer?
                   <button
