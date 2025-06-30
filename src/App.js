@@ -5757,6 +5757,27 @@ function App() {
             }
           />
 
+<Route
+            exact
+            path="/pool-bonus"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="pool-bonus"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+
           <Route
             exact
             path="/special-otc"
