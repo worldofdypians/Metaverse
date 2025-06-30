@@ -19,7 +19,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
-
+import suspenseful1Sound from "../../../../../components/AIQuestion/assets/suspenseful1.mp3";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
@@ -634,7 +634,7 @@ function Dashboard({
 
   const [mediaUrl, setMediaUrl] = useState("");
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
-
+  const [suspenseSound, setSuspenseSound] = useState(false);
   const [selectedEvent, setselectedEvent] = useState([]);
   const [showEventPopup, setshowEventPopup] = useState(false);
 
@@ -644,6 +644,12 @@ function Dashboard({
   });
 
   const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
+
+  const suspenseMusicRef = useRef(null);
+
+  useEffect(() => {
+    suspenseMusicRef.current = new Audio(suspenseful1Sound);
+  }, []);
 
   const recaptchaRef = useRef(null);
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
@@ -7008,7 +7014,12 @@ function Dashboard({
                 <div className="d-flex align-items-center justify-content-end ai-popup-x-wrapper">
                   <img
                     src={"https://cdn.worldofdypians.com/wod/ai-popupx.png"}
-                    onClick={() => setShowDailyQuestion(false)}
+                    onClick={() => {
+                      setSuspenseSound(true);
+                      setShowDailyQuestion(false);
+                      suspenseMusicRef.current?.pause();
+                      suspenseMusicRef.current.currentTime = 0;
+                    }}
                     alt=""
                     className="ai-x"
                   />
@@ -7022,6 +7033,9 @@ function Dashboard({
                   isConnected={isConnected}
                   coinbase={coinbase}
                   chainId={chainId}
+                  suspenseMusicRef={suspenseMusicRef}
+                  suspenseSound={suspenseSound}
+                  setSuspenseSound={setSuspenseSound}
                   onConnectWallet={() => {
                     setShowDailyQuestion(false);
                     handleConnect();

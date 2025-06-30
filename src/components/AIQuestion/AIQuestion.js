@@ -37,6 +37,9 @@ const AIQuestion = ({
   binanceW3WProvider,
   address,
   username,
+  suspenseMusicRef,
+  suspenseSound,
+  setSuspenseSound,
 }) => {
   // new Audio(successSound).play();
 
@@ -48,7 +51,7 @@ const AIQuestion = ({
   const TYPING_SPEED_PER_CHAR = 0.05; // seconds per character
   const BASE_DELAY = 1.5;
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [optionsClickable, setOptionsClickable] = useState(false);
@@ -67,12 +70,6 @@ const AIQuestion = ({
   const [showSelect, setShowSelect] = useState(false);
   const [pause, setPause] = useState(false);
   const [avatarState, setAvatarState] = useState("idle");
-
-  const suspenseMusicRef = useRef(null);
-
-  useEffect(() => {
-    suspenseMusicRef.current = new Audio(suspenseful1Sound);
-  }, []);
 
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
@@ -234,6 +231,7 @@ const AIQuestion = ({
 
   const handleOptionClick = (value) => {
     setPause(true);
+    setSuspenseSound(true);
     suspenseMusicRef.current?.pause();
     suspenseMusicRef.current.currentTime = 0;
     new Audio(drumrollSound).play();
@@ -363,7 +361,6 @@ const AIQuestion = ({
 
       setTimeout(() => {
         setOptionsClickable(true);
-        suspenseMusicRef.current?.play();
       }, totalTypingTime * 1000);
     }
 
@@ -371,10 +368,15 @@ const AIQuestion = ({
   }, [step, answersOptions]);
 
   useEffect(() => {
+    if (timeLeft === 20 && step === 1) {
+        setTimeout(() => {
+          suspenseMusicRef.current?.play();
+        }, 4500);
+    }
     if (timeLeft === 0) {
       suspenseMusicRef.current?.pause();
       suspenseMusicRef.current.currentTime = 0;
-
+      setSuspenseSound(true);
       new Audio(timerEndedSound).play();
 
       setAvatarState("time");
@@ -382,7 +384,9 @@ const AIQuestion = ({
         setAvatarState("idle");
       }, 3360);
     }
-  }, [timeLeft]);
+  }, [timeLeft, step]);
+
+  console.log("Audio state before pause:", suspenseMusicRef.current?.paused);
 
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
@@ -1015,7 +1019,10 @@ const AIQuestion = ({
           <NavLink
             className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
             to="/auth"
-            onClick={() => onClose()}
+            onClick={() => {
+              onClose();
+              suspenseMusicRef.current?.pause();
+            }}
           >
             Log in
           </NavLink>
