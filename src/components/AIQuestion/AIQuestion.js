@@ -19,6 +19,7 @@ import avatarWrong from "./assets/avatarWrong.gif";
 import avatarIdle from "./assets/avatarIdle.gif";
 import avatarTime from "./assets/avatarTime.gif";
 import axios from "axios";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -45,7 +46,7 @@ const AIQuestion = ({
 
   const answersOptions = [0, 1, 2, 3];
   const answers = ["A", "B", "C", "D"];
-
+  const windowSize = useWindowSize();
   const totalTime = 20;
 
   const TYPING_SPEED_PER_CHAR = 0.05; // seconds per character
@@ -468,7 +469,6 @@ const AIQuestion = ({
   // console.log(selectedAnswer, selectedOption);
   return (
     <div className="d-flex w-100 gap-4 py-5 pt-3 pt-lg-0 py-lg-0">
-   
       <div className="d-none d-lg-flex d-md-flex flex-column gap-2 col-lg-3 col-md-4 position-relative">
         <div className="ai-oryn-top">
           <div
@@ -896,7 +896,13 @@ const AIQuestion = ({
                           style={{
                             animation:
                               step === 1
-                                ? `typing ${animationDuration}s steps(${text.length}, end) forwards`
+                                ? `${
+                                    windowSize.width > 500
+                                      ? "typing-desktop"
+                                      : "typing-mobile"
+                                  } ${animationDuration}s steps(${
+                                    text.length
+                                  }, end) forwards`
                                 : "none",
                             animationDelay: `${delayBeforeThisOption}s`,
                             overflow: "hidden",
