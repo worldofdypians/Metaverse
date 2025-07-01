@@ -9,6 +9,10 @@ import drumrollSound from "./assets/drumroll.mp3";
 import failSound from "./assets/fail.mp3";
 import gamestartSound from "./assets/gamestart.mp3";
 import successSound from "./assets/success.mp3";
+import suspenseSound from "./assets/suspense.mp3";
+import suspenseful1Sound from "./assets/suspenseful1.mp3";
+import suspenseful2Sound from "./assets/suspenseful2.mp3";
+import clockSound from "./assets/clockSound.mp3";
 import timerEndedSound from "./assets/timerEnded.mp3";
 import avatarCorrect from "./assets/avatarCorrect.gif";
 import avatarWrong from "./assets/avatarWrong.gif";
@@ -29,6 +33,10 @@ const AIQuestion = ({
   binanceW3WProvider,
   address,
   username,
+  suspenseMusicRef,
+  suspenseSound,
+  setSuspenseSound,
+  clockSoundRef,
   onQuestionUnlocked,
   aiQuestionObject,
 }) => {
@@ -60,6 +68,62 @@ const AIQuestion = ({
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
   const intervalRef = useRef(null);
+
+  const messages = [
+    "Are you feeling smart today?",
+    "Let’s see what your brain can do",
+    "Today's challenge awaits you!",
+    "Your brain is under pressure!",
+    "Think you can crack this one?",
+    "Time to earn your bragging rights",
+    "Only the sharp survive today",
+    "Let's put you to the test now",
+    "Is your brain warmed up yet?",
+    "Can you handle today's quiz?",
+    "Ready to prove your skills?",
+    "This one’s not for the weak!",
+    "One question. All the glory.",
+    "Get ready, genius in action!",
+    "Let’s find out who you are!",
+    "Do you dare to take this on?",
+    "Test your limits right now!",
+    "Brains or luck—pick one now!",
+    "Your fate rests on this quiz",
+    "Sharpen up. It's game time!",
+    "No mercy in today’s round!",
+    "You vs the unknown begins!",
+    "Don’t choke on this one 😈",
+    "Dare to challenge the odds?",
+    "Mind games start right here!",
+    "Let’s heat up those neurons!",
+    "A true test of your wits 🔥",
+    "Think fast or fall behind!",
+    "Big brain moves only today!",
+    "Can you outsmart the game?",
+  ];
+
+  const [dailyMessage, setDailyMessage] = useState("");
+
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0]; // e.g. "2025-06-30"
+    const saved = JSON.parse(localStorage.getItem("dailyMessage")) || {};
+
+    if (saved.date === today && saved.message) {
+      // Use saved message for today
+      setDailyMessage(saved.message);
+    } else {
+      // Pick a new message
+      const randomMessage =
+        messages[Math.floor(Math.random() * messages.length)];
+
+      setDailyMessage(randomMessage);
+
+      localStorage.setItem(
+        "dailyMessage",
+        JSON.stringify({ date: today, message: randomMessage })
+      );
+    }
+  }, []);
 
   const handleConfirm = () => {
     if (selectedOption === undefined) return;
@@ -223,6 +287,10 @@ const AIQuestion = ({
 
   const handleOptionClick = (value) => {
     setPause(true);
+    setSuspenseSound(true);
+    suspenseMusicRef.current?.pause();
+    clockSoundRef.current?.pause();
+    suspenseMusicRef.current.currentTime = 0;
     new Audio(drumrollSound).play();
 
     setTimeout(() => {
@@ -351,14 +419,25 @@ const AIQuestion = ({
   }, [step, answersOptions]);
 
   useEffect(() => {
+    if (timeLeft === 20 && step === 1) {
+      suspenseMusicRef.current?.play();
+    }
+    // if (timeLeft === 8 && step === 1) {
+    //   suspenseMusicRef.current?.pause();
+    //   clockSoundRef.current?.play();
+    // }
     if (timeLeft === 0) {
+      suspenseMusicRef.current?.pause();
+      suspenseMusicRef.current.currentTime = 0;
+      setSuspenseSound(true);
       new Audio(timerEndedSound).play();
       setAvatarState("time");
       setTimeout(() => {
         setAvatarState("idle");
       }, 3360);
     }
-  }, [timeLeft]);
+  }, [timeLeft, step]);
+ 
 
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
@@ -414,7 +493,7 @@ const AIQuestion = ({
               {username},
             </span>
           </span>
-          <span className="ai-oryn-text">Are you feeling lucky today?</span>
+          <span className="ai-oryn-text">{dailyMessage}</span>
         </div>
         <div className="ai-oryn-bottom">
           <div className="d-flex flex-column gap-2 p-4 h-100 justify-content-between">
@@ -985,7 +1064,11 @@ const AIQuestion = ({
           <NavLink
             className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
             to="/auth"
-            onClick={() => onClose()}
+            onClick={() => {
+              onClose();
+              suspenseMusicRef.current?.pause();
+              clockSoundRef.current?.pause();
+            }}
           >
             Log in
           </NavLink>
