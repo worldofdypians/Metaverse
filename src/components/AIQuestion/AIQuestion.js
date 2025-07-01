@@ -16,7 +16,7 @@ import successSound from "./assets/success.mp3";
 import suspenseSound from "./assets/suspense.mp3";
 import suspenseful1Sound from "./assets/suspenseful1.mp3";
 import suspenseful2Sound from "./assets/suspenseful2.mp3";
-
+import clockSound from "./assets/clockSound.mp3";
 import timerEndedSound from "./assets/timerEnded.mp3";
 import avatarCorrect from "./assets/avatarCorrect.gif";
 import avatarWrong from "./assets/avatarWrong.gif";
@@ -40,6 +40,7 @@ const AIQuestion = ({
   suspenseMusicRef,
   suspenseSound,
   setSuspenseSound,
+  clockSoundRef,
 }) => {
   // new Audio(successSound).play();
 
@@ -75,41 +76,40 @@ const AIQuestion = ({
   const circumference = 2 * Math.PI * radius;
   const intervalRef = useRef(null);
 
+  const messages = [
+    "Are you feeling smart today?",
+    "Let’s see what your brain can do",
+    "Today's challenge awaits you!",
+    "Your brain is under pressure!",
+    "Think you can crack this one?",
+    "Time to earn your bragging rights",
+    "Only the sharp survive today",
+    "Let's put you to the test now",
+    "Is your brain warmed up yet?",
+    "Can you handle today's quiz?",
+    "Ready to prove your skills?",
+    "This one’s not for the weak!",
+    "One question. All the glory.",
+    "Get ready, genius in action!",
+    "Let’s find out who you are!",
+    "Do you dare to take this on?",
+    "Test your limits right now!",
+    "Brains or luck—pick one now!",
+    "Your fate rests on this quiz",
+    "Sharpen up. It's game time!",
+    "No mercy in today’s round!",
+    "You vs the unknown begins!",
+    "Don’t choke on this one 😈",
+    "Dare to challenge the odds?",
+    "Mind games start right here!",
+    "Let’s heat up those neurons!",
+    "A true test of your wits 🔥",
+    "Think fast or fall behind!",
+    "Big brain moves only today!",
+    "Can you outsmart the game?",
+  ];
 
-const messages = [
-   "Are you feeling smart today?",
-  "Let’s see what your brain can do",
-  "Today's challenge awaits you!",
-  "Your brain is under pressure!",
-  "Think you can crack this one?",
-  "Time to earn your bragging rights",
-  "Only the sharp survive today",
-  "Let's put you to the test now",
-  "Is your brain warmed up yet?",
-  "Can you handle today's quiz?",
-  "Ready to prove your skills?",
-  "This one’s not for the weak!",
-  "One question. All the glory.",
-  "Get ready, genius in action!",
-  "Let’s find out who you are!",
-  "Do you dare to take this on?",
-  "Test your limits right now!",
-  "Brains or luck—pick one now!",
-  "Your fate rests on this quiz",
-  "Sharpen up. It's game time!",
-  "No mercy in today’s round!",
-  "You vs the unknown begins!",
-  "Don’t choke on this one 😈",
-  "Dare to challenge the odds?",
-  "Mind games start right here!",
-  "Let’s heat up those neurons!",
-  "A true test of your wits 🔥",
-  "Think fast or fall behind!",
-  "Big brain moves only today!",
-  "Can you outsmart the game?"
-];
-
-const [dailyMessage, setDailyMessage] = useState("");
+  const [dailyMessage, setDailyMessage] = useState("");
 
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0]; // e.g. "2025-06-30"
@@ -131,8 +131,6 @@ const [dailyMessage, setDailyMessage] = useState("");
       );
     }
   }, []);
-
-
 
   const handleConfirm = () => {
     if (selectedOption === undefined) return;
@@ -292,6 +290,7 @@ const [dailyMessage, setDailyMessage] = useState("");
     setPause(true);
     setSuspenseSound(true);
     suspenseMusicRef.current?.pause();
+    clockSoundRef.current?.pause();
     suspenseMusicRef.current.currentTime = 0;
     new Audio(drumrollSound).play();
 
@@ -428,10 +427,12 @@ const [dailyMessage, setDailyMessage] = useState("");
 
   useEffect(() => {
     if (timeLeft === 20 && step === 1) {
-        setTimeout(() => {
-          suspenseMusicRef.current?.play();
-        }, 4500);
+      suspenseMusicRef.current?.play();
     }
+    // if (timeLeft === 8 && step === 1) {
+    //   suspenseMusicRef.current?.pause();
+    //   clockSoundRef.current?.play();
+    // }
     if (timeLeft === 0) {
       suspenseMusicRef.current?.pause();
       suspenseMusicRef.current.currentTime = 0;
@@ -1081,6 +1082,7 @@ const [dailyMessage, setDailyMessage] = useState("");
             onClick={() => {
               onClose();
               suspenseMusicRef.current?.pause();
+              clockSoundRef.current?.pause();
             }}
           >
             Log in

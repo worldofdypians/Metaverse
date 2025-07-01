@@ -19,7 +19,8 @@ import OutsideClickHandler from "react-outside-click-handler";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
-import suspenseful1Sound from "../../../../../components/AIQuestion/assets/suspenseful1.mp3";
+import suspenseful1Sound from "../../../../../components/AIQuestion/assets/longSuspense.mp3";
+import clockSound from "../../../../../components/AIQuestion/assets/clockSound.mp3";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
@@ -646,9 +647,11 @@ function Dashboard({
   const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
 
   const suspenseMusicRef = useRef(null);
+  const clockSoundRef = useRef(null);
 
   useEffect(() => {
     suspenseMusicRef.current = new Audio(suspenseful1Sound);
+    clockSoundRef.current = new Audio(clockSound);
   }, []);
 
   const recaptchaRef = useRef(null);
@@ -7019,6 +7022,8 @@ function Dashboard({
                       setShowDailyQuestion(false);
                       suspenseMusicRef.current?.pause();
                       suspenseMusicRef.current.currentTime = 0;
+                      clockSoundRef.current?.pause();
+                      clockSoundRef.current.currentTime = 0;
                     }}
                     alt=""
                     className="ai-x"
@@ -7034,6 +7039,7 @@ function Dashboard({
                   coinbase={coinbase}
                   chainId={chainId}
                   suspenseMusicRef={suspenseMusicRef}
+                  clockSoundRef={clockSoundRef}
                   suspenseSound={suspenseSound}
                   setSuspenseSound={setSuspenseSound}
                   onConnectWallet={() => {
