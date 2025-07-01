@@ -375,7 +375,6 @@ const AIQuestion = ({
   };
 
   const getRadioClass = (option) => {
- 
     if (!confirmed) {
       return selectedOption === option
         ? "radio-button-option-selected"
@@ -468,7 +467,8 @@ const AIQuestion = ({
 
   // console.log(selectedAnswer, selectedOption);
   return (
-    <div className="d-flex w-100 gap-4 py-5 py-lg-0">
+    <div className="d-flex w-100 gap-4 py-5 pt-3 pt-lg-0 py-lg-0">
+   
       <div className="d-none d-lg-flex d-md-flex flex-column gap-2 col-lg-3 col-md-4 position-relative">
         <div className="ai-oryn-top">
           <div
@@ -682,6 +682,7 @@ const AIQuestion = ({
           </div>
         </div>
       </div>
+
       <div
         className="d-flex flex-column gap-4 justify-content-between overflow-auto"
         style={{ flex: 1 }}
@@ -734,8 +735,8 @@ const AIQuestion = ({
             </button> */}
             </div>
             <div className="ai-timer-bg-wrapper px-3 py-1 col-lg-3 col-md-4 col-sm-3 col-2">
-              <div className="d-flex align-items-center w-100 gap-4 justify-content-center justify-content-lg-between">
-                <span className="ai-timer-title d-none d-lg-flex text-uppercase">
+              <div className="d-flex align-items-center w-100 gap-4 justify-content-center justify-content-lg-between justify-content-md-between">
+                <span className="ai-timer-title d-none d-lg-flex d-md-flex text-uppercase">
                   {timeLeft > 0 ? "Timer" : "Time's Up!"}
                 </span>
                 {/* {(selectedAnswer === undefined || !showResult) && ( */}
@@ -986,14 +987,14 @@ const AIQuestion = ({
               step === 1 ? (
               <>
                 <span className="w-100 px-4 aiAnswer-title d-flex align-items-center gap-2 justify-content-center">
-                  You are going with
+                  Is
                   <span
                     className="aiAnswer-title m-0"
                     style={{ color: "#ffd37e" }}
                   >
                     '{selectedOption}'
                   </span>
-                  ..Final answer?
+                  your Final answer?
                   <button
                     className="ai-question-confirm-answer px-3"
                     onClick={() => handleOptionClick(selectedOption)}
