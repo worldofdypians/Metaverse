@@ -54,6 +54,9 @@ const AIQuestion = ({
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [optionsClickable, setOptionsClickable] = useState(false);
+  const [typingDone, setTypingDone] = useState(
+    new Array(answersOptions.length).fill(false)
+  );
 
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [confirmed, setConfirmed] = useState(false);
@@ -356,7 +359,6 @@ const AIQuestion = ({
   };
 
   const getRadioClass = (option) => {
-    console.log(selectedOption, option);
     if (!confirmed) {
       return selectedOption === option
         ? "radio-button-option-selected"
@@ -437,7 +439,6 @@ const AIQuestion = ({
       }, 3360);
     }
   }, [timeLeft, step]);
- 
 
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
@@ -833,7 +834,7 @@ const AIQuestion = ({
                 return (
                   <div
                     key={index}
-                    className={`answer-outer-wrapper w-100 ${
+                    className={`answer-outer-wrapper col-12 ${
                       (!optionsClickable ||
                         selectedAnswer !== undefined ||
                         timeLeft === 0 ||
@@ -852,13 +853,20 @@ const AIQuestion = ({
                         answers[index]
                       )} px-4 py-3 d-flex align-items-center justify-content-between`}
                     >
-                      <div className="d-flex align-items-center gap-3">
+                      <div className="d-flex align-items-center w-100 gap-3">
                         <span className="answer-text">
                           {answers[index] + ":"}
                         </span>
                         <span
                           className="answer-text option"
                           id={`option${index + 1}`}
+                          onAnimationEnd={() => {
+                            setTypingDone((prev) => {
+                              const updated = [...prev];
+                              updated[index] = true;
+                              return updated;
+                            });
+                          }}
                           style={{
                             animation:
                               step === 1
@@ -866,9 +874,14 @@ const AIQuestion = ({
                                 : "none",
                             animationDelay: `${delayBeforeThisOption}s`,
                             overflow: "hidden",
-                            // whiteSpace: "nowrap",
-                            display: "inline-block",
-                            width: step === 1 ? "0" : "auto",
+                            whiteSpace: typingDone[index]
+                              ? "break-spaces"
+                              : "nowrap",
+                            // display: "inline-block",
+                            width: step === 1 ? "0" : "256px",
+                            maxWidth: "100%",
+                            textOverflow: "ellipsis",
+                            // minWidth: `${text.length + 2}ch`,
                           }}
                         >
                           {step === 0 ? "" : option}
