@@ -8,7 +8,7 @@ import clickSound from "./assets/click.mp3";
 import drumrollSound from "./assets/drumroll.mp3";
 import failSound from "./assets/wrongAnswer.mp3";
 import gamestartSound from "./assets/gamestart.mp3";
-import successSound from "./assets/correctAnswer.mp3";
+import successSound from "./assets/correctAnswer2.mp3";
 import suspenseSound from "./assets/suspense.mp3";
 import suspenseful1Sound from "./assets/suspenseful1.mp3";
 import suspenseful2Sound from "./assets/suspenseful2.mp3";
@@ -468,7 +468,7 @@ const AIQuestion = ({
 
   // console.log(selectedAnswer, selectedOption);
   return (
-    <div className="d-flex w-100 gap-4">
+    <div className="d-flex w-100 gap-4 py-5 py-lg-0">
       <div className="d-none d-lg-flex d-md-flex flex-column gap-2 col-lg-3 col-md-4 position-relative">
         <div className="ai-oryn-top">
           <div
@@ -688,12 +688,12 @@ const AIQuestion = ({
       >
         <div className="d-flex flex-column w-100">
           <div className="d-flex align-items-center gap-2 justify-content-between w-100 overflow-auto">
-            <div className="d-flex w-100 align-items-center gap-3 justify-content-start">
+            <div className="d-flex w-100 align-items-center gap-2 gap-lg-3 justify-content-start">
               <button
                 className={
                   chainId === 56
-                    ? "ai-chain-button-active py-3 px-3 col-lg-4"
-                    : "ai-chain-button py-3 px-3 col-lg-4"
+                    ? "ai-chain-button-active py-3 px-3 col-5 col-lg-4"
+                    : "ai-chain-button py-3 px-3 col-5 col-lg-4"
                 }
                 onClick={() => {
                   handleBnbPool("0x38", 56);
@@ -711,8 +711,8 @@ const AIQuestion = ({
               <button
                 className={
                   chainId === 204
-                    ? "ai-chain-button-active py-3 px-3 col-lg-4"
-                    : "ai-chain-button py-3 px-3 col-lg-4"
+                    ? "ai-chain-button-active py-3 px-3 col-5  col-lg-4"
+                    : "ai-chain-button py-3 px-3  col-5 col-lg-4"
                 }
                 onClick={() => {
                   handleBnbPool("0xcc", 204);
@@ -733,9 +733,9 @@ const AIQuestion = ({
               </div>
             </button> */}
             </div>
-            <div className="ai-timer-bg-wrapper px-3 py-1 col-lg-3 col-md-4 col-sm-3 col-4">
-              <div className="d-flex align-items-center w-100 gap-4 justify-content-between">
-                <span className="ai-timer-title text-uppercase">
+            <div className="ai-timer-bg-wrapper px-3 py-1 col-lg-3 col-md-4 col-sm-3 col-2">
+              <div className="d-flex align-items-center w-100 gap-4 justify-content-center justify-content-lg-between">
+                <span className="ai-timer-title d-none d-lg-flex text-uppercase">
                   {timeLeft > 0 ? "Timer" : "Time's Up!"}
                 </span>
                 {/* {(selectedAnswer === undefined || !showResult) && ( */}
@@ -835,7 +835,7 @@ const AIQuestion = ({
                 {step === 0 ? "" : step === 1 ? aiQuestionObject.question : ""}
               </span>
             </div>
-            <div className="options-wrapper gap-3 w-100">
+            <div className="options-wrapper gap-2 ga-lg-3 w-100">
               {(aiQuestionObject.options.length > 0
                 ? aiQuestionObject.options
                 : Array(4).fill("")
