@@ -18,6 +18,7 @@ import avatarCorrect from "./assets/avatarCorrect.gif";
 import avatarWrong from "./assets/avatarWrong.gif";
 import avatarIdle from "./assets/avatarIdle.gif";
 import avatarTime from "./assets/avatarTime.gif";
+import axios from "axios";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -60,7 +61,6 @@ const AIQuestion = ({
 
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [confirmed, setConfirmed] = useState(false);
-  const [showResult, setShowResult] = useState(false);
   const [unlockLoading, setUnlockLoading] = useState(false);
   const [unlockStatus, setUnlockStatus] = useState("initial");
   const [activeClass, setActiveClass] = useState("");
@@ -132,7 +132,6 @@ const AIQuestion = ({
     if (selectedOption === undefined) return;
     clearInterval(intervalRef.current);
     setConfirmed(true);
-    setShowResult(true);
   };
 
   const handleUnlockQuestion = async () => {
@@ -288,50 +287,67 @@ const AIQuestion = ({
     }
   };
 
-  const handleOptionClick = (value) => {
-    setPause(true);
-    setSuspenseSound(true);
-    suspenseMusicRef.current?.pause();
-    clockSoundRef.current?.pause();
-    suspenseMusicRef.current.currentTime = 0;
-    new Audio(drumrollSound).play();
+  const checkAnswer = async () => {
+    const data = {
+      walletAddress: coinbase,
+      email: email,
+      chain: chainId === 56 ? "bnb" : "opbnb",
+      questionId: aiQuestionObject.id,
+      answerIndex: answers.indexOf(selectedOption),
+    };
 
-    setTimeout(() => {
-      handleConfirm();
-      const isCorrect = Math.random() < 0.5;
+    const result = await axios
+      .post(`https://api.worldofdypians.com/api/qa/answer`, data)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      console.log(result.data);
+      setPause(false);
+      const isCorrect = result.data.correct;
 
       setShowSelect(false);
 
       if (isCorrect) {
-        setSelectedAnswer(value);
+        setSelectedAnswer(answers[result.data.correctIndex]);
         new Audio(successSound).play();
         setAvatarState("correct");
         setTimeout(() => {
           setAvatarState("idle");
         }, 3360);
       } else {
-        const otherOptions = answersOptions.filter((opt) => opt !== value);
-        const randomWrong =
-          otherOptions[Math.floor(Math.random() * otherOptions.length)];
-        setSelectedAnswer(randomWrong);
+        setSelectedAnswer(answers[result.data.correctIndex]);
         new Audio(failSound).play();
         setAvatarState("wrong");
         setTimeout(() => {
           setAvatarState("idle");
         }, 3360);
       }
-      setPause(false);
-    }, 2000);
-    onQuestionComplete(true);
+
+      onQuestionComplete(true);
+      setTimeout(() => {
+        setSelectedAnswer(undefined);
+        setSelectedOption(undefined);
+        onQuestionComplete(false);
+        setStep(0);
+        setConfirmed(false);
+        setTimeLeft(totalTime);
+      }, 10000);
+    }
+  };
+
+  const handleOptionClick = (value) => {
+    setPause(true);
+    setSuspenseSound(true);
+    suspenseMusicRef.current?.pause();
+    clockSoundRef.current?.pause();
+    suspenseMusicRef.current.currentTime = 0;
+    handleConfirm();
+    new Audio(drumrollSound).play();
     setTimeout(() => {
-      setSelectedAnswer(undefined);
-      setSelectedOption(undefined);
-      onQuestionComplete(false);
-      setStep(0);
-      setConfirmed(false);
-      setShowResult(false);
-      setTimeLeft(totalTime);
-    }, 10000);
+      checkAnswer();
+    }, 2000);
   };
 
   const getAnswerClass = (option) => {
@@ -359,22 +375,29 @@ const AIQuestion = ({
   };
 
   const getRadioClass = (option) => {
+ 
     if (!confirmed) {
       return selectedOption === option
         ? "radio-button-option-selected"
         : "radio-button-option";
     }
 
-    if (option === selectedAnswer) return "radio-button-option-correct";
-    if (option === selectedOption) return "radio-button-option-wrong";
-    if (option !== selectedOption && option !== selectedAnswer)
-      return "radio-button-option-wrong";
+    if (confirmed && selectedAnswer !== undefined) {
+      return option === selectedAnswer
+        ? "radio-button-option-correct"
+        : "radio-button-option-wrong";
+    }
+    if (confirmed && selectedAnswer === undefined) {
+      if (option === selectedAnswer) return "radio-button-option-correct";
+      if (option === selectedOption) return "radio-button-option-selected";
+      if (option !== selectedOption) return "radio-button-option";
+    }
+
     return "radio-button-option-incorrect-unselected";
   };
   const handleTimeout = () => {
     if (selectedOption === undefined || selectedAnswer === undefined) {
       setConfirmed(true);
-      setShowResult(true);
       // setTimeout(() => {
       //   setSelectedAnswer(undefined);
       //   setSelectedOption(undefined);
@@ -442,6 +465,8 @@ const AIQuestion = ({
 
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
+
+  // console.log(selectedAnswer, selectedOption);
   return (
     <div className="d-flex w-100 gap-4">
       <div className="d-none d-lg-flex d-md-flex flex-column gap-2 col-lg-3 col-md-4 position-relative">
@@ -878,7 +903,7 @@ const AIQuestion = ({
                               ? "break-spaces"
                               : "nowrap",
                             // display: "inline-block",
-                            width: step === 1 ? "0" : "256px",
+                            width: step === 1 ? "0" : "100%",
                             maxWidth: "100%",
                             textOverflow: "ellipsis",
                             // minWidth: `${text.length + 2}ch`,
