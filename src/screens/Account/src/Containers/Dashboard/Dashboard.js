@@ -467,6 +467,7 @@ function Dashboard({
 
   const [loading, setLoading] = useState(false);
   const [showDailyQuestion, setShowDailyQuestion] = useState(false);
+  const [tooltip, setTooltip] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
 
@@ -7058,7 +7059,138 @@ function Dashboard({
                     className="ai-question-header-img"
                   />
                 </div>
-                <div className="d-flex align-items-center justify-content-end ai-popup-x-wrapper">
+                <div className="d-flex align-items-center justify-content-between w-100 ai-popup-x-wrapper">
+                  <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
+                    <div className="d-lg-none d-md-none d-flex position-relative top-0 start-0">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/ai-tooltip.png"
+                        }
+                        alt=""
+                        className="tooltip-icon"
+                        style={{
+                          cursor: "pointer",
+                          width: "40px",
+                          height: "40px",
+                        }}
+                        onClick={() => setTooltip(!tooltip)}
+                      />
+                      <div
+                        className={`tooltip-wrapper p-3 ${
+                          tooltip && "tooltip-active"
+                        }`}
+                        style={{
+                          width: 260,
+                          left: "40%",
+                          background: "#091235",
+                        }}
+                      >
+                        <div className=" gap-2 d-flex flex-column">
+                          <span className="ai-oryn-bottom-txt">
+                            A daily challenge where each player can unlock a AI
+                            question for a chance to win!
+                          </span>
+                          <span className="ai-oryn-bottom-txt">Notes:</span>
+                          <ul className="ai-oryn-bottom-txt ps-0">
+                            <li>🔹 Daily opportunity </li>
+                            <li>🔹 Available on BNB & opBNB</li>
+                            <li>🔹 Sign the transaction </li>
+                            <li>🔹 Answer in 20 seconds</li>
+                            <li>🔹 Win different rewards</li>
+                          </ul>
+                        
+                        <div
+                          className={"ai-rewards-info-active"}
+                          // onMouseOver={() => {
+                          //   setActiveClass("stars");
+                          // }}
+                          // onMouseLeave={() => {
+                          //   setActiveClass("");
+                          // }}
+                        >
+                          <div className="d-flex align-items-center px-3 py-2 gap-2">
+                            <div className="d-flex align-items-center gap-1">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
+                                }
+                                alt=""
+                                className={"ai-reward-logo-active"}
+                              />
+                              <div className="d-flex flex-column">
+                                {/* <span className={"ai-rewards-stars"}>180</span> */}
+                                <span
+                                  className={"ai-rewards-title-active ps-3"}
+                                >
+                                  STARS
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className="ai-rewards-info-active"
+                          // onMouseOver={() => {
+                          //   setActiveClass("points");
+                          // }}
+                          // onMouseLeave={() => {
+                          //   setActiveClass("");
+                          // }}
+                        >
+                          <div className="d-flex align-items-center px-3 py-2 gap-2">
+                            <div className="d-flex align-items-center gap-1">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
+                                }
+                                alt=""
+                                className={"ai-reward-logo-active"}
+                              />
+                              <div className="d-flex flex-column">
+                                {/* <span className={"ai-rewards-points"}>
+                      {getFormattedNumber(23200, 0)}
+                    </span> */}
+                                <span
+                                  className={"ai-rewards-title-active ps-3"}
+                                >
+                                  POINTS
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className="ai-rewards-info-active"
+                          // onMouseOver={() => {
+                          //   setActiveClass("rewards");
+                          // }}
+                          // onMouseLeave={() => {
+                          //   setActiveClass("");
+                          // }}
+                        >
+                          <div className="d-flex align-items-center px-3 py-2 gap-2">
+                            <div className="d-flex align-items-center gap-1">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
+                                }
+                                alt=""
+                                className={"ai-reward-logo-active"}
+                              />
+                              <div className="d-flex flex-column">
+                                {/* <span className={"ai-rewards-money"}>$1.5</span> */}
+                                <span
+                                  className={"ai-rewards-title-active ps-3"}
+                                >
+                                  REWARDS
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div></div>
+                      </div>
+                    </div>
+                  </OutsideClickHandler>
                   <img
                     src={"https://cdn.worldofdypians.com/wod/ai-popupx.png"}
                     onClick={() => {
