@@ -8,7 +8,7 @@ import clickSound from "./assets/click.mp3";
 import drumrollSound from "./assets/drumroll.mp3";
 import failSound from "./assets/wrongAnswer.mp3";
 import gamestartSound from "./assets/gamestart.mp3";
-import successSound from "./assets/correctAnswer.mp3";
+import successSound from "./assets/correctAnswer2.mp3";
 import suspenseSound from "./assets/suspense.mp3";
 import suspenseful1Sound from "./assets/suspenseful1.mp3";
 import suspenseful2Sound from "./assets/suspenseful2.mp3";
