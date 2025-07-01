@@ -66,6 +66,7 @@
   background-color: #1d203f;
   background-blend-mode: luminosity;
   min-height: 55px;
+  height: 100%;
 }
 
 .answer-inner-wrapper:hover,
@@ -77,6 +78,7 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
   min-height: 55px;
+  height: 100%;
 
   .radio-button-option {
     border: 2px solid #ff7c00;
@@ -95,6 +97,8 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
   min-height: 55px;
+  height: 100%;
+
 }
 
 .answer-inner-wrapper-wrong {
@@ -103,6 +107,8 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
   min-height: 55px;
+  height: 100%;
+
 }
 
 .radio-button-option-selected {
@@ -175,6 +181,15 @@
 
 .ai-answer-result-error-wrapper {
   background: url("https://cdn.worldofdypians.com/wod/ai-answer-result-error.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: calc(100% - 60px);
+  min-height: 76px;
+}
+
+.ai-answer-result-warning-wrapper {
+  background: url("https://cdn.worldofdypians.com/wod/ai-answer-result-warning.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
