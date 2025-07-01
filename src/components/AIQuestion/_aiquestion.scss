@@ -15,7 +15,7 @@
 }
 
 .aiLockedDesc {
-  color: #FFF;
+  color: #fff;
   text-align: center;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   font-family: Montserrat;
@@ -33,6 +33,12 @@
   // border-radius: 8px;
   // background: #3d4078;
   cursor: pointer;
+  // overflow: hidden;
+  // position: relative;
+  // min-width: 0;
+  // height: 100%;
+  // display: flex;
+  // align-items: center;
 }
 
 .ai-question-text-wrapper {
@@ -54,7 +60,6 @@
     padding: 10px;
     min-height: 60px;
     max-width: 100%;
-
   }
 }
 
@@ -98,7 +103,6 @@
   background-size: 100% 100%;
   min-height: 55px;
   height: 100%;
-
 }
 
 .answer-inner-wrapper-wrong {
@@ -108,7 +112,6 @@
   background-size: 100% 100%;
   min-height: 55px;
   height: 100%;
-
 }
 
 .radio-button-option-selected {
@@ -163,10 +166,9 @@
   width: calc(100% - 60px);
   min-height: 76px;
 
-   @media screen and (max-width: 500px) { 
+  @media screen and (max-width: 500px) {
     min-height: auto;
     width: 100%;
-
   }
 }
 
@@ -200,7 +202,9 @@
 .options-wrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-
+  overflow: hidden;
+  position: relative;
+  min-width: 0;
   @media screen and (max-width: 640px) {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -227,7 +231,7 @@
 
 .ai-oryn-border {
   position: absolute;
-  background-image: url('./ai-oryn-border2.webp');
+  background-image: url("./ai-oryn-border2.webp");
   height: 200px;
   bottom: 2px;
   min-width: 235px;
@@ -285,7 +289,7 @@
 }
 
 .ai-oryn-bottom-txt {
-  color: #8D98BC;
+  color: #8d98bc;
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
@@ -398,7 +402,7 @@
 
 .ai-timer-bg-wrapper {
   border-radius: 20px;
-  border: 1px solid #EFCB86;
+  border: 1px solid #efcb86;
   background: rgba(239, 203, 134, 0.05);
   backdrop-filter: blur(2px);
   min-height: 56px;
@@ -408,7 +412,7 @@
 }
 
 .ai-timer-title {
-  color: #EFCB86;
+  color: #efcb86;
   font-family: Montserrat;
   font-size: 15px;
   font-style: normal;
@@ -456,10 +460,10 @@
 }
 
 .ai-question-confirm-answer {
-  background: linear-gradient(90deg, #13243A 0%, #273F5E 100%);
+  background: linear-gradient(90deg, #13243a 0%, #273f5e 100%);
   border-radius: 6px;
   border: none;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-family: Montserrat;
   font-size: 14px;
@@ -469,7 +473,7 @@
 }
 
 .ai-question-confirm-answer:hover {
-  background: linear-gradient(90deg, #008EBF 0%, #00B7CC 100%);
+  background: linear-gradient(90deg, #008ebf 0%, #00b7cc 100%);
 }
 
 .ai-timer-container {
@@ -549,7 +553,7 @@
 }
 
 .ai-rewards-title-active {
-  color: #F3C009;
+  color: #f3c009;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
@@ -590,7 +594,7 @@
 
 .ai-rewards-info-active {
   border-radius: 20px;
-  border: 1px solid #F3C009;
+  border: 1px solid #f3c009;
   background: rgba(15, 23, 47, 0.8);
   backdrop-filter: blur(2px);
 }
@@ -625,10 +629,9 @@
   }
 
   to {
-    width: 100%;
+    width: 256px;
   }
 }
-
 
 // .question, .option {
 //   overflow: hidden;
@@ -638,12 +641,10 @@
 //   text-align: center;
 // }
 
-
 // #option1 { animation-delay: 1.5s; }
 // #option2 { animation-delay: 2.5s; }
 // #option3 { animation-delay: 3.5s; }
 // #option4 { animation-delay: 4.5s; }
-
 
 // #question {
 //   animation-delay: 0s;
