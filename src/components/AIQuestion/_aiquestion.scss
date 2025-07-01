@@ -73,8 +73,8 @@
   min-height: 55px;
   height: 100%;
 
-    @media screen and (max-width: 500px) { 
-    min-height: auto; 
+  @media screen and (max-width: 500px) {
+    min-height: auto;
   }
 }
 
@@ -451,9 +451,9 @@
   display: flex;
   align-items: center;
 
-    @media screen and (max-width: 767px) {
-     border: none;
-     background: transparent;
+  @media screen and (max-width: 767px) {
+    border: none;
+    background: transparent;
   }
 }
 
@@ -630,8 +630,8 @@
   height: 16px;
   background-position: center;
 
-    @media screen and (max-width: 640px) {
-  height: 6px;
+  @media screen and (max-width: 640px) {
+    height: 6px;
   }
 }
 
@@ -673,15 +673,16 @@
 }
 
 /* Typing effect keyframes */
-@keyframes typing {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 100%;
-  }
+@keyframes typing-desktop {
+  from { width: 0; }
+  to { width: 254px; }
 }
+
+@keyframes typing-mobile {
+  from { width: 0; }
+  to { width: 205px; }
+}
+
 
 // .question, .option {
 //   overflow: hidden;
