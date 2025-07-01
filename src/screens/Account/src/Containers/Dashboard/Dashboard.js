@@ -592,6 +592,7 @@ function Dashboard({
   const [aiQuestionObject, setAiQuestionObject] = useState({
     question: "",
     options: [],
+    id: "",
   });
 
   const [countdown, setcountdown] = useState();
@@ -5206,7 +5207,7 @@ function Dashboard({
       walletAddress: coinbase,
       email: email,
       chain: chain,
-      txHash: txHash,
+      // txHash: txHash,
     };
 
     const result = await axios
@@ -5223,7 +5224,22 @@ function Dashboard({
       setAiQuestionObject({
         question: result.data.question,
         options: cleanedAnswers,
+        id: result.data.questionId,
       });
+    }
+  };
+
+  const getAIQuestionStatus = async (wallet) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/qa/profile?walletAddress=${wallet}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      console.log(result.data);
     }
   };
 
@@ -5908,7 +5924,7 @@ function Dashboard({
   useEffect(() => {
     if ((coinbase && isConnected) || userWallet !== undefined) {
       fetchAllMyNfts();
-
+      getAIQuestionStatus(coinbase);
       // getmyWodStakes();
     }
   }, [userWallet, isConnected, coinbase]);
