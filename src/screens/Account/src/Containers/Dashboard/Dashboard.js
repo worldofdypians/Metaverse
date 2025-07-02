@@ -5208,7 +5208,7 @@ function Dashboard({
       walletAddress: coinbase,
       email: email,
       chain: chain,
-      // txHash: txHash,
+      transactionHash: txHash,
     };
 
     const result = await axios
