@@ -6,9 +6,9 @@ import Web3 from "web3";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import clickSound from "./assets/click.mp3";
 import drumrollSound from "./assets/drumroll.mp3";
-import failSound from "./assets/wrongAnswer.mp3";
+import failSound from "./assets/wrongAnswer3.mp3";
 import gamestartSound from "./assets/gamestart.mp3";
-import successSound from "./assets/correctAnswer2.mp3";
+import successSound from "./assets/correctAnswer3.mp3";
 import suspenseSound from "./assets/suspense.mp3";
 import suspenseful1Sound from "./assets/suspenseful1.mp3";
 import suspenseful2Sound from "./assets/suspenseful2.mp3";
@@ -316,14 +316,14 @@ const AIQuestion = ({
         setAvatarState("correct");
         setTimeout(() => {
           setAvatarState("idle");
-        }, 3360);
+        }, 5040);
       } else {
         setSelectedAnswer(answers[result.data.correctIndex]);
         new Audio(failSound).play();
         setAvatarState("wrong");
         setTimeout(() => {
           setAvatarState("idle");
-        }, 3360);
+        }, 5040);
       }
 
       onQuestionComplete(true);
@@ -407,7 +407,7 @@ const AIQuestion = ({
       setAvatarState("time");
       setTimeout(() => {
         setAvatarState("idle");
-      }, 3360);
+      }, 5040);
       setTimeout(() => {
         setSelectedAnswer(undefined);
         setSelectedOption(undefined);
@@ -470,7 +470,7 @@ const AIQuestion = ({
       setAvatarState("time");
       setTimeout(() => {
         setAvatarState("idle");
-      }, 3360);
+      }, 5040);
     }
   }, [timeLeft, step]);
 
@@ -488,7 +488,20 @@ const AIQuestion = ({
             alt=""
             className="ai-oryn-border d-flex align-items-center justify-content-center"
           >
-            <div className="oryn-inner-border">
+            <div className={`oryn-inner-border
+              ${
+                 avatarState === "idle"
+                    ? "gif-bg-idle"
+                    : avatarState === "correct"
+                    ? "gif-bg-correct"
+                    : avatarState === "wrong"
+                    ? "gif-bg-wrong"
+                    : avatarState === "time"
+                    ? "gif-bg-time"
+                    : "gif-bg-idle"
+              }
+              
+              `}>
               {/* <Canvas
                 shadows
                 camera={{ near: 0.01, far: 1000, position: [0, 0, 10] }}
@@ -599,7 +612,7 @@ const AIQuestion = ({
                         selectedAnswer !== undefined &&
                         step === 1 &&
                         "530 "}
-                      STARS
+                     50-250 STARS
                     </span>
                   </div>
                 </div>
@@ -642,7 +655,7 @@ const AIQuestion = ({
                           : "ai-rewards-title ps-3"
                       }
                     >
-                      POINTS
+                     15,000-80,000 POINTS
                     </span>
                   </div>
                 </div>
@@ -683,7 +696,7 @@ const AIQuestion = ({
                           : "ai-rewards-title ps-3"
                       }
                     >
-                      REWARDS
+                     $5-$10 REWARDS
                     </span>
                   </div>
                 </div>
@@ -699,8 +712,8 @@ const AIQuestion = ({
         style={{ flex: 1 }}
       >
         <div className="d-flex flex-column w-100">
-          <div className="d-flex align-items-center gap-2 justify-content-between w-100 overflow-auto">
-            <div className="d-flex w-100 align-items-center gap-2 gap-lg-3 justify-content-start">
+          <div className="d-flex flex-column flex-lg-row align-items-center gap-2 justify-content-between w-100 overflow-auto">
+            <div className="d-flex w-100 align-items-center gap-2 gap-lg-3 justify-content-center justify-content-lg-start">
               <button
                 className={
                   chainId === 56
