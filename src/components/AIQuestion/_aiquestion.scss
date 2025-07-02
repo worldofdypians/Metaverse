@@ -92,6 +92,10 @@
   .radio-button-option {
     border: 2px solid #ff7c00;
   }
+
+   @media screen and (max-width: 500px) {
+    min-height: auto;
+  }
 }
 
 .ai-answer-option-wrapper {
@@ -107,6 +111,11 @@
   background-size: 100% 100%;
   min-height: 55px;
   height: 100%;
+
+
+   @media screen and (max-width: 500px) {
+    min-height: auto;
+  }
 }
 
 .answer-inner-wrapper-wrong {
@@ -116,6 +125,10 @@
   background-size: 100% 100%;
   min-height: 55px;
   height: 100%;
+
+   @media screen and (max-width: 500px) {
+    min-height: auto;
+  }
 }
 
 .radio-button-option-selected {
@@ -412,7 +425,7 @@
     // padding: 2px;
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     right: 0px;
     top: -20px;
   }
@@ -507,6 +520,12 @@
   line-height: normal;
   border: none;
   outline: none;
+
+    @media screen and (max-width: 500px) {
+    font-size: 11px;
+    white-space: nowrap;
+    min-height: 56px;
+  }
 }
 
 .ai-main-button {
