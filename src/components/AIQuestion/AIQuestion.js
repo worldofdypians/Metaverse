@@ -334,6 +334,7 @@ const AIQuestion = ({
         setStep(0);
         setConfirmed(false);
         setTimeLeft(totalTime);
+        setTypingDone(new Array(answersOptions.length).fill(false));
       }, 10000);
     }
   };
