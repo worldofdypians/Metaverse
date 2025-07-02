@@ -278,14 +278,13 @@
   }
 
   @media screen and (max-width: 991px) {
-    height: 130px;
-    transform: translate(-84%, 3%);
-    min-width: 178px;
+    height: 150px;
+    transform: translate(-55%, 3%);
+    min-width: 185px;
   }
 }
 
 .oryn-inner-border {
-  background: rgba(127, 17, 224, 0.5);
   border-radius: 50%;
   width: 115px;
   height: 115px;
@@ -296,6 +295,25 @@
     width: 85px;
     height: 85px;
   }
+}
+
+.gif-bg-time{
+  background: rgba(214, 160, 61, 0.5);
+}
+
+.gif-bg-idle{
+  background: rgba(127, 17, 224, 0.5);
+
+}
+
+.gif-bg-correct{
+  background: rgba(61, 214, 82, 0.5);
+
+}
+
+.gif-bg-wrong{
+  background: rgba(214, 61, 61, 0.5);
+
 }
 
 .ai-oryn-text {
