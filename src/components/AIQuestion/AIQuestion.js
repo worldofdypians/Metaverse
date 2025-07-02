@@ -3,23 +3,23 @@ import "./_aiquestion.scss";
 import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import Web3 from "web3";
-import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+// import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import clickSound from "./assets/click.mp3";
 import drumrollSound from "./assets/drumroll.mp3";
 import failSound from "./assets/wrongAnswer3.mp3";
 import gamestartSound from "./assets/gamestart.mp3";
 import successSound from "./assets/correctAnswer3.mp3";
-import suspenseSound from "./assets/suspense.mp3";
-import suspenseful1Sound from "./assets/suspenseful1.mp3";
-import suspenseful2Sound from "./assets/suspenseful2.mp3";
-import clockSound from "./assets/clockSound.mp3";
+// import suspenseSound from "./assets/suspense.mp3";
+// import suspenseful1Sound from "./assets/suspenseful1.mp3";
+// import suspenseful2Sound from "./assets/suspenseful2.mp3";
+// import clockSound from "./assets/clockSound.mp3";
 import timerEndedSound from "./assets/timerEnded.mp3";
 import avatarCorrect from "./assets/avatarCorrect.gif";
 import avatarWrong from "./assets/avatarWrong.gif";
 import avatarIdle from "./assets/avatarIdle.gif";
 import avatarTime from "./assets/avatarTime.gif";
 import axios from "axios";
-import useWindowSize from "../../hooks/useWindowSize";
+// import useWindowSize from "../../hooks/useWindowSize";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -46,19 +46,16 @@ const AIQuestion = ({
 
   const answersOptions = [0, 1, 2, 3];
   const answers = ["A", "B", "C", "D"];
-  const windowSize = useWindowSize();
+  // const windowSize = useWindowSize();
   const totalTime = 20;
 
-  const TYPING_SPEED_PER_CHAR = 0.05; // seconds per character
-  const BASE_DELAY = 1.5;
+  // const TYPING_SPEED_PER_CHAR = 0.05;
+  // const BASE_DELAY = 1.5;
 
   const [step, setStep] = useState(0);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [optionsClickable, setOptionsClickable] = useState(false);
-  const [typingDone, setTypingDone] = useState(
-    new Array(answersOptions.length).fill(false)
-  );
 
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [confirmed, setConfirmed] = useState(false);
@@ -492,7 +489,6 @@ const AIQuestion = ({
         setConfirmed(false);
         setTimeLeft(totalTime);
         setOptionsClickable(false);
-        setTypingDone(new Array(answersOptions.length).fill(false));
       }, 10000);
     }
   };
@@ -573,7 +569,6 @@ const AIQuestion = ({
         setConfirmed(false);
         setTimeLeft(totalTime);
         setOptionsClickable(false);
-        setTypingDone(new Array(answersOptions.length).fill(false));
       }, 10000);
     }
   };
@@ -596,19 +591,14 @@ const AIQuestion = ({
 
   useEffect(() => {
     if (step === 1) {
-      const totalTypingTime =
-        BASE_DELAY +
-        aiQuestionObject.options.reduce((acc, option) => {
-          const text = option;
-          return acc + text.length * TYPING_SPEED_PER_CHAR;
-        }, 0);
+      const lastFadeInTime = (answersOptions.length - 1) * 0.5 + 0.7 + 0.6;
 
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setOptionsClickable(true);
-      }, totalTypingTime * 1000);
-    }
+      }, lastFadeInTime * 1000);
 
-    // return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, [step, answersOptions]);
 
   useEffect(() => {
@@ -1025,21 +1015,7 @@ const AIQuestion = ({
                 ? aiQuestionObject.options
                 : Array(4).fill("")
               ).map((option, index) => {
-                const text = step === 1 ? option : "";
-
-                const delayBeforeThisOption =
-                  step === 1
-                    ? aiQuestionObject.options
-                        .slice(0, index)
-                        .reduce((acc, prevOption) => {
-                          const prevText = prevOption;
-
-                          return acc + prevText.length * TYPING_SPEED_PER_CHAR;
-                        }, BASE_DELAY)
-                    : 0;
-
-                const animationDuration =
-                  step === 1 ? text.length * TYPING_SPEED_PER_CHAR : 0;
+                const animationDelay = `${index * 0.5 + 0.7}s`;
 
                 return (
                   <div
@@ -1048,6 +1024,7 @@ const AIQuestion = ({
                       (!optionsClickable ||
                         selectedAnswer !== undefined ||
                         timeLeft === 0 ||
+                        confirmed ||
                         step === 0) &&
                       "pe-none"
                     }`}
@@ -1070,42 +1047,37 @@ const AIQuestion = ({
                         <span
                           className="answer-text option"
                           id={`option${index + 1}`}
-                          onAnimationEnd={() => {
-                            setTypingDone((prev) => {
-                              const updated = [...prev];
-                              updated[index] = true;
-                              return updated;
-                            });
-                          }}
+                          // onAnimationEnd={() => {
+                          //   setTypingDone((prev) => {
+                          //     const updated = [...prev];
+                          //     updated[index] = true;
+                          //     return updated;
+                          //   });
+                          // }}
                           style={{
+                            // animation:
+                            //   step === 1 ? `fade-in-ai 1s forwards` : "none",
+                            // animationDelay: `${index + 1}s`,
+                            // overflow: "hidden",
+                            // whiteSpace: "break-spaces",
+                            // display: "inline-block",
+                            // width: "100%",
+                            // maxWidth: "100%",
+                            // textOverflow: "ellipsis",
+                            // minWidth: `${text.length + 2}ch`,
+                            opacity: step === 1 ? 0 : 1, // prevent flash if step isn't active
                             animation:
                               step === 1
-                                ? `${
-                                    windowSize.width > 500
-                                      ? "typing-desktop"
-                                      : "typing-mobile"
-                                  } ${animationDuration}s steps(${
-                                    text.length
-                                  }, end) forwards`
+                                ? `fadeInAI 0.5s ease-out ${animationDelay} forwards`
                                 : "none",
-                            animationDelay: `${delayBeforeThisOption}s`,
-                            overflow: "hidden",
-                            whiteSpace: typingDone[index]
-                              ? "break-spaces"
-                              : "nowrap",
-                            // display: "inline-block",
-                            width: step === 1 ? "0" : "100%",
-                            maxWidth: "100%",
-                            textOverflow: "ellipsis",
-                            // minWidth: `${text.length + 2}ch`,
                           }}
                         >
                           {step === 0 ? "" : option}
                         </span>
                       </div>
-                      {step === 1 && (
+                      {/* {step === 1 && (
                         <span className={getRadioClass(answers[index])}></span>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 );
@@ -1117,7 +1089,11 @@ const AIQuestion = ({
               (chainId !== 56 && chainId !== 204) ||
               !email ||
               !isConnected ||
-              !coinbase
+              !coinbase ||
+              (email &&
+                coinbase &&
+                address &&
+                address.toLowerCase() !== coinbase.toLowerCase())
                 ? "ai-answer-result-warning-wrapper"
                 : selectedAnswer === undefined && timeLeft === 0
                 ? "ai-answer-result-error-wrapper"
@@ -1226,7 +1202,8 @@ const AIQuestion = ({
             ) : step === 1 ? (
               <>
                 <span className="aiAnswer-title">
-                  🍀 Better Luck Next Time 🍀
+                  🍀 You're getting there. Dig deeper into the BNB Chain
+                  ecosystem. 🍀
                 </span>
               </>
             ) : (
@@ -1238,12 +1215,12 @@ const AIQuestion = ({
       <div
         className={
           isConnected &&
+          (chainId === 56 || chainId === 204) &&
           coinbase &&
           email &&
           address &&
-          coinbase.toLowerCase() === address.toLowerCase() &&
-          (chainId === 56 || chainId === 204) &&
-          step === 0
+          step === 0 &&
+          coinbase.toLowerCase() === address.toLowerCase()
             ? "ai-question-footer-wrapper"
             : coinbase &&
               isConnected &&
@@ -1324,12 +1301,12 @@ const AIQuestion = ({
           chainId !== 56 &&
           chainId !== 204 && (
             <button
-              className="ai-main-button text-white text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
+              className="ai-main-button text-white text-uppercase d-flex align-items-center gap-2 col-lg-5 justify-content-center py-2"
               onClick={() => {
                 handleBnbPool("0x38", 56);
               }}
             >
-              Switch
+              SWITCH CHAIN
             </button>
           )}
 
@@ -1420,7 +1397,7 @@ const AIQuestion = ({
               disabled
               className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
             >
-              Switch
+              Synchronize
             </button>
           )}
         {/* <img

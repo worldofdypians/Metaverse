@@ -5219,7 +5219,7 @@ function Dashboard({
 
     if (result && result.status === 200) {
       const cleanedAnswers = result.data.answers.map((answer) =>
-        answer.replace(/^[A-D]\.\s*/, "")
+        answer.replace(/^[A-D][.)]\s*/, "")
       );
 
       setAiQuestionObject({
