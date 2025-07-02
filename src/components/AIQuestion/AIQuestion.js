@@ -334,6 +334,7 @@ const AIQuestion = ({
         setStep(0);
         setConfirmed(false);
         setTimeLeft(totalTime);
+        setOptionsClickable(false);
         setTypingDone(new Array(answersOptions.length).fill(false));
       }, 10000);
     }
@@ -399,15 +400,24 @@ const AIQuestion = ({
   const handleTimeout = () => {
     if (selectedOption === undefined || selectedAnswer === undefined) {
       setConfirmed(true);
-      // setTimeout(() => {
-      //   setSelectedAnswer(undefined);
-      //   setSelectedOption(undefined);
-      //   onQuestionComplete(false);
-      //   setStep(0);
-      //   setConfirmed(false);
-      //   setShowResult(false);
-      //   setTimeLeft(totalTime);
-      // }, 2000);
+      suspenseMusicRef.current?.pause();
+      suspenseMusicRef.current.currentTime = 0;
+      setSuspenseSound(true);
+      new Audio(timerEndedSound).play();
+      setAvatarState("time");
+      setTimeout(() => {
+        setAvatarState("idle");
+      }, 3360);
+      setTimeout(() => {
+        setSelectedAnswer(undefined);
+        setSelectedOption(undefined);
+        onQuestionComplete(false);
+        setStep(0);
+        setConfirmed(false);
+        setTimeLeft(totalTime);
+        setOptionsClickable(false);
+        setTypingDone(new Array(answersOptions.length).fill(false));
+      }, 10000);
     }
   };
   useEffect(() => {
