@@ -140,70 +140,60 @@ const AIQuestion = ({
     setUnlockStatus("loading");
     let web3 = new Web3(window.ethereum);
     const contract_bnb = new web3.eth.Contract(
-      window.DAILY_BONUS_BNB_ABI,
-      window.config.daily_bonus_bnb_address
+      window.DAILY_QUESTION_ABI,
+      window.config.daily_question_bnb_address
     );
 
-    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
-      const gasPrice = await web3.eth.getGasPrice();
-      console.log("gasPrice", gasPrice);
-      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-      const increasedGwei = parseInt(currentGwei) + 0.5;
-      console.log("increasedGwei", increasedGwei);
+    const contract_opbnb = new web3.eth.Contract(
+      window.DAILY_QUESTION_ABI,
+      window.config.daily_question_opbnb_address
+    );
 
-      const transactionParameters = {
-        gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-      };
+    if (chainId === 56) {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        const gasPrice = await web3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        const increasedGwei = parseInt(currentGwei) + 0.5;
+        console.log("increasedGwei", increasedGwei);
 
-      await contract_bnb.methods
-        .openChest()
-        .estimateGas({ from: coinbase })
-        .then((gas) => {
-          transactionParameters.gas = web3.utils.toHex(gas);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      console.log(transactionParameters);
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        };
 
-      await contract_bnb.methods
-        .openChest()
-        .send({
-          from: coinbase,
-          ...transactionParameters,
-        })
-        .then((data) => {
-          setUnlockLoading(false);
-          setUnlockStatus("success");
-          onQuestionUnlocked(
-            chainId === 56 ? "bnb" : "opbnb",
-            data.transactionHash
-          );
-          new Audio(gamestartSound).play();
+        await contract_bnb.methods
+          .openDailyQuestion()
+          .estimateGas({ from: coinbase })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
 
-          setTimeout(() => {
-            setStep(1);
-            setUnlockStatus("initial");
-          }, 2000);
-        })
-        .catch((e) => {
-          window.alertify.error(e?.message);
-          setUnlockLoading(false);
-          setUnlockStatus("error");
-          setTimeout(() => {
-            setUnlockStatus("initial");
-          }, 3000);
+        await contract_bnb.methods
+          .openDailyQuestion()
+          .send({
+            from: coinbase,
+            ...transactionParameters,
+          })
+          .then((data) => {
+            setUnlockLoading(false);
+            setUnlockStatus("success");
+            onQuestionUnlocked(
+              chainId === 56 ? "bnb" : "opbnb",
+              data.transactionHash
+            );
+            new Audio(gamestartSound).play();
 
-          console.error(e);
-        });
-    } else if (window.WALLET_TYPE === "matchId") {
-      if (walletClient) {
-        const result = await walletClient
-          .writeContract({
-            address: window.config.daily_bonus_bnb_address,
-            abi: window.DAILY_BONUS_BNB_ABI,
-            functionName: "openPremiumChest",
-            args: [],
+            setTimeout(() => {
+              setStep(1);
+              setUnlockStatus("initial");
+            }, 2000);
           })
           .catch((e) => {
             window.alertify.error(e?.message);
@@ -215,75 +205,242 @@ const AIQuestion = ({
 
             console.error(e);
           });
-        if (result) {
-          const receipt = await publicClient
-            .waitForTransactionReceipt({
-              hash: result,
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: window.config.daily_question_bnb_address,
+              abi: window.DAILY_QUESTION_ABI,
+              functionName: "openDailyQuestion",
+              args: [],
             })
             .catch((e) => {
+              window.alertify.error(e?.message);
+              setUnlockLoading(false);
+              setUnlockStatus("error");
+              setTimeout(() => {
+                setUnlockStatus("initial");
+              }, 3000);
+
               console.error(e);
             });
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
 
-          if (receipt) {
-            onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
+            if (receipt) {
+              onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
+              setUnlockLoading(false);
+              setUnlockStatus("success");
+              setTimeout(() => {
+                setStep(1);
+                setUnlockStatus("initial");
+              }, 2000);
+            }
+          }
+        }
+      } else if (window.WALLET_TYPE === "binance") {
+        const contract_bnb_binance = new ethers.Contract(
+          window.config.daily_question_bnb_address,
+          window.DAILY_QUESTION_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        const gasPrice = await binanceW3WProvider.getGasPrice();
+        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+        const gasPriceInWei = ethers.utils.parseUnits(
+          currentGwei.toString().slice(0, 14),
+          "gwei"
+        );
+
+        const transactionParameters = {
+          gasPrice: gasPriceInWei,
+        };
+
+        let gasLimit;
+        try {
+          gasLimit = await contract_bnb_binance.estimateGas.openDailyQuestion();
+          transactionParameters.gasLimit = gasLimit;
+          console.log("transactionParameters", transactionParameters);
+        } catch (error) {
+          console.error(error);
+        }
+
+        const txResponse = await contract_bnb_binance
+          .openDailyQuestion({ ...transactionParameters })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            setUnlockLoading(false);
+            setUnlockStatus("error");
+            setTimeout(() => {
+              setUnlockStatus("initial");
+            }, 3000);
+
+            console.error(e);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
+          setUnlockLoading(false);
+          setUnlockStatus("success");
+          setTimeout(() => {
+            setStep(1);
+            setUnlockStatus("initial");
+          }, 2000);
+        }
+      }
+    } else if (chainId === 204) {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        const gasPrice = await web3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        const increasedGwei = parseInt(currentGwei) + 0.5;
+        console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        };
+
+        await contract_opbnb.methods
+          .openDailyQuestion()
+          .estimateGas({ from: coinbase })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+        await contract_opbnb.methods
+          .openDailyQuestion()
+          .send({
+            from: coinbase,
+            ...transactionParameters,
+          })
+          .then((data) => {
             setUnlockLoading(false);
             setUnlockStatus("success");
+            onQuestionUnlocked(
+              chainId === 56 ? "bnb" : "opbnb",
+              data.transactionHash
+            );
+            new Audio(gamestartSound).play();
+
             setTimeout(() => {
               setStep(1);
               setUnlockStatus("initial");
             }, 2000);
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            setUnlockLoading(false);
+            setUnlockStatus("error");
+            setTimeout(() => {
+              setUnlockStatus("initial");
+            }, 3000);
+
+            console.error(e);
+          });
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: window.config.daily_question_opbnb_address,
+              abi: window.DAILY_QUESTION_ABI,
+              functionName: "openDailyQuestion",
+              args: [],
+            })
+            .catch((e) => {
+              window.alertify.error(e?.message);
+              setUnlockLoading(false);
+              setUnlockStatus("error");
+              setTimeout(() => {
+                setUnlockStatus("initial");
+              }, 3000);
+
+              console.error(e);
+            });
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (receipt) {
+              onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
+              setUnlockLoading(false);
+              setUnlockStatus("success");
+              setTimeout(() => {
+                setStep(1);
+                setUnlockStatus("initial");
+              }, 2000);
+            }
           }
         }
-      }
-    } else if (window.WALLET_TYPE === "binance") {
-      const contract_bnb_binance = new ethers.Contract(
-        window.config.daily_bonus_bnb_address,
-        window.DAILY_BONUS_BNB_ABI,
-        binanceW3WProvider.getSigner()
-      );
+      } else if (window.WALLET_TYPE === "binance") {
+        const contract_opbnb_binance = new ethers.Contract(
+          window.config.daily_question_opbnb_address,
+          window.DAILY_QUESTION_ABI,
+          binanceW3WProvider.getSigner()
+        );
 
-      const gasPrice = await binanceW3WProvider.getGasPrice();
-      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
-      const gasPriceInWei = ethers.utils.parseUnits(
-        currentGwei.toString().slice(0, 14),
-        "gwei"
-      );
+        const gasPrice = await binanceW3WProvider.getGasPrice();
+        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+        const gasPriceInWei = ethers.utils.parseUnits(
+          currentGwei.toString().slice(0, 14),
+          "gwei"
+        );
 
-      const transactionParameters = {
-        gasPrice: gasPriceInWei,
-      };
+        const transactionParameters = {
+          gasPrice: gasPriceInWei,
+        };
 
-      let gasLimit;
-      try {
-        gasLimit = await contract_bnb_binance.estimateGas.openChest();
-        transactionParameters.gasLimit = gasLimit;
-        console.log("transactionParameters", transactionParameters);
-      } catch (error) {
-        console.error(error);
-      }
+        let gasLimit;
+        try {
+          gasLimit =
+            await contract_opbnb_binance.estimateGas.openDailyQuestion();
+          transactionParameters.gasLimit = gasLimit;
+          console.log("transactionParameters", transactionParameters);
+        } catch (error) {
+          console.error(error);
+        }
 
-      const txResponse = await contract_bnb_binance
-        .openChest({ ...transactionParameters })
-        .catch((e) => {
-          window.alertify.error(e?.message);
+        const txResponse = await contract_opbnb_binance
+          .openDailyQuestion({ ...transactionParameters })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            setUnlockLoading(false);
+            setUnlockStatus("error");
+            setTimeout(() => {
+              setUnlockStatus("initial");
+            }, 3000);
+
+            console.error(e);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
           setUnlockLoading(false);
-          setUnlockStatus("error");
+          setUnlockStatus("success");
           setTimeout(() => {
+            setStep(1);
             setUnlockStatus("initial");
-          }, 3000);
-
-          console.error(e);
-        });
-
-      const txReceipt = await txResponse.wait();
-      if (txReceipt) {
-        onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
-        setUnlockLoading(false);
-        setUnlockStatus("success");
-        setTimeout(() => {
-          setStep(1);
-          setUnlockStatus("initial");
-        }, 2000);
+          }, 2000);
+        }
       }
     }
   };
@@ -488,20 +645,22 @@ const AIQuestion = ({
             alt=""
             className="ai-oryn-border d-flex align-items-center justify-content-center"
           >
-            <div className={`oryn-inner-border
+            <div
+              className={`oryn-inner-border
               ${
-                 avatarState === "idle"
-                    ? "gif-bg-idle"
-                    : avatarState === "correct"
-                    ? "gif-bg-correct"
-                    : avatarState === "wrong"
-                    ? "gif-bg-wrong"
-                    : avatarState === "time"
-                    ? "gif-bg-time"
-                    : "gif-bg-idle"
+                avatarState === "idle"
+                  ? "gif-bg-idle"
+                  : avatarState === "correct"
+                  ? "gif-bg-correct"
+                  : avatarState === "wrong"
+                  ? "gif-bg-wrong"
+                  : avatarState === "time"
+                  ? "gif-bg-time"
+                  : "gif-bg-idle"
               }
               
-              `}>
+              `}
+            >
               {/* <Canvas
                 shadows
                 camera={{ near: 0.01, far: 1000, position: [0, 0, 10] }}
@@ -613,7 +772,7 @@ const AIQuestion = ({
                       step === 1
                         ? "530 "
                         : "50 - 250 "}
-                      STARS
+                      Stars
                     </span>
                   </div>
                 </div>
