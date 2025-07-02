@@ -7127,7 +7127,7 @@ function Dashboard({
                                   <span
                                     className={"ai-rewards-title-active ps-3"}
                                   >
-                                    STARS
+                                    50 - 250 Stars
                                   </span>
                                 </div>
                               </div>
@@ -7158,7 +7158,7 @@ function Dashboard({
                                   <span
                                     className={"ai-rewards-title-active ps-3"}
                                   >
-                                    POINTS
+                                    15,000 - 80,000 Points
                                   </span>
                                 </div>
                               </div>
@@ -7187,7 +7187,7 @@ function Dashboard({
                                   <span
                                     className={"ai-rewards-title-active ps-3"}
                                   >
-                                    REWARDS
+                                    $5-$10 Rewards
                                   </span>
                                 </div>
                               </div>

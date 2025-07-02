@@ -596,9 +596,10 @@ const AIQuestion = ({
                       }
                     >
                       {selectedOption === selectedAnswer &&
-                        selectedAnswer !== undefined &&
-                        step === 1 &&
-                        "530 "}
+                      selectedAnswer !== undefined &&
+                      step === 1
+                        ? "530 "
+                        : "50 - 250 "}
                       STARS
                     </span>
                   </div>
@@ -642,7 +643,7 @@ const AIQuestion = ({
                           : "ai-rewards-title ps-3"
                       }
                     >
-                      POINTS
+                      15,000 - 80,000 Points
                     </span>
                   </div>
                 </div>
@@ -683,7 +684,7 @@ const AIQuestion = ({
                           : "ai-rewards-title ps-3"
                       }
                     >
-                      REWARDS
+                      $5-$10 Rewards
                     </span>
                   </div>
                 </div>
@@ -700,7 +701,7 @@ const AIQuestion = ({
       >
         <div className="d-flex flex-column w-100">
           <div className="d-flex align-items-center gap-2 justify-content-between w-100 overflow-auto">
-            <div className="d-flex w-100 align-items-center gap-2 gap-lg-3 justify-content-start">
+            <div className="d-flex w-100 align-items-center gap-2 gap-lg-3 justify-content-lg-start justify-content-center">
               <button
                 className={
                   chainId === 56
@@ -1013,7 +1014,7 @@ const AIQuestion = ({
                   </span>
                   your Final answer?
                   <button
-                    className="ai-question-confirm-answer px-3"
+                    className="ai-question-confirm-answer px-3 py-1 d-flex align-items-center"
                     onClick={() => handleOptionClick(selectedOption)}
                   >
                     {pause ? (
@@ -1040,7 +1041,14 @@ const AIQuestion = ({
               step === 1 ? (
               <>
                 <span className="aiAnswer-title">
-                  🎉 You have earned 530 Stars 🎉
+                  🎉 You have earned{" "}
+                  <span
+                    className="aiAnswer-title m-0"
+                    style={{ color: "#ffd37e" }}
+                  >
+                    530 Stars
+                  </span>{" "}
+                  🎉
                 </span>
               </>
             ) : step === 1 ? (
