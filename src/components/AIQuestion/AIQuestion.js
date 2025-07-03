@@ -1010,7 +1010,7 @@ const AIQuestion = ({
                 {step === 0 ? "" : step === 1 ? aiQuestionObject.question : ""}
               </span>
             </div>
-            <div className="options-wrapper gap-2 ga-lg-3 w-100">
+            <div className="options-wrapper gap-2 gap-lg-3 w-100">
               {(aiQuestionObject.options.length > 0
                 ? aiQuestionObject.options
                 : Array(4).fill("")
@@ -1020,7 +1020,7 @@ const AIQuestion = ({
                 return (
                   <div
                     key={index}
-                    className={`answer-outer-wrapper col-12 ${
+                    className={`answer-outer-wrapper d-flex col-12 ${
                       (!optionsClickable ||
                         selectedAnswer !== undefined ||
                         timeLeft === 0 ||
@@ -1106,114 +1106,146 @@ const AIQuestion = ({
                 : ""
             } ai-answer-result-wrapper px-3 py-2 d-flex flex-column align-items-center justify-content-center`}
           >
-            {step === 0 ? (
-              <>
-                {/* <span className="aiLockedDesc">
-                    A Hidden question awaits
-                  </span> */}
-                <span className="aiLockedDesc">
-                  {!email && coinbase
-                    ? "Login to your game account"
-                    : !isConnected && !coinbase
-                    ? "Connect your wallet to show the question"
-                    : isConnected &&
-                      coinbase &&
-                      address &&
-                      address.toLowerCase() === coinbase.toLowerCase() &&
-                      email &&
-                      chainId !== 56 &&
-                      chainId !== 204
-                    ? "Switch to BNB Chain or opBNB to show the question"
-                    : isConnected &&
-                      coinbase &&
-                      email &&
-                      address &&
-                      (chainId === 56 || chainId === 204) &&
-                      address.toLowerCase() !== coinbase.toLowerCase()
-                    ? "Use the wallet associated to your game account."
-                    : "Complete the transaction to show the question"}
-                </span>
-              </>
-            ) : (
-              <></>
-            )}
+            <span
+              className={
+                step === 0
+                  ? "aiLockedDesc"
+                  : step === 1 &&
+                    selectedOption !== undefined &&
+                    selectedAnswer === undefined &&
+                    showSelect &&
+                    timeLeft !== 0
+                  ? "w-100 px-4 aiAnswer-title d-flex align-items-center gap-2 justify-content-center"
+                  : "aiAnswer-title"
+              }
+            >
+              {(() => {
+                if (step === 0) {
+                  if (!email && coinbase) return "Login to your game account";
+                  if (!isConnected && !coinbase)
+                    return "Connect your wallet to show the question";
+                  if (
+                    isConnected &&
+                    coinbase &&
+                    address &&
+                    address.toLowerCase() === coinbase.toLowerCase() &&
+                    email &&
+                    chainId !== 56 &&
+                    chainId !== 204
+                  )
+                    return "Switch to BNB Chain or opBNB to show the question";
+                  if (
+                    isConnected &&
+                    coinbase &&
+                    email &&
+                    address &&
+                    (chainId === 56 || chainId === 204) &&
+                    address.toLowerCase() !== coinbase.toLowerCase()
+                  )
+                    return "Use the wallet associated to your game account.";
+                  return "Complete the transaction to show the question";
+                }
 
-            {!showSelect &&
-            selectedOption === undefined &&
-            selectedAnswer === undefined &&
-            step === 1 &&
-            timeLeft !== 0 ? (
-              <>
-                <span className="aiAnswer-title">Select your answer</span>
-              </>
-            ) : showSelect &&
-              selectedOption !== undefined &&
-              selectedAnswer === undefined &&
-              timeLeft !== 0 &&
-              step === 1 ? (
-              <>
-                <span className="w-100 px-4 aiAnswer-title d-flex align-items-center gap-2 justify-content-center">
-                  Is
-                  <span
-                    className="aiAnswer-title m-0"
-                    style={{ color: "#ffd37e" }}
-                  >
-                    '{selectedOption}'
-                  </span>
-                  your Final answer?
-                  <button
-                    className="ai-question-confirm-answer px-3 py-1 d-flex align-items-center"
-                    onClick={() => handleOptionClick(selectedOption)}
-                  >
-                    {pause ? (
-                      <div
-                        className="spinner-border spinner-border-sm text-light"
-                        role="status"
+                if (
+                  !showSelect &&
+                  selectedOption === undefined &&
+                  selectedAnswer === undefined &&
+                  step === 1 &&
+                  timeLeft !== 0
+                ) {
+                  return "Select your answer";
+                }
+
+                if (
+                  showSelect &&
+                  selectedOption !== undefined &&
+                  selectedAnswer === undefined &&
+                  timeLeft !== 0 &&
+                  step === 1
+                ) {
+                  return (
+                    <>
+                      Is{" "}
+                      <span
+                        className="aiAnswer-title m-0"
+                        style={{ color: "#ffd37e" }}
                       >
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                    ) : (
-                      "Yes"
-                    )}
-                  </button>
-                </span>
-              </>
-            ) : selectedAnswer === undefined && timeLeft === 0 && step === 1 ? (
-              <>
-                <span className="aiAnswer-title">
-                  🐌 Too slow! Try again tomorrow.
-                </span>
-              </>
-            ) : selectedOption === selectedAnswer &&
-              selectedAnswer !== undefined &&
-              step === 1 ? (
-              <>
-                <span className="aiAnswer-title">
-                  🎉 You have earned{" "}
-                  <span
-                    className="aiAnswer-title m-0"
-                    style={{ color: "#ffd37e" }}
-                  >
-                    530 Stars
-                  </span>{" "}
-                  🎉
-                </span>
-              </>
-            ) : step === 1 ? (
-              <>
-                <span className="aiAnswer-title">
-                  🍀 You're getting there. Dig deeper into the BNB Chain
-                  ecosystem. 🍀
-                </span>
-              </>
-            ) : (
-              <></>
-            )}
+                        '{selectedOption}'
+                      </span>{" "}
+                      your Final answer?
+                      <button
+                        className="ai-question-confirm-answer px-3 py-1 d-flex align-items-center"
+                        onClick={() => handleOptionClick(selectedOption)}
+                      >
+                        {pause ? (
+                          <div
+                            className="spinner-border spinner-border-sm text-light"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        ) : (
+                          "Yes"
+                        )}
+                      </button>
+                    </>
+                  );
+                }
+
+                if (
+                  selectedAnswer === undefined &&
+                  timeLeft === 0 &&
+                  step === 1
+                ) {
+                  return "🐌 Too slow! Try again tomorrow.";
+                }
+
+                if (
+                  selectedOption === selectedAnswer &&
+                  selectedAnswer !== undefined &&
+                  step === 1
+                ) {
+                  return (
+                    <>
+                      🎉 You have earned{" "}
+                      <span
+                        className="aiAnswer-title m-0"
+                        style={{ color: "#ffd37e" }}
+                      >
+                        530 Stars
+                      </span>{" "}
+                      🎉
+                    </>
+                  );
+                }
+
+                if (step === 1) {
+                  return "🍀 You're getting there. Dig deeper into the BNB Chain ecosystem. 🍀";
+                }
+
+                return null;
+              })()}
+            </span>
           </div>
         </div>
       </div>
+      <img
+        src={"https://cdn.worldofdypians.com/wod/ai-main-button-active.webp"}
+        className="d-none"
+        alt=""
+      />
+      <img
+        src={"https://cdn.worldofdypians.com/wod/ai-main-button-error.webp"}
+        className="d-none"
+        alt=""
+      />
+      <img
+        src={"https://cdn.worldofdypians.com/wod/ai-main-button-disabled.webp"}
+        className="d-none"
+        alt=""
+      />
       <div
-        className={
+        className={`ai-question-footer-wrapper-static ${
           isConnected &&
           (chainId === 56 || chainId === 204) &&
           coinbase &&
@@ -1271,7 +1303,7 @@ const AIQuestion = ({
             : !isConnected || !email
             ? "ai-question-footer-wrapper"
             : "ai-question-footer-wrapper-disabled"
-        }
+        }`}
       >
         {!email && coinbase && (
           <NavLink
