@@ -19,6 +19,7 @@ import avatarWrong from "./assets/avatarWrong.gif";
 import avatarIdle from "./assets/avatarIdle.gif";
 import avatarTime from "./assets/avatarTime.gif";
 import axios from "axios";
+import DynamicSpan from "./DynamicSpan";
 // import useWindowSize from "../../hooks/useWindowSize";
 
 const AIQuestion = ({
@@ -65,7 +66,6 @@ const AIQuestion = ({
   const [showSelect, setShowSelect] = useState(false);
   const [pause, setPause] = useState(false);
   const [avatarState, setAvatarState] = useState("idle");
-
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
   const intervalRef = useRef(null);
@@ -187,20 +187,21 @@ const AIQuestion = ({
             );
             new Audio(gamestartSound).play();
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStep(1);
               setUnlockStatus("initial");
             }, 2000);
+            return () => clearTimeout(timer);
           })
           .catch((e) => {
             window.alertify.error(e?.message);
             setUnlockLoading(false);
             setUnlockStatus("error");
-            setTimeout(() => {
+            console.error(e);
+            const timer = setTimeout(() => {
               setUnlockStatus("initial");
             }, 3000);
-
-            console.error(e);
+            return () => clearTimeout(timer);
           });
       } else if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
@@ -215,11 +216,11 @@ const AIQuestion = ({
               window.alertify.error(e?.message);
               setUnlockLoading(false);
               setUnlockStatus("error");
-              setTimeout(() => {
+              console.error(e);
+              const timer = setTimeout(() => {
                 setUnlockStatus("initial");
               }, 3000);
-
-              console.error(e);
+              return () => clearTimeout(timer);
             });
           if (result) {
             const receipt = await publicClient
@@ -234,10 +235,11 @@ const AIQuestion = ({
               onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
               setUnlockLoading(false);
               setUnlockStatus("success");
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setStep(1);
                 setUnlockStatus("initial");
               }, 2000);
+              return () => clearTimeout(timer);
             }
           }
         }
@@ -274,11 +276,12 @@ const AIQuestion = ({
             window.alertify.error(e?.message);
             setUnlockLoading(false);
             setUnlockStatus("error");
-            setTimeout(() => {
+            console.error(e);
+            const timer = setTimeout(() => {
               setUnlockStatus("initial");
             }, 3000);
 
-            console.error(e);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -286,10 +289,12 @@ const AIQuestion = ({
           onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
           setUnlockLoading(false);
           setUnlockStatus("success");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStep(1);
             setUnlockStatus("initial");
           }, 2000);
+
+          return () => clearTimeout(timer);
         }
       }
     } else if (chainId === 204) {
@@ -333,20 +338,22 @@ const AIQuestion = ({
             );
             new Audio(gamestartSound).play();
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStep(1);
               setUnlockStatus("initial");
             }, 2000);
+            return () => clearTimeout(timer);
           })
           .catch((e) => {
             window.alertify.error(e?.message);
             setUnlockLoading(false);
             setUnlockStatus("error");
-            setTimeout(() => {
+            console.error(e);
+            const timer = setTimeout(() => {
               setUnlockStatus("initial");
             }, 3000);
 
-            console.error(e);
+            return () => clearTimeout(timer);
           });
       } else if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
@@ -361,11 +368,12 @@ const AIQuestion = ({
               window.alertify.error(e?.message);
               setUnlockLoading(false);
               setUnlockStatus("error");
-              setTimeout(() => {
+              console.error(e);
+              const timer = setTimeout(() => {
                 setUnlockStatus("initial");
               }, 3000);
 
-              console.error(e);
+              return () => clearTimeout(timer);
             });
           if (result) {
             const receipt = await publicClient
@@ -380,10 +388,11 @@ const AIQuestion = ({
               onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
               setUnlockLoading(false);
               setUnlockStatus("success");
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setStep(1);
                 setUnlockStatus("initial");
               }, 2000);
+              return () => clearTimeout(timer);
             }
           }
         }
@@ -421,11 +430,11 @@ const AIQuestion = ({
             window.alertify.error(e?.message);
             setUnlockLoading(false);
             setUnlockStatus("error");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setUnlockStatus("initial");
             }, 3000);
 
-            console.error(e);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -433,10 +442,11 @@ const AIQuestion = ({
           onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
           setUnlockLoading(false);
           setUnlockStatus("success");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStep(1);
             setUnlockStatus("initial");
           }, 2000);
+          return () => clearTimeout(timer);
         }
       }
     }
@@ -468,28 +478,49 @@ const AIQuestion = ({
         setSelectedAnswer(answers[result.data.correctIndex]);
         new Audio(successSound).play();
         setAvatarState("correct");
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setAvatarState("idle");
         }, 5040);
+
+        onQuestionComplete(true);
+        const resetTimer = setTimeout(() => {
+          setSelectedAnswer(undefined);
+          setSelectedOption(undefined);
+          onQuestionComplete(false);
+          setStep(0);
+          setConfirmed(false);
+          setTimeLeft(totalTime);
+          setOptionsClickable(false);
+        }, 10000);
+
+        return () => {
+          clearTimeout(timer);
+          clearTimeout(resetTimer);
+        };
       } else {
         setSelectedAnswer(answers[result.data.correctIndex]);
         new Audio(failSound).play();
         setAvatarState("wrong");
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setAvatarState("idle");
         }, 5040);
-      }
 
-      onQuestionComplete(true);
-      setTimeout(() => {
-        setSelectedAnswer(undefined);
-        setSelectedOption(undefined);
-        onQuestionComplete(false);
-        setStep(0);
-        setConfirmed(false);
-        setTimeLeft(totalTime);
-        setOptionsClickable(false);
-      }, 10000);
+        onQuestionComplete(true);
+        const resetTimer = setTimeout(() => {
+          setSelectedAnswer(undefined);
+          setSelectedOption(undefined);
+          onQuestionComplete(false);
+          setStep(0);
+          setConfirmed(false);
+          setTimeLeft(totalTime);
+          setOptionsClickable(false);
+        }, 10000);
+
+        return () => {
+          clearTimeout(timer);
+          clearTimeout(resetTimer);
+        };
+      }
     }
   };
 
@@ -501,9 +532,10 @@ const AIQuestion = ({
     suspenseMusicRef.current.currentTime = 0;
     handleConfirm();
     new Audio(drumrollSound).play();
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       checkAnswer();
     }, 2000);
+    return () => clearTimeout(timer);
   };
 
   const getAnswerClass = (option) => {
@@ -558,10 +590,10 @@ const AIQuestion = ({
       setSuspenseSound(true);
       new Audio(timerEndedSound).play();
       setAvatarState("time");
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setAvatarState("idle");
       }, 5040);
-      setTimeout(() => {
+      const timer2 = setTimeout(() => {
         setSelectedAnswer(undefined);
         setSelectedOption(undefined);
         onQuestionComplete(false);
@@ -570,6 +602,10 @@ const AIQuestion = ({
         setTimeLeft(totalTime);
         setOptionsClickable(false);
       }, 10000);
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(timer2);
+      };
     }
   };
   useEffect(() => {
@@ -615,9 +651,10 @@ const AIQuestion = ({
       setSuspenseSound(true);
       new Audio(timerEndedSound).play();
       setAvatarState("time");
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setAvatarState("idle");
       }, 5040);
+      return () => clearTimeout(timer);
     }
   }, [timeLeft, step]);
 
@@ -1044,36 +1081,16 @@ const AIQuestion = ({
                         <span className="answer-text">
                           {answers[index] + ":"}
                         </span>
-                        <span
-                          className="answer-text option"
+                        <DynamicSpan
+                          text={step === 0 ? "" : option}
                           id={`option${index + 1}`}
-                          // onAnimationEnd={() => {
-                          //   setTypingDone((prev) => {
-                          //     const updated = [...prev];
-                          //     updated[index] = true;
-                          //     return updated;
-                          //   });
-                          // }}
-                          style={{
-                            // animation:
-                            //   step === 1 ? `fade-in-ai 1s forwards` : "none",
-                            // animationDelay: `${index + 1}s`,
-                            // overflow: "hidden",
-                            // whiteSpace: "break-spaces",
-                            // display: "inline-block",
-                            // width: "100%",
-                            // maxWidth: "100%",
-                            // textOverflow: "ellipsis",
-                            // minWidth: `${text.length + 2}ch`,
-                            opacity: step === 1 ? 0 : 1, // prevent flash if step isn't active
-                            animation:
-                              step === 1
-                                ? `fadeInAI 0.5s ease-out ${animationDelay} forwards`
-                                : "none",
-                          }}
-                        >
-                          {step === 0 ? "" : option}
-                        </span>
+                          opacity={step === 1 ? 0 : 1}
+                          animation={
+                            step === 1
+                              ? `fadeInAI 0.5s ease-out ${animationDelay} forwards`
+                              : "none"
+                          }
+                        />
                       </div>
                       {/* {step === 1 && (
                         <span className={getRadioClass(answers[index])}></span>

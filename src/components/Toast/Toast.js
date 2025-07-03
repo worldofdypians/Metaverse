@@ -11,7 +11,7 @@ const Toast = ({ title, showToast }) => {
   useEffect(() => {
     if (showToast === true) {
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 6000);
+      const timer = setTimeout(() => setShowConfetti(false), 6000);
       toast(title, {
         position: "bottom-right",
         autoClose: 5000,
@@ -22,6 +22,7 @@ const Toast = ({ title, showToast }) => {
         progress: undefined,
         theme: "light",
       });
+      return () => clearTimeout(timer);
     }
   }, [showToast]);
 

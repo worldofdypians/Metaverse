@@ -85,19 +85,16 @@ const ItemCard = ({
 
       return result;
     } else if (window.WALLET_TYPE === "binance") {
-      
-       if (tokenType === "eth") {
+      if (tokenType === "eth") {
         return true;
       }
-    } else return false
+    } else return false;
   };
 
   const checkapprove = async (nftItem) => {
- 
+    const tokenType = "eth";
 
-    const tokenType =  "eth";
- 
-     if (isConnected === true && nftItem.payment_priceType === 0) {
+    if (isConnected === true && nftItem.payment_priceType === 0) {
       setbuttonTxt("Buy");
       setIsApprove(true);
       setpurchasestate("buy");
@@ -134,8 +131,6 @@ const ItemCard = ({
     }
     return output;
   };
-
- 
 
   const handleManageState = (e, nft) => {
     e.preventDefault();
@@ -176,11 +171,13 @@ const ItemCard = ({
                 setpurchasestate("success");
                 setStatus("done");
                 handleRefreshListing();
-                setTimeout(() => {
+                setToastTitle("Successfully purchased!");
+                const timer = setTimeout(() => {
                   checkapprove(nft);
                   setShowModal(false);
                 }, 2000);
-                setToastTitle("Successfully purchased!");
+
+                return () => clearTimeout(timer);
               })
               .catch((e) => {
                 console.error(e);
@@ -260,11 +257,12 @@ const ItemCard = ({
                 setpurchasestate("success");
                 setStatus("done");
                 handleRefreshListing();
-                setTimeout(() => {
+                setToastTitle("Successfully purchased!");
+                const timer = setTimeout(() => {
                   checkapprove(nft);
                   setShowModal(false);
                 }, 2000);
-                setToastTitle("Successfully purchased!");
+                return () => clearTimeout(timer);
               }
             } else if (nft.payment_priceType === 0) {
               const txResponse = await marketplace
@@ -295,15 +293,16 @@ const ItemCard = ({
                 setpurchasestate("success");
                 setStatus("done");
                 handleRefreshListing();
-                setTimeout(() => {
+                setToastTitle("Successfully purchased!");
+                const timer = setTimeout(() => {
                   checkapprove(nft);
                   setShowModal(false);
                 }, 2000);
-                setToastTitle("Successfully purchased!");
+                return () => clearTimeout(timer);
               }
             }
           }
-        } 
+        }
         // else {
         //   setbuttonTxt("Approve");
         //   setpurchasestate("approve");
@@ -386,10 +385,9 @@ const ItemCard = ({
         //   }
         // }
       }
-    } else if( window.WALLET_TYPE === "matchId") {
+    } else if (window.WALLET_TYPE === "matchId") {
       window.alertify.error("Please connect to another EVM wallet.");
-    }
-      else {
+    } else {
       window.alertify.error(
         "Invalid network! Switch into Ethereum Network to purchase NFTs"
       );
@@ -426,9 +424,10 @@ const ItemCard = ({
   useEffect(() => {
     if (isConnected && status === "clicked") {
       setShowModal(true);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         handleBuyState(nft);
       }, 2000);
+      return () => clearTimeout(timer);
     }
   }, [isConnected, status]);
 
@@ -549,11 +548,7 @@ const ItemCard = ({
                     className="nft-price"
                     style={{ textDecoration: "none" }}
                   >
-                    {getFormattedNumber(
-                      nft.price / 1e18,
-                      2
-                    )}{" "}
-                   ETH 
+                    {getFormattedNumber(nft.price / 1e18, 2)} ETH
                   </span>
 
                   <span
@@ -565,12 +560,7 @@ const ItemCard = ({
                     } ${!isListed && "nft-price-usdhover2"}`}
                     style={{ color: "#7DD9AF" }}
                   >
-                    $
-                    {getFormattedNumber(
-                        ethTokenData * (nft.price / 1e18)
-                         ,
-                      2
-                    )}
+                    ${getFormattedNumber(ethTokenData * (nft.price / 1e18), 2)}
                   </span>
                 </div>
               </div>
@@ -604,12 +594,7 @@ const ItemCard = ({
               style={{ bottom: isListed ? 0 : 15, height: 0 }}
             >
               <span className="lastsold">
-                Last Sale:{" "}
-                {getFormattedNumber(
-                  lastSold / 1e18,
-                  2
-                )}{" "}
-                 ETH 
+                Last Sale: {getFormattedNumber(lastSold / 1e18, 2)} ETH
               </span>
             </div>
           )}

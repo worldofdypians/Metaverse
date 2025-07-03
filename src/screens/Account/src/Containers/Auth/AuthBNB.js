@@ -187,10 +187,11 @@ function AuthBNB({
     if (result2 && result2.status === 200) {
       console.log(result2);
       setsuccessLink(true);
-      setTimeout(() => {
+    const timer =  setTimeout(() => {
         // window.location.reload();
         navigate("/account");
       }, 3000);
+      return () => clearTimeout(timer);
     }
   };
 

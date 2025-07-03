@@ -974,9 +974,10 @@ function Dashboard({
       setloadingCore(false);
       fillRecordsCore([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingCore(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -1189,9 +1190,10 @@ function Dashboard({
       setloadingViction(false);
       fillRecordsViction([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingViction(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -1403,9 +1405,10 @@ function Dashboard({
       setloadingManta(false);
       fillRecordsManta([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingManta(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -1622,9 +1625,10 @@ function Dashboard({
       setloadingSei(false);
       fillRecordsSei([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingSei(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -1841,9 +1845,10 @@ function Dashboard({
       setloadingBase(false);
       fillRecordsBase([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingBase(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2031,9 +2036,10 @@ function Dashboard({
       setLoadingVanar(false);
       fillRecordsVanar([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoadingVanar(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2160,9 +2166,10 @@ function Dashboard({
       setloadingTaiko(false);
       fillRecordsTaiko([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingTaiko(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2378,9 +2385,10 @@ function Dashboard({
       setloadingMat(false);
       fillRecordsMat([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingMat(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2596,9 +2604,10 @@ function Dashboard({
       setloadingSkale(false);
       fillRecordsSkale([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingSkale(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2896,9 +2905,10 @@ function Dashboard({
       setloadingStarMonthly(false);
       fillRecordsStar([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingStarMonthly(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2997,9 +3007,10 @@ function Dashboard({
       setloadingStarWeekly(false);
       fillRecordsStarWeekly([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingStarWeekly(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -3212,9 +3223,10 @@ function Dashboard({
       setloadingBnb(false);
       fillRecords([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingBnb(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -4575,11 +4587,12 @@ function Dashboard({
 
     if (result2 && result2.status === 200) {
       console.log(result2.data.result);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         if (isonlink) {
           window.location.reload();
         }
       }, 2000);
+      return () => clearTimeout(timer);
     }
   };
 
