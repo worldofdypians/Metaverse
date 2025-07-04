@@ -4,20 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import Web3 from "web3";
 // import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import clickSound from "./assets/click.mp3";
-import drumrollSound from "./assets/drumroll.mp3";
-import failSound from "./assets/wrongAnswer3.mp3";
-import gamestartSound from "./assets/gamestart.mp3";
-import successSound from "./assets/correctAnswer3.mp3";
-// import suspenseSound from "./assets/suspense.mp3";
-// import suspenseful1Sound from "./assets/suspenseful1.mp3";
-// import suspenseful2Sound from "./assets/suspenseful2.mp3";
-// import clockSound from "./assets/clockSound.mp3";
-import timerEndedSound from "./assets/timerEnded.mp3";
-import avatarCorrect from "./assets/avatarCorrect.gif";
-import avatarWrong from "./assets/avatarWrong.gif";
-import avatarIdle from "./assets/avatarIdle.gif";
-import avatarTime from "./assets/avatarTime.gif";
 import axios from "axios";
 import DynamicSpan from "./DynamicSpan";
 // import useWindowSize from "../../hooks/useWindowSize";
@@ -43,7 +29,23 @@ const AIQuestion = ({
   onQuestionUnlocked,
   aiQuestionObject,
 }) => {
-  // new Audio(successSound).play();
+  const clickSound = "https://cdn.worldofdypians.com/wod/aiOryn/click.mp3";
+  const drumrollSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/drumroll.mp3";
+  const failSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/wrongAnswer3.mp3";
+  const gamestartSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/gamestart.mp3";
+  const successSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/correctAnswer3.mp3";
+  const timerEndedSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/timerEnded.mp3";
+  const avatarCorrect =
+    "https://cdn.worldofdypians.com/wod/aiOryn/avatarCorrect.gif";
+  const avatarWrong =
+    "https://cdn.worldofdypians.com/wod/aiOryn/avatarWrong.gif";
+  const avatarIdle = "https://cdn.worldofdypians.com/wod/aiOryn/avatarIdle.gif";
+  const avatarTime = "https://cdn.worldofdypians.com/wod/aiOryn/avatarTime.gif";
 
   const answersOptions = [0, 1, 2, 3];
   const answers = ["A", "B", "C", "D"];
@@ -1449,12 +1451,6 @@ const AIQuestion = ({
               Synchronize
             </button>
           )}
-        {/* <img
-          src={
-            "https://cdn.worldofdypians.com/wod/ai-question-button-bottom.webp"
-          }
-          className="ai-question-footer-img"
-        /> */}
       </div>
     </div>
   );
