@@ -8,9 +8,19 @@
   font-weight: 800;
   line-height: normal;
   text-transform: uppercase;
-
+  opacity: 0;
+  transition: all 0.25s;
+  transform: translateY(10px);
+  
   @media screen and (max-width: 640px) {
     font-size: 12px;
+  }
+}
+
+@keyframes fadeInAI2 {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -43,7 +53,7 @@
 
 .ai-question-text-wrapper {
   background: url("https://cdn.worldofdypians.com/wod/ai-question-txt-wrapper.webp");
-  background-position: center;
+ background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   display: flex;
@@ -52,9 +62,11 @@
   top: -25px;
   transform: translate(-50%, 0);
   left: 50%;
-  max-width: calc(100% - 20px);
+  // max-width: calc(100% - 20px);
   width: 100%;
+  box-sizing: border-box;
   height: 78px;
+  min-width: 0;
 
   @media screen and (max-width: 500px) {
     padding: 10px;
@@ -72,7 +84,8 @@
   background-blend-mode: luminosity;
   // min-height: 55px;
   height: 55px;
-  width: 100%;
+ width: 100%;
+  min-width: 0;
 
   @media screen and (max-width: 500px) {
     min-height: auto;
@@ -95,7 +108,7 @@
     border: 2px solid #ff7c00;
   }
 
-   @media screen and (max-width: 500px) {
+  @media screen and (max-width: 500px) {
     min-height: auto;
   }
 }
@@ -114,8 +127,7 @@
   min-height: 55px;
   height: 100%;
 
-
-   @media screen and (max-width: 500px) {
+  @media screen and (max-width: 500px) {
     min-height: auto;
   }
 }
@@ -128,7 +140,7 @@
   min-height: 55px;
   height: 100%;
 
-   @media screen and (max-width: 500px) {
+  @media screen and (max-width: 500px) {
     min-height: auto;
   }
 }
@@ -182,7 +194,9 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: calc(100% - 60px);
+  // width: calc(100% - 60px);
+  width: 100% ;
+
   min-height: 76px;
 
   @media screen and (max-width: 500px) {
@@ -196,7 +210,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: calc(100% - 60px);
+ // width: calc(100% - 60px);
+  width: 100% ;
   min-height: 76px;
   @media screen and (max-width: 785px) {
     width: 100%;
@@ -209,7 +224,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: calc(100% - 60px);
+ // width: calc(100% - 60px);
+  width: 100% ;
   min-height: 76px;
   @media screen and (max-width: 785px) {
     width: 100%;
@@ -222,7 +238,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: calc(100% - 60px);
+  // width: calc(100% - 60px);
+  width: 100% ;
   min-height: 76px;
   @media screen and (max-width: 785px) {
     width: 100%;
@@ -299,23 +316,20 @@
   }
 }
 
-.gif-bg-time{
+.gif-bg-time {
   background: rgba(214, 160, 61, 0.5);
 }
 
-.gif-bg-idle{
+.gif-bg-idle {
   background: rgba(127, 17, 224, 0.5);
-
 }
 
-.gif-bg-correct{
+.gif-bg-correct {
   background: rgba(61, 214, 82, 0.5);
-
 }
 
-.gif-bg-wrong{
+.gif-bg-wrong {
   background: rgba(214, 61, 61, 0.5);
-
 }
 
 .ai-oryn-text {
@@ -366,18 +380,18 @@
   color: #dfdced;
   font-size: clamp(0.75rem, 0.8rem, 1rem);
   font-weight: 600;
+   min-width: 0;
   margin: 0;
-  line-height: 1.35;
-  height: 32px;
-  display: flex;
+  // line-height: 1.35;
+  // height: 32px;
+  // display: flex;
   user-select: none;
-  align-items: center;
+  // align-items: center;
   @media (max-width: 992px) {
     font-size: 13px !important ;
     height: auto;
   }
 }
-
 
 .aiAnswer-desc {
   color: #eeedff;
@@ -540,7 +554,7 @@
   border: none;
   outline: none;
 
-    @media screen and (max-width: 500px) {
+  @media screen and (max-width: 500px) {
     font-size: 11px;
     white-space: nowrap;
     min-height: 56px;
@@ -730,18 +744,25 @@
 
 /* Typing effect keyframes */
 @keyframes typing-desktop {
-  from { width: 0; }
-  to { width: 254px; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 254px;
+  }
 }
 
 @keyframes typing-mobile {
-  from { width: 0; }
-  to { width: 205px; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 205px;
+  }
 }
 
-
 @keyframes fadeInAI {
- from {
+  from {
     opacity: 0;
     transform: translateY(5px);
   }
@@ -751,12 +772,10 @@
   }
 }
 
-
 // .fade-in-ai {
 //   opacity: 0;
 //   animation: fadeIn-ai 1s forwards;
 // }
-
 
 // .question, .option {
 //   overflow: hidden;
@@ -772,7 +791,7 @@
 // #option4 { animation-delay: 4.5s; }
 
 // #question {
-//   animation-delay: 0s;
+//   animation: 0.5s ease-out 1.2s 1 normal forwards running fadeInAI;
 // }
 
 .oryn-avatar {
@@ -781,14 +800,19 @@
   border-radius: 50%;
 }
 
-.processing-fade{
-  transition: all .25s;
-  animation: fadeInOut 2s infinite ease-in-out;
+.processing-fade {
+  transition: all 0.25s;
+  animation: fadeInOut 1s infinite ease-in-out;
 }
 
-
 @keyframes fadeInOut {
-  0% { opacity: 0.5; }
-  50% { opacity: 1; }
-  100% { opacity: 0.5; }
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
 }
