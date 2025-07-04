@@ -1374,7 +1374,7 @@ const AIQuestion = ({
               style={{ color: unlockStatus === "error" ? "#fff" : "" }}
             >
               {unlockLoading ? (
-                <div className="d-flex align-items-center gap-2">
+                <div className="d-flex align-items-center gap-2 processing-fade">
                   Processing
                   <div
                     className="spinner-border spinner-border-sm text-light"
