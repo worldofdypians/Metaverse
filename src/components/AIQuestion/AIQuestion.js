@@ -3,23 +3,10 @@ import "./_aiquestion.scss";
 import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import Web3 from "web3";
-import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import clickSound from "./assets/click.mp3";
-import drumrollSound from "./assets/drumroll.mp3";
-import failSound from "./assets/wrongAnswer3.mp3";
-import gamestartSound from "./assets/gamestart.mp3";
-import successSound from "./assets/correctAnswer3.mp3";
-import suspenseSound from "./assets/suspense.mp3";
-import suspenseful1Sound from "./assets/suspenseful1.mp3";
-import suspenseful2Sound from "./assets/suspenseful2.mp3";
-import clockSound from "./assets/clockSound.mp3";
-import timerEndedSound from "./assets/timerEnded.mp3";
-import avatarCorrect from "./assets/avatarCorrect.gif";
-import avatarWrong from "./assets/avatarWrong.gif";
-import avatarIdle from "./assets/avatarIdle.gif";
-import avatarTime from "./assets/avatarTime.gif";
+// import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import axios from "axios";
-import useWindowSize from "../../hooks/useWindowSize";
+import DynamicSpan from "./DynamicSpan";
+// import useWindowSize from "../../hooks/useWindowSize";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -42,23 +29,36 @@ const AIQuestion = ({
   onQuestionUnlocked,
   aiQuestionObject,
 }) => {
-  // new Audio(successSound).play();
+  const clickSound = "https://cdn.worldofdypians.com/wod/aiOryn/click.mp3";
+  const drumrollSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/drumroll.mp3";
+  const failSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/wrongAnswer3.mp3";
+  const gamestartSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/gamestart.mp3";
+  const successSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/correctAnswer3.mp3";
+  const timerEndedSound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/timerEnded.mp3";
+  const avatarCorrect =
+    "https://cdn.worldofdypians.com/wod/aiOryn/avatarCorrect.gif";
+  const avatarWrong =
+    "https://cdn.worldofdypians.com/wod/aiOryn/avatarWrong.gif";
+  const avatarIdle = "https://cdn.worldofdypians.com/wod/aiOryn/avatarIdle.gif";
+  const avatarTime = "https://cdn.worldofdypians.com/wod/aiOryn/avatarTime.gif";
 
   const answersOptions = [0, 1, 2, 3];
   const answers = ["A", "B", "C", "D"];
-  const windowSize = useWindowSize();
+  // const windowSize = useWindowSize();
   const totalTime = 20;
 
-  const TYPING_SPEED_PER_CHAR = 0.05; // seconds per character
-  const BASE_DELAY = 1.5;
+  // const TYPING_SPEED_PER_CHAR = 0.05;
+  // const BASE_DELAY = 1.5;
 
   const [step, setStep] = useState(0);
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [optionsClickable, setOptionsClickable] = useState(false);
-  const [typingDone, setTypingDone] = useState(
-    new Array(answersOptions.length).fill(false)
-  );
 
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [confirmed, setConfirmed] = useState(false);
@@ -68,7 +68,6 @@ const AIQuestion = ({
   const [showSelect, setShowSelect] = useState(false);
   const [pause, setPause] = useState(false);
   const [avatarState, setAvatarState] = useState("idle");
-
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
   const intervalRef = useRef(null);
@@ -190,20 +189,21 @@ const AIQuestion = ({
             );
             new Audio(gamestartSound).play();
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStep(1);
               setUnlockStatus("initial");
             }, 2000);
+            return () => clearTimeout(timer);
           })
           .catch((e) => {
             window.alertify.error(e?.message);
             setUnlockLoading(false);
             setUnlockStatus("error");
-            setTimeout(() => {
+            console.error(e);
+            const timer = setTimeout(() => {
               setUnlockStatus("initial");
             }, 3000);
-
-            console.error(e);
+            return () => clearTimeout(timer);
           });
       } else if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
@@ -218,11 +218,11 @@ const AIQuestion = ({
               window.alertify.error(e?.message);
               setUnlockLoading(false);
               setUnlockStatus("error");
-              setTimeout(() => {
+              console.error(e);
+              const timer = setTimeout(() => {
                 setUnlockStatus("initial");
               }, 3000);
-
-              console.error(e);
+              return () => clearTimeout(timer);
             });
           if (result) {
             const receipt = await publicClient
@@ -237,10 +237,11 @@ const AIQuestion = ({
               onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
               setUnlockLoading(false);
               setUnlockStatus("success");
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setStep(1);
                 setUnlockStatus("initial");
               }, 2000);
+              return () => clearTimeout(timer);
             }
           }
         }
@@ -277,11 +278,12 @@ const AIQuestion = ({
             window.alertify.error(e?.message);
             setUnlockLoading(false);
             setUnlockStatus("error");
-            setTimeout(() => {
+            console.error(e);
+            const timer = setTimeout(() => {
               setUnlockStatus("initial");
             }, 3000);
 
-            console.error(e);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -289,10 +291,12 @@ const AIQuestion = ({
           onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
           setUnlockLoading(false);
           setUnlockStatus("success");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStep(1);
             setUnlockStatus("initial");
           }, 2000);
+
+          return () => clearTimeout(timer);
         }
       }
     } else if (chainId === 204) {
@@ -336,20 +340,22 @@ const AIQuestion = ({
             );
             new Audio(gamestartSound).play();
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStep(1);
               setUnlockStatus("initial");
             }, 2000);
+            return () => clearTimeout(timer);
           })
           .catch((e) => {
             window.alertify.error(e?.message);
             setUnlockLoading(false);
             setUnlockStatus("error");
-            setTimeout(() => {
+            console.error(e);
+            const timer = setTimeout(() => {
               setUnlockStatus("initial");
             }, 3000);
 
-            console.error(e);
+            return () => clearTimeout(timer);
           });
       } else if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
@@ -364,11 +370,12 @@ const AIQuestion = ({
               window.alertify.error(e?.message);
               setUnlockLoading(false);
               setUnlockStatus("error");
-              setTimeout(() => {
+              console.error(e);
+              const timer = setTimeout(() => {
                 setUnlockStatus("initial");
               }, 3000);
 
-              console.error(e);
+              return () => clearTimeout(timer);
             });
           if (result) {
             const receipt = await publicClient
@@ -383,10 +390,11 @@ const AIQuestion = ({
               onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
               setUnlockLoading(false);
               setUnlockStatus("success");
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setStep(1);
                 setUnlockStatus("initial");
               }, 2000);
+              return () => clearTimeout(timer);
             }
           }
         }
@@ -424,11 +432,11 @@ const AIQuestion = ({
             window.alertify.error(e?.message);
             setUnlockLoading(false);
             setUnlockStatus("error");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setUnlockStatus("initial");
             }, 3000);
 
-            console.error(e);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -436,10 +444,11 @@ const AIQuestion = ({
           onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
           setUnlockLoading(false);
           setUnlockStatus("success");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStep(1);
             setUnlockStatus("initial");
           }, 2000);
+          return () => clearTimeout(timer);
         }
       }
     }
@@ -471,29 +480,49 @@ const AIQuestion = ({
         setSelectedAnswer(answers[result.data.correctIndex]);
         new Audio(successSound).play();
         setAvatarState("correct");
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setAvatarState("idle");
         }, 5040);
+
+        onQuestionComplete(true);
+        const resetTimer = setTimeout(() => {
+          setSelectedAnswer(undefined);
+          setSelectedOption(undefined);
+          onQuestionComplete(false);
+          setStep(0);
+          setConfirmed(false);
+          setTimeLeft(totalTime);
+          setOptionsClickable(false);
+        }, 10000);
+
+        return () => {
+          clearTimeout(timer);
+          clearTimeout(resetTimer);
+        };
       } else {
         setSelectedAnswer(answers[result.data.correctIndex]);
         new Audio(failSound).play();
         setAvatarState("wrong");
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setAvatarState("idle");
         }, 5040);
-      }
 
-      onQuestionComplete(true);
-      setTimeout(() => {
-        setSelectedAnswer(undefined);
-        setSelectedOption(undefined);
-        onQuestionComplete(false);
-        setStep(0);
-        setConfirmed(false);
-        setTimeLeft(totalTime);
-        setOptionsClickable(false);
-        setTypingDone(new Array(answersOptions.length).fill(false));
-      }, 10000);
+        onQuestionComplete(true);
+        const resetTimer = setTimeout(() => {
+          setSelectedAnswer(undefined);
+          setSelectedOption(undefined);
+          onQuestionComplete(false);
+          setStep(0);
+          setConfirmed(false);
+          setTimeLeft(totalTime);
+          setOptionsClickable(false);
+        }, 10000);
+
+        return () => {
+          clearTimeout(timer);
+          clearTimeout(resetTimer);
+        };
+      }
     }
   };
 
@@ -505,9 +534,10 @@ const AIQuestion = ({
     suspenseMusicRef.current.currentTime = 0;
     handleConfirm();
     new Audio(drumrollSound).play();
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       checkAnswer();
     }, 2000);
+    return () => clearTimeout(timer);
   };
 
   const getAnswerClass = (option) => {
@@ -562,10 +592,10 @@ const AIQuestion = ({
       setSuspenseSound(true);
       new Audio(timerEndedSound).play();
       setAvatarState("time");
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setAvatarState("idle");
       }, 5040);
-      setTimeout(() => {
+      const timer2 = setTimeout(() => {
         setSelectedAnswer(undefined);
         setSelectedOption(undefined);
         onQuestionComplete(false);
@@ -573,8 +603,11 @@ const AIQuestion = ({
         setConfirmed(false);
         setTimeLeft(totalTime);
         setOptionsClickable(false);
-        setTypingDone(new Array(answersOptions.length).fill(false));
       }, 10000);
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(timer2);
+      };
     }
   };
   useEffect(() => {
@@ -596,19 +629,14 @@ const AIQuestion = ({
 
   useEffect(() => {
     if (step === 1) {
-      const totalTypingTime =
-        BASE_DELAY +
-        aiQuestionObject.options.reduce((acc, option) => {
-          const text = option;
-          return acc + text.length * TYPING_SPEED_PER_CHAR;
-        }, 0);
+      const lastFadeInTime = (answersOptions.length - 1) * 0.5 + 0.7 + 0.6;
 
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setOptionsClickable(true);
-      }, totalTypingTime * 1000);
-    }
+      }, lastFadeInTime * 1000);
 
-    // return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, [step, answersOptions]);
 
   useEffect(() => {
@@ -625,9 +653,10 @@ const AIQuestion = ({
       setSuspenseSound(true);
       new Audio(timerEndedSound).play();
       setAvatarState("time");
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setAvatarState("idle");
       }, 5040);
+      return () => clearTimeout(timer);
     }
   }, [timeLeft, step]);
 
@@ -1020,34 +1049,21 @@ const AIQuestion = ({
                 {step === 0 ? "" : step === 1 ? aiQuestionObject.question : ""}
               </span>
             </div>
-            <div className="options-wrapper gap-2 ga-lg-3 w-100">
+            <div className="options-wrapper gap-2 gap-lg-3 w-100">
               {(aiQuestionObject.options.length > 0
                 ? aiQuestionObject.options
                 : Array(4).fill("")
               ).map((option, index) => {
-                const text = step === 1 ? option : "";
-
-                const delayBeforeThisOption =
-                  step === 1
-                    ? aiQuestionObject.options
-                        .slice(0, index)
-                        .reduce((acc, prevOption) => {
-                          const prevText = prevOption;
-
-                          return acc + prevText.length * TYPING_SPEED_PER_CHAR;
-                        }, BASE_DELAY)
-                    : 0;
-
-                const animationDuration =
-                  step === 1 ? text.length * TYPING_SPEED_PER_CHAR : 0;
+                const animationDelay = `${index * 0.5 + 0.7}s`;
 
                 return (
                   <div
                     key={index}
-                    className={`answer-outer-wrapper col-12 ${
+                    className={`answer-outer-wrapper d-flex col-12 ${
                       (!optionsClickable ||
                         selectedAnswer !== undefined ||
                         timeLeft === 0 ||
+                        confirmed ||
                         step === 0) &&
                       "pe-none"
                     }`}
@@ -1067,45 +1083,20 @@ const AIQuestion = ({
                         <span className="answer-text">
                           {answers[index] + ":"}
                         </span>
-                        <span
-                          className="answer-text option"
+                        <DynamicSpan
+                          text={step === 0 ? "" : option}
                           id={`option${index + 1}`}
-                          onAnimationEnd={() => {
-                            setTypingDone((prev) => {
-                              const updated = [...prev];
-                              updated[index] = true;
-                              return updated;
-                            });
-                          }}
-                          style={{
-                            animation:
-                              step === 1
-                                ? `${
-                                    windowSize.width > 500
-                                      ? "typing-desktop"
-                                      : "typing-mobile"
-                                  } ${animationDuration}s steps(${
-                                    text.length
-                                  }, end) forwards`
-                                : "none",
-                            animationDelay: `${delayBeforeThisOption}s`,
-                            overflow: "hidden",
-                            whiteSpace: typingDone[index]
-                              ? "break-spaces"
-                              : "nowrap",
-                            // display: "inline-block",
-                            width: step === 1 ? "0" : "100%",
-                            maxWidth: "100%",
-                            textOverflow: "ellipsis",
-                            // minWidth: `${text.length + 2}ch`,
-                          }}
-                        >
-                          {step === 0 ? "" : option}
-                        </span>
+                          opacity={step === 1 ? 0 : 1}
+                          animation={
+                            step === 1
+                              ? `fadeInAI 0.5s ease-out ${animationDelay} forwards`
+                              : "none"
+                          }
+                        />
                       </div>
-                      {step === 1 && (
+                      {/* {step === 1 && (
                         <span className={getRadioClass(answers[index])}></span>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 );
@@ -1117,7 +1108,11 @@ const AIQuestion = ({
               (chainId !== 56 && chainId !== 204) ||
               !email ||
               !isConnected ||
-              !coinbase
+              !coinbase ||
+              (email &&
+                coinbase &&
+                address &&
+                address.toLowerCase() !== coinbase.toLowerCase())
                 ? "ai-answer-result-warning-wrapper"
                 : selectedAnswer === undefined && timeLeft === 0
                 ? "ai-answer-result-error-wrapper"
@@ -1130,120 +1125,153 @@ const AIQuestion = ({
                 : ""
             } ai-answer-result-wrapper px-3 py-2 d-flex flex-column align-items-center justify-content-center`}
           >
-            {step === 0 ? (
-              <>
-                {/* <span className="aiLockedDesc">
-                    A Hidden question awaits
-                  </span> */}
-                <span className="aiLockedDesc">
-                  {!email && coinbase
-                    ? "Login to your game account"
-                    : !isConnected && !coinbase
-                    ? "Connect your wallet to show the question"
-                    : isConnected &&
-                      coinbase &&
-                      address &&
-                      address.toLowerCase() === coinbase.toLowerCase() &&
-                      email &&
-                      chainId !== 56 &&
-                      chainId !== 204
-                    ? "Switch to BNB Chain or opBNB to show the question"
-                    : isConnected &&
-                      coinbase &&
-                      email &&
-                      address &&
-                      (chainId === 56 || chainId === 204) &&
-                      address.toLowerCase() !== coinbase.toLowerCase()
-                    ? "Use the wallet associated to your game account."
-                    : "Complete the transaction to show the question"}
-                </span>
-              </>
-            ) : (
-              <></>
-            )}
+            <span
+              className={
+                step === 0
+                  ? "aiLockedDesc"
+                  : step === 1 &&
+                    selectedOption !== undefined &&
+                    selectedAnswer === undefined &&
+                    showSelect &&
+                    timeLeft !== 0
+                  ? "w-100 px-4 aiAnswer-title d-flex align-items-center gap-2 justify-content-center"
+                  : "aiAnswer-title"
+              }
+            >
+              {(() => {
+                if (step === 0) {
+                  if (!email && coinbase) return "Login to your game account";
+                  if (!isConnected && !coinbase)
+                    return "Connect your wallet to show the question";
+                  if (
+                    isConnected &&
+                    coinbase &&
+                    address &&
+                    address.toLowerCase() === coinbase.toLowerCase() &&
+                    email &&
+                    chainId !== 56 &&
+                    chainId !== 204
+                  )
+                    return "Switch to BNB Chain or opBNB to show the question";
+                  if (
+                    isConnected &&
+                    coinbase &&
+                    email &&
+                    address &&
+                    (chainId === 56 || chainId === 204) &&
+                    address.toLowerCase() !== coinbase.toLowerCase()
+                  )
+                    return "Use the wallet associated to your game account.";
+                  return "Complete the transaction to show the question";
+                }
 
-            {!showSelect &&
-            selectedOption === undefined &&
-            selectedAnswer === undefined &&
-            step === 1 &&
-            timeLeft !== 0 ? (
-              <>
-                <span className="aiAnswer-title">Select your answer</span>
-              </>
-            ) : showSelect &&
-              selectedOption !== undefined &&
-              selectedAnswer === undefined &&
-              timeLeft !== 0 &&
-              step === 1 ? (
-              <>
-                <span className="w-100 px-4 aiAnswer-title d-flex align-items-center gap-2 justify-content-center">
-                  Is
-                  <span
-                    className="aiAnswer-title m-0"
-                    style={{ color: "#ffd37e" }}
-                  >
-                    '{selectedOption}'
-                  </span>
-                  your Final answer?
-                  <button
-                    className="ai-question-confirm-answer px-3 py-1 d-flex align-items-center"
-                    onClick={() => handleOptionClick(selectedOption)}
-                  >
-                    {pause ? (
-                      <div
-                        className="spinner-border spinner-border-sm text-light"
-                        role="status"
+                if (
+                  !showSelect &&
+                  selectedOption === undefined &&
+                  selectedAnswer === undefined &&
+                  step === 1 &&
+                  timeLeft !== 0
+                ) {
+                  return "Select your answer";
+                }
+
+                if (
+                  showSelect &&
+                  selectedOption !== undefined &&
+                  selectedAnswer === undefined &&
+                  timeLeft !== 0 &&
+                  step === 1
+                ) {
+                  return (
+                    <>
+                      Is{" "}
+                      <span
+                        className="aiAnswer-title m-0"
+                        style={{ color: "#ffd37e" }}
                       >
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                    ) : (
-                      "Yes"
-                    )}
-                  </button>
-                </span>
-              </>
-            ) : selectedAnswer === undefined && timeLeft === 0 && step === 1 ? (
-              <>
-                <span className="aiAnswer-title">
-                  🐌 Too slow! Try again tomorrow.
-                </span>
-              </>
-            ) : selectedOption === selectedAnswer &&
-              selectedAnswer !== undefined &&
-              step === 1 ? (
-              <>
-                <span className="aiAnswer-title">
-                  🎉 You have earned{" "}
-                  <span
-                    className="aiAnswer-title m-0"
-                    style={{ color: "#ffd37e" }}
-                  >
-                    530 Stars
-                  </span>{" "}
-                  🎉
-                </span>
-              </>
-            ) : step === 1 ? (
-              <>
-                <span className="aiAnswer-title">
-                  🍀 Better Luck Next Time 🍀
-                </span>
-              </>
-            ) : (
-              <></>
-            )}
+                        '{selectedOption}'
+                      </span>{" "}
+                      your Final answer?
+                      <button
+                        className="ai-question-confirm-answer px-3 py-1 d-flex align-items-center"
+                        onClick={() => handleOptionClick(selectedOption)}
+                      >
+                        {pause ? (
+                          <div
+                            className="spinner-border spinner-border-sm text-light"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        ) : (
+                          "Yes"
+                        )}
+                      </button>
+                    </>
+                  );
+                }
+
+                if (
+                  selectedAnswer === undefined &&
+                  timeLeft === 0 &&
+                  step === 1
+                ) {
+                  return "🐌 Too slow! Try again tomorrow.";
+                }
+
+                if (
+                  selectedOption === selectedAnswer &&
+                  selectedAnswer !== undefined &&
+                  step === 1
+                ) {
+                  return (
+                    <>
+                      🎉 You have earned{" "}
+                      <span
+                        className="aiAnswer-title m-0"
+                        style={{ color: "#ffd37e" }}
+                      >
+                        530 Stars
+                      </span>{" "}
+                      🎉
+                    </>
+                  );
+                }
+
+                if (step === 1) {
+                  return "🍀 You're getting there. Dig deeper into the BNB Chain ecosystem. 🍀";
+                }
+
+                return null;
+              })()}
+            </span>
           </div>
         </div>
       </div>
+      <img
+        src={"https://cdn.worldofdypians.com/wod/ai-main-button-active.webp"}
+        className="d-none"
+        alt=""
+      />
+      <img
+        src={"https://cdn.worldofdypians.com/wod/ai-main-button-error.webp"}
+        className="d-none"
+        alt=""
+      />
+      <img
+        src={"https://cdn.worldofdypians.com/wod/ai-main-button-disabled.webp"}
+        className="d-none"
+        alt=""
+      />
       <div
-        className={
+        className={`ai-question-footer-wrapper-static ${
           isConnected &&
+          (chainId === 56 || chainId === 204) &&
           coinbase &&
           email &&
           address &&
-          coinbase.toLowerCase() === address.toLowerCase() &&
-          (chainId === 56 || chainId === 204) &&
-          step === 0
+          step === 0 &&
+          coinbase.toLowerCase() === address.toLowerCase()
             ? "ai-question-footer-wrapper"
             : coinbase &&
               isConnected &&
@@ -1294,7 +1322,7 @@ const AIQuestion = ({
             : !isConnected || !email
             ? "ai-question-footer-wrapper"
             : "ai-question-footer-wrapper-disabled"
-        }
+        }`}
       >
         {!email && coinbase && (
           <NavLink
@@ -1324,12 +1352,12 @@ const AIQuestion = ({
           chainId !== 56 &&
           chainId !== 204 && (
             <button
-              className="ai-main-button text-white text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
+              className="ai-main-button text-white text-uppercase d-flex align-items-center gap-2 col-lg-5 justify-content-center py-2"
               onClick={() => {
                 handleBnbPool("0x38", 56);
               }}
             >
-              Switch
+              SWITCH CHAIN
             </button>
           )}
 
@@ -1420,15 +1448,9 @@ const AIQuestion = ({
               disabled
               className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
             >
-              Switch
+              Synchronize
             </button>
           )}
-        {/* <img
-          src={
-            "https://cdn.worldofdypians.com/wod/ai-question-button-bottom.webp"
-          }
-          className="ai-question-footer-img"
-        /> */}
       </div>
     </div>
   );

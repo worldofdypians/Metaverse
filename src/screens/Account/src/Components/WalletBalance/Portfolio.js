@@ -224,23 +224,26 @@ const Portfolio = ({
       setFilterTitle("Favorites");
       getAllFavs();
       setLoading(true);
-      setTimeout(() => {
+    const timer =  setTimeout(() => {
         setLoading(false);
       }, 2000);
+      return () => clearTimeout(timer);
     } else if (sortValue === "listed") {
       setFilterTitle("Listed");
       setLoading(true);
       getListed();
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 2000);
+      return () => clearTimeout(timer);
     } else if (sortValue === "staked") {
       setFilterTitle("Staked");
       setLoading(true);
       // getStakes();
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 2000);
+      return () => clearTimeout(timer);
     } else if (sortValue === "eth") {
       setFilterTitle("");
     }
@@ -251,9 +254,10 @@ const Portfolio = ({
       setLoading(true);
       setFilterTitle("Offers");
       setmyOffersFiltered(myOffers);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -344,9 +348,10 @@ const Portfolio = ({
         setmyOffersFiltered(myOffers);
       }
     }
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setLoadingRecentListings(false);
     }, 1000);
+    return () => clearTimeout(timer);
   };
 
   const getListed = async () => {

@@ -128,7 +128,7 @@
   }
 }
 
-.ai-question-footer-wrapper {
+.ai-question-footer-wrapper,.ai-question-footer-wrapper-static {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -139,11 +139,11 @@
   right: 50%;
   transform: translate(-50%, 0);
   align-items: center;
-  background: url("https://cdn.worldofdypians.com/wod/ai-question-button-bottom.webp");
+  background: url("https://cdn.worldofdypians.com/wod/ai-question-button-bottom1.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  height: 50px;
+  height: 50px; 
 }
 
 .ai-question-footer-wrapper:hover,

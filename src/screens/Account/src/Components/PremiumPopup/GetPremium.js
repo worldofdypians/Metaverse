@@ -802,11 +802,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+             const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         } else if (approveStatus === "approveAmount") {
           await tokenContract.methods
@@ -822,11 +823,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         }
       } else if (window.WALLET_TYPE === "matchId") {
@@ -847,11 +849,12 @@ const GetPremiumPopup = ({
                 setloadspinner(false);
                 setapproveStatus("fail");
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
                   setapproveStatus("initial");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -891,11 +894,12 @@ const GetPremiumPopup = ({
                 setloadspinner(false);
                 setapproveStatus("fail");
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
                   setapproveStatus("initial");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -940,11 +944,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -970,11 +975,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -1011,11 +1017,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       } else if (approveStatus === "approveAmount") {
         let tokenContract = new window.web3.eth.Contract(
@@ -1035,11 +1042,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       }
     } else if (
@@ -1068,11 +1076,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       } else if (approveStatus === "approveAmount") {
         let tokenContract = new window.web3.eth.Contract(
@@ -1092,11 +1101,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       }
     } else if (
@@ -1125,11 +1135,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       } else if (approveStatus === "approveAmount") {
         let tokenContract = new window.web3.eth.Contract(
@@ -1149,11 +1160,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       }
     } else if (
@@ -1179,11 +1191,12 @@ const GetPremiumPopup = ({
                 setloadspinner(false);
                 setapproveStatus("fail");
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
                   setapproveStatus("initial");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -1218,11 +1231,12 @@ const GetPremiumPopup = ({
                 setloadspinner(false);
                 setapproveStatus("fail");
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
                   setapproveStatus("initial");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -1264,11 +1278,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         } else if (approveStatus === "approveAmount") {
           let tokenContract = new window.web3.eth.Contract(
@@ -1288,11 +1303,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         }
       }
@@ -1348,11 +1364,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       } else if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
@@ -1375,11 +1392,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.shortMessage);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
 
           if (result) {
@@ -1440,11 +1458,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -2173,12 +2192,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
         if (txResponse) {
           const txReceipt = await txResponse.wait();
@@ -2188,12 +2208,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
       } else if (
@@ -2247,12 +2268,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         if (txResponse) {
@@ -2263,12 +2285,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
       } else if (chainId === 88 && nftPremium_totalViction > 0) {
@@ -2297,12 +2320,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         if (txResponse) {
@@ -2313,12 +2337,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
 
@@ -2381,12 +2406,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         if (txResponse) {
@@ -2397,12 +2423,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
 
@@ -2465,12 +2492,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         if (txResponse) {
@@ -2481,12 +2509,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
 
@@ -2549,12 +2578,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         if (txResponse) {
@@ -2565,12 +2595,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
         // await window
@@ -2626,12 +2657,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
         if (txResponse) {
           const txReceipt = await txResponse.wait();
@@ -2641,12 +2673,13 @@ const GetPremiumPopup = ({
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
         // await subscriptionContract.methods
@@ -2701,12 +2734,13 @@ const GetPremiumPopup = ({
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
 
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -2724,12 +2758,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("successsubscribe");
 
                 onSuccessDeposit();
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               }
             }
           } else if (
@@ -2753,12 +2788,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("failsubscribe");
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -2775,12 +2811,13 @@ const GetPremiumPopup = ({
                 onSuccessDeposit();
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               }
             }
           } else {
@@ -2796,12 +2833,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("failsubscribe");
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               });
             if (result) {
               const receipt = await publicClient
@@ -2818,12 +2856,13 @@ const GetPremiumPopup = ({
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
 
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               }
             }
           }
@@ -2847,12 +2886,13 @@ const GetPremiumPopup = ({
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
 
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -2869,12 +2909,13 @@ const GetPremiumPopup = ({
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
                 onSuccessDeposit();
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               }
             }
           } else {
@@ -2890,12 +2931,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("failsubscribe");
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -2913,12 +2955,13 @@ const GetPremiumPopup = ({
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
 
-                setTimeout(() => {
+               const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+               return () => clearTimeout(timer);
               }
             }
           }
@@ -2971,12 +3014,13 @@ const GetPremiumPopup = ({
             setstatus(e?.message);
             window.alertify.error(e?.message);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -3004,12 +3048,13 @@ const GetPremiumPopup = ({
           //     console.error(e);
           //   });
 
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else if (
         chainId === 56 &&
@@ -3023,12 +3068,13 @@ const GetPremiumPopup = ({
             setapproveStatus("failsubscribe");
             setstatus(e?.message);
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -3056,12 +3102,13 @@ const GetPremiumPopup = ({
           //     console.error(e);
           //   });
 
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else {
         const txResponse = await subscriptionContract
@@ -3071,12 +3118,13 @@ const GetPremiumPopup = ({
             setapproveStatus("failsubscribe");
             setstatus(e?.message);
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -3086,12 +3134,13 @@ const GetPremiumPopup = ({
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
 
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       }
     }
