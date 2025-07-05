@@ -409,12 +409,13 @@ function App() {
     88: {
       chainId: 88,
       chainName: "Viction",
-      rpcUrls: ["https://rpc.viction.xyz"],
+      rpcUrls: ["https://viction.drpc.org/"],
       nativeCurrency: {
+        name: "Viction",
         symbol: "VIC",
         decimals: 18,
       },
-      blockExplorerUrls: ["https:/vicscan.xyz"],
+      blockExplorerUrls: ["https://www.vicscan.xyz/"],
     },
     1329: {
       chainId: 1329,
@@ -5757,7 +5758,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             exact
             path="/pool-bonus"
             element={
@@ -5776,7 +5777,6 @@ function App() {
               />
             }
           />
-
 
           <Route
             exact

@@ -132,8 +132,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
       symbol: "VIC", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: ["https://rpc.viction.xyz"],
-    blockExplorerUrls: ["https:/vicscan.xyz"],
+    rpcUrls: ["https://viction.drpc.org/"],
+    blockExplorerUrls: ["https://www.vicscan.xyz/"],
   };
   const SEIPARAMS = {
     chainId: "0x531", // A 0x-prefixed hexadecimal string
