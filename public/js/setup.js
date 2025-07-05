@@ -118,7 +118,7 @@ window.config = {
 
   opbnb_endpoint: "https://opbnb.publicnode.com",
   core_endpoint: "https://rpc.coredao.org",
-  viction_endpoint: "https://rpc.viction.xyz",
+  viction_endpoint: "https://viction.drpc.org/",
   sei_endpoint: "https://evm-rpc.sei-apis.com",
   immutable_endpoint: "https://rpc.immutable.com",
   vanar_endpoint: "https://rpc.vanarchain.com",
