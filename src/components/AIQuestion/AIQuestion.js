@@ -26,8 +26,6 @@ const AIQuestion = ({
   suspenseSound,
   setSuspenseSound,
   clockSoundRef,
-  onQuestionUnlocked,
-  aiQuestionObject,
 }) => {
   const clickSound = "https://cdn.worldofdypians.com/wod/aiOryn/click.mp3";
   const drumrollSound =
@@ -56,6 +54,11 @@ const AIQuestion = ({
   // const BASE_DELAY = 1.5;
 
   const [step, setStep] = useState(0);
+  const [aiQuestionObject, setAiQuestionObject] = useState({
+    question: "",
+    options: [],
+    id: "",
+  });
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [optionsClickable, setOptionsClickable] = useState(false);
@@ -134,6 +137,41 @@ const AIQuestion = ({
     setConfirmed(true);
   };
 
+  const getAIQuestion = async (chain, txHash) => {
+    const data = {
+      walletAddress: coinbase,
+      email: email,
+      chain: chain,
+      transactionHash: txHash,
+    };
+
+    new Audio(gamestartSound).play();
+
+    const result = await axios
+      .post(`https://api.worldofdypians.com/api/qa/request`, data)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      const cleanedAnswers = result.data.answers.map((answer) =>
+        answer.replace(/^[A-D][.)]\s*/, "")
+      );
+
+      setAiQuestionObject({
+        question: result.data.question,
+        options: cleanedAnswers,
+        id: result.data.questionId,
+      });
+
+      const timer = setTimeout(() => {
+        setStep(1);
+        setUnlockStatus("initial");
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  };
+
   const handleUnlockQuestion = async () => {
     setUnlockLoading(true);
     setUnlockStatus("loading");
@@ -183,17 +221,10 @@ const AIQuestion = ({
           .then((data) => {
             setUnlockLoading(false);
             setUnlockStatus("success");
-            onQuestionUnlocked(
+            getAIQuestion(
               chainId === 56 ? "bnb" : "opbnb",
               data.transactionHash
             );
-            new Audio(gamestartSound).play();
-
-            const timer = setTimeout(() => {
-              setStep(1);
-              setUnlockStatus("initial");
-            }, 2000);
-            return () => clearTimeout(timer);
           })
           .catch((e) => {
             window.alertify.error(e?.message);
@@ -234,14 +265,9 @@ const AIQuestion = ({
               });
 
             if (receipt) {
-              onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
               setUnlockLoading(false);
               setUnlockStatus("success");
-              const timer = setTimeout(() => {
-                setStep(1);
-                setUnlockStatus("initial");
-              }, 2000);
-              return () => clearTimeout(timer);
+              getAIQuestion("bnb", result);
             }
           }
         }
@@ -288,15 +314,9 @@ const AIQuestion = ({
 
         const txReceipt = await txResponse.wait();
         if (txReceipt) {
-          onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
+          getAIQuestion(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
           setUnlockLoading(false);
           setUnlockStatus("success");
-          const timer = setTimeout(() => {
-            setStep(1);
-            setUnlockStatus("initial");
-          }, 2000);
-
-          return () => clearTimeout(timer);
         }
       }
     } else if (chainId === 204) {
@@ -334,17 +354,8 @@ const AIQuestion = ({
           .then((data) => {
             setUnlockLoading(false);
             setUnlockStatus("success");
-            onQuestionUnlocked(
-              chainId === 56 ? "bnb" : "opbnb",
-              data.transactionHash
-            );
-            new Audio(gamestartSound).play();
 
-            const timer = setTimeout(() => {
-              setStep(1);
-              setUnlockStatus("initial");
-            }, 2000);
-            return () => clearTimeout(timer);
+            getAIQuestion("opbnb", data.transactionHash);
           })
           .catch((e) => {
             window.alertify.error(e?.message);
@@ -387,14 +398,9 @@ const AIQuestion = ({
               });
 
             if (receipt) {
-              onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
+              getAIQuestion("opbnb", result);
               setUnlockLoading(false);
               setUnlockStatus("success");
-              const timer = setTimeout(() => {
-                setStep(1);
-                setUnlockStatus("initial");
-              }, 2000);
-              return () => clearTimeout(timer);
             }
           }
         }
@@ -441,14 +447,9 @@ const AIQuestion = ({
 
         const txReceipt = await txResponse.wait();
         if (txReceipt) {
-          onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
           setUnlockLoading(false);
           setUnlockStatus("success");
-          const timer = setTimeout(() => {
-            setStep(1);
-            setUnlockStatus("initial");
-          }, 2000);
-          return () => clearTimeout(timer);
+          getAIQuestion("opbnb", txReceipt.hash);
         }
       }
     }
@@ -1044,63 +1045,86 @@ const AIQuestion = ({
           style={{ flex: 1 }}
         >
           <div className="ai-answer-option-wrapper p-4 pt-0 position-relative w-100">
-            <div className="ai-question-text-wrapper justify-content-center align-items-center">
-              <span className="aiLockedQuestion text-capitalize " id="question">
-                {step === 0 ? "" : step === 1 ? aiQuestionObject.question : ""}
-              </span>
+            <div className="ai-question-parent px-2">
+              <div className="ai-question-text-wrapper justify-content-center align-items-center">
+                <span
+                  className="aiLockedQuestion text-capitalize position-absolute"
+                  id="question"
+                  style={{
+                    animation:
+                      step === 1 && aiQuestionObject.question !== ""
+                        ? "fadeInAI2 0.5s ease-out forwards"
+                        : "none",
+                    opacity:
+                      step === 1 && aiQuestionObject.question !== "" ? 0 : 1,
+                    visibility: step === 0 ? "hidden" : "visible",
+                  }}
+                >
+                  {step === 1 && aiQuestionObject.question !== ""
+                    ? aiQuestionObject.question.toString()
+                    : ""}
+                </span>
+              </div>
             </div>
             <div className="options-wrapper gap-2 gap-lg-3 w-100">
-              {(aiQuestionObject.options.length > 0
-                ? aiQuestionObject.options
-                : Array(4).fill("")
-              ).map((option, index) => {
-                const animationDelay = `${index * 0.5 + 0.7}s`;
+              {Array(4)
+                .fill("")
+                .map((option, index) => {
+                  const animationDelay = `${index * 0.5 + 0.7}s`;
 
-                return (
-                  <div
-                    key={index}
-                    className={`answer-outer-wrapper d-flex col-12 ${
-                      (!optionsClickable ||
-                        selectedAnswer !== undefined ||
-                        timeLeft === 0 ||
-                        confirmed ||
-                        step === 0) &&
-                      "pe-none"
-                    }`}
-                    onClick={() => {
-                      step === 1 && setSelectedOption(answers[index]);
-                      setShowSelect(true);
-
-                      new Audio(clickSound).play();
-                    }}
-                  >
+                  return (
                     <div
-                      className={`${getAnswerClass(
-                        answers[index]
-                      )} px-4 py-3 d-flex align-items-center justify-content-between`}
+                      key={index}
+                      className={`answer-outer-wrapper ${
+                        (!optionsClickable ||
+                          selectedAnswer !== undefined ||
+                          timeLeft === 0 ||
+                          confirmed ||
+                          step === 0) &&
+                        "pe-none"
+                      }`}
+                      onClick={() => {
+                        step === 1 && setSelectedOption(answers[index]);
+                        setShowSelect(true);
+
+                        new Audio(clickSound).play();
+                      }}
                     >
-                      <div className="d-flex align-items-center w-100 gap-3">
-                        <span className="answer-text">
-                          {answers[index] + ":"}
-                        </span>
-                        <DynamicSpan
-                          text={step === 0 ? "" : option}
-                          id={`option${index + 1}`}
-                          opacity={step === 1 ? 0 : 1}
-                          animation={
-                            step === 1
-                              ? `fadeInAI 0.5s ease-out ${animationDelay} forwards`
-                              : "none"
-                          }
-                        />
-                      </div>
-                      {/* {step === 1 && (
+                      <div
+                        className={`${getAnswerClass(
+                          answers[index]
+                        )} px-4 py-3 d-flex align-items-center justify-content-between`}
+                      >
+                        <div className="d-flex align-items-center gap-3">
+                          <span className="answer-text">
+                            {answers[index] + ":"}
+                          </span>
+                          <DynamicSpan
+                            text={
+                              step === 1 && aiQuestionObject.question !== ""
+                                ? aiQuestionObject.options[index]
+                                : "  "
+                            }
+                            id={`option${index + 1}`}
+                            opacity={
+                              step === 1 && aiQuestionObject.question !== ""
+                                ? 0
+                                : 1
+                            }
+                            animation={
+                              step === 1 && aiQuestionObject.question !== ""
+                                ? `fadeInAI 0.5s ease-out ${animationDelay} forwards`
+                                : "none"
+                            }
+                          />
+                        </div>
+                        {/* {step === 1 && (
                         <span className={getRadioClass(answers[index])}></span>
                       )} */}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </div>
           <div
@@ -1406,7 +1430,7 @@ const AIQuestion = ({
           (chainId === 56 || chainId === 204) &&
           step === 1 && (
             <button
-              className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
+              className="processing-fade ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               disabled
             >
               {selectedOption === undefined &&
