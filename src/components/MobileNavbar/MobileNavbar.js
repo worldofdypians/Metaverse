@@ -70,7 +70,7 @@ const MobileNavbar = ({
       } else if (chainId === 1116) {
         setchainState("core");
       } else if (chainId === 88) {
-        setchainState("viciton");
+        setchainState("viction");
       } else if (chainId === 13371) {
         setchainState("immutable");
       } else if (chainId === 169) {
