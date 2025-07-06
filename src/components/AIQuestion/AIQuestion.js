@@ -26,8 +26,6 @@ const AIQuestion = ({
   suspenseSound,
   setSuspenseSound,
   clockSoundRef,
-  onQuestionUnlocked,
-  aiQuestionObject,
 }) => {
   const clickSound = "https://cdn.worldofdypians.com/wod/aiOryn/click.mp3";
   const drumrollSound =
@@ -56,6 +54,11 @@ const AIQuestion = ({
   // const BASE_DELAY = 1.5;
 
   const [step, setStep] = useState(0);
+  const [aiQuestionObject, setAiQuestionObject] = useState({
+    question: "",
+    options: [],
+    id: "",
+  });
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [optionsClickable, setOptionsClickable] = useState(false);
@@ -134,6 +137,41 @@ const AIQuestion = ({
     setConfirmed(true);
   };
 
+  const getAIQuestion = async (chain, txHash) => {
+    const data = {
+      walletAddress: coinbase,
+      email: email,
+      chain: chain,
+      transactionHash: txHash,
+    };
+
+    new Audio(gamestartSound).play();
+
+    const result = await axios
+      .post(`https://api.worldofdypians.com/api/qa/request`, data)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      const cleanedAnswers = result.data.answers.map((answer) =>
+        answer.replace(/^[A-D][.)]\s*/, "")
+      );
+
+      setAiQuestionObject({
+        question: result.data.question,
+        options: cleanedAnswers,
+        id: result.data.questionId,
+      });
+
+      const timer = setTimeout(() => {
+        setStep(1);
+        setUnlockStatus("initial");
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  };
+
   const handleUnlockQuestion = async () => {
     setUnlockLoading(true);
     setUnlockStatus("loading");
@@ -183,17 +221,10 @@ const AIQuestion = ({
           .then((data) => {
             setUnlockLoading(false);
             setUnlockStatus("success");
-            onQuestionUnlocked(
+            getAIQuestion(
               chainId === 56 ? "bnb" : "opbnb",
               data.transactionHash
             );
-            new Audio(gamestartSound).play();
-
-            const timer = setTimeout(() => {
-              setStep(1);
-              setUnlockStatus("initial");
-            }, 2000);
-            return () => clearTimeout(timer);
           })
           .catch((e) => {
             window.alertify.error(e?.message);
@@ -234,14 +265,9 @@ const AIQuestion = ({
               });
 
             if (receipt) {
-              onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
               setUnlockLoading(false);
               setUnlockStatus("success");
-              const timer = setTimeout(() => {
-                setStep(1);
-                setUnlockStatus("initial");
-              }, 2000);
-              return () => clearTimeout(timer);
+              getAIQuestion("bnb", result);
             }
           }
         }
@@ -288,15 +314,9 @@ const AIQuestion = ({
 
         const txReceipt = await txResponse.wait();
         if (txReceipt) {
-          onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
+          getAIQuestion(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
           setUnlockLoading(false);
           setUnlockStatus("success");
-          const timer = setTimeout(() => {
-            setStep(1);
-            setUnlockStatus("initial");
-          }, 2000);
-
-          return () => clearTimeout(timer);
         }
       }
     } else if (chainId === 204) {
@@ -334,17 +354,8 @@ const AIQuestion = ({
           .then((data) => {
             setUnlockLoading(false);
             setUnlockStatus("success");
-            onQuestionUnlocked(
-              chainId === 56 ? "bnb" : "opbnb",
-              data.transactionHash
-            );
-            new Audio(gamestartSound).play();
 
-            const timer = setTimeout(() => {
-              setStep(1);
-              setUnlockStatus("initial");
-            }, 2000);
-            return () => clearTimeout(timer);
+            getAIQuestion("opbnb", data.transactionHash);
           })
           .catch((e) => {
             window.alertify.error(e?.message);
@@ -387,14 +398,9 @@ const AIQuestion = ({
               });
 
             if (receipt) {
-              onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", result);
+              getAIQuestion("opbnb", result);
               setUnlockLoading(false);
               setUnlockStatus("success");
-              const timer = setTimeout(() => {
-                setStep(1);
-                setUnlockStatus("initial");
-              }, 2000);
-              return () => clearTimeout(timer);
             }
           }
         }
@@ -441,14 +447,9 @@ const AIQuestion = ({
 
         const txReceipt = await txResponse.wait();
         if (txReceipt) {
-          onQuestionUnlocked(chainId === 56 ? "bnb" : "opbnb", txReceipt.hash);
           setUnlockLoading(false);
           setUnlockStatus("success");
-          const timer = setTimeout(() => {
-            setStep(1);
-            setUnlockStatus("initial");
-          }, 2000);
-          return () => clearTimeout(timer);
+          getAIQuestion("opbnb", txReceipt.hash);
         }
       }
     }
