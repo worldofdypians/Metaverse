@@ -317,6 +317,14 @@ const WodPartners = ({ full }) => {
       name: "XPIN Network",
       icon: "xpin.png",
     },
+    {
+      name: "Coinomi Wallet",
+      icon: "coinomi.svg",
+    },
+    {
+      name: "Fair3",
+      icon: "fair3.png",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
