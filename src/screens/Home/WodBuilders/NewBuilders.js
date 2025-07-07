@@ -436,6 +436,14 @@ const NewBuilders = () => {
       name: "XPIN Network",
       icon: "xpin.png",
     },
+    {
+      name: "Coinomi Wallet",
+      icon: "coinomi.svg",
+    },
+    {
+      name: "Fair3",
+      icon: "fair3.png",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
