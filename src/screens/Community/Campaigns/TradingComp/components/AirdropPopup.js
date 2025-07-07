@@ -6,7 +6,7 @@ import axios from "axios";
 const AirdropPopup = ({ onClose, coinbase }) => {
   const [airdropWeek, setAirdropWeek] = useState(1);
   const [loading, setLoading] = useState(false);
-  const currentWeek = 11;
+  const currentWeek = 12;
   const airdropArray = Array.from({ length: 12 }, (_, i) => i + 1);
   const [participants, setParticipants] = useState([]);
 
