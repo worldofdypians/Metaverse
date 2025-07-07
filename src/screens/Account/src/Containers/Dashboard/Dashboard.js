@@ -55,6 +55,7 @@ import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
 import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
+import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -470,6 +471,7 @@ function Dashboard({
   const [tooltip, setTooltip] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
+  const [closePopup, setClosePopup] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -637,7 +639,7 @@ function Dashboard({
   const [suspenseSound, setSuspenseSound] = useState(false);
   const [selectedEvent, setselectedEvent] = useState([]);
   const [showEventPopup, setshowEventPopup] = useState(false);
-
+  const [aiStep, setAiStep] = useState(0);
   const [userRankName, setUserRankName] = useState({
     name: "starter",
     id: 0,
@@ -647,6 +649,13 @@ function Dashboard({
 
   const suspenseMusicRef = useRef(null);
   const clockSoundRef = useRef(null);
+
+  const getAiStep = (data) => {
+    setAiStep(data);
+  };
+
+console.log(aiStep, "step");
+
 
   useEffect(() => {
     suspenseMusicRef.current = new Audio(suspenseful1Sound);
@@ -7181,12 +7190,17 @@ function Dashboard({
                   <img
                     src={"https://cdn.worldofdypians.com/wod/ai-popupx.png"}
                     onClick={() => {
-                      setSuspenseSound(true);
-                      setShowDailyQuestion(false);
-                      suspenseMusicRef.current?.pause();
-                      suspenseMusicRef.current.currentTime = 0;
-                      clockSoundRef.current?.pause();
-                      clockSoundRef.current.currentTime = 0;
+                      if (aiStep === 0) {
+                        setSuspenseSound(true);
+                        setShowDailyQuestion(false);
+                        suspenseMusicRef.current?.pause();
+                        suspenseMusicRef.current.currentTime = 0;
+                        clockSoundRef.current?.pause();
+                        clockSoundRef.current.currentTime = 0;
+                        html.classList.remove("hidescroll");
+                      } else {
+                        setClosePopup(true);
+                      }
                     }}
                     alt=""
                     className="ai-x"
@@ -7196,6 +7210,9 @@ function Dashboard({
                   onQuestionComplete={(value) => {
                     setAiQuestionCompleted(value);
                   }}
+                  getAiStep={getAiStep}
+                  closePopup={closePopup}
+                  setClosePopup={setClosePopup}
                   username={data?.getPlayer?.displayName ?? "Player"}
                   address={data?.getPlayer?.wallet?.publicAddress}
                   isConnected={isConnected}
@@ -7210,7 +7227,12 @@ function Dashboard({
                     handleConnect();
                   }}
                   onClose={() => {
+                    setSuspenseSound(true);
                     setShowDailyQuestion(false);
+                    suspenseMusicRef.current?.pause();
+                    suspenseMusicRef.current.currentTime = 0;
+                    clockSoundRef.current?.pause();
+                    clockSoundRef.current.currentTime = 0;
                     html.classList.remove("hidescroll");
                   }}
                   handleBnbPool={(hex, dec) => {
@@ -7227,7 +7249,20 @@ function Dashboard({
 
           // </OutsideClickHandler>
         )}
-
+        {closePopup && (
+          <ClosePopup
+            onClose={() => {
+              setSuspenseSound(true);
+              setShowDailyQuestion(false);
+              suspenseMusicRef.current?.pause();
+              suspenseMusicRef.current.currentTime = 0;
+              clockSoundRef.current?.pause();
+              clockSoundRef.current.currentTime = 0;
+              html.classList.remove("hidescroll");
+            }}
+            setClosePopup={setClosePopup}
+          />
+        )}
         {portfolio && (
           <OutsideClickHandler onOutsideClick={() => setPortfolio(false)}>
             <div
