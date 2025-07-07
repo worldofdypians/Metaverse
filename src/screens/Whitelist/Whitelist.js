@@ -795,7 +795,7 @@ const Whitelist = ({
           totalVestedTokensPerUserOTCPoolBonus / 1e18
         ).toFixed(6);
 
-      setuserVestedTokensOTCSpecial(
+        setuserVestedTokensOTCPoolBonus(
         totalVestedTokensPerUserOTCPoolBonus_formatted
       );
     }
