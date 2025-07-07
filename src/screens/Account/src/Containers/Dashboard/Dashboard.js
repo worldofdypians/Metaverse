@@ -590,11 +590,6 @@ function Dashboard({
   const [allMantaChests, setallMantaChests] = useState([]);
   const [allBaseChests, setallBaseChests] = useState([]);
   const [allMatChests, setallMatChests] = useState([]);
-  const [aiQuestionObject, setAiQuestionObject] = useState({
-    question: "",
-    options: [],
-    id: "",
-  });
 
   const [countdown, setcountdown] = useState();
   const [countdown3500, setcountdown3500] = useState();
@@ -5216,33 +5211,6 @@ function Dashboard({
     }
   };
 
-  const getAIQuestion = async (chain, txHash) => {
-    const data = {
-      walletAddress: coinbase,
-      email: email,
-      chain: chain,
-      transactionHash: txHash,
-    };
-
-    const result = await axios
-      .post(`https://api.worldofdypians.com/api/qa/request`, data)
-      .catch((e) => {
-        console.error(e);
-      });
-
-    if (result && result.status === 200) {
-      const cleanedAnswers = result.data.answers.map((answer) =>
-        answer.replace(/^[A-D][.)]\s*/, "")
-      );
-
-      setAiQuestionObject({
-        question: result.data.question,
-        options: cleanedAnswers,
-        id: result.data.questionId,
-      });
-    }
-  };
-
   const getAIQuestionStatus = async (wallet, email, chainId) => {
     const result = await axios
       .get(
@@ -7252,10 +7220,6 @@ function Dashboard({
                   walletClient={walletClient}
                   publicClient={publicClient}
                   binanceW3WProvider={binanceW3WProvider}
-                  onQuestionUnlocked={(chain, hash) => {
-                    getAIQuestion(chain, hash);
-                  }}
-                  aiQuestionObject={aiQuestionObject}
                 />
               </div>
             </div>
