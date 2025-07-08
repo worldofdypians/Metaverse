@@ -17,8 +17,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 // import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
-import suspenseful1Sound from "../../../../../components/AIQuestion/assets/longSuspense.mp3";
-import clockSound from "../../../../../components/AIQuestion/assets/clockSound.mp3";
+
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
@@ -181,7 +180,9 @@ function Dashboard({
   //   margin: "auto",
   //   borderColor: "#554fd8",
   // };
-
+  const suspenseful1Sound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/longSuspense.mp3";
+  const clockSound = "https://cdn.worldofdypians.com/wod/aiOryn/clockSound.mp3";
   const {
     data,
     refetch: refetchPlayer,
@@ -653,9 +654,6 @@ function Dashboard({
   const getAiStep = (data) => {
     setAiStep(data);
   };
-
- 
-
 
   useEffect(() => {
     suspenseMusicRef.current = new Audio(suspenseful1Sound);

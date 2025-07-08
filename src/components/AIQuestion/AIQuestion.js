@@ -1273,7 +1273,23 @@ const AIQuestion = ({
                   }
 
                   if (step === 1) {
-                    return "🍀 You're getting there. Dig deeper into the BNB Chain ecosystem. 🍀";
+                    return (
+                      <>
+                        🍀 You're getting there. Dig deeper into the
+                        <a
+                          href="https://www.bnbchain.org/en"
+                          target="_blank"
+                          className="aiAnswer-title m-0"
+                          style={{
+                            color: "#ffd37e",
+                            textDecoration: "underline",
+                          }}
+                        >
+                          BNB Chain ecosystem.
+                        </a>
+                        🍀
+                      </>
+                    );
                   }
 
                   return null;
