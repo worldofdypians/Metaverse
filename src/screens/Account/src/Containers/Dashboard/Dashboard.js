@@ -654,7 +654,7 @@ function Dashboard({
     setAiStep(data);
   };
 
-console.log(aiStep, "step");
+ 
 
 
   useEffect(() => {
