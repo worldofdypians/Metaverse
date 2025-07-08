@@ -802,17 +802,43 @@
 
 .processing-fade {
   transition: all 0.25s;
-  animation: fadeInOut 1s infinite ease-in-out;
+  animation: fadeInOut 1.5s infinite ease-in-out;
 }
 
 @keyframes fadeInOut {
   0% {
-    opacity: 0.5;
+    opacity: 0.3;
   }
   50% {
     opacity: 1;
   }
   100% {
-    opacity: 0.5;
+    opacity: 0.3;
   }
+}
+
+.question-close-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+
+  background: #121235;
+  border-radius: 12px;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+
+  pointer-events: auto !important;
+  @media screen and (max-width: 786px) {
+    width: 95%;
+  }
+}
+
+.close-ai-x {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
 }

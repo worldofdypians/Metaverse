@@ -6,6 +6,7 @@ import Web3 from "web3";
 // import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import axios from "axios";
 import DynamicSpan from "./DynamicSpan";
+import ClosePopup from "./ClosePopup";
 // import useWindowSize from "../../hooks/useWindowSize";
 
 const AIQuestion = ({
@@ -26,6 +27,9 @@ const AIQuestion = ({
   suspenseSound,
   setSuspenseSound,
   clockSoundRef,
+  closePopup,
+setClosePopup,
+getAiStep
 }) => {
   const clickSound = "https://cdn.worldofdypians.com/wod/aiOryn/click.mp3";
   const drumrollSound =
@@ -62,7 +66,6 @@ const AIQuestion = ({
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [selectedAnswer, setSelectedAnswer] = useState(undefined);
   const [optionsClickable, setOptionsClickable] = useState(false);
-
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [confirmed, setConfirmed] = useState(false);
   const [unlockLoading, setUnlockLoading] = useState(false);
@@ -661,11 +664,21 @@ const AIQuestion = ({
     }
   }, [timeLeft, step]);
 
+
+useEffect(() => {
+  getAiStep(step)
+}, [step])
+
+
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
 
+  console.log(step, "step2");
+  
+
   // console.log(selectedAnswer, selectedOption);
   return (
+   <>
     <div className="d-flex w-100 gap-4 py-5 pt-3 pt-lg-0 py-lg-0">
       <div className="d-none d-lg-flex d-md-flex flex-column gap-2 col-lg-3 col-md-4 position-relative">
         <div className="ai-oryn-top">
@@ -1395,6 +1408,7 @@ const AIQuestion = ({
             <button
               className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
               onClick={() => handleUnlockQuestion()}
+              disabled={unlockStatus === "success" ? true : false}
               style={{ color: unlockStatus === "error" ? "#fff" : "" }}
             >
               {unlockLoading ? (
@@ -1477,6 +1491,7 @@ const AIQuestion = ({
           )}
       </div>
     </div>
+   </>
   );
 };
 
