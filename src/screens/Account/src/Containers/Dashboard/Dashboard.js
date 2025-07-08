@@ -857,6 +857,24 @@ function Dashboard({
   });
   const [puzzleMadnessTimer, setPuzzleMadnessTimer] = useState(0);
 
+  const useWarnOnRefresh = (shouldWarn) => {
+    useEffect(() => {
+      const handleBeforeUnload = (event) => {
+        if (shouldWarn === 0) return; // Do nothing if the condition is false
+
+        event.preventDefault();
+        event.returnValue = ""; // Required for the dialog to appear
+      };
+
+      window.addEventListener("beforeunload", handleBeforeUnload);
+      return () => {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+      };
+    }, [shouldWarn]);
+  };
+
+  useWarnOnRefresh(aiStep);
+
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
       setRecords(placeholderplayerData);
@@ -7232,6 +7250,7 @@ function Dashboard({
                     clockSoundRef.current?.pause();
                     clockSoundRef.current.currentTime = 0;
                     html.classList.remove("hidescroll");
+                    setAiStep(0);
                   }}
                   handleBnbPool={(hex, dec) => {
                     switchNetwork(hex, dec);
@@ -7257,6 +7276,7 @@ function Dashboard({
               clockSoundRef.current?.pause();
               clockSoundRef.current.currentTime = 0;
               html.classList.remove("hidescroll");
+              setAiStep(0);
             }}
             setClosePopup={setClosePopup}
           />
