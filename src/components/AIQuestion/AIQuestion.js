@@ -1104,7 +1104,10 @@ const AIQuestion = ({
                           )} px-4 py-3 d-flex align-items-center justify-content-between`}
                         >
                           <div className="d-flex align-items-center gap-3">
-                            <span className="answer-text">
+                            <span
+                              className="answer-text"
+                              style={{ color: "#ffd37e" }}
+                            >
                               {answers[index] + ":"}
                             </span>
                             <DynamicSpan
