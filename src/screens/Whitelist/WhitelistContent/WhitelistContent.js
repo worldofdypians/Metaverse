@@ -107,6 +107,11 @@ const WhitelistContent = ({
   const [timerFinishedOTCPoolBonus, settimerFinishedOTCPoolBonus] =
     useState(false);
 
+  const [timerFinishedOTCPoolDynamic, settimerFinishedOTCPoolDynamic] =
+    useState(false);
+  const [timerFinishedOTCWodDynamic, settimerFinishedOTCWodDynamic] =
+    useState(false);
+
   const [timerFinishedPrivate, settimerFinishedPrivate] = useState(false);
   const [timerFinishedKol, settimerFinishedKol] = useState(false);
   const [timerFinishedAdvisors, settimerFinishedAdvisors] = useState(false);
@@ -149,6 +154,20 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCPoolBonus(true);
+        }
+      } else if (selectedRound.id == "pool-dynamic") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedOTCPoolDynamic(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedOTCPoolDynamic(true);
+        }
+      } else if (selectedRound.id == "wod-dynamic") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedOTCWodDynamic(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedOTCWodDynamic(true);
         }
       } else if (selectedRound.id == "bonus-otc") {
         if (today.getTime() > cliffTime) {
@@ -254,7 +273,11 @@ const WhitelistContent = ({
                   Available to claim
                 </span>
                 <span className="whitelist-balance-amount">
-                  {getFormattedNumber(wodBalance)} WOD
+                  {getFormattedNumber(wodBalance)}{" "}
+                  {selectedRound?.id == "pool-dynamic" ||
+                  selectedRound?.id == "wod-dynamic"
+                    ? "USD"
+                    : "WOD"}
                 </span>
               </div>
             </div>
@@ -267,7 +290,13 @@ const WhitelistContent = ({
                   <span className="whitelist-upper-txt">
                     {getFormattedNumber(totalVestedTokens)}
                   </span>
-                  <span className="whitelist-bottom-txt">Total WOD</span>
+                  <span className="whitelist-bottom-txt">
+                    Total{" "}
+                    {selectedRound?.id == "pool-dynamic" ||
+                    selectedRound?.id == "wod-dynamic"
+                      ? "USD"
+                      : "WOD"}
+                  </span>
                 </div>
 
                 <div className="d-flex flex-column">
@@ -276,12 +305,20 @@ const WhitelistContent = ({
                   </span>
                   <span className="whitelist-bottom-txt">WOD Withdrew</span>
                 </div>
-                <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">
-                    {getFormattedNumber(totalVestedTokens - userClaimedTokens)}
-                  </span>
-                  <span className="whitelist-bottom-txt">WOD Remaining</span>
-                </div>
+                {selectedRound?.id !== "pool-dynamic" &&
+                  selectedRound?.id !== "wod-dynamic" && (
+                    <div className="d-flex flex-column">
+                      <span className="whitelist-upper-txt">
+                        {getFormattedNumber(
+                          totalVestedTokens - userClaimedTokens
+                        )}
+                      </span>
+
+                      <span className="whitelist-bottom-txt">
+                        WOD Remaining
+                      </span>
+                    </div>
+                  )}
               </div>
 
               <div className="whitelist-input-upper-wrapper p-2">
@@ -341,6 +378,28 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedOTCPoolBonus(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "pool-dynamic" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTCPoolDynamic(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "wod-dynamic" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTCWodDynamic(true);
                           onTimerFinished(true);
                         }}
                       />
@@ -596,6 +655,90 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedOTCPoolBonus === false ||
+                    Number(wodBalance) === 0
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "pool-dynamic" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTCPoolDynamic === false
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedOTCPoolDynamic === false ||
+                    Number(wodBalance) === 0
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "wod-dynamic" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTCWodDynamic === false
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedOTCWodDynamic === false ||
                     Number(wodBalance) === 0
                       ? true
                       : false
