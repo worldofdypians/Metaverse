@@ -1287,7 +1287,12 @@ const AIQuestion = ({
                     );
                   }
 
-                  if (step === 1) {
+                  if (
+                    step === 1 &&
+                    selectedAnswer &&
+                    selectedOption &&
+                    selectedAnswer !== selectedOption
+                  ) {
                     return (
                       <>
                         🍀 You're getting there. Dig deeper into the{" "}
@@ -1314,7 +1319,7 @@ const AIQuestion = ({
           </div>
         </div>
         <img
-          src={"https://cdn.worldofdypians.com/wod/ai-main-button-active.webp"}
+          src={"https://cdn.worldofdypians.com/wod/ai-main-button-active2.webp"}
           className="d-none"
           alt=""
         />
@@ -1439,10 +1444,15 @@ const AIQuestion = ({
             (chainId === 56 || chainId === 204) &&
             step === 0 && (
               <button
-                className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
+                className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-5 justify-content-center py-2"
                 onClick={() => handleUnlockQuestion()}
-                disabled={unlockStatus === "success" ? true : false}
-                style={{ color: unlockStatus === "error" ? "#fff" : "" }}
+                disabled={
+                  unlockStatus === "success" ||
+                  unlockLoading ||
+                  unlockStatus === "error"
+                    ? true
+                    : false
+                }
               >
                 {unlockLoading ? (
                   <div className="d-flex align-items-center gap-2 processing-fade">
