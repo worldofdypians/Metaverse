@@ -8,7 +8,7 @@ import axios from "axios";
 import DynamicSpan from "./DynamicSpan";
 import ClosePopup from "./ClosePopup";
 // import useWindowSize from "../../hooks/useWindowSize";
-import buttonHover  from './assets/buttonHover.mp3'
+import buttonHover from "./assets/buttonHover.mp3";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -922,6 +922,10 @@ const AIQuestion = ({
                   onClick={() => {
                     handleBnbPool("0x38", 56);
                   }}
+                  disabled={timeLeft > 0 && step === 1}
+                  style={{
+                    pointerEvents: timeLeft > 0 && step === 1 ? "none" : "",
+                  }}
                 >
                   <div className="d-flex align-items-center gap-2 justify-content-center">
                     <img
@@ -940,6 +944,10 @@ const AIQuestion = ({
                   }
                   onClick={() => {
                     handleBnbPool("0xcc", 204);
+                  }}
+                  disabled={timeLeft > 0 && step === 1}
+                  style={{
+                    pointerEvents: timeLeft > 0 && step === 1 ? "none" : "",
                   }}
                 >
                   <div className="d-flex align-items-center gap-2 justify-content-center">
@@ -1083,7 +1091,6 @@ const AIQuestion = ({
 
                     return (
                       <div
-                      
                         key={index}
                         className={`answer-outer-wrapper ${
                           (!optionsClickable ||
@@ -1104,9 +1111,9 @@ const AIQuestion = ({
                           className={`${getAnswerClass(
                             answers[index]
                           )} px-4 py-3 d-flex align-items-center justify-content-between`}
-                            onMouseEnter={() => {
-                          new Audio(buttonHover).play()
-                        }}
+                          onMouseEnter={() => {
+                            new Audio(buttonHover).play();
+                          }}
                         >
                           <div className="d-flex align-items-center gap-3">
                             <span
