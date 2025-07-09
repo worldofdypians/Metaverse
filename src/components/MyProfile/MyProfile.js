@@ -1424,7 +1424,7 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-8">
                 <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-end  align-items-lg-center justify-content-center justify-content-lg-between p-3">
-                  <div className="d-flex flex-row flex-lg-column align-items-center gap-2 gap-lg-0">
+                  <div className="d-flex flex-row flex-lg-column align-items-center gap-2">
                     <h6 className="leaderboards-title mb-0">Leaderboards</h6>
                     {/* <h6
                       className="leaderboards-title mb-0"
