@@ -8,7 +8,7 @@ import axios from "axios";
 import DynamicSpan from "./DynamicSpan";
 import ClosePopup from "./ClosePopup";
 // import useWindowSize from "../../hooks/useWindowSize";
-import buttonHover  from './assets/buttonHover.mp3'
+import buttonHover from "./assets/buttonHover.mp3";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -539,10 +539,10 @@ const AIQuestion = ({
     suspenseMusicRef.current.currentTime = 0;
     handleConfirm();
     new Audio(drumrollSound).play();
-    const timer = setTimeout(() => {
-      checkAnswer();
-    }, 2000);
-    return () => clearTimeout(timer);
+    // const timer = setTimeout(() => {
+    checkAnswer();
+    // }, 2000);
+    // return () => clearTimeout(timer);
   };
 
   const getAnswerClass = (option) => {
@@ -922,6 +922,10 @@ const AIQuestion = ({
                   onClick={() => {
                     handleBnbPool("0x38", 56);
                   }}
+                  disabled={timeLeft > 0 && step === 1}
+                  style={{
+                    pointerEvents: timeLeft > 0 && step === 1 ? "none" : "",
+                  }}
                 >
                   <div className="d-flex align-items-center gap-2 justify-content-center">
                     <img
@@ -940,6 +944,10 @@ const AIQuestion = ({
                   }
                   onClick={() => {
                     handleBnbPool("0xcc", 204);
+                  }}
+                  disabled={timeLeft > 0 && step === 1}
+                  style={{
+                    pointerEvents: timeLeft > 0 && step === 1 ? "none" : "",
                   }}
                 >
                   <div className="d-flex align-items-center gap-2 justify-content-center">
@@ -1057,7 +1065,7 @@ const AIQuestion = ({
               <div className="ai-question-parent px-2">
                 <div className="ai-question-text-wrapper justify-content-center align-items-center">
                   <span
-                    className="aiLockedQuestion text-capitalize position-absolute"
+                    className="aiLockedQuestion text-capitalize"
                     id="question"
                     style={{
                       animation:
@@ -1083,7 +1091,6 @@ const AIQuestion = ({
 
                     return (
                       <div
-                      
                         key={index}
                         className={`answer-outer-wrapper ${
                           (!optionsClickable ||
@@ -1104,9 +1111,9 @@ const AIQuestion = ({
                           className={`${getAnswerClass(
                             answers[index]
                           )} px-4 py-3 d-flex align-items-center justify-content-between`}
-                            onMouseEnter={() => {
-                          new Audio(buttonHover).play()
-                        }}
+                          onMouseEnter={() => {
+                            new Audio(buttonHover).play();
+                          }}
                         >
                           <div className="d-flex align-items-center gap-3">
                             <span
@@ -1280,7 +1287,12 @@ const AIQuestion = ({
                     );
                   }
 
-                  if (step === 1) {
+                  if (
+                    step === 1 &&
+                    selectedAnswer &&
+                    selectedOption &&
+                    selectedAnswer !== selectedOption
+                  ) {
                     return (
                       <>
                         🍀 You're getting there. Dig deeper into the{" "}
@@ -1307,7 +1319,7 @@ const AIQuestion = ({
           </div>
         </div>
         <img
-          src={"https://cdn.worldofdypians.com/wod/ai-main-button-active.webp"}
+          src={"https://cdn.worldofdypians.com/wod/ai-main-button-active2.webp"}
           className="d-none"
           alt=""
         />
@@ -1432,10 +1444,15 @@ const AIQuestion = ({
             (chainId === 56 || chainId === 204) &&
             step === 0 && (
               <button
-                className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
+                className="ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-5 justify-content-center py-2"
                 onClick={() => handleUnlockQuestion()}
-                disabled={unlockStatus === "success" ? true : false}
-                style={{ color: unlockStatus === "error" ? "#fff" : "" }}
+                disabled={
+                  unlockStatus === "success" ||
+                  unlockLoading ||
+                  unlockStatus === "error"
+                    ? true
+                    : false
+                }
               >
                 {unlockLoading ? (
                   <div className="d-flex align-items-center gap-2 processing-fade">

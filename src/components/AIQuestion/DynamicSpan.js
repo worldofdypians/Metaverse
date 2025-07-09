@@ -13,7 +13,7 @@ export default function DynamicSpan({ text, id, opacity, animation }) {
     const spanWidth = spanRef.current.offsetWidth;
     if (spanWidth > containerWidth) {
       // scale font size down proportionally
-      const newSize = Math.max(12, (containerWidth / spanWidth) * 15);
+      const newSize = Math.max(11.5, (containerWidth / spanWidth) * 15);
       setFontSize(newSize);
     } else if (spanWidth === containerWidth) {
       // scale font size down proportionally

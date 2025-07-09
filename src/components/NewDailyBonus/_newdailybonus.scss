@@ -148,7 +148,7 @@
 
 .ai-question-footer-wrapper:hover,
 .ai-question-footer-wrapper-active {
-  background: url("https://cdn.worldofdypians.com/wod/ai-main-button-active.webp");
+  background: url("https://cdn.worldofdypians.com/wod/ai-main-button-active2.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -163,6 +163,7 @@
   right: 50%;
   transform: translate(-50%, 0);
   align-items: center;
+  transition: all 0.25s;
 }
 
 .ai-question-footer-wrapper-error {
