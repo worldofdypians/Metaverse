@@ -57,7 +57,7 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
   display: flex;
-  padding: 20px;
+  padding: 20px 30px;
   position: relative;
   top: -25px;
   transform: translate(-50%, 0);
@@ -253,7 +253,7 @@
   overflow: hidden;
   position: relative;
   min-width: 0;
-  @media screen and (max-width: 640px) {
+  @media screen and (max-width: 800px) {
     grid-template-columns: repeat(1, 1fr);
   }
 }

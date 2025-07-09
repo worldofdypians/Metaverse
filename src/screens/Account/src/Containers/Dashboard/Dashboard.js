@@ -7267,7 +7267,8 @@ function Dashboard({
           // </OutsideClickHandler>
         )}
         {closePopup && (
-          <ClosePopup
+       <OutsideClickHandler onOutsideClick={() => setClosePopup(false)}>
+           <ClosePopup
             onClose={() => {
               setSuspenseSound(true);
               setShowDailyQuestion(false);
@@ -7280,6 +7281,7 @@ function Dashboard({
             }}
             setClosePopup={setClosePopup}
           />
+       </OutsideClickHandler>
         )}
         {portfolio && (
           <OutsideClickHandler onOutsideClick={() => setPortfolio(false)}>
