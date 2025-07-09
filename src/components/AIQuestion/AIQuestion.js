@@ -539,10 +539,10 @@ const AIQuestion = ({
     suspenseMusicRef.current.currentTime = 0;
     handleConfirm();
     new Audio(drumrollSound).play();
-    const timer = setTimeout(() => {
-      checkAnswer();
-    }, 2000);
-    return () => clearTimeout(timer);
+    // const timer = setTimeout(() => {
+    checkAnswer();
+    // }, 2000);
+    // return () => clearTimeout(timer);
   };
 
   const getAnswerClass = (option) => {
@@ -1065,7 +1065,7 @@ const AIQuestion = ({
               <div className="ai-question-parent px-2">
                 <div className="ai-question-text-wrapper justify-content-center align-items-center">
                   <span
-                    className="aiLockedQuestion text-capitalize position-absolute"
+                    className="aiLockedQuestion text-capitalize"
                     id="question"
                     style={{
                       animation:
