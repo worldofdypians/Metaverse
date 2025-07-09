@@ -1275,7 +1275,7 @@ const AIQuestion = ({
                   if (step === 1) {
                     return (
                       <>
-                        🍀 You're getting there. Dig deeper into the
+                        🍀 You're getting there. Dig deeper into the{" "}
                         <a
                           href="https://www.bnbchain.org/en"
                           target="_blank"
