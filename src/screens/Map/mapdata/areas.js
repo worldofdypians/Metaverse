@@ -1538,6 +1538,71 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
+  {
+    title: "Tea-Fi Area",
+    marker: markers.teafiMarker,
+    activeMarker: activeMarkers.teafiMarker,
+
+    icon: "https://cdn.worldofdypians.com/wod/teafi.svg",
+    location: [-0.06892739063903598, 0.08374929428100586],
+    banner: "vanarArea.webp",
+    area: [
+      [
+        [-0.06880937352763049, 0.08381903171539308],
+        [-0.06885228884090124, 0.08363664150238038],
+        [-0.06905077216428224, 0.08367419242858888],
+        [-0.06900249243705621, 0.0838834047317505],
+      ],
+    ],
+    events: [
+      {
+        title: "Daily Bonus",
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+        link: "/account#dailybonus",
+      },
+
+      {
+        title: "Leaderboard",
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+        link: "/account#leaderboard",
+      },
+      {
+        title: "Treasure Hunt",
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/TeaFi_Official",
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+      },
+      {
+        link: "https://t.me/TeaFi_Official",
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+      },
+      {
+        link: "https://discord.com/invite/DUVua49zrf",
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+      },
+      {
+        link: "https://tea-fi.com/",
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+      },
+    ],
+    city: "Dypians",
+    size: "250x250",
+    rewards: "N/A",
+    desc: "Tea-Fi is taking the Hustle out of DeFi with a seamless, intuitive & unified SUPER APP. It offers a frictionless, unified platform, to manage and grow digital assets. ",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Participate in daily challenges",
+      "Explore an immersive environment",
+      "Experience real-time interactions",
+      "Join community-driven contests",
+    ],
+  },
 ];
 
 const bearAreas = [
