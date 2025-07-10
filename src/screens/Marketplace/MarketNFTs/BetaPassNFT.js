@@ -109,7 +109,7 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "base-mint-bg2",
       wrapperClassName: "base-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in ETH rewards",
       rewardType: "ETH",
       userEarned: baseEarnUSD,
