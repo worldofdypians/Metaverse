@@ -491,6 +491,28 @@ const BetaPassNFT = ({
       eventStartDate: "May. 19, 2025",
       eventEndDate: "Sep. 16, 2025",
     },
+    {
+      id: "tea-fi",
+      mainTitle: "Tea-Fi Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Tea-Fi. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/vanarHero.webp",
+      logo: "https://cdn.worldofdypians.com/wod/teafiLogo.svg",
+      buttonTitle: "Tea-Fi",
+      isComingSoon: false,
+      giveawayButton: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
+      areaImage: undefined,
+      cardClassName: "teafi-mint-bg",
+      wrapperClassName: "tea-eventwrapper",
+      treasureHuntStatus: "Coming Soon",
+      rewardsTitle: "$40,000 in TEA rewards",
+      rewardType: "TEA",
+      userEarned: 0,
+      eventType: "Explore & Mine",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
+    },
   ];
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
