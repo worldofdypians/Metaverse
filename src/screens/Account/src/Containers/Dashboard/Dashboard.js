@@ -6096,7 +6096,7 @@ function Dashboard({
                 Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
-                Number(baseEarnUSD) +
+                // Number(baseEarnUSD) +
                 Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
                 Number(mantaEarnUsd) +
