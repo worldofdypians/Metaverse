@@ -1509,9 +1509,9 @@ function App() {
           }
 
           if (baseEvent && baseEvent[0]) {
-            if (baseEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (baseEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const basePoints = baseEvent[0].reward.earn.totalPoints;
             setBaseUserPoints(basePoints);
@@ -4006,7 +4006,7 @@ function App() {
     {
       title: "Base",
       logo: "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in ETH Rewards",
       location: [-0.0694799252930712, 0.08724689483642578],
       myEarnings: 0.0,
@@ -4024,7 +4024,7 @@ function App() {
         chain: "Base",
         linkState: "base",
         rewards: "ETH",
-        status: "Live",
+        status: "Expired",
         id: "event24",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in ETH Rewards",
@@ -6364,6 +6364,22 @@ function App() {
 
           <Route
             exact
+            path="/shop/beta-pass/tea-fi"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
             path="/shop/beta-pass/vanar"
             element={
               <BetaPassNFT
@@ -6853,19 +6869,10 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalMatNfts={myMatNFTs.length}
-                matMintAllowed={1 - myMatNFTs.length}
-                seiMintAllowed={1 - myseiNfts.length}
-                myMatNFTs={myMatNFTs}
-                myMatNFTsCreated={myMatNFTs}
                 handleSwitchNetwork={handleSwitchNetwork}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
                 binanceWallet={coinbase}
-                totalMantaNft={totalMantaNft}
-                mantaMintAllowed={mantaMintAllowed}
-                myMantaNfts={myMantaNfts}
-                myMantaNFTsCreated={myMantaNFTsCreated}
                 cawsArray={allCawsForTimepieceMint}
                 mintloading={mintloading}
                 isConnected={isConnected}
@@ -6874,17 +6881,36 @@ function App() {
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
                 timepieceMetadata={timepieceMetadata}
-                mybaseNFTsCreated={mybaseNFTsCreated}
-                handleBaseNftMint={handleBaseNftMint}
-                totalseiNft={totalseiNft}
-                myseiNfts={myseiNfts}
-                myKucoinNfts={mykucoinNFTs}
-                myOpbnbNfts={myOpbnbNfts}
-                totalOpbnbNft={myOpbnbNfts?.length}
-                myVanarNFTs={myVanarNFTs}
-                totalVanarNfts={myVanarNFTs?.length ?? 0}
+                nftCreated={totalTimepieceCreated}
+                totalCreated={totalTimepieceCreated}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/shop/mint/tea-fi"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                timepieceMetadata={timepieceMetadata}
+                nftCreated={[]}
+                totalCreated={totalTimepieceCreated}
               />
             }
           />
