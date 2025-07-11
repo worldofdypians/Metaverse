@@ -3469,7 +3469,7 @@ function App() {
             );
           });
 
-        handleFirstTask(userWallet);
+        // handleFirstTask(userWallet);
       } catch (error) {
         setsyncStatus("error");
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -5506,11 +5506,11 @@ function App() {
     }
   }, [allTimepieceNfts]);
 
-  useEffect(() => {
-    if (loginListener !== 0 || userWallet !== undefined) {
-      handleFirstTask(userWallet);
-    }
-  }, [loginListener, userWallet]);
+  // useEffect(() => {
+  //   if (loginListener !== 0 || userWallet !== undefined) {
+  //     handleFirstTask(userWallet);
+  //   }
+  // }, [loginListener, userWallet]);
 
   // useEffect(() => {
   //   if (address && address.length > 0) {

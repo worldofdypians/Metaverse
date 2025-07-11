@@ -209,7 +209,7 @@ function AuthBNB({
         },
       }).then(() => {
         onWalletLinkComplete();
-        handleFirstTask(coinbase);
+        // handleFirstTask(coinbase);
       });
     } catch (error) {
       console.log(error);
@@ -329,7 +329,7 @@ function AuthBNB({
                           }}
                           onSuccessLogin={() => {
                             handleManageLoginStates();
-                            handleFirstTask(coinbase);
+                            // handleFirstTask(coinbase);
                           }}
                           handleGoToSignup={() => {
                             handleChange("click", 1);

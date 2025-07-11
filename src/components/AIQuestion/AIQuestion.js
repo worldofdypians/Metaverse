@@ -3,12 +3,12 @@ import "./_aiquestion.scss";
 import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import Web3 from "web3";
-// import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import axios from "axios";
 import DynamicSpan from "./DynamicSpan";
 import ClosePopup from "./ClosePopup";
 // import useWindowSize from "../../hooks/useWindowSize";
 import buttonHover from "./assets/buttonHover.mp3";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
 const AIQuestion = ({
   onQuestionComplete,
@@ -31,6 +31,8 @@ const AIQuestion = ({
   closePopup,
   setClosePopup,
   getAiStep,
+  aiQuestionRewards,
+  aiQuestionObjectAnswered,
 }) => {
   const clickSound = "https://cdn.worldofdypians.com/wod/aiOryn/click.mp3";
   const drumrollSound =
@@ -69,6 +71,9 @@ const AIQuestion = ({
   const [optionsClickable, setOptionsClickable] = useState(false);
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [confirmed, setConfirmed] = useState(false);
+  const [questionTxHash, setquestionTxHash] = useState("");
+  const [questionRewards, setquestionRewards] = useState([]);
+
   const [unlockLoading, setUnlockLoading] = useState(false);
   const [unlockStatus, setUnlockStatus] = useState("initial");
   const [activeClass, setActiveClass] = useState("");
@@ -142,6 +147,7 @@ const AIQuestion = ({
   };
 
   const getAIQuestion = async (chain, txHash) => {
+    setquestionTxHash(txHash);
     const data = {
       walletAddress: coinbase,
       email: email,
@@ -459,6 +465,53 @@ const AIQuestion = ({
     }
   };
 
+  const getQuestionRewards = async (email, txHash, chain, correctAnswer) => {
+    const data = {
+      emailAddress: email,
+      transactionHash: txHash,
+      chainId: chain,
+      correctAnswer: true,
+    };
+
+    const result = await axios
+      .post(
+        `https://worldofdypiansdailybonus.azurewebsites.net/api/AnswerDailyQuestion?code=6T7eOTFcMi0c71I-HQoVeCL1GUcZi7-akH6ZPBVcLBsnAzFu_Dj9IQ==`,
+        data
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data.status === "Success") {
+        setquestionRewards(result.data.reward);
+
+        setSelectedAnswer(correctAnswer);
+        new Audio(successSound).play();
+        setAvatarState("correct");
+        const timer = setTimeout(() => {
+          setAvatarState("idle");
+        }, 5040);
+
+        onQuestionComplete(true);
+        // const resetTimer = setTimeout(() => {
+        //   setSelectedAnswer(undefined);
+        //   setSelectedOption(undefined);
+        //   onQuestionComplete(false);
+        //   setStep(0);
+        //   setConfirmed(false);
+        //   setTimeLeft(totalTime);
+        //   setOptionsClickable(false);
+        // }, 10000);
+
+        return () => {
+          clearTimeout(timer);
+          // clearTimeout(resetTimer);
+        };
+      }
+    }
+  };
+
   const checkAnswer = async () => {
     const data = {
       walletAddress: coinbase,
@@ -482,28 +535,12 @@ const AIQuestion = ({
       setShowSelect(false);
 
       if (isCorrect) {
-        setSelectedAnswer(answers[result.data.correctIndex]);
-        new Audio(successSound).play();
-        setAvatarState("correct");
-        const timer = setTimeout(() => {
-          setAvatarState("idle");
-        }, 5040);
-
-        onQuestionComplete(true);
-        const resetTimer = setTimeout(() => {
-          setSelectedAnswer(undefined);
-          setSelectedOption(undefined);
-          onQuestionComplete(false);
-          setStep(0);
-          setConfirmed(false);
-          setTimeLeft(totalTime);
-          setOptionsClickable(false);
-        }, 10000);
-
-        return () => {
-          clearTimeout(timer);
-          clearTimeout(resetTimer);
-        };
+        getQuestionRewards(
+          email,
+          questionTxHash,
+          chainId === 56 ? "bnb" : "opbnb",
+          answers[result.data.correctIndex]
+        );
       } else {
         setSelectedAnswer(answers[result.data.correctIndex]);
         new Audio(failSound).play();
@@ -513,21 +550,58 @@ const AIQuestion = ({
         }, 5040);
 
         onQuestionComplete(true);
-        const resetTimer = setTimeout(() => {
-          setSelectedAnswer(undefined);
-          setSelectedOption(undefined);
-          onQuestionComplete(false);
-          setStep(0);
-          setConfirmed(false);
-          setTimeLeft(totalTime);
-          setOptionsClickable(false);
-        }, 10000);
+        // const resetTimer = setTimeout(() => {
+        //   setSelectedAnswer(undefined);
+        //   setSelectedOption(undefined);
+        //   onQuestionComplete(false);
+        //   setStep(0);
+        //   setConfirmed(false);
+        //   setTimeLeft(totalTime);
+        //   setOptionsClickable(false);
+        // }, 10000);
 
         return () => {
-          clearTimeout(timer);
-          clearTimeout(resetTimer);
+          // clearTimeout(timer);
+          // clearTimeout(resetTimer);
         };
       }
+    }
+  };
+
+  const checkAnswerTimeout = async () => {
+    const data = {
+      walletAddress: coinbase,
+      email: email,
+      chain: chainId === 56 ? "bnb" : "opbnb",
+      questionId: aiQuestionObject.id,
+      answerIndex: 4,
+    };
+
+    const result = await axios
+      .post(`https://api.worldofdypians.com/api/qa/answer`, data)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      console.log(result.data);
+      setPause(false);
+      setShowSelect(false);
+      setSelectedAnswer(answers[result.data.correctIndex]);
+      setConfirmed(true);
+      suspenseMusicRef.current?.pause();
+      suspenseMusicRef.current.currentTime = 0;
+      setSuspenseSound(true);
+      new Audio(timerEndedSound).play();
+      setAvatarState("time");
+      onQuestionComplete(true);
+      const timer = setTimeout(() => {
+        setAvatarState("idle");
+      }, 5040);
+
+      return () => {
+        clearTimeout(timer);
+      };
     }
   };
 
@@ -591,32 +665,15 @@ const AIQuestion = ({
   };
   const handleTimeout = () => {
     if (selectedOption === undefined || selectedAnswer === undefined) {
-      setConfirmed(true);
-      suspenseMusicRef.current?.pause();
-      suspenseMusicRef.current.currentTime = 0;
-      setSuspenseSound(true);
-      new Audio(timerEndedSound).play();
-      setAvatarState("time");
-      const timer = setTimeout(() => {
-        setAvatarState("idle");
-      }, 5040);
-      const timer2 = setTimeout(() => {
-        setSelectedAnswer(undefined);
-        setSelectedOption(undefined);
-        onQuestionComplete(false);
-        setStep(0);
-        setConfirmed(false);
-        setTimeLeft(totalTime);
-        setOptionsClickable(false);
-      }, 10000);
-      return () => {
-        clearTimeout(timer);
-        clearTimeout(timer2);
-      };
+      checkAnswerTimeout();
     }
   };
   useEffect(() => {
-    if (step === 1 && optionsClickable) {
+    if (
+      step === 1 &&
+      optionsClickable &&
+      aiQuestionObjectAnswered.question === ""
+    ) {
       if (confirmed || timeLeft === 0) return;
       intervalRef.current = setInterval(() => {
         setTimeLeft((prev) => {
@@ -630,10 +687,10 @@ const AIQuestion = ({
 
       return () => clearInterval(intervalRef.current);
     }
-  }, [timeLeft, confirmed, step, optionsClickable]);
+  }, [timeLeft, confirmed, step, optionsClickable, aiQuestionObjectAnswered]);
 
   useEffect(() => {
-    if (step === 1) {
+    if (step === 1 && aiQuestionObjectAnswered.question === "") {
       const lastFadeInTime = (answersOptions.length - 1) * 0.5 + 0.7 + 0.6;
 
       const timer = setTimeout(() => {
@@ -642,10 +699,14 @@ const AIQuestion = ({
 
       return () => clearTimeout(timer);
     }
-  }, [step, answersOptions]);
+  }, [step, answersOptions, aiQuestionObjectAnswered]);
 
   useEffect(() => {
-    if (timeLeft === 20 && step === 1) {
+    if (
+      timeLeft === 20 &&
+      step === 1 &&
+      aiQuestionObjectAnswered.question === ""
+    ) {
       suspenseMusicRef.current?.play();
     }
     // if (timeLeft === 8 && step === 1) {
@@ -663,11 +724,41 @@ const AIQuestion = ({
       }, 5040);
       return () => clearTimeout(timer);
     }
-  }, [timeLeft, step]);
+  }, [timeLeft, step, aiQuestionObjectAnswered]);
 
   useEffect(() => {
-    getAiStep(timeLeft === 0 ? 0 : step);
+    getAiStep(
+      timeLeft === 0 || aiQuestionObjectAnswered.question !== "" ? 0 : step
+    );
   }, [step, timeLeft]);
+
+  useEffect(() => {
+    if (
+      aiQuestionRewards &&
+      aiQuestionRewards.length > 0 &&
+      aiQuestionObjectAnswered.question !== ""
+    ) {
+      setquestionRewards(aiQuestionRewards);
+      setStep(1);
+      setAiQuestionObject({
+        question: aiQuestionObjectAnswered.question,
+        options: aiQuestionObjectAnswered.options,
+        id: "",
+      });
+      setSelectedAnswer(answers[aiQuestionObjectAnswered.correctIndex]);
+      setSelectedOption(answers[aiQuestionObjectAnswered.userIndex]);
+
+      setAvatarState(
+        answers[aiQuestionObjectAnswered.correctIndex] ===
+          answers[aiQuestionObjectAnswered.userIndex]
+          ? "correct"
+          : "wrong"
+      );
+
+      suspenseMusicRef.current?.pause();
+      suspenseMusicRef.current.currentTime = 0;
+    }
+  }, [aiQuestionRewards, aiQuestionObjectAnswered]);
 
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
@@ -720,7 +811,8 @@ const AIQuestion = ({
               </Canvas> */}
                 <img
                   src={
-                    avatarState === "idle"
+                    avatarState === "idle" ||
+                    aiQuestionObjectAnswered.question !== ""
                       ? avatarIdle
                       : avatarState === "correct"
                       ? avatarCorrect
@@ -762,18 +854,16 @@ const AIQuestion = ({
               {/* {step === 1 && ( */}
               <div
                 className={
-                  selectedOption === selectedAnswer &&
-                  selectedAnswer !== undefined &&
-                  step === 1
+                  (selectedOption === selectedAnswer &&
+                    selectedAnswer !== undefined &&
+                    step === 1) ||
+                  (questionRewards.find((item) => {
+                    return item.rewardType === "Stars";
+                  }) !== undefined &&
+                    step === 1)
                     ? "ai-rewards-info-active"
                     : "ai-rewards-info"
                 }
-                // onMouseOver={() => {
-                //   setActiveClass("stars");
-                // }}
-                // onMouseLeave={() => {
-                //   setActiveClass("");
-                // }}
               >
                 <div className="d-flex align-items-center px-3 py-2 gap-2">
                   <div className="d-flex align-items-center gap-1">
@@ -788,7 +878,11 @@ const AIQuestion = ({
                         (selectedOption === selectedAnswer &&
                           selectedAnswer !== undefined &&
                           step === 1) ||
-                        (selectedAnswer === undefined && step === 1)
+                        (selectedAnswer === undefined && step === 1) ||
+                        (questionRewards.find((item) => {
+                          return item.rewardType === "Stars";
+                        }) !== undefined &&
+                          step === 1)
                           ? "ai-reward-logo-active"
                           : "ai-reward-logo"
                       }
@@ -801,16 +895,25 @@ const AIQuestion = ({
                           // step === 0 ||
                           (selectedOption === selectedAnswer &&
                             selectedAnswer !== undefined &&
+                            step === 1) ||
+                          (questionRewards.find((item) => {
+                            return item.rewardType === "Stars";
+                          }) !== undefined &&
                             step === 1)
                             ? "ai-rewards-title-active ps-3"
                             : "ai-rewards-title ps-3"
                         }
                       >
-                        {selectedOption === selectedAnswer &&
-                        selectedAnswer !== undefined &&
-                        step === 1
-                          ? "530 "
-                          : "50 - 250 "}
+                        {questionRewards.find((item) => {
+                          return item.rewardType === "Stars";
+                        }) !== undefined && step === 1
+                          ? getFormattedNumber(
+                              questionRewards.find((item) => {
+                                return item.rewardType === "Stars";
+                              }).reward,
+                              0
+                            )
+                          : "50 - 250"}{" "}
                         Stars
                       </span>
                     </div>
@@ -818,13 +921,17 @@ const AIQuestion = ({
                 </div>
               </div>
               <div
-                className="ai-rewards-info"
-                // onMouseOver={() => {
-                //   setActiveClass("points");
-                // }}
-                // onMouseLeave={() => {
-                //   setActiveClass("");
-                // }}
+                className={
+                  (selectedOption === selectedAnswer &&
+                    selectedAnswer !== undefined &&
+                    step === 1) ||
+                  (questionRewards.find((item) => {
+                    return item.rewardType === "Points";
+                  }) !== undefined &&
+                    step === 1)
+                    ? "ai-rewards-info-active"
+                    : "ai-rewards-info"
+                }
               >
                 <div className="d-flex align-items-center px-3 py-2 gap-2">
                   <div className="d-flex align-items-center gap-1">
@@ -836,7 +943,11 @@ const AIQuestion = ({
                       className={
                         activeClass === "points" ||
                         step === 0 ||
-                        (selectedAnswer === undefined && step === 1)
+                        (selectedAnswer === undefined && step === 1) ||
+                        (questionRewards.find((item) => {
+                          return item.rewardType === "Points";
+                        }) !== undefined &&
+                          step === 1)
                           ? "ai-reward-logo-active"
                           : "ai-reward-logo"
                       }
@@ -847,27 +958,45 @@ const AIQuestion = ({
                     </span> */}
                       <span
                         className={
-                          activeClass === "points"
+                          activeClass === "points" ||
+                          (questionRewards.find((item) => {
+                            return item.rewardType === "Points";
+                          }) !== undefined &&
+                            step === 1)
                             ? //|| step === 0 ||
                               // (selectedAnswer !== undefined && step === 1)
                               "ai-rewards-title-active ps-3"
                             : "ai-rewards-title ps-3"
                         }
                       >
-                        15,000 - 80,000 Points
+                        {questionRewards.find((item) => {
+                          return item.rewardType === "Points";
+                        }) !== undefined && step === 1
+                          ? getFormattedNumber(
+                              questionRewards.find((item) => {
+                                return item.rewardType === "Points";
+                              }).reward,
+                              0
+                            )
+                          : "15,000 - 80,000"}{" "}
+                        Points
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
               <div
-                className="ai-rewards-info"
-                // onMouseOver={() => {
-                //   setActiveClass("rewards");
-                // }}
-                // onMouseLeave={() => {
-                //   setActiveClass("");
-                // }}
+                className={
+                  (selectedOption === selectedAnswer &&
+                    selectedAnswer !== undefined &&
+                    step === 1) ||
+                  (questionRewards.find((item) => {
+                    return item.rewardType === "Money";
+                  }) !== undefined &&
+                    step === 1)
+                    ? "ai-rewards-info-active"
+                    : "ai-rewards-info"
+                }
               >
                 <div className="d-flex align-items-center px-3 py-2 gap-2">
                   <div className="d-flex align-items-center gap-1">
@@ -879,7 +1008,14 @@ const AIQuestion = ({
                       className={
                         activeClass === "rewards" ||
                         step === 0 ||
-                        (selectedAnswer === undefined && step === 1)
+                        (selectedAnswer === undefined && step === 1) ||
+                        (questionRewards.find((item) => {
+                          return (
+                            item.rewardType === "Money" &&
+                            item.status === "Claimed"
+                          );
+                        }) !== undefined &&
+                          step === 1)
                           ? "ai-reward-logo-active"
                           : "ai-reward-logo"
                       }
@@ -888,14 +1024,36 @@ const AIQuestion = ({
                       {/* <span className={"ai-rewards-money"}>$1.5</span> */}
                       <span
                         className={
-                          activeClass === "rewards"
+                          activeClass === "rewards" ||
+                          (questionRewards.find((item) => {
+                            return (
+                              item.rewardType === "Money" &&
+                              item.status === "Claimed"
+                            );
+                          }) !== undefined &&
+                            step === 1)
                             ? // ||step === 0 ||
                               // (selectedAnswer !== undefined && step === 1)
                               "ai-rewards-title-active ps-3"
                             : "ai-rewards-title ps-3"
                         }
                       >
-                        $5-$10 Rewards
+                        {" "}
+                        {questionRewards.find((item) => {
+                          return (
+                            item.rewardType === "Money" &&
+                            item.status === "Claimed"
+                          );
+                        }) !== undefined && step === 1
+                          ? "$" +
+                            questionRewards.find((item) => {
+                              return (
+                                item.rewardType === "Money" &&
+                                item.status === "Claimed"
+                              );
+                            }).reward +
+                            " Reward"
+                          : "$5-$10 Rewards"}
                       </span>
                     </div>
                   </div>
@@ -965,7 +1123,11 @@ const AIQuestion = ({
               </div>
             </button> */}
               </div>
-              <div className="ai-timer-bg-wrapper px-3 py-1 col-lg-3 col-md-4 col-sm-3 col-2">
+              <div
+                className={`ai-timer-bg-wrapper px-3 py-1 col-lg-3 col-md-4 col-sm-3 col-2 ${
+                  aiQuestionObjectAnswered.question !== "" && "invisible d-none d-lg-block"
+                }`}
+              >
                 <div className="d-flex align-items-center w-100 gap-4 justify-content-center justify-content-lg-between justify-content-md-between">
                   <span className="ai-timer-title d-none d-lg-flex d-md-flex text-uppercase">
                     {timeLeft > 0 ? "Timer" : "Time's Up!"}
@@ -1073,7 +1235,11 @@ const AIQuestion = ({
                           ? "fadeInAI2 0.5s ease-out forwards"
                           : "none",
                       opacity:
-                        step === 1 && aiQuestionObject.question !== "" ? 0 : 1,
+                        step === 1 &&
+                        aiQuestionObject.question !== "" &&
+                        aiQuestionObjectAnswered.question === ""
+                          ? 0
+                          : 1,
                       visibility: step === 0 ? "hidden" : "visible",
                     }}
                   >
@@ -1130,12 +1296,16 @@ const AIQuestion = ({
                               }
                               id={`option${index + 1}`}
                               opacity={
-                                step === 1 && aiQuestionObject.question !== ""
+                                step === 1 &&
+                                aiQuestionObject.question !== "" &&
+                                aiQuestionObjectAnswered.question === ""
                                   ? 0
                                   : 1
                               }
                               animation={
-                                step === 1 && aiQuestionObject.question !== ""
+                                step === 1 &&
+                                aiQuestionObject.question !== "" &&
+                                aiQuestionObjectAnswered.question === ""
                                   ? `fadeInAI 0.5s ease-out ${animationDelay} forwards`
                                   : "none"
                               }
@@ -1276,12 +1446,19 @@ const AIQuestion = ({
                     return (
                       <>
                         🎉 You have earned{" "}
-                        <span
-                          className="aiAnswer-title m-0"
-                          style={{ color: "#ffd37e" }}
-                        >
-                          530 Stars
-                        </span>{" "}
+                        {questionRewards &&
+                          questionRewards.length > 0 &&
+                          questionRewards.map((obj, index) => {
+                            return (
+                              <span
+                                className="aiAnswer-title me-1"
+                                style={{ color: "#ffd37e" }}
+                                key={index}
+                              >
+                                {obj.reward} {obj.rewardType}
+                              </span>
+                            );
+                          })}
                         🎉
                       </>
                     );

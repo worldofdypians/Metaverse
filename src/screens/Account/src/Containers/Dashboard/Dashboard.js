@@ -707,7 +707,7 @@ function Dashboard({
             headers: { Authorization: `Bearer ${authToken}` },
           })
           .then(function (result) {
-            console.log(result.data);
+            // console.log(result.data);
             setSpecialRewardsSuccess("Email sent successfully");
             return result.data;
           })
@@ -856,7 +856,15 @@ function Dashboard({
     puzzleMadness: false,
   });
   const [puzzleMadnessTimer, setPuzzleMadnessTimer] = useState(0);
-
+  const [aiQuestionRewards, setaiQuestionRewards] = useState([]);
+  const [aiQuestionObjectAnswered, setAiQuestionObjectAnswered] = useState({
+    question: "",
+    options: [],
+    id: "",
+    userIndex: undefined,
+    correctIndex: undefined,
+    chain: "",
+  });
   const useWarnOnRefresh = (shouldWarn) => {
     useEffect(() => {
       const handleBeforeUnload = (event) => {
@@ -5236,7 +5244,47 @@ function Dashboard({
     }
   };
 
-  const getAIQuestionStatus = async (wallet, email, chainId) => {
+  const getAIQuestionRewardStatus = async (email) => {
+    const data = {
+      emailAddress: email,
+      chainId: "bnb",
+    };
+    const result = await axios
+      .post(
+        `https://worldofdypiansdailybonus.azurewebsites.net/api/GetDailyQuestionAnswer?code=YaQr78883ptswtmsk4Oyfl3QK_ni3SN2E5okDerTxsxwAzFurSAsvQ==`,
+        data
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data.status === "Success") {
+        setaiQuestionRewards(result.data.reward);
+      }
+    } else {
+      const data = {
+        emailAddress: email,
+        chainId: "opbnb",
+      };
+      const result = await axios
+        .post(
+          `https://worldofdypiansdailybonus.azurewebsites.net/api/GetDailyQuestionAnswer?code=YaQr78883ptswtmsk4Oyfl3QK_ni3SN2E5okDerTxsxwAzFurSAsvQ==`,
+          data
+        )
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (result && result.status === 200) {
+        if (result.data.status === "Success") {
+          setaiQuestionRewards(result.data.reward);
+        }
+      }
+    }
+  };
+
+  const getAIQuestionStatus = async (wallet, email) => {
     const result = await axios
       .get(
         `https://api.worldofdypians.com/api/qa/profile?walletAddress=${wallet}&email=${email}`
@@ -5246,7 +5294,29 @@ function Dashboard({
       });
 
     if (result && result.status === 200) {
-      console.log(result.data);
+      const today = new Date();
+
+      const todayString = today.toISOString().split("T")[0];
+      // console.log(result.data);
+      const todayObj = result.data.questionsHistory.find((item) => {
+        return item.date === todayString;
+      });
+
+      if (todayObj !== undefined) {
+        const cleanedAnswers = todayObj.answers.map((answer) =>
+          answer.replace(/^[A-D][.)]\s*/, "")
+        );
+
+        setAiQuestionObjectAnswered({
+          question: todayObj.questionText,
+          options: cleanedAnswers,
+          id: "",
+          userIndex: todayObj.userIndex,
+          correctIndex: todayObj.correctIndex,
+          chain: todayObj.chain,
+        });
+        setAiQuestionCompleted(true);
+      }
 
       //   if (result.data.totalAnswered > 0) {
       //     getAIQuestion(chainId === 204 ? "opbnb" : "bnb", wallet);
@@ -5927,11 +5997,11 @@ function Dashboard({
   ]);
 
   useEffect(() => {
-    if (userWallet && email && chainId) {
+    if (userWallet && email) {
       getUserRewardData(userWallet);
-      getAIQuestionStatus(userWallet, email, chainId);
+      getAIQuestionStatus(userWallet, email);
     }
-  }, [userWallet, email, chainId]);
+  }, [userWallet, email]);
 
   useEffect(() => {
     if ((coinbase && isConnected) || userWallet !== undefined) {
@@ -5941,11 +6011,11 @@ function Dashboard({
     }
   }, [userWallet, isConnected, coinbase]);
 
-  useEffect(() => {
-    if (email && userWallet) {
-      handleFirstTask(userWallet);
-    }
-  }, [email, userWallet]);
+  // useEffect(() => {
+  //   if (email && userWallet) {
+  //     handleFirstTask(userWallet);
+  //   }
+  // }, [email, userWallet]);
 
   useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
@@ -5990,6 +6060,7 @@ function Dashboard({
     if (email && userWallet) {
       getAllSkaleChests(email);
       getAllChests(email);
+      getAIQuestionRewardStatus(email);
       getAllCoreChests(email);
       getAllVictionChests(email);
       getAllMantaChests(email);
@@ -7226,6 +7297,8 @@ function Dashboard({
                   onQuestionComplete={(value) => {
                     setAiQuestionCompleted(value);
                   }}
+                  aiQuestionRewards={aiQuestionRewards}
+                  aiQuestionObjectAnswered={aiQuestionObjectAnswered}
                   getAiStep={getAiStep}
                   closePopup={closePopup}
                   setClosePopup={setClosePopup}
@@ -7267,21 +7340,21 @@ function Dashboard({
           // </OutsideClickHandler>
         )}
         {closePopup && (
-       <OutsideClickHandler onOutsideClick={() => setClosePopup(false)}>
-           <ClosePopup
-            onClose={() => {
-              setSuspenseSound(true);
-              setShowDailyQuestion(false);
-              suspenseMusicRef.current?.pause();
-              suspenseMusicRef.current.currentTime = 0;
-              clockSoundRef.current?.pause();
-              clockSoundRef.current.currentTime = 0;
-              html.classList.remove("hidescroll");
-              setAiStep(0);
-            }}
-            setClosePopup={setClosePopup}
-          />
-       </OutsideClickHandler>
+          <OutsideClickHandler onOutsideClick={() => setClosePopup(false)}>
+            <ClosePopup
+              onClose={() => {
+                setSuspenseSound(true);
+                setShowDailyQuestion(false);
+                suspenseMusicRef.current?.pause();
+                suspenseMusicRef.current.currentTime = 0;
+                clockSoundRef.current?.pause();
+                clockSoundRef.current.currentTime = 0;
+                html.classList.remove("hidescroll");
+                setAiStep(0);
+              }}
+              setClosePopup={setClosePopup}
+            />
+          </OutsideClickHandler>
         )}
         {portfolio && (
           <OutsideClickHandler onOutsideClick={() => setPortfolio(false)}>

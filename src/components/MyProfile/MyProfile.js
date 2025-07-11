@@ -1632,7 +1632,7 @@ const MyProfile = ({
                     {/* {aiQuestionCompleted && (
                       <Countdown date={Number(midnight)} renderer={renderer} />
                     )} */}
-                    {!aiQuestionCompleted && (
+                    {/* {!aiQuestionCompleted && ( */}
                       <div className={`d-flex flex-column infotips-holder`}>
                         <div className="d-flex align-items-center gap-1">
                           <div className="yellow-dot-small"></div>
@@ -1674,7 +1674,7 @@ const MyProfile = ({
                           </span>
                         </div>
                       </div>
-                    )}
+                    {/* )} */}
                     {aiQuestionCompleted ? (
                       //   <div className="d-flex flex-column gap-1">
                       //   <span className="beast-siege-ends-in">Available until:</span>
