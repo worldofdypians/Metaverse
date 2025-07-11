@@ -823,9 +823,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-
-  background: #121235;
-  border-radius: 12px;
+  background-image: url('./assets/closeBorder2.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  // background: #121235;
+  // border-radius: 12px;
   width: fit-content;
   height: fit-content;
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);

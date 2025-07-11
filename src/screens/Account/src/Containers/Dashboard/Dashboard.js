@@ -6014,12 +6014,12 @@ function Dashboard({
   }, [success]);
 
   useEffect(() => {
-    if (dailyBonusPopup) {
+    if (dailyBonusPopup || closePopup) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [dailyBonusPopup]);
+  }, [dailyBonusPopup, closePopup]);
 
   const hashValue = window.location.hash;
 
