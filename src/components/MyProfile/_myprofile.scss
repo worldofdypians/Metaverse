@@ -30,7 +30,7 @@
 }
 
 .getwod-item {
-  width: 200px;
+  // width: 200px;
   padding: 5px;
 }
 
@@ -280,6 +280,20 @@
   font-weight: 800;
   line-height: normal;
   text-transform: uppercase;
+}
+
+
+
+.question-of-the-day-title{
+ font-family: 'Bowlby One SC', sans-serif;
+    font-size: 16px;
+  color: #ffdf83; /* White text */
+  text-shadow: 
+    -1px -1px 0 #471f06,  
+     1px -1px 0 #471f06,
+    -1px  1px 0 #471f06,
+     1px  1px 0 #471f06; /* Blue outline */
+
 }
 
 .special-rewards-span {
@@ -830,9 +844,7 @@
     font-style: normal;
     font-weight: bold;
     line-height: 16px;
-    @media screen and (max-width: 500px) {
-      width: 74px;
-    }
+ 
   }
 
   h6 {

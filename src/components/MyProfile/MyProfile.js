@@ -573,11 +573,12 @@ const MyProfile = ({
                       syncStatus !== "" &&
                       address.toLowerCase() === coinbase.toLowerCase()) ||
                     (isConnected && !email && coinbase) ? (
-                      <div className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2">
+                      <div className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2 wallet-address-wrapper2"
+                            onClick={openPortfolio}
+                      >
                         <div className="d-flex gap-2 w-100 align-items-center justify-content-start">
                           <div
-                            onClick={openPortfolio}
-                            className="wallet-address-wrapper2 border-0 p-2"
+                            className=" border-0 p-2"
                           >
                             <img
                               src={
@@ -595,27 +596,28 @@ const MyProfile = ({
                             className="d-flex align-items-center gap-2 w-100 justify-content-between pe-2"
                           >
                             <div className="d-flex align-items-center gap-2">
-                              <img
+                              {/* <img
                                 src={
                                   "https://cdn.worldofdypians.com/wod/wodToken.svg"
                                 }
                                 width={20}
                                 height={20}
                                 alt=""
-                              />
-                              <h6 className="mb-0 wod-balance-txt">
-                                {getFormattedNumber(wodBalance, 2)}
+                              /> */}
+                              <h6 className="mb-0 wod-balance-txt" style={{fontSize: "16px"}}>
+                                {/* {getFormattedNumber(wodBalance, 2)} */}
+                                Portfolio
                               </h6>
                             </div>
-                            <img
+                            {/* <img
                               src={
                                 "https://cdn.worldofdypians.com/wod/whiteArrows.svg"
                               }
                               alt=""
                               style={{ width: 20, height: 20 }}
                               className={showBuyTooltip ? "whitearrowUp" : ""}
-                            />
-                            {showBuyTooltip === true && (
+                            /> */}
+                            {/* {showBuyTooltip === true && (
                               <div className="position-absolute w-100">
                                 <OutsideClickHandler
                                   onOutsideClick={() => {
@@ -672,7 +674,6 @@ const MyProfile = ({
                                             Gate.io
                                           </h6>
                                         </a>
-
                                         <a
                                           href="https://www.mexc.com/exchange/WOD_USDT"
                                           target="_blank"
@@ -868,7 +869,7 @@ const MyProfile = ({
                                   </div>
                                 </OutsideClickHandler>
                               </div>
-                            )}
+                            )} */}
                           </div>
                         </div>
                       </div>
@@ -1624,7 +1625,7 @@ const MyProfile = ({
                     className="ai-question-img"
                     alt=""
                   />
-                  <h6 className="special-rewards-title text-white">
+                  <h6 className=" question-of-the-day-title ">
                     QUESTION OF THE DAY
                   </h6>
 

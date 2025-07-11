@@ -29,6 +29,55 @@
   }
 }
 
+
+  .wod-balance-txt {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #eeedff;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 16px;
+
+  }
+
+.sidebar-separator2 {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(238, 237, 255, 0) 0%,
+    rgba(238, 237, 255, 0.5) 50%,
+    rgba(238, 237, 255, 0) 100%
+  );
+}
+
+.get-wod-portfolio-grid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 6px;
+  @media screen and (max-width: 1000px) {
+  grid-template-columns: repeat(3,1fr);
+  }
+  @media screen and (max-width: 700px) {
+  grid-template-columns: repeat(2,1fr);
+  }
+  @media screen and (max-width: 420px) {
+  grid-template-columns: repeat(1,1fr);
+  }
+}
+
+.buy-wod-portfolio-text{
+      color: #eeedff !important;
+    font-family: "Montserrat" !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    line-height: 16px !important;
+}
+
 .wallet-wrapper {
   background: rgba(8, 11, 42, 0.3);
   padding: 10px;
@@ -253,7 +302,7 @@
 
 .account-nft-sort {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
   color: #e2e2e2;
   transition: all 0.25s;
