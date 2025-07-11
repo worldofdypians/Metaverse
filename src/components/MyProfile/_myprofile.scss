@@ -30,7 +30,7 @@
 }
 
 .getwod-item {
-  width: 200px;
+  // width: 200px;
   padding: 5px;
 }
 
@@ -844,9 +844,7 @@
     font-style: normal;
     font-weight: bold;
     line-height: 16px;
-    @media screen and (max-width: 500px) {
-      width: 74px;
-    }
+ 
   }
 
   h6 {

@@ -39,9 +39,7 @@
     font-style: normal;
     font-weight: bold;
     line-height: 16px;
-    @media screen and (max-width: 500px) {
-      width: 74px;
-    }
+
   }
 
 .sidebar-separator2 {
@@ -59,16 +57,25 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4,1fr);
-  gap: 12px;
+  gap: 6px;
+  @media screen and (max-width: 1000px) {
+  grid-template-columns: repeat(3,1fr);
+  }
+  @media screen and (max-width: 700px) {
+  grid-template-columns: repeat(2,1fr);
+  }
+  @media screen and (max-width: 420px) {
+  grid-template-columns: repeat(1,1fr);
+  }
 }
 
 .buy-wod-portfolio-text{
-      color: #eeedff;
-    font-family: "Montserrat";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: bold;
-    line-height: 16px;
+      color: #eeedff !important;
+    font-family: "Montserrat" !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    line-height: 16px !important;
 }
 
 .wallet-wrapper {
@@ -295,7 +302,7 @@
 
 .account-nft-sort {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
   color: #e2e2e2;
   transition: all 0.25s;
