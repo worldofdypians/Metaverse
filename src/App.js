@@ -765,6 +765,9 @@ function App() {
   const [bnbEarnToken, setBnbEarnToken] = useState(0);
   const [bnbEarnUsd, setBnbEarnUsd] = useState(0);
   const [bnbPoints, setBnbPoints] = useState(0);
+  const [teaEarnToken, setTeaEarnToken] = useState(0);
+  const [teaEarnUsd, setTeaEarnUsd] = useState(0);
+  const [teaPoints, setTeaPoints] = useState(0);
 
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
@@ -3930,6 +3933,42 @@ function App() {
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
+    {
+      title: "Tea-Fi",
+      logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TEA Rewards",
+      myEarnings: 0.0,
+      location: [-0.06892739063903598, 0.08374929428100586],
+      eventType: "Explore & Mine",
+      eventDate: "Apr 09, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
+      userEarnUsd: teaEarnUsd,
+      userEarnCrypto: teaEarnToken,
+      userEarnPoints: teaPoints,
+      image: "bnbBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+
+      marker: markers.treasureMarker,
+      popupInfo: {
+        title: "Tea-Fi",
+        chain: "Tea-Fi",
+        linkState: "bnb",
+        rewards: "TEA",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TEA Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Apr 09, 2025",
+      },
+    },
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
