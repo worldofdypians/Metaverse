@@ -97,7 +97,7 @@ const AIQuestion = ({
     "Let’s find out who you are!",
     "Do you dare to take this on?",
     "Test your limits right now!",
-    "Brains or luck—pick one now!",
+    "Brains or luck,pick one now!",
     "Your fate rests on this quiz",
     "Sharpen up. It's game time!",
     "No mercy in today’s round!",
