@@ -80,9 +80,13 @@ const Campaigns = ({ coinbase }) => {
       link: "https://www.binance.com/en/web3-campaign/airdrop/4484095621998736896",
       target: "_blank",
     },
-    {
+   
+  ];
+
+  const dummyData = [
+     {
       title: "The Gathering Storm",
-      status: "Live",
+      status: "Expired",
       start_date: "Apr 21, 2025",
       end_date: "Jul 14, 2025",
       image: "https://cdn.worldofdypians.com/wod/tradingCompBanner.webp",
@@ -96,9 +100,6 @@ const Campaigns = ({ coinbase }) => {
    `,
       link: "/trading-competition",
     },
-  ];
-
-  const dummyData = [
        {
       title: "First 5,000 new users share $50,000",
       status:
