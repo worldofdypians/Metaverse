@@ -209,7 +209,8 @@ function Dashboard({
     "izcipara88@gmail.com",
     "therockhidder@gmail.com",
     "deryanuwu7@gmail.com",
-    "amox@poczta.fm"
+    "amox@poczta.fm",
+    "hmbsamd@gmail.com"
   ];
 
   const chainDropdowns = [
