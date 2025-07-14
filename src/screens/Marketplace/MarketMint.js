@@ -43,6 +43,10 @@ const MarketMint = ({
   calculateCaws,
   timepieceMetadata,
   nftCreated,
+  myTeaBnbNfts,
+  myTeaOpbnbNfts,
+  myTeaSeiNfts,
+  myTeaBaseNfts,
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -97,7 +101,7 @@ const MarketMint = ({
       emptyClass: "genesis-land-empty",
       nftcreated: totalCreated,
       nft_address: window.config.nft_timepiece_address,
-      chainId: 1,
+      chainId: [1],
       chainName: "Ethereum Chain",
       logo: "https://cdn.worldofdypians.com/wod/eth.svg",
     },
@@ -207,8 +211,15 @@ const MarketMint = ({
       activeClass: "teafi-active",
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
-      nft_address: window.config.nft_vanar_address,
-      chainId: 2040,
+      nft_address:
+        chainId === 56
+          ? window.config.nft_teabnb_address
+          : chainId === 204
+          ? window.config.nft_teaopbnb_address
+          : chainId === 8453
+          ? window.config.nft_teabase_address
+          : window.config.nft_teasei_address,
+      chainId: [56, 204, 8453, 1329],
       chainName: "Sei Network",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
     },
@@ -247,10 +258,10 @@ const MarketMint = ({
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(
     allMints.find((obj) => {
-      return obj.id === "timepiece";
+      return obj.id === "tea-fi";
     })
   );
-  const [mintTitle, setMintTitle] = useState("timepiece");
+  const [mintTitle, setMintTitle] = useState("tea-fi");
   const [sliderCut, setSliderCut] = useState();
 
   const slider = useRef(null);
@@ -1067,6 +1078,14 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
+        } else if (selectedMint.id === "tea-fi") {
+          if (!selectedMint.chainId.includes(chainId)) {
+            setactiveButton(false);
+            setStatus("Switch to supported chains to continue minting.");
+          } else if (selectedMint.chainId.includes(chainId)) {
+            setactiveButton(true);
+            setStatus("");
+          }
         }
       }
     }
@@ -1231,7 +1250,7 @@ const MarketMint = ({
 
                             <div
                               className={`genesis-wrapper ${
-                                selectedMint.nftcreated > 0
+                                nftCreated.length > 0
                                   ? selectedMint.activeClass
                                   : selectedMint.emptyClass
                               } d-flex justify-content-center align-items-center p-3 position-relative`}
@@ -1284,20 +1303,34 @@ const MarketMint = ({
                               className={`py-2 ${
                                 isConnected === false ||
                                 activeButton === false ||
-                                selectedMint.nftcreated.length === 0
+                                nftCreated.length === 0
                                   ? "outline-btn-disabled"
                                   : "stake-wod-btn"
                               } px-5 w-100`}
                               disabled={
                                 isConnected === false ||
                                 activeButton === false ||
-                                selectedMint.nftcreated.length === 0
+                                nftCreated.length === 0
                               }
-                              to={`/shop/nft/${selectedMint.nftcreated[0]}/${selectedMint.nft_address}`}
+                              to={`/shop/nft/${nftCreated[0]}/${
+                                myTeaBnbNfts.length > 0
+                                  ? window.config.nft_teabnb_address
+                                  : myTeaOpbnbNfts.length > 0
+                                  ? window.config.nft_teaopbnb_address
+                                  : myTeaBaseNfts.length > 0
+                                  ? window.config.nft_teabase_address
+                                  : window.config.nft_teasei_address
+                              }`}
                               onClick={() => {
                                 updateViewCount(
-                                  selectedMint.nftcreated[0],
-                                  selectedMint.nft_address
+                                  nftCreated[0],
+                                  myTeaBnbNfts.length > 0
+                                    ? window.config.nft_teabnb_address
+                                    : myTeaOpbnbNfts.length > 0
+                                    ? window.config.nft_teaopbnb_address
+                                    : myTeaBaseNfts.length > 0
+                                    ? window.config.nft_teabase_address
+                                    : window.config.nft_teasei_address
                                 );
                               }}
                             >
@@ -1772,19 +1805,21 @@ const MarketMint = ({
                                     mintloading === "error"
                                       ? "fail-button"
                                       : (isConnected === true &&
-                                          chainId !== selectedMint.chainId) ||
+                                          !selectedMint.chainId.includes(
+                                            chainId
+                                          )) ||
                                         (status !== "Connect your wallet." &&
                                           status !== "") ||
-                                        selectedMint.nftcreated.length > 0
+                                        nftCreated.length > 0
                                       ? "outline-btn-disabled"
                                       : "stake-wod-btn"
                                   }  px-4 w-100`}
                                   onClick={() => {
                                     isConnected === true &&
-                                    chainId === selectedMint.chainId
+                                    selectedMint.chainId.includes(chainId)
                                       ? handleMint()
                                       : isConnected === true &&
-                                        chainId !== selectedMint.chainId
+                                        !selectedMint.chainId.includes(chainId)
                                       ? handleSeiPool()
                                       : showWalletConnect();
                                   }}
@@ -1792,10 +1827,12 @@ const MarketMint = ({
                                     mintloading === "error" ||
                                     mintloading === "success" ||
                                     (isConnected === true &&
-                                      chainId !== selectedMint.chainId) ||
+                                      !selectedMint.chainId.includes(
+                                        chainId
+                                      )) ||
                                     (status !== "Connect your wallet." &&
                                       status !== "") ||
-                                    selectedMint.nftcreated.length > 0
+                                    nftCreated.length > 0
                                       ? true
                                       : false
                                   }
@@ -1822,11 +1859,11 @@ const MarketMint = ({
                                   )}{" "}
                                   {mintloading === "initial" &&
                                   isConnected === true &&
-                                  chainId === selectedMint.chainId ? (
+                                  selectedMint.chainId.includes(chainId) ? (
                                     "Mint"
                                   ) : mintloading === "mint" &&
                                     isConnected === true &&
-                                    chainId === selectedMint.chainId ? (
+                                    selectedMint.chainId.includes(chainId) ? (
                                     <>
                                       <div
                                         className="spinner-border "
@@ -1839,16 +1876,18 @@ const MarketMint = ({
                                     </>
                                   ) : mintloading === "error" &&
                                     isConnected === true &&
-                                    chainId === selectedMint.chainId ? (
+                                    selectedMint.chainId.includes(chainId) ? (
                                     "Failed"
                                   ) : mintloading === "success" &&
                                     isConnected === true &&
                                     activeButton ===
                                       (isConnected === true &&
-                                        chainId === selectedMint.chainId) ? (
+                                        selectedMint.chainId.includes(
+                                          chainId
+                                        )) ? (
                                     "Success"
                                   ) : isConnected === true &&
-                                    chainId !== selectedMint.chainId ? (
+                                    !selectedMint.chainId.includes(chainId) ? (
                                     " Switch Chain"
                                   ) : (
                                     "Connect wallet"

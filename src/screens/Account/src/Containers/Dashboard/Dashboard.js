@@ -172,6 +172,10 @@ function Dashboard({
   publicClient,
   network_matchain,
   syncStatus,
+    myTeaBnbNfts,
+  myTeaOpbnbNfts,
+  myTeaSeiNfts,
+  myTeaBaseNfts,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -210,7 +214,7 @@ function Dashboard({
     "therockhidder@gmail.com",
     "deryanuwu7@gmail.com",
     "amox@poczta.fm",
-    "hmbsamd@gmail.com"
+    "hmbsamd@gmail.com",
   ];
 
   const chainDropdowns = [
@@ -7016,6 +7020,10 @@ function Dashboard({
                 myNFTSBNB={MyNFTSBNB}
                 MyNFTSCawsBase={MyNFTSCawsBase}
                 myMatNfts={myMatNfts}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts} 
               />
             </div>
           </OutsideClickHandler>
