@@ -209,7 +209,8 @@ function Dashboard({
     "izcipara88@gmail.com",
     "therockhidder@gmail.com",
     "deryanuwu7@gmail.com",
-    "amox@poczta.fm"
+    "amox@poczta.fm",
+    "hmbsamd@gmail.com"
   ];
 
   const chainDropdowns = [
@@ -6096,7 +6097,7 @@ function Dashboard({
                 Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
-                Number(baseEarnUSD) +
+                // Number(baseEarnUSD) +
                 Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
                 Number(mantaEarnUsd) +

@@ -651,7 +651,7 @@ const MyProfile = ({
                                         MEXC Global
                                       </h6>
                                     </a>
-                                      <a
+                                    <a
                                       href="https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
                                       target="_blank"
                                       rel="noreferrer"
@@ -1192,9 +1192,9 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 8
+                        {userActiveEvents === 7
                           ? "Completed"
-                          : userActiveEvents + "/8"}
+                          : userActiveEvents + "/7"}
                       </span>
                     </div>
 
