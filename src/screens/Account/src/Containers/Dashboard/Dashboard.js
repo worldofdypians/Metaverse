@@ -6030,7 +6030,15 @@ function Dashboard({
   useEffect(() => {
     fetchUsersocialRewards();
   }, [userSocialRewards]);
-
+  console.log(
+    aiQuestionRewards.find((item) => {
+      return item.rewardType === "Money" && item.status === "Claimed";
+    }) !== undefined
+      ? aiQuestionRewards.find((item) => {
+          return item.rewardType === "Money" && item.status === "Claimed";
+        }).reward
+      : 0
+  );
   useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
@@ -6454,6 +6462,21 @@ function Dashboard({
             easy2StakeEarnUsd={easy2StakeEarnUsd}
             midleEarnUsd={midleEarnUsd}
             coingeckoEarnUsd={coingeckoEarnUsd}
+            aiQuestionRewards={
+              aiQuestionRewards.length > 0
+                ? aiQuestionRewards.find((item) => {
+                    return (
+                      item.rewardType === "Money" && item.status === "Claimed"
+                    );
+                  }) !== undefined
+                  ? aiQuestionRewards.find((item) => {
+                      return (
+                        item.rewardType === "Money" && item.status === "Claimed"
+                      );
+                    }).reward
+                  : 0
+                : 0
+            }
           />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
@@ -7109,6 +7132,23 @@ function Dashboard({
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 coingeckoEarnUsd={coingeckoEarnUsd}
+                aiQuestionRewards={
+                  aiQuestionRewards.length > 0
+                    ? aiQuestionRewards.find((item) => {
+                        return (
+                          item.rewardType === "Money" &&
+                          item.status === "Claimed"
+                        );
+                      }) !== undefined
+                      ? aiQuestionRewards.find((item) => {
+                          return (
+                            item.rewardType === "Money" &&
+                            item.status === "Claimed"
+                          );
+                        }).reward
+                      : 0
+                    : 0
+                }
               />
             </div>
           </OutsideClickHandler>

@@ -54,6 +54,7 @@ const MyRewardsPopupNew = ({
   midleEarnUsd,
   coingeckoEarnUsd,
   chainlinkEarnUsd,
+  aiQuestionRewards,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -806,6 +807,7 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneyBase) +
+                      Number(aiQuestionRewards) +
                       Number(treasureRewardMoney) +
                       Number(treasureRewardMoneySkale) +
                       Number(seiEarnUsd) +
@@ -1010,7 +1012,7 @@ const MyRewardsPopupNew = ({
                   : "reward-item-desc"
               }
             >
-              Daily Bonus
+              Daily Opportunity
             </span>
             <div
               className={
@@ -1033,6 +1035,7 @@ const MyRewardsPopupNew = ({
                     Number(treasureRewardMoney) +
                       Number(treasureRewardMoneyCore) +
                       Number(treasureRewardMoneyVanar) +
+                      Number(aiQuestionRewards) +
                       Number(treasureRewardMoneyMat) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
@@ -1044,70 +1047,7 @@ const MyRewardsPopupNew = ({
             </span>
           </div>
         </div>
-        <div
-          className={` ${
-            rewardCategory === "dailyQuestion"
-              ? "reward-category-item-active"
-              : "reward-category-item"
-          }  p-2`}
-          onClick={() => {
-            setrewardCategory("dailyQuestion");
-            scrollToView(
-              previousRewards ? "pastdailyQuestion" : "dailyQuestion"
-            );
-          }}
-        >
-          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-            <img
-              src={
-                rewardCategory === "dailyQuestion"
-                  ? "https://cdn.worldofdypians.com/wod/dailyBonusActive.png"
-                  : "https://cdn.worldofdypians.com/wod/dailyBonus.png"
-              }
-              style={{ width: 36, height: 36 }}
-              alt=""
-            />
-            <span
-              className={
-                rewardCategory === "dailyQuestion"
-                  ? "reward-item-desc-active"
-                  : "reward-item-desc"
-              }
-            >
-              Daily Question
-            </span>
-            <div
-              className={
-                rewardCategory === "dailyQuestion"
-                  ? "small-separator-active"
-                  : "small-separator"
-              }
-            ></div>
-            <span
-              className={
-                rewardCategory === "dailyQuestion"
-                  ? "reward-category-amount-active"
-                  : "reward-category-amount"
-              }
-            >
-              $
-              {previousRewards
-                ? getFormattedNumber(pasttreasureRewardMoney, 2)
-                : getFormattedNumber(
-                    Number(treasureRewardMoney) +
-                      Number(treasureRewardMoneyCore) +
-                      Number(treasureRewardMoneyVanar) +
-                      Number(treasureRewardMoneyMat) +
-                      Number(treasureRewardMoneyViction) +
-                      Number(treasureRewardMoneyManta) +
-                      Number(treasureRewardMoneyBase) +
-                      Number(treasureRewardMoneySkale) +
-                      Number(treasureRewardMoneySei),
-                    2
-                  )}
-            </span>
-          </div>
-        </div>
+
         <div
           className={` ${
             rewardCategory === "treasurehunt"
@@ -1537,7 +1477,7 @@ const MyRewardsPopupNew = ({
               : "item-name-title"
           }
         >
-          Daily Bonus
+          Daily Opportunity
         </span>
         <div
           className={
@@ -1546,6 +1486,15 @@ const MyRewardsPopupNew = ({
               : "item-name-wrapper p-2"
           }
         >
+          <span
+            className={
+              rewardCategory === "dailyBonus"
+                ? "item-name-title-selected"
+                : "item-name-title"
+            }
+          >
+            Daily Bonus
+          </span>
           <div className="d-flex justify-content-between gap-4 align-items-start">
             <div className="d-flex flex-column gap-2 w-50">
               <div className="d-flex w-100 justify-content-between gap-2">
@@ -1654,43 +1603,69 @@ const MyRewardsPopupNew = ({
               </div> */}
             </div>
           </div>
-        </div>
-      </div>
 
-      <div
-        className="d-flex flex-column gap-2"
-        id={previousRewards ? "pastdailyQuestion" : "dailyQuestion"}
-      >
-        <span
-          className={
-            rewardCategory === "dailyQuestion"
-              ? "item-name-title-selected"
-              : "item-name-title"
-          }
-        >
-          Question of the day
-        </span>
-        <div
-          className={
-            rewardCategory === "dailyQuestion"
-              ? "item-name-wrapper-selected p-2"
-              : "item-name-wrapper p-2"
-          }
-        >
-          <div className="d-flex justify-content-between gap-4 align-items-start">
-            {/* <div className="d-flex flex-column gap-2"> */}
-            <div className="d-flex w-100 justify-content-between gap-2">
-              <span className="item-name-left">BNB Chain</span>
-              <span className="item-name-right">
-                $
-                {previousRewards
-                  ? getFormattedNumber(pasttreasureRewardMoney, 2)
-                  : getFormattedNumber(treasureRewardMoney, 2)}
-              </span>
+          <span
+            className={
+              rewardCategory === "dailyBonus"
+                ? "item-name-title-selected"
+                : "item-name-title"
+            }
+          >
+            Question of the day
+          </span>
+          <div>
+            <div className="d-flex justify-content-between gap-4 align-items-start">
+              {/* <div className="d-flex flex-column gap-2"> */}
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">BNB Chain</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(aiQuestionRewards, 2)}
+                </span>
+              </div>
+              {/* </div> */}
             </div>
-            {/* </div> */}
           </div>
         </div>
+        {/* <div
+          className="d-flex flex-column gap-2"
+          id={previousRewards ? "pastdailyBonus" : "dailyBonus"}
+        >
+          <div
+            className={
+              rewardCategory === "dailyBonus"
+                ? "item-name-wrapper-selected p-2"
+                : "item-name-wrapper p-2"
+            }
+          >
+            <span
+              className={
+                rewardCategory === "dailyBonus"
+                  ? "item-name-title-selected"
+                  : "item-name-title"
+              }
+            >
+              Question of the day
+            </span>
+            <div>
+              <div className="d-flex justify-content-between gap-4 align-items-start">
+                
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">BNB Chain</span>
+                  <span className="item-name-right">
+                    $
+                    {previousRewards
+                      ? getFormattedNumber(pasttreasureRewardMoney, 2)
+                      : getFormattedNumber(treasureRewardMoney, 2)}
+                  </span>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        </div> */}
       </div>
 
       {!previousRewards ? (
