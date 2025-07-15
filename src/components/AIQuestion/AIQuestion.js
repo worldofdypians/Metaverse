@@ -632,6 +632,10 @@ const AIQuestion = ({
       return "answer-inner-wrapper-answer"; // selected and correct
     }
 
+    if (option === selectedAnswer && option !== selectedOption) {
+      return "answer-inner-wrapper-answer"; // selected and correct
+    }
+
     if (option === selectedOption && option !== selectedAnswer) {
       return "answer-inner-wrapper-wrong"; // selected and wrong
     }
@@ -705,7 +709,8 @@ const AIQuestion = ({
     if (
       timeLeft === 20 &&
       step === 1 &&
-      aiQuestionObjectAnswered.question === ""
+      aiQuestionObjectAnswered.question === "" &&
+      suspenseMusicRef.current
     ) {
       suspenseMusicRef.current?.play();
     }
@@ -724,7 +729,7 @@ const AIQuestion = ({
       }, 5040);
       return () => clearTimeout(timer);
     }
-  }, [timeLeft, step, aiQuestionObjectAnswered]);
+  }, [timeLeft, step, aiQuestionObjectAnswered, suspenseMusicRef]);
 
   useEffect(() => {
     getAiStep(
@@ -734,8 +739,7 @@ const AIQuestion = ({
 
   useEffect(() => {
     if (
-      aiQuestionRewards &&
-      aiQuestionRewards.length > 0 &&
+      (aiQuestionRewards && aiQuestionRewards.length > 0) ||
       aiQuestionObjectAnswered.question !== ""
     ) {
       setquestionRewards(aiQuestionRewards);
@@ -1125,7 +1129,8 @@ const AIQuestion = ({
               </div>
               <div
                 className={`ai-timer-bg-wrapper px-3 py-1 col-lg-3 col-md-4 col-sm-3 col-2 ${
-                  aiQuestionObjectAnswered.question !== "" && "invisible d-none d-lg-block"
+                  aiQuestionObjectAnswered.question !== "" &&
+                  "invisible d-none d-lg-block"
                 }`}
               >
                 <div className="d-flex align-items-center w-100 gap-4 justify-content-center justify-content-lg-between justify-content-md-between">

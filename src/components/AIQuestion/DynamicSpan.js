@@ -34,6 +34,7 @@ export default function DynamicSpan({ text, id, opacity, animation }) {
         // maxWidth: containerWidth + "px",
         animation: animation,
         opacity: opacity,
+        lineHeight: "normal",
       }}
     >
       {text}
