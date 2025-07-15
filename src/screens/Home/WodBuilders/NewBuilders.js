@@ -444,6 +444,10 @@ const NewBuilders = () => {
       name: "Fair3",
       icon: "fair3.png",
     },
+    {
+      name: "Melitho Ventures",
+      icon: "melitho.png",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
