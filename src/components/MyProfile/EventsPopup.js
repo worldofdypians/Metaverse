@@ -248,6 +248,17 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   and venture into the BNB Chain area to uncover hidden
                   treasures.
                 </p>
+              ) : dummyEvent.popupInfo.id === "event4" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a Tea-Fi Beta Pass NFT</b>. You can get the Tea-Fi
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the Tea-Fi area,
+                  players not only stand a chance to secure daily rewards in
+                  TEA, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Tea-Fi area to uncover hidden treasures.
+                </p>
               ) : dummyEvent.popupInfo.id === "event26" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
@@ -553,6 +564,17 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
             experience. From new engagement experiences to AI-driven IP
             tracking.
           </p>
+        ) : dummyEvent.popupInfo.id === "event4" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            Tea-Fi eliminates the hassle of crypto management by providing a
+            seamless, all-in-one platform to manage and grow digital assets. Its
+            Yield Engine offers effortless access to tailored growth
+            opportunities by integrating a wide variety of yield tools into a
+            unified ecosystem.
+          </p>
         ) : dummyEvent.popupInfo.id === "event20" ? (
           <p
             className="popup-event-desc"
@@ -794,6 +816,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://twitter.com/dypius"
                 : dummyEvent.popupInfo.id === "event3"
                 ? "https://twitter.com/coingecko"
+                : dummyEvent.popupInfo.id === "event4"
+                ? "https://x.com/TeaFi_Official"
                 : dummyEvent.popupInfo.id === "event6"
                 ? "https://twitter.com/gate_io"
                 : dummyEvent.popupInfo.id === "event7"
@@ -858,6 +882,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://t.me/worldofdypians"
                 : dummyEvent.popupInfo.id === "event3"
                 ? "https://t.me/coingecko"
+                : dummyEvent.popupInfo.id === "event4"
+                ? "https://t.me/TeaFi_Official"
                 : dummyEvent.popupInfo.id === "event8"
                 ? "https://t.me/CoinMarketCapAnnouncements"
                 : dummyEvent.popupInfo.id === "event6"
@@ -929,6 +955,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://www.dypius.com/"
                 : dummyEvent.popupInfo.id === "event3"
                 ? "https://www.coingecko.com/"
+                : dummyEvent.popupInfo.id === "event4"
+                ? "https://tea-fi.com/"
                 : dummyEvent.popupInfo.id === "event6"
                 ? "https://www.gate.io/"
                 : dummyEvent.popupInfo.id === "event7"
