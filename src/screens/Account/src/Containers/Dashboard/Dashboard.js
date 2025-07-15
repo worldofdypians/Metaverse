@@ -7328,6 +7328,8 @@ function Dashboard({
                 <AIQuestion
                   onQuestionComplete={(value) => {
                     setAiQuestionCompleted(value);
+                    getAIQuestionRewardStatus(email);
+                    getAIQuestionStatus(coinbase, email)
                   }}
                   aiQuestionRewards={aiQuestionRewards}
                   aiQuestionObjectAnswered={aiQuestionObjectAnswered}

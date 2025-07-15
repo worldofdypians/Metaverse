@@ -573,13 +573,12 @@ const MyProfile = ({
                       syncStatus !== "" &&
                       address.toLowerCase() === coinbase.toLowerCase()) ||
                     (isConnected && !email && coinbase) ? (
-                      <div className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2 wallet-address-wrapper2"
-                            onClick={openPortfolio}
+                      <div
+                        className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2 wallet-address-wrapper2"
+                        onClick={openPortfolio}
                       >
                         <div className="d-flex gap-2 w-100 align-items-center justify-content-start">
-                          <div
-                            className=" border-0 p-2"
-                          >
+                          <div className=" border-0 p-2">
                             <img
                               src={
                                 "https://cdn.worldofdypians.com/wod/portfolio.svg"
@@ -604,7 +603,10 @@ const MyProfile = ({
                                 height={20}
                                 alt=""
                               /> */}
-                              <h6 className="mb-0 wod-balance-txt" style={{fontSize: "16px"}}>
+                              <h6
+                                className="mb-0 wod-balance-txt"
+                                style={{ fontSize: "16px" }}
+                              >
                                 {/* {getFormattedNumber(wodBalance, 2)} */}
                                 Portfolio
                               </h6>
@@ -1634,47 +1636,47 @@ const MyProfile = ({
                       <Countdown date={Number(midnight)} renderer={renderer} />
                     )} */}
                     {/* {!aiQuestionCompleted && ( */}
-                      <div className={`d-flex flex-column infotips-holder`}>
-                        <div className="d-flex align-items-center gap-1">
-                          <div className="yellow-dot-small"></div>
-                          <span
-                            className="beast-siege-timer"
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: 400,
-                              color: "#fff",
-                            }}
-                          >
-                            Stars
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center gap-1">
-                          <div className="yellow-dot-small"></div>
-                          <span
-                            className="beast-siege-timer"
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: 400,
-                              color: "#fff",
-                            }}
-                          >
-                            Points
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center gap-1">
-                          <div className="yellow-dot-small"></div>
-                          <span
-                            className="beast-siege-timer"
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: 400,
-                              color: "#fff",
-                            }}
-                          >
-                            Rewards
-                          </span>
-                        </div>
+                    <div className={`d-flex flex-column infotips-holder`}>
+                      <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot-small"></div>
+                        <span
+                          className="beast-siege-timer"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#fff",
+                          }}
+                        >
+                          Stars
+                        </span>
                       </div>
+                      <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot-small"></div>
+                        <span
+                          className="beast-siege-timer"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#fff",
+                          }}
+                        >
+                          Points
+                        </span>
+                      </div>
+                      <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot-small"></div>
+                        <span
+                          className="beast-siege-timer"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#fff",
+                          }}
+                        >
+                          Rewards
+                        </span>
+                      </div>
+                    </div>
                     {/* )} */}
                     {aiQuestionCompleted ? (
                       //   <div className="d-flex flex-column gap-1">
@@ -1802,7 +1804,7 @@ const MyProfile = ({
                 </a>
               </div>
               <div className="col-12 col-lg-6 mt-3">
-                <NavLink to="/account/prime">
+                <NavLink to="/loyalty-program">
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                       <div className="d-flex align-items-center gap-2">
@@ -1814,36 +1816,22 @@ const MyProfile = ({
                           style={{ width: 44, height: 44 }}
                         />
                         <div className="d-flex flex-column">
-                          <span
-                            className="user-blue-rank"
-                            style={{ color: isPremium ? "#F3BF09" : "" }}
-                          >
-                            {!isPremium ? "Upgrade Status" : "Prime Enabled"}
+                          <span className="user-blue-rank">
+                            Loyalty Program
                           </span>
-                          <span className="user-rank-text">
-                            {!isPremium ? "Prime" : ""}
-                          </span>
+                          <span className="user-rank-text">Season three</span>
                         </div>
                       </div>
-                      {!isPremium ? (
-                        <NavLink
-                          className="activate-btn2 px-3 py-1"
-                          to="/account/prime"
-                          style={{
-                            background: "#7E52D2",
-                          }}
-                        >
-                          Get
-                        </NavLink>
-                      ) : (
-                        <button
-                          className="activate-btn2 px-3 py-1"
-                          style={{ background: "transparent" }}
-                          // onClick={onPremiumClick}
-                        >
-                          Lifetime
-                        </button>
-                      )}
+
+                      <NavLink
+                        className="activate-btn2 px-3 py-1"
+                        to="/loyalty-program"
+                        style={{
+                          background: "#7E52D2",
+                        }}
+                      >
+                        View More
+                      </NavLink>
                     </div>
                   </div>
                 </NavLink>
