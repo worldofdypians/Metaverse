@@ -636,7 +636,7 @@ const MarketMint = ({
     html.classList.remove("hidescroll");
   }, []);
 
-  let countToExpiresei = new Date("2025-05-23T14:00:00.000+02:00");
+  let countToExpiresei = new Date("2025-07-31T14:00:00.000+02:00");
   const dummyCards = [
     // {
     //   title: "Avalanche Pass",

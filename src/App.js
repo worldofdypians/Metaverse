@@ -644,7 +644,7 @@ function App() {
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
-  let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+  let teaLastDay = new Date("2025-11-15T13:00:00.000+02:00");
   let bnbLastDay = new Date("2025-08-07T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
@@ -4308,12 +4308,12 @@ function App() {
     {
       title: "Tea-Fi",
       logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
-      eventStatus: "Live",
-      totalRewards: "$20,000 in TEA Rewards",
+      eventStatus: "Coming Soon",
+      totalRewards: "$40,000 in TEA Rewards",
       myEarnings: 0.0,
       location: [-0.06892739063903598, 0.08374929428100586],
       eventType: "Explore & Mine",
-      eventDate: "Apr 09, 2025",
+      eventDate: "Jul 18, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
       userEarnUsd: teaEarnUsd,
       userEarnCrypto: teaEarnToken,
@@ -4328,17 +4328,17 @@ function App() {
         chain: "Tea-Fi",
         linkState: "bnb",
         rewards: "TEA",
-        status: "Live",
-        id: "event20",
+        status: "Coming Soon",
+        id: "event4",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TEA Rewards",
-        eventDuration: bnbLastDay,
+        totalRewards: "$40,000 in TEA Rewards",
+        eventDuration: teaLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 09, 2025",
+        eventDate: "Jul 18, 2025",
       },
     },
     {
