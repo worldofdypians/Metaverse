@@ -194,7 +194,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "Tea-Fi",
       icon: "teafi",
-      banner: "vanarBuilderBanner.webp",
+      banner: "teafiBuilderBanner.webp",
       // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
       backer: false,
     },
