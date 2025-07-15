@@ -4311,22 +4311,23 @@ function App() {
       eventStatus: "Coming Soon",
       totalRewards: "$40,000 in TEA Rewards",
       myEarnings: 0.0,
+      rewardAmount: "$40,000",
       location: [-0.06892739063903598, 0.08374929428100586],
       eventType: "Explore & Mine",
       eventDate: "Jul 18, 2025",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/teafiEventBg.webp",
       userEarnUsd: teaEarnUsd,
       userEarnCrypto: teaEarnToken,
       userEarnPoints: teaPoints,
-      image: "bnbBanner.png",
+      image: "teafiBuilderBanner.webp",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
-
+      rewardType: "TEA",
       marker: markers.treasureMarker,
       popupInfo: {
         title: "Tea-Fi",
-        chain: "Tea-Fi",
-        linkState: "bnb",
+        chain: "BNB Chain",
+        linkState: "tea-fi",
         rewards: "TEA",
         status: "Coming Soon",
         id: "event4",
@@ -6483,7 +6484,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
-                myTeaBaseNfts={myTeaBaseNfts} 
+                myTeaBaseNfts={myTeaBaseNfts}
                 syncStatus={syncStatus}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -6579,7 +6580,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
-                myTeaBaseNfts={myTeaBaseNfts} 
+                myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -7141,7 +7142,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
-                myTeaBaseNfts={myTeaBaseNfts} 
+                myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -7310,11 +7311,11 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
-                myTeaBaseNfts={myTeaBaseNfts} 
+                myTeaBaseNfts={myTeaBaseNfts}
               />
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/shop/mint/tea-fi"
             element={
@@ -7361,7 +7362,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          />
+          /> */}
           {/* <Route
             exact
             path="/shop/mint/vanar"

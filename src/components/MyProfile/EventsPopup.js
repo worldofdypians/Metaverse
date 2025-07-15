@@ -89,6 +89,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                     ? "https://cdn.worldofdypians.com/wod/gatePopupImage.png"
                     : dummyEvent.popupInfo.linkState === "base"
                     ? "https://cdn.worldofdypians.com/wod/eventPopupImageBase.png"
+                    : dummyEvent.popupInfo.linkState === "tea-fi"
+                    ? "https://cdn.worldofdypians.com/wod/teafiThumb.webp"
                     : dummyEvent.popupInfo.linkState === "doge"
                     ? "https://cdn.worldofdypians.com/wod/dogePopupImage.png"
                     : dummyEvent.popupInfo.linkState === "coinmarketcap"
@@ -931,7 +933,6 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
             <img
               alt=""
               src={
-                dummyEvent.popupInfo.id !== "event4" &&
                 dummyEvent.popupInfo.id !== "event24" &&
                 dummyEvent.popupInfo.id !== "event7" &&
                 dummyEvent.popupInfo.id !== "event15"
@@ -939,8 +940,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   : "https://cdn.worldofdypians.com/wod/greenDiscord.svg"
               }
             />
-            {dummyEvent.popupInfo.id !== "event4" &&
-            dummyEvent.popupInfo.id !== "event24" &&
+            {dummyEvent.popupInfo.id !== "event24" &&
             dummyEvent.popupInfo.id !== "event7" &&
             dummyEvent.popupInfo.id !== "event15"
               ? "Telegram"
