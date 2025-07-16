@@ -580,7 +580,8 @@ function App() {
 
   const [isBnb, setisBnb] = useState(false);
   const [isBnbSuccess, setisBnbSuccess] = useState(false);
-  const [logoutCount, setLogoutCount] = useState(0);
+  const [syncCount, setsyncCount] = useState(1);
+  const [logoutCount, setlogoutCount] = useState(1);
 
   const [nftCount, setNftCount] = useState(1);
   const [countBalance, setcountBalance] = useState(1);
@@ -3403,6 +3404,7 @@ function App() {
   };
 
   const handleManageLogin = async (signature, message) => {
+    setsyncCount(syncCount + 1);
     const data2 = {
       email: email,
       walletAddress: data?.getPlayer?.wallet?.publicAddress ?? coinbase,
@@ -5565,6 +5567,7 @@ function App() {
           domainName={domainName}
           onLogout={() => {
             setCount55(count55 + 1);
+            setlogoutCount(logoutCount + 1);
           }}
           onSigninClick={checkData}
           gameAccount={gameAccount}
@@ -5588,6 +5591,7 @@ function App() {
           }}
           onLogout={() => {
             setCount55(count55 + 1);
+            setlogoutCount(logoutCount + 1);
           }}
           handleDisconnect={handleDisconnect}
           myOffers={myNftsOffer}
@@ -6007,6 +6011,8 @@ function App() {
                   setshowSync(true);
                 }}
                 syncStatus={syncStatus}
+                syncCount={syncCount}
+                logoutCount={logoutCount}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -6098,6 +6104,8 @@ function App() {
                     setIsPremium(true);
                   }, 2000);
                 }}
+                syncCount={syncCount}
+                logoutCount={logoutCount}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -6630,6 +6638,8 @@ function App() {
                   isTokenExpired(authToken);
                 }}
                 syncStatus={syncStatus}
+                syncCount={syncCount}
+                logoutCount={logoutCount}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}

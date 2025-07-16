@@ -110,6 +110,7 @@ function Dashboard({
   chainId,
   coinbase,
   handleConnect,
+  syncCount,
   // myCawsWodStakes,
   // landStaked,
   ethTokenData,
@@ -3400,6 +3401,16 @@ function Dashboard({
       setclaimedMatChests(0);
       setclaimedMatPremiumChests(0);
       refetchPlayer();
+      setaiQuestionRewards([]);
+      setAiQuestionCompleted(false);
+      setAiQuestionObjectAnswered({
+        question: "",
+        options: [],
+        id: "",
+        userIndex: undefined,
+        correctIndex: undefined,
+        chain: "",
+      });
     }
   }, [logoutCount]);
 
@@ -5296,13 +5307,11 @@ function Dashboard({
     if (result && result.status === 200) {
       const today = new Date();
 
-      const todayString = today.toISOString().split("T")[0];
-      // console.log(result.data);
-      const todayObj = result.data.questionsHistory.find((item) => {
-        return item.date === todayString;
-      });
+      const isToday = result.data.alreadyAnsweredToday;
 
-      if (todayObj !== undefined) {
+      const todayObj = result.data.todayResult;
+
+      if (isToday === true) {
         const cleanedAnswers = todayObj.answers.map((answer) =>
           answer.replace(/^[A-D][.)]\s*/, "")
         );
@@ -5323,7 +5332,7 @@ function Dashboard({
       //   }
     }
   };
-
+  // console.log(aiQuestionObjectAnswered, aiQuestionCompleted);
   const handleShowSyncModal = () => {
     onSyncClick();
   };
@@ -5997,7 +6006,7 @@ function Dashboard({
   ]);
 
   useEffect(() => {
-    if (userWallet && email) {
+    if (userWallet !== undefined && email !== undefined && email !== "") {
       getUserRewardData(userWallet);
       getAIQuestionStatus(userWallet, email);
     }
@@ -6025,12 +6034,12 @@ function Dashboard({
 
   useEffect(() => {
     refetchPlayer();
-  }, [email]);
+  }, [email, syncCount]);
 
   useEffect(() => {
     fetchUsersocialRewards();
   }, [userSocialRewards]);
- 
+
   useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
@@ -7329,7 +7338,7 @@ function Dashboard({
                   onQuestionComplete={(value) => {
                     setAiQuestionCompleted(value);
                     getAIQuestionRewardStatus(email);
-                    getAIQuestionStatus(coinbase, email)
+                    getAIQuestionStatus(coinbase, email);
                   }}
                   aiQuestionRewards={aiQuestionRewards}
                   aiQuestionObjectAnswered={aiQuestionObjectAnswered}

@@ -727,17 +727,17 @@ const AIQuestion = ({
     //   suspenseMusicRef.current?.pause();
     //   clockSoundRef.current?.play();
     // }
-    if (timeLeft === 0) {
-      suspenseMusicRef.current?.pause();
-      suspenseMusicRef.current.currentTime = 0;
-      setSuspenseSound(true);
-      new Audio(timerEndedSound).play();
-      setAvatarState("time");
-      const timer = setTimeout(() => {
-        setAvatarState("idle");
-      }, 5040);
-      return () => clearTimeout(timer);
-    }
+    // if (timeLeft === 0) {
+    //   suspenseMusicRef.current?.pause();
+    //   suspenseMusicRef.current.currentTime = 0;
+    //   setSuspenseSound(true);
+    //   new Audio(timerEndedSound).play();
+    //   setAvatarState("time");
+    //   const timer = setTimeout(() => {
+    //     setAvatarState("idle");
+    //   }, 5040);
+    //   return () => clearTimeout(timer);
+    // }
   }, [timeLeft, step, aiQuestionObjectAnswered, suspenseMusicRef]);
 
   useEffect(() => {
