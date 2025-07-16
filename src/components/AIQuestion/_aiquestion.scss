@@ -113,6 +113,26 @@
   }
 }
 
+
+.drumroll-background{
+  animation: pulseAnswer 1s infinite;
+}
+
+@keyframes pulseAnswer {
+  0%{
+  background-color: #ff7c00 !important;
+
+  }
+  50%{
+  background-color: #1d203f !important;
+
+  }
+  100%{
+  background-color: #ff7c00 !important;
+
+  }
+}
+
 .ai-answer-option-wrapper {
   background-color: #010d22;
   border: 1px solid #677a90;
