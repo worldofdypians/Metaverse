@@ -644,7 +644,7 @@ function App() {
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
-  let teaLastDay = new Date("2025-11-15T13:00:00.000+02:00");
+  let teaLastDay = new Date("2025-10-16T13:00:00.000+02:00");
   let bnbLastDay = new Date("2025-08-07T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");

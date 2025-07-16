@@ -1041,7 +1041,10 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
               <h6
                 className="mb-0 event-earnings-coin2 d-flex specialstyle-wrapper gap-1"
                 style={{
-                  left: dummyEvent.popupInfo.id === "event5" && "0px",
+                  left:
+                    (dummyEvent.popupInfo.id === "event5" ||
+                      dummyEvent.popupInfo.id === "event4") &&
+                    "0px",
                 }}
               >
                 $
@@ -1052,17 +1055,18 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   2
                 )}
                 <span className="ethpricerewards specialstyle-wrapper-eth">
-                  {dummyEvent.popupInfo.id !== "event5" && (
-                    <>
-                      {getFormattedNumber(
-                        dummyEvent.popupInfo?.status === "Coming Soon"
-                          ? 0
-                          : dummyEvent.userEarnCrypto,
-                        2
-                      )}
-                      {dummyEvent.popupInfo.rewards}
-                    </>
-                  )}
+                  {dummyEvent.popupInfo.id !== "event5" &&
+                    dummyEvent.popupInfo.id !== "event4" && (
+                      <>
+                        {getFormattedNumber(
+                          dummyEvent.popupInfo?.status === "Coming Soon"
+                            ? 0
+                            : dummyEvent.userEarnCrypto,
+                          2
+                        )}
+                        {dummyEvent.popupInfo.rewards}
+                      </>
+                    )}
                 </span>
               </h6>
               <span className="mb-0 event-earnings-usd">Rewards</span>

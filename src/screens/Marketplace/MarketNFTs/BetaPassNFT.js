@@ -511,7 +511,7 @@ const BetaPassNFT = ({
       userEarned: 0,
       eventType: "Explore & Mine",
       eventStartDate: "Jul. 18, 2025",
-      eventEndDate: "Nov. 15, 2025",
+      eventEndDate: "Oct. 16, 2025",
     },
   ];
 
