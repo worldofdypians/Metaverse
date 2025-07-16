@@ -3203,7 +3203,7 @@ const NewDailyBonus = ({
                               >
                                 <img
                                   src={
-                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                    "https://cdn.worldofdypians.com/wod/opbnbChain.png"
                                   }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
@@ -4353,7 +4353,7 @@ const NewDailyBonus = ({
                               >
                                 <img
                                   src={
-                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                    "https://cdn.worldofdypians.com/wod/opbnbChain.png"
                                   }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
@@ -5389,7 +5389,7 @@ const NewDailyBonus = ({
                                   selectedChest={selectedChest}
                                   isPremium={isPremium}
                                   onClaimRewards={(value) => {
-                                    console.log('vanar', value)
+                                    console.log("vanar", value);
                                     // setRewardData(value);
                                     setLiveRewardData(value);
                                     onVanarChestClaimed();
@@ -8572,7 +8572,7 @@ const NewDailyBonus = ({
             onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               chain === "bnb"
                 ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
                 : chain === "core"
@@ -8614,6 +8614,7 @@ const NewDailyBonus = ({
                     isActiveIndex - 1
                   );
             }, 2000);
+            return () => clearTimeout(timer);
           }}
         />
       )}

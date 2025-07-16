@@ -1,23 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { ethers } from "ethers";
 import { GENERATE_NONCE, GET_PLAYER, VERIFY_WALLET } from "./Dashboard.schema";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import NewEvents from "../../../../../components/NewEvents/NewEvents";
 import Web3 from "web3";
-import { ERC20_ABI } from "../../web3/abis";
-import _, { set } from "lodash";
+
 import GlobalLeaderboard from "../../../../../components/LeaderBoard/GlobalLeaderboard";
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
 import axios from "axios";
-import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
+// import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 import OutsideClickHandler from "react-outside-click-handler";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import MyBalance from "../../Components/WalletBalance/MyBalance";
+// import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
@@ -41,7 +39,7 @@ import Countdown from "react-countdown";
 import {
   baseStars,
   bnbStars,
-  mantaStars,
+  // mantaStars,
   monthlyStarPrizes,
   monthlyExtraStarPrizes,
   skaleStars,
@@ -55,6 +53,8 @@ import {
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
+import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
+import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -110,27 +110,28 @@ function Dashboard({
   chainId,
   coinbase,
   handleConnect,
-  myCawsWodStakes,
-  landStaked,
+  syncCount,
+  // myCawsWodStakes,
+  // landStaked,
   ethTokenData,
   dypTokenData,
-  onSigninClick,
+  // onSigninClick,
   onSyncClick,
-  onLogoutClick,
-  availableTime,
+  // onLogoutClick,
+  // availableTime,
   success,
   handleSwitchNetwork,
   domainName,
   handleOpenDomains,
-  dogePrice,
+  // dogePrice,
   handleSwitchChain,
   onSubscribeSuccess,
   isPremium,
-  dyptokenDatabnb,
+  // dyptokenDatabnb,
   baseEarnUSD,
   logoutCount,
-  handleConnectBinance,
-  handleConnectionPassport,
+  // handleConnectBinance,
+  // handleConnectionPassport,
   binanceW3WProvider,
   binanceWallet,
   handleSwitchChainBinanceWallet,
@@ -157,8 +158,8 @@ function Dashboard({
   matEarnUsd,
   wodBalance,
   wodPrice,
-  showSync,
-  onCloseSync,
+  // showSync,
+  // onCloseSync,
   easy2StakeEarnUsd,
   midleEarnUsd,
   coingeckoEarnUsd,
@@ -177,14 +178,16 @@ function Dashboard({
   myTeaSeiNfts,
   myTeaBaseNfts,
 }) {
-  const { email, logout } = useAuth();
+  const { email } = useAuth();
   const { eventId } = useParams();
-  const override = {
-    display: "block",
-    margin: "auto",
-    borderColor: "#554fd8",
-  };
-
+  // const override = {
+  //   display: "block",
+  //   margin: "auto",
+  //   borderColor: "#554fd8",
+  // };
+  const suspenseful1Sound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/longSuspense.mp3";
+  const clockSound = "https://cdn.worldofdypians.com/wod/aiOryn/clockSound.mp3";
   const {
     data,
     refetch: refetchPlayer,
@@ -217,59 +220,59 @@ function Dashboard({
     "hmbsamd@gmail.com",
   ];
 
-  const chainDropdowns = [
-    {
-      name: "Ethereum",
-      symbol: "eth",
-    },
-    {
-      name: "BNB Chain",
-      symbol: "bnb",
-    },
+  // const chainDropdowns = [
+  //   {
+  //     name: "Ethereum",
+  //     symbol: "eth",
+  //   },
+  //   {
+  //     name: "BNB Chain",
+  //     symbol: "bnb",
+  //   },
 
-    {
-      name: "Avalanche",
-      symbol: "wavax",
-    },
-    {
-      name: "Conflux",
-      symbol: "conflux",
-    },
-    {
-      name: "Base",
-      symbol: "base",
-    },
-    {
-      name: "SKALE",
-      symbol: "skale",
-    },
-    {
-      name: "CORE",
-      symbol: "core",
-    },
-    {
-      name: "Viction",
-      symbol: "viction",
-    },
+  //   {
+  //     name: "Avalanche",
+  //     symbol: "wavax",
+  //   },
+  //   {
+  //     name: "Conflux",
+  //     symbol: "conflux",
+  //   },
+  //   {
+  //     name: "Base",
+  //     symbol: "base",
+  //   },
+  //   {
+  //     name: "SKALE",
+  //     symbol: "skale",
+  //   },
+  //   {
+  //     name: "CORE",
+  //     symbol: "core",
+  //   },
+  //   {
+  //     name: "Viction",
+  //     symbol: "viction",
+  //   },
 
-    {
-      name: "Manta",
-      symbol: "manta",
-    },
+  //   {
+  //     name: "Manta",
+  //     symbol: "manta",
+  //   },
 
-    {
-      name: "Taiko",
-      symbol: "taiko",
-    },
-    {
-      name: "Matchain",
-      symbol: "matchain",
-    },
-    {
-      name: "SEI",
-      symbol: "sei",
-    },
-  ];
+  //   {
+  //     name: "Taiko",
+  //     symbol: "taiko",
+  //   },
+  //   {
+  //     name: "Matchain",
+  //     symbol: "matchain",
+  //   },
+  //   {
+  //     name: "SEI",
+  //     symbol: "sei",
+  //   },
+  // ];
 
   const chestImagesBnb = [
     "0",
@@ -473,8 +476,11 @@ function Dashboard({
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [showDailyQuestion, setShowDailyQuestion] = useState(false);
+  const [tooltip, setTooltip] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
+  const [closePopup, setClosePopup] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -540,6 +546,7 @@ function Dashboard({
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
   const [adClicked, setadClicked] = useState("");
   const [goldenPassPopup, setgoldenPassPopup] = useState(false);
+  const [aiQuestionCompleted, setAiQuestionCompleted] = useState(false);
 
   const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
 
@@ -638,16 +645,28 @@ function Dashboard({
 
   const [mediaUrl, setMediaUrl] = useState("");
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
-
+  const [suspenseSound, setSuspenseSound] = useState(false);
   const [selectedEvent, setselectedEvent] = useState([]);
   const [showEventPopup, setshowEventPopup] = useState(false);
-
+  const [aiStep, setAiStep] = useState(0);
   const [userRankName, setUserRankName] = useState({
     name: "starter",
     id: 0,
   });
 
   const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
+
+  const suspenseMusicRef = useRef(null);
+  const clockSoundRef = useRef(null);
+
+  const getAiStep = (data) => {
+    setAiStep(data);
+  };
+
+  useEffect(() => {
+    suspenseMusicRef.current = new Audio(suspenseful1Sound);
+    clockSoundRef.current = new Audio(clockSound);
+  }, []);
 
   const recaptchaRef = useRef(null);
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
@@ -696,7 +715,7 @@ function Dashboard({
             headers: { Authorization: `Bearer ${authToken}` },
           })
           .then(function (result) {
-            console.log(result.data);
+            // console.log(result.data);
             setSpecialRewardsSuccess("Email sent successfully");
             return result.data;
           })
@@ -845,6 +864,32 @@ function Dashboard({
     puzzleMadness: false,
   });
   const [puzzleMadnessTimer, setPuzzleMadnessTimer] = useState(0);
+  const [aiQuestionRewards, setaiQuestionRewards] = useState([]);
+  const [aiQuestionObjectAnswered, setAiQuestionObjectAnswered] = useState({
+    question: "",
+    options: [],
+    id: "",
+    userIndex: undefined,
+    correctIndex: undefined,
+    chain: "",
+  });
+  const useWarnOnRefresh = (shouldWarn) => {
+    useEffect(() => {
+      const handleBeforeUnload = (event) => {
+        if (shouldWarn === 0) return; // Do nothing if the condition is false
+
+        event.preventDefault();
+        event.returnValue = ""; // Required for the dialog to appear
+      };
+
+      window.addEventListener("beforeunload", handleBeforeUnload);
+      return () => {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+      };
+    }, [shouldWarn]);
+  };
+
+  useWarnOnRefresh(aiStep);
 
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
@@ -965,9 +1010,10 @@ function Dashboard({
       setloadingCore(false);
       fillRecordsCore([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingCore(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -1180,9 +1226,10 @@ function Dashboard({
       setloadingViction(false);
       fillRecordsViction([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingViction(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -1394,9 +1441,10 @@ function Dashboard({
       setloadingManta(false);
       fillRecordsManta([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingManta(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -1613,9 +1661,10 @@ function Dashboard({
       setloadingSei(false);
       fillRecordsSei([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingSei(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -1832,9 +1881,10 @@ function Dashboard({
       setloadingBase(false);
       fillRecordsBase([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingBase(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2022,9 +2072,10 @@ function Dashboard({
       setLoadingVanar(false);
       fillRecordsVanar([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoadingVanar(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2151,9 +2202,10 @@ function Dashboard({
       setloadingTaiko(false);
       fillRecordsTaiko([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingTaiko(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2369,9 +2421,10 @@ function Dashboard({
       setloadingMat(false);
       fillRecordsMat([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingMat(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2587,9 +2640,10 @@ function Dashboard({
       setloadingSkale(false);
       fillRecordsSkale([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingSkale(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2887,9 +2941,10 @@ function Dashboard({
       setloadingStarMonthly(false);
       fillRecordsStar([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingStarMonthly(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -2988,9 +3043,10 @@ function Dashboard({
       setloadingStarWeekly(false);
       fillRecordsStarWeekly([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingStarWeekly(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -3203,9 +3259,10 @@ function Dashboard({
       setloadingBnb(false);
       fillRecords([]);
     } finally {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setloadingBnb(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -3351,6 +3408,16 @@ function Dashboard({
       setclaimedMatChests(0);
       setclaimedMatPremiumChests(0);
       refetchPlayer();
+      setaiQuestionRewards([]);
+      setAiQuestionCompleted(false);
+      setAiQuestionObjectAnswered({
+        question: "",
+        options: [],
+        id: "",
+        userIndex: undefined,
+        correctIndex: undefined,
+        chain: "",
+      });
     }
   }, [logoutCount]);
 
@@ -4568,11 +4635,12 @@ function Dashboard({
 
     if (result2 && result2.status === 200) {
       console.log(result2.data.result);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         if (isonlink) {
           window.location.reload();
         }
       }, 2000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -5196,6 +5264,84 @@ function Dashboard({
     }
   };
 
+  const getAIQuestionRewardStatus = async (email) => {
+    const data = {
+      emailAddress: email,
+      chainId: "bnb",
+    };
+    const result = await axios
+      .post(
+        `https://worldofdypiansdailybonus.azurewebsites.net/api/GetDailyQuestionAnswer?code=YaQr78883ptswtmsk4Oyfl3QK_ni3SN2E5okDerTxsxwAzFurSAsvQ==`,
+        data
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data.status === "Success") {
+        setaiQuestionRewards(result.data.reward);
+      }
+    } else {
+      const data = {
+        emailAddress: email,
+        chainId: "opbnb",
+      };
+      const result = await axios
+        .post(
+          `https://worldofdypiansdailybonus.azurewebsites.net/api/GetDailyQuestionAnswer?code=YaQr78883ptswtmsk4Oyfl3QK_ni3SN2E5okDerTxsxwAzFurSAsvQ==`,
+          data
+        )
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (result && result.status === 200) {
+        if (result.data.status === "Success") {
+          setaiQuestionRewards(result.data.reward);
+        }
+      }
+    }
+  };
+
+  const getAIQuestionStatus = async (wallet, email) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/qa/profile?walletAddress=${wallet}&email=${email}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      const today = new Date();
+
+      const isToday = result.data.alreadyAnsweredToday;
+
+      const todayObj = result.data.todayResult;
+
+      if (isToday === true) {
+        const cleanedAnswers = todayObj.answers.map((answer) =>
+          answer.replace(/^[A-D][.)]\s*/, "")
+        );
+
+        setAiQuestionObjectAnswered({
+          question: todayObj.questionText,
+          options: cleanedAnswers,
+          id: "",
+          userIndex: todayObj.userIndex,
+          correctIndex: todayObj.correctIndex,
+          chain: todayObj.chain,
+        });
+        setAiQuestionCompleted(true);
+      }
+
+      //   if (result.data.totalAnswered > 0) {
+      //     getAIQuestion(chainId === 204 ? "opbnb" : "bnb", wallet);
+      //   }
+    }
+  };
+  // console.log(aiQuestionObjectAnswered, aiQuestionCompleted);
   const handleShowSyncModal = () => {
     onSyncClick();
   };
@@ -5207,7 +5353,39 @@ function Dashboard({
       return [];
     }
   };
-
+  const switchNetwork = async (hexChainId, chain) => {
+    if (window.ethereum) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        await handleSwitchNetworkhook(hexChainId)
+          .then(() => {
+            handleSwitchNetwork(chain);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        handleSwitchChainGateWallet(chain);
+      } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+        network_matchain?.showChangeNetwork();
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(chain);
+      }
+    } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(chain);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
   //todo
   const fetchAllMyNfts = async () => {
     countUserDailyBundles(userWallet ? userWallet : coinbase);
@@ -5837,8 +6015,9 @@ function Dashboard({
   ]);
 
   useEffect(() => {
-    if (userWallet && email) {
+    if (userWallet !== undefined && email !== undefined && email !== "") {
       getUserRewardData(userWallet);
+      getAIQuestionStatus(userWallet, email);
     }
   }, [userWallet, email]);
 
@@ -5850,11 +6029,11 @@ function Dashboard({
     }
   }, [userWallet, isConnected, coinbase]);
 
-  useEffect(() => {
-    if (email && userWallet) {
-      handleFirstTask(userWallet);
-    }
-  }, [email, userWallet]);
+  // useEffect(() => {
+  //   if (email && userWallet) {
+  //     handleFirstTask(userWallet);
+  //   }
+  // }, [email, userWallet]);
 
   useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
@@ -5864,7 +6043,7 @@ function Dashboard({
 
   useEffect(() => {
     refetchPlayer();
-  }, [email]);
+  }, [email, syncCount]);
 
   useEffect(() => {
     fetchUsersocialRewards();
@@ -5875,7 +6054,8 @@ function Dashboard({
       (dailyBonusPopup === true && dailyrewardpopup) ||
       leaderboard === true ||
       globalLeaderboard === true ||
-      genesisLeaderboard === true
+      genesisLeaderboard === true ||
+      showDailyQuestion === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -5889,6 +6069,7 @@ function Dashboard({
     leaderboard,
     globalLeaderboard,
     genesisLeaderboard,
+    showDailyQuestion,
   ]);
 
   const logoutItem = localStorage.getItem("logout");
@@ -5897,6 +6078,7 @@ function Dashboard({
     if (email && userWallet) {
       getAllSkaleChests(email);
       getAllChests(email);
+      getAIQuestionRewardStatus(email);
       getAllCoreChests(email);
       getAllVictionChests(email);
       getAllMantaChests(email);
@@ -5921,12 +6103,12 @@ function Dashboard({
   }, [success]);
 
   useEffect(() => {
-    if (dailyBonusPopup) {
+    if (dailyBonusPopup || closePopup) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [dailyBonusPopup]);
+  }, [dailyBonusPopup, closePopup]);
 
   const hashValue = window.location.hash;
 
@@ -6010,6 +6192,7 @@ function Dashboard({
           <>
             <MyProfile
               wodBalance={wodBalance}
+              aiQuestionCompleted={aiQuestionCompleted}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
@@ -6022,6 +6205,9 @@ function Dashboard({
               beastSiegeStatus={beastSiegeStatus}
               puzzleMadnessTimer={puzzleMadnessTimer}
               onGoldenpassClick={() => setgoldenPassPopup(true)}
+              onDailyQuestionClick={() => {
+                setShowDailyQuestion(true);
+              }}
               onShowRankPopup={() => {
                 handleFetchRecords("all");
               }}
@@ -6286,6 +6472,21 @@ function Dashboard({
             easy2StakeEarnUsd={easy2StakeEarnUsd}
             midleEarnUsd={midleEarnUsd}
             coingeckoEarnUsd={coingeckoEarnUsd}
+            aiQuestionRewards={
+              aiQuestionRewards.length > 0
+                ? aiQuestionRewards.find((item) => {
+                    return (
+                      item.rewardType === "Money" && item.status === "Claimed"
+                    );
+                  }) !== undefined
+                  ? aiQuestionRewards.find((item) => {
+                      return (
+                        item.rewardType === "Money" && item.status === "Claimed"
+                      );
+                    }).reward
+                  : 0
+                : 0
+            }
           />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
@@ -6941,8 +7142,270 @@ function Dashboard({
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 coingeckoEarnUsd={coingeckoEarnUsd}
+                aiQuestionRewards={
+                  aiQuestionRewards.length > 0
+                    ? aiQuestionRewards.find((item) => {
+                        return (
+                          item.rewardType === "Money" &&
+                          item.status === "Claimed"
+                        );
+                      }) !== undefined
+                      ? aiQuestionRewards.find((item) => {
+                          return (
+                            item.rewardType === "Money" &&
+                            item.status === "Claimed"
+                          );
+                        }).reward
+                      : 0
+                    : 0
+                }
               />
             </div>
+          </OutsideClickHandler>
+        )}
+
+        {showDailyQuestion && (
+          // <OutsideClickHandler
+          //   onOutsideClick={() => setShowDailyQuestion(false)}
+          // >
+          // <div
+          //   className="popup-wrapper popup-active p-4 ai-question-outer-wrapper d-flex flex-column"
+          //   id="aiQuestion"
+          //   style={{
+          //     minHeight: "460px",
+          //     pointerEvents: "auto",
+          //     overflowX: "auto",
+          //     width: "460px",
+          //   }}
+          // >
+          <div className={`package-popup-wrapper2 `}>
+            <div
+              className={`new-daily-bonus-popup overflow-visible d-flex flex-column gap-2 custom-container-width2 justify-content-center`}
+            >
+              <div className="ai-question-outer-wrapper custom-container-width2 position-relative p-lg-5 p-3 d-flex">
+                <div className="ai-question-header-wrapper">
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/ai-question-header-img2.webp"
+                    }
+                    className="ai-question-header-img"
+                  />
+                </div>
+                <div className="d-flex align-items-center justify-content-between w-100 ai-popup-x-wrapper">
+                  <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
+                    <div className="d-lg-none d-md-none d-flex position-relative top-0 start-0">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/ai-tooltip.png"
+                        }
+                        alt=""
+                        className="tooltip-icon"
+                        style={{
+                          cursor: "pointer",
+                          width: "40px",
+                          height: "40px",
+                        }}
+                        onClick={() => setTooltip(!tooltip)}
+                      />
+                      <div
+                        className={`tooltip-wrapper p-3 ${
+                          tooltip && "tooltip-active"
+                        }`}
+                        style={{
+                          width: 260,
+                          left: "40%",
+                          background: "#091235",
+                        }}
+                      >
+                        <div className=" gap-2 d-flex flex-column">
+                          <span className="ai-oryn-bottom-txt">
+                            A daily challenge where each player can unlock a AI
+                            question for a chance to win!
+                          </span>
+                          <span className="ai-oryn-bottom-txt">Notes:</span>
+                          <ul className="ai-oryn-bottom-txt ps-0">
+                            <li>🔹 Daily opportunity </li>
+                            <li>🔹 Available on BNB & opBNB</li>
+                            <li>🔹 Sign the transaction </li>
+                            <li>🔹 Answer in 20 seconds</li>
+                            <li>🔹 Win different rewards</li>
+                          </ul>
+
+                          <div
+                            className={"ai-rewards-info-active"}
+                            // onMouseOver={() => {
+                            //   setActiveClass("stars");
+                            // }}
+                            // onMouseLeave={() => {
+                            //   setActiveClass("");
+                            // }}
+                          >
+                            <div className="d-flex align-items-center px-3 py-2 gap-2">
+                              <div className="d-flex align-items-center gap-1">
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
+                                  }
+                                  alt=""
+                                  className={"ai-reward-logo-active"}
+                                />
+                                <div className="d-flex flex-column">
+                                  {/* <span className={"ai-rewards-stars"}>180</span> */}
+                                  <span
+                                    className={"ai-rewards-title-active ps-3"}
+                                  >
+                                    50 - 250 Stars
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className="ai-rewards-info-active"
+                            // onMouseOver={() => {
+                            //   setActiveClass("points");
+                            // }}
+                            // onMouseLeave={() => {
+                            //   setActiveClass("");
+                            // }}
+                          >
+                            <div className="d-flex align-items-center px-3 py-2 gap-2">
+                              <div className="d-flex align-items-center gap-1">
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
+                                  }
+                                  alt=""
+                                  className={"ai-reward-logo-active"}
+                                />
+                                <div className="d-flex flex-column">
+                                  {/* <span className={"ai-rewards-points"}>
+                      {getFormattedNumber(23200, 0)}
+                    </span> */}
+                                  <span
+                                    className={"ai-rewards-title-active ps-3"}
+                                  >
+                                    15,000 - 80,000 Points
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className="ai-rewards-info-active"
+                            // onMouseOver={() => {
+                            //   setActiveClass("rewards");
+                            // }}
+                            // onMouseLeave={() => {
+                            //   setActiveClass("");
+                            // }}
+                          >
+                            <div className="d-flex align-items-center px-3 py-2 gap-2">
+                              <div className="d-flex align-items-center gap-1">
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
+                                  }
+                                  alt=""
+                                  className={"ai-reward-logo-active"}
+                                />
+                                <div className="d-flex flex-column">
+                                  {/* <span className={"ai-rewards-money"}>$1.5</span> */}
+                                  <span
+                                    className={"ai-rewards-title-active ps-3"}
+                                  >
+                                    $5-$10 Rewards
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </OutsideClickHandler>
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/ai-popupx.png"}
+                    onClick={() => {
+                      if (aiStep === 0) {
+                        setSuspenseSound(true);
+                        setShowDailyQuestion(false);
+                        suspenseMusicRef.current?.pause();
+                        suspenseMusicRef.current.currentTime = 0;
+                        clockSoundRef.current?.pause();
+                        clockSoundRef.current.currentTime = 0;
+                        html.classList.remove("hidescroll");
+                      } else {
+                        setClosePopup(true);
+                      }
+                    }}
+                    alt=""
+                    className="ai-x"
+                  />
+                </div>
+                <AIQuestion
+                  onQuestionComplete={(value) => {
+                    setAiQuestionCompleted(value);
+                    getAIQuestionRewardStatus(email);
+                    getAIQuestionStatus(coinbase, email);
+                  }}
+                  aiQuestionRewards={aiQuestionRewards}
+                  aiQuestionObjectAnswered={aiQuestionObjectAnswered}
+                  getAiStep={getAiStep}
+                  closePopup={closePopup}
+                  setClosePopup={setClosePopup}
+                  username={data?.getPlayer?.displayName ?? "Player"}
+                  address={data?.getPlayer?.wallet?.publicAddress}
+                  isConnected={isConnected}
+                  coinbase={coinbase}
+                  chainId={chainId}
+                  suspenseMusicRef={suspenseMusicRef}
+                  clockSoundRef={clockSoundRef}
+                  suspenseSound={suspenseSound}
+                  setSuspenseSound={setSuspenseSound}
+                  onConnectWallet={() => {
+                    setShowDailyQuestion(false);
+                    handleConnect();
+                  }}
+                  onClose={() => {
+                    setSuspenseSound(true);
+                    setShowDailyQuestion(false);
+                    suspenseMusicRef.current?.pause();
+                    suspenseMusicRef.current.currentTime = 0;
+                    clockSoundRef.current?.pause();
+                    clockSoundRef.current.currentTime = 0;
+                    html.classList.remove("hidescroll");
+                    setAiStep(0);
+                  }}
+                  handleBnbPool={(hex, dec) => {
+                    switchNetwork(hex, dec);
+                  }}
+                  email={email}
+                  walletClient={walletClient}
+                  publicClient={publicClient}
+                  binanceW3WProvider={binanceW3WProvider}
+                />
+              </div>
+            </div>
+          </div>
+
+          // </OutsideClickHandler>
+        )}
+        {closePopup && (
+          <OutsideClickHandler onOutsideClick={() => setClosePopup(false)}>
+            <ClosePopup
+              onClose={() => {
+                setSuspenseSound(true);
+                setShowDailyQuestion(false);
+                suspenseMusicRef.current?.pause();
+                suspenseMusicRef.current.currentTime = 0;
+                clockSoundRef.current?.pause();
+                clockSoundRef.current.currentTime = 0;
+                html.classList.remove("hidescroll");
+                setAiStep(0);
+              }}
+              setClosePopup={setClosePopup}
+            />
           </OutsideClickHandler>
         )}
         {portfolio && (

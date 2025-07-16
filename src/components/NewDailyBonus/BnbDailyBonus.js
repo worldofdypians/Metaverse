@@ -6827,7 +6827,7 @@ const BnbDailyBonus = ({
             onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               chain === "bnb"
                 ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
                 : chain === "core"
@@ -6864,6 +6864,7 @@ const BnbDailyBonus = ({
                     isActiveIndex - 1
                   );
             }, 2000);
+            return () => clearTimeout(timer);
           }}
         />
       )}
