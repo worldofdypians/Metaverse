@@ -510,12 +510,22 @@ const Marketplace = ({
         console.error(e);
       });
 
-    if (result.data && result.data !== "NaN") {
+    if (
+      result &&
+      result.status === 200 &&
+      result.data &&
+      result.data !== "NaN"
+    ) {
       setTotalTx(result.data);
       localStorage.setItem("cachedTvl", result.data);
     }
 
-    if (result2.data && result2.data !== "NaN") {
+    if (
+      result2 &&
+      result2.status === 200 &&
+      result2.data &&
+      result2.data !== "NaN"
+    ) {
       setTotalVolume(result2.data.totalVolume);
       localStorage.setItem("cachedVolume", result2.data.totalVolume);
     }

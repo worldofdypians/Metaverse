@@ -2013,6 +2013,9 @@ function App() {
         if (obj.data) {
           setEthTokenData(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -2039,6 +2042,9 @@ function App() {
         if (res.data) {
           setWodPrice(res.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -2049,6 +2055,9 @@ function App() {
         if (obj.data) {
           setDogePrice(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -2059,6 +2068,9 @@ function App() {
         if (obj.data) {
           setKucoinPrice(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -2070,6 +2082,9 @@ function App() {
           setBnbUSDPrice(obj.data.price);
           setBnbPrice(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
 
     await axios
@@ -2078,6 +2093,9 @@ function App() {
         if (obj.data) {
           setIDypTokenDatabnb(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -4105,6 +4123,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/tomochain`)
       .then((obj) => {
         setmultiversPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -4113,6 +4134,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/immutable`)
       .then((obj) => {
         setImmutablePrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -4121,6 +4145,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/skale`)
       .then((obj) => {
         setSkalePrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
   const fetchSeiPrice = async () => {
@@ -4128,6 +4155,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/sei-network`)
       .then((obj) => {
         setSeiPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -4136,6 +4166,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/coredaoorg`)
       .then((obj) => {
         setCorePrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
   const fetchCFXPrice = async () => {
@@ -4145,6 +4178,9 @@ function App() {
         if (obj.data) {
           setCfxPrice(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
   const fetchMantaPrice = async () => {
@@ -4152,6 +4188,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/manta-network`)
       .then((obj) => {
         setMantaPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -4160,6 +4199,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/taiko`)
       .then((obj) => {
         setTaikoPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -4168,6 +4210,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/cookie`)
       .then((obj) => {
         setCookiePrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -4176,6 +4221,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/tomochain`)
       .then((obj) => {
         setVictionPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -4184,6 +4232,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/vanar-chain`)
       .then((obj) => {
         setvanarPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
