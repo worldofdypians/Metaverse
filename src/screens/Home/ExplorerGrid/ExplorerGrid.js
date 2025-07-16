@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./_explorergrid.scss";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 
-
 import axios from "axios";
 
 const ExplorerGrid = ({
@@ -17,22 +16,22 @@ const ExplorerGrid = ({
   const cachedVolume = localStorage.getItem("cachedVolume");
   const cachedTvl = localStorage.getItem("cachedTvl");
 
-
   const getAllData = async () => {
     const result = await axios
       .get("https://api.worldofdypians.com/api/totalTXs")
       .catch((e) => {
         console.error(e);
       });
-    ;
-
-    if (result.data && result.data !== "NaN") {
+    if (
+      result &&
+      result.status === 200 &&
+      result.data &&
+      result.data !== "NaN"
+    ) {
       setTotalTx(result.data);
       localStorage.setItem("cachedTvl", result.data);
     }
- 
   };
-
 
   const fetchCachedData = () => {
     if (cachedTvl && cachedVolume) {
@@ -45,11 +44,9 @@ const ExplorerGrid = ({
     fetchCachedData();
   }, [cachedTvl, cachedVolume]);
 
-
   useEffect(() => {
-    getAllData(); 
+    getAllData();
   }, []);
-
 
   return (
     <div
@@ -65,7 +62,11 @@ const ExplorerGrid = ({
                 className="dappRadar-full"
                 target="_blank"
               >
-                <img src={"https://cdn.worldofdypians.com/wod/dappradarFull.svg"} className="w-100" alt="" />
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/dappradarFull.svg"}
+                  className="w-100"
+                  alt=""
+                />
               </a>
               <h6 className="mb-0 new-stats-value">
                 {" "}

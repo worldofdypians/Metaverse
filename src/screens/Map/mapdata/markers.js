@@ -305,6 +305,12 @@ const iconData = [
     size: 24,
     chain: true,
   },
+  {
+    name: "teafiMarker",
+    url: "https://cdn.worldofdypians.com/wod/teafi.svg",
+    size: 24,
+    chain: true,
+  },
 ];
 
 // Function to create markers dynamically
