@@ -172,6 +172,10 @@ function Dashboard({
   publicClient,
   network_matchain,
   syncStatus,
+    myTeaBnbNfts,
+  myTeaOpbnbNfts,
+  myTeaSeiNfts,
+  myTeaBaseNfts,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -7018,6 +7022,10 @@ function Dashboard({
                 myNFTSBNB={MyNFTSBNB}
                 MyNFTSCawsBase={MyNFTSCawsBase}
                 myMatNfts={myMatNfts}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts} 
               />
             </div>
           </OutsideClickHandler>

@@ -575,6 +575,10 @@ function App() {
   const [mykucoinNFTs, setMykucoinNFTs] = useState([]);
   const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
   const [myVanarNFTs, setmyVanarNFTs] = useState([]);
+  const [myTeaOpbnbNfts, setmyTeaOpbnbNfts] = useState([]);
+  const [myTeaBnbNfts, setmyTeaBnbNfts] = useState([]);
+  const [myTeaBaseNfts, setmyTeaBaseNfts] = useState([]);
+  const [myTeaSeiNfts, setmyTeaSeiNfts] = useState([]);
 
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
@@ -640,7 +644,7 @@ function App() {
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
-  let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+  let teaLastDay = new Date("2025-10-16T13:00:00.000+02:00");
   let bnbLastDay = new Date("2025-08-07T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
@@ -765,6 +769,9 @@ function App() {
   const [bnbEarnToken, setBnbEarnToken] = useState(0);
   const [bnbEarnUsd, setBnbEarnUsd] = useState(0);
   const [bnbPoints, setBnbPoints] = useState(0);
+  const [teaEarnToken, setTeaEarnToken] = useState(0);
+  const [teaEarnUsd, setTeaEarnUsd] = useState(0);
+  const [teaPoints, setTeaPoints] = useState(0);
 
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
@@ -2006,6 +2013,9 @@ function App() {
         if (obj.data) {
           setEthTokenData(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -2032,6 +2042,9 @@ function App() {
         if (res.data) {
           setWodPrice(res.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -2042,6 +2055,9 @@ function App() {
         if (obj.data) {
           setDogePrice(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -2052,6 +2068,9 @@ function App() {
         if (obj.data) {
           setKucoinPrice(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -2063,6 +2082,9 @@ function App() {
           setBnbUSDPrice(obj.data.price);
           setBnbPrice(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
 
     await axios
@@ -2071,6 +2093,9 @@ function App() {
         if (obj.data) {
           setIDypTokenDatabnb(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -2568,6 +2593,18 @@ function App() {
       });
       getMyNFTS(coinbase, "vanar").then((NFTS) => {
         setmyVanarNFTs(NFTS);
+      });
+      getMyNFTS(coinbase, "tea-bnb").then((NFTS) => {
+        setmyTeaBnbNfts(NFTS);
+      });
+      getMyNFTS(coinbase, "tea-opbnb").then((NFTS) => {
+        setmyTeaOpbnbNfts(NFTS);
+      });
+      getMyNFTS(coinbase, "tea-base").then((NFTS) => {
+        setmyTeaBaseNfts(NFTS);
+      });
+      getMyNFTS(coinbase, "tea-sei").then((NFTS) => {
+        setmyTeaSeiNfts(NFTS);
       });
       //setmyBaseNFTs
     } else {
@@ -3181,6 +3218,362 @@ function App() {
     }
   };
 
+  const handleMintTeaopBnb = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      if (window.WALLET_TYPE !== "binance") {
+        await window.teaopbnb_nft
+          .mintTeaOpbnbNFT()
+          .then(() => {
+            setmintStatus("Success! Your Nft was minted successfully!");
+            setmintloading("success");
+            settextColor("rgb(123, 216, 176)");
+            setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            getMyNFTS(coinbase, "tea-opbnb").then((NFTS) => {
+              setmyTeaOpbnbNfts(NFTS);
+            });
+          })
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+      } else if (window.WALLET_TYPE === "binance") {
+        const nft_contract = new ethers.Contract(
+          window.config.nft_teaopbnb_address,
+          window.OPBNB_NFT_ABI,
+          library.getSigner()
+        );
+        const txResponse = await nft_contract.mintBetaPass().catch((e) => {
+          console.error(e);
+          setmintloading("error");
+          settextColor("#d87b7b");
+
+          if (typeof e == "object" && e.message) {
+            setmintStatus(e.message);
+          } else {
+            setmintStatus(
+              "Oops, something went wrong! Refresh the page and try again!"
+            );
+          }
+          setTimeout(() => {
+            setmintloading("initial");
+            setmintStatus("");
+          }, 5000);
+        });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setmintStatus("Success! Your Nft was minted successfully!");
+          setmintloading("success");
+          settextColor("rgb(123, 216, 176)");
+          setTimeout(() => {
+            setmintStatus("");
+            setmintloading("initial");
+          }, 5000);
+          getMyNFTS(coinbase, "tea-opbnb").then((NFTS) => {
+            setmyTeaOpbnbNfts(NFTS);
+          });
+        }
+      }
+    }
+  };
+
+  const handleMintTeaBase = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      if (window.WALLET_TYPE !== "binance") {
+        await window.teabase_nft
+          .mintTeaBaseNFT()
+          .then(() => {
+            setmintStatus("Success! Your Nft was minted successfully!");
+            setmintloading("success");
+            settextColor("rgb(123, 216, 176)");
+            setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            getMyNFTS(coinbase, "tea-base").then((NFTS) => {
+              setmyTeaBaseNfts(NFTS);
+            });
+          })
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+      } else if (window.WALLET_TYPE === "binance") {
+        const nft_contract = new ethers.Contract(
+          window.config.nft_teabase_address,
+          window.BASE_NFT_ABI,
+          library.getSigner()
+        );
+        const txResponse = await nft_contract.mintBetaPass().catch((e) => {
+          console.error(e);
+          setmintloading("error");
+          settextColor("#d87b7b");
+
+          if (typeof e == "object" && e.message) {
+            setmintStatus(e.message);
+          } else {
+            setmintStatus(
+              "Oops, something went wrong! Refresh the page and try again!"
+            );
+          }
+          setTimeout(() => {
+            setmintloading("initial");
+            setmintStatus("");
+          }, 5000);
+        });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setmintStatus("Success! Your Nft was minted successfully!");
+          setmintloading("success");
+          settextColor("rgb(123, 216, 176)");
+          setTimeout(() => {
+            setmintStatus("");
+            setmintloading("initial");
+          }, 5000);
+          getMyNFTS(coinbase, "tea-base").then((NFTS) => {
+            setmyTeaBaseNfts(NFTS);
+          });
+        }
+      }
+    }
+  };
+
+  const handleMintTeaBnb = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        await window.teabnb_nft
+          .mintTeaBnbNFT()
+          .then(() => {
+            setmintStatus("Success! Your Nft was minted successfully!");
+            setmintloading("success");
+            settextColor("rgb(123, 216, 176)");
+            setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            getMyNFTS(coinbase, "tea-bnb").then((NFTS) => {
+              setmyTeaBnbNfts(NFTS);
+            });
+          })
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: window.config.nft_teabnb_address,
+              abi: window.BNB_NFT_ABI,
+              functionName: "mintBetaPass",
+              args: [],
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (receipt) {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "tea-bnb").then((NFTS) => {
+                setmyTeaBnbNfts(NFTS);
+              });
+            }
+          }
+        }
+      } else if (window.WALLET_TYPE === "binance") {
+        const nft_contract = new ethers.Contract(
+          window.config.nft_teabnb_address,
+          window.BNB_NFT_ABI,
+          library.getSigner()
+        );
+
+        const gasPrice = await library.getGasPrice();
+        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+        const gasPriceInWei = ethers.utils.parseUnits(
+          currentGwei.toString().slice(0, 14),
+          "gwei"
+        );
+
+        const transactionParameters = {
+          gasPrice: gasPriceInWei,
+        };
+
+        let gasLimit;
+        try {
+          gasLimit = await nft_contract.estimateGas.mintBetaPass();
+          transactionParameters.gasLimit = gasLimit;
+          console.log("transactionParameters", transactionParameters);
+        } catch (error) {
+          console.error(error);
+        }
+
+        const txResponse = await nft_contract
+          .mintBetaPass({ ...transactionParameters })
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setmintStatus("Success! Your Nft was minted successfully!");
+          setmintloading("success");
+          settextColor("rgb(123, 216, 176)");
+          setTimeout(() => {
+            setmintStatus("");
+            setmintloading("initial");
+          }, 5000);
+          getMyNFTS(coinbase, "tea-bnb").then((NFTS) => {
+            setmyTeaBnbNfts(NFTS);
+          });
+        }
+      }
+    }
+  };
+
+  const handleMintTeaSei = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      const provider = ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const nft_contract = new ethers.Contract(
+        window.config.nft_teasei_address,
+        window.SEI_NFT_ABI,
+        signer
+      );
+      const txResponse = await nft_contract.mintBetaPass().catch((e) => {
+        console.error(e);
+        setmintloading("error");
+        settextColor("#d87b7b");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setmintStatus("Success! Your Nft was minted successfully!");
+        setmintloading("success");
+        settextColor("rgb(123, 216, 176)");
+        setTimeout(() => {
+          setmintStatus("");
+          setmintloading("initial");
+        }, 5000);
+        getMyNFTS(coinbase, "tea-sei").then((NFTS) => {
+          setmyTeaSeiNfts(NFTS);
+        });
+      }
+    }
+  };
+  // console.log(myTeaBaseNfts, myTeaBnbNfts, myTeaSeiNfts, myTeaOpbnbNfts);
   useEffect(() => {
     if (
       binanceData &&
@@ -3730,6 +4123,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/tomochain`)
       .then((obj) => {
         setmultiversPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -3738,6 +4134,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/immutable`)
       .then((obj) => {
         setImmutablePrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -3746,6 +4145,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/skale`)
       .then((obj) => {
         setSkalePrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
   const fetchSeiPrice = async () => {
@@ -3753,6 +4155,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/sei-network`)
       .then((obj) => {
         setSeiPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -3761,6 +4166,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/coredaoorg`)
       .then((obj) => {
         setCorePrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
   const fetchCFXPrice = async () => {
@@ -3770,6 +4178,9 @@ function App() {
         if (obj.data) {
           setCfxPrice(obj.data.price);
         }
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
   const fetchMantaPrice = async () => {
@@ -3777,6 +4188,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/manta-network`)
       .then((obj) => {
         setMantaPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -3785,6 +4199,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/taiko`)
       .then((obj) => {
         setTaikoPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -3793,6 +4210,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/cookie`)
       .then((obj) => {
         setCookiePrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -3801,6 +4221,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/tomochain`)
       .then((obj) => {
         setVictionPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -3809,6 +4232,9 @@ function App() {
       .get(`https://api.worldofdypians.com/api/price/vanar-chain`)
       .then((obj) => {
         setvanarPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 
@@ -3930,6 +4356,43 @@ function App() {
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
+    {
+      title: "Tea-Fi",
+      logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
+      eventStatus: "Coming Soon",
+      totalRewards: "$40,000 in TEA Rewards",
+      myEarnings: 0.0,
+      rewardAmount: "$40,000",
+      location: [-0.06892739063903598, 0.08374929428100586],
+      eventType: "Explore & Mine",
+      eventDate: "Jul 18, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/teafiEventBg.webp",
+      userEarnUsd: teaEarnUsd,
+      userEarnCrypto: teaEarnToken,
+      userEarnPoints: teaPoints,
+      image: "teafiBuilderBanner.webp",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      rewardType: "TEA",
+      marker: markers.treasureMarker,
+      popupInfo: {
+        title: "Tea-Fi",
+        chain: "BNB Chain",
+        linkState: "tea-fi",
+        rewards: "TEA",
+        status: "Coming Soon",
+        id: "event4",
+        eventType: "Explore & Mine",
+        totalRewards: "$40,000 in TEA Rewards",
+        eventDuration: teaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 18, 2025",
+      },
+    },
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
@@ -6069,6 +6532,10 @@ function App() {
                 onSyncClick={() => {
                   setshowSync(true);
                 }}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
                 syncStatus={syncStatus}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -6161,6 +6628,10 @@ function App() {
                     setIsPremium(true);
                   }, 2000);
                 }}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -6349,6 +6820,22 @@ function App() {
           <Route
             exact
             path="/shop/beta-pass/bnb"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/tea-fi"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -6703,6 +7190,10 @@ function App() {
                     setIsPremium(true);
                   }, 2000);
                 }}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -6853,19 +7344,10 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalMatNfts={myMatNFTs.length}
-                matMintAllowed={1 - myMatNFTs.length}
-                seiMintAllowed={1 - myseiNfts.length}
-                myMatNFTs={myMatNFTs}
-                myMatNFTsCreated={myMatNFTs}
                 handleSwitchNetwork={handleSwitchNetwork}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
                 binanceWallet={coinbase}
-                totalMantaNft={totalMantaNft}
-                mantaMintAllowed={mantaMintAllowed}
-                myMantaNfts={myMantaNfts}
-                myMantaNFTsCreated={myMantaNFTsCreated}
                 cawsArray={allCawsForTimepieceMint}
                 mintloading={mintloading}
                 isConnected={isConnected}
@@ -6874,20 +7356,64 @@ function App() {
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
                 timepieceMetadata={timepieceMetadata}
-                mybaseNFTsCreated={mybaseNFTsCreated}
-                handleBaseNftMint={handleBaseNftMint}
-                totalseiNft={totalseiNft}
-                myseiNfts={myseiNfts}
-                myKucoinNfts={mykucoinNFTs}
-                myOpbnbNfts={myOpbnbNfts}
-                totalOpbnbNft={myOpbnbNfts?.length}
-                myVanarNFTs={myVanarNFTs}
-                totalVanarNfts={myVanarNFTs?.length ?? 0}
+                nftCreated={totalTimepieceCreated}
+                totalCreated={totalTimepieceCreated}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
               />
             }
           />
+          {/* <Route
+            exact
+            path="/shop/mint/tea-fi"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={() => {
+                  networkId === 56
+                    ? handleMintTeaBnb()
+                    : networkId === 204
+                    ? handleMintTeaopBnb()
+                    : networkId === 8453
+                    ? handleMintTeaBase()
+                    : handleMintTeaSei();
+                }}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                timepieceMetadata={timepieceMetadata}
+                nftCreated={
+                  [
+                    myTeaBaseNfts,
+                    myTeaOpbnbNfts,
+                    myTeaSeiNfts,
+                    myTeaBnbNfts,
+                  ].find((item) => {
+                    return item.length > 0;
+                  }) ?? []
+                }
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
+                totalCreated={totalTimepieceCreated}
+              />
+            }
+          /> */}
           {/* <Route
             exact
             path="/shop/mint/vanar"

@@ -3634,7 +3634,7 @@ const NewEvents = ({
                           </div>
                         </div>
                         {
-                          // eventDuration === "Live" ||
+                          eventDuration === "Live" ||
                           eventDuration === "Expired" && (
                             <div className="d-flex align-items-center gap-2 mb-3">
                               <div
