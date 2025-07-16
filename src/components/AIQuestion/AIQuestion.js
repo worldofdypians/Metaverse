@@ -83,7 +83,7 @@ const AIQuestion = ({
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
   const intervalRef = useRef(null);
-
+  const hasTimedOut = useRef(false);
   const messages = [
     "Are you feeling smart today?",
     "Let’s see what your brain can do",
@@ -620,7 +620,14 @@ const AIQuestion = ({
   };
 
   const getAnswerClass = (option) => {
-    if (selectedOption === undefined) return "answer-inner-wrapper";
+    if (selectedOption === undefined && selectedAnswer === undefined)
+      return "answer-inner-wrapper";
+
+    if (option === selectedAnswer && selectedOption === undefined) {
+      return "answer-inner-wrapper-answer"; // selected and correct
+    }
+    if (selectedOption === undefined && selectedAnswer !== undefined)
+      return "answer-inner-wrapper-wrong";
 
     if (selectedAnswer === undefined) {
       return selectedOption === option
@@ -668,6 +675,8 @@ const AIQuestion = ({
     return "radio-button-option-incorrect-unselected";
   };
   const handleTimeout = () => {
+    if (hasTimedOut.current) return;
+    hasTimedOut.current = true;
     if (selectedOption === undefined || selectedAnswer === undefined) {
       checkAnswerTimeout();
     }
@@ -1436,9 +1445,11 @@ const AIQuestion = ({
                   }
 
                   if (
-                    selectedAnswer === undefined &&
-                    timeLeft === 0 &&
-                    step === 1
+                    (selectedAnswer === undefined &&
+                      timeLeft === 0 &&
+                      step === 1) ||
+                    (aiQuestionObjectAnswered.question !== "" &&
+                      aiQuestionObjectAnswered.userIndex === 4)
                   ) {
                     return "🐌 Too slow! Try again tomorrow.";
                   }
@@ -1672,10 +1683,12 @@ const AIQuestion = ({
                 className="processing-fade ai-main-button text-uppercase d-flex align-items-center gap-2 col-lg-4 justify-content-center py-2"
                 disabled
               >
-                {selectedOption === undefined &&
-                selectedAnswer === undefined &&
-                step === 1 &&
-                timeLeft === 0
+                {(selectedOption === undefined &&
+                  selectedAnswer === undefined &&
+                  step === 1 &&
+                  timeLeft === 0) ||
+                (aiQuestionObjectAnswered.question !== "" &&
+                  aiQuestionObjectAnswered.userIndex === 4)
                   ? "TIME'S UP"
                   : unlockStatus === "error"
                   ? "FAIL"
