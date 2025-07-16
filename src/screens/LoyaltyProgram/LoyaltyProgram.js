@@ -33,7 +33,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
   const [latestUsers, setLatestUsers] = useState([]);
   const [previousUsers, setpreviousUsers] = useState([]);
 
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(1);
   const [loading, setLoading] = useState(false);
   const [totalUsers, setTotalUsers] = useState(0);
 
@@ -85,7 +85,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
     });
   };
 
-  let loyaltyCd = new Date("2025-06-06T12:59:59.000+02:00");
+  let loyaltyCd = new Date("2025-10-14T12:59:59.000+02:00");
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -192,7 +192,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
       })
       .then((res) => {
         setLoading(false);
-        setRefresh(true);
+        setRefresh(refresh + 1);
         setStep(4);
       })
       .catch((err) => {
@@ -291,7 +291,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                         />
                       )}
                       {expired && (
-                        <h6 className="loyalty-timer mb-0">Season three</h6>
+                        <h6 className="loyalty-timer mb-0">Season four</h6>
                       )}
                       <span className="loyalty-time-left">
                         {expired ? "Coming soon" : "Time left"}
@@ -367,7 +367,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                           className="appliedbadge"
                         />
                       )} */}
-                      {(step === 5 || step === 4) && (
+                      {(step === 5 || step === 4) && !activeLoyalty && (
                         <div className="d-flex flex-column w-100 mb-3 mb-lg-0">
                           <div className="d-flex align-items-center justify-content-center w-100">
                             <div className="d-flex align-items-center justify-content-center gap-2">
@@ -375,7 +375,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                                 src={
                                   "https://cdn.worldofdypians.com/wod/appliedBadge.webp"
                                 }
-                                className="w-75"
+                                className="w-50"
                                 alt=""
                               />
                             </div>
@@ -433,6 +433,15 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                                             alt=""
                                             className="participant-chain"
                                           />
+                                        ) : item === "opbnb" ? (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Chain.png`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
                                         ) : (
                                           <img
                                             key={index}
@@ -470,6 +479,15 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Icon.png`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
+                                        ) : item === "opbnb" ? (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Chain.png`}
                                             width={16}
                                             height={16}
                                             alt=""
