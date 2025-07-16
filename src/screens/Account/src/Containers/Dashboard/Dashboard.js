@@ -4041,8 +4041,8 @@ function Dashboard({
         type: "stars",
         rewards: baseStars,
         previous_rewards: baseStars,
-        activeData: dailyRecordsBase,
-        previousData: prevDataBase,
+        activeData: placeholderplayerData.slice(0, 10),
+        previousData: placeholderplayerData.slice(0, 10),
         player_data: userDataBase,
         is_active: activePlayerBase, //change when apis are ready
         loading: loadingBase,
@@ -4149,11 +4149,13 @@ function Dashboard({
       if (dailyRecordsManta.length === 0) {
         fetchDailyRecordsManta();
       }
-    } else if (chain === "base") {
-      if (dailyRecordsBase.length === 0) {
-        fetchDailyRecordsBase();
-      }
-    } else if (chain === "core") {
+    }
+    // else if (chain === "base") {
+    //   if (dailyRecordsBase.length === 0) {
+    //     fetchDailyRecordsBase();
+    //   }
+    // }
+    else if (chain === "core") {
       if (dailyRecordsCore.length === 0) {
         fetchDailyRecordsCore();
       }
