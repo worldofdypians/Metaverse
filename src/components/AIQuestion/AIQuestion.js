@@ -1290,7 +1290,7 @@ const AIQuestion = ({
                         <div
                           className={`${getAnswerClass(
                             answers[index]
-                          )} px-4 py-3 d-flex align-items-center justify-content-between`}
+                          )} px-4 py-3 d-flex align-items-center justify-content-between  ${pause && selectedOption === index ? "drumroll-background" : ""}   `}
                           onMouseEnter={() => {
                             new Audio(buttonHover).play();
                           }}
