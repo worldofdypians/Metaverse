@@ -109,7 +109,7 @@ const WodBitGet = () => {
                         aria-expanded="true"
                         aria-controls="panelsStayOpen-collapseOne"
                       >
-                        Trade at least $2 of WOD on Bitget
+                        Trade at least $5 of WOD on Bitget
                       </button>
                     </h2>
                   </div>

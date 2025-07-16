@@ -621,9 +621,9 @@ const TermsConditions = () => {
                 4.3. Feedback. We welcome feedback, bug reports, comments, and
                 suggestions for improvements to the Services, but please do not
                 send suggstions for creative ideas, design pitch portfolios, or
-                similiar such meterials (“Unsolicited Ideas”). We may currently
+                similiar such materials (“Unsolicited Ideas”). We may currently
                 be developing, have developed, or in the future will develop
-                ideas or materials interally or recieve ideas or materials from
+                ideas or materials interally or receive ideas or materials from
                 other parties that may purely by coincidence be similar to
                 Unsolicited Ideas. If you ignore this policy and send us your
                 Unsolicited Ideas anyway, you grant the Company a non-exclusive,

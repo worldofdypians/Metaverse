@@ -510,12 +510,22 @@ const Marketplace = ({
         console.error(e);
       });
 
-    if (result.data && result.data !== "NaN") {
+    if (
+      result &&
+      result.status === 200 &&
+      result.data &&
+      result.data !== "NaN"
+    ) {
       setTotalTx(result.data);
       localStorage.setItem("cachedTvl", result.data);
     }
 
-    if (result2.data && result2.data !== "NaN") {
+    if (
+      result2 &&
+      result2.status === 200 &&
+      result2.data &&
+      result2.data !== "NaN"
+    ) {
       setTotalVolume(result2.data.totalVolume);
       localStorage.setItem("cachedVolume", result2.data.totalVolume);
     }
@@ -1639,16 +1649,16 @@ const Marketplace = ({
                   </div>
                   <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
-                      to={"/shop/mint/vanar"}
+                      to={"/shop/mint/tea-fi"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
                     >
-                      <div className="p-4 mint-wrappernew market-mint-vanar w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-100">
+                      <div className="p-4 mint-wrappernew market-mint-teafi w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-100">
                         <div className="d-flex align-items-center justify-content-center homepage-nft-mint-tag px-3 py-1">
                           <span>NFT Minting</span>
                         </div>
                         <div className="d-flex flex-column gap-2 mb-3">
                           <h6 className="newminttitlehome m-0 position-relative">
-                            Vanar
+                            Tea-Fi
                           </h6>
                           <h6 className="newminttitlehome m-0 position-relative">
                             Beta Pass
@@ -1656,7 +1666,7 @@ const Marketplace = ({
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/shop/mint/vanar">
+                    <NavLink to="/shop/mint/tea-fi">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
