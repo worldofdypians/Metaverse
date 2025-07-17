@@ -3301,6 +3301,12 @@
   );
 }
 
+.tea-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #171a3a 0%, rgb(255 29 254 / 50%) 168.67%);
+}
+
+
 .gate-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #181636 15.48%, #1d438d 254.86%);
@@ -3546,6 +3552,19 @@
   transition: all 0.25s;
 }
 
+.mintchainwrapper {
+  background: rgb(74 32 128 / 70%);
+  cursor: pointer;
+
+}
+
+.mintchainwrapper-active,.mintchainwrapper:hover {
+  background: linear-gradient(180deg, #5b08d0 -17.02%, #7f2df7 100%);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+
 .active-mint-selected {
   border: 2px solid #00fecf;
 }
@@ -3593,6 +3612,10 @@
 
 .mint-core {
   background: linear-gradient(90deg, #181b38 0%, #2cbeb5 168.67%);
+}
+
+.mint-teafi {
+  background: linear-gradient(90deg, #181b38 0%, rgb(255 29 254 / 50%) 168.67%);
 }
 
 .mint-viction {
@@ -4785,6 +4808,12 @@
     rgba(5, 156, 121, 0.5) 168.67%
   ) !important;
 }
+
+.upcoming-teafi-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #171a3a 0%, rgb(255 29 254 / 50%) 168.67%);
+}
+
 
 .upcoming-taiko-event {
   border-radius: 20px;
