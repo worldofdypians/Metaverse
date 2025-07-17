@@ -6961,6 +6961,9 @@ function App() {
                 isConnected={isConnected}
                 handleConnection={handleConnectWallet}
                 email={email}
+                onConnect={() => {
+                  setwalletModal(true);
+                }}
               />
             }
           />
