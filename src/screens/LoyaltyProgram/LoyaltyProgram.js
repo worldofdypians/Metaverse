@@ -56,9 +56,10 @@ const LoyaltyProgram = ({
     base: { title: "Base", value: "base", checked: false },
     taiko: { title: "Taiko", value: "taiko", checked: false },
     core: { title: "CORE", value: "core", checked: false },
-    opBnb: { title: "opBnb", value: "opbnb", checked: false },
+    opBnb: { title: "opBNB", value: "opbnb", checked: false },
     viction: { title: "Viction", value: "viction", checked: false },
-    viction: { title: "Vanar", value: "vanar", checked: false },
+    vanar: { title: "Vanar", value: "vanar", checked: false },
+    sei: { title: "Sei", value: "sei", checked: false },
   });
   const [reqChains, setReqChains] = useState([]);
   const selectedCount = Object.values(chains).filter(
@@ -448,6 +449,15 @@ const LoyaltyProgram = ({
                                             alt=""
                                             className="participant-chain"
                                           />
+                                        ) : item === "sei" ? (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Logo.svg`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
                                         ) : (
                                           <img
                                             key={index}
@@ -494,6 +504,15 @@ const LoyaltyProgram = ({
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Chain.png`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
+                                        ) : item === "sei" ? (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Logo.svg`}
                                             width={16}
                                             height={16}
                                             alt=""
