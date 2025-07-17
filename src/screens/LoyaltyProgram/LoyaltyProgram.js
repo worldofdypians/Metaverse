@@ -20,7 +20,13 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
+const LoyaltyProgram = ({
+  coinbase,
+  isConnected,
+  handleConnection,
+  email,
+  onConnect,
+}) => {
   const baseUrl = "https://api.worldofdypians.com/api";
   const windowSize = useWindowSize();
 
@@ -632,7 +638,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
           </>
         )}
         {step === 1 ? (
-          <button className="btn filled-btn px-4" onClick={() => setStep(2)}>
+          <button className="btn filled-btn px-4" onClick={() => onConnect()}>
             Connect Wallet
           </button>
         ) : step === 2 ? (
