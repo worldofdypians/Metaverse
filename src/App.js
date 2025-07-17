@@ -4375,6 +4375,43 @@ function App() {
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
+
+    {
+      title: "BNB Chain",
+      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      location: [-0.06735561726792588, 0.08666753768920898],
+      eventType: "Explore & Mine",
+      eventDate: "Apr 09, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
+      userEarnUsd: bnbEarnUsd,
+      userEarnCrypto: bnbEarnToken,
+      userEarnPoints: bnbPoints,
+      image: "bnbBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+
+      marker: markers.treasureMarker,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Apr 09, 2025",
+      },
+    },
     {
       title: "Tea-Fi",
       logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
@@ -4410,42 +4447,6 @@ function App() {
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Jul 18, 2025",
-      },
-    },
-    {
-      title: "BNB Chain",
-      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      location: [-0.06735561726792588, 0.08666753768920898],
-      eventType: "Explore & Mine",
-      eventDate: "Apr 09, 2025",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
-      userEarnUsd: bnbEarnUsd,
-      userEarnCrypto: bnbEarnToken,
-      userEarnPoints: bnbPoints,
-      image: "bnbBanner.png",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
-
-      marker: markers.treasureMarker,
-      popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
-        linkState: "bnb",
-        rewards: "BNB",
-        status: "Live",
-        id: "event20",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: bnbLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Apr 09, 2025",
       },
     },
     {
@@ -4897,7 +4898,6 @@ function App() {
         eventDate: "Aug 26, 2024",
       },
     },
-
     {
       title: "VICTION",
       logo: "https://cdn.worldofdypians.com/wod/viction.svg",
@@ -6563,7 +6563,6 @@ function App() {
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
                 teaEarnUsd={teaEarnUsd}
-
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
@@ -6660,7 +6659,6 @@ function App() {
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
                 teaEarnUsd={teaEarnUsd}
-
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
@@ -7227,7 +7225,6 @@ function App() {
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
                 teaEarnUsd={teaEarnUsd}
-
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
