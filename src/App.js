@@ -4359,7 +4359,7 @@ function App() {
     {
       title: "Tea-Fi",
       logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$40,000 in TEA Rewards",
       myEarnings: 0.0,
       rewardAmount: "$40,000",
@@ -4380,7 +4380,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "tea-fi",
         rewards: "TEA",
-        status: "Coming Soon",
+        status: "Live",
         id: "event4",
         eventType: "Explore & Mine",
         totalRewards: "$40,000 in TEA Rewards",
