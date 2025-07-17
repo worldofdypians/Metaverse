@@ -764,7 +764,7 @@ const GlobalLeaderboard = ({
                 alt=""
               />{" "}
               <img
-                src={"https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"}
+                src={"https://cdn.worldofdypians.com/wod/base.svg"}
                 style={{ width: 20, height: 20 }}
                 alt=""
               />

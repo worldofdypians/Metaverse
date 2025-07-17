@@ -412,7 +412,7 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "base"
-                              ? "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                              ? "https://cdn.worldofdypians.com/wod/base.svg"
                               : optionText2 !== "base" && hoverState === "base"
                               ? "https://cdn.worldofdypians.com/wod/baseWhite.svg"
                               : "https://cdn.worldofdypians.com/wod/baseInactive.svg"

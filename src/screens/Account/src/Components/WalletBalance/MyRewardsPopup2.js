@@ -1201,7 +1201,7 @@ const MyRewardsPopupNew = ({
               alt=""
             />{" "}
             <img
-              src={"https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"}
+              src={"https://cdn.worldofdypians.com/wod/base.svg"}
               style={{ width: 16, height: 16 }}
               alt=""
             />
@@ -1768,7 +1768,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                        "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                        "https://cdn.worldofdypians.com/wod/base.svg"
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}
