@@ -4468,7 +4468,7 @@ function App() {
     },
     {
       title: "Base",
-      logo: "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg",
+      logo: "https://cdn.worldofdypians.com/wod/base.svg",
       eventStatus: "Expired",
       totalRewards: "$20,000 in ETH Rewards",
       location: [-0.0694799252930712, 0.08724689483642578],

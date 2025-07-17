@@ -100,7 +100,7 @@ const BetaPassNFT = ({
       mainTitle: "Base Beta Pass",
       desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by our partners. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
       heroImage: "https://cdn.worldofdypians.com/wod/baseBetaBanner.png",
-      logo: "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg",
+      logo: "https://cdn.worldofdypians.com/wod/base.svg",
       buttonTitle: "Base",
       giveawayButton: false,
       isComingSoon: false,

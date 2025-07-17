@@ -21,7 +21,7 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
                 : event.title === "Conflux"
                 ? 'https://cdn.worldofdypians.com/wod/confluxIcon.svg'
                 : event.title === "Base"
-                ? 'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'
+                ? 'https://cdn.worldofdypians.com/wod/base.svg'
                 : event.title === "Dypius"
                 ? 'https://cdn.worldofdypians.com/wod/dypius.svg'
                 : event.title === "Dogecoin"

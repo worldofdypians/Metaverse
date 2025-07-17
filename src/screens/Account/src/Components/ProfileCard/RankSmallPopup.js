@@ -256,7 +256,7 @@ const RankSmallPopup = ({
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img
-                  src={"https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"}
+                  src={"https://cdn.worldofdypians.com/wod/base.svg"}
                   width={30}
                   height={30}
                   alt=""
