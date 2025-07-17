@@ -2576,7 +2576,7 @@ class TEAOPBNB_NFT {
   }
 }
 
-window.teaopbnb_nft = new OPBNB_NFT();
+window.teaopbnb_nft = new TEAOPBNB_NFT();
 
 /**
  *
