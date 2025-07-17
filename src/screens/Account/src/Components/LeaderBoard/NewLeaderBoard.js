@@ -728,13 +728,26 @@ const NewLeaderBoard = ({
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <CircularProgress size={20} />
                       </div>
-                    ) : optionText2 === "base" ? (
+                    ) : optionText2 === "base" && inactiveBoard === true ? (
                       <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center">
-                        <h6 className="mb-0 text-center" style={{fontSize: 18}}>Coming Soon</h6>
-                        <h6 className="mb-0 text-center" style={{fontSize: 14}}>The leaderboard is under maintenance.</h6>
-                        <h6 className="mb-0 text-center" style={{fontSize: 14}}> The points and stars will be live soon </h6>
-
-
+                        <h6
+                          className="mb-0 text-center"
+                          style={{ fontSize: 18 }}
+                        >
+                          Coming Soon
+                        </h6>
+                        <h6
+                          className="mb-0 text-center"
+                          style={{ fontSize: 14 }}
+                        >
+                          The leaderboard is under maintenance.
+                        </h6>
+                        <h6
+                          className="mb-0 text-center"
+                          style={{ fontSize: 14 }}
+                        >
+                          The points and stars will be live tomorrow{" "}
+                        </h6>
                       </div>
                     ) : (
                       <></>
@@ -766,7 +779,8 @@ const NewLeaderBoard = ({
                             key={index}
                             className={`${
                               (leaderboard.loading === true ||
-                                optionText2 === "base") &&
+                                (optionText2 === "base" &&
+                                  inactiveBoard === true)) &&
                               "comingsoon-new"
                             } leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
