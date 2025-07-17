@@ -1204,6 +1204,10 @@ function App() {
             return obj.id === "chainlinkEvent10";
           });
 
+          const teafiEvent = responseData.events.filter((obj) => {
+            return obj.id === "tea-fi";
+          });
+
           const kucoinEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "kucoin";
           });
@@ -1231,6 +1235,21 @@ function App() {
             setBnbPoints(pointsBnb);
             setBnbEarnUsd(userEarnedusd);
             setBnbEarnToken(userEarnedusd / bnbPrice);
+          }
+
+          if (teafiEvent && teafiEvent[0]) {
+            if (teafiEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
+
+            const userEarnedusd =
+              teafiEvent[0].reward.earn.total /
+              teafiEvent[0].reward.earn.multiplier;
+            const pointsBnb = teafiEvent[0].reward.earn.totalPoints;
+
+            setTeaPoints(pointsBnb);
+            setTeaEarnUsd(userEarnedusd);
+            setTeaEarnToken(userEarnedusd / 1);
           }
 
           if (immutableEvent && immutableEvent[0]) {
@@ -6543,6 +6562,8 @@ function App() {
                 skaleEarnUsd={skaleEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
+                teaEarnUsd={teaEarnUsd}
+
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
@@ -6638,6 +6659,8 @@ function App() {
                 skaleEarnUsd={skaleEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
+                teaEarnUsd={teaEarnUsd}
+
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
@@ -7203,6 +7226,8 @@ function App() {
                 skaleEarnUsd={skaleEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
+                teaEarnUsd={teaEarnUsd}
+
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
