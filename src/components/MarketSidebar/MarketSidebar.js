@@ -192,7 +192,7 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/shop/mint/timepiece"
+            to="/shop/mint/tea-fi"
             end
             className={({ isActive }) =>
               isActive || location.pathname.includes("mint")

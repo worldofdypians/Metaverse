@@ -10,8 +10,24 @@ const Campaigns = ({ coinbase }) => {
   let today = new Date();
   let wod_campaign_end_timestamp = 1749477533000;
   let wod_bitget_campaign_end_timestamp = 1752148728000;
+  // let okx_campaign_end_timestamp = 17528292000;
 
   const dummyBanner = [
+    {
+      title: "$150,000 Rewards with OKX Wallet",
+      status: "Live",
+      start_date: "Jun 18, 2025",
+      end_date: "Jul 18, 2025",
+      image: "https://cdn.worldofdypians.com/wod/wod-x-wallet2.webp",
+      desc: `To celebrate our campaign with OKX Wallet, we're giving away $150,000 in WOD to the first 15,000 users who complete all steps:<br/>
+    <ul><li>Follow World of Dypians on X</li>
+    <li>Swap at least $25 in WOD using OKX Wallet</li>
+    <li>Login or create a game account and link your wallet </li>
+    </ul>
+   `,
+      link: "https://web3.okx.com/ul/qa6RR4",
+      target: "_blank",
+    },
     {
       title: "World of Dypians Rising Heat Challenge",
       status: today.getTime() > wod_campaign_end_timestamp ? "Expired" : "Live",
@@ -40,7 +56,7 @@ const Campaigns = ({ coinbase }) => {
       image: "https://cdn.worldofdypians.com/wod/wodBitgetBanner.webp",
       desc: `To celebrate the WOD on-chain listing on Bitget, we have launched an exclusive campaign for new users! <br/>
       <ul><li>Register a new account on Bitget and complete verification.</li>
-      <li>Trade at least $2 worth of WOD on Bitget Onchain.</li>
+      <li>Trade at least $5 worth of WOD on Bitget Onchain.</li>
       <li>Submit your UID so we can verify your participation.</li>
       </ul>
      The first 5,000 users to complete all tasks will each receive $10 guaranteed!
@@ -64,9 +80,13 @@ const Campaigns = ({ coinbase }) => {
       link: "https://www.binance.com/en/web3-campaign/airdrop/4484095621998736896",
       target: "_blank",
     },
-    {
+   
+  ];
+
+  const dummyData = [
+     {
       title: "The Gathering Storm",
-      status: "Live",
+      status: "Expired",
       start_date: "Apr 21, 2025",
       end_date: "Jul 14, 2025",
       image: "https://cdn.worldofdypians.com/wod/tradingCompBanner.webp",
@@ -80,9 +100,24 @@ const Campaigns = ({ coinbase }) => {
    `,
       link: "/trading-competition",
     },
-  ];
-
-  const dummyData = [
+       {
+      title: "First 5,000 new users share $50,000",
+      status:
+        today.getTime() > wod_bitget_campaign_end_timestamp
+          ? "Expired"
+          : "Live",
+      start_date: "Jun 10, 2025",
+      end_date: "Jul 10, 2025",
+      image: "https://cdn.worldofdypians.com/wod/wodBitgetBanner.webp",
+      desc: `To celebrate the WOD on-chain listing on Bitget, we have launched an exclusive campaign for new users! <br/>
+      <ul><li>Register a new account on Bitget and complete verification.</li>
+      <li>Trade at least $5 worth of WOD on Bitget Onchain.</li>
+      <li>Submit your UID so we can verify your participation.</li>
+      </ul>
+     The first 5,000 users to complete all tasks will each receive $10 guaranteed!
+     `,
+      link: "/wod-bitget",
+    },
     {
       title: "World of Dypians Rising Heat Challenge",
       status: today.getTime() > wod_campaign_end_timestamp ? "Expired" : "Live",

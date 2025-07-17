@@ -265,7 +265,7 @@ const BridgeContent = ({
               </div>
               <div className="bridge-balance-wrapper p-2 mt-5">
                 <div className="d-flex align-items-center justify-content-between">
-                  <span className="user-bridge-balance">Recieve</span>
+                  <span className="user-bridge-balance">Receive</span>
                   <img src={tooltip} alt="" />
                 </div>
                 <div className="d-flex align-items-center justify-content-between mt-3">

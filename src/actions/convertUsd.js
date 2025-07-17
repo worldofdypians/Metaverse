@@ -12,6 +12,10 @@ const getEthPrice = async () => {
       eth_Price = data.price;
       eth_Price = eth_Price.toFixed(2);
       return eth_Price;
+    })
+    .catch((e) => {
+      console.log(e);
+      return 0;
     });
 };
 

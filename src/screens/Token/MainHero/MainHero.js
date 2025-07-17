@@ -34,6 +34,11 @@ const MainHero = ({ scrollInto }) => {
       link: "https://www.binance.com/en/download",
     },
     {
+      title: "OKX Wallet",
+      logo: "okxExchange.svg",
+      link: "https://web3.okx.com/token/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+    {
       title: "PancakeSwap",
       logo: "pancakeswap.svg",
       link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",

@@ -173,6 +173,10 @@ function Dashboard({
   publicClient,
   network_matchain,
   syncStatus,
+  myTeaBnbNfts,
+  myTeaOpbnbNfts,
+  myTeaSeiNfts,
+  myTeaBaseNfts,
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -211,6 +215,9 @@ function Dashboard({
     "ciangsabin@gmail.com",
     "izcipara88@gmail.com",
     "therockhidder@gmail.com",
+    "deryanuwu7@gmail.com",
+    "amox@poczta.fm",
+    "hmbsamd@gmail.com",
   ];
 
   // const chainDropdowns = [
@@ -4102,7 +4109,7 @@ function Dashboard({
         rewards: baseStars,
         previous_rewards: baseStars,
         activeData: dailyRecordsBase,
-        previousData: prevDataBase,
+        previousData:  placeholderplayerData.slice(0, 10),
         player_data: userDataBase,
         is_active: activePlayerBase, //change when apis are ready
         loading: loadingBase,
@@ -6273,21 +6280,36 @@ function Dashboard({
               }}
               liveRewards={
                 Number(userSocialRewardsCached) +
-                Number(userRank2) +
-                Number(genesisRank2) +
-                Number(userRankRewards) +
-                Number(dataAmountStar) +
-                Number(dataAmountStarWeekly) +
-                Number(cawsPremiumRewards) +
-                Number(landPremiumRewards) +
-                Number(baseEarnUSD) +
-                Number(kucoinEarnUsd) +
-                Number(bnbEarnUsd) +
-                Number(mantaEarnUsd) +
-                Number(coreEarnUsd) +
-                Number(seiEarnUsd) +
-                Number(taikoEarnUsd) +
-                Number(vanarEarnUsd)
+                  Number(userRank2) +
+                  Number(genesisRank2) +
+                  Number(userRankRewards) +
+                  Number(dataAmountStar) +
+                  Number(dataAmountStarWeekly) +
+                  Number(cawsPremiumRewards) +
+                  Number(landPremiumRewards) +
+                  // Number(baseEarnUSD) +
+                  Number(kucoinEarnUsd) +
+                  Number(bnbEarnUsd) +
+                  Number(mantaEarnUsd) +
+                  Number(coreEarnUsd) +
+                  Number(seiEarnUsd) +
+                  Number(taikoEarnUsd) +
+                  Number(vanarEarnUsd) +
+                  aiQuestionRewards.length >
+                0
+                  ? aiQuestionRewards.find((item) => {
+                      return (
+                        item.rewardType === "Money" && item.status === "Claimed"
+                      );
+                    }) !== undefined
+                    ? aiQuestionRewards.find((item) => {
+                        return (
+                          item.rewardType === "Money" &&
+                          item.status === "Claimed"
+                        );
+                      }).reward
+                    : 0
+                  : 0
                 // Number(coingeckoEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
@@ -7476,6 +7498,10 @@ function Dashboard({
                 myNFTSBNB={MyNFTSBNB}
                 MyNFTSCawsBase={MyNFTSCawsBase}
                 myMatNfts={myMatNfts}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
               />
             </div>
           </OutsideClickHandler>

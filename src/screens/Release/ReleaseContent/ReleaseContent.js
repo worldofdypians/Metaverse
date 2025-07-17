@@ -436,7 +436,7 @@ const ReleaseContent = ({
               </div>
               <div className="release-balance-wrapper p-2 mt-5">
                 <div className="d-flex align-items-center justify-content-between">
-                  <span className="user-release-balance">Recieve</span>
+                  <span className="user-release-balance">Receive</span>
                   <img src={tooltip} alt="" />
                 </div>
                 <div className="d-flex align-items-center justify-content-between mt-3">

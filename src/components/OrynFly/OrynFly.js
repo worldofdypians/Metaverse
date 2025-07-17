@@ -3,10 +3,13 @@ import "./_orynfly.scss";
 import orynGif from "./orynGif.webp"; // Walking animation (~10s)
 import orynGifIdle from "./newOrynGifIdle.webp"; // Idle animation
 import { NavLink } from "react-router-dom";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const OrynFly = ({ onClose }) => {
   const [chat, setChat] = useState(false);
   const [showIdle, setShowIdle] = useState(false);
+
+  const windowSize = useWindowSize();
 
   useEffect(() => {
     // Preload images
@@ -17,7 +20,7 @@ const OrynFly = ({ onClose }) => {
 
     // Show chat after 8s
     const chatTimeout = setTimeout(() => setChat(true), 8000);
-    
+
     // Switch GIF after 10s
     const gifTimeout = setTimeout(() => setShowIdle(true), 10400);
 
@@ -28,7 +31,11 @@ const OrynFly = ({ onClose }) => {
   }, []);
 
   return (
-    <div className="oryn-gif-holder d-flex align-items-center justify-content-end">
+    <div
+      className={`oryn-gif-holder d-flex align-items-center justify-content-end ${
+        windowSize.width < 786 ? "d-none" : ""
+      }`}
+    >
       <div
         className={`oryn-chat-title ${
           chat ? "oryn-chat-active" : ""

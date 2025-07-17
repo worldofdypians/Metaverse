@@ -555,6 +555,16 @@ const Roadmap = () => {
           completed: true,
         },
         {
+          title: "New Chain Expansion",
+          desc: `Integrate additional blockchains into the game to broaden the reach and appeal.`,
+          completed: true,
+        },
+        {
+          title: "Oryn AI Agent Enhancements",
+          desc: `Expand Oryn's capabilities with advanced features, including personalized player guidance based on in-game behavior, real-time event updates, contextual tips during quests and battles, and multilingual support.`,
+          completed: true,
+        },
+        {
           title: "Dynamic NPC Behavior",
           desc: "Enhance NPC crowds nteractions and behaviors to create a more immersive and lifelike environment, improving player engagement and overall realism.",
           completed: true,
@@ -563,6 +573,29 @@ const Roadmap = () => {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience",
           completed: true,
+        },
+      ],
+    },
+    {
+      quarter: "quarterThree",
+      image: "quarterThreeImage",
+
+      content: [
+        {
+          title: "Launch of Crypto Museum",
+          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Character NFT Generation",
+          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
+          completed: false,
+        },
+
+        {
+          title: "Loot Box Introduction",
+          desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
+          completed: false,
         },
         {
           title: "New Game UI Development",
@@ -575,8 +608,13 @@ const Roadmap = () => {
           completed: false,
         },
         {
-          title: "Launchpool Launch",
-          desc: "Create a Launchpool system where players can contribute resources to community-driven projects and unlock exclusive benefits.",
+          title: "Full Release of the Multiplayer PvE",
+          desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Game Quests",
+          desc: "Add a variety of engaging partner quests to challenge players, offering rewards and enhancing gameplay depth.",
           completed: false,
         },
 
@@ -602,60 +640,7 @@ const Roadmap = () => {
           desc: "Combine AI-powered features with DeFi mechanics to create an adaptive and engaging in-game economy.",
           completed: false,
         },
-      ],
-    },
-    {
-      quarter: "quarterThree",
-      image: "quarterThreeImage",
 
-      content: [
-        {
-          title: "Launch of Crypto Museum",
-          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
-          completed: false,
-        },
-        {
-          title: "Introduction of Character NFT Generation",
-          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
-          completed: false,
-        },
-
-        {
-          title: "In-Game DeFi Integration",
-          desc: "Introduce seamless DeFi mechanics within the game, allowing players to earn directly in the virtual economy.",
-          completed: false,
-        },
-        {
-          title: "Introduction of Shop v2",
-          desc: "Improve and expand the in-game shop with new features and offerings.",
-          completed: false,
-        },
-        {
-          title: "Loot Box Introduction",
-          desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
-          completed: false,
-        },
-
-        {
-          title: "Full Release of the Multiplayer PvE",
-          desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
-          completed: false,
-        },
-        {
-          title: "Introduction of Game Quests",
-          desc: "Add a variety of engaging partner quests to challenge players, offering rewards and enhancing gameplay depth.",
-          completed: false,
-        },
-        {
-          title: "New Land NFTs Batch",
-          desc: "Release a fresh batch of exclusive Land NFTs, offering players new opportunities to own, customize, and expand their in-game territories, fostering creativity and strategic gameplay.",
-          completed: false,
-        },
-        {
-          title: "Open Beta Launch",
-          desc: "Introduce an open beta program, giving players early access to upcoming features and the opportunity to provide feedback, helping refine the experience before the full release.",
-          completed: false,
-        },
         {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
@@ -694,11 +679,35 @@ const Roadmap = () => {
           completed: false,
         },
         {
+          title: "New Land NFTs Batch",
+          desc: "Release a fresh batch of exclusive Land NFTs, offering players new opportunities to own, customize, and expand their in-game territories, fostering creativity and strategic gameplay.",
+          completed: false,
+        },
+        {
+          title: "Open Beta Launch",
+          desc: "Introduce an open beta program, giving players early access to upcoming features and the opportunity to provide feedback, helping refine the experience before the full release.",
+          completed: false,
+        },
+        {
           title: "Introduction of the Mall Center",
           desc: "Introduce a mall center in the game where players can shop for various items and goods.",
           completed: false,
         },
-
+        {
+          title: "In-Game DeFi Integration",
+          desc: "Introduce seamless DeFi mechanics within the game, allowing players to earn directly in the virtual economy.",
+          completed: false,
+        },
+        {
+          title: "Introduction of Shop v2",
+          desc: "Improve and expand the in-game shop with new features and offerings.",
+          completed: false,
+        },
+        {
+          title: "Launchpool Launch",
+          desc: "Create a Launchpool system where players can contribute resources to community-driven projects and unlock exclusive benefits.",
+          completed: false,
+        },
         {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",

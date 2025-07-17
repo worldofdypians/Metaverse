@@ -20,8 +20,8 @@ const VideoWrapper = ({
 
   const [icons, setIcons] = useState(false);
   const betaSlider = useRef(null);
-  const [activeSlide, setActiveSlide] = useState();
-  const [showFirstNext, setShowFirstNext] = useState();
+  // const [activeSlide, setActiveSlide] = useState();
+  // const [showFirstNext, setShowFirstNext] = useState();
   const [hoverState, setHoverState] = useState(false);
   const [buyWodPopup, setBuyWodPopup] = useState(false);
 
@@ -116,10 +116,10 @@ const VideoWrapper = ({
       class: "earnClass",
     },
     {
-      link: "/wod-bitget",
-      title: "",
-      desc: "",
-      class: "campaignClass",
+      link: "/game#challenges",
+      title: "EVENTS & CHALLENGES",
+      desc: "Join exciting in-game challenges",
+      class: "eventClass",
     },
     {
       link: "/",
@@ -138,19 +138,19 @@ const VideoWrapper = ({
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: false,
-    initialSlide: 2,
-    beforeChange: (current, next) => {
-      setActiveSlide(next);
-      setShowFirstNext(current);
-    },
-    afterChange: (current) => setActiveSlide(current),
+    initialSlide: 0,
+    // beforeChange: (current, next) => {
+    //   setActiveSlide(next);
+    //   setShowFirstNext(current);
+    // },
+    // afterChange: (current) => setActiveSlide(current),
     responsive: [
       {
         breakpoint: 1600,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
-          initialSlide: 0,
+          // initialSlide: 0,
         },
       },
       {
@@ -158,7 +158,7 @@ const VideoWrapper = ({
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
-          initialSlide: 0,
+          // initialSlide: 0,
         },
       },
       {
@@ -166,7 +166,7 @@ const VideoWrapper = ({
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
-          initialSlide: 0,
+          // initialSlide: 0,
           infinite: true,
           autoplay: true,
         },
@@ -176,7 +176,7 @@ const VideoWrapper = ({
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          initialSlide: 0,
+          // initialSlide: 0,
           infinite: true,
           autoplay: true,
         },
@@ -186,7 +186,7 @@ const VideoWrapper = ({
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          initialSlide: 2,
+          // initialSlide: 2,
           dots: false,
           infinite: true,
           autoplay: true,
@@ -198,7 +198,7 @@ const VideoWrapper = ({
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 480) {
-        betaSlider.current?.slickGoTo(2);
+        betaSlider.current?.slickGoTo(0);
       }
     };
     handleResize();

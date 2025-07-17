@@ -803,7 +803,13 @@ const GlobalLeaderboard = ({
                 style={{ width: 20, height: 20 }}
                 alt=""
               />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />
             </div>
+
             <img
               src={"https://cdn.worldofdypians.com/wod/yellowArrow.svg"}
               width={20}

@@ -67,6 +67,10 @@ const Portfolio = ({
   mySeiNfts,
   mykucoinNFTs,
   myVanarNFTs,
+  myTeaBnbNfts,
+  myTeaOpbnbNfts,
+  myTeaSeiNfts,
+  myTeaBaseNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -435,6 +439,10 @@ const Portfolio = ({
     let matNftsArray = [];
     let kucoinNftsArray = [];
     let vanarNftsArray = [];
+    let teaBnbArray = [];
+    let teaopBnbArray = [];
+    let teaBaseArray = [];
+    let teaSeiArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -839,6 +847,70 @@ const Portfolio = ({
         );
       }
 
+      if (myTeaBnbNfts && myTeaBnbNfts.length > 0) {
+        await Promise.all(
+          myTeaBnbNfts.map(async (i) => {
+            teaBnbArray.push({
+              nftAddress: window.config.nft_teabnb_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "tea-bnb",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myTeaOpbnbNfts && myTeaOpbnbNfts.length > 0) {
+        await Promise.all(
+          myTeaOpbnbNfts.map(async (i) => {
+            teaopBnbArray.push({
+              nftAddress: window.config.nft_teaopbnb_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "tea-opbnb",
+              chain: 204,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myTeaBaseNfts && myTeaBaseNfts.length > 0) {
+        await Promise.all(
+          myTeaBaseNfts.map(async (i) => {
+            teaBaseArray.push({
+              nftAddress: window.config.nft_teabase_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "tea-base",
+              chain: 8453,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (myTeaSeiNfts && myTeaSeiNfts.length > 0) {
+        await Promise.all(
+          myTeaSeiNfts.map(async (i) => {
+            teaSeiArray.push({
+              nftAddress: window.config.nft_teasei_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "tea-sei",
+              chain: 1329,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
       if (myTaikoNfts && myTaikoNfts.length > 0) {
         await Promise.all(
           myTaikoNfts.map(async (i) => {
@@ -1056,6 +1128,10 @@ const Portfolio = ({
       setmyNftsOffer(recievedOffers);
 
       finalCollection = [
+        ...teaBaseArray,
+        ...teaBnbArray,
+        ...teaSeiArray,
+        ...teaopBnbArray,
         ...kucoinNftsArray,
         ...vanarNftsArray,
         ...baseNftsArray,
@@ -1273,7 +1349,16 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_mat_address
       );
 
+      let teaFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_teabnb_address ||
+          item.nftAddress === window.config.nft_teaopbnb_address ||
+          item.nftAddress === window.config.nft_teabase_address ||
+          item.nftAddress === window.config.nft_teasei_address
+      );
+
       const allBetapassArray = [
+        ...teaFilter,
         ...coingeckoFilter,
         ...vanarFilter,
         ...confluxFilter,
@@ -2098,6 +2183,11 @@ const Portfolio = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
                                   : item.type === "doge"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
+                                  : item.type === "tea-bnb" ||
+                                    item.type === "tea-base" ||
+                                    item.type === "tea-opbnb" ||
+                                    item.type === "tea-sei"
+                                  ? `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`
                                   : item.type === "skale"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                   : item.type === "bnb"
@@ -2157,8 +2247,11 @@ const Portfolio = ({
                                   ? "BSBP"
                                   : item.type === "doge"
                                   ? "DCBP"
-                                  : item.type === "doge"
-                                  ? "BNBBP"
+                                  : item.type === "tea-bnb" ||
+                                    item.type === "tea-base" ||
+                                    item.type === "tea-opbnb" ||
+                                    item.type === "tea-sei"
+                                  ? "TFBP"
                                   : item.type === "skale"
                                   ? "SKBP"
                                   : item.type === "cmc"
@@ -3097,6 +3190,18 @@ const Portfolio = ({
                                   window.config.nft_doge_address
                                 ? "doge"
                                 : nft.nftAddress ===
+                                  window.config.nft_teabnb_address
+                                ? "tea-bnb"
+                                : nft.nftAddress ===
+                                  window.config.nft_teabase_address
+                                ? "tea-base"
+                                : nft.nftAddress ===
+                                  window.config.nft_teaopbnb_address
+                                ? "tea-opbnb"
+                                : nft.nftAddress ===
+                                  window.config.nft_teasei_address
+                                ? "tea-sei"
+                                : nft.nftAddress ===
                                   window.config.nft_skale_address
                                 ? "skale"
                                 : nft.nftAddress ===
@@ -3208,6 +3313,15 @@ const Portfolio = ({
                                       window.config.nft_doge_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                     : nft.nftAddress ===
+                                        window.config.nft_teabnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teaopbnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teabase_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teasei_address
+                                    ? `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`
+                                    : nft.nftAddress ===
                                       window.config.nft_skale_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                     : nft.nftAddress ===
@@ -3298,6 +3412,15 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_doge_address
                                     ? "DCBP"
+                                    : nft.nftAddress ===
+                                        window.config.nft_teabnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teaopbnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teabase_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teasei_address
+                                    ? "TFBP"
                                     : nft.nftAddress ===
                                       window.config.nft_skale_address
                                     ? "SKBP"
@@ -3495,6 +3618,18 @@ const Portfolio = ({
                                   window.config.nft_doge_address
                                 ? "doge"
                                 : nft.nftAddress ===
+                                  window.config.nft_teabnb_address
+                                ? "tea-bnb"
+                                : nft.nftAddress ===
+                                  window.config.nft_teaopbnb_address
+                                ? "tea-opbnb"
+                                : nft.nftAddress ===
+                                  window.config.nft_teabase_address
+                                ? "tea-base"
+                                : nft.nftAddress ===
+                                  window.config.nft_teasei_address
+                                ? "tea-sei"
+                                : nft.nftAddress ===
                                   window.config.nft_skale_address
                                 ? "skale"
                                 : nft.nftAddress ===
@@ -3605,6 +3740,15 @@ const Portfolio = ({
                                       window.config.nft_doge_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
                                     : nft.nftAddress ===
+                                        window.config.nft_teabnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teaopbnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teabase_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teasei_address
+                                    ? `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`
+                                    : nft.nftAddress ===
                                       window.config.nft_skale_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
                                     : nft.nftAddress ===
@@ -3694,6 +3838,15 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_doge_address
                                     ? "DCBP"
+                                    : nft.nftAddress ===
+                                        window.config.nft_teabnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teaopbnb_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teabase_address ||
+                                      nft.nftAddress ===
+                                        window.config.nft_teasei_address
+                                    ? "TFBP"
                                     : nft.nftAddress ===
                                       window.config.nft_skale_address
                                     ? "SKBP"
