@@ -326,6 +326,10 @@ const WodPartners = ({ full }) => {
       icon: "fair3.png",
     },
     {
+      name: "Tea-Fi",
+      icon: "teafi.svg",
+    },
+    {
       name: "Melitho Ventures",
       icon: "melitho.png",
     },

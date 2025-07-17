@@ -7000,6 +7000,9 @@ function App() {
                 isConnected={isConnected}
                 handleConnection={handleConnectWallet}
                 email={email}
+                onConnect={() => {
+                  setwalletModal(true);
+                }}
               />
             }
           />
@@ -7407,7 +7410,7 @@ function App() {
               />
             }
           />
-          {/* <Route
+          <Route
             exact
             path="/shop/mint/tea-fi"
             element={
@@ -7454,7 +7457,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          /> */}
+          />
           {/* <Route
             exact
             path="/shop/mint/vanar"
