@@ -173,7 +173,7 @@ function Dashboard({
   publicClient,
   network_matchain,
   syncStatus,
-    myTeaBnbNfts,
+  myTeaBnbNfts,
   myTeaOpbnbNfts,
   myTeaSeiNfts,
   myTeaBaseNfts,
@@ -6282,21 +6282,36 @@ function Dashboard({
               }}
               liveRewards={
                 Number(userSocialRewardsCached) +
-                Number(userRank2) +
-                Number(genesisRank2) +
-                Number(userRankRewards) +
-                Number(dataAmountStar) +
-                Number(dataAmountStarWeekly) +
-                Number(cawsPremiumRewards) +
-                Number(landPremiumRewards) +
-                // Number(baseEarnUSD) +
-                Number(kucoinEarnUsd) +
-                Number(bnbEarnUsd) +
-                Number(mantaEarnUsd) +
-                Number(coreEarnUsd) +
-                Number(seiEarnUsd) +
-                Number(taikoEarnUsd) +
-                Number(vanarEarnUsd)
+                  Number(userRank2) +
+                  Number(genesisRank2) +
+                  Number(userRankRewards) +
+                  Number(dataAmountStar) +
+                  Number(dataAmountStarWeekly) +
+                  Number(cawsPremiumRewards) +
+                  Number(landPremiumRewards) +
+                  // Number(baseEarnUSD) +
+                  Number(kucoinEarnUsd) +
+                  Number(bnbEarnUsd) +
+                  Number(mantaEarnUsd) +
+                  Number(coreEarnUsd) +
+                  Number(seiEarnUsd) +
+                  Number(taikoEarnUsd) +
+                  Number(vanarEarnUsd) +
+                  aiQuestionRewards.length >
+                0
+                  ? aiQuestionRewards.find((item) => {
+                      return (
+                        item.rewardType === "Money" && item.status === "Claimed"
+                      );
+                    }) !== undefined
+                    ? aiQuestionRewards.find((item) => {
+                        return (
+                          item.rewardType === "Money" &&
+                          item.status === "Claimed"
+                        );
+                      }).reward
+                    : 0
+                  : 0
                 // Number(coingeckoEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
@@ -7488,7 +7503,7 @@ function Dashboard({
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
-                myTeaBaseNfts={myTeaBaseNfts} 
+                myTeaBaseNfts={myTeaBaseNfts}
               />
             </div>
           </OutsideClickHandler>

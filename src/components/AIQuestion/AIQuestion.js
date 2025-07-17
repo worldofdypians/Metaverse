@@ -1290,7 +1290,11 @@ const AIQuestion = ({
                         <div
                           className={`${getAnswerClass(
                             answers[index]
-                          )} px-4 py-3 d-flex align-items-center justify-content-between  ${pause && selectedOption === index ? "drumroll-background" : ""}   `}
+                          )} px-4 py-3 d-flex align-items-center justify-content-between  ${
+                            pause && selectedOption === index
+                              ? "drumroll-background"
+                              : ""
+                          }   `}
                           onMouseEnter={() => {
                             new Audio(buttonHover).play();
                           }}
@@ -1471,7 +1475,12 @@ const AIQuestion = ({
                                 style={{ color: "#ffd37e" }}
                                 key={index}
                               >
-                                {obj.reward} {obj.rewardType}
+                                {obj.rewardType === "Money" && "$"}
+                                {getFormattedNumber(
+                                  obj.reward,
+                                  obj.rewardType === "Money" ? 2 : 0
+                                )}{" "}
+                                {obj.rewardType !== "Money" && obj.rewardType}
                               </span>
                             );
                           })}
