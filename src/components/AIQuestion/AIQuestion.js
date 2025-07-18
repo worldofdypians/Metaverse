@@ -1082,7 +1082,7 @@ const AIQuestion = ({
           style={{ flex: 1 }}
         >
           <div className="d-flex flex-column w-100">
-            <div className="d-flex flex-column flex-lg-row align-items-center gap-2 justify-content-between w-100 overflow-auto">
+            <div className="d-flex flex-row align-items-center gap-2 justify-content-between w-100 overflow-auto">
               <div className="d-flex w-100 align-items-center gap-2 gap-lg-3 justify-content-lg-start justify-content-center">
                 <button
                   className={
@@ -1230,7 +1230,7 @@ const AIQuestion = ({
                 </div>
               </div>
             </div>
-            <div className="ai-separator my-3"></div>
+            <div className="ai-separator my-2"></div>
           </div>
           {/* {step === 0 ? ( */}
           <div
