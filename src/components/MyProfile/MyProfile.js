@@ -1684,7 +1684,7 @@ const MyProfile = ({
                       //   <Countdown renderer={renderer4} date={midnight} />
                       // </div>
                       <>
-                        <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
+                        <div className="ready-circle-2-position d-flex flex-column gap-1 align-items-center justify-content-center">
                           <div className="ready-circle-ai d-flex flex-column gap-1">
                             <Countdown renderer={renderer4} date={midnight} />
                           </div>
@@ -1692,18 +1692,14 @@ const MyProfile = ({
                             Time Remaining
                           </span>
                         </div>
-                        <div className="d-flex d-lg-none">
-                          <Countdown renderer={renderer4} date={midnight} />
-                        </div>
+                       
                       </>
                     ) : (
                       <>
-                        <div className="ready-circle d-none d-lg-flex">
+                        <div className="ready-circle d-flex">
                           <span className="beast-siege-timer">Ready</span>
                         </div>
-                        <span className="beast-siege-timer d-flex d-lg-none">
-                          Ready
-                        </span>
+                       
                       </>
                     )}
                   </div>
