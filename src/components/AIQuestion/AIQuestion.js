@@ -742,9 +742,13 @@ const AIQuestion = ({
 
   useEffect(() => {
     getAiStep(
-      timeLeft === 0 || aiQuestionObjectAnswered.question !== "" ? 0 : step
+      timeLeft === 0 ||
+        aiQuestionObjectAnswered.question !== "" ||
+        selectedAnswer !== undefined
+        ? 0
+        : step
     );
-  }, [step, timeLeft]);
+  }, [step, timeLeft, selectedAnswer]);
 
   useEffect(() => {
     if (
@@ -1291,7 +1295,7 @@ const AIQuestion = ({
                           className={`${getAnswerClass(
                             answers[index]
                           )} px-4 py-3 d-flex align-items-center justify-content-between  ${
-                            pause && selectedOption === index
+                            pause && selectedOption === answers[index]
                               ? "drumroll-background"
                               : ""
                           }   `}
