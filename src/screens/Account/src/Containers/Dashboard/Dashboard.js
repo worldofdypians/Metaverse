@@ -176,6 +176,7 @@ function Dashboard({
   myTeaOpbnbNfts,
   myTeaSeiNfts,
   myTeaBaseNfts,
+  teaEarnUsd,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -6108,7 +6109,8 @@ function Dashboard({
                 Number(coreEarnUsd) +
                 Number(seiEarnUsd) +
                 Number(taikoEarnUsd) +
-                Number(vanarEarnUsd)
+                Number(vanarEarnUsd) +
+                Number(teaEarnUsd)
                 // Number(coingeckoEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
@@ -6267,6 +6269,7 @@ function Dashboard({
             multiversEarnUsd={multiversEarnUsd}
             seiEarnUsd={seiEarnUsd}
             vanarEarnUsd={vanarEarnUsd}
+            teaEarnUsd={teaEarnUsd}
             victionEarnUsd={victionEarnUsd}
             mantaEarnUsd={mantaEarnUsd}
             taikoEarnUsd={taikoEarnUsd}
@@ -6922,6 +6925,7 @@ function Dashboard({
                 multiversEarnUsd={multiversEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
+                teaEarnUsd={teaEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
