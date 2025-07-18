@@ -176,6 +176,7 @@ function Dashboard({
   myTeaOpbnbNfts,
   myTeaSeiNfts,
   myTeaBaseNfts,
+  teaEarnUsd,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -4042,7 +4043,7 @@ function Dashboard({
         rewards: baseStars,
         previous_rewards: baseStars,
         activeData: dailyRecordsBase,
-        previousData:  placeholderplayerData.slice(0, 10),
+        previousData:  prevDataBase,
         player_data: userDataBase,
         is_active: activePlayerBase, //change when apis are ready
         loading: loadingBase,
@@ -6108,7 +6109,8 @@ function Dashboard({
                 Number(coreEarnUsd) +
                 Number(seiEarnUsd) +
                 Number(taikoEarnUsd) +
-                Number(vanarEarnUsd)
+                Number(vanarEarnUsd) +
+                Number(teaEarnUsd)
                 // Number(coingeckoEarnUsd) +
                 // Number(matEarnUsd) +
                 // Number(bnbEarnUsd) +
@@ -6267,6 +6269,7 @@ function Dashboard({
             multiversEarnUsd={multiversEarnUsd}
             seiEarnUsd={seiEarnUsd}
             vanarEarnUsd={vanarEarnUsd}
+            teaEarnUsd={teaEarnUsd}
             victionEarnUsd={victionEarnUsd}
             mantaEarnUsd={mantaEarnUsd}
             taikoEarnUsd={taikoEarnUsd}
@@ -6922,6 +6925,7 @@ function Dashboard({
                 multiversEarnUsd={multiversEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
+                teaEarnUsd={teaEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
