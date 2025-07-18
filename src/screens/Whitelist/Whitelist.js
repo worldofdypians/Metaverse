@@ -1407,7 +1407,7 @@ const Whitelist = ({
 
       await vestingSc.methods
         .claim()
-        .estimateGas({ from: await window.getCoinbase() })
+        .estimateGas({ from: coinbase })
         .then((gas) => {
           transactionParameters.gas = web3.utils.toHex(gas);
         })
@@ -1417,7 +1417,7 @@ const Whitelist = ({
 
       await vestingSc.methods
         .claim()
-        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .send({ from: coinbase, ...transactionParameters })
         .then(() => {
           setclaimStatus("success");
           setclaimLoading(false);
@@ -1547,7 +1547,7 @@ const Whitelist = ({
 
       await otcSc.methods
         .claim()
-        .estimateGas({ from: await window.getCoinbase() })
+        .estimateGas({ from: coinbase })
         .then((gas) => {
           transactionParameters.gas = web3.utils.toHex(gas);
         })
@@ -1557,7 +1557,7 @@ const Whitelist = ({
 
       await otcSc.methods
         .claim()
-        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .send({ from: coinbase, ...transactionParameters })
         .then(() => {
           setclaimStatusOTC("success");
           setclaimLoadingOTC(false);
@@ -1690,7 +1690,7 @@ const Whitelist = ({
 
       await otcSc2.methods
         .claim()
-        .estimateGas({ from: await window.getCoinbase() })
+        .estimateGas({ from: coinbase })
         .then((gas) => {
           transactionParameters.gas = web3.utils.toHex(gas);
         })
@@ -1700,7 +1700,7 @@ const Whitelist = ({
 
       await otcSc2.methods
         .claim()
-        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .send({ from: coinbase, ...transactionParameters })
         .then(() => {
           setclaimStatusOTC2("success");
           setclaimLoadingOTC2(false);
@@ -1833,7 +1833,7 @@ const Whitelist = ({
 
       await otcScBonus.methods
         .claim()
-        .estimateGas({ from: await window.getCoinbase() })
+        .estimateGas({ from: coinbase })
         .then((gas) => {
           transactionParameters.gas = web3.utils.toHex(gas);
         })
@@ -1843,7 +1843,7 @@ const Whitelist = ({
 
       await otcScBonus.methods
         .claim()
-        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .send({ from: coinbase, ...transactionParameters })
         .then(() => {
           setclaimStatusOTCBonus("success");
           setclaimLoadingOTCBonus(false);
@@ -1976,7 +1976,7 @@ const Whitelist = ({
 
       await otcScSpecial.methods
         .claim()
-        .estimateGas({ from: await window.getCoinbase() })
+        .estimateGas({ from: coinbase })
         .then((gas) => {
           transactionParameters.gas = web3.utils.toHex(gas);
         })
@@ -1986,7 +1986,7 @@ const Whitelist = ({
 
       await otcScSpecial.methods
         .claim()
-        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .send({ from: coinbase, ...transactionParameters })
         .then(() => {
           setclaimStatusOTCSpecial("success");
           setclaimLoadingOTCSpecial(false);
@@ -2119,7 +2119,7 @@ const Whitelist = ({
 
       await otcScPoolBonus.methods
         .claim()
-        .estimateGas({ from: await window.getCoinbase() })
+        .estimateGas({ from: coinbase })
         .then((gas) => {
           transactionParameters.gas = web3.utils.toHex(gas);
         })
@@ -2129,7 +2129,7 @@ const Whitelist = ({
 
       await otcScPoolBonus.methods
         .claim()
-        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .send({ from: coinbase, ...transactionParameters })
         .then(() => {
           setclaimStatusOTCPoolBonus("success");
           setclaimLoadingOTCPoolBonus(false);
@@ -2262,7 +2262,7 @@ const Whitelist = ({
 
       await otcScPoolDynamic.methods
         .claim()
-        .estimateGas({ from: await window.getCoinbase() })
+        .estimateGas({ from: coinbase })
         .then((gas) => {
           transactionParameters.gas = web3.utils.toHex(gas);
         })
@@ -2272,7 +2272,7 @@ const Whitelist = ({
 
       await otcScPoolDynamic.methods
         .claim()
-        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .send({ from: coinbase, ...transactionParameters })
         .then(() => {
           setclaimStatusOTCPoolDynamic("success");
           setclaimLoadingOTCPoolDynamic(false);
@@ -2405,7 +2405,7 @@ const Whitelist = ({
 
       await otcScWodDynamic.methods
         .claim()
-        .estimateGas({ from: await window.getCoinbase() })
+        .estimateGas({ from: coinbase })
         .then((gas) => {
           transactionParameters.gas = web3.utils.toHex(gas);
         })
@@ -2415,7 +2415,7 @@ const Whitelist = ({
 
       await otcScWodDynamic.methods
         .claim()
-        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .send({ from: coinbase, ...transactionParameters })
         .then(() => {
           setclaimStatusOTCWodDynamic("success");
           setclaimLoadingOTCWodDynamic(false);
@@ -2534,12 +2534,12 @@ const Whitelist = ({
       const privateSc = new web3.eth.Contract(
         PRIVATE_ABI,
         window.config.private_address,
-        { from: await window.getCoinbase() }
+        { from: coinbase }
       );
 
       await privateSc.methods
         .claim()
-        .send({ from: await window.getCoinbase() })
+        .send({ from: coinbase })
         .then(() => {
           setclaimStatusPrivate("success");
           setclaimLoadingPrivate(false);
@@ -2683,13 +2683,13 @@ const Whitelist = ({
         KOL_ABI,
         isSpecial ? window.config.kol2_address : window.config.kol_address,
         {
-          from: await window.getCoinbase(),
+          from: coinbase,
         }
       );
 
       await kolSc.methods
         .claim()
-        .send({ from: await window.getCoinbase() })
+        .send({ from: coinbase })
         .then(() => {
           setclaimStatusKol("success");
           setclaimLoadingKol(false);
@@ -2808,13 +2808,13 @@ const Whitelist = ({
         ADVISORS_ABI,
         window.config.advisors_address,
         {
-          from: await window.getCoinbase(),
+          from: coinbase,
         }
       );
 
       await advisorsSc.methods
         .claim()
-        .send({ from: await window.getCoinbase() })
+        .send({ from: coinbase })
         .then(() => {
           setclaimStatusAdvisors("success");
           setclaimLoadingAdvisors(false);

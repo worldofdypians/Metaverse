@@ -3384,22 +3384,6 @@ const NewDailyBonus = ({
                             chain === "sei" && "chain-item-active"
                           } w-100`}
                         >
-                          <HtmlTooltipGift
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                            }
-                          >
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/gift.png"
-                              }
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon2.png"
@@ -4156,6 +4140,23 @@ const NewDailyBonus = ({
                             chain === "vanar" && "chain-item-active"
                           } w-100`}
                         >
+                          <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
+
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon3.png"
@@ -4419,22 +4420,6 @@ const NewDailyBonus = ({
                             chain === "sei" && "chain-item-active"
                           } w-100`}
                         >
-                          <HtmlTooltipGift
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                            }
-                          >
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/gift.png"
-                              }
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon2.png"
@@ -4797,6 +4782,22 @@ const NewDailyBonus = ({
                             chain === "vanar" && "chain-item-active"
                           }`}
                         >
+                          <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon3.png"
@@ -5389,7 +5390,7 @@ const NewDailyBonus = ({
                                   selectedChest={selectedChest}
                                   isPremium={isPremium}
                                   onClaimRewards={(value) => {
-                                    console.log('vanar', value)
+                                    console.log("vanar", value);
                                     // setRewardData(value);
                                     setLiveRewardData(value);
                                     onVanarChestClaimed();
