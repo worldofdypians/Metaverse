@@ -1204,6 +1204,10 @@ function App() {
             return obj.id === "chainlinkEvent10";
           });
 
+          const teafiEvent = responseData.events.filter((obj) => {
+            return obj.id === "tea-fi";
+          });
+
           const kucoinEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "kucoin";
           });
@@ -1231,6 +1235,21 @@ function App() {
             setBnbPoints(pointsBnb);
             setBnbEarnUsd(userEarnedusd);
             setBnbEarnToken(userEarnedusd / bnbPrice);
+          }
+
+          if (teafiEvent && teafiEvent[0]) {
+            if (teafiEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
+
+            const userEarnedusd =
+              teafiEvent[0].reward.earn.total /
+              teafiEvent[0].reward.earn.multiplier;
+            const pointsBnb = teafiEvent[0].reward.earn.totalPoints;
+
+            setTeaPoints(pointsBnb);
+            setTeaEarnUsd(userEarnedusd);
+            setTeaEarnToken(userEarnedusd / 1);
           }
 
           if (immutableEvent && immutableEvent[0]) {
@@ -1725,6 +1744,11 @@ function App() {
       window.config.nft_vanar_address
     );
 
+    const teaseicontract = new window.seiWeb3.eth.Contract(
+      window.SEI_NFT_ABI,
+      window.config.nft_teasei_address
+    );
+
     const confluxresult = await confluxContract.methods
       .totalSupply()
       .call()
@@ -1732,6 +1756,36 @@ function App() {
         console.error(e);
         return 0;
       });
+
+    const teaseiResult = await teaseicontract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaBNBResult = await window.teabnb_nft
+      .getTeaBNBLatestMint()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaOPBNBResult = await window.teaopbnb_nft
+      .getTeaOPBNBLatestMint()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaBaseResult = await window.teabase_nft
+      .getTeaBaseLatestMint()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     const gateresult = await gateContract.methods
       .totalSupply()
       .call()
@@ -1879,6 +1933,10 @@ function App() {
         parseInt(seiresult) +
         parseInt(kucoinresult) +
         Number(vanarresult) +
+        Number(teaBNBResult) +
+        Number(teaOPBNBResult) +
+        Number(teaBaseResult) +
+        Number(teaseiResult) +
         20002
     );
   };
@@ -4356,43 +4414,7 @@ function App() {
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
-    {
-      title: "Tea-Fi",
-      logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
-      eventStatus: "Coming Soon",
-      totalRewards: "$40,000 in TEA Rewards",
-      myEarnings: 0.0,
-      rewardAmount: "$40,000",
-      location: [-0.06892739063903598, 0.08374929428100586],
-      eventType: "Explore & Mine",
-      eventDate: "Jul 18, 2025",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/teafiEventBg.webp",
-      userEarnUsd: teaEarnUsd,
-      userEarnCrypto: teaEarnToken,
-      userEarnPoints: teaPoints,
-      image: "teafiBuilderBanner.webp",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
-      rewardType: "TEA",
-      marker: markers.treasureMarker,
-      popupInfo: {
-        title: "Tea-Fi",
-        chain: "BNB Chain",
-        linkState: "tea-fi",
-        rewards: "TEA",
-        status: "Coming Soon",
-        id: "event4",
-        eventType: "Explore & Mine",
-        totalRewards: "$40,000 in TEA Rewards",
-        eventDuration: teaLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 18, 2025",
-      },
-    },
+
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
@@ -4427,6 +4449,43 @@ function App() {
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Apr 09, 2025",
+      },
+    },
+    {
+      title: "Tea-Fi",
+      logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
+      eventStatus: "Live",
+      totalRewards: "$40,000 in TEA Rewards",
+      myEarnings: 0.0,
+      rewardAmount: "$40,000",
+      location: [-0.06892739063903598, 0.08374929428100586],
+      eventType: "Explore & Mine",
+      eventDate: "Jul 18, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/teafiEventBg.webp",
+      userEarnUsd: teaEarnUsd,
+      userEarnCrypto: teaEarnToken,
+      userEarnPoints: teaPoints,
+      image: "teafiBuilderBanner.webp",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      rewardType: "TEA",
+      marker: markers.treasureMarker,
+      popupInfo: {
+        title: "Tea-Fi",
+        chain: "BNB Chain",
+        linkState: "tea-fi",
+        rewards: "TEA",
+        status: "Live",
+        id: "event4",
+        eventType: "Explore & Mine",
+        totalRewards: "$40,000 in TEA Rewards",
+        eventDuration: teaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 18, 2025",
       },
     },
     {
@@ -4878,7 +4937,6 @@ function App() {
         eventDate: "Aug 26, 2024",
       },
     },
-
     {
       title: "VICTION",
       logo: "https://cdn.worldofdypians.com/wod/viction.svg",
@@ -6543,6 +6601,7 @@ function App() {
                 skaleEarnUsd={skaleEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
+                teaEarnUsd={teaEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
@@ -6638,6 +6697,7 @@ function App() {
                 skaleEarnUsd={skaleEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
+                teaEarnUsd={teaEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
@@ -7203,6 +7263,7 @@ function App() {
                 skaleEarnUsd={skaleEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
+                teaEarnUsd={teaEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
