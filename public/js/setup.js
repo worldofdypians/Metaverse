@@ -1690,6 +1690,17 @@ class TEABASE_NFT {
       throw new Error("Minting failed!");
     }
   }
+
+  async getTeaBaseLatestMint() {
+    let nft_contract = new window.baseWeb3.eth.Contract(
+      window.BASE_NFT_ABI,
+      window.config.nft_teabase_address,
+      {
+        from: await getCoinbase(),
+      }
+    );
+    return await nft_contract.methods.totalSupply().call();
+  }
 }
 
 window.teabase_nft = new TEABASE_NFT();
@@ -2386,6 +2397,17 @@ class TEABNB_NFT {
       throw new Error("Minting failed!");
     }
   }
+
+  async getTeaBNBLatestMint() {
+    let nft_contract = new window.bscWeb3.eth.Contract(
+      window.BNB_NFT_ABI,
+      window.config.nft_teabnb_address,
+      {
+        from: await getCoinbase(),
+      }
+    );
+    return await nft_contract.methods.totalSupply().call();
+  }
 }
 
 window.teabnb_nft = new TEABNB_NFT();
@@ -2573,6 +2595,17 @@ class TEAOPBNB_NFT {
     } else {
       throw new Error("Minting failed!");
     }
+  }
+
+  async getTeaOPBNBLatestMint() {
+    let nft_contract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_teaopbnb_address,
+      {
+        from: await getCoinbase(),
+      }
+    );
+    return await nft_contract.methods.totalSupply().call();
   }
 }
 

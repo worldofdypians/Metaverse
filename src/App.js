@@ -1744,6 +1744,11 @@ function App() {
       window.config.nft_vanar_address
     );
 
+    const teaseicontract = new window.seiWeb3.eth.Contract(
+      window.SEI_NFT_ABI,
+      window.config.nft_teasei_address
+    );
+
     const confluxresult = await confluxContract.methods
       .totalSupply()
       .call()
@@ -1751,6 +1756,36 @@ function App() {
         console.error(e);
         return 0;
       });
+
+    const teaseiResult = await teaseicontract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaBNBResult = await window.teabnb_nft
+      .getTeaBNBLatestMint()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaOPBNBResult = await window.teaopbnb_nft
+      .getTeaOPBNBLatestMint()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaBaseResult = await window.teabase_nft
+      .getTeaBaseLatestMint()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     const gateresult = await gateContract.methods
       .totalSupply()
       .call()
@@ -1898,6 +1933,10 @@ function App() {
         parseInt(seiresult) +
         parseInt(kucoinresult) +
         Number(vanarresult) +
+        Number(teaBNBResult) +
+        Number(teaOPBNBResult) +
+        Number(teaBaseResult) +
+        Number(teaseiResult) +
         20002
     );
   };
