@@ -57,6 +57,10 @@ const WodPartners = ({ full }) => {
       icon: "kucoinLogoRound.svg",
     },
     {
+      name: "Taraxa",
+      icon: "taraxa.svg",
+    },
+    {
       name: "Binance Wallet",
       icon: "binanceWalletUpdated.svg",
     },

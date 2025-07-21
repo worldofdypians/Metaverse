@@ -586,6 +586,45 @@ const NewLeaderBoard = ({
                           ? "Vanar"
                           : ""}
                       </button>
+                      <button
+                        onMouseEnter={() => handleMouseEnter("taraxa")}
+                        onMouseLeave={handleMouseLeave}
+                        className={` 
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "taraxa" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("taraxa");
+                          setAllData(allVanarData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "taraxa"
+                              ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                              : optionText2 !== "taraxa" &&
+                                hoverState === "taraxa"
+                              ? "https://cdn.worldofdypians.com/wod/taraxaWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/taraxaInactive.svg"
+                          }
+                          taraxa
+                          className={`${
+                            optionText2 === "taraxa"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Taraxa"
+                          : windowSize.width < 786 && optionText2 === "taraxa"
+                          ? "Taraxa"
+                          : ""}
+                      </button>
                     </div>
                   </div>
                 </div>

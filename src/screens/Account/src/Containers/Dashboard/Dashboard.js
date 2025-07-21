@@ -49,6 +49,7 @@ import {
   weeklyStarPrizes,
   weeklyExtraStarPrizes,
   seiStars,
+  taraxaStars,
   matStars,
   vanarStars,
 } from "./stars";
@@ -726,6 +727,7 @@ function Dashboard({
   const [allBaseData, setAllBaseData] = useState([]);
   const [allMatData, setAllMatData] = useState([]);
   const [allSeiData, setAllSeiData] = useState([]);
+  const [allTaraxaData, setAllTaraxaData] = useState([])
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [activePlayerCore, setActivePlayerCore] = useState(false);
@@ -801,6 +803,16 @@ function Dashboard({
   const [userDataSei, setUserDataSei] = useState({});
 
   const [prevDataSei, setPrevDataSei] = useState([]);
+
+  const [dailyRecordsTaraxa, setDailyRecordsTaraxa] = useState([]);
+
+  const [activePlayerTaraxa, setActivePlayerTaraxa] = useState(false);
+
+  const [userDataTaraxa, setUserDataTaraxa] = useState({});
+
+  const [prevDataTaraxa, setPrevDataTaraxa] = useState([]);
+
+  const [loadingTaraxa, setLoadingTaraxa] = useState(false)
 
   const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
 
@@ -1674,9 +1686,174 @@ function Dashboard({
     }
   };
 
-  // const fetchWeeklyRecordsAroundPlayerSei = async (itemData) => {
+
+  //TARAXA
+    const fillRecordsTaraxa = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsTaraxa(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsTaraxa(finalData);
+    }
+  };
+  // const fillRecordsWeeklyTaraxa = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsTaraxa(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsTaraxa(finalData);
+  //   }
+  // };
+
+  const fetchPreviousWinnersTaraxa = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaraxaDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsTaraxa([]);
+        });
+      setPrevDataTaraxa(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaraxa(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+
+  // const fetchPreviousWeeklyWinnersTaraxa = async (version) => {
+  //   if (version != 0) {
+  //     const data = {
+  //       StatisticName: "LeaderboardTaraxaWeekly",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 10,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data
+  //     );
+
+  //     setPrevDataTaraxaWeekly(result.data.data.leaderboard);
+  //   } else {
+  //     setPrevDataTaraxaWeekly(placeholderplayerData);
+  //   }
+  // };
+
+  const fetchDailyRecordsTaraxa = async () => {
+    if (dailyRecordsTaraxa.length > 0) return;
+    setLoadingTaraxa(true);
+
+    const data = {
+      StatisticName: "LeaderboardTaraxaDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersTaraxa(parseInt(result.data.data.version));
+      setDailyRecordsTaraxa(result.data.data.leaderboard);
+      fillRecordsTaraxa(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerTaraxa(true);
+          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerTaraxa(false);
+          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setLoadingTaraxa(false);
+      fillRecordsTaraxa([]);
+    } finally {
+      setTimeout(() => {
+        setLoadingTaraxa(false);
+      }, 1000);
+    }
+  };
+
+  // const fetchWeeklyRecordsTaraxa = async () => {
   //   const data = {
-  //     StatisticName: "LeaderboardSeiWeekly",
+  //     StatisticName: "LeaderboardTaraxaWeekly",
+  //     StartPosition: 0,
+  //     MaxResultsCount: 100,
+  //   };
+  //   const result = await axios
+  //     .post(`${backendApi}/auth/GetLeaderboard`, data)
+  //     .catch((e) => {
+  //       console.error(e);
+  //       fillRecordsWeeklyTaraxa([]);
+  //     });
+  //   setWeeklyRecordsTaraxa(result.data.data.leaderboard);
+
+  //   fetchPreviousWeeklyWinnersTaraxa(parTaraxant(result.data.data.version));
+  //   fillRecordsWeeklyTaraxa(result.data.data.leaderboard);
+  //   if (userId && username) {
+  //     var testArray = result.data.data.leaderboard.filter(
+  //       (item) => item.displayName === username
+  //     );
+
+  //     if (testArray.length > 0) {
+  //       setActivePlayerTaraxaWeekly(true);
+  //       fetchWeeklyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+  //     }
+  //     if (testArray.length === 0) {
+  //       setActivePlayerTaraxaWeekly(false);
+  //       fetchWeeklyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+  //     }
+  //   }
+  // };
+
+  const fetchDailyRecordsAroundPlayerTaraxa = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaraxaDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserDataTaraxa(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerTaraxa(false);
+      } else {
+        setActivePlayerTaraxa(true);
+      }
+    }
+  };
+
+
+
+
+
+  // const fetchWeeklyRecordsAroundPlayerTaraxa = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "LeaderboardTaraxaWeekly",
   //     MaxResultsCount: 6,
   //     PlayerId: userId,
   //   };
@@ -1691,7 +1868,7 @@ function Dashboard({
 
   //     const userPosition = testArray[0].position;
   //     if (goldenPassRemainingTime && testArray[0].statValue != 0) {
-  //       setWeeklyDataAmountSei(
+  //       setWeeklyDataAmountTaraxa(
   //         testArray[0].statValue !== 0
   //           ? userPosition > 10
   //             ? 0
@@ -1703,7 +1880,7 @@ function Dashboard({
   //           : 0
   //       );
   //     } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
-  //       setWeeklyDataAmountSei(
+  //       setWeeklyDataAmountTaraxa(
   //         testArray[0].statValue !== 0
   //           ? userPosition > 10
   //             ? 0
@@ -1712,7 +1889,7 @@ function Dashboard({
   //             : Number(skalePrizesWeekly[userPosition])
   //           : 0
   //       );
-  //     } else setWeeklyDataAmountSei(0);
+  //     } else setWeeklyDataAmountTaraxa(0);
 
   //     if (itemData.length > 0) {
   //       var testArray2 = Object.values(itemData).filter(
@@ -1720,15 +1897,15 @@ function Dashboard({
   //       );
 
   //       if (testArray.length > 0 && testArray2.length > 0) {
-  //         setActivePlayerSeiWeekly(true);
-  //         setUserDataSeiWeekly([]);
+  //         setActivePlayerTaraxaWeekly(true);
+  //         setUserDataTaraxaWeekly([]);
   //       } else if (testArray.length > 0 && testArray2.length === 0) {
-  //         setActivePlayerSeiWeekly(false);
-  //         setUserDataSeiWeekly(...testArray);
+  //         setActivePlayerTaraxaWeekly(false);
+  //         setUserDataTaraxaWeekly(...testArray);
   //       }
   //     } else if (testArray.length > 0) {
-  //       setActivePlayerSeiWeekly(false);
-  //       setUserDataSeiWeekly(...testArray);
+  //       setActivePlayerTaraxaWeekly(false);
+  //       setUserDataTaraxaWeekly(...testArray);
   //     }
   //   }
   // };
@@ -4033,6 +4210,22 @@ function Dashboard({
       },
     ]);
   }, [dailyRecordsSei, prevDataSei, userDataSei, activePlayerSei, loadingSei]);
+  useEffect(() => {
+    setAllTaraxaData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: taraxaStars,
+        previous_rewards: taraxaStars,
+        activeData: dailyRecordsTaraxa,
+        previousData: prevDataTaraxa,
+        player_data: userDataTaraxa,
+        is_active: activePlayerTaraxa, //change when apis are ready
+        loading: loadingTaraxa,
+      },
+    ]);
+  }, [dailyRecordsTaraxa, prevDataTaraxa, userDataTaraxa, activePlayerTaraxa, loadingTaraxa]);
 
   useEffect(() => {
     setAllBaseData([
@@ -4146,7 +4339,15 @@ function Dashboard({
       if (dailyRecordsSei.length === 0) {
         fetchDailyRecordsSei();
       }
-    } else if (chain === "manta") {
+    } 
+    else if (chain === "taraxa") {
+      if (dailyRecordsTaraxa.length === 0) {
+        fetchDailyRecordsTaraxa();
+      }
+    }
+    
+    
+    else if (chain === "manta") {
       if (dailyRecordsManta.length === 0) {
         fetchDailyRecordsManta();
       }
@@ -6169,6 +6370,13 @@ function Dashboard({
                   : userDataSei?.position > 100
                   ? 0
                   : seiStars[userDataSei?.position]
+              }
+              userTaraxaStars={
+                userDataTaraxa?.statValue === 0
+                  ? 0
+                  : userDataTaraxa?.position > 100
+                  ? 0
+                  : taraxaStars[userDataTaraxa?.position]
               }
               userRankManta={userDataManta?.position ?? 0}
               userMantaStars={

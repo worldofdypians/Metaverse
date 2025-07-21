@@ -60,6 +60,7 @@ const LoyaltyProgram = ({
     viction: { title: "Viction", value: "viction", checked: false },
     vanar: { title: "Vanar", value: "vanar", checked: false },
     sei: { title: "Sei", value: "sei", checked: false },
+    taraxa: { title: "Taraxa", value: "taraxa", checked: false },
   });
   const [reqChains, setReqChains] = useState([]);
   const selectedCount = Object.values(chains).filter(
@@ -458,7 +459,19 @@ const LoyaltyProgram = ({
                                             alt=""
                                             className="participant-chain"
                                           />
-                                        ) : (
+                                        ) 
+                                        : item === "taraxa" ? (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Logo.svg`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
+                                        )
+                                        
+                                        : (
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}
@@ -518,7 +531,20 @@ const LoyaltyProgram = ({
                                             alt=""
                                             className="participant-chain"
                                           />
-                                        ) : (
+                                        ) 
+                                        
+                                        : item === "taraxa" ? (
+                                          <img
+                                            key={index}
+                                            src={`https://cdn.worldofdypians.com/wod/${item}Logo.svg`}
+                                            width={16}
+                                            height={16}
+                                            alt=""
+                                            className="participant-chain"
+                                          />
+                                        )
+                                        
+                                        : (
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}
