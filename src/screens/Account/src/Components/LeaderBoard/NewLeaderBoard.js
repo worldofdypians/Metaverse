@@ -88,6 +88,7 @@ const NewLeaderBoard = ({
   allBaseData,
   allTaikoData,
   allMatData,
+  allTaraxaData,
   onPremiumClick,
   onGoldenpassClick,
   allSeiData,
@@ -152,6 +153,9 @@ const NewLeaderBoard = ({
     if (allVanarData && allVanarData.length > 0 && optionText2 === "vanar") {
       setAllData(allVanarData);
     }
+    if (allTaraxaData && allTaraxaData.length > 0 && optionText2 === "taraxa") {
+      setAllData(allTaraxaData);
+    }
     if (
       allVictionData &&
       allVictionData.length > 0 &&
@@ -170,6 +174,7 @@ const NewLeaderBoard = ({
     allTaikoData,
     allVictionData,
     allVanarData,
+    allTaraxaData,
   ]);
 
   // useEffect(() => {
@@ -597,7 +602,7 @@ const NewLeaderBoard = ({
                      } leaderboard-inactive-btn2 w-100`}
                         onClick={() => {
                           handleOption("taraxa");
-                          setAllData(allVanarData);
+                          setAllData(allTaraxaData);
                         }}
                       >
                         <img

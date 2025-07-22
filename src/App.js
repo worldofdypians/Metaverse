@@ -799,6 +799,11 @@ function App() {
   const [taikoEarnToken, setTaikoEarnToken] = useState(0);
   const [taikoPoints, setTaikoPoints] = useState(0);
 
+  const [taraxaEarnUsd, setTaraxaEarnUsd] = useState(0);
+  const [taraxaPrice, setTaraxaPrice] = useState(0);
+  const [taraxaEarnToken, setTaraxaEarnToken] = useState(0);
+  const [taraxaPoints, setTaraxaPoints] = useState(0);
+
   const [cookieEarnUsd, setCookieEarnUsd] = useState(0);
   const [cookiePrice, setCookiePrice] = useState(0);
   const [cookieEarnToken, setCookieEarnToken] = useState(0);
@@ -1147,6 +1152,9 @@ function App() {
           const taikoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "taiko";
           });
+          const taraxaEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taraxa";
+          });
 
           const multiversEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "multivers";
@@ -1308,6 +1316,21 @@ function App() {
             setTaikoPoints(pointsTaiko);
             setTaikoEarnUsd(userEarnedusd);
             setTaikoEarnToken(userEarnedusd / taikoPrice);
+          }
+
+
+          if (taraxaEvent && taraxaEvent[0]) {
+            if (taraxaEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
+
+            const userEarnedusd =
+              taraxaEvent[0].reward.earn.total /
+              taraxaEvent[0].reward.earn.multiplier;
+            const pointsTaraxa = taraxaEvent[0].reward.earn.totalPoints;
+            setTaraxaPoints(pointsTaraxa);
+            setTaraxaEarnUsd(userEarnedusd);
+            setTaraxaEarnToken(userEarnedusd / taraxaPrice);
           }
 
           if (midleEvent && midleEvent[0]) {
@@ -4262,6 +4285,16 @@ function App() {
         console.log(e);
       });
   };
+  const fetchTaraxaPrice = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/price/taraxa`)
+      .then((obj) => {
+        setTaraxaPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const fetchCookiePrice = async () => {
     await axios
@@ -4326,6 +4359,7 @@ function App() {
     fetchSeiPrice();
     fetchMantaPrice();
     fetchTaikoPrice();
+    fetchTaraxaPrice();
     fetchCookiePrice();
     fetchCorePrice();
     fetchCFXPrice();
@@ -4625,6 +4659,43 @@ function App() {
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$30,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Apr 04, 2025",
+      },
+    },
+    {
+      title: "Taraxa",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+      eventStatus: "Coming Soon",
+      rewardType: "TARA",
+      rewardAmount: "$20,000",
+      location: [-0.06917415368919773, 0.08433401584625246],
+      image: "taikoBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$30,000 in Taraxa Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 04, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
+      userEarnUsd: taraxaEarnUsd,
+      userEarnCrypto: taraxaEarnToken,
+      userEarnPoints: taraxaPoints,
+      popupInfo: {
+        title: "Taraxa",
+        chain: "Taraxa",
+        linkState: "taraxa",
+        rewards: "TARA",
+        status: "Coming Soon",
+        id: "event30",
+        eventType: "Explore & Mine",
+        totalRewards: "$30,000 in Tara Rewards",
         eventDuration: taikoLastDay,
         minRewards: "0.5",
         maxRewards: "20",
@@ -6607,6 +6678,7 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
@@ -6703,6 +6775,7 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
@@ -6896,6 +6969,22 @@ function App() {
           <Route
             exact
             path="/shop/beta-pass/tea-fi"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/taraxa"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -7269,6 +7358,7 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}

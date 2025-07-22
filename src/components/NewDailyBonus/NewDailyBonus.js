@@ -104,6 +104,7 @@ const NewDailyBonus = ({
   victionImages,
   coreImages,
   mantaImages,
+  taraxaImages,
   baseImages,
   claimedMantaChests,
   claimedMantaPremiumChests,
@@ -140,6 +141,11 @@ const NewDailyBonus = ({
   walletClient,
   publicClient,
   network_matchain,
+  claimedTaraxaChests,
+  claimedTaraxaPremiumChests,
+  openedTaraxaChests,
+  allTaraxaChests,
+  onTaraxaChestClaimed,
 }) => {
   const html = document.querySelector("html");
 
@@ -172,6 +178,10 @@ const NewDailyBonus = ({
 
   const seiClaimed = claimedSeiChests + claimedSeiPremiumChests;
   const seiPercentage = (seiClaimed / 20) * 100;
+
+
+  const taraxaClaimed = claimedTaraxaChests + claimedTaraxaPremiumChests;
+  const taraxaPercentage = (taraxaClaimed / 20) * 100;
 
   var settings = {
     dots: false,
@@ -343,6 +353,7 @@ const NewDailyBonus = ({
   const [totalCoreStars, settotalCoreStars] = useState(0);
   const [totalVictionStars, settotalVictionStars] = useState(0);
   const [totalMantaStars, settotalMantaStars] = useState(0);
+  const [totalTaraxaStars, settotalTaraxaStars] = useState(0);
   const [totalBaseStars, settotalBaseStars] = useState(0);
   const [totalTaikoStars, settotalTaikoStars] = useState(0);
   const [totalVanarStars, settotalVanarStars] = useState(0);
@@ -360,6 +371,8 @@ const NewDailyBonus = ({
   const [totalVictionUsd, settotalVictionUsd] = useState(0);
   const [totalMantaPoints, settotalMantaPoints] = useState(0);
   const [totalMantaUsd, settotalMantaUsd] = useState(0);
+  const [totalTaraxaPoints, settotalTaraxaPoints] = useState(0);
+  const [totalTaraxaUsd, settotalTaraxaUsd] = useState(0);
   const [totalBasePoints, settotalBasePoints] = useState(0);
   const [totalBaseUsd, settotalBaseUsd] = useState(0);
   const [totalTaikoPoints, settotalTaikoPoints] = useState(0);
@@ -572,6 +585,44 @@ const NewDailyBonus = ({
 
       settotalMantaPoints(resultMantaPoints);
       settotalMantaUsd(resultMantaUsd);
+    }
+    if (allTaraxaChests && allTaraxaChests.length > 0) {
+      let resultTaraxaPoints = 0;
+      let resultTaraxaUsd = 0;
+      let resultstars = 0;
+
+      allTaraxaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultTaraxaPoints += Number(innerChest.reward);
+              }
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultTaraxaUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultTaraxaPoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+      settotalTaraxaStars(resultstars);
+
+      settotalTaraxaPoints(resultTaraxaPoints);
+      settotalTaraxaUsd(resultTaraxaUsd);
     }
 
     if (allBaseChests && allBaseChests.length > 0) {
@@ -828,7 +879,11 @@ const NewDailyBonus = ({
         showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "manta") {
         showSingleRewardDataManta(rewardData.chestId, isActiveIndex - 1);
-      } else if (chain === "base") {
+      }
+       else if (chain === "taraxa") {
+        showSingleRewardDataTaraxa(rewardData.chestId, isActiveIndex - 1);
+      }
+      else if (chain === "base") {
         showSingleRewardDataBase(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "taiko") {
         showSingleRewardDataTaiko(rewardData.chestId, isActiveIndex - 1);
@@ -891,6 +946,32 @@ const NewDailyBonus = ({
         }
       } else if (binanceWallet && window.WALLET_TYPE === "binance") {
         handleSwitchChainBinanceWallet(169);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    }
+  };
+  const handleTaraxaPool = async () => {
+    
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0x349")
+            .then(() => {
+              handleSwitchNetwork(841);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(841);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(841);
+        }
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(841);
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
@@ -2126,6 +2207,87 @@ const NewDailyBonus = ({
     }
   };
 
+  
+  const showSingleRewardDataTaraxa = (chestID, chestIndex) => {
+    const filteredResult = openedTaraxaChests.find(
+      (el) => el.chestId === chestID && allTaraxaChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money";
+        }) === undefined;
+
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
+
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      }
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+  };
+
   useEffect(() => {
     countEarnedRewards();
   }, [
@@ -2139,6 +2301,7 @@ const NewDailyBonus = ({
     allMatChests,
     allCoreChests,
     allSeiChests,
+    allTaraxaChests,
   ]);
 
   // useEffect(() => {
@@ -2885,7 +3048,86 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
       // setMessage("comingsoon");
+    } else if (chain === "taraxa") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedTaraxaChests + claimedTaraxaPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 841
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 841
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedTaraxaChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 841
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedTaraxaChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 841
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedTaraxaChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 841
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
+          }
+        } else {
+          setMessage("connect");
+          setDisable(true);
+        }
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.WALLET_TYPE === "matchId" ||
+        window.ethereum?.isBinance
+      ) {
+        setMessage("notsupported");
+      }
+      // setMessage("comingsoon");
     }
+
+
   }, [
     email,
     chain,
@@ -2913,6 +3155,8 @@ const NewDailyBonus = ({
     claimedMatPremiumChests,
     claimedSeiChests,
     claimedSeiPremiumChests,
+    claimedTaraxaChests,
+    claimedTaraxaPremiumChests,
     rewardData,
   ]);
 
@@ -3067,6 +3311,8 @@ const NewDailyBonus = ({
                       ? totalMatPoints
                       : chain === "sei"
                       ? totalSeiPoints
+                      : chain === "taraxa"
+                      ? totalTaraxaPoints
                       : totalSkalePoints,
                     0
                   )}{" "}
@@ -3094,6 +3340,8 @@ const NewDailyBonus = ({
                       ? totalMatStars
                       : chain === "sei"
                       ? totalSeiStars
+                      : chain === "taraxa"
+                      ? totalTaraxaStars
                       : totalSkaleStars,
                     0
                   )}{" "}
@@ -3124,6 +3372,8 @@ const NewDailyBonus = ({
                       ? totalMatUsd
                       : chain === "sei"
                       ? totalSeiUsd
+                      : chain === "taraxa"
+                      ? totalTaraxaUsd
                       : totalSkaleUsd,
                     2
                   )}{" "}
@@ -3593,6 +3843,113 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
+                        {/* <div
+                          className={`position-relative chain-item ${
+                            chain === "taraxa" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taraxaBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "taraxa" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "taraxa" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("taraxa");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 169
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleTaraxaPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taraxa
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(taraxaPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div> */}
 
                         <div
                           className={`position-relative chain-item ${
@@ -4518,6 +4875,57 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
+                        {/* <div
+                          className={`position-relative chain-item ${
+                            chain === "taraxa" && "chain-item-active"
+                          } w-auto`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taraxaBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "taraxa" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "taraxa" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("taraxa");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                        
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 169
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleTaraxaPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taraxa
+                              </button>
+                            </div>
+                          </div>
+                        </div> */}
 
                         <div
                           className={`position-relative chain-item ${
@@ -5682,6 +6090,110 @@ const NewDailyBonus = ({
                                   publicClient={publicClient}
                                 />
                               ))
+                          : chain === "taraxa"
+                          ? allTaraxaChests && allTaraxaChests.length > 0
+                            ? allTaraxaChests.map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={taraxaImages[index]}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onTaraxaChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataTaraxa(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  image={taraxaImages[index]}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onTaraxaChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataTaraxa(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                  walletClient={walletClient}
+                                  publicClient={publicClient}
+                                />
+                              ))
                           : chain === "viction"
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
@@ -6026,7 +6538,26 @@ const NewDailyBonus = ({
                               Manta Chain
                             </span>
                           </h6>
-                        ) : chain === "taiko" ? (
+                        ) 
+                        : chain === "taraxa" ? (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleTaraxaPool}
+                            >
+                              Taraxa
+                            </span>
+                          </h6>
+                        )
+                        
+                        : chain === "taiko" ? (
                           <h6
                             className="loader-text mb-0"
                             style={{ color: "#ce5d1b" }}
@@ -8567,6 +9098,7 @@ const NewDailyBonus = ({
             onVictionChestClaimed();
             onCoreChestClaimed();
             onMantaChestClaimed();
+            onTaraxaChestClaimed();
             onTaikoChestClaimed();
             onVanarChestClaimed();
             onMatChestClaimed();
@@ -8586,7 +9118,14 @@ const NewDailyBonus = ({
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                : chain === "taiko"
+                : chain === "taraxa"
+                ? showSingleRewardDataTaraxa(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
+                
+                
+                  : chain === "taiko"
                 ? showSingleRewardDataTaiko(
                     rewardData.chestId,
                     isActiveIndex - 1

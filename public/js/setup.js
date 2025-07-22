@@ -90,6 +90,7 @@ window.config = {
   daily_bonus_manta_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
   daily_bonus_base_address: "0xB3ae054CB8017eCc54B35075f2F4Da8Eb21d214D",
   daily_bonus_taiko_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
+  daily_bonus_taraxa_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
   daily_bonus_mat_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_sei_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_vanar_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
@@ -107,6 +108,7 @@ window.config = {
 
   manta_endpoint: "https://pacific-rpc.manta.network/http",
   taiko_endpoint: "https://rpc.mainnet.taiko.xyz",
+  taraxa_endpoint: "https://rpc.mainnet.taraxa.io",
 
   skale_endpoint: "https://mainnet.skalenodes.com/v1/green-giddy-denebola",
   mat_endpoint: "https://rpc.matchain.io",
@@ -420,6 +422,7 @@ window.bscTestWeb3 = new Web3(window.config.bsc_testnet_endpoint);
 
 window.mantaWeb3 = new Web3(window.config.manta_endpoint);
 window.taikoWeb3 = new Web3(window.config.taiko_endpoint);
+window.taraxaWeb3 = new Web3(window.config.taraxa_endpoint);
 window.skaleWeb3 = new Web3(window.config.skale_endpoint);
 window.matWeb3 = new Web3(window.config.mat_endpoint);
 
@@ -13693,6 +13696,186 @@ window.DAILY_BONUS_BASE_ABI = [
 ];
 
 window.DAILY_BONUS_TAIKO_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "initialPremiumUsers",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    name: "ChestOpened",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    name: "PremiumChestOpened",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "PremiumUserAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "PremiumUserRemoved",
+    type: "event",
+  },
+  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
+    name: "addPremiumUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address[]", name: "users", type: "address[]" }],
+    name: "addPremiumUsersInBulk",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
+    name: "isPremiumUser",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "lifetimeChestCount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "lifetimePremiumChestCount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "openChest",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "openPremiumChest",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "premiumUsers",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
+    name: "removePremiumUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+window.DAILY_BONUS_TARAXA_ABI = [
   {
     inputs: [
       {
