@@ -69,6 +69,7 @@ const Portfolio = ({
   myTeaBnbNfts,
   myTeaOpbnbNfts,
   myTeaSeiNfts,
+  myTaraxaNfts,
   myTeaBaseNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
@@ -416,6 +417,7 @@ const Portfolio = ({
     let teaopBnbArray = [];
     let teaBaseArray = [];
     let teaSeiArray = [];
+    let taraxaArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -883,6 +885,21 @@ const Portfolio = ({
           })
         );
       }
+      if (myTaraxaNfts && myTaraxaNfts.length > 0) {
+        await Promise.all(
+          myTaraxaNfts.map(async (i) => {
+            taraxaArray.push({
+              nftAddress: window.config.nft_teasei_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "tea-sei",
+              chain: 1329,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
 
       if (myTaikoNfts && myTaikoNfts.length > 0) {
         await Promise.all(
@@ -1104,6 +1121,7 @@ const Portfolio = ({
         ...teaBaseArray,
         ...teaBnbArray,
         ...teaSeiArray,
+        ...taraxaArray,
         ...teaopBnbArray,
         ...kucoinNftsArray,
         ...vanarNftsArray,

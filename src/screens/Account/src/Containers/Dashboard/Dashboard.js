@@ -177,6 +177,7 @@ function Dashboard({
   myTeaBnbNfts,
   myTeaOpbnbNfts,
   myTeaSeiNfts,
+  myTaraxaNfts,
   myTeaBaseNfts,
   teaEarnUsd,
 }) {
@@ -517,7 +518,6 @@ function Dashboard({
   const [myTaikoNfts, setmyTaikoNfts] = useState([]);
   const [myCookieNfts, setmyCookieNfts] = useState([]);
   const [mySeiNfts, setmySeiNfts] = useState([]);
-  const [myTaraxaNfts, setmyTaraxaNfts] = useState([]);
 
   const [myMatNfts, setmyMatNfts] = useState([]);
 
@@ -7356,6 +7356,7 @@ function Dashboard({
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
               />
             </div>

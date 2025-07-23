@@ -579,7 +579,7 @@ function App() {
   const [myTeaBnbNfts, setmyTeaBnbNfts] = useState([]);
   const [myTeaBaseNfts, setmyTeaBaseNfts] = useState([]);
   const [myTeaSeiNfts, setmyTeaSeiNfts] = useState([]);
-
+  const [myTaraxaNfts, setMyTaraxaNfts] = useState([])
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
   const [isBnb, setisBnb] = useState(false);
@@ -2687,6 +2687,9 @@ function App() {
       getMyNFTS(coinbase, "tea-sei").then((NFTS) => {
         setmyTeaSeiNfts(NFTS);
       });
+      getMyNFTS(coinbase, "taraxa").then((NFTS) => {
+        setMyTaraxaNfts(NFTS);
+      });
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -3654,7 +3657,55 @@ function App() {
       }
     }
   };
-  // console.log(myTeaBaseNfts, myTeaBnbNfts, myTeaSeiNfts, myTeaOpbnbNfts);
+
+
+  const handleMintTaraxa = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      const provider = ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const nft_contract = new ethers.Contract(
+        window.config.nft_taraxa_address,
+        window.TARAXA_NFT_ABI,
+        signer
+      );
+      const txResponse = await nft_contract.mintBetaPass().catch((e) => {
+        console.error(e);
+        setmintloading("error");
+        settextColor("#d87b7b");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setmintStatus("Success! Your Nft was minted successfully!");
+        setmintloading("success");
+        settextColor("rgb(123, 216, 176)");
+        setTimeout(() => {
+          setmintStatus("");
+          setmintloading("initial");
+        }, 5000);
+        getMyNFTS(coinbase, "taraxa").then((NFTS) => {
+          setMyTaraxaNfts(NFTS);
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     if (
       binanceData &&
@@ -6664,6 +6715,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 syncStatus={syncStatus}
                 userActiveEvents={userEvents}
@@ -6762,6 +6814,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -7345,6 +7398,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -7516,6 +7570,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
               />
             }
@@ -7544,6 +7599,8 @@ function App() {
                     ? handleMintTeaopBnb()
                     : networkId === 8453
                     ? handleMintTeaBase()
+                    : networkId === 841
+                    ? handleMintTaraxa()
                     : handleMintTeaSei();
                 }}
                 mintStatus={mintStatus}
@@ -7555,6 +7612,7 @@ function App() {
                     myTeaBaseNfts,
                     myTeaOpbnbNfts,
                     myTeaSeiNfts,
+                    // myTaraxaNfts,
                     myTeaBnbNfts,
                   ].find((item) => {
                     return item.length > 0;
@@ -7563,6 +7621,49 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
+                totalCreated={totalTimepieceCreated}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/shop/mint/taraxa"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleMintTaraxa}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                timepieceMetadata={timepieceMetadata}
+                nftCreated={
+                  [
+                    myTeaBaseNfts,
+                    myTeaOpbnbNfts,
+                    myTeaSeiNfts,
+                    // myTaraxaNfts,
+                    myTeaBnbNfts,
+                  ].find((item) => {
+                    return item.length > 0;
+                  }) ?? []
+                }
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 totalCreated={totalTimepieceCreated}
               />

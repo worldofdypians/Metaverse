@@ -536,6 +536,17 @@
     height: auto !important;
   }
 }
+.market-mint-taraxa {
+  background-image: url("https://cdn.worldofdypians.com/wod/taraxaMarketMint.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px !important;
+
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
+}
 
 .market-mint-immutable {
   background-image: url("https://cdn.worldofdypians.com/wod/immutableMarketBanner.png");
@@ -1541,6 +1552,13 @@
 
 .kucoin-active {
   background-image: url("https://cdn.worldofdypians.com/wod/kucoinNft.png");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.taraxa-active {
+  background-image: url("https://cdn.worldofdypians.com/wod/taraxaNft.png");
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: center;

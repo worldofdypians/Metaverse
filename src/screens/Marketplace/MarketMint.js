@@ -46,6 +46,7 @@ const MarketMint = ({
   myTeaBnbNfts,
   myTeaOpbnbNfts,
   myTeaSeiNfts,
+  myTaraxaNfts,
   myTeaBaseNfts,
 }) => {
   // const avaxData = {
@@ -63,6 +64,20 @@ const MarketMint = ({
   //   mobileBg: "gateMobileBg.png",
   // };
   const allMints = [
+    {
+      id: "taraxa",
+      cardTitle: "Taraxa Beta Pass",
+      title: "Taraxa Beta Pass",
+      background: "taraxa-mint-bg",
+      mobileBg: "taraxaMobileBg.png",
+      activeClass: "taraxa-active",
+      emptyClass: "conflux-empty",
+      nftcreated: nftCreated,
+      nft_address: window.config.nft_taraxa_address,
+      chainId: 841,
+      chainName: "Taraxa",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    },
     {
       id: "kucoin",
       cardTitle: "KuCoin Beta Pass",
@@ -801,6 +816,17 @@ const MarketMint = ({
       id: "tea-fi",
     },
     {
+      title: "Taraxa Pass",
+      eventId: "taraxa",
+      desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
+      img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
+      data: allMints.find((item) => {
+        return item.id === "taraxa";
+      }),
+      class: "mint-taraxa",
+      id: "taraxa",
+    },
+    {
       title: "CAWS Timepiece",
       eventId: "timepiece",
       desc: "Access the metaverse, experience enhanced interactions, and enjoy diverse benefits.",
@@ -1078,7 +1104,18 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
-        } else if (selectedMint.id === "tea-fi") {
+        } 
+        else if (selectedMint.id === "taraxa") {
+          if (chainId !== 841) {
+            setactiveButton(false);
+            setStatus("Switch to Taraxa to continue minting.");
+          } else if (chainId === 841) {
+            setactiveButton(true);
+            setStatus("");
+          }
+        }
+        
+        else if (selectedMint.id === "tea-fi") {
           if (!selectedMint.chainId.includes(chainId)) {
             setactiveButton(false);
             setStatus("Switch to supported chains to continue minting.");
@@ -1799,7 +1836,7 @@ const MarketMint = ({
                             )}
                             <hr className="gray-divider" />
                             <div className="d-flex w-100 justify-content-center">
-                              {selectedMint.id !== "timepiece" && (
+                              {selectedMint.id !== "timepiece" || selectedMint.id !== "taraxa" && (
                                 <button
                                   className={`py-2 ${
                                     mintloading === "error"
