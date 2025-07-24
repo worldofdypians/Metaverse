@@ -5028,7 +5028,8 @@ const NewEvents = ({
                                     ) : activeEvent.title ===
                                       "Puzzle Madness" ? (
                                       <>
-                                        {hasBoughtpuzzleMadness &&
+                                        {
+                                        hasBoughtpuzzleMadness &&
                                         isFinishedPuzzle === false ? (
                                           // <div className="d-flex flex-column gap-1">
                                           //   <span className="event-price-span">
@@ -5086,7 +5087,8 @@ const NewEvents = ({
                                           </div>
                                         )}
 
-                                        {hasBoughtpuzzleMadness &&
+                                        {
+                                        // hasBoughtpuzzleMadness &&
                                         isFinishedPuzzle === false ? (
                                           <div style={{ height: "38px" }}></div>
                                         ) : (
