@@ -8,6 +8,7 @@ const Kickstarter = ({ onClose }) => {
   const [showContent, setShowContent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
+  const [rewards, setRewards] = useState([])
 
   useEffect(() => {
     const video = videoRef.current;
@@ -42,6 +43,7 @@ const Kickstarter = ({ onClose }) => {
         setTimeout(() => {
           video.pause();
           setStep(3);
+          setRewards([0,2])
         }, 5000);
       }
     }, 2000);
@@ -61,7 +63,7 @@ const Kickstarter = ({ onClose }) => {
           <h6 className="kickstarter-title mb-0 mt-4 fade-in">
             Unlock Container
           </h6>
-          <div className="kickstarter-info-container px-5 py-4 d-flex flex-column gap-3 w-100 fade-in">
+          <div className="kickstarter-info-container px-3 py-3 px-lg-5 py-lg-4   d-flex flex-column gap-2 w-100 fade-in">
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center gap-2">
                 <img
@@ -105,9 +107,9 @@ const Kickstarter = ({ onClose }) => {
                 </a>
               </div>
             </div>
-            <div className="kickstarter-divider"></div>
-            <div className="d-flex align-items-center w-100 justify-content-between">
-              <p className="kickstarter-desc mb-0 w-50">
+            <div className="kickstarter-divider mb-1"></div>
+            <div className="d-flex align-items-center w-100 flex-column flex-lg-row gap-2 gap-lg-0 justify-content-between">
+              <p className="kickstarter-desc mb-0 ">
                 BNB Chain is a decentralized blockchain network built for
                 high-speed, low-cost transactions, designed to support scalable
                 applications in Web3, DeFi, NFTs, gaming, and beyond.
@@ -117,38 +119,38 @@ const Kickstarter = ({ onClose }) => {
                 growing community of builders, making it one of the most used
                 blockchains in the world.
               </p>
-              <div className="d-flex flex-column gap-3">
-                <div className="d-flex align-items-center">
+              <div className="d-flex flex-row flex-lg-column gap-2">
+                <div className="d-flex align-items-center position-relative">
                   <img
                     src="https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
                     alt=""
                     className="kickstarter-reward-image"
                   />
-                  <div className="d-flex px-3 py-2 kickstarter-rewards-container justify-content-end">
+                  <div className={`d-flex px-3 py-2 kickstarter-rewards-container ${rewards.includes(0) && "kickstart-rewarded"} justify-content-end`}>
                     <span className="kickstarter-reward-title text-end">
                       Stars
                     </span>
                   </div>
                 </div>
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center position-relative">
                   <img
                     src="https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
                     alt=""
                     className="kickstarter-reward-image"
                   />
-                  <div className="d-flex px-3 py-2 kickstarter-rewards-container justify-content-end">
+                  <div className={`d-flex px-3 py-2 kickstarter-rewards-container ${rewards.includes(1) && "kickstart-rewarded"} justify-content-end`}>
                     <span className="kickstarter-reward-title text-end">
                       Points
                     </span>
                   </div>
                 </div>
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center position-relative">
                   <img
                     src="https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
                     alt=""
                     className="kickstarter-reward-image"
                   />
-                  <div className="d-flex px-3 py-2 kickstarter-rewards-container justify-content-end">
+                  <div className={`d-flex px-3 py-2 kickstarter-rewards-container ${rewards.includes(2) && "kickstart-rewarded"} justify-content-end`}>
                     <span className="kickstarter-reward-title text-end">
                       Rewards
                     </span>
@@ -156,7 +158,7 @@ const Kickstarter = ({ onClose }) => {
                 </div>
               </div>
             </div>
-            <div className="kickstarter-divider"></div>
+            <div className="kickstarter-divider mb-1"></div>
             <div className="d-flex w-100 justify-content-center">
               <button className="explore-btn px-3 py-2" disabled={step !== 1 ? true : false} onClick={onClaim}>
                 {loading ? (
