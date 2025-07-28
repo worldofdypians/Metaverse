@@ -874,6 +874,13 @@ function Dashboard({
     correctIndex: undefined,
     chain: "",
   });
+
+  const [aiQuestionObject2, setAiQuestionObject2] = useState({
+    question: "",
+    options: [],
+    id: "",
+  });
+
   const useWarnOnRefresh = (shouldWarn) => {
     useEffect(() => {
       const handleBeforeUnload = (event) => {
@@ -4110,7 +4117,7 @@ function Dashboard({
         rewards: baseStars,
         previous_rewards: baseStars,
         activeData: dailyRecordsBase,
-        previousData:  prevDataBase,
+        previousData: prevDataBase,
         player_data: userDataBase,
         is_active: activePlayerBase, //change when apis are ready
         loading: loadingBase,
@@ -5340,7 +5347,28 @@ function Dashboard({
       //   }
     }
   };
-  // console.log(aiQuestionObjectAnswered, aiQuestionCompleted);
+
+  const checkAnswerTimeout = async () => {
+    const data = {
+      walletAddress: coinbase,
+      email: email,
+      chain: chainId === 56 ? "bnb" : "opbnb",
+      questionId: aiQuestionObject2.id,
+      answerIndex: 4,
+    };
+
+    const result = await axios
+      .post(`https://api.worldofdypians.com/api/qa/answer`, data)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      console.log(result.data);
+      getAIQuestionStatus(coinbase, email);
+    }
+  };
+
   const handleShowSyncModal = () => {
     onSyncClick();
   };
@@ -6281,22 +6309,22 @@ function Dashboard({
               }}
               liveRewards={
                 Number(userSocialRewardsCached) +
-                Number(userRank2) +
-                Number(genesisRank2) +
-                Number(userRankRewards) +
-                Number(dataAmountStar) +
-                Number(dataAmountStarWeekly) +
-                Number(cawsPremiumRewards) +
-                Number(landPremiumRewards) +
-                // Number(baseEarnUSD) +
-                Number(kucoinEarnUsd) +
-                Number(bnbEarnUsd) +
-                Number(mantaEarnUsd) +
-                Number(coreEarnUsd) +
-                Number(seiEarnUsd) +
-                Number(taikoEarnUsd) +
-                Number(vanarEarnUsd) +
-                Number(teaEarnUsd)+
+                  Number(userRank2) +
+                  Number(genesisRank2) +
+                  Number(userRankRewards) +
+                  Number(dataAmountStar) +
+                  Number(dataAmountStarWeekly) +
+                  Number(cawsPremiumRewards) +
+                  Number(landPremiumRewards) +
+                  // Number(baseEarnUSD) +
+                  Number(kucoinEarnUsd) +
+                  Number(bnbEarnUsd) +
+                  Number(mantaEarnUsd) +
+                  Number(coreEarnUsd) +
+                  Number(seiEarnUsd) +
+                  Number(taikoEarnUsd) +
+                  Number(vanarEarnUsd) +
+                  Number(teaEarnUsd) +
                   aiQuestionRewards.length >
                 0
                   ? aiQuestionRewards.find((item) => {
@@ -7384,6 +7412,9 @@ function Dashboard({
                     setShowDailyQuestion(false);
                     handleConnect();
                   }}
+                  onQuestionReveal={(value) => {
+                    setAiQuestionObject2(value);
+                  }}
                   onClose={() => {
                     setSuspenseSound(true);
                     setShowDailyQuestion(false);
@@ -7420,6 +7451,7 @@ function Dashboard({
                 clockSoundRef.current.currentTime = 0;
                 html.classList.remove("hidescroll");
                 setAiStep(0);
+                checkAnswerTimeout();
               }}
               setClosePopup={setClosePopup}
             />

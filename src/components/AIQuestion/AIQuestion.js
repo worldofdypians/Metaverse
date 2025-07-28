@@ -33,6 +33,7 @@ const AIQuestion = ({
   getAiStep,
   aiQuestionRewards,
   aiQuestionObjectAnswered,
+  onQuestionReveal,
 }) => {
   const clickSound = "https://cdn.worldofdypians.com/wod/aiOryn/click.mp3";
   const drumrollSound =
@@ -167,6 +168,11 @@ const AIQuestion = ({
       const cleanedAnswers = result.data.answers.map((answer) =>
         answer.replace(/^[A-D][.)]\s*/, "")
       );
+      onQuestionReveal({
+        question: result.data.question,
+        options: cleanedAnswers,
+        id: result.data.questionId,
+      });
 
       setAiQuestionObject({
         question: result.data.question,
@@ -844,13 +850,13 @@ const AIQuestion = ({
                 />
               </div>
             </div>
-            <span className="ai-oryn-text">
+            <span className="ai-oryn-text text-end">
               Hi{" "}
               <span className="ai-username ai-username text-uppercase">
                 {username},
               </span>
             </span>
-            <span className="ai-oryn-text">{dailyMessage}</span>
+            <span className="ai-oryn-text text-end">{dailyMessage}</span>
           </div>
           <div className="ai-oryn-bottom">
             <div className="d-flex flex-column gap-2 p-4 h-100 justify-content-between">
