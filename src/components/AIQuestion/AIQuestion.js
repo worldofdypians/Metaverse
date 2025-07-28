@@ -545,9 +545,9 @@ const AIQuestion = ({
         setSelectedAnswer(answers[result.data.correctIndex]);
         new Audio(failSound).play();
         setAvatarState("wrong");
-        const timer = setTimeout(() => {
-          setAvatarState("idle");
-        }, 5040);
+        // const timer = setTimeout(() => {
+        //   setAvatarState("idle");
+        // }, 5040);
 
         onQuestionComplete(true);
         // const resetTimer = setTimeout(() => {
@@ -560,10 +560,10 @@ const AIQuestion = ({
         //   setOptionsClickable(false);
         // }, 10000);
 
-        return () => {
-          // clearTimeout(timer);
-          // clearTimeout(resetTimer);
-        };
+        // return () => {
+        // clearTimeout(timer);
+        // clearTimeout(resetTimer);
+        // };
       }
     }
   };
@@ -1080,7 +1080,6 @@ const AIQuestion = ({
             </div>
           </div>
         </div>
-
         <div
           className="d-flex flex-column gap-4 justify-content-between overflow-auto"
           style={{ flex: 1 }}
@@ -1537,6 +1536,20 @@ const AIQuestion = ({
         <img
           src={
             "https://cdn.worldofdypians.com/wod/ai-main-button-disabled.webp"
+          }
+          className="d-none"
+          alt=""
+        />
+        <img
+          src={
+            "https://cdn.worldofdypians.com/wod/answer-inner-wrapper-answer.png"
+          }
+          className="d-none"
+          alt=""
+        />
+        <img
+          src={
+            "https://cdn.worldofdypians.com/wod/answer-inner-wrapper-error.png"
           }
           className="d-none"
           alt=""
