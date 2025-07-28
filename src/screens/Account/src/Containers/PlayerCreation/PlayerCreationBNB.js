@@ -58,11 +58,12 @@ function PlayerCreationBNB({ onLinkWallet, linkWallet, successLink, onShowLinkWa
         },
       });
       getUpdatedUser();
-      setTimeout(() => {
+     const timer = setTimeout(() => {
         // navigate("/account");
         setShowLinkWallet(true);
         onShowLinkWallet()
       }, 1000);
+      return () => clearTimeout(timer);
     } catch (error) {
       setCreateError(getErrorMessage(error));
     }

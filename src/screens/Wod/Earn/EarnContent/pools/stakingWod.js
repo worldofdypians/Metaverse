@@ -9,7 +9,6 @@ import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import axios from "axios";
 import Countdown from "react-countdown";
-import { ClickAwayListener } from "@material-ui/core";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 

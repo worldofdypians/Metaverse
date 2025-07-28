@@ -43,7 +43,7 @@ const useSharedDataCurrentNft = (nftId, nftAddress) => {
     queryFn: () => fetchCurrentNft(nftId, nftAddress),
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!nftId && !!nftAddress,
   });
@@ -105,7 +105,7 @@ const useSharedDataLatest20BoughtNFTS = (nftId, nftAddress) => {
     queryFn: () => getLatest20BoughtNFTS(nftId, nftAddress),
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!nftId && !!nftAddress,
   });

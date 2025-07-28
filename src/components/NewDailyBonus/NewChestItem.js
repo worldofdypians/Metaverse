@@ -83,9 +83,10 @@ const NewChestItem = ({
           setIsChestOpen(false);
           window.alertify.error(e?.message);
           onChestStatus("error");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             onChestStatus("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       if (result && result.status === 200) {
         onClaimRewards(result.data);
@@ -110,9 +111,10 @@ const NewChestItem = ({
           setIsChestOpen(false);
           window.alertify.error(e?.message);
           onChestStatus("error");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             onChestStatus("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       if (result && result.status === 200) {
         // if (chainText === "opbnb" || chainText === "bnb") {
@@ -155,9 +157,10 @@ const NewChestItem = ({
         )
         .catch((e) => {
           if (e.response.status === 400) {
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
             }, 2000);
+            return () => clearTimeout(timer);
           } else {
             onLoadingChest(false);
             setLoading(false);
@@ -166,9 +169,10 @@ const NewChestItem = ({
             window.alertify.error(e?.message);
             console.error(e);
             onChestStatus("error");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               onChestStatus("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           }
         });
       if (result && result.status === 200) {
@@ -190,9 +194,10 @@ const NewChestItem = ({
         )
         .catch((e) => {
           if (e.response.status === 400) {
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
             }, 2000);
+            return () => clearTimeout(timer);
           } else {
             onLoadingChest(false);
             setLoading(false);
@@ -201,9 +206,10 @@ const NewChestItem = ({
             window.alertify.error(e?.message);
             console.error(e);
             onChestStatus("error");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               onChestStatus("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           }
         });
       if (result && result.status === 200) {
@@ -250,21 +256,23 @@ const NewChestItem = ({
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
       } else {
         if (count < 10) {
-          setTimeout(
+          const timer = setTimeout(
             () => {
               handleCheckIfTxExists(txHash);
             },
             count === 9 ? 5000 : 2000
           );
+          return () => clearTimeout(timer);
         } else {
           window.alertify.error("Something went wrong.");
           onChestStatus("error");
           onLoadingChest(false);
           setLoading(false);
           setClaimingChest(false);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             onChestStatus("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         }
       }
       count = count + 1;
@@ -280,21 +288,23 @@ const NewChestItem = ({
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
       } else {
         if (count < 10) {
-          setTimeout(
+          const timer = setTimeout(
             () => {
               handleCheckIfTxExists(txHash);
             },
             count === 9 ? 5000 : 2000
           );
+          return () => clearTimeout(timer);
         } else {
           window.alertify.error("Something went wrong.");
           onChestStatus("error");
           onLoadingChest(false);
           setLoading(false);
           setClaimingChest(false);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             onChestStatus("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         }
       }
       count = count + 1;
@@ -311,21 +321,23 @@ const NewChestItem = ({
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
       } else {
         if (count < 10) {
-          setTimeout(
+          const timer = setTimeout(
             () => {
               handleCheckIfTxExists(txHash);
             },
             count === 9 ? 5000 : 2000
           );
+          return () => clearTimeout(timer);
         } else {
           window.alertify.error("Something went wrong.");
           onChestStatus("error");
           onLoadingChest(false);
           setLoading(false);
           setClaimingChest(false);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             onChestStatus("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         }
       }
       count = count + 1;
@@ -425,14 +437,15 @@ const NewChestItem = ({
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
 
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
         } else if (rewardTypes === "standard") {
           await daily_bonus_contract.methods
@@ -453,12 +466,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
         }
       } else if (window.WALLET_TYPE === "binance") {
@@ -473,14 +487,14 @@ const NewChestItem = ({
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
-
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
           const txReceipt = await txResponse.wait();
           if (txReceipt) {
@@ -499,12 +513,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -590,12 +605,13 @@ const NewChestItem = ({
                     // Transaction failed on-chain
                     window.alertify.error("Transaction failed on-chain.");
                     onChestStatus("error");
-                    setTimeout(() => {
-                      onChestStatus("initial");
-                    }, 3000);
                     onLoadingChest(false);
                     setLoading(false);
                     setClaimingChest(false);
+                    const timer = setTimeout(() => {
+                      onChestStatus("initial");
+                    }, 3000);
+                    return () => clearTimeout(timer);
                   }
                 }
               }, 5000); // Poll every 2 seconds
@@ -603,13 +619,14 @@ const NewChestItem = ({
               // Handle other errors normally
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             }
           });
         // .catch((e) => {
@@ -695,12 +712,13 @@ const NewChestItem = ({
                     // Transaction failed on-chain
                     window.alertify.error("Transaction failed on-chain.");
                     onChestStatus("error");
-                    setTimeout(() => {
-                      onChestStatus("initial");
-                    }, 3000);
                     onLoadingChest(false);
                     setLoading(false);
                     setClaimingChest(false);
+                    const timer = setTimeout(() => {
+                      onChestStatus("initial");
+                    }, 3000);
+                    return () => clearTimeout(timer);
                   }
                 }
               }, 5000);
@@ -708,13 +726,14 @@ const NewChestItem = ({
               // Handle other errors normally
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             }
           });
         // .catch((e) => {
@@ -778,25 +797,27 @@ const NewChestItem = ({
                     // Transaction failed on-chain
                     window.alertify.error("Transaction failed on-chain.");
                     onChestStatus("error");
-                    setTimeout(() => {
-                      onChestStatus("initial");
-                    }, 3000);
                     onLoadingChest(false);
                     setLoading(false);
                     setClaimingChest(false);
+                    const timer = setTimeout(() => {
+                      onChestStatus("initial");
+                    }, 3000);
+                    return () => clearTimeout(timer);
                   }
                 }
               }, 5000); // Poll every 2 seconds
             } else {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             }
           });
       } else if (rewardTypes === "standard") {
@@ -845,12 +866,13 @@ const NewChestItem = ({
                     // Transaction failed on-chain
                     window.alertify.error("Transaction failed on-chain.");
                     onChestStatus("error");
-                    setTimeout(() => {
-                      onChestStatus("initial");
-                    }, 3000);
                     onLoadingChest(false);
                     setLoading(false);
                     setClaimingChest(false);
+                    const timer = setTimeout(() => {
+                      onChestStatus("initial");
+                    }, 3000);
+                    return () => clearTimeout(timer);
                   }
                 }
               }, 5000); // Poll every 2 seconds
@@ -858,12 +880,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             }
           });
       }
@@ -916,25 +939,27 @@ const NewChestItem = ({
                     // Transaction failed on-chain
                     window.alertify.error("Transaction failed on-chain.");
                     onChestStatus("error");
-                    setTimeout(() => {
-                      onChestStatus("initial");
-                    }, 3000);
                     onLoadingChest(false);
                     setLoading(false);
                     setClaimingChest(false);
+                    const timer = setTimeout(() => {
+                      onChestStatus("initial");
+                    }, 3000);
+                    return () => clearTimeout(timer);
                   }
                 }
               }, 5000); // Poll every 2 seconds
             } else {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             }
           });
       } else if (rewardTypes === "standard") {
@@ -983,12 +1008,13 @@ const NewChestItem = ({
                     // Transaction failed on-chain
                     window.alertify.error("Transaction failed on-chain.");
                     onChestStatus("error");
-                    setTimeout(() => {
-                      onChestStatus("initial");
-                    }, 3000);
                     onLoadingChest(false);
                     setLoading(false);
                     setClaimingChest(false);
+                    const timer = setTimeout(() => {
+                      onChestStatus("initial");
+                    }, 3000);
+                    return () => clearTimeout(timer);
                   }
                 }
               }, 5000); // Poll every 2 seconds
@@ -996,12 +1022,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             }
           });
       }
@@ -1047,13 +1074,14 @@ const NewChestItem = ({
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
         } else if (rewardTypes === "standard") {
           const web3 = new Web3(window.ethereum);
@@ -1096,12 +1124,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
         }
       } else if (window.WALLET_TYPE === "binance") {
@@ -1149,13 +1178,14 @@ const NewChestItem = ({
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -1195,12 +1225,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -1256,13 +1287,14 @@ const NewChestItem = ({
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
         } else if (rewardTypes === "standard") {
           const web3 = new Web3(window.ethereum);
@@ -1305,12 +1337,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
         }
       } else if (window.WALLET_TYPE === "binance") {
@@ -1358,13 +1391,14 @@ const NewChestItem = ({
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -1404,12 +1438,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -1464,13 +1499,14 @@ const NewChestItem = ({
           .catch((e) => {
             window.alertify.error(e?.message);
             onChestStatus("error");
-            setTimeout(() => {
-              onChestStatus("initial");
-            }, 3000);
             onLoadingChest(false);
             setLoading(false);
             setClaimingChest(false);
             console.error(e);
+            const timer = setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
           });
       } else if (rewardTypes === "standard") {
         const web3 = new Web3(window.ethereum);
@@ -1513,12 +1549,13 @@ const NewChestItem = ({
             console.error(e);
             window.alertify.error(e?.message);
             onChestStatus("error");
-            setTimeout(() => {
-              onChestStatus("initial");
-            }, 3000);
             onLoadingChest(false);
             setLoading(false);
             setClaimingChest(false);
+            const timer = setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
           });
       }
     } else if (chainId === 1329) {
@@ -1562,13 +1599,14 @@ const NewChestItem = ({
           .catch((e) => {
             window.alertify.error(e?.message);
             onChestStatus("error");
-            setTimeout(() => {
-              onChestStatus("initial");
-            }, 3000);
             onLoadingChest(false);
             setLoading(false);
             setClaimingChest(false);
             console.error(e);
+            const timer = setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
           });
       } else if (rewardTypes === "standard") {
         const web3 = new Web3(window.ethereum);
@@ -1611,12 +1649,13 @@ const NewChestItem = ({
             console.error(e);
             window.alertify.error(e?.message);
             onChestStatus("error");
-            setTimeout(() => {
-              onChestStatus("initial");
-            }, 3000);
             onLoadingChest(false);
             setLoading(false);
             setClaimingChest(false);
+            const timer = setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
           });
       }
     } else if (chainId === 698) {
@@ -1633,13 +1672,14 @@ const NewChestItem = ({
               .catch((e) => {
                 window.alertify.error(e?.shortMessage);
                 onChestStatus("error");
-                setTimeout(() => {
-                  onChestStatus("initial");
-                }, 3000);
                 onLoadingChest(false);
                 setLoading(false);
                 setClaimingChest(false);
                 console.error(e);
+                const timer = setTimeout(() => {
+                  onChestStatus("initial");
+                }, 3000);
+                return () => clearTimeout(timer);
               });
             if (result) {
               const receipt = await publicClient
@@ -1671,13 +1711,14 @@ const NewChestItem = ({
               .catch((e) => {
                 window.alertify.error(e?.shortMessage);
                 onChestStatus("error");
-                setTimeout(() => {
-                  onChestStatus("initial");
-                }, 3000);
                 onLoadingChest(false);
                 setLoading(false);
                 setClaimingChest(false);
                 console.error(e);
+                const timer = setTimeout(() => {
+                  onChestStatus("initial");
+                }, 3000);
+                return () => clearTimeout(timer);
               });
             if (result) {
               const receipt = await publicClient
@@ -1741,13 +1782,14 @@ const NewChestItem = ({
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
         } else if (rewardTypes === "standard") {
           const web3 = new Web3(window.ethereum);
@@ -1790,12 +1832,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
         }
       }
@@ -1854,12 +1897,13 @@ const NewChestItem = ({
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
 
               console.error(e);
             });
@@ -1907,12 +1951,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
         }
       } else if (window.WALLET_TYPE === "matchId") {
@@ -1928,13 +1973,14 @@ const NewChestItem = ({
               .catch((e) => {
                 window.alertify.error(e?.shortMessage);
                 onChestStatus("error");
-                setTimeout(() => {
-                  onChestStatus("initial");
-                }, 3000);
                 onLoadingChest(false);
                 setLoading(false);
                 setClaimingChest(false);
                 console.error(e);
+                const timer = setTimeout(() => {
+                  onChestStatus("initial");
+                }, 3000);
+                return () => clearTimeout(timer);
               });
             if (result) {
               const receipt = await publicClient
@@ -1961,13 +2007,14 @@ const NewChestItem = ({
               .catch((e) => {
                 window.alertify.error(e?.shortMessage);
                 onChestStatus("error");
-                setTimeout(() => {
-                  onChestStatus("initial");
-                }, 3000);
                 onLoadingChest(false);
                 setLoading(false);
                 setClaimingChest(false);
                 console.error(e);
+                const timer = setTimeout(() => {
+                  onChestStatus("initial");
+                }, 3000);
+                return () => clearTimeout(timer);
               });
             if (result) {
               const receipt = await publicClient
@@ -2031,14 +2078,15 @@ const NewChestItem = ({
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
 
               console.error(e);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -2083,12 +2131,13 @@ const NewChestItem = ({
               console.error(e);
               window.alertify.error(e?.message);
               onChestStatus("error");
-              setTimeout(() => {
-                onChestStatus("initial");
-              }, 3000);
               onLoadingChest(false);
               setLoading(false);
               setClaimingChest(false);
+              const timer = setTimeout(() => {
+                onChestStatus("initial");
+              }, 3000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -2145,14 +2194,15 @@ const NewChestItem = ({
           .catch((e) => {
             window.alertify.error(e.revertReason ?? e?.message);
             onChestStatus("error");
-            setTimeout(() => {
-              onChestStatus("initial");
-            }, 3000);
             onLoadingChest(false);
             setLoading(false);
             setClaimingChest(false);
 
             console.error(e);
+            const timer = setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
           });
       } else if (rewardTypes === "standard") {
         // console.log("standard");
@@ -2196,12 +2246,13 @@ const NewChestItem = ({
             console.error(e);
             window.alertify.error(e.revertReason ?? e?.message);
             onChestStatus("error");
-            setTimeout(() => {
-              onChestStatus("initial");
-            }, 3000);
             onLoadingChest(false);
             setLoading(false);
             setClaimingChest(false);
+            const timer = setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
           });
       }
     }
@@ -2236,9 +2287,10 @@ const NewChestItem = ({
   const onShake = () => {
     setShake(true);
     new Audio(errorSound).play();
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setShake(false);
     }, 1000);
+    return () => clearTimeout(timer);
   };
 
   return (
