@@ -231,6 +231,34 @@
     height: 155px;
   }
 }
+.royalty-chest-wrapper {
+  background-image: url("./royaltyChestBg.png");
+  border-radius: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 145px;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+  background-position: center;
+
+  @media screen and (max-width: 786px) {
+    height: 155px;
+  }
+
+
+  //   &::before {
+  //   content: "";
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   border-radius: 10px;
+  //   background: rgba(0, 0, 0, 0.4); // ← your shadow overlay (change opacity as needed)
+  //   z-index: 1;
+  // }
+}
 
 .wod-domain-name-wrapper {
   background-image: url("https://cdn.worldofdypians.com/wod/domainNameBg.webp");
@@ -271,6 +299,9 @@
 .new-special-rewards-wrapper:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
+.royalty-chest-wrapper:hover {
+  filter: drop-shadow(0px 0px 10px #c09645);
+}
 
 .special-rewards-title {
   color: #9e3c7a;
@@ -280,6 +311,20 @@
   font-weight: 800;
   line-height: normal;
   text-transform: uppercase;
+}
+.royalty-chest-title {
+  color: #9e3c7a;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
+   text-shadow: 
+    -1px -1px 0 #471f06,  
+     1px -1px 0 #471f06,
+    -1px  1px 0 #471f06,
+     1px  1px 0 #471f06; /* Blue outline */
 }
 
 

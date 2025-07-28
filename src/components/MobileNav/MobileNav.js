@@ -154,7 +154,7 @@ const MobileNav = () => {
             );
           }}
         />
-
+       
         {email && (
           <NavLink
             to="/loyalty-program"
@@ -175,6 +175,13 @@ const MobileNav = () => {
             }}
           />
         )}
+         <a href="https://www.space.id/tld/21/" target="_blank">
+            <img
+              src="https://cdn.worldofdypians.com/wod/domainNameIcon.png"
+              style={{ width: "22px", height: "22px" }}
+              alt="wod domain"
+            />
+          </a>
       </div>
       {/* <OutsideClickHandler onOutsideClick={() => setOpenMint(false)}>
         <div id="bgmenu1" className={` ${openMint && 'comming-soon-mint-active'} d-flex align-items-center justify-content-center px-3 py-2 comming-soon-mint`}>
