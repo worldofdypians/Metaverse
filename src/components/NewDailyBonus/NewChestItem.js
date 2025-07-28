@@ -2319,7 +2319,7 @@ const NewChestItem = ({
       {rewardTypes !== "premium" ? (
         <img
           className={` ${
-            chain === "bnb" ? "new-chest-item-img" : "new-chest-item-img-skale"
+            chain !== "skale" ? "new-chest-item-img" : "new-chest-item-img-skale"
           } ${
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}

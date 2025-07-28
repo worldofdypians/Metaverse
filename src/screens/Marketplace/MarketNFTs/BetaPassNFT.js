@@ -74,6 +74,7 @@ const BetaPassNFT = ({
   const [cookieEarnUsd, setCookieEarnUsd] = useState(0);
   const [matChainEarnUsd, setmatChainEarnUsd] = useState(0);
   const [vanarEarnUsd, setvanarEarnUsd] = useState(0);
+  const [teafiEarnUsd, setteafiEarnUsd] = useState(0);
 
   const benefits = [
     {
@@ -100,7 +101,7 @@ const BetaPassNFT = ({
       mainTitle: "Base Beta Pass",
       desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by our partners. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
       heroImage: "https://cdn.worldofdypians.com/wod/baseBetaBanner.png",
-      logo: "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg",
+      logo: "https://cdn.worldofdypians.com/wod/base.svg",
       buttonTitle: "Base",
       giveawayButton: false,
       isComingSoon: false,
@@ -505,10 +506,10 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "teafi-mint-bg",
       wrapperClassName: "tea-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$40,000 in TEA rewards",
       rewardType: "TEA",
-      userEarned: 0,
+      userEarned: teafiEarnUsd,
       eventType: "Explore & Mine",
       eventStartDate: "Jul. 18, 2025",
       eventEndDate: "Oct. 16, 2025",
@@ -637,6 +638,10 @@ const BetaPassNFT = ({
             return obj.betapassId === "sei";
           });
 
+          const teafiEvent = responseData.events.filter((obj) => {
+            return obj.id === "tea-fi";
+          });
+
           const kucoinEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "kucoin";
           });
@@ -655,6 +660,13 @@ const BetaPassNFT = ({
               seiEvent[0].reward.earn.total /
               seiEvent[0].reward.earn.multiplier;
             setSeiEarnUsd(userEarnedusd);
+          }
+
+          if (teafiEvent && teafiEvent[0]) {
+            const userEarnedusd =
+              teafiEvent[0].reward.earn.total /
+              teafiEvent[0].reward.earn.multiplier;
+            setteafiEarnUsd(userEarnedusd);
           }
 
           if (cmcEvent && cmcEvent[0]) {

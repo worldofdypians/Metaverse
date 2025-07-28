@@ -19,7 +19,7 @@ const WodBuilders = ({ page }) => {
       name: "Matchain",
       icon: "matchainIcon",
       banner: "matchainBanner.webp",
-      // link: "",
+      link: "https://x.com/matchain_io/status/1862149131692577027",
       backer: true,
     },
     {
@@ -147,6 +147,7 @@ const WodBuilders = ({ page }) => {
       name: "KuCoin",
       icon: "kucoinLogoRound",
       banner: "kucoinBanner.png",
+      link: "https://x.com/kucoincom/status/1902540953086464333",
       backer: false,
     },
 
@@ -188,14 +189,14 @@ const WodBuilders = ({ page }) => {
       name: "Vanar",
       icon: "vanar",
       banner: "vanarBuilderBanner.webp",
-      // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
+      link: "https://x.com/Vanarchain/status/1915043390825116020",
       backer: false,
     },
     {
       name: "Tea-Fi",
       icon: "teafi",
       banner: "teafiBuilderBanner.webp",
-      // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
+      link: "https://x.com/TeaFi_Official/status/1945511408570880105",
       backer: false,
     },
     {

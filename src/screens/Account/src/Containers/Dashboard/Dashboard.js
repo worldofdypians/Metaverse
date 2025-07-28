@@ -177,6 +177,7 @@ function Dashboard({
   myTeaOpbnbNfts,
   myTeaSeiNfts,
   myTeaBaseNfts,
+  teaEarnUsd,
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -4109,7 +4110,7 @@ function Dashboard({
         rewards: baseStars,
         previous_rewards: baseStars,
         activeData: dailyRecordsBase,
-        previousData: placeholderplayerData.slice(0, 10),
+        previousData:  prevDataBase,
         player_data: userDataBase,
         is_active: activePlayerBase, //change when apis are ready
         loading: loadingBase,
@@ -6280,21 +6281,22 @@ function Dashboard({
               }}
               liveRewards={
                 Number(userSocialRewardsCached) +
-                  Number(userRank2) +
-                  Number(genesisRank2) +
-                  Number(userRankRewards) +
-                  Number(dataAmountStar) +
-                  Number(dataAmountStarWeekly) +
-                  Number(cawsPremiumRewards) +
-                  Number(landPremiumRewards) +
-                  // Number(baseEarnUSD) +
-                  Number(kucoinEarnUsd) +
-                  Number(bnbEarnUsd) +
-                  Number(mantaEarnUsd) +
-                  Number(coreEarnUsd) +
-                  Number(seiEarnUsd) +
-                  Number(taikoEarnUsd) +
-                  Number(vanarEarnUsd) +
+                Number(userRank2) +
+                Number(genesisRank2) +
+                Number(userRankRewards) +
+                Number(dataAmountStar) +
+                Number(dataAmountStarWeekly) +
+                Number(cawsPremiumRewards) +
+                Number(landPremiumRewards) +
+                // Number(baseEarnUSD) +
+                Number(kucoinEarnUsd) +
+                Number(bnbEarnUsd) +
+                Number(mantaEarnUsd) +
+                Number(coreEarnUsd) +
+                Number(seiEarnUsd) +
+                Number(taikoEarnUsd) +
+                Number(vanarEarnUsd) +
+                Number(teaEarnUsd)+
                   aiQuestionRewards.length >
                 0
                   ? aiQuestionRewards.find((item) => {
@@ -6468,6 +6470,7 @@ function Dashboard({
             multiversEarnUsd={multiversEarnUsd}
             seiEarnUsd={seiEarnUsd}
             vanarEarnUsd={vanarEarnUsd}
+            teaEarnUsd={teaEarnUsd}
             victionEarnUsd={victionEarnUsd}
             mantaEarnUsd={mantaEarnUsd}
             taikoEarnUsd={taikoEarnUsd}
@@ -7138,6 +7141,7 @@ function Dashboard({
                 multiversEarnUsd={multiversEarnUsd}
                 seiEarnUsd={seiEarnUsd}
                 vanarEarnUsd={vanarEarnUsd}
+                teaEarnUsd={teaEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}

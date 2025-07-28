@@ -15,7 +15,7 @@ const Campaigns = ({ coinbase }) => {
   const dummyBanner = [
     {
       title: "$150,000 Rewards with OKX Wallet",
-      status: "Live",
+      status: "Expired",
       start_date: "Jun 18, 2025",
       end_date: "Jul 18, 2025",
       image: "https://cdn.worldofdypians.com/wod/wod-x-wallet2.webp",
@@ -28,63 +28,62 @@ const Campaigns = ({ coinbase }) => {
       link: "https://web3.okx.com/ul/qa6RR4",
       target: "_blank",
     },
-    {
-      title: "World of Dypians Rising Heat Challenge",
-      status: today.getTime() > wod_campaign_end_timestamp ? "Expired" : "Live",
-      start_date: "May 26, 2025",
-      end_date: "Jun 09, 2025",
-      image: "https://cdn.worldofdypians.com/wod/wod-x-bnb-2.webp",
-      desc: `The World of Dypians: Rising Heat challenge is kicking off with $35,000 in rewards up for grabs. As temperatures climb, so does the competition. Take on exciting tasks, show your dedication, and unlock exclusive prizes as you gear up for a blazing summer ahead.<br/>
-    <ul><li>Trade a minimum of $20 in WOD</li>
-    <li>Login or Create a Game Account</li>
-    <li>Open at Least 10 Daily Bonus Chests </li>  
-     
-    </ul>
-    This campaign is your chance to get ahead of the heat, earn massive rewards, and connect with a growing community of players. Are you ready to rise with the season?
-   `,
-      link: "https://dappbay.bnbchain.org/campaign/389",
-      target: "_blank",
-    },
-    {
-      title: "First 5,000 new users share $50,000",
-      status:
-        today.getTime() > wod_bitget_campaign_end_timestamp
-          ? "Expired"
-          : "Live",
-      start_date: "Jun 10, 2025",
-      end_date: "Jul 10, 2025",
-      image: "https://cdn.worldofdypians.com/wod/wodBitgetBanner.webp",
-      desc: `To celebrate the WOD on-chain listing on Bitget, we have launched an exclusive campaign for new users! <br/>
-      <ul><li>Register a new account on Bitget and complete verification.</li>
-      <li>Trade at least $5 worth of WOD on Bitget Onchain.</li>
-      <li>Submit your UID so we can verify your participation.</li>
-      </ul>
-     The first 5,000 users to complete all tasks will each receive $10 guaranteed!
-     `,
-      link: "/wod-bitget",
-    },
-    {
-      title: "World of Dypians x Binance Wallet Campaign!",
-      status: "Expired",
-      start_date: "Apr 24, 2025",
-      end_date: "Apr 27, 2025",
-      image: "https://cdn.worldofdypians.com/wod/binance-campagin-v2.webp",
-      desc: `Our second $50,000 $WOD Airdrop Campaign with Binance Wallet is officially live! <br/>
-    <ul><li>Follow Binance on X</li>
-    <li> Follow World of Dypians on X</li>
-    <li> Like and Retweet the Pinned Post</li>  
-    <li> Swap a minimum of $20 in WOD on BNB Chain</li>  
-    </ul>
-    
-   `,
-      link: "https://www.binance.com/en/web3-campaign/airdrop/4484095621998736896",
-      target: "_blank",
-    },
-   
+    //   {
+    //     title: "World of Dypians Rising Heat Challenge",
+    //     status: today.getTime() > wod_campaign_end_timestamp ? "Expired" : "Live",
+    //     start_date: "May 26, 2025",
+    //     end_date: "Jun 09, 2025",
+    //     image: "https://cdn.worldofdypians.com/wod/wod-x-bnb-2.webp",
+    //     desc: `The World of Dypians: Rising Heat challenge is kicking off with $35,000 in rewards up for grabs. As temperatures climb, so does the competition. Take on exciting tasks, show your dedication, and unlock exclusive prizes as you gear up for a blazing summer ahead.<br/>
+    //   <ul><li>Trade a minimum of $20 in WOD</li>
+    //   <li>Login or Create a Game Account</li>
+    //   <li>Open at Least 10 Daily Bonus Chests </li>
+
+    //   </ul>
+    //   This campaign is your chance to get ahead of the heat, earn massive rewards, and connect with a growing community of players. Are you ready to rise with the season?
+    //  `,
+    //     link: "https://dappbay.bnbchain.org/campaign/389",
+    //     target: "_blank",
+    //   },
+    //   {
+    //     title: "First 5,000 new users share $50,000",
+    //     status:
+    //       today.getTime() > wod_bitget_campaign_end_timestamp
+    //         ? "Expired"
+    //         : "Live",
+    //     start_date: "Jun 10, 2025",
+    //     end_date: "Jul 10, 2025",
+    //     image: "https://cdn.worldofdypians.com/wod/wodBitgetBanner.webp",
+    //     desc: `To celebrate the WOD on-chain listing on Bitget, we have launched an exclusive campaign for new users! <br/>
+    //     <ul><li>Register a new account on Bitget and complete verification.</li>
+    //     <li>Trade at least $5 worth of WOD on Bitget Onchain.</li>
+    //     <li>Submit your UID so we can verify your participation.</li>
+    //     </ul>
+    //    The first 5,000 users to complete all tasks will each receive $10 guaranteed!
+    //    `,
+    //     link: "/wod-bitget",
+    //   },
+    //   {
+    //     title: "World of Dypians x Binance Wallet Campaign!",
+    //     status: "Expired",
+    //     start_date: "Apr 24, 2025",
+    //     end_date: "Apr 27, 2025",
+    //     image: "https://cdn.worldofdypians.com/wod/binance-campagin-v2.webp",
+    //     desc: `Our second $50,000 $WOD Airdrop Campaign with Binance Wallet is officially live! <br/>
+    //   <ul><li>Follow Binance on X</li>
+    //   <li> Follow World of Dypians on X</li>
+    //   <li> Like and Retweet the Pinned Post</li>
+    //   <li> Swap a minimum of $20 in WOD on BNB Chain</li>
+    //   </ul>
+
+    //  `,
+    //     link: "https://www.binance.com/en/web3-campaign/airdrop/4484095621998736896",
+    //     target: "_blank",
+    //   },
   ];
 
   const dummyData = [
-     {
+    {
       title: "The Gathering Storm",
       status: "Expired",
       start_date: "Apr 21, 2025",
@@ -100,7 +99,7 @@ const Campaigns = ({ coinbase }) => {
    `,
       link: "/trading-competition",
     },
-       {
+    {
       title: "First 5,000 new users share $50,000",
       status:
         today.getTime() > wod_bitget_campaign_end_timestamp
@@ -285,9 +284,9 @@ const Campaigns = ({ coinbase }) => {
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-2 px-lg-0">
       <div className="custom-container  my-5 py-0 py-lg-5">
         {dummyBanner
-          .filter((item) => {
-            return item.status === "Live";
-          })
+          // .filter((item) => {
+          //   return item.status === "Live";
+          // })
           .map((item, index) => {
             return (
               <div className="row mb-5 pb-5" key={index}>
