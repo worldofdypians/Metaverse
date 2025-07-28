@@ -579,7 +579,7 @@ function App() {
   const [myTeaBnbNfts, setmyTeaBnbNfts] = useState([]);
   const [myTeaBaseNfts, setmyTeaBaseNfts] = useState([]);
   const [myTeaSeiNfts, setmyTeaSeiNfts] = useState([]);
-  const [myTaraxaNfts, setMyTaraxaNfts] = useState([])
+  const [myTaraxaNfts, setMyTaraxaNfts] = useState([]);
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
   const [isBnb, setisBnb] = useState(false);
@@ -1317,7 +1317,6 @@ function App() {
             setTaikoEarnUsd(userEarnedusd);
             setTaikoEarnToken(userEarnedusd / taikoPrice);
           }
-
 
           if (taraxaEvent && taraxaEvent[0]) {
             if (taraxaEvent[0].reward.earn.totalPoints > 0) {
@@ -3657,7 +3656,6 @@ function App() {
       }
     }
   };
-
 
   const handleMintTaraxa = async () => {
     if (isConnected && coinbase) {
@@ -7570,7 +7568,6 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
-                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
               />
             }
@@ -7620,8 +7617,6 @@ function App() {
                 }
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
-                myTeaSeiNfts={myTeaSeiNfts}
-                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 totalCreated={totalTimepieceCreated}
               />
@@ -7649,21 +7644,10 @@ function App() {
                 textColor={textColor}
                 calculateCaws={calculateCaws}
                 timepieceMetadata={timepieceMetadata}
-                nftCreated={
-                  [
-                    myTeaBaseNfts,
-                    myTeaOpbnbNfts,
-                    myTeaSeiNfts,
-                    // myTaraxaNfts,
-                    myTeaBnbNfts,
-                  ].find((item) => {
-                    return item.length > 0;
-                  }) ?? []
-                }
+                nftCreated={myTaraxaNfts}
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
-                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 totalCreated={totalTimepieceCreated}
               />

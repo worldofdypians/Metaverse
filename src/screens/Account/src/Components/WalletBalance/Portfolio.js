@@ -889,11 +889,11 @@ const Portfolio = ({
         await Promise.all(
           myTaraxaNfts.map(async (i) => {
             taraxaArray.push({
-              nftAddress: window.config.nft_teasei_address,
+              nftAddress: window.config.nft_taraxa_address,
               buyer: coinbase,
               tokenId: i,
-              type: "tea-sei",
-              chain: 1329,
+              type: "taraxa",
+              chain: 841,
               isStaked: false,
               isListed: false,
             });
@@ -1340,6 +1340,10 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_mat_address
       );
 
+      let taraxaFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_taraxa_address
+      );
+
       let teaFilter = collectedItems.filter(
         (item) =>
           item.nftAddress === window.config.nft_teabnb_address ||
@@ -1350,6 +1354,7 @@ const Portfolio = ({
 
       const allBetapassArray = [
         ...teaFilter,
+        ...taraxaFilter,
         ...coingeckoFilter,
         ...vanarFilter,
         ...confluxFilter,
@@ -1975,6 +1980,8 @@ const Portfolio = ({
                                   ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
                                   : item.type === "vanar"
                                   ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
+                                  : item.type === "taraxa"
+                                  ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
@@ -2017,6 +2024,8 @@ const Portfolio = ({
                                   ? "KCBP"
                                   : item.type === "vanar"
                                   ? "VNBP"
+                                  : item.type === "taraxa"
+                                  ? "TXBP"
                                   : item.type === "immutable"
                                   ? "IMXBP"
                                   : item.type === "multivers"
@@ -2817,6 +2826,9 @@ const Portfolio = ({
                                 : nft.nftAddress ===
                                   window.config.nft_sei_address
                                 ? "sei"
+                                : nft.nftAddress ===
+                                  window.config.nft_taraxa_address
+                                ? "taraxa"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -2937,6 +2949,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_taraxa_address
+                                    ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -3031,6 +3046,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_sei_address
                                     ? "SEBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_taraxa_address
+                                    ? "TXBP"
                                     : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address
@@ -3242,6 +3260,9 @@ const Portfolio = ({
                                 : nft.nftAddress ===
                                   window.config.nft_sei_address
                                 ? "sei"
+                                : nft.nftAddress ===
+                                  window.config.nft_taraxa_address
+                                ? "taraxa"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3361,6 +3382,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_taraxa_address
+                                    ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -3457,6 +3481,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_sei_address
                                     ? "SEBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_taraxa_address
+                                    ? "TXBP"
                                     : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address
