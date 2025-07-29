@@ -361,11 +361,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setpuzzleMadnessBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setpuzzleMadnessBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -380,11 +381,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setpuzzleMadnessBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setpuzzleMadnessBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -407,11 +409,12 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.shortMessage);
             setpuzzleMadnessBundleState("fail");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setpuzzleMadnessBundleState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -461,11 +464,12 @@ const NewEvents = ({
           setpuzzleMadnessDepositState("failDeposit");
           console.log(e);
 
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setpuzzleMadnessDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       handleRefreshCountdownPuzzle();
     } else if (window.WALLET_TYPE === "binance") {
@@ -507,11 +511,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setpuzzleMadnessDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setpuzzleMadnessDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -538,11 +543,12 @@ const NewEvents = ({
             setStatus(e?.shortMessage);
             setpuzzleMadnessDepositState("failDeposit");
             console.log(e);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setpuzzleMadnessDepositState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -731,11 +737,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setDragonBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setDragonBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -750,11 +757,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setDragonBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setDragonBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -777,11 +785,12 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.shortMessage);
             setDragonBundleState("fail");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setDragonBundleState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -830,11 +839,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setDragonDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setDragonDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       handleRefreshCountdownDragon();
     } else if (window.WALLET_TYPE === "binance") {
@@ -876,11 +886,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setDragonDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setDragonDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -907,11 +918,12 @@ const NewEvents = ({
             setStatus(e?.shortMessage);
             setDragonDepositState("failDeposit");
             console.log(e);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setDragonDepositState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -1100,11 +1112,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBearBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBearBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -1119,11 +1132,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBearBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBearBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1146,11 +1160,12 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.shortMessage);
             setBearBundleState("fail");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setBearBundleState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -1199,11 +1214,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setBearDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBearDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       handleRefreshCountdownBear();
     } else if (window.WALLET_TYPE === "binance") {
@@ -1245,11 +1261,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setBearDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBearDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1275,11 +1292,12 @@ const NewEvents = ({
             setStatus(e?.shortMessage);
             setBearDepositState("failDeposit");
             console.log(e);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setBearDepositState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -1467,11 +1485,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBeastBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBeastBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -1486,11 +1505,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBeastBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBeastBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1498,11 +1518,12 @@ const NewEvents = ({
         setBeastBundleState("deposit");
         setStatusColor("#00FECF");
         setBeastShowApproval(false);
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setStatusColor("#00FECF");
           setStatus("");
           setBeastBundleState("initial");
         }, 3000);
+        return () => clearTimeout(timer);
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -1518,11 +1539,12 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.shortMessage);
             setBeastBundleState("fail");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setBeastBundleState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -1571,11 +1593,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setBeastDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBeastDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       handleRefreshCountdownBeast();
     } else if (window.WALLET_TYPE === "binance") {
@@ -1617,11 +1640,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setBeastDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBeastDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1647,11 +1671,12 @@ const NewEvents = ({
             setStatus(e?.shortMessage);
             setBeastDepositState("failDeposit");
             console.log(e);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setBeastDepositState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -1839,11 +1864,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setEagleBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setEagleBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -1858,11 +1884,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setEagleBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setEagleBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -1885,11 +1912,12 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.shortMessage);
             setEagleBundleState("fail");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setEagleBundleState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -1938,11 +1966,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setEagleDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setEagleDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       handleRefreshCountdownEagle();
     } else if (window.WALLET_TYPE === "binance") {
@@ -1984,11 +2013,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setEagleDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setEagleDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -2014,11 +2044,12 @@ const NewEvents = ({
             setStatus(e?.shortMessage);
             setEagleDepositState("failDeposit");
             console.log(e);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setEagleDepositState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -2208,11 +2239,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setScorpionBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setScorpionBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -2227,11 +2259,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setScorpionBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setScorpionBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -2254,11 +2287,12 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.shortMessage);
             setScorpionBundleState("fail");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setScorpionBundleState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -2308,11 +2342,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setScorpionDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setScorpionDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       handleRefreshCountdownScorpion();
     } else if (window.WALLET_TYPE === "binance") {
@@ -2354,11 +2389,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setScorpionDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setScorpionDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -2384,11 +2420,12 @@ const NewEvents = ({
             setStatus(e?.shortMessage);
             setScorpionDepositState("failDeposit");
             console.log(e);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setScorpionDepositState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -2577,11 +2614,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setCyclopsBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setCyclopsBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -2596,11 +2634,12 @@ const NewEvents = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setCyclopsBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setCyclopsBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -2623,11 +2662,12 @@ const NewEvents = ({
             setStatusColor("#FE7A00");
             setStatus(e?.shortMessage);
             setCyclopsBundleState("fail");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setCyclopsBundleState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -2677,11 +2717,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setCyclopsDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setCyclopsDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       handleRefreshCountdownCyclops();
     } else if (window.WALLET_TYPE === "binance") {
@@ -2723,11 +2764,12 @@ const NewEvents = ({
           setStatus(e?.message);
           setCyclopsDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setCyclopsDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -2753,11 +2795,12 @@ const NewEvents = ({
             setStatus(e?.shortMessage);
             setCyclopsDepositState("failDeposit");
             console.log(e);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setCyclopsDepositState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -5086,7 +5129,7 @@ const NewEvents = ({
                                           </div>
                                         )}
 
-                                        {hasBoughtpuzzleMadness &&
+                                        {/* {hasBoughtpuzzleMadness &&
                                         isFinishedPuzzle === false ? (
                                           <div style={{ height: "38px" }}></div>
                                         ) : (
@@ -5188,7 +5231,105 @@ const NewEvents = ({
                                               </>
                                             )}
                                           </div>
-                                        )}
+                                        )} */}
+                                                           <div className="d-flex align-items-center gap-2">
+                                            {!isConnected && (
+                                              <button
+                                                className="beast-siege-btn"
+                                                onClick={onConnectWallet}
+                                              >
+                                                {" "}
+                                                Connect Wallet
+                                              </button>
+                                            )}
+                                            {!email && isConnected && (
+                                              <NavLink
+                                                className="beast-siege-btn"
+                                                to={"/auth"}
+                                              >
+                                                {" "}
+                                                Log In
+                                              </NavLink>
+                                            )}
+                                            {isConnected && email && (
+                                              <>
+                                                <button
+                                                  disabled={
+                                                    puzzleMadnessBundleState ===
+                                                      "deposit" ||
+                                                    puzzleMadnessBundleState ===
+                                                      "loading" ||
+                                                    checkWallet === false
+                                                      ? true
+                                                      : false
+                                                  }
+                                                  className={` ${
+                                                    puzzleMadnessBundleState ===
+                                                      "deposit" ||
+                                                    checkWallet === false ||
+                                                    puzzleMadnessShowApproval ===
+                                                      false
+                                                      ? "beast-siege-btn-inactive d-none"
+                                                      : "beast-siege-btn"
+                                                  }  py-2 px-4`}
+                                                  onClick={() =>
+                                                    handleApprovalPuzzle()
+                                                  }
+                                                >
+                                                  {puzzleMadnessBundleState ===
+                                                  "loading" ? (
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
+                                                  ) : (
+                                                    "Approve"
+                                                  )}
+                                                </button>
+                                                <button
+                                                  disabled={
+                                                    checkWallet === true &&
+                                                    puzzleMadnessDepositState !==
+                                                      "loading-deposit"
+                                                      ? false
+                                                      : true
+                                                  }
+                                                  className={` ${
+                                                    puzzleMadnessShowApproval ===
+                                                      true &&
+                                                    checkWallet === true
+                                                      ? "beast-siege-btn-inactive d-none"
+                                                      : puzzleMadnessShowApproval ===
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "beast-siege-btn"
+                                                      : "beast-siege-btn-inactive"
+                                                  }  py-2 px-4`}
+                                                  onClick={() =>
+                                                    handleDepositPuzzle()
+                                                  }
+                                                >
+                                                  {puzzleMadnessDepositState ===
+                                                  "loading-deposit" ? (
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
+                                                  ) : (
+                                                    "Activate"
+                                                  )}
+                                                </button>
+                                              </>
+                                            )}
+                                          </div>
                                       </>
                                     ) : (
                                       <></>

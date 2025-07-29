@@ -1,6 +1,6 @@
 import Modal from "@mui/material/Modal";
 import axios from "axios";
-import _ from "lodash";
+
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
