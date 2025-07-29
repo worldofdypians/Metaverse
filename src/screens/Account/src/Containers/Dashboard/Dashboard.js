@@ -178,6 +178,7 @@ function Dashboard({
   myTeaSeiNfts,
   myTeaBaseNfts,
   teaEarnUsd,
+  openKickstarter
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -6218,6 +6219,7 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+            openKickstarter={openKickstarter}
               wodBalance={wodBalance}
               aiQuestionCompleted={aiQuestionCompleted}
               greatCollectionData={greatCollectionData}

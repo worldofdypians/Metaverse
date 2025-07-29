@@ -159,3 +159,11 @@
   opacity: 0;
   pointer-events: none;
 }
+
+.kickstarter-hero-wrapper{
+  background-image: url('./assets/kickstarterBackground.webp');
+  height: 100vh;
+  background-size: cover;
+  background-position: bottom;
+
+}

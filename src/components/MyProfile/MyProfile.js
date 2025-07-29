@@ -171,6 +171,7 @@ const MyProfile = ({
   userVanarStars,
   aiQuestionCompleted,
   onDailyQuestionClick,
+  openKickstarter,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -1714,17 +1715,36 @@ const MyProfile = ({
               <div className="col-12 col-lg-3 mt-3">
                 <div
                   className="royalty-chest-wrapper position-relative d-flex flex-column justify-content-between p-3 h-100"
-                  onClick={openSpecialRewards}
+                  onClick={openKickstarter}
                 >
-                  <h6 className="royalty-chest-title" style={{color: "#ffcb14"}}>Royalty Chest</h6>
-                 
-                <div className="d-flex flex-column gap-2">
-                  <img src="https://cdn.worldofdypians.com/wod/rewardGroup.png" width={40}  alt="" />
-                  <span className="special-rewards-total"  style={{color: "#f3de91ff", fontSize: "13px", textTransform: "uppercase", fontWeight: "600"}}>Royal Rewards</span>
-                </div>
+                  <h6
+                    className="royalty-chest-title"
+                    style={{ color: "#ffcb14" }}
+                  >
+                    Royalty Chest
+                  </h6>
+
+                  <div className="d-flex flex-column gap-2">
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/rewardGroup.png"
+                      width={40}
+                      alt=""
+                    />
+                    <span
+                      className="special-rewards-total"
+                      style={{
+                        color: "#f3de91ff",
+                        fontSize: "13px",
+                        textTransform: "uppercase",
+                        fontWeight: "600",
+                      }}
+                    >
+                      Royal Rewards
+                    </span>
+                  </div>
                 </div>
               </div>
-           
+
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink to="/loyalty-program">
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
@@ -1758,7 +1778,7 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-                 <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-6 mt-3">
                 <div
                   className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-2 pe-3"
                   style={{ height: "60px" }}
@@ -1779,7 +1799,16 @@ const MyProfile = ({
                       >
                         Special Rewards
                       </h6>
-                      <div className="d-flex gap-2 align-items-center">
+                     
+                    </div>
+                  </div>
+                  {/* <img
+                    src={"https://cdn.worldofdypians.com/wod/redArrow.svg"}
+                    width={20}
+                    height={20}
+                    alt=""
+                  /> */}
+                   <div className="d-flex gap-2 align-items-center">
                         <h6 className="special-rewards-total mb-0">
                           ${getFormattedNumber(specialRewards)}
                         </h6>
@@ -1787,14 +1816,6 @@ const MyProfile = ({
                           Rewards
                         </span>
                       </div>
-                    </div>
-                  </div>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/redArrow.svg"}
-                    width={20}
-                    height={20}
-                    alt=""
-                  />
                 </div>
               </div>
               {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>

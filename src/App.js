@@ -98,6 +98,7 @@ import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
 import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.js";
 import WodBitGet from "./screens/Community/Campaigns/WodBitGet/WodBitGet.js";
 import Kickstarter from "./components/Kickstarter/Kickstarter.js";
+import KickstarterPage from "./components/Kickstarter/KickstarterPage.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -6618,6 +6619,7 @@ function App() {
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 wodPrice={wodPrice}
+                openKickstarter={() => setKickstarter(true)}
                 onSuccessDeposit={() => {
                   // setCount55(count55 + 1);
                   setTimeout(() => {
@@ -8173,6 +8175,11 @@ function App() {
             exact
             path="/map"
             element={<Map dummyBetaPassData2={dummyBetaPassData2} />}
+          />
+          <Route
+            exact
+            path="/kickstarter"
+            element={<KickstarterPage />}
           />
         </Routes>
 
