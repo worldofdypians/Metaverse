@@ -113,7 +113,7 @@ const GetPremiumPopup = ({
   let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
   let wmataddress = "0xB6dc6C8b71e88642cEAD3be1025565A9eE74d1C6";
   let wseiAddress = "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1";
-  let wtaraxaAddress = "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1";
+  let wtaraxaAddress = "0x8712796136Ac8e0EEeC123251ef93702f265aa80";
 
   const allBenefits = [
     {

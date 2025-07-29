@@ -585,7 +585,8 @@ function Dashboard({
   const [claimedTaikoPremiumChests, setclaimedTaikoPremiumChests] = useState(0);
   const [claimedVanarPremiumChests, setclaimedVanarPremiumChests] = useState(0);
   const [claimedMatPremiumChests, setclaimedMatPremiumChests] = useState(0);
-  const [claimedTaraxaPremiumChests, setclaimedTaraxaPremiumChests] = useState(0);
+  const [claimedTaraxaPremiumChests, setclaimedTaraxaPremiumChests] =
+    useState(0);
 
   const [userSocialRewards, setuserSocialRewards] = useState(0);
 
@@ -735,7 +736,7 @@ function Dashboard({
   const [allBaseData, setAllBaseData] = useState([]);
   const [allMatData, setAllMatData] = useState([]);
   const [allSeiData, setAllSeiData] = useState([]);
-  const [allTaraxaData, setAllTaraxaData] = useState([])
+  const [allTaraxaData, setAllTaraxaData] = useState([]);
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [activePlayerCore, setActivePlayerCore] = useState(false);
@@ -820,7 +821,7 @@ function Dashboard({
 
   const [prevDataTaraxa, setPrevDataTaraxa] = useState([]);
 
-  const [loadingTaraxa, setLoadingTaraxa] = useState(false)
+  const [loadingTaraxa, setLoadingTaraxa] = useState(false);
 
   const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
 
@@ -1694,9 +1695,8 @@ function Dashboard({
     }
   };
 
-
   //TARAXA
-    const fillRecordsTaraxa = (itemData) => {
+  const fillRecordsTaraxa = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsTaraxa(placeholderplayerData);
     } else if (itemData.length <= 10) {
@@ -1854,10 +1854,6 @@ function Dashboard({
       }
     }
   };
-
-
-
-
 
   // const fetchWeeklyRecordsAroundPlayerTaraxa = async (itemData) => {
   //   const data = {
@@ -3619,7 +3615,6 @@ function Dashboard({
     }
   }, [seicount]);
 
-
   useEffect(() => {
     if (taraxacount !== 0) {
       // fetchDailyRecordstaraxa();
@@ -4241,7 +4236,13 @@ function Dashboard({
         loading: loadingTaraxa,
       },
     ]);
-  }, [dailyRecordsTaraxa, prevDataTaraxa, userDataTaraxa, activePlayerTaraxa, loadingTaraxa]);
+  }, [
+    dailyRecordsTaraxa,
+    prevDataTaraxa,
+    userDataTaraxa,
+    activePlayerTaraxa,
+    loadingTaraxa,
+  ]);
 
   useEffect(() => {
     setAllBaseData([
@@ -4252,7 +4253,7 @@ function Dashboard({
         rewards: baseStars,
         previous_rewards: baseStars,
         activeData: dailyRecordsBase,
-        previousData:  prevDataBase,
+        previousData: prevDataBase,
         player_data: userDataBase,
         is_active: activePlayerBase, //change when apis are ready
         loading: loadingBase,
@@ -4356,15 +4357,11 @@ function Dashboard({
       if (dailyRecordsSei.length === 0) {
         fetchDailyRecordsSei();
       }
-    } 
-    else if (chain === "taraxa") {
+    } else if (chain === "taraxa") {
       if (dailyRecordsTaraxa.length === 0) {
         fetchDailyRecordsTaraxa();
       }
-    }
-    
-    
-    else if (chain === "manta") {
+    } else if (chain === "manta") {
       if (dailyRecordsManta.length === 0) {
         fetchDailyRecordsManta();
       }
@@ -4938,7 +4935,7 @@ function Dashboard({
           claimedVanarChests < 10 ||
           claimedMatChests < 10 ||
           claimedSeiChests < 10 ||
-          claimedTaraxaChests < 10 
+          claimedTaraxaChests < 10
         ) {
           setCanBuy(true);
         } else if (
@@ -4952,7 +4949,7 @@ function Dashboard({
           claimedVanarChests === 10 &&
           claimedMatChests === 10 &&
           claimedSeiChests === 10 &&
-          claimedTaraxaChests === 10 
+          claimedTaraxaChests === 10
         ) {
           setCanBuy(false);
         }
@@ -7256,8 +7253,7 @@ function Dashboard({
                 victionEarnUsd={victionEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
-            taraxaEarnUsd={taraxaEarnUsd}
-
+                taraxaEarnUsd={taraxaEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}

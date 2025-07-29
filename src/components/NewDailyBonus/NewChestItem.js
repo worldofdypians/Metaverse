@@ -409,8 +409,6 @@ const NewChestItem = ({
       window.config.daily_bonus_vanar_address
     );
 
-
-
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (window.WALLET_TYPE !== "binance") {
@@ -1528,8 +1526,7 @@ const NewChestItem = ({
             setClaimingChest(false);
           });
       }
-    } 
-    else if (chainId === 841) {
+    } else if (chainId === 841) {
       if (rewardTypes === "premium" && isPremium) {
         const web3 = new Web3(window.ethereum);
         const gasPrice = await window.taraxaWeb3.eth.getGasPrice();
@@ -1627,9 +1624,7 @@ const NewChestItem = ({
             setClaimingChest(false);
           });
       }
-    }
-    
-    else if (chainId === 1329) {
+    } else if (chainId === 1329) {
       if (rewardTypes === "premium" && isPremium) {
         const web3 = new Web3(window.ethereum);
         const gasPrice = await window.seiWeb3.eth.getGasPrice();
@@ -2375,7 +2370,9 @@ const NewChestItem = ({
       {rewardTypes !== "premium" ? (
         <img
           className={` ${
-            chain !== "skale" ? "new-chest-item-img" : "new-chest-item-img-skale"
+            chain !== "skale"
+              ? "new-chest-item-img"
+              : "new-chest-item-img-skale"
           } ${
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
@@ -2397,7 +2394,11 @@ const NewChestItem = ({
         />
       ) : rewardTypes === "premium" && dummypremiumChests ? (
         <img
-          className={`new-chest-item-img ${
+          className={`${
+            chain !== "skale"
+              ? "new-chest-item-img"
+              : "new-chest-item-img-skale"
+          } ${
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
           src={

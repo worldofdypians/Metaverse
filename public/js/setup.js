@@ -119,9 +119,9 @@ window.config = {
 
   avax_endpoint: "https://api.avax.network/ext/bc/C/rpc",
   conflux_endpoint: "https://evm.confluxrpc.com/",
-  base_endpoint: "https://mainnet.base.org",
+  base_endpoint: "https://1rpc.io/base",
   all_base_endpoints: [
-    "https://mainnet.base.org",
+    "https://1rpc.io/base",
     "https://1rpc.io/base",
     "https://base-rpc.publicnode.com",
   ],
@@ -159,7 +159,7 @@ window.config = {
   subscription_taiko_address: "0x0570cb2bb014d0eda8dfffffdeb07906a5b40aa3",
   subscription_mat_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
   subscription_sei_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
-  subscription_taraxa_address: "0x6A96d47B8B93Fb656Bf305146C27FAE38dE1F646",
+  subscription_taraxa_address: "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
   // default_gasprice_gwei: 60,
   default_gas_amount: 1200000,
 
@@ -384,9 +384,17 @@ window.config = {
   },
 
   subscriptiontaraxa_tokens: {
-    "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1": {
+    "0x8712796136Ac8e0EEeC123251ef93702f265aa80": {
+      symbol: "USDC",
+      decimals: 6,
+    },
+    "0x69D411CbF6dBaD54Bfe36f81d0a39922625bC78c": {
       symbol: "USDT",
       decimals: 6,
+    },
+    "0x69D411CbF6dBaD54Bfe36f81d0a39922625bC78c": {
+      symbol: "TARA",
+      decimals: 18,
     },
   },
 
@@ -4402,7 +4410,13 @@ async function getMyNFTs(address, type = "") {
       window.config.nft_viction_address.toLowerCase()
     );
 
-    const balance = await contract.methods.balanceOf(address).call();
+    const balance = await contract.methods
+      .balanceOf(address)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return [];
+      });
 
     const tokens = await Promise.all(
       range(0, balance - 1).map((i) =>
@@ -35882,9 +35896,18 @@ async function getEstimatedTokenSubscriptionAmountTaraxa(
     window.SUBSCRIPTION_TARAXA_ABI,
     window.config.subscription_taraxa_address
   );
+  console.log(
+    taraxaContract.methods
+      .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
+      .call()
+  );
   return await taraxaContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
-    .call();
+    .call()
+    .catch((e) => {
+      console.log(e);
+      return 100000000;
+    });
 }
 
 async function getEstimatedTokenSubscriptionAmountCore(tokenAddress) {

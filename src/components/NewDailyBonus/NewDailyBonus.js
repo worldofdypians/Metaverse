@@ -179,7 +179,6 @@ const NewDailyBonus = ({
   const seiClaimed = claimedSeiChests + claimedSeiPremiumChests;
   const seiPercentage = (seiClaimed / 20) * 100;
 
-
   const taraxaClaimed = claimedTaraxaChests + claimedTaraxaPremiumChests;
   const taraxaPercentage = (taraxaClaimed / 20) * 100;
 
@@ -879,11 +878,9 @@ const NewDailyBonus = ({
         showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "manta") {
         showSingleRewardDataManta(rewardData.chestId, isActiveIndex - 1);
-      }
-       else if (chain === "taraxa") {
+      } else if (chain === "taraxa") {
         showSingleRewardDataTaraxa(rewardData.chestId, isActiveIndex - 1);
-      }
-      else if (chain === "base") {
+      } else if (chain === "base") {
         showSingleRewardDataBase(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "taiko") {
         showSingleRewardDataTaiko(rewardData.chestId, isActiveIndex - 1);
@@ -952,7 +949,6 @@ const NewDailyBonus = ({
     }
   };
   const handleTaraxaPool = async () => {
-    
     if (window.WALLET_TYPE === "matchId") {
       window.alertify.error("Please connect to another EVM wallet.");
     } else {
@@ -2207,10 +2203,10 @@ const NewDailyBonus = ({
     }
   };
 
-  
   const showSingleRewardDataTaraxa = (chestID, chestIndex) => {
     const filteredResult = openedTaraxaChests.find(
-      (el) => el.chestId === chestID && allTaraxaChests.indexOf(el) === chestIndex
+      (el) =>
+        el.chestId === chestID && allTaraxaChests.indexOf(el) === chestIndex
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -3126,8 +3122,6 @@ const NewDailyBonus = ({
       }
       // setMessage("comingsoon");
     }
-
-
   }, [
     email,
     chain,
@@ -3843,14 +3837,14 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        {/* <div
+                        <div
                           className={`position-relative chain-item ${
                             chain === "taraxa" && "chain-item-active"
                           } w-100`}
                         >
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/taraxaBg.png"
+                              "https://cdn.worldofdypians.com/wod/taraxaBg.webp"
                             }
                             className={`chain-img ${
                               chain === "taraxa" && "chain-img-active"
@@ -3949,7 +3943,7 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                        </div> */}
+                        </div>
 
                         <div
                           className={`position-relative chain-item ${
@@ -4614,27 +4608,10 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                        {/* <div className={`position-relative chain-item w-100`}>
-                          <img
-                            src={comingSoon}
-                            className={`chain-img`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
-                          >
-                            <div className="d-flex align-items-center gap-2">
-                              <span className="percentage-span">
-                                Coming Soon
-                              </span>
-                            </div>
-                          </div>
-                        </div> */}
-
-                        {/* <div className={`position-relative chain-item w-100`}>
+                        <div className={`position-relative chain-item w-100`}>
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
+                              "https://cdn.worldofdypians.com/wod/comingSoon.png"
                             }
                             className={`chain-img`}
                             alt=""
@@ -4648,7 +4625,7 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                        </div> */}
+                        </div>
                       </div>
                     ) : windowSize.width && windowSize.width <= 992 ? (
                       <Slider {...settings}>
@@ -4875,14 +4852,14 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        {/* <div
+                        <div
                           className={`position-relative chain-item ${
                             chain === "taraxa" && "chain-item-active"
                           } w-auto`}
                         >
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/taraxaBg.png"
+                              "https://cdn.worldofdypians.com/wod/taraxaBg.webp"
                             }
                             className={`chain-img ${
                               chain === "taraxa" && "chain-img-active"
@@ -4900,7 +4877,6 @@ const NewDailyBonus = ({
                               setRewardData([]);
                             }}
                           >
-                        
                             <div
                               className="d-flex align-items-center gap-2"
                               style={{ width: "fit-content" }}
@@ -4925,7 +4901,7 @@ const NewDailyBonus = ({
                               </button>
                             </div>
                           </div>
-                        </div> */}
+                        </div>
 
                         <div
                           className={`position-relative chain-item ${
@@ -5252,7 +5228,7 @@ const NewDailyBonus = ({
                       <></>
                     )}
                   </div>
-                  <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
+                  <div className="col-12 col-lg-7 px-0 grid-overall-wrapper d-flex flex-column">
                     <div className="grid-scroll">
                       <div className="new-chests-grid">
                         {chain === "bnb"
@@ -6407,885 +6383,463 @@ const NewDailyBonus = ({
                             ))}
                       </div>
                     </div>
-                  </div>
-                  <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
-                    {message === "" ||
-                    message === "initial" ||
-                    message === "waiting" ? (
-                      <div
-                        className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          background: "#1A1C39",
-                          border: "1px solid #10C5C5",
-                        }}
-                      >
+                    <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
+                      {message === "" ||
+                      message === "initial" ||
+                      message === "waiting" ? (
                         <div
-                          className={`loader ${
-                            message === "waiting" && "loader-waiting"
-                          }`}
-                        >
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-                        <h6 className="loader-text mb-0">
-                          {message === "waiting"
-                            ? "Processing"
-                            : "Ready to claim"}
-                        </h6>
-                        <div
-                          className={`loader ${
-                            message === "waiting" && "loader-waiting-2"
-                          }`}
-                        >
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-                      </div>
-                    ) : message === "switch" ? (
-                      <div
-                        className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          background: "#1A1C39",
-                          border: "1px solid #ce5d1b",
-                        }}
-                      >
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-
-                        {chain === "bnb" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleBnbPool}
-                            >
-                              BNB Chain
-                            </span>{" "}
-                            or{" "}
-                            <span
-                              span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleOpBnbPool}
-                            >
-                              opBNB Chain
-                            </span>
-                          </h6>
-                        ) : chain === "skale" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleSkalePool}
-                            >
-                              SKALE Network
-                            </span>
-                          </h6>
-                        ) : chain === "manta" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleMantaPool}
-                            >
-                              Manta Chain
-                            </span>
-                          </h6>
-                        ) 
-                        : chain === "taraxa" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleTaraxaPool}
-                            >
-                              Taraxa
-                            </span>
-                          </h6>
-                        )
-                        
-                        : chain === "taiko" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleTaikoPool}
-                            >
-                              Taiko Chain
-                            </span>
-                          </h6>
-                        ) : chain === "vanar" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleVanarPool}
-                            >
-                              Vanar Chain
-                            </span>
-                          </h6>
-                        ) : chain === "matchain" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleMatPool}
-                            >
-                              Matchain
-                            </span>
-                          </h6>
-                        ) : chain === "core" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleCorePool}
-                            >
-                              CORE Network
-                            </span>
-                          </h6>
-                        ) : chain === "viction" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleVictionPool}
-                            >
-                              Viction Network
-                            </span>
-                          </h6>
-                        ) : chain === "base" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleBasePool}
-                            >
-                              BASE Network
-                            </span>
-                          </h6>
-                        ) : chain === "sei" ? (
-                          <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                            Switch to{" "}
-                            <span
-                              style={{
-                                textDecoration: "underline",
-                                cursor: "pointer",
-                              }}
-                              onClick={handleSeiPool}
-                            >
-                              Sei Network
-                            </span>
-                          </h6>
-                        ) : (
-                          <></>
-                        )}
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-                      </div>
-                    ) : message === "notsupported" ? (
-                      <div
-                        className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          background: "#1A1C39",
-                          border: "1px solid #ce5d1b",
-                        }}
-                      >
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-                        <h6
-                          className="loader-text mb-0"
-                          style={{ color: "#ce5d1b" }}
-                        >
-                          Not available
-                        </h6>
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-                      </div>
-                    ) : message === "switchAccount" ? (
-                      <div
-                        className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          background: "#1A1C39",
-                          border: "1px solid #ce5d1b",
-                        }}
-                      >
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                          <div className="dot" style={{ "--i": 10 }}></div>
-                        </div>
-
-                        <h6
-                          className="loader-text mb-0"
-                          style={{ color: "#ce5d1b" }}
-                        >
-                          Use the wallet associated to your game account.
-                        </h6>
-
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                          <div className="dot" style={{ "--i": 10 }}></div>
-                        </div>
-                      </div>
-                    ) : message === "error" ? (
-                      <div
-                        className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          background: "#1A1C39",
-                          border: "1px solid #D75853",
-                        }}
-                      >
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-                        <h6
-                          className="loader-text mb-0"
-                          style={{ color: "#D75853" }}
-                        >
-                          Something went wrong. Try again.
-                        </h6>
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
-                        </div>
-                      </div>
-                    ) : message === "complete" ? (
-                      <div className="d-flex align-items-center justify-content-center complete-bg p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <h6 className="completed-text mb-0">Completed</h6>
-                      </div>
-                    ) : message === "needPremium" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                           style={{
-                            filter: "brightness(1)",
-                            position: "relative",
+                            background: "#1A1C39",
+                            border: "1px solid #10C5C5",
                           }}
                         >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/warning.svg"
-                              }
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <span className="win-desc mb-0">
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward will be allocated to you if you become a
-                              Prime User.
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center warning-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {" "}
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
-
-                        <div className="d-flex align-items-center gap-5 me-0 me-lg-3 px-3 px-lg-0">
-                          <img
-                            className="d-none d-lg-flex"
-                            src={
-                              "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                            }
-                            style={{ width: 70, height: 70 }}
-                            alt=""
-                          />
-                          <NavLink
-                            className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
-                            to={"/account/prime"}
+                          <div
+                            className={`loader ${
+                              message === "waiting" && "loader-waiting"
+                            }`}
                           >
-                            Get Prime
-                          </NavLink>
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                          </div>
+                          <h6 className="loader-text mb-0">
+                            {message === "waiting"
+                              ? "Processing"
+                              : "Ready to claim"}
+                          </h6>
+                          <div
+                            className={`loader ${
+                              message === "waiting" && "loader-waiting-2"
+                            }`}
+                          >
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                          </div>
                         </div>
-                      </div>
-                    ) : message === "caws" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      ) : message === "switch" ? (
                         <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                           style={{
-                            filter: "brightness(1)",
-                            position: "relative",
+                            background: "#1A1C39",
+                            border: "1px solid #ce5d1b",
                           }}
                         >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/warning.svg"
-                              }
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <span
-                              className="win-desc mb-0"
-                              style={{ fontSize: 10 }}
-                            >
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward will be allocated to you if you get one of
-                              the suggested CAWS NFTs.
-                            </span>
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
                           </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center warning-border p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
 
-                        <div className="d-flex align-items-center gap-2">
-                          {cawsNfts.slice(0, 4).map((item, index) => (
-                            <div
-                              className="nft-reward-container"
-                              onClick={() => {
-                                setNft(item);
-                                setBuyNftPopup(true);
-                                // boughtCaws(
-                                //   isActive,
-                                //   isActiveIndex,
-                                //   rewardData.rewards.find((obj) => {
-                                //     return obj.rewardType === "Money";
-                                //   }).reward ?? 0,
-                                //   rewardData.rewards.find((obj) => {
-                                //     return obj.rewardType === "Points";
-                                //   }).reward ?? 0
-                                // );
-                              }}
+                          {chain === "bnb" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
                             >
+                              Switch to{" "}
+                              <span
+                                span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleBnbPool}
+                              >
+                                BNB Chain
+                              </span>{" "}
+                              or{" "}
+                              <span
+                                span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleOpBnbPool}
+                              >
+                                opBNB Chain
+                              </span>
+                            </h6>
+                          ) : chain === "skale" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleSkalePool}
+                              >
+                                SKALE Network
+                              </span>
+                            </h6>
+                          ) : chain === "manta" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleMantaPool}
+                              >
+                                Manta Chain
+                              </span>
+                            </h6>
+                          ) : chain === "taraxa" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleTaraxaPool}
+                              >
+                                Taraxa
+                              </span>
+                            </h6>
+                          ) : chain === "taiko" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleTaikoPool}
+                              >
+                                Taiko Chain
+                              </span>
+                            </h6>
+                          ) : chain === "vanar" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleVanarPool}
+                              >
+                                Vanar Chain
+                              </span>
+                            </h6>
+                          ) : chain === "matchain" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleMatPool}
+                              >
+                                Matchain
+                              </span>
+                            </h6>
+                          ) : chain === "core" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleCorePool}
+                              >
+                                CORE Network
+                              </span>
+                            </h6>
+                          ) : chain === "viction" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleVictionPool}
+                              >
+                                Viction Network
+                              </span>
+                            </h6>
+                          ) : chain === "base" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleBasePool}
+                              >
+                                BASE Network
+                              </span>
+                            </h6>
+                          ) : chain === "sei" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleSeiPool}
+                              >
+                                Sei Network
+                              </span>
+                            </h6>
+                          ) : (
+                            <></>
+                          )}
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                          </div>
+                        </div>
+                      ) : message === "notsupported" ? (
+                        <div
+                          className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
+                          style={{
+                            background: "#1A1C39",
+                            border: "1px solid #ce5d1b",
+                          }}
+                        >
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                          </div>
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Not available
+                          </h6>
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                          </div>
+                        </div>
+                      ) : message === "switchAccount" ? (
+                        <div
+                          className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
+                          style={{
+                            background: "#1A1C39",
+                            border: "1px solid #ce5d1b",
+                          }}
+                        >
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                            <div className="dot" style={{ "--i": 10 }}></div>
+                          </div>
+
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Use the wallet associated to your game account.
+                          </h6>
+
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                            <div className="dot" style={{ "--i": 10 }}></div>
+                          </div>
+                        </div>
+                      ) : message === "error" ? (
+                        <div
+                          className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
+                          style={{
+                            background: "#1A1C39",
+                            border: "1px solid #D75853",
+                          }}
+                        >
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                          </div>
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#D75853" }}
+                          >
+                            Something went wrong. Try again.
+                          </h6>
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                          </div>
+                        </div>
+                      ) : message === "complete" ? (
+                        <div className="d-flex align-items-center justify-content-center complete-bg p-0 p-lg-2 w-100 chest-progress-wrapper">
+                          <h6 className="completed-text mb-0">Completed</h6>
+                        </div>
+                      ) : message === "needPremium" ? (
+                        <div className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You won</h6>
+                            <div className="d-flex align-items-center gap-2">
                               <img
-                                key={index}
-                                className="nft-reward-img"
-                                src={`https://mint.dyp.finance/thumbs150/${item.tokenId}.png`}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/warning.svg"
+                                }
                                 alt=""
+                                width={20}
+                                height={20}
                               />
-                              <div className="buy-nft-reward-btn">Buy</div>
+                              <span className="win-desc mb-0">
+                                The{" "}
+                                <span style={{ color: "#F2C624" }}>
+                                  $
+                                  {getFormattedNumber(
+                                    rewardData.rewards
+                                      ? rewardData.rewards.find((obj) => {
+                                          return obj.rewardType === "Money";
+                                        }).reward
+                                      : 0,
+                                    2
+                                  )}
+                                </span>{" "}
+                                reward will be allocated to you if you become a
+                                Prime User.
+                              </span>
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                    ) : message === "won" ? (
-                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You Won</h6>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
                           </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
-
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/winConfetti.png"
-                          }
-                          alt=""
-                          className="win-confetti"
-                        />
-                      </div>
-                    ) : message === "wonPoints" ? (
-                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You Won</h6>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                        </div>
-
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/winConfetti.png"
-                          }
-                          alt=""
-                          className="win-confetti"
-                        />
-                      </div>
-                    ) : message === "wonPointsStars" ? (
-                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You Won</h6>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Stars";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Stars</span>
-                          </div>
-                        </div>
-
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/winConfetti.png"
-                          }
-                          alt=""
-                          className="win-confetti"
-                        />
-                      </div>
-                    ) : message === "premium" ? (
-                      <div
-                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          border: "1px solid #8262D0",
-                          background:
-                            "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
-                        }}
-                      >
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6
-                            className="desc-title mb-0"
-                            style={{ color: "#fff" }}
-                          >
-                            Become Prime
-                          </h6>
-                          <span className="chain-desc mb-0">
-                            Enjoy extra benefits and unlock more chests for
-                            extra rewards by upgrading to Prime.
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center justify-content-between get-premium-wrapper p-3 p-lg-0">
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                            }
-                            style={{ width: 60, height: 60 }}
-                            alt=""
-                          />
-                          <NavLink
-                            className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
-                            to={"/account/prime"}
-                          >
-                            Get Prime
-                          </NavLink>
-                        </div>
-                      </div>
-                    ) : message === "login" ? (
-                      <div
-                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          border: "1px solid #8262D0",
-                          background:
-                            "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
-                        }}
-                      >
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6
-                            className="desc-title mb-0"
-                            style={{ color: "#fff" }}
-                          >
-                            Sign in with Your Game Account
-                          </h6>
-                          <span className="chain-desc mb-0">
-                            Sign in to access Daily Bonus and earn tailored
-                            rewards!
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
-                          <NavLink
-                            className="sign-in-btn px-4 py-1"
-                            to="/auth"
-                            onClick={() => {
-                              html.classList.remove("hidescroll");
-                            }}
-                          >
-                            Sign In
-                          </NavLink>
-                        </div>
-                      </div>
-                    ) : message === "connect" ? (
-                      <div
-                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          border: "1px solid #8262D0",
-                          background:
-                            "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
-                        }}
-                      >
-                        <div
-                          className="chain-desc-wrapper w-100 p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6
-                            className="desc-title mb-0"
-                            style={{ color: "#fff" }}
-                          >
-                            Connect wallet
-                          </h6>
-                          <span className="chain-desc mb-0">
-                            Connect wallet in order to access Daily Bonus and
-                            earn tailored rewards!
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
-                          <button
-                            className="sign-in-btn px-4 py-1"
-                            onClick={() => {
-                              onConnectWallet();
-                            }}
-                          >
-                            Connect Wallet
-                          </button>
-                        </div>
-                      </div>
-                    ) : message === "winDanger" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/danger.svg"
-                              }
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <span className="win-desc mb-0">
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center warning-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {" "}
+                                $
                                 {getFormattedNumber(
                                   rewardData.rewards
                                     ? rewardData.rewards.find((obj) => {
@@ -7294,236 +6848,471 @@ const NewDailyBonus = ({
                                     : 0,
                                   2
                                 )}
-                              </span>{" "}
-                              reward has not been assigned due to incomplete
-                              fulfillment of all the requirements.
-                            </span>
+                              </h6>
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+
+                          <div className="d-flex align-items-center gap-5 me-0 me-lg-3 px-3 px-lg-0">
+                            <img
+                              className="d-none d-lg-flex"
+                              src={
+                                "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                              }
+                              style={{ width: 70, height: 70 }}
+                              alt=""
+                            />
+                            <NavLink
+                              className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
+                              to={"/account/prime"}
+                            >
+                              Get Prime
+                            </NavLink>
                           </div>
                         </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
+                      ) : message === "caws" ? (
+                        <div className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You won</h6>
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/warning.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              <span
+                                className="win-desc mb-0"
+                                style={{ fontSize: 10 }}
+                              >
+                                The{" "}
+                                <span style={{ color: "#F2C624" }}>
+                                  $
+                                  {getFormattedNumber(
+                                    rewardData.rewards
+                                      ? rewardData.rewards.find((obj) => {
+                                          return obj.rewardType === "Money";
+                                        }).reward
+                                      : 0,
+                                    2
+                                  )}
+                                </span>{" "}
+                                reward will be allocated to you if you get one
+                                of the suggested CAWS NFTs.
+                              </span>
+                            </div>
                           </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center danger-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center warning-border p-1">
+                              <h6 className="win-amount mb-0">
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+
+                          <div className="d-flex align-items-center gap-2">
+                            {cawsNfts.slice(0, 4).map((item, index) => (
+                              <div
+                                className="nft-reward-container"
+                                onClick={() => {
+                                  setNft(item);
+                                  setBuyNftPopup(true);
+                                  // boughtCaws(
+                                  //   isActive,
+                                  //   isActiveIndex,
+                                  //   rewardData.rewards.find((obj) => {
+                                  //     return obj.rewardType === "Money";
+                                  //   }).reward ?? 0,
+                                  //   rewardData.rewards.find((obj) => {
+                                  //     return obj.rewardType === "Points";
+                                  //   }).reward ?? 0
+                                  // );
+                                }}
+                              >
+                                <img
+                                  key={index}
+                                  className="nft-reward-img"
+                                  src={`https://mint.dyp.finance/thumbs150/${item.tokenId}.png`}
+                                  alt=""
+                                />
+                                <div className="buy-nft-reward-btn">Buy</div>
+                              </div>
+                            ))}
                           </div>
                         </div>
-                        <div className="d-flex align-items-center gap-2">
-                          {winDangerItems
-                            .sort(
-                              (a, b) => Number(b.required) - Number(a.required)
-                            )
-                            .map((item, index) =>
-                              item.required ? (
-                                <HtmlTooltip
-                                  placement="top"
-                                  title={
-                                    <div
-                                      className="d-flex align-items-center gap-2"
-                                      style={{ width: "fit-content" }}
-                                    >
-                                      <span
-                                        className="win-desc"
-                                        style={{ fontSize: "12px" }}
-                                      >
-                                        {item.message}
-                                      </span>
-                                    </div>
-                                  }
-                                >
-                                  <div className="nft-reward-container">
-                                    <img
-                                      key={index}
-                                      className="nft-reward-img"
-                                      src={item.image}
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                      style={{
-                                        borderRadius: "50%",
-                                        filter: "opacity(0.5)",
-                                      }}
-                                    />
-                                    <img
-                                      src={
-                                        item.holder
-                                          ? "https://cdn.worldofdypians.com/wod/greenCheck.svg"
-                                          : "https://cdn.worldofdypians.com/wod/redX.svg"
-                                      }
-                                      alt=""
-                                      className="holder-check"
-                                    />
-                                  </div>
-                                </HtmlTooltip>
-                              ) : (
-                                <div className="required-item-placeholder"></div>
+                      ) : message === "won" ? (
+                        <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You Won</h6>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center p-1">
+                              <h6 className="win-amount mb-0">
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </h6>
+
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/winConfetti.png"
+                            }
+                            alt=""
+                            className="win-confetti"
+                          />
+                        </div>
+                      ) : message === "wonPoints" ? (
+                        <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You Won</h6>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                          </div>
+
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/winConfetti.png"
+                            }
+                            alt=""
+                            className="win-confetti"
+                          />
+                        </div>
+                      ) : message === "wonPointsStars" ? (
+                        <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You Won</h6>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Stars";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Stars</span>
+                            </div>
+                          </div>
+
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/winConfetti.png"
+                            }
+                            alt=""
+                            className="win-confetti"
+                          />
+                        </div>
+                      ) : message === "premium" ? (
+                        <div
+                          className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper"
+                          style={{
+                            border: "1px solid #8262D0",
+                            background:
+                              "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
+                          }}
+                        >
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6
+                              className="desc-title mb-0"
+                              style={{ color: "#fff" }}
+                            >
+                              Become Prime
+                            </h6>
+                            <span className="chain-desc mb-0">
+                              Enjoy extra benefits and unlock more chests for
+                              extra rewards by upgrading to Prime.
+                            </span>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-between get-premium-wrapper p-3 p-lg-0">
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                              }
+                              style={{ width: 60, height: 60 }}
+                              alt=""
+                            />
+                            <NavLink
+                              className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
+                              to={"/account/prime"}
+                            >
+                              Get Prime
+                            </NavLink>
+                          </div>
+                        </div>
+                      ) : message === "login" ? (
+                        <div
+                          className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper"
+                          style={{
+                            border: "1px solid #8262D0",
+                            background:
+                              "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
+                          }}
+                        >
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6
+                              className="desc-title mb-0"
+                              style={{ color: "#fff" }}
+                            >
+                              Sign in with Your Game Account
+                            </h6>
+                            <span className="chain-desc mb-0">
+                              Sign in to access Daily Bonus and earn tailored
+                              rewards!
+                            </span>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-end get-premium-wrapper">
+                            <NavLink
+                              className="sign-in-btn px-4 py-1"
+                              to="/auth"
+                              onClick={() => {
+                                html.classList.remove("hidescroll");
+                              }}
+                            >
+                              Sign In
+                            </NavLink>
+                          </div>
+                        </div>
+                      ) : message === "connect" ? (
+                        <div
+                          className="d-flex align-items-center justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                          style={{
+                            border: "1px solid #8262D0",
+                            background:
+                              "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
+                          }}
+                        >
+                          <div
+                            className="chain-desc-wrapper w-100 p-2 d-flex flex-column"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6
+                              className="desc-title mb-0"
+                              style={{ color: "#fff" }}
+                            >
+                              Connect wallet
+                            </h6>
+                            <span className="chain-desc mb-0">
+                              Connect wallet in order to access Daily Bonus and
+                              earn tailored rewards!
+                            </span>
+                          </div>
+                          <div className="d-flex align-items-center justify-content-end get-premium-wrapper">
+                            <button
+                              className="sign-in-btn px-4 py-1"
+                              onClick={() => {
+                                onConnectWallet();
+                              }}
+                            >
+                              Connect Wallet
+                            </button>
+                          </div>
+                        </div>
+                      ) : message === "winDanger" ? (
+                        <div className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You won</h6>
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/danger.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              <span className="win-desc mb-0">
+                                The{" "}
+                                <span style={{ color: "#F2C624" }}>
+                                  {getFormattedNumber(
+                                    rewardData.rewards
+                                      ? rewardData.rewards.find((obj) => {
+                                          return obj.rewardType === "Money";
+                                        }).reward
+                                      : 0,
+                                    2
+                                  )}
+                                </span>{" "}
+                                reward has not been assigned due to incomplete
+                                fulfillment of all the requirements.
+                              </span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center danger-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2">
+                            {winDangerItems
+                              .sort(
+                                (a, b) =>
+                                  Number(b.required) - Number(a.required)
                               )
-                            )}
-                        </div>
-                      </div>
-                    ) : message === "winDangerCaws" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/danger.svg"
-                              }
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <span className="win-desc mb-0">
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward has not been assigned due to incomplete
-                              fulfillment of all the requirements.
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Stars";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Stars</span>
-                          </div>
-                          <div className="d-flex flex-column align-items-center danger-border p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === false ? (
-                                  <></>
-                                ) : (
-                                  <div
-                                    className="nft-reward-container"
-                                    key={index}
-                                  >
-                                    <img
-                                      className="nft-reward-img"
-                                      src={
-                                        item.type === "PREMIUM"
-                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                          : item.type === "CAWS"
-                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                          : item.type === "LAND"
-                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                      style={{
-                                        borderRadius: "50%",
-                                      }}
-                                    />
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
-                                      }
-                                      alt=""
-                                      className="holder-check"
-                                    />
-                                  </div>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === true ? (
-                                  <></>
-                                ) : (
+                              .map((item, index) =>
+                                item.required ? (
                                   <HtmlTooltip
                                     placement="top"
-                                    key={index}
                                     title={
                                       <div
                                         className="d-flex align-items-center gap-2"
@@ -7533,32 +7322,16 @@ const NewDailyBonus = ({
                                           className="win-desc"
                                           style={{ fontSize: "12px" }}
                                         >
-                                          {rewardData.rewards
-                                            ? rewardData.rewards.find((obj) => {
-                                                return (
-                                                  obj.rewardType === "Money"
-                                                );
-                                              }).details
-                                            : ""}
+                                          {item.message}
                                         </span>
                                       </div>
                                     }
                                   >
-                                    <div
-                                      className="nft-reward-container"
-                                      key={index}
-                                    >
+                                    <div className="nft-reward-container">
                                       <img
+                                        key={index}
                                         className="nft-reward-img"
-                                        src={
-                                          item.type === "PREMIUM"
-                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                            : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                        }
+                                        src={item.image}
                                         alt=""
                                         width={70}
                                         height={70}
@@ -7569,1017 +7342,1228 @@ const NewDailyBonus = ({
                                       />
                                       <img
                                         src={
-                                          "https://cdn.worldofdypians.com/wod/redX.svg"
+                                          item.holder
+                                            ? "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                            : "https://cdn.worldofdypians.com/wod/redX.svg"
                                         }
                                         alt=""
                                         className="holder-check"
                                       />
                                     </div>
                                   </HtmlTooltip>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-                          {window
-                            .range(
-                              0,
-                              rewardData.rewards
-                                ? 3 -
-                                    rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).requirements.length
-                                : 0
-                            )
-                            .map((item, index) => {
-                              return (
-                                <div
-                                  className="required-item-placeholder"
-                                  key={index}
-                                ></div>
-                              );
-                            })}
-                        </div>
-                      </div>
-                    ) : message === "winDangerLand" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/danger.svg"
-                              }
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <span className="win-desc mb-0">
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward has not been assigned due to incomplete
-                              fulfillment of all the requirements.
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Stars";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Stars</span>
-                          </div>
-
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center danger-border p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === false ? (
-                                  <></>
                                 ) : (
-                                  <div
-                                    className="nft-reward-container"
-                                    key={index}
-                                  >
-                                    <img
-                                      className="nft-reward-img"
-                                      src={
-                                        item.type === "PREMIUM"
-                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                          : item.type === "CAWS"
-                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                          : item.type === "LAND"
-                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                      style={{
-                                        borderRadius: "50%",
-                                      }}
-                                    />
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
-                                      }
-                                      alt=""
-                                      className="holder-check"
-                                    />
-                                  </div>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === true ? (
-                                  <></>
-                                ) : (
-                                  <HtmlTooltip
-                                    placement="top"
-                                    key={index}
-                                    title={
-                                      <div
-                                        className="d-flex align-items-center gap-2"
-                                        style={{ width: "fit-content" }}
-                                      >
-                                        <span
-                                          className="win-desc"
-                                          style={{ fontSize: "12px" }}
-                                        >
-                                          {rewardData.rewards
-                                            ? rewardData.rewards.find((obj) => {
-                                                return (
-                                                  obj.rewardType === "Money"
-                                                );
-                                              }).details
-                                            : ""}
-                                        </span>
-                                      </div>
-                                    }
-                                  >
-                                    <div
-                                      className="nft-reward-container"
-                                      key={index}
-                                    >
-                                      <img
-                                        className="nft-reward-img"
-                                        src={
-                                          item.type === "PREMIUM"
-                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                            : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                        }
-                                        alt=""
-                                        width={70}
-                                        height={70}
-                                        style={{
-                                          borderRadius: "50%",
-                                          filter: "opacity(0.5)",
-                                        }}
-                                      />
-                                      <img
-                                        src={
-                                          "https://cdn.worldofdypians.com/wod/redX.svg"
-                                        }
-                                        alt=""
-                                        className="holder-check"
-                                      />
-                                    </div>
-                                  </HtmlTooltip>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-                          {window
-                            .range(
-                              0,
-                              rewardData.rewards
-                                ? 3 -
-                                    rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).requirements.length
-                                : 0
-                            )
-                            .map((item, index) => {
-                              return (
-                                <div
-                                  className="required-item-placeholder"
-                                  key={index}
-                                ></div>
-                              );
-                            })}
-                        </div>
-                      </div>
-                    ) : message === "winDangerNotEnoughLand" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/danger.svg"
-                              }
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <span className="win-desc mb-0">
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward has not been assigned due to incomplete
-                              fulfillment of all the requirements.
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
+                                  <div className="required-item-placeholder"></div>
+                                )
                               )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center danger-border p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
                           </div>
                         </div>
-                        <div className="d-flex align-items-center gap-2">
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === false ? (
-                                  <></>
-                                ) : (
-                                  <div
-                                    className="nft-reward-container"
-                                    key={index}
-                                  >
-                                    <img
-                                      className="nft-reward-img"
-                                      src={
-                                        item.type === "PREMIUM"
-                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                          : item.type === "CAWS"
-                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                          : item.type === "LAND"
-                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                      style={{
-                                        borderRadius: "50%",
-                                      }}
-                                    />
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
-                                      }
-                                      alt=""
-                                      className="holder-check"
-                                    />
-                                  </div>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === true ? (
-                                  <></>
-                                ) : (
-                                  <HtmlTooltip
-                                    placement="top"
-                                    key={index}
-                                    title={
-                                      <div
-                                        className="d-flex align-items-center gap-2"
-                                        style={{ width: "fit-content" }}
-                                      >
-                                        <span
-                                          className="win-desc"
-                                          style={{ fontSize: "12px" }}
-                                        >
-                                          {rewardData.rewards
-                                            ? rewardData.rewards.find((obj) => {
-                                                return (
-                                                  obj.rewardType === "Money"
-                                                );
-                                              }).details
-                                            : ""}
-                                        </span>
-                                      </div>
-                                    }
-                                  >
-                                    <div
-                                      className="nft-reward-container"
-                                      key={index}
-                                    >
-                                      <img
-                                        className="nft-reward-img"
-                                        src={
-                                          item.type === "PREMIUM"
-                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                            : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                        }
-                                        alt=""
-                                        width={70}
-                                        height={70}
-                                        style={{
-                                          borderRadius: "50%",
-                                          filter: "opacity(0.5)",
-                                        }}
-                                      />
-                                      <img
-                                        src={
-                                          "https://cdn.worldofdypians.com/wod/redX.svg"
-                                        }
-                                        alt=""
-                                        className="holder-check"
-                                      />
-                                    </div>
-                                  </HtmlTooltip>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-                          {window
-                            .range(
-                              0,
-                              rewardData.rewards
-                                ? 3 -
-                                    rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).requirements.length
-                                : 0
-                            )
-                            .map((item, index) => {
-                              return (
-                                <div
-                                  className="required-item-placeholder"
-                                  key={index}
-                                ></div>
-                              );
-                            })}
-                        </div>
-                      </div>
-                    ) : message === "winDangerHasNftsNoPremium" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/danger.svg"
-                              }
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <span className="win-desc mb-0">
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward has not been assigned due to incomplete
-                              fulfillment of all the requirements.
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center danger-border p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === false ? (
-                                  <></>
-                                ) : (
-                                  <div
-                                    className="nft-reward-container"
-                                    key={index}
-                                  >
-                                    <img
-                                      className="nft-reward-img"
-                                      src={
-                                        item.type === "PREMIUM"
-                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                          : item.type === "CAWS"
-                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                          : item.type === "LAND"
-                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                      style={{
-                                        borderRadius: "50%",
-                                      }}
-                                    />
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
-                                      }
-                                      alt=""
-                                      className="holder-check"
-                                    />
-                                  </div>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === true ? (
-                                  <></>
-                                ) : (
-                                  <HtmlTooltip
-                                    placement="top"
-                                    key={index}
-                                    title={
-                                      <div
-                                        className="d-flex align-items-center gap-2"
-                                        style={{ width: "fit-content" }}
-                                      >
-                                        <span
-                                          className="win-desc"
-                                          style={{ fontSize: "12px" }}
-                                        >
-                                          {rewardData.rewards
-                                            ? rewardData.rewards.find((obj) => {
-                                                return (
-                                                  obj.rewardType === "Money"
-                                                );
-                                              }).details
-                                            : ""}
-                                        </span>
-                                      </div>
-                                    }
-                                  >
-                                    <div
-                                      className="nft-reward-container"
-                                      key={index}
-                                    >
-                                      <img
-                                        className="nft-reward-img"
-                                        src={
-                                          item.type === "PREMIUM"
-                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                            : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                        }
-                                        alt=""
-                                        width={70}
-                                        height={70}
-                                        style={{
-                                          borderRadius: "50%",
-                                          filter: "opacity(0.5)",
-                                        }}
-                                      />
-                                      <img
-                                        src={
-                                          "https://cdn.worldofdypians.com/wod/redX.svg"
-                                        }
-                                        alt=""
-                                        className="holder-check"
-                                      />
-                                    </div>
-                                  </HtmlTooltip>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-                          {window
-                            .range(
-                              0,
-                              rewardData.rewards
-                                ? 3 -
-                                    rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).requirements.length
-                                : 0
-                            )
-                            .map((item, index) => {
-                              return (
-                                <div
-                                  className="required-item-placeholder"
-                                  key={index}
-                                ></div>
-                              );
-                            })}
-                        </div>
-                      </div>
-                    ) : message === "winDangerHasNftsPremiumNoDyp" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/danger.svg"
-                              }
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <span className="win-desc mb-0">
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward has not been assigned due to incomplete
-                              fulfillment of all the requirements.
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center danger-border p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === false ? (
-                                  <></>
-                                ) : (
-                                  <div
-                                    className="nft-reward-container"
-                                    key={index}
-                                  >
-                                    <img
-                                      className="nft-reward-img"
-                                      src={
-                                        item.type === "PREMIUM"
-                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                          : item.type === "CAWS"
-                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                          : item.type === "LAND"
-                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                      }
-                                      alt=""
-                                      width={70}
-                                      height={70}
-                                      style={{
-                                        borderRadius: "50%",
-                                      }}
-                                    />
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
-                                      }
-                                      alt=""
-                                      className="holder-check"
-                                    />
-                                  </div>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-
-                          {rewardData.rewards ? (
-                            rewardData.rewards
-                              .find((obj) => {
-                                return obj.rewardType === "Money";
-                              })
-                              .requirements.map((item, index) => {
-                                return item.owned === true ? (
-                                  <></>
-                                ) : (
-                                  <HtmlTooltip
-                                    placement="top"
-                                    key={index}
-                                    title={
-                                      <div
-                                        className="d-flex align-items-center gap-2"
-                                        style={{ width: "fit-content" }}
-                                      >
-                                        <span
-                                          className="win-desc"
-                                          style={{ fontSize: "12px" }}
-                                        >
-                                          {rewardData.rewards
-                                            ? rewardData.rewards.find((obj) => {
-                                                return (
-                                                  obj.rewardType === "Money"
-                                                );
-                                              }).details
-                                            : ""}
-                                        </span>
-                                      </div>
-                                    }
-                                  >
-                                    <div
-                                      className="nft-reward-container"
-                                      key={index}
-                                    >
-                                      <img
-                                        className="nft-reward-img"
-                                        src={
-                                          item.type === "PREMIUM"
-                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                                            : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
-                                        }
-                                        alt=""
-                                        width={70}
-                                        height={70}
-                                        style={{
-                                          borderRadius: "50%",
-                                          filter: "opacity(0.5)",
-                                        }}
-                                      />
-                                      <img
-                                        src={
-                                          "https://cdn.worldofdypians.com/wod/redX.svg"
-                                        }
-                                        alt=""
-                                        className="holder-check"
-                                      />
-                                    </div>
-                                  </HtmlTooltip>
-                                );
-                              })
-                          ) : (
-                            <></>
-                          )}
-                          {window
-                            .range(
-                              0,
-                              rewardData.rewards
-                                ? 3 -
-                                    rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).requirements.length
-                                : 0
-                            )
-                            .map((item, index) => {
-                              return (
-                                <div
-                                  className="required-item-placeholder"
-                                  key={index}
-                                ></div>
-                              );
-                            })}
-                        </div>
-                      </div>
-                    ) : message === "wod" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
-                        <div
-                          className="chain-desc-wrapper p-2 d-flex flex-column"
-                          style={{
-                            filter: "brightness(1)",
-                            position: "relative",
-                          }}
-                        >
-                          <h6 className="win-text mb-0">You won</h6>
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/warning.svg"
-                              }
-                              alt=""
-                              width={20}
-                              height={20}
-                            />
-                            <span
-                              className="win-desc mb-0"
-                              style={{ fontSize: 10 }}
-                            >
-                              The{" "}
-                              <span style={{ color: "#F2C624" }}>
-                                $
-                                {getFormattedNumber(
-                                  rewardData.rewards
-                                    ? rewardData.rewards.find((obj) => {
-                                        return obj.rewardType === "Money";
-                                      }).reward
-                                    : 0,
-                                  2
-                                )}
-                              </span>{" "}
-                              reward will be allocated to you if you get one of
-                              the suggested Genesis NFTs.
-                            </span>
-                          </div>
-                        </div>
-                        <div className="d-flex align-items-center gap-2 win-rewards-container">
-                          <div className="d-flex flex-column align-items-center neutral-border p-1">
-                            <h6 className="win-amount mb-0">
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Points";
-                                    }).reward
-                                  : 0,
-                                0
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">
-                              Leaderboard Points
-                            </span>
-                          </div>
-                          <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center warning-border p-1">
-                            <h6 className="win-amount mb-0">
-                              $
-                              {getFormattedNumber(
-                                rewardData.rewards
-                                  ? rewardData.rewards.find((obj) => {
-                                      return obj.rewardType === "Money";
-                                    }).reward
-                                  : 0,
-                                2
-                              )}
-                            </h6>
-                            <span className="win-amount-desc">Rewards</span>
-                          </div>
-                        </div>
-
-                        <div className="d-flex align-items-center gap-2">
-                          {landNfts.slice(0, 4).map((item, index) => (
-                            <div
-                              className="nft-reward-container"
-                              onClick={() => {
-                                setNft(item);
-                                setBuyNftPopup(true);
-                                // boughtCaws(
-                                //   isActive,
-                                //   isActiveIndex,
-                                //   rewardData.rewards.find((obj) => {
-                                //     return obj.rewardType === "Money";
-                                //   }).reward ?? 0,
-                                //   rewardData.rewards.find((obj) => {
-                                //     return obj.rewardType === "Points";
-                                //   }).reward ?? 0
-                                // );
-                              }}
-                            >
+                      ) : message === "winDangerCaws" ? (
+                        <div className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You won</h6>
+                            <div className="d-flex align-items-center gap-2">
                               <img
-                                key={index}
-                                className="nft-reward-img"
-                                src={`https://mint.worldofdypians.com/thumbs150/${item.tokenId}.png`}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/danger.svg"
+                                }
                                 alt=""
-                                width={70}
-                                height={70}
+                                width={20}
+                                height={20}
                               />
-                              <div className="buy-nft-reward-btn">Buy</div>
+                              <span className="win-desc mb-0">
+                                The{" "}
+                                <span style={{ color: "#F2C624" }}>
+                                  $
+                                  {getFormattedNumber(
+                                    rewardData.rewards
+                                      ? rewardData.rewards.find((obj) => {
+                                          return obj.rewardType === "Money";
+                                        }).reward
+                                      : 0,
+                                    2
+                                  )}
+                                </span>{" "}
+                                reward has not been assigned due to incomplete
+                                fulfillment of all the requirements.
+                              </span>
                             </div>
-                          ))}
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Stars";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Stars</span>
+                            </div>
+                            <div className="d-flex flex-column align-items-center danger-border p-1">
+                              <h6 className="win-amount mb-0">
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2">
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === false ? (
+                                    <></>
+                                  ) : (
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                            : item.type === "CAWS"
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                            : item.type === "LAND"
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                        }}
+                                      />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                        }
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === true ? (
+                                    <></>
+                                  ) : (
+                                    <HtmlTooltip
+                                      placement="top"
+                                      key={index}
+                                      title={
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          style={{ width: "fit-content" }}
+                                        >
+                                          <span
+                                            className="win-desc"
+                                            style={{ fontSize: "12px" }}
+                                          >
+                                            {rewardData.rewards
+                                              ? rewardData.rewards.find(
+                                                  (obj) => {
+                                                    return (
+                                                      obj.rewardType === "Money"
+                                                    );
+                                                  }
+                                                ).details
+                                              : ""}
+                                          </span>
+                                        </div>
+                                      }
+                                    >
+                                      <div
+                                        className="nft-reward-container"
+                                        key={index}
+                                      >
+                                        <img
+                                          className="nft-reward-img"
+                                          src={
+                                            item.type === "PREMIUM"
+                                              ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                              : item.type === "CAWS"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                          }
+                                          alt=""
+                                          width={70}
+                                          height={70}
+                                          style={{
+                                            borderRadius: "50%",
+                                            filter: "opacity(0.5)",
+                                          }}
+                                        />
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/redX.svg"
+                                          }
+                                          alt=""
+                                          className="holder-check"
+                                        />
+                                      </div>
+                                    </HtmlTooltip>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+                            {window
+                              .range(
+                                0,
+                                rewardData.rewards
+                                  ? 3 -
+                                      rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).requirements.length
+                                  : 0
+                              )
+                              .map((item, index) => {
+                                return (
+                                  <div
+                                    className="required-item-placeholder"
+                                    key={index}
+                                  ></div>
+                                );
+                              })}
+                          </div>
                         </div>
-                      </div>
-                    ) : message === "comingsoon" ? (
-                      <div
-                        className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
-                        style={{
-                          background: "#1A1C39",
-                          border: "1px solid #D75853",
-                        }}
-                      >
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
+                      ) : message === "winDangerLand" ? (
+                        <div className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You won</h6>
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/danger.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              <span className="win-desc mb-0">
+                                The{" "}
+                                <span style={{ color: "#F2C624" }}>
+                                  $
+                                  {getFormattedNumber(
+                                    rewardData.rewards
+                                      ? rewardData.rewards.find((obj) => {
+                                          return obj.rewardType === "Money";
+                                        }).reward
+                                      : 0,
+                                    2
+                                  )}
+                                </span>{" "}
+                                reward has not been assigned due to incomplete
+                                fulfillment of all the requirements.
+                              </span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Stars";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Stars</span>
+                            </div>
+
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center danger-border p-1">
+                              <h6 className="win-amount mb-0">
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2">
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === false ? (
+                                    <></>
+                                  ) : (
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                            : item.type === "CAWS"
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                            : item.type === "LAND"
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                        }}
+                                      />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                        }
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === true ? (
+                                    <></>
+                                  ) : (
+                                    <HtmlTooltip
+                                      placement="top"
+                                      key={index}
+                                      title={
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          style={{ width: "fit-content" }}
+                                        >
+                                          <span
+                                            className="win-desc"
+                                            style={{ fontSize: "12px" }}
+                                          >
+                                            {rewardData.rewards
+                                              ? rewardData.rewards.find(
+                                                  (obj) => {
+                                                    return (
+                                                      obj.rewardType === "Money"
+                                                    );
+                                                  }
+                                                ).details
+                                              : ""}
+                                          </span>
+                                        </div>
+                                      }
+                                    >
+                                      <div
+                                        className="nft-reward-container"
+                                        key={index}
+                                      >
+                                        <img
+                                          className="nft-reward-img"
+                                          src={
+                                            item.type === "PREMIUM"
+                                              ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                              : item.type === "CAWS"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                          }
+                                          alt=""
+                                          width={70}
+                                          height={70}
+                                          style={{
+                                            borderRadius: "50%",
+                                            filter: "opacity(0.5)",
+                                          }}
+                                        />
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/redX.svg"
+                                          }
+                                          alt=""
+                                          className="holder-check"
+                                        />
+                                      </div>
+                                    </HtmlTooltip>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+                            {window
+                              .range(
+                                0,
+                                rewardData.rewards
+                                  ? 3 -
+                                      rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).requirements.length
+                                  : 0
+                              )
+                              .map((item, index) => {
+                                return (
+                                  <div
+                                    className="required-item-placeholder"
+                                    key={index}
+                                  ></div>
+                                );
+                              })}
+                          </div>
                         </div>
-                        <h6
-                          className="loader-text mb-0"
-                          style={{ color: "#D75853" }}
+                      ) : message === "winDangerNotEnoughLand" ? (
+                        <div className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You won</h6>
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/danger.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              <span className="win-desc mb-0">
+                                The{" "}
+                                <span style={{ color: "#F2C624" }}>
+                                  $
+                                  {getFormattedNumber(
+                                    rewardData.rewards
+                                      ? rewardData.rewards.find((obj) => {
+                                          return obj.rewardType === "Money";
+                                        }).reward
+                                      : 0,
+                                    2
+                                  )}
+                                </span>{" "}
+                                reward has not been assigned due to incomplete
+                                fulfillment of all the requirements.
+                              </span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center danger-border p-1">
+                              <h6 className="win-amount mb-0">
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2">
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === false ? (
+                                    <></>
+                                  ) : (
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                            : item.type === "CAWS"
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                            : item.type === "LAND"
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                        }}
+                                      />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                        }
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === true ? (
+                                    <></>
+                                  ) : (
+                                    <HtmlTooltip
+                                      placement="top"
+                                      key={index}
+                                      title={
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          style={{ width: "fit-content" }}
+                                        >
+                                          <span
+                                            className="win-desc"
+                                            style={{ fontSize: "12px" }}
+                                          >
+                                            {rewardData.rewards
+                                              ? rewardData.rewards.find(
+                                                  (obj) => {
+                                                    return (
+                                                      obj.rewardType === "Money"
+                                                    );
+                                                  }
+                                                ).details
+                                              : ""}
+                                          </span>
+                                        </div>
+                                      }
+                                    >
+                                      <div
+                                        className="nft-reward-container"
+                                        key={index}
+                                      >
+                                        <img
+                                          className="nft-reward-img"
+                                          src={
+                                            item.type === "PREMIUM"
+                                              ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                              : item.type === "CAWS"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                          }
+                                          alt=""
+                                          width={70}
+                                          height={70}
+                                          style={{
+                                            borderRadius: "50%",
+                                            filter: "opacity(0.5)",
+                                          }}
+                                        />
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/redX.svg"
+                                          }
+                                          alt=""
+                                          className="holder-check"
+                                        />
+                                      </div>
+                                    </HtmlTooltip>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+                            {window
+                              .range(
+                                0,
+                                rewardData.rewards
+                                  ? 3 -
+                                      rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).requirements.length
+                                  : 0
+                              )
+                              .map((item, index) => {
+                                return (
+                                  <div
+                                    className="required-item-placeholder"
+                                    key={index}
+                                  ></div>
+                                );
+                              })}
+                          </div>
+                        </div>
+                      ) : message === "winDangerHasNftsNoPremium" ? (
+                        <div className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You won</h6>
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/danger.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              <span className="win-desc mb-0">
+                                The{" "}
+                                <span style={{ color: "#F2C624" }}>
+                                  $
+                                  {getFormattedNumber(
+                                    rewardData.rewards
+                                      ? rewardData.rewards.find((obj) => {
+                                          return obj.rewardType === "Money";
+                                        }).reward
+                                      : 0,
+                                    2
+                                  )}
+                                </span>{" "}
+                                reward has not been assigned due to incomplete
+                                fulfillment of all the requirements.
+                              </span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center danger-border p-1">
+                              <h6 className="win-amount mb-0">
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2">
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === false ? (
+                                    <></>
+                                  ) : (
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                            : item.type === "CAWS"
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                            : item.type === "LAND"
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                        }}
+                                      />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                        }
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === true ? (
+                                    <></>
+                                  ) : (
+                                    <HtmlTooltip
+                                      placement="top"
+                                      key={index}
+                                      title={
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          style={{ width: "fit-content" }}
+                                        >
+                                          <span
+                                            className="win-desc"
+                                            style={{ fontSize: "12px" }}
+                                          >
+                                            {rewardData.rewards
+                                              ? rewardData.rewards.find(
+                                                  (obj) => {
+                                                    return (
+                                                      obj.rewardType === "Money"
+                                                    );
+                                                  }
+                                                ).details
+                                              : ""}
+                                          </span>
+                                        </div>
+                                      }
+                                    >
+                                      <div
+                                        className="nft-reward-container"
+                                        key={index}
+                                      >
+                                        <img
+                                          className="nft-reward-img"
+                                          src={
+                                            item.type === "PREMIUM"
+                                              ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                              : item.type === "CAWS"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                          }
+                                          alt=""
+                                          width={70}
+                                          height={70}
+                                          style={{
+                                            borderRadius: "50%",
+                                            filter: "opacity(0.5)",
+                                          }}
+                                        />
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/redX.svg"
+                                          }
+                                          alt=""
+                                          className="holder-check"
+                                        />
+                                      </div>
+                                    </HtmlTooltip>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+                            {window
+                              .range(
+                                0,
+                                rewardData.rewards
+                                  ? 3 -
+                                      rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).requirements.length
+                                  : 0
+                              )
+                              .map((item, index) => {
+                                return (
+                                  <div
+                                    className="required-item-placeholder"
+                                    key={index}
+                                  ></div>
+                                );
+                              })}
+                          </div>
+                        </div>
+                      ) : message === "winDangerHasNftsPremiumNoDyp" ? (
+                        <div className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You won</h6>
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/danger.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              <span className="win-desc mb-0">
+                                The{" "}
+                                <span style={{ color: "#F2C624" }}>
+                                  $
+                                  {getFormattedNumber(
+                                    rewardData.rewards
+                                      ? rewardData.rewards.find((obj) => {
+                                          return obj.rewardType === "Money";
+                                        }).reward
+                                      : 0,
+                                    2
+                                  )}
+                                </span>{" "}
+                                reward has not been assigned due to incomplete
+                                fulfillment of all the requirements.
+                              </span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center danger-border p-1">
+                              <h6 className="win-amount mb-0">
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2">
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === false ? (
+                                    <></>
+                                  ) : (
+                                    <div
+                                      className="nft-reward-container"
+                                      key={index}
+                                    >
+                                      <img
+                                        className="nft-reward-img"
+                                        src={
+                                          item.type === "PREMIUM"
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                            : item.type === "CAWS"
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                            : item.type === "LAND"
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                        }
+                                        alt=""
+                                        width={70}
+                                        height={70}
+                                        style={{
+                                          borderRadius: "50%",
+                                        }}
+                                      />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                        }
+                                        alt=""
+                                        className="holder-check"
+                                      />
+                                    </div>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+
+                            {rewardData.rewards ? (
+                              rewardData.rewards
+                                .find((obj) => {
+                                  return obj.rewardType === "Money";
+                                })
+                                .requirements.map((item, index) => {
+                                  return item.owned === true ? (
+                                    <></>
+                                  ) : (
+                                    <HtmlTooltip
+                                      placement="top"
+                                      key={index}
+                                      title={
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          style={{ width: "fit-content" }}
+                                        >
+                                          <span
+                                            className="win-desc"
+                                            style={{ fontSize: "12px" }}
+                                          >
+                                            {rewardData.rewards
+                                              ? rewardData.rewards.find(
+                                                  (obj) => {
+                                                    return (
+                                                      obj.rewardType === "Money"
+                                                    );
+                                                  }
+                                                ).details
+                                              : ""}
+                                          </span>
+                                        </div>
+                                      }
+                                    >
+                                      <div
+                                        className="nft-reward-container"
+                                        key={index}
+                                      >
+                                        <img
+                                          className="nft-reward-img"
+                                          src={
+                                            item.type === "PREMIUM"
+                                              ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                                              : item.type === "CAWS"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                          }
+                                          alt=""
+                                          width={70}
+                                          height={70}
+                                          style={{
+                                            borderRadius: "50%",
+                                            filter: "opacity(0.5)",
+                                          }}
+                                        />
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/redX.svg"
+                                          }
+                                          alt=""
+                                          className="holder-check"
+                                        />
+                                      </div>
+                                    </HtmlTooltip>
+                                  );
+                                })
+                            ) : (
+                              <></>
+                            )}
+                            {window
+                              .range(
+                                0,
+                                rewardData.rewards
+                                  ? 3 -
+                                      rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).requirements.length
+                                  : 0
+                              )
+                              .map((item, index) => {
+                                return (
+                                  <div
+                                    className="required-item-placeholder"
+                                    key={index}
+                                  ></div>
+                                );
+                              })}
+                          </div>
+                        </div>
+                      ) : message === "wod" ? (
+                        <div className="d-flex align-items-center flex-row justify-content-between p-2 w-100 chest-progress-wrapper">
+                          <div
+                            className="chain-desc-wrapper d-flex flex-column w-100"
+                            style={{
+                              filter: "brightness(1)",
+                              position: "relative",
+                            }}
+                          >
+                            <h6 className="win-text mb-0">You won</h6>
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/warning.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
+                              <span
+                                className="win-desc mb-0"
+                                style={{ fontSize: 10 }}
+                              >
+                                The{" "}
+                                <span style={{ color: "#F2C624" }}>
+                                  $
+                                  {getFormattedNumber(
+                                    rewardData.rewards
+                                      ? rewardData.rewards.find((obj) => {
+                                          return obj.rewardType === "Money";
+                                        }).reward
+                                      : 0,
+                                    2
+                                  )}
+                                </span>{" "}
+                                reward will be allocated to you if you get one
+                                of the suggested Genesis NFTs.
+                              </span>
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 win-rewards-container">
+                            <div className="d-flex flex-column align-items-center neutral-border p-1">
+                              <h6 className="win-amount mb-0">
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Points";
+                                      }).reward
+                                    : 0,
+                                  0
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">
+                                Leaderboard Points
+                              </span>
+                            </div>
+                            <h6 className="win-amount mb-0">+</h6>
+                            <div className="d-flex flex-column align-items-center warning-border p-1">
+                              <h6 className="win-amount mb-0">
+                                $
+                                {getFormattedNumber(
+                                  rewardData.rewards
+                                    ? rewardData.rewards.find((obj) => {
+                                        return obj.rewardType === "Money";
+                                      }).reward
+                                    : 0,
+                                  2
+                                )}
+                              </h6>
+                              <span className="win-amount-desc">Rewards</span>
+                            </div>
+                          </div>
+
+                          <div className="d-flex align-items-center gap-2">
+                            {landNfts.slice(0, 4).map((item, index) => (
+                              <div
+                                className="nft-reward-container"
+                                onClick={() => {
+                                  setNft(item);
+                                  setBuyNftPopup(true);
+                                  // boughtCaws(
+                                  //   isActive,
+                                  //   isActiveIndex,
+                                  //   rewardData.rewards.find((obj) => {
+                                  //     return obj.rewardType === "Money";
+                                  //   }).reward ?? 0,
+                                  //   rewardData.rewards.find((obj) => {
+                                  //     return obj.rewardType === "Points";
+                                  //   }).reward ?? 0
+                                  // );
+                                }}
+                              >
+                                <img
+                                  key={index}
+                                  className="nft-reward-img"
+                                  src={`https://mint.worldofdypians.com/thumbs150/${item.tokenId}.png`}
+                                  alt=""
+                                  width={70}
+                                  height={70}
+                                />
+                                <div className="buy-nft-reward-btn">Buy</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : message === "comingsoon" ? (
+                        <div
+                          className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
+                          style={{
+                            background: "#1A1C39",
+                            border: "1px solid #D75853",
+                          }}
                         >
-                          Coming Soon
-                        </h6>
-                        <div className="loader red-loader">
-                          <div className="dot" style={{ "--i": 0 }}></div>
-                          <div className="dot" style={{ "--i": 1 }}></div>
-                          <div className="dot" style={{ "--i": 2 }}></div>
-                          <div className="dot" style={{ "--i": 3 }}></div>
-                          <div className="dot" style={{ "--i": 4 }}></div>
-                          <div className="dot" style={{ "--i": 5 }}></div>
-                          <div className="dot" style={{ "--i": 6 }}></div>
-                          <div className="dot" style={{ "--i": 7 }}></div>
-                          <div className="dot" style={{ "--i": 8 }}></div>
-                          <div className="dot" style={{ "--i": 9 }}></div>
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                          </div>
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#D75853" }}
+                          >
+                            Coming Soon
+                          </h6>
+                          <div className="loader red-loader">
+                            <div className="dot" style={{ "--i": 0 }}></div>
+                            <div className="dot" style={{ "--i": 1 }}></div>
+                            <div className="dot" style={{ "--i": 2 }}></div>
+                            <div className="dot" style={{ "--i": 3 }}></div>
+                            <div className="dot" style={{ "--i": 4 }}></div>
+                            <div className="dot" style={{ "--i": 5 }}></div>
+                            <div className="dot" style={{ "--i": 6 }}></div>
+                            <div className="dot" style={{ "--i": 7 }}></div>
+                            <div className="dot" style={{ "--i": 8 }}></div>
+                            <div className="dot" style={{ "--i": 9 }}></div>
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      <></>
-                    )}
+                      ) : (
+                        <></>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -9123,9 +9107,7 @@ const NewDailyBonus = ({
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                
-                
-                  : chain === "taiko"
+                : chain === "taiko"
                 ? showSingleRewardDataTaiko(
                     rewardData.chestId,
                     isActiveIndex - 1

@@ -98,28 +98,6 @@ const BetaPassNFT = ({
 
   const betaPasses = [
     {
-      id: "taraxa",
-      mainTitle: "Taraxa Beta Pass",
-      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by our partners. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
-      heroImage: "https://cdn.worldofdypians.com/wod/baseBetaBanner.png",
-      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-      buttonTitle: "Taraxa",
-      giveawayButton: false,
-      isComingSoon: false,
-      giveawayButtonTitle: "",
-      giveawayLink: "",
-      areaImage: undefined,
-      cardClassName: "taraxa-mint-bg",
-      wrapperClassName: "taraxa-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
-      rewardsTitle: "$30,000 in TARA rewards",
-      rewardType: "TARA",
-      userEarned: taraxaEarnUsd,
-      eventType: "Explore & Mine",
-      eventStartDate: "Coming Soon",
-      eventEndDate: "Coming Soon",
-    },
-    {
       id: "base",
       mainTitle: "Base Beta Pass",
       desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by our partners. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
@@ -140,6 +118,28 @@ const BetaPassNFT = ({
       eventType: "Explore & Mine",
       eventStartDate: "Mar. 12, 2025",
       eventEndDate: "Jul. 10, 2025",
+    },
+    {
+      id: "taraxa",
+      mainTitle: "Taraxa Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by our partners. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/baseBetaBanner.png",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+      buttonTitle: "Taraxa",
+      giveawayButton: false,
+      isComingSoon: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
+      areaImage: undefined,
+      cardClassName: "taraxa-mint-bg",
+      wrapperClassName: "taraxa-eventwrapper",
+      treasureHuntStatus: "Coming Soon",
+      rewardsTitle: "$30,000 in TARA rewards",
+      rewardType: "TARA",
+      userEarned: taraxaEarnUsd,
+      eventType: "Explore & Mine",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
     },
     {
       id: "matchain",
@@ -1036,7 +1036,7 @@ const BetaPassNFT = ({
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <h6 className="nft-page-title pt-4 pt-lg-0 mt-5 mt-lg-4">
-                      {selectedMint?.mainTitle} 
+                      {selectedMint?.mainTitle}
                     </h6>
 
                     <p className="collection-desc">{selectedMint?.desc}</p>
