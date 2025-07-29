@@ -97,7 +97,7 @@ import { http, createPublicClient } from "viem";
 import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
 import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.js";
 import WodBitGet from "./screens/Community/Campaigns/WodBitGet/WodBitGet.js";
-// import DailyQuestion from "./screens/DailyQuestion/DailyQuestion.js";
+import Kickstarter from "./components/Kickstarter/Kickstarter.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -625,6 +625,7 @@ function App() {
   const [skaleAmount, setSkaleAmount] = useState(0);
   const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
   const [wodPrice, setWodPrice] = useState(0);
+  const [kickstarter, setKickstarter] = useState(false);
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
   const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
@@ -1958,12 +1959,12 @@ function App() {
   const html = document.querySelector("html");
 
   useEffect(() => {
-    if (domainPopup === true) {
+    if (domainPopup === true || kickstarter === true) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [domainPopup]);
+  }, [domainPopup, kickstarter]);
 
   // const web3Name = createWeb3Name();
 
@@ -6073,6 +6074,7 @@ function App() {
           !location.pathname.includes("wod-okxwallet") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
+        openKickstarter={() => setKickstarter(true)}
           authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
@@ -8249,6 +8251,9 @@ function App() {
       )}
 
       {fireAppcontent === true && <AppContent />}
+      {kickstarter &&
+      <Kickstarter onClose={() => setKickstarter(false)} />
+      }
     </>
   );
 }

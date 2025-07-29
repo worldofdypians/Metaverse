@@ -37,6 +37,7 @@ const Header = ({
   loginListener,
   onSyncClick,
   network_matchain,
+  openKickstarter
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -711,6 +712,16 @@ const Header = ({
                   </div>
                 </div>
               </div>
+               <div className="d-flex align-items-center gap-2 kickstarter-header-item p-2">
+                <img src="https://cdn.worldofdypians.com/wod/kickstartIcon.svg" alt="" />
+                <div
+                className={`nav-anchor kickstarter-anchor`}
+                style={{cursor: "pointer"}}
+                onClick={openKickstarter}
+              >
+                Kickstarter
+              </div>
+               </div>
             </div>
             <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
               <div

@@ -593,7 +593,7 @@ const NewLeaderBoard = ({
                       Loyalty Program
                     </span>
                     <span className="new-leaderboard-desc">
-                      Eenjoy 90 days of gas-free transactions in the World of
+                      Enjoy 90 days of gas-free transactions in the World of
                       Dypians ecosystem on every network reimbursed to cover the
                       gas costs for one transaction per day.
                     </span>
