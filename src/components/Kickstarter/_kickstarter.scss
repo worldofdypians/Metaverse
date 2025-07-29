@@ -3,7 +3,7 @@
   height: 80vh;
   z-index: 10000;
   position: absolute;
-  right: 0;
+  left: 0;
   bottom: 0;
   top: 0;
   margin: auto;
@@ -18,13 +18,13 @@
 }
 
 .slide-in {
-  left: -100%;
+  right: -100%;
   animation: slideIn 1s ease-out forwards;
 }
 
 @keyframes slideIn {
   to {
-    left: 0;
+    right: 0;
   }
 }
 
