@@ -299,7 +299,7 @@ const LoyaltyProgram = ({
                         />
                       )}
                       {expired && (
-                        <h6 className="loyalty-timer mb-0">Season four</h6>
+                        <h6 className="loyalty-timer mb-0">Season five</h6>
                       )}
                       <span className="loyalty-time-left">
                         {expired ? "Coming soon" : "Time left"}
@@ -459,8 +459,7 @@ const LoyaltyProgram = ({
                                             alt=""
                                             className="participant-chain"
                                           />
-                                        ) 
-                                        : item === "taraxa" ? (
+                                        ) : item === "taraxa" ? (
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Logo.svg`}
@@ -469,9 +468,7 @@ const LoyaltyProgram = ({
                                             alt=""
                                             className="participant-chain"
                                           />
-                                        )
-                                        
-                                        : (
+                                        ) : (
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}
@@ -531,9 +528,7 @@ const LoyaltyProgram = ({
                                             alt=""
                                             className="participant-chain"
                                           />
-                                        ) 
-                                        
-                                        : item === "taraxa" ? (
+                                        ) : item === "taraxa" ? (
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Logo.svg`}
@@ -542,9 +537,7 @@ const LoyaltyProgram = ({
                                             alt=""
                                             className="participant-chain"
                                           />
-                                        )
-                                        
-                                        : (
+                                        ) : (
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}

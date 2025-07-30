@@ -639,6 +639,13 @@ const MarketMint = ({
         })
       );
       setMintTitle("kucoin");
+    } else if (location.pathname.includes("taraxa")) {
+      setSelectedMint(
+        allMints.find((obj) => {
+          return obj.id === "taraxa";
+        })
+      );
+      setMintTitle("taraxa");
     }
     // else if (location.pathname.includes("vanar")) {
     //   setSelectedMint(vanarData);

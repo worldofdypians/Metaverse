@@ -3618,7 +3618,7 @@ function Dashboard({
   useEffect(() => {
     if (taraxacount !== 0) {
       // fetchDailyRecordstaraxa();
-      getAllTaraxaChests(email);
+      // getAllTaraxaChests(email);
     }
   }, [taraxacount]);
 
@@ -6187,7 +6187,7 @@ function Dashboard({
       getAllVanarChests(email);
       getAllMatChests(email);
       getAllSeiChests(email);
-      getAllTaraxaChests(email);
+      // getAllTaraxaChests(email);
     }
   }, [email, userWallet]);
 

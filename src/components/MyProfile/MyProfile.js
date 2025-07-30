@@ -153,7 +153,7 @@ const MyProfile = ({
   let now2 = new Date();
 
   const midnight = new Date(now).setUTCHours(24, 30, 0, 0);
-  const chestPercentage = (totalClaimedChests / 200) * 100;
+  const chestPercentage = (totalClaimedChests / 220) * 100;
   const utcDayIndex = new Date().getUTCDay();
   const utcHours = now2.getUTCHours();
   const utcMinutes = now2.getUTCMinutes();
@@ -1102,8 +1102,8 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsstd < 100
-                          ? allClaimedChestsstd + "/100"
+                        {allClaimedChestsstd < 110
+                          ? allClaimedChestsstd + "/110"
                           : "Completed"}
                       </span>
                     </div>
@@ -1121,8 +1121,8 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsPremium < 100
-                          ? allClaimedChestsPremium + "/100"
+                        {allClaimedChestsPremium < 110
+                          ? allClaimedChestsPremium + "/110"
                           : "Completed"}
                       </span>
                     </div>
@@ -1338,7 +1338,7 @@ const MyProfile = ({
                               color: "#fff",
                             }}
                           >
-                            200 Chests
+                            220 Chests
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-1">
@@ -1351,7 +1351,7 @@ const MyProfile = ({
                               color: "#fff",
                             }}
                           >
-                            11 Chains
+                            12 Chains
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-1">
