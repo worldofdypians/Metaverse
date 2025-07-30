@@ -2319,12 +2319,18 @@ const NewChestItem = ({
       {rewardTypes !== "premium" ? (
         <img
           className={` ${
-            chain !== "skale" ? "new-chest-item-img" : "new-chest-item-img-skale"
+            chain !== "skale"
+              ? "new-chest-item-img"
+              : "new-chest-item-img-skale"
           } ${
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
           src={
-            chain !== "skale"
+            chestIndex === 6
+              ? `https://cdn.worldofdypians.com/wod/${
+                  open ? "premiumChestOpenFront" : "premiumChest"
+                }.png`
+              : chain !== "skale"
               ? `https://cdn.worldofdypians.com/wod/${
                   open ? image + "open" : image
                 }.png`
