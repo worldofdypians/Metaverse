@@ -462,7 +462,7 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "kucoin-mint-bg2",
       wrapperClassName: "kucoin-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$2,000 in KCS rewards",
       rewardType: "KCS",
       userEarned: userEarnUsdKucoin,
