@@ -3380,7 +3380,7 @@ const NewDailyBonus = ({
                 <div
                   className="row daily-bonus-row 
                gap-lg-0 mx-3 mx-lg-2 mt-3 mt-lg-3"
-                  style={{ height: "100%", marginTop: "64px" }}
+                  style={{ height: "auto", marginTop: "64px" }}
                 >
                   <div className="col-12 col-lg-5 chains-wrapper mt-5 mt-lg-0 d-flex align-items-center">
                     {windowSize.width && windowSize.width > 992 ? (
@@ -5228,7 +5228,7 @@ const NewDailyBonus = ({
                       <></>
                     )}
                   </div>
-                  <div className="col-12 col-lg-7 px-0 grid-overall-wrapper d-flex flex-column">
+                  <div className="col-12 col-lg-7 p-lg-0 p-2 d-flex flex-column">
                     <div className="grid-scroll">
                       <div className="new-chests-grid">
                         {chain === "bnb"
@@ -6383,7 +6383,7 @@ const NewDailyBonus = ({
                             ))}
                       </div>
                     </div>
-                    <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
+                    <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper h-auto">
                       {message === "" ||
                       message === "initial" ||
                       message === "waiting" ? (
@@ -6974,7 +6974,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
                       ) : message === "won" ? (
-                        <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                           <div
                             className="chain-desc-wrapper d-flex flex-column w-100"
                             style={{
@@ -7028,7 +7028,7 @@ const NewDailyBonus = ({
                           />
                         </div>
                       ) : message === "wonPoints" ? (
-                        <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                           <div
                             className="chain-desc-wrapper d-flex flex-column w-100"
                             style={{
@@ -7065,7 +7065,7 @@ const NewDailyBonus = ({
                           />
                         </div>
                       ) : message === "wonPointsStars" ? (
-                        <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                           <div
                             className="chain-desc-wrapper d-flex flex-column w-100"
                             style={{
@@ -7200,7 +7200,7 @@ const NewDailyBonus = ({
                         </div>
                       ) : message === "connect" ? (
                         <div
-                          className="d-flex align-items-center justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                          className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper"
                           style={{
                             border: "1px solid #8262D0",
                             background:
@@ -7208,7 +7208,7 @@ const NewDailyBonus = ({
                           }}
                         >
                           <div
-                            className="chain-desc-wrapper w-100 p-2 d-flex flex-column"
+                            className="chain-desc-wrapper w-100 d-flex flex-column"
                             style={{
                               filter: "brightness(1)",
                               position: "relative",

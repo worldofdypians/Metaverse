@@ -2640,7 +2640,7 @@ const BnbDailyBonus = ({
             onClick={onclose}
             style={{ cursor: "pointer" }}
           /> */}
-            <div className={"chest-test-wrapper"}>
+            <div className={"chest-test-wrapper h-100"}>
               <div
                 className="close-daily-btn d-flex align-items-center justify-content-center"
                 onClick={onclose}
@@ -3217,7 +3217,7 @@ const BnbDailyBonus = ({
                     )}
                   </div>
                   <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
-                    <div className="grid-scroll">
+                    <div className="grid-scroll h-100">
                       <div className="new-chests-grid">
                         {chain === "bnb"
                           ? allChests && allChests.length > 0
@@ -4167,7 +4167,7 @@ const BnbDailyBonus = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
+                  <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper h-auto">
                     {message === "" ||
                     message === "initial" ||
                     message === "waiting" ? (
@@ -4535,7 +4535,7 @@ const BnbDailyBonus = ({
                         <h6 className="completed-text mb-0">Completed</h6>
                       </div>
                     ) : message === "needPremium" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4623,7 +4623,7 @@ const BnbDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "caws" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4726,7 +4726,7 @@ const BnbDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "won" ? (
-                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4780,7 +4780,7 @@ const BnbDailyBonus = ({
                         />
                       </div>
                     ) : message === "wonPoints" ? (
-                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4817,7 +4817,7 @@ const BnbDailyBonus = ({
                         />
                       </div>
                     ) : message === "wonPointsStars" ? (
-                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4870,7 +4870,7 @@ const BnbDailyBonus = ({
                       </div>
                     ) : message === "premium" ? (
                       <div
-                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper"
                         style={{
                           border: "1px solid #8262D0",
                           background:
@@ -4913,7 +4913,7 @@ const BnbDailyBonus = ({
                       </div>
                     ) : message === "login" ? (
                       <div
-                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper"
                         style={{
                           border: "1px solid #8262D0",
                           background:
@@ -4938,7 +4938,7 @@ const BnbDailyBonus = ({
                             rewards!
                           </span>
                         </div>
-                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
+                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper">
                           <NavLink
                             className="sign-in-btn px-4 py-1"
                             to="/auth"
@@ -4952,7 +4952,7 @@ const BnbDailyBonus = ({
                       </div>
                     ) : message === "connect" ? (
                       <div
-                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper"
                         style={{
                           border: "1px solid #8262D0",
                           background:
@@ -4960,7 +4960,7 @@ const BnbDailyBonus = ({
                         }}
                       >
                         <div
-                          className="chain-desc-wrapper w-100 p-2 d-flex flex-column"
+                          className="chain-desc-wrapper w-100 d-flex flex-column"
                           style={{
                             filter: "brightness(1)",
                             position: "relative",
@@ -4977,7 +4977,7 @@ const BnbDailyBonus = ({
                             earn tailored rewards!
                           </span>
                         </div>
-                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
+                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper">
                           <button
                             className="sign-in-btn px-4 py-1"
                             onClick={() => {
@@ -4989,7 +4989,7 @@ const BnbDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDanger" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -5109,7 +5109,7 @@ const BnbDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerCaws" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -5326,7 +5326,7 @@ const BnbDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerLand" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -5546,7 +5546,7 @@ const BnbDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerNotEnoughLand" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -5750,7 +5750,7 @@ const BnbDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerHasNftsNoPremium" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -5954,7 +5954,7 @@ const BnbDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerHasNftsPremiumNoDyp" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -6158,7 +6158,7 @@ const BnbDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "wod" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
