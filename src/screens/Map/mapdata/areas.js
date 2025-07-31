@@ -610,14 +610,14 @@ const chainAreas = [
         [-0.06806908436765445, 0.08490800857543945],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/KuCoinCom",

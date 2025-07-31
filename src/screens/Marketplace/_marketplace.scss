@@ -2491,6 +2491,19 @@
   }
 }
 
+.past-teafi-mint {
+  background-image: url("https://cdn.worldofdypians.com/wod/teafiPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("https://cdn.worldofdypians.com/wod/teafiPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
 .past-vanar-mint {
   background-image: url("https://cdn.worldofdypians.com/wod/pastVanarMintBg.webp");
   width: 100%;

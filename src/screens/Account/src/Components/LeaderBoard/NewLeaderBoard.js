@@ -247,6 +247,45 @@ const NewLeaderBoard = ({
                           : ""}
                       </button>
                       <button
+                        onMouseEnter={() => handleMouseEnter("vanar")}
+                        onMouseLeave={handleMouseLeave}
+                        className={` 
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "vanar" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("vanar");
+                          setAllData(allVanarData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "vanar"
+                              ? "https://cdn.worldofdypians.com/wod/vanar.svg"
+                              : optionText2 !== "vanar" &&
+                                hoverState === "vanar"
+                              ? "https://cdn.worldofdypians.com/wod/vanarWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/vanarInactive.svg"
+                          }
+                          vanar
+                          className={`${
+                            optionText2 === "vanar"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Vanar"
+                          : windowSize.width < 786 && optionText2 === "vanar"
+                          ? "Vanar"
+                          : ""}
+                      </button>
+                      <button
                         onMouseEnter={() => handleMouseEnter("taiko")}
                         onMouseLeave={handleMouseLeave}
                         className={`
@@ -284,32 +323,30 @@ const NewLeaderBoard = ({
                           ? "Taiko"
                           : ""}
                       </button>
-
                       <button
-                        onMouseEnter={() => handleMouseEnter("matchain")}
+                        onMouseEnter={() => handleMouseEnter("core")}
                         onMouseLeave={handleMouseLeave}
-                        className={`
-                     d-flex align-items-center gap-2
-                     ${
-                       optionText2 === "matchain" &&
-                       "otheroptionsActive optionswrapper-bg-new"
-                     } leaderboard-inactive-btn2 w-100`}
+                        className={` 
+                    d-flex align-items-center gap-2
+                    ${
+                      optionText2 === "core" &&
+                      "otheroptionsActive optionswrapper-bg-new"
+                    } leaderboard-inactive-btn2 w-100`}
                         onClick={() => {
-                          handleOption("matchain");
-                          setAllData(allMatData);
+                          handleOption("core");
+                          setAllData(allCoreData);
                         }}
                       >
                         <img
                           src={
-                            optionText2 === "matchain"
-                              ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
-                              : optionText2 !== "matchain" &&
-                                hoverState === "matchain"
-                              ? "https://cdn.worldofdypians.com/wod/matchainWhite.svg"
-                              : "https://cdn.worldofdypians.com/wod/matchainInactive.svg"
+                            optionText2 === "core"
+                              ? "https://cdn.worldofdypians.com/wod/core.svg"
+                              : optionText2 !== "core" && hoverState === "core"
+                              ? "https://cdn.worldofdypians.com/wod/coreWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/coreInactive.svg"
                           }
                           className={`${
-                            optionText2 === "matchain"
+                            optionText2 === "core"
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
@@ -318,9 +355,9 @@ const NewLeaderBoard = ({
                           alt=""
                         />
                         {windowSize.width > 768
-                          ? "Matchain"
-                          : windowSize.width < 786 && optionText2 === "matchain"
-                          ? "Matchain"
+                          ? "CORE"
+                          : windowSize.width < 786 && optionText2 === "core"
+                          ? "CORE"
                           : ""}
                       </button>
                       <button
@@ -360,7 +397,6 @@ const NewLeaderBoard = ({
                           ? "Sei"
                           : ""}
                       </button>
-
                       <button
                         onMouseEnter={() => handleMouseEnter("manta")}
                         onMouseLeave={handleMouseLeave}
@@ -399,7 +435,6 @@ const NewLeaderBoard = ({
                           ? "Manta"
                           : ""}
                       </button>
-
                       <button
                         onMouseEnter={() => handleMouseEnter("base")}
                         onMouseLeave={handleMouseLeave}
@@ -437,30 +472,31 @@ const NewLeaderBoard = ({
                           ? "Base"
                           : ""}
                       </button>
-                      <button
-                        onMouseEnter={() => handleMouseEnter("core")}
+                        <button
+                        onMouseEnter={() => handleMouseEnter("skale")}
                         onMouseLeave={handleMouseLeave}
                         className={` 
-                    d-flex align-items-center gap-2
-                    ${
-                      optionText2 === "core" &&
-                      "otheroptionsActive optionswrapper-bg-new"
-                    } leaderboard-inactive-btn2 w-100`}
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "skale" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
                         onClick={() => {
-                          handleOption("core");
-                          setAllData(allCoreData);
+                          handleOption("skale");
+                          setAllData(allSkaleData);
                         }}
                       >
                         <img
                           src={
-                            optionText2 === "core"
-                              ? "https://cdn.worldofdypians.com/wod/core.svg"
-                              : optionText2 !== "core" && hoverState === "core"
-                              ? "https://cdn.worldofdypians.com/wod/coreWhite.svg"
-                              : "https://cdn.worldofdypians.com/wod/coreInactive.svg"
+                            optionText2 === "skale"
+                              ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                              : optionText2 !== "skale" &&
+                                hoverState === "skale"
+                              ? "https://cdn.worldofdypians.com/wod/skaleWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/skaleInactive.svg"
                           }
                           className={`${
-                            optionText2 === "core"
+                            optionText2 === "skale"
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
@@ -469,9 +505,9 @@ const NewLeaderBoard = ({
                           alt=""
                         />
                         {windowSize.width > 768
-                          ? "CORE"
-                          : windowSize.width < 786 && optionText2 === "core"
-                          ? "CORE"
+                          ? "SKALE"
+                          : windowSize.width < 786 && optionText2 === "skale"
+                          ? "SKALE"
                           : ""}
                       </button>
                       <button
@@ -515,30 +551,30 @@ const NewLeaderBoard = ({
                           : ""}
                       </button>
                       <button
-                        onMouseEnter={() => handleMouseEnter("skale")}
+                        onMouseEnter={() => handleMouseEnter("matchain")}
                         onMouseLeave={handleMouseLeave}
-                        className={` 
+                        className={`
                      d-flex align-items-center gap-2
                      ${
-                       optionText2 === "skale" &&
+                       optionText2 === "matchain" &&
                        "otheroptionsActive optionswrapper-bg-new"
                      } leaderboard-inactive-btn2 w-100`}
                         onClick={() => {
-                          handleOption("skale");
-                          setAllData(allSkaleData);
+                          handleOption("matchain");
+                          setAllData(allMatData);
                         }}
                       >
                         <img
                           src={
-                            optionText2 === "skale"
-                              ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
-                              : optionText2 !== "skale" &&
-                                hoverState === "skale"
-                              ? "https://cdn.worldofdypians.com/wod/skaleWhite.svg"
-                              : "https://cdn.worldofdypians.com/wod/skaleInactive.svg"
+                            optionText2 === "matchain"
+                              ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                              : optionText2 !== "matchain" &&
+                                hoverState === "matchain"
+                              ? "https://cdn.worldofdypians.com/wod/matchainWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/matchainInactive.svg"
                           }
                           className={`${
-                            optionText2 === "skale"
+                            optionText2 === "matchain"
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
@@ -547,48 +583,9 @@ const NewLeaderBoard = ({
                           alt=""
                         />
                         {windowSize.width > 768
-                          ? "SKALE"
-                          : windowSize.width < 786 && optionText2 === "skale"
-                          ? "SKALE"
-                          : ""}
-                      </button>
-                      <button
-                        onMouseEnter={() => handleMouseEnter("vanar")}
-                        onMouseLeave={handleMouseLeave}
-                        className={` 
-                     d-flex align-items-center gap-2
-                     ${
-                       optionText2 === "vanar" &&
-                       "otheroptionsActive optionswrapper-bg-new"
-                     } leaderboard-inactive-btn2 w-100`}
-                        onClick={() => {
-                          handleOption("vanar");
-                          setAllData(allVanarData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "vanar"
-                              ? "https://cdn.worldofdypians.com/wod/vanar.svg"
-                              : optionText2 !== "vanar" &&
-                                hoverState === "vanar"
-                              ? "https://cdn.worldofdypians.com/wod/vanarWhite.svg"
-                              : "https://cdn.worldofdypians.com/wod/vanarInactive.svg"
-                          }
-                          vanar
-                          className={`${
-                            optionText2 === "vanar"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Vanar"
-                          : windowSize.width < 786 && optionText2 === "vanar"
-                          ? "Vanar"
+                          ? "Matchain"
+                          : windowSize.width < 786 && optionText2 === "matchain"
+                          ? "Matchain"
                           : ""}
                       </button>
                       <button
@@ -772,30 +769,29 @@ const NewLeaderBoard = ({
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <CircularProgress size={20} />
                       </div>
-                    )
-                    //  : optionText2 === "base" && inactiveBoard === true ? (
-                    //   <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center">
-                    //     <h6
-                    //       className="mb-0 text-center"
-                    //       style={{ fontSize: 18 }}
-                    //     >
-                    //       Coming Soon
-                    //     </h6>
-                    //     <h6
-                    //       className="mb-0 text-center"
-                    //       style={{ fontSize: 14 }}
-                    //     >
-                    //       The leaderboard is under maintenance.
-                    //     </h6>
-                    //     <h6
-                    //       className="mb-0 text-center"
-                    //       style={{ fontSize: 14 }}
-                    //     >
-                    //       The points and stars will be live tomorrow{" "}
-                    //     </h6>
-                    //   </div>
-                    // ) 
-                    : (
+                    ) : (
+                      //  : optionText2 === "base" && inactiveBoard === true ? (
+                      //   <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center">
+                      //     <h6
+                      //       className="mb-0 text-center"
+                      //       style={{ fontSize: 18 }}
+                      //     >
+                      //       Coming Soon
+                      //     </h6>
+                      //     <h6
+                      //       className="mb-0 text-center"
+                      //       style={{ fontSize: 14 }}
+                      //     >
+                      //       The leaderboard is under maintenance.
+                      //     </h6>
+                      //     <h6
+                      //       className="mb-0 text-center"
+                      //       style={{ fontSize: 14 }}
+                      //     >
+                      //       The points and stars will be live tomorrow{" "}
+                      //     </h6>
+                      //   </div>
+                      // )
                       <></>
                     )}
                     {/* <img
@@ -824,8 +820,7 @@ const NewLeaderBoard = ({
                           <div
                             key={index}
                             className={`${
-                              (leaderboard.loading === true ) &&
-                              "comingsoon-new"
+                              leaderboard.loading === true && "comingsoon-new"
                             } leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
                             {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">

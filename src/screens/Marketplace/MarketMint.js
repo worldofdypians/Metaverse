@@ -260,6 +260,8 @@ const MarketMint = ({
   const [baseSold, setcBaseSold] = useState(0);
   const [skaleSold, setskaleSold] = useState(0);
   const [bnbNftsSold, setbnbNftsSold] = useState(0);
+  const [teaNftsSold, setteaNftsSold] = useState(0);
+
   const [victionNftsSold, setVictionNftsSold] = useState(0);
   const [coreNftsSold, setCoreNftsSold] = useState(0);
   const [opbnbNftsSold, setopBnbNftsSold] = useState(0);
@@ -273,10 +275,10 @@ const MarketMint = ({
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(
     allMints.find((obj) => {
-      return obj.id === "tea-fi";
+      return obj.id === "timepiece";
     })
   );
-  const [mintTitle, setMintTitle] = useState("tea-fi");
+  const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
 
   const slider = useRef(null);
@@ -340,6 +342,47 @@ const MarketMint = ({
       window.VANAR_NFT_ABI,
       window.config.nft_vanar_address
     );
+
+    const teaseicontract = new window.seiWeb3.eth.Contract(
+      window.SEI_NFT_ABI,
+      window.config.nft_teasei_address
+    );
+
+    const teaseiResult = await teaseicontract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaBNBResult = await window.teabnb_nft
+      .getTeaBNBLatestMint()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaOPBNBResult = await window.teaopbnb_nft
+      .getTeaOPBNBLatestMint()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaBaseResult = await window.teabase_nft
+      .getTeaBaseLatestMint()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const teaResult =
+      Number(teaBNBResult) +
+      Number(teaOPBNBResult) +
+      Number(teaBaseResult) +
+      Number(teaseiResult);
+    setteaNftsSold(teaResult);
 
     const vanarresult = await vanarContract.methods
       .totalSupply()
@@ -811,17 +854,17 @@ const MarketMint = ({
     //   class: "mint-core",
     //   id: "vanar",
     // },
-    {
-      title: "Tea-Fi Pass",
-      eventId: "tea-fi",
-      desc: "Gain entry to metaverse, and join exclusive Tea-Fi event with special ticket.",
-      img: "https://cdn.worldofdypians.com/wod/teafiMintSlide.webp",
-      data: allMints.find((item) => {
-        return item.id === "tea-fi";
-      }),
-      class: "mint-teafi",
-      id: "tea-fi",
-    },
+    // {
+    //   title: "Tea-Fi Pass",
+    //   eventId: "tea-fi",
+    //   desc: "Gain entry to metaverse, and join exclusive Tea-Fi event with special ticket.",
+    //   img: "https://cdn.worldofdypians.com/wod/teafiMintSlide.webp",
+    //   data: allMints.find((item) => {
+    //     return item.id === "tea-fi";
+    //   }),
+    //   class: "mint-teafi",
+    //   id: "tea-fi",
+    // },
     {
       title: "Taraxa Pass",
       eventId: "taraxa",
@@ -2350,6 +2393,22 @@ const MarketMint = ({
                             {getFormattedNumber(vanarNftsSold, 0)}
                           </h6>
                           <span className="past-vanar-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-teafi-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">Tea-Fi Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-taiko-mint-amount">
+                            {getFormattedNumber(teaNftsSold, 0)}
+                          </h6>
+                          <span className="past-taiko-mint-desc">SOLD OUT</span>
                         </div>
                       </div>
                     </div>
