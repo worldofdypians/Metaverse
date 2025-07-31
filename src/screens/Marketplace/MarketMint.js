@@ -9,6 +9,7 @@ import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import EventSliderCard from "./components/EventSliderCard";
 import TimepieceChecklistModal from "../Timepiece/TimepieceChecklistModal";
 import Slider from "react-slick";
+import { mint } from "viem/chains";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -63,6 +64,20 @@ const MarketMint = ({
   //   mobileBg: "gateMobileBg.png",
   // };
   const allMints = [
+    {
+      id: "taraxa",
+      cardTitle: "Taraxa Beta Pass",
+      title: "Taraxa Beta Pass",
+      background: "taraxa-mint-bg",
+      mobileBg: "taraxaMobileBg.png",
+      activeClass: "taraxa-active",
+      emptyClass: "conflux-empty",
+      nftcreated: nftCreated,
+      nft_address: window.config.nft_taraxa_address,
+      chainId: 841,
+      chainName: "Taraxa",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    },
     {
       id: "kucoin",
       cardTitle: "KuCoin Beta Pass",
@@ -667,6 +682,13 @@ const MarketMint = ({
         })
       );
       setMintTitle("kucoin");
+    } else if (location.pathname.includes("taraxa")) {
+      setSelectedMint(
+        allMints.find((obj) => {
+          return obj.id === "taraxa";
+        })
+      );
+      setMintTitle("taraxa");
     }
     // else if (location.pathname.includes("vanar")) {
     //   setSelectedMint(vanarData);
@@ -843,6 +865,17 @@ const MarketMint = ({
     //   class: "mint-teafi",
     //   id: "tea-fi",
     // },
+    {
+      title: "Taraxa Pass",
+      eventId: "taraxa",
+      desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
+      img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
+      data: allMints.find((item) => {
+        return item.id === "taraxa";
+      }),
+      class: "mint-taraxa",
+      id: "taraxa",
+    },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -1118,6 +1151,14 @@ const MarketMint = ({
             setactiveButton(false);
             setStatus("Switch to Vanar to continue minting.");
           } else if (chainId === 2040) {
+            setactiveButton(true);
+            setStatus("");
+          }
+        } else if (selectedMint.id === "taraxa") {
+          if (chainId !== 841) {
+            setactiveButton(false);
+            setStatus("Switch to Taraxa to continue minting.");
+          } else if (chainId === 841) {
             setactiveButton(true);
             setStatus("");
           }
@@ -1691,78 +1732,80 @@ const MarketMint = ({
                                   </h6>
                                 </div>
                               </div>
-                              <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
-                                <span className="mb-0 latest-mint">
-                                  Select chain
-                                </span>
-                                <div className="d-flex align-items-center gap-2">
-                                  <div
-                                    className={`p-1 rounded ${
-                                      chainId === 56
-                                        ? "mintchainwrapper-active"
-                                        : "mintchainwrapper"
-                                    } `}
-                                    onClick={handleBNBPool}
-                                  >
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                                      }
-                                      alt=""
-                                      style={{ width: 20, height: 20 }}
-                                    />
-                                  </div>
+                              {mintTitle === "tea-fi" && (
+                                <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
+                                  <span className="mb-0 latest-mint">
+                                    Select chain
+                                  </span>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <div
+                                      className={`p-1 rounded ${
+                                        chainId === 56
+                                          ? "mintchainwrapper-active"
+                                          : "mintchainwrapper"
+                                      } `}
+                                      onClick={handleBNBPool}
+                                    >
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                        }
+                                        alt=""
+                                        style={{ width: 20, height: 20 }}
+                                      />
+                                    </div>
 
-                                  <div
-                                    className={`p-1 rounded ${
-                                      chainId === 204
-                                        ? "mintchainwrapper-active"
-                                        : "mintchainwrapper"
-                                    } `}
-                                    onClick={handleOpBnbPool}
-                                  >
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/opbnbChain.png"
-                                      }
-                                      alt=""
-                                      style={{ width: 20, height: 20 }}
-                                    />
-                                  </div>
-                                  <div
-                                    className={`p-1 rounded ${
-                                      chainId === 8453
-                                        ? "mintchainwrapper-active"
-                                        : "mintchainwrapper"
-                                    } `}
-                                    onClick={handleBasePool}
-                                  >
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/base.svg"
-                                      }
-                                      alt=""
-                                      style={{ width: 20, height: 20 }}
-                                    />
-                                  </div>
-                                  <div
-                                    className={`p-1 rounded ${
-                                      chainId === 1329
-                                        ? "mintchainwrapper-active"
-                                        : "mintchainwrapper"
-                                    } `}
-                                    onClick={handleSeiPool}
-                                  >
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/seiLogo.svg"
-                                      }
-                                      alt=""
-                                      style={{ width: 20, height: 20 }}
-                                    />
+                                    <div
+                                      className={`p-1 rounded ${
+                                        chainId === 204
+                                          ? "mintchainwrapper-active"
+                                          : "mintchainwrapper"
+                                      } `}
+                                      onClick={handleOpBnbPool}
+                                    >
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/opbnbChain.png"
+                                        }
+                                        alt=""
+                                        style={{ width: 20, height: 20 }}
+                                      />
+                                    </div>
+                                    <div
+                                      className={`p-1 rounded ${
+                                        chainId === 8453
+                                          ? "mintchainwrapper-active"
+                                          : "mintchainwrapper"
+                                      } `}
+                                      onClick={handleBasePool}
+                                    >
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/base.svg"
+                                        }
+                                        alt=""
+                                        style={{ width: 20, height: 20 }}
+                                      />
+                                    </div>
+                                    <div
+                                      className={`p-1 rounded ${
+                                        chainId === 1329
+                                          ? "mintchainwrapper-active"
+                                          : "mintchainwrapper"
+                                      } `}
+                                      onClick={handleSeiPool}
+                                    >
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                        }
+                                        alt=""
+                                        style={{ width: 20, height: 20 }}
+                                      />
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
+                              )}
                               <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
                                 <span className="mb-0 latest-mint">
                                   Minting ends in
@@ -1842,101 +1885,196 @@ const MarketMint = ({
                             )}
                             <hr className="gray-divider" />
                             <div className="d-flex w-100 justify-content-center">
-                              {selectedMint.id !== "timepiece" && (
-                                <button
-                                  className={`py-2 ${
-                                    mintloading === "error"
-                                      ? "fail-button"
-                                      : (isConnected === true &&
+                              {selectedMint.id !== "timepiece" &&
+                                selectedMint.id !== "taraxa" && (
+                                  <button
+                                    className={`py-2 ${
+                                      mintloading === "error"
+                                        ? "fail-button"
+                                        : (isConnected === true &&
+                                            !selectedMint.chainId.includes(
+                                              chainId
+                                            )) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                          nftCreated.length > 0
+                                        ? "outline-btn-disabled"
+                                        : "stake-wod-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true &&
+                                      selectedMint.chainId.includes(chainId)
+                                        ? handleMint()
+                                        : isConnected === true &&
                                           !selectedMint.chainId.includes(
                                             chainId
-                                          )) ||
-                                        (status !== "Connect your wallet." &&
-                                          status !== "") ||
-                                        nftCreated.length > 0
-                                      ? "outline-btn-disabled"
-                                      : "stake-wod-btn"
-                                  }  px-4 w-100`}
-                                  onClick={() => {
+                                          )
+                                        ? handleSeiPool()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
+                                      (isConnected === true &&
+                                        !selectedMint.chainId.includes(
+                                          chainId
+                                        )) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      nftCreated.length > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {isConnected === false && (
+                                      <img
+                                        src={
+                                          mouseOver === true
+                                            ? "https://cdn.worldofdypians.com/wod/wallet-black.svg"
+                                            : "https://cdn.worldofdypians.com/wod/wallet-white.svg"
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
                                     isConnected === true &&
-                                    selectedMint.chainId.includes(chainId)
-                                      ? handleMint()
-                                      : isConnected === true &&
-                                        !selectedMint.chainId.includes(chainId)
-                                      ? handleSeiPool()
-                                      : showWalletConnect();
-                                  }}
-                                  disabled={
-                                    mintloading === "error" ||
-                                    mintloading === "success" ||
-                                    (isConnected === true &&
+                                    selectedMint.chainId.includes(chainId) ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      selectedMint.chainId.includes(chainId) ? (
+                                      <>
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      selectedMint.chainId.includes(chainId) ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          selectedMint.chainId.includes(
+                                            chainId
+                                          )) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
                                       !selectedMint.chainId.includes(
                                         chainId
-                                      )) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    nftCreated.length > 0
-                                      ? true
-                                      : false
-                                  }
-                                  onMouseEnter={() => {
-                                    setMouseOver(true);
-                                  }}
-                                  onMouseLeave={() => {
-                                    setMouseOver(false);
-                                  }}
-                                >
-                                  {isConnected === false && (
-                                    <img
-                                      src={
-                                        mouseOver === true
-                                          ? "https://cdn.worldofdypians.com/wod/wallet-black.svg"
-                                          : "https://cdn.worldofdypians.com/wod/wallet-white.svg"
-                                      }
-                                      alt=""
-                                      style={{
-                                        width: "23px",
-                                        height: "23px",
-                                      }}
-                                    />
-                                  )}{" "}
-                                  {mintloading === "initial" &&
-                                  isConnected === true &&
-                                  selectedMint.chainId.includes(chainId) ? (
-                                    "Mint"
-                                  ) : mintloading === "mint" &&
-                                    isConnected === true &&
-                                    selectedMint.chainId.includes(chainId) ? (
-                                    <>
-                                      <div
-                                        className="spinner-border "
-                                        role="status"
-                                        style={{
-                                          height: "1rem",
-                                          width: "1rem",
-                                        }}
-                                      ></div>
-                                    </>
-                                  ) : mintloading === "error" &&
-                                    isConnected === true &&
-                                    selectedMint.chainId.includes(chainId) ? (
-                                    "Failed"
-                                  ) : mintloading === "success" &&
-                                    isConnected === true &&
-                                    activeButton ===
+                                      ) ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                )}
+                              {selectedMint.id !== "timepiece" &&
+                                selectedMint.id !== "tea-fi" && (
+                                  <button
+                                    className={`py-2 ${
+                                      mintloading === "error"
+                                        ? "fail-button"
+                                        : (isConnected === true &&
+                                            selectedMint.chainId !== chainId) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                          nftCreated.length > 0
+                                        ? "outline-btn-disabled"
+                                        : "stake-wod-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true &&
+                                      selectedMint.chainId === chainId
+                                        ? handleMint()
+                                        : isConnected === true &&
+                                          selectedMint.chainId !== chainId
+                                        ? handleSeiPool()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
                                       (isConnected === true &&
-                                        selectedMint.chainId.includes(
-                                          chainId
-                                        )) ? (
-                                    "Success"
-                                  ) : isConnected === true &&
-                                    !selectedMint.chainId.includes(chainId) ? (
-                                    " Switch Chain"
-                                  ) : (
-                                    "Connect wallet"
-                                  )}
-                                </button>
-                              )}
+                                        selectedMint.chainId !== chainId) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      nftCreated.length > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {isConnected === false && (
+                                      <img
+                                        src={
+                                          mouseOver === true
+                                            ? "https://cdn.worldofdypians.com/wod/wallet-black.svg"
+                                            : "https://cdn.worldofdypians.com/wod/wallet-white.svg"
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    selectedMint.chainId === chainId ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      selectedMint.chainId === chainId ? (
+                                      <>
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      selectedMint.chainId === chainId ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          selectedMint.chainId === chainId) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      selectedMint.chainId !== chainId ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                )}
                             </div>
                           </div>
                         </div>

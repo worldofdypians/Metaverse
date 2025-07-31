@@ -192,6 +192,16 @@ export const handleSwitchNetworkhook = async (chainID) => {
     rpcUrls: ["https://rpc.vanarchain.com"],
     blockExplorerUrls: ["https://explorer.vanarchain.com/"],
   };
+  const TARAXAPARAMS = {
+    chainId: "0x349", // A 0x-prefixed hexadecimal string
+    chainName: "Taraxa Mainnet",
+    nativeCurrency: {
+      symbol: "TARA", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc.mainnet.taraxa.io"],
+    blockExplorerUrls: ["https://mainnet.explorer.taraxa.io/"],
+  };
 
   try {
     await ethereum.request({
@@ -218,6 +228,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x343b" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xa9" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x7f8" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x349" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x2ba" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x585eb4b1" &&
         switchError.code.toString().includes("32603")) ||
@@ -260,6 +271,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [MANTAPARAMS]
               : chainID === "0x7f8"
               ? [VANARPARAMS]
+              : chainID === "0x349"
+              ? [TARAXAPARAMS]
               : "",
         });
         if (window.ethereum && window.ethereum.isTrust === true) {

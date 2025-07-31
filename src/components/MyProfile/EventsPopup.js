@@ -99,6 +99,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                     ? "https://cdn.worldofdypians.com/wod/skalePopupImage.png"
                     : dummyEvent.popupInfo.linkState === "core"
                     ? "https://cdn.worldofdypians.com/wod/coreThumb.png"
+                    : dummyEvent.popupInfo.linkState === "taraxa"
+                    ? "https://cdn.worldofdypians.com/wod/taraxaThumb.png"
                     : dummyEvent.popupInfo.linkState === "sei"
                     ? "https://cdn.worldofdypians.com/wod/seiThumb.png"
                     : dummyEvent.popupInfo.linkState === "immutable"
@@ -426,6 +428,17 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   earn points for their placement on the global leaderboard.
                   Remember to log in to the game daily and venture into the CORE
                   area to uncover hidden treasures.
+                </p>
+              ) : dummyEvent.popupInfo.id === "event30" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a Taraxa Beta Pass NFT</b>. You can get the Taraxa
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the Taraxa area,
+                  players not only stand a chance to secure daily rewards in
+                  Taraxa, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Taraxa area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event16" ? (
                 <p className="popup-event-desc">
@@ -785,6 +798,17 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
             Core is focused instead on platform growth and driving the global
             adoption of blockchain technology.
           </p>
+        ) : dummyEvent.popupInfo.id === "event30" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            Taraxa is a public, EVM-compatible blockchain designed to support
+            fast, scalable, and cost-efficient decentralized applications
+            (dApps). It was originally created to address audit logging for
+            off-chain data and real-world events, but has since evolved into a
+            general-purpose platform.
+          </p>
         ) : dummyEvent.popupInfo.id === "event25" ? (
           <p
             className="popup-event-desc"
@@ -838,6 +862,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://twitter.com/SeiNetwork"
                 : dummyEvent.popupInfo.id === "event12"
                 ? "https://twitter.com/Coredao_Org"
+                : dummyEvent.popupInfo.id === "event30"
+                ? "https://x.com/taraxa_project"
                 : dummyEvent.popupInfo.id === "event16"
                 ? "https://twitter.com/MultiversX"
                 : dummyEvent.popupInfo.id === "event21"
@@ -904,6 +930,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://t.me/seinetwork?ref=blog.sei.io"
                 : dummyEvent.popupInfo.id === "event12"
                 ? "https://t.me/CoreDAOTelegram"
+                : dummyEvent.popupInfo.id === "event30"
+                ? "https://t.me/taraxa_project"
                 : dummyEvent.popupInfo.id === "event16"
                 ? "https://t.me/MultiversX"
                 : dummyEvent.popupInfo.id === "event21"
@@ -975,6 +1003,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://www.bnbchain.org/en"
                 : dummyEvent.popupInfo.id === "event12"
                 ? "https://coredao.org/"
+                : dummyEvent.popupInfo.id === "event30"
+                ? "https://taraxa.io/"
                 : dummyEvent.popupInfo.id === "event16"
                 ? "https://multiversx.com/"
                 : dummyEvent.popupInfo.id === "event21"

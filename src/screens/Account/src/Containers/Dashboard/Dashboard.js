@@ -49,6 +49,7 @@ import {
   weeklyStarPrizes,
   weeklyExtraStarPrizes,
   seiStars,
+  taraxaStars,
   matStars,
   vanarStars,
 } from "./stars";
@@ -146,6 +147,7 @@ function Dashboard({
   coreEarnUsd,
   victionEarnUsd,
   taikoEarnUsd,
+  taraxaEarnUsd,
   cookieEarnUsd,
   immutableEarnUsd,
   mantaEarnUsd,
@@ -175,6 +177,7 @@ function Dashboard({
   myTeaBnbNfts,
   myTeaOpbnbNfts,
   myTeaSeiNfts,
+  myTaraxaNfts,
   myTeaBaseNfts,
   teaEarnUsd,
 }) {
@@ -536,6 +539,7 @@ function Dashboard({
   const [openedVanarChests, setOpenedVanarChests] = useState([]);
   const [openedBaseChests, setOpenedBaseChests] = useState([]);
   const [openedMatChests, setOpenedMatChests] = useState([]);
+  const [openedTaraxaChests, setOpenedTaraxaChests] = useState([]);
 
   const [leaderboard, setLeaderboard] = useState(false);
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
@@ -572,6 +576,7 @@ function Dashboard({
   const [claimedTaikoChests, setclaimedTaikoChests] = useState(0);
   const [claimedVanarChests, setclaimedVanarChests] = useState(0);
   const [claimedMatChests, setclaimedMatChests] = useState(0);
+  const [claimedTaraxaChests, setclaimedTaraxaChests] = useState(0);
 
   const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
     useState(0);
@@ -580,6 +585,8 @@ function Dashboard({
   const [claimedTaikoPremiumChests, setclaimedTaikoPremiumChests] = useState(0);
   const [claimedVanarPremiumChests, setclaimedVanarPremiumChests] = useState(0);
   const [claimedMatPremiumChests, setclaimedMatPremiumChests] = useState(0);
+  const [claimedTaraxaPremiumChests, setclaimedTaraxaPremiumChests] =
+    useState(0);
 
   const [userSocialRewards, setuserSocialRewards] = useState(0);
 
@@ -595,6 +602,7 @@ function Dashboard({
   const [allMantaChests, setallMantaChests] = useState([]);
   const [allBaseChests, setallBaseChests] = useState([]);
   const [allMatChests, setallMatChests] = useState([]);
+  const [allTaraxaChests, setallTaraxaChests] = useState([]);
 
   const [countdown, setcountdown] = useState();
   const [countdown3500, setcountdown3500] = useState();
@@ -611,6 +619,7 @@ function Dashboard({
   const [basecount, setbasecount] = useState(0);
   const [matcount, setmatcount] = useState(0);
   const [seicount, setseicount] = useState(0);
+  const [taraxacount, settaraxacount] = useState(0);
 
   const [rankData, setRankData] = useState({});
 
@@ -634,6 +643,7 @@ function Dashboard({
   const [mantaImages, setMantaImages] = useState(shuffle(chestImagesViction));
   const [baseImages, setBaseImages] = useState(shuffle(chestImagesBase));
   const [matImages, setMatImages] = useState(shuffle(chestImagesMat));
+  const [taraxaImages, setTaraxaImages] = useState(shuffle(chestImagesMat));
 
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
 
@@ -726,6 +736,7 @@ function Dashboard({
   const [allBaseData, setAllBaseData] = useState([]);
   const [allMatData, setAllMatData] = useState([]);
   const [allSeiData, setAllSeiData] = useState([]);
+  const [allTaraxaData, setAllTaraxaData] = useState([]);
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [activePlayerCore, setActivePlayerCore] = useState(false);
@@ -801,6 +812,16 @@ function Dashboard({
   const [userDataSei, setUserDataSei] = useState({});
 
   const [prevDataSei, setPrevDataSei] = useState([]);
+
+  const [dailyRecordsTaraxa, setDailyRecordsTaraxa] = useState([]);
+
+  const [activePlayerTaraxa, setActivePlayerTaraxa] = useState(false);
+
+  const [userDataTaraxa, setUserDataTaraxa] = useState({});
+
+  const [prevDataTaraxa, setPrevDataTaraxa] = useState([]);
+
+  const [loadingTaraxa, setLoadingTaraxa] = useState(false);
 
   const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
 
@@ -1674,9 +1695,169 @@ function Dashboard({
     }
   };
 
-  // const fetchWeeklyRecordsAroundPlayerSei = async (itemData) => {
+  //TARAXA
+  const fillRecordsTaraxa = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsTaraxa(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsTaraxa(finalData);
+    }
+  };
+  // const fillRecordsWeeklyTaraxa = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsTaraxa(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsTaraxa(finalData);
+  //   }
+  // };
+
+  const fetchPreviousWinnersTaraxa = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaraxaDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsTaraxa([]);
+        });
+      setPrevDataTaraxa(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaraxa(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+
+  // const fetchPreviousWeeklyWinnersTaraxa = async (version) => {
+  //   if (version != 0) {
+  //     const data = {
+  //       StatisticName: "LeaderboardTaraxaWeekly",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 10,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data
+  //     );
+
+  //     setPrevDataTaraxaWeekly(result.data.data.leaderboard);
+  //   } else {
+  //     setPrevDataTaraxaWeekly(placeholderplayerData);
+  //   }
+  // };
+
+  const fetchDailyRecordsTaraxa = async () => {
+    if (dailyRecordsTaraxa.length > 0) return;
+    setLoadingTaraxa(true);
+
+    const data = {
+      StatisticName: "LeaderboardTaraxaDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersTaraxa(parseInt(result.data.data.version));
+      setDailyRecordsTaraxa(result.data.data.leaderboard);
+      fillRecordsTaraxa(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerTaraxa(true);
+          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerTaraxa(false);
+          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setLoadingTaraxa(false);
+      fillRecordsTaraxa([]);
+    } finally {
+      setTimeout(() => {
+        setLoadingTaraxa(false);
+      }, 1000);
+    }
+  };
+
+  // const fetchWeeklyRecordsTaraxa = async () => {
   //   const data = {
-  //     StatisticName: "LeaderboardSeiWeekly",
+  //     StatisticName: "LeaderboardTaraxaWeekly",
+  //     StartPosition: 0,
+  //     MaxResultsCount: 100,
+  //   };
+  //   const result = await axios
+  //     .post(`${backendApi}/auth/GetLeaderboard`, data)
+  //     .catch((e) => {
+  //       console.error(e);
+  //       fillRecordsWeeklyTaraxa([]);
+  //     });
+  //   setWeeklyRecordsTaraxa(result.data.data.leaderboard);
+
+  //   fetchPreviousWeeklyWinnersTaraxa(parTaraxant(result.data.data.version));
+  //   fillRecordsWeeklyTaraxa(result.data.data.leaderboard);
+  //   if (userId && username) {
+  //     var testArray = result.data.data.leaderboard.filter(
+  //       (item) => item.displayName === username
+  //     );
+
+  //     if (testArray.length > 0) {
+  //       setActivePlayerTaraxaWeekly(true);
+  //       fetchWeeklyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+  //     }
+  //     if (testArray.length === 0) {
+  //       setActivePlayerTaraxaWeekly(false);
+  //       fetchWeeklyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+  //     }
+  //   }
+  // };
+
+  const fetchDailyRecordsAroundPlayerTaraxa = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaraxaDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserDataTaraxa(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerTaraxa(false);
+      } else {
+        setActivePlayerTaraxa(true);
+      }
+    }
+  };
+
+  // const fetchWeeklyRecordsAroundPlayerTaraxa = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "LeaderboardTaraxaWeekly",
   //     MaxResultsCount: 6,
   //     PlayerId: userId,
   //   };
@@ -1691,7 +1872,7 @@ function Dashboard({
 
   //     const userPosition = testArray[0].position;
   //     if (goldenPassRemainingTime && testArray[0].statValue != 0) {
-  //       setWeeklyDataAmountSei(
+  //       setWeeklyDataAmountTaraxa(
   //         testArray[0].statValue !== 0
   //           ? userPosition > 10
   //             ? 0
@@ -1703,7 +1884,7 @@ function Dashboard({
   //           : 0
   //       );
   //     } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
-  //       setWeeklyDataAmountSei(
+  //       setWeeklyDataAmountTaraxa(
   //         testArray[0].statValue !== 0
   //           ? userPosition > 10
   //             ? 0
@@ -1712,7 +1893,7 @@ function Dashboard({
   //             : Number(skalePrizesWeekly[userPosition])
   //           : 0
   //       );
-  //     } else setWeeklyDataAmountSei(0);
+  //     } else setWeeklyDataAmountTaraxa(0);
 
   //     if (itemData.length > 0) {
   //       var testArray2 = Object.values(itemData).filter(
@@ -1720,15 +1901,15 @@ function Dashboard({
   //       );
 
   //       if (testArray.length > 0 && testArray2.length > 0) {
-  //         setActivePlayerSeiWeekly(true);
-  //         setUserDataSeiWeekly([]);
+  //         setActivePlayerTaraxaWeekly(true);
+  //         setUserDataTaraxaWeekly([]);
   //       } else if (testArray.length > 0 && testArray2.length === 0) {
-  //         setActivePlayerSeiWeekly(false);
-  //         setUserDataSeiWeekly(...testArray);
+  //         setActivePlayerTaraxaWeekly(false);
+  //         setUserDataTaraxaWeekly(...testArray);
   //       }
   //     } else if (testArray.length > 0) {
-  //       setActivePlayerSeiWeekly(false);
-  //       setUserDataSeiWeekly(...testArray);
+  //       setActivePlayerTaraxaWeekly(false);
+  //       setUserDataTaraxaWeekly(...testArray);
   //     }
   //   }
   // };
@@ -3435,6 +3616,13 @@ function Dashboard({
   }, [seicount]);
 
   useEffect(() => {
+    if (taraxacount !== 0) {
+      // fetchDailyRecordstaraxa();
+      // getAllTaraxaChests(email);
+    }
+  }, [taraxacount]);
+
+  useEffect(() => {
     // if (!lastUpdated.current) {
     setAllStarData({
       rewards: monthlyStarPrizes,
@@ -4033,6 +4221,28 @@ function Dashboard({
       },
     ]);
   }, [dailyRecordsSei, prevDataSei, userDataSei, activePlayerSei, loadingSei]);
+  useEffect(() => {
+    setAllTaraxaData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: taraxaStars,
+        previous_rewards: taraxaStars,
+        activeData: dailyRecordsTaraxa,
+        previousData: prevDataTaraxa,
+        player_data: userDataTaraxa,
+        is_active: activePlayerTaraxa, //change when apis are ready
+        loading: loadingTaraxa,
+      },
+    ]);
+  }, [
+    dailyRecordsTaraxa,
+    prevDataTaraxa,
+    userDataTaraxa,
+    activePlayerTaraxa,
+    loadingTaraxa,
+  ]);
 
   useEffect(() => {
     setAllBaseData([
@@ -4043,7 +4253,7 @@ function Dashboard({
         rewards: baseStars,
         previous_rewards: baseStars,
         activeData: dailyRecordsBase,
-        previousData:  prevDataBase,
+        previousData: prevDataBase,
         player_data: userDataBase,
         is_active: activePlayerBase, //change when apis are ready
         loading: loadingBase,
@@ -4108,6 +4318,7 @@ function Dashboard({
     setDailyRecordsViction([]);
     setDailyRecordsSkale([]);
     setDailyRecordsVanar([]);
+    setDailyRecordsTaraxa([]);
   };
 
   const handleResetRecordsStars = () => {
@@ -4145,6 +4356,10 @@ function Dashboard({
     } else if (chain === "sei") {
       if (dailyRecordsSei.length === 0) {
         fetchDailyRecordsSei();
+      }
+    } else if (chain === "taraxa") {
+      if (dailyRecordsTaraxa.length === 0) {
+        fetchDailyRecordsTaraxa();
       }
     } else if (chain === "manta") {
       if (dailyRecordsManta.length === 0) {
@@ -4689,7 +4904,8 @@ function Dashboard({
           claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
           claimedVanarChests + claimedVanarPremiumChests < 20 ||
           claimedMatChests + claimedMatPremiumChests < 20 ||
-          claimedSeiChests + claimedSeiPremiumChests < 20
+          claimedSeiChests + claimedSeiPremiumChests < 20 ||
+          claimedTaraxaChests + claimedTaraxaPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
@@ -4702,7 +4918,8 @@ function Dashboard({
           claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
           claimedVanarChests + claimedVanarPremiumChests === 20 &&
           claimedMatChests + claimedMatPremiumChests === 20 &&
-          claimedSeiChests + claimedSeiPremiumChests === 20
+          claimedSeiChests + claimedSeiPremiumChests === 20 &&
+          claimedTaraxaChests + claimedTaraxaPremiumChests === 20
         ) {
           setCanBuy(false);
         }
@@ -4717,7 +4934,8 @@ function Dashboard({
           claimedTaikoChests < 10 ||
           claimedVanarChests < 10 ||
           claimedMatChests < 10 ||
-          claimedSeiChests < 10
+          claimedSeiChests < 10 ||
+          claimedTaraxaChests < 10
         ) {
           setCanBuy(true);
         } else if (
@@ -4730,7 +4948,8 @@ function Dashboard({
           claimedTaikoChests === 10 &&
           claimedVanarChests === 10 &&
           claimedMatChests === 10 &&
-          claimedSeiChests === 10
+          claimedSeiChests === 10 &&
+          claimedTaraxaChests === 10
         ) {
           setCanBuy(false);
         }
@@ -5191,6 +5410,50 @@ function Dashboard({
         setclaimedSeiChests(openedStandardChests.length);
         setclaimedSeiPremiumChests(openedPremiumChests.length);
         setallSeiChests(chestOrder);
+      }
+    }
+  };
+  const getAllTaraxaChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "taraxa" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedTaraxaChests(openedChests);
+
+        setclaimedTaraxaChests(openedStandardChests.length);
+        setclaimedTaraxaPremiumChests(openedPremiumChests.length);
+        setallTaraxaChests(chestOrder);
       }
     }
   };
@@ -5749,6 +6012,24 @@ function Dashboard({
         }
       });
     }
+    if (openedTaraxaChests && openedTaraxaChests.length > 0) {
+      openedTaraxaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
     setTreasureRewardMoney(moneyResult);
   };
 
@@ -5827,6 +6108,8 @@ function Dashboard({
     claimedMantaPremiumChests,
     claimedSeiChests,
     claimedSeiPremiumChests,
+    claimedTaraxaChests,
+    claimedTaraxaPremiumChests,
     claimedTaikoChests,
     claimedTaikoPremiumChests,
     claimedVanarChests,
@@ -5904,6 +6187,7 @@ function Dashboard({
       getAllVanarChests(email);
       getAllMatChests(email);
       getAllSeiChests(email);
+      // getAllTaraxaChests(email);
     }
   }, [email, userWallet]);
 
@@ -5945,6 +6229,7 @@ function Dashboard({
     openedBaseChests,
     openedTaikoChests,
     openedVanarChests,
+    openedTaraxaChests,
   ]);
 
   useEffect(() => {
@@ -6034,6 +6319,7 @@ function Dashboard({
                 openedCoreChests.length +
                 openedMantaChests.length +
                 openedSeiChests.length +
+                openedTaraxaChests.length +
                 openedSkaleChests.length +
                 openedTaikoChests.length +
                 openedVanarChests.length +
@@ -6045,6 +6331,7 @@ function Dashboard({
                 claimedCorePremiumChests +
                 claimedMantaPremiumChests +
                 claimedSeiPremiumChests +
+                claimedTaraxaPremiumChests +
                 claimedMatPremiumChests +
                 claimedTaikoPremiumChests +
                 claimedVanarPremiumChests +
@@ -6057,6 +6344,7 @@ function Dashboard({
                 claimedCoreChests +
                 claimedMantaChests +
                 claimedSeiChests +
+                claimedTaraxaChests +
                 claimedMatChests +
                 claimedTaikoChests +
                 claimedVanarChests +
@@ -6109,6 +6397,7 @@ function Dashboard({
                 Number(coreEarnUsd) +
                 Number(seiEarnUsd) +
                 Number(taikoEarnUsd) +
+                Number(taraxaEarnUsd) +
                 Number(vanarEarnUsd) +
                 Number(teaEarnUsd)
                 // Number(coingeckoEarnUsd) +
@@ -6169,6 +6458,13 @@ function Dashboard({
                   : userDataSei?.position > 100
                   ? 0
                   : seiStars[userDataSei?.position]
+              }
+              userTaraxaStars={
+                userDataTaraxa?.statValue === 0
+                  ? 0
+                  : userDataTaraxa?.position > 100
+                  ? 0
+                  : taraxaStars[userDataTaraxa?.position]
               }
               userRankManta={userDataManta?.position ?? 0}
               userMantaStars={
@@ -6263,6 +6559,7 @@ function Dashboard({
             allVanarChests={allVanarChests}
             allMatChests={allMatChests}
             allSeiChests={allSeiChests}
+            allTaraxaChests={allTaraxaChests}
             userSocialRewards={userSocialRewards}
             bnbEarnUsd={bnbEarnUsd}
             skaleEarnUsd={skaleEarnUsd}
@@ -6273,6 +6570,7 @@ function Dashboard({
             victionEarnUsd={victionEarnUsd}
             mantaEarnUsd={mantaEarnUsd}
             taikoEarnUsd={taikoEarnUsd}
+            taraxaEarnUsd={taraxaEarnUsd}
             matEarnUsd={matEarnUsd}
             chainlinkEarnUsd={chainlinkEarnUsd}
             immutableEarnUsd={immutableEarnUsd}
@@ -6327,6 +6625,7 @@ function Dashboard({
             baseImages={baseImages}
             taikoImages={taikoImages}
             matImages={matImages}
+            taraxaImages={taraxaImages}
             coreImages={coreImages}
             chainId={chainId}
             dypTokenData={dypTokenData}
@@ -6363,6 +6662,8 @@ function Dashboard({
             claimedMatPremiumChests={claimedMatPremiumChests}
             claimedSeiChests={claimedSeiChests}
             claimedSeiPremiumChests={claimedSeiPremiumChests}
+            claimedTaraxaChests={claimedTaraxaChests}
+            claimedTaraxaPremiumChests={claimedTaraxaPremiumChests}
             email={email}
             openedChests={openedChests}
             openedSkaleChests={openedSkaleChests}
@@ -6374,6 +6675,7 @@ function Dashboard({
             openedVanarChests={openedVanarChests}
             openedMatChests={openedMatChests}
             openedSeiChests={openedSeiChests}
+            openedTaraxaChests={openedTaraxaChests}
             address={userWallet}
             allChests={allChests}
             allSkaleChests={allSkaleChests}
@@ -6385,6 +6687,7 @@ function Dashboard({
             allVanarChests={allVanarChests}
             allMatChests={allMatChests}
             allSeiChests={allSeiChests}
+            allTaraxaChests={allTaraxaChests}
             onChestClaimed={() => {
               setCount(count + 1);
             }}
@@ -6415,6 +6718,9 @@ function Dashboard({
             onSeiChestClaimed={() => {
               setseicount(seicount + 1);
             }}
+            onTaraxaChestClaimed={() => {
+              settaraxacount(taraxacount + 1);
+            }}
             dummypremiumChests={dummypremiumChests}
             premiumTxHash={premiumTxHash}
             selectedChainforPremium={selectedChainforPremium}
@@ -6443,6 +6749,7 @@ function Dashboard({
             baseImages={baseImages}
             taikoImages={taikoImages}
             matImages={matImages}
+            taraxaImages={taraxaImages}
             coreImages={coreImages}
             chainId={chainId}
             dypTokenData={dypTokenData}
@@ -6479,6 +6786,8 @@ function Dashboard({
             claimedMatPremiumChests={claimedMatPremiumChests}
             claimedSeiChests={claimedSeiChests}
             claimedSeiPremiumChests={claimedSeiPremiumChests}
+            claimedTaraxaChests={claimedTaraxaChests}
+            claimedTaraxaPremiumChests={claimedTaraxaPremiumChests}
             email={email}
             openedChests={openedChests}
             openedSkaleChests={openedSkaleChests}
@@ -6490,6 +6799,7 @@ function Dashboard({
             openedVanarChests={openedVanarChests}
             openedMatChests={openedMatChests}
             openedSeiChests={openedSeiChests}
+            openedTaraxaChests={openedTaraxaChests}
             address={userWallet}
             allChests={allChests}
             allSkaleChests={allSkaleChests}
@@ -6501,6 +6811,7 @@ function Dashboard({
             allVanarChests={allVanarChests}
             allMatChests={allMatChests}
             allSeiChests={allSeiChests}
+            allTaraxaChests={allTaraxaChests}
             onChestClaimed={() => {
               setCount(count + 1);
             }}
@@ -6527,6 +6838,9 @@ function Dashboard({
             }}
             onSeiChestClaimed={() => {
               setseicount(seicount + 1);
+            }}
+            onTaraxaChestClaimed={() => {
+              settaraxacount(taraxacount + 1);
             }}
             dummypremiumChests={dummypremiumChests}
             premiumTxHash={premiumTxHash}
@@ -6556,6 +6870,7 @@ function Dashboard({
             baseImages={baseImages}
             taikoImages={taikoImages}
             matImages={matImages}
+            taraxaImages={taraxaImages}
             coreImages={coreImages}
             chainId={chainId}
             dypTokenData={dypTokenData}
@@ -6592,6 +6907,8 @@ function Dashboard({
             claimedMatPremiumChests={claimedMatPremiumChests}
             claimedSeiChests={claimedSeiChests}
             claimedSeiPremiumChests={claimedSeiPremiumChests}
+            claimedTaraxaChests={claimedTaraxaChests}
+            claimedTaraxaPremiumChests={claimedTaraxaPremiumChests}
             email={email}
             openedChests={openedChests}
             openedSkaleChests={openedSkaleChests}
@@ -6603,6 +6920,7 @@ function Dashboard({
             openedVanarChests={openedVanarChests}
             openedMatChests={openedMatChests}
             openedSeiChests={openedSeiChests}
+            openedTaraxaChests={openedTaraxaChests}
             address={userWallet}
             allChests={allChests}
             allSkaleChests={allSkaleChests}
@@ -6614,6 +6932,7 @@ function Dashboard({
             allVanarChests={allVanarChests}
             allMatChests={allMatChests}
             allSeiChests={allSeiChests}
+            allTaraxaChests={allTaraxaChests}
             onChestClaimed={() => {
               setCount(count + 1);
             }}
@@ -6640,6 +6959,9 @@ function Dashboard({
             }}
             onSeiChestClaimed={() => {
               setseicount(seicount + 1);
+            }}
+            onTaraxaChestClaimed={() => {
+              settaraxacount(taraxacount + 1);
             }}
             dummypremiumChests={dummypremiumChests}
             premiumTxHash={premiumTxHash}
@@ -6702,6 +7024,7 @@ function Dashboard({
                 allTaikoData={allTaikoData}
                 allMatData={allMatData}
                 allSeiData={allSeiData}
+                allTaraxaData={allTaraxaData}
                 allVanarData={allVanarData}
                 dailyplayerData={dailyplayerData}
                 genesisData={genesisData}
@@ -6918,6 +7241,7 @@ function Dashboard({
                 allVanarChests={allVanarChests}
                 allMatChests={allMatChests}
                 allSeiChests={allSeiChests}
+                allTaraxaChests={allTaraxaChests}
                 availableTime={goldenPassRemainingTime}
                 userSocialRewards={userSocialRewards}
                 bnbEarnUsd={bnbEarnUsd}
@@ -6929,6 +7253,7 @@ function Dashboard({
                 victionEarnUsd={victionEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
@@ -7027,6 +7352,7 @@ function Dashboard({
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
               />
             </div>
