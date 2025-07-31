@@ -6317,7 +6317,7 @@ function Dashboard({
                   Number(cawsPremiumRewards) +
                   Number(landPremiumRewards) +
                   // Number(baseEarnUSD) +
-                  Number(kucoinEarnUsd) +
+                  // Number(kucoinEarnUsd) +
                   Number(bnbEarnUsd) +
                   Number(mantaEarnUsd) +
                   Number(coreEarnUsd) +
