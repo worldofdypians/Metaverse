@@ -30,7 +30,7 @@
 }
 
 .getwod-item {
-  width: 100%;
+  // width: 200px;
   padding: 5px;
 }
 
@@ -75,18 +75,21 @@
   white-space: nowrap;
   text-transform: uppercase;
 }
+
 .loginbtn-profile:hover {
   background: linear-gradient(90deg, #c64c85 0%, #b936f5 100%);
   background-position: 0 0;
   color: #eeedff !important;
 }
+
 .my-profile-email {
   color: #b8b8e0;
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 10px; /* 100% */
+  line-height: 10px;
+  /* 100% */
 }
 
 .current-rank-text {
@@ -127,7 +130,8 @@
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
-  line-height: 8px; /* 100% */
+  line-height: 8px;
+  /* 100% */
 }
 
 .wallet-addr {
@@ -138,6 +142,7 @@
   font-weight: 500;
   line-height: 10px;
 }
+
 .wallet-addr-error {
   color: #ff8168;
   font-family: "Montserrat";
@@ -146,6 +151,7 @@
   font-weight: 500;
   line-height: 10px;
 }
+
 .domain-name-wrapper {
   background: linear-gradient(
     172deg,
@@ -179,6 +185,7 @@
     max-width: 60px;
     max-height: 60px;
   }
+
   background: rgba(0, 0, 0, 0.2);
 }
 
@@ -194,7 +201,8 @@
   font-size: 11px;
   font-style: normal;
   font-weight: 500;
-  line-height: 10px; /* 100% */
+  line-height: 10px;
+  /* 100% */
 }
 
 .rank-card-value {
@@ -204,7 +212,8 @@
   font-size: 11px;
   font-style: normal;
   font-weight: 700;
-  line-height: 10px; /* 100% */
+  line-height: 10px;
+  /* 100% */
 }
 
 .new-special-rewards-wrapper {
@@ -217,12 +226,14 @@
 
   transition: all 0.25s ease;
   background-position: center;
+
   @media screen and (max-width: 786px) {
     height: 155px;
   }
 }
+
 .wod-domain-name-wrapper {
-  background-image: url("https://cdn.worldofdypians.com/wod/domainNameBg.svg");
+  background-image: url("https://cdn.worldofdypians.com/wod/domainNameBg.webp");
   border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -231,34 +242,36 @@
 
   transition: all 0.25s ease;
   background-position: center;
+
   @media screen and (max-width: 786px) {
     height: 155px;
   }
 }
+
 .wod-domain-name-wrapper:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
 
 .wod-domain-icon {
-  width: 70px;
-  @media screen and (max-width: 786px) {
-    width: 120px;
-  }
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
 }
 
 .wod-domain-name-span {
-  color: #fff;
+  color: #f3bf09;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  width: 80%;
+  // width: 80%;
 }
 
 .new-special-rewards-wrapper:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
+
 .special-rewards-title {
   color: #9e3c7a;
   font-family: "Montserrat";
@@ -267,6 +280,20 @@
   font-weight: 800;
   line-height: normal;
   text-transform: uppercase;
+}
+
+
+
+.question-of-the-day-title{
+ font-family: 'Bowlby One SC', sans-serif;
+    font-size: 16px;
+  color: #ffdf83; /* White text */
+  text-shadow: 
+    -1px -1px 0 #471f06,  
+     1px -1px 0 #471f06,
+    -1px  1px 0 #471f06,
+     1px  1px 0 #471f06; /* Blue outline */
+
 }
 
 .special-rewards-span {
@@ -283,6 +310,7 @@
   background-size: 100% 100%;
   border-radius: 10px;
   transition: all 0.25s;
+
   @media screen and (max-width: 991px) {
     height: 155px !important;
   }
@@ -300,13 +328,17 @@
   font-weight: 800;
   line-height: normal;
   text-transform: uppercase;
+
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+  }
 }
 
 .buy-wod-wrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
-    @media screen and (max-width: 480px) {
+  @media screen and (max-width: 480px) {
     grid-template-columns: repeat(1, 1fr);
   }
 }
@@ -316,9 +348,11 @@
   right: 5%;
   top: -30px;
   width: 60%;
+
   @media screen and (max-width: 1500px) {
     top: -20px;
   }
+
   @media screen and (max-width: 786px) {
     width: 100%;
     top: -23px;
@@ -326,14 +360,20 @@
     justify-content: center;
   }
 }
+
 .flag-title {
   color: #f7f7fc;
   text-align: center;
   font-size: 12px;
   font-style: normal;
   font-weight: 700;
-  line-height: 10px; /* 125% */
+  line-height: 10px;
+  /* 125% */
   text-transform: uppercase;
+
+  @media screen and (max-width: 1650px) {
+    font-size: 10px;
+  }
   @media screen and (max-width: 1500px) {
     font-size: 9px;
   }
@@ -354,9 +394,11 @@
   cursor: pointer;
   width: 33%;
   transition: all 0.25s;
+
   @media screen and (max-width: 991px) {
     width: 100px;
   }
+
   @media screen and (max-width: 500px) {
     width: 26%;
   }
@@ -381,6 +423,7 @@
   border: 0.5px solid #9c89b3;
   background: #321a61;
 }
+
 .new-treasure-hunt-card-expired {
   border-radius: 10px;
   border: 0.5px solid #b8b8e0;
@@ -399,7 +442,8 @@
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
-  line-height: 24px; /* 240% */
+  line-height: 24px;
+  /* 240% */
 }
 
 .treasure-hunt-rewards {
@@ -409,7 +453,8 @@
   font-size: 10px;
   font-style: normal;
   font-weight: 500;
-  line-height: 10px; /* 125% */
+  line-height: 10px;
+  /* 125% */
 }
 
 .treasure-hunt-info {
@@ -423,12 +468,14 @@
   font-size: 10px;
   font-style: normal;
   font-weight: 500;
-  line-height: 10px; /* 125% */
+  line-height: 10px;
+  /* 125% */
 }
 
 .events-page-status-tag-upcoming {
   border-radius: 3px;
   background: #ec8123;
+
   span {
     color: #fff;
     text-align: center;
@@ -438,9 +485,11 @@
     line-height: normal;
   }
 }
+
 .events-page-status-tag-expired {
   background: #b8b8e0;
   border-radius: 3px;
+
   span {
     color: #404040;
     text-align: center;
@@ -461,6 +510,7 @@
   background: #18193c;
   height: 140px;
   width: 100%;
+
   @media screen and (max-width: 786px) {
     height: auto;
   }
@@ -500,6 +550,7 @@
   .slick-slider {
     width: 100%;
   }
+
   @media screen and (max-width: 786px) {
     height: auto;
   }
@@ -508,15 +559,18 @@
 .limited-offers-wrapper:hover {
   border: 2px solid #015f86;
 }
+
 .new-stake-nft-wrapper {
   height: 155px;
   border-radius: 10px;
   background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
   transition: all 0.25s ease;
   overflow: hidden;
+
   @media screen and (max-width: 786px) {
     height: 180px;
   }
+
   .utcEventContent {
     @media screen and (max-width: 786px) {
       width: 50% !important;
@@ -548,6 +602,7 @@
   background-repeat: no-repeat;
   background-position: center;
   transition: all 0.25s ease;
+
   @media screen and (max-width: 786px) {
     height: 155px;
   }
@@ -572,7 +627,18 @@
   position: absolute;
   right: 20px;
   bottom: 0;
-  width: 22%;
+  width: 28%;
+}
+
+.ai-question-img {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  width: 21%;
+
+    @media screen and (max-width: 500px) {
+    width: 16%;
+  }
 }
 
 .daily-progress-wrapper {
@@ -586,6 +652,7 @@
   background: linear-gradient(to right, #ffd37e00, #ffd37e80);
   width: 100%;
 }
+
 .progress-line-2 {
   height: 1px;
   background: linear-gradient(to left, #ffd37e00, #ffd37e80);
@@ -599,7 +666,8 @@
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
-  line-height: 24px; /* 240% */
+  line-height: 24px;
+  /* 240% */
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -608,14 +676,17 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px 20px;
+
   @media screen and (max-width: 1400px) {
     grid-template-columns: repeat(3, 1fr);
     gap: 30px 20px;
   }
+
   @media screen and (max-width: 1199px) {
     grid-template-columns: repeat(8, 1fr);
     gap: 26px 10px;
   }
+
   @media screen and (max-width: 500px) {
     grid-template-columns: repeat(3, 1fr);
     gap: 26px 10px;
@@ -629,6 +700,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.25s;
+
   img {
     width: 80px;
     height: auto;
@@ -640,6 +712,7 @@
       height: auto;
     }
   }
+
   @media screen and (max-width: 500px) {
     img {
       width: 70px;
@@ -666,10 +739,12 @@
   top: -10px;
   left: 50%;
   transform: translateX(-50%);
+
   @media screen and (max-width: 500px) {
     width: 38px;
     height: 15px;
   }
+
   span {
     color: #ffd37e;
     text-align: center;
@@ -684,6 +759,7 @@
     }
   }
 }
+
 .daily-progress-value-golden {
   display: flex;
   justify-content: center;
@@ -702,9 +778,11 @@
   left: 50%;
   transform: translateX(-50%);
   min-width: 48px;
+
   @media screen and (max-width: 500px) {
     height: 15px;
   }
+
   span {
     color: #ffd37e;
     text-align: center;
@@ -714,6 +792,7 @@
     font-weight: 700;
     line-height: normal;
     white-space: nowrap;
+
     @media screen and (max-width: 500px) {
       font-size: 10px;
     }
@@ -754,13 +833,28 @@
   border: 0.5px solid #c23f62;
   background: rgba(128, 32, 96, 0.2);
   cursor: pointer;
+
+  .wod-balance-txt {
+    text-overflow: ellipsis;
+    width: 100px;
+    overflow: hidden;
+    color: #eeedff;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 16px;
+ 
+  }
+
   h6 {
     color: #eeedff;
     font-family: "Montserrat";
     font-size: 14px;
     font-style: normal;
     font-weight: bold;
-    line-height: 16px; /* 100% */
+    line-height: 16px;
+    /* 100% */
   }
 }
 
@@ -779,6 +873,7 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #0b3398 0%, #062663 62%);
   height: 155px;
+
   @media screen and (max-width: 500px) {
     height: 170px;
   }
@@ -788,6 +883,7 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #2e3842 0%, #121a1e 62%);
   height: 155px;
+
   @media screen and (max-width: 500px) {
     height: 170px;
   }
@@ -796,6 +892,7 @@
 .coldBiteBannerItem {
   height: 155px;
   border-radius: 10px;
+
   @media screen and (max-width: 500px) {
     height: 170px;
   }
@@ -807,6 +904,7 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #262f29 0%, #29302c 62%);
   height: 155px;
+
   @media screen and (max-width: 500px) {
     height: 170px;
   }
@@ -816,6 +914,7 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #004e7f 0%, #073755 62%);
   height: 155px;
+
   @media screen and (max-width: 500px) {
     height: 170px;
   }
@@ -825,6 +924,7 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #732802 0%, #ab621e 62%);
   height: 155px;
+
   @media screen and (max-width: 500px) {
     height: 170px;
   }
@@ -834,6 +934,7 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #081c00 0%, #081c00 65%);
   height: 155px;
+
   @media screen and (max-width: 500px) {
     height: 170px;
   }
@@ -854,6 +955,7 @@
   justify-content: center;
   align-items: center;
   transition: all 0.25s;
+
   @media screen and (max-width: 1500px) {
     width: 60px;
     height: 60px;
@@ -877,6 +979,23 @@
   justify-content: center;
   align-items: center;
   transition: all 0.25s;
+
+  @media screen and (max-width: 1500px) {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.ready-circle-ai {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid gold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s;
+
   @media screen and (max-width: 1500px) {
     width: 60px;
     height: 60px;
@@ -892,6 +1011,7 @@
   justify-content: center;
   align-items: center;
   transition: all 0.25s;
+
   @media screen and (max-width: 1500px) {
     width: 60px;
     height: 60px;
@@ -909,6 +1029,7 @@
   justify-content: center;
   align-items: center;
   transition: all 0.25s;
+
   @media screen and (max-width: 786px) {
     position: relative;
     left: auto;
@@ -924,17 +1045,20 @@
   overflow: hidden;
 }
 
-.new-stake-nft-wrapper:hover {
+.new-stake-nft-wrapper:hover,.ai-question-banner:hover {
   .ready-circle {
     box-shadow: 0px 0px 20px gold;
   }
-  .ready-circle-2 {
+
+  .ready-circle-2,
+  .ready-circle-ai {
     box-shadow: 0px 0px 20px gold;
   }
 
   .ready-circle-2-db {
     box-shadow: 0px 0px 20px rgb(255, 94, 160);
   }
+
   .countdown-position-beast {
     filter: drop-shadow(0px 0px 5px gold);
   }
@@ -944,7 +1068,9 @@
   .ready-circle {
     box-shadow: 0px 0px 20px gold;
   }
-  .ready-circle-2 {
+
+  .ready-circle-2,
+  .ready-circle-ai {
     box-shadow: 0px 0px 20px gold;
   }
 
@@ -961,6 +1087,7 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
   height: 155px;
+
   // border: 2px solid transparent;
   @media screen and (max-width: 500px) {
     height: 170px;
@@ -1007,6 +1134,7 @@
   z-index: 0;
   // filter: grayscale(1);
 }
+
 .puzzle-eventbannerimg {
   right: -35px;
 }
@@ -1016,6 +1144,7 @@
   bottom: 10px;
   left: 0;
   right: 0;
+
   h6 {
     color: #ffd37e;
     text-align: center;
@@ -1023,7 +1152,8 @@
     font-size: 10px;
     font-style: normal;
     font-weight: 700;
-    line-height: 100%; /* 10px */
+    line-height: 100%;
+    /* 10px */
   }
 
   span {
@@ -1033,7 +1163,8 @@
     font-size: 8px;
     font-style: normal;
     font-weight: 700;
-    line-height: 100%; /* 8px */
+    line-height: 100%;
+    /* 8px */
     text-transform: uppercase;
   }
 }
@@ -1087,12 +1218,16 @@
 .beast-siege-timer {
   color: #d3d5d7;
   font-family: "Montserrat";
-  font-size: 22px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+
   @media screen and (max-width: 1500px) {
-    font-size: 18px;
+    font-size: 16px;
+  }
+  @media screen and (max-width: 1200px) {
+    font-size: 15px;
   }
 }
 
@@ -1112,6 +1247,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
   @media screen and (max-width: 1500px) {
     font-size: 9px;
   }
