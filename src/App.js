@@ -6319,6 +6319,27 @@ function App() {
             }
           />
 
+            <Route
+            exact
+            path="/pool2-dynamic"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="pool2-dynamic"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+
           <Route
             exact
             path="/wod-dynamic"
