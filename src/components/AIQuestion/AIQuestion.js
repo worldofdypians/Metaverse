@@ -1174,7 +1174,7 @@ const AIQuestion = ({
                           timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
                         }`}
                         stroke={
-                          timeLeft > 16
+                          timeLeft > 12
                             ? "url(#gradient)"
                             : timeLeft > 8
                             ? "url(#gradient2)"
