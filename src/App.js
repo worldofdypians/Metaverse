@@ -1268,9 +1268,9 @@ function App() {
           }
 
           if (kucoinEvent && kucoinEvent[0]) {
-            if (kucoinEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (kucoinEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               kucoinEvent[0].reward.earn.total /
@@ -4562,7 +4562,7 @@ function App() {
     {
       title: "KuCoin",
       logo: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "KCS",
       rewardAmount: "$20,000",
       location: [-0.06778661442929296, 0.08464515209198],
@@ -4584,7 +4584,7 @@ function App() {
         chain: "opBNB Chain",
         linkState: "kucoin",
         rewards: "KCS",
-        status: "Live",
+        status: "Expired",
         id: "event29",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in KCS Rewards",
@@ -6319,6 +6319,27 @@ function App() {
             }
           />
 
+            <Route
+            exact
+            path="/pool2-dynamic"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="pool2-dynamic"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+
           <Route
             exact
             path="/wod-dynamic"
@@ -7430,7 +7451,7 @@ function App() {
               />
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/shop/mint/tea-fi"
             element={
@@ -7477,7 +7498,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          />
+          /> */}
           {/* <Route
             exact
             path="/shop/mint/vanar"
