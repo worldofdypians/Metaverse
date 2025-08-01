@@ -275,10 +275,10 @@ const MarketMint = ({
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(
     allMints.find((obj) => {
-      return obj.id === "timepiece";
+      return obj.id === "taraxa";
     })
   );
-  const [mintTitle, setMintTitle] = useState("timepiece");
+  const [mintTitle, setMintTitle] = useState("taraxa");
   const [sliderCut, setSliderCut] = useState();
 
   const slider = useRef(null);
