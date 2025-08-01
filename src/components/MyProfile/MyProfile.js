@@ -145,6 +145,9 @@ const MyProfile = ({
   userRankVanar,
   userVanarScore,
   userVanarStars,
+  userRankTaraxa,
+  userTaraxaScore,
+  userTaraxaStars,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -997,6 +1000,9 @@ const MyProfile = ({
                       userTaikoStars={userTaikoStars}
                       userMatStars={userMatStars}
                       userSeiStars={userSeiStars}
+                      userRankTaraxa={userRankTaraxa}
+                      userTaraxaScore={userTaraxaScore}
+                      userTaraxaStars={userTaraxaStars}
                       globalMonthly={
                         userDataStar.position
                           ? userDataStar.position + 1
@@ -1635,7 +1641,10 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2" onClick={onGoldenpassClick}>
+              <div
+                className="col-12 col-lg-6 mt-3 px-0 px-lg-2"
+                onClick={onGoldenpassClick}
+              >
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
                     <div className="d-flex align-items-center gap-2">

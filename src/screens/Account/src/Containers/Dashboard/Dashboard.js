@@ -6497,6 +6497,8 @@ function Dashboard({
                   ? 0
                   : skaleStars[userDataSkale?.position]) ?? 0
               }
+              userRankTaraxa={userDataTaraxa?.position ?? 0}
+              userTaraxaScore={userDataTaraxa?.statValue}
               userBnbScore={userData?.statValue}
               userMatScore={userDataMat?.statValue}
               userSeiScore={userDataSei?.statValue}
