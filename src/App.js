@@ -1297,9 +1297,9 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            if (taikoEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (taikoEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
