@@ -1604,6 +1604,71 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
+  {
+    title: "Taraxa Area",
+    marker: markers.taraxaMarker,
+    activeMarker: activeMarkers.taraxaMarker,
+
+    icon: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    location: [-0.06917415368919773, 0.08433401584625246],
+    banner: "teafiArea.webp",
+    area: [
+      [
+        [-0.06900785685118961, 0.08438229560852052],
+        [-0.06904540775014885, 0.0842052698135376],
+        [-0.06937263701123018, 0.08429646492004396],
+        [-0.06932435728433493, 0.0844627618789673],
+      ],
+    ],
+    events: [
+      // {
+      //   title: "Daily Bonus",
+      //   image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+      //   link: "/account#dailybonus",
+      // },
+
+      // {
+      //   title: "Leaderboard",
+      //   image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+      //   link: "/account#leaderboard",
+      // },
+      // {
+      //   title: "Treasure Hunt",
+      //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      //   link: "/account/challenges/treasure-hunt",
+      // },
+    ],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/taraxa_project",
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+      },
+      {
+        link: "https://t.me/taraxa_project",
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+      },
+      {
+        link: "https://discord.com/invite/WaXnwUb",
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+      },
+      {
+        link: "https://taraxa.io/",
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+      },
+    ],
+    city: "Dypians",
+    size: "250x250",
+    rewards: "N/A",
+    desc: "Taraxa is revolutionizing the DeFi and Social AI landscape with the world’s only EVM-compatible blockDAG Layer-1, delivering unmatched scalability and parallel transaction processing. ",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Participate in daily challenges",
+      "Explore an immersive environment",
+      "Experience real-time interactions",
+      "Join community-driven contests",
+    ],
+  },
 ];
 
 const bearAreas = [

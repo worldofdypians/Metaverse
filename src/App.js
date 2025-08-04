@@ -579,7 +579,7 @@ function App() {
   const [myTeaBnbNfts, setmyTeaBnbNfts] = useState([]);
   const [myTeaBaseNfts, setmyTeaBaseNfts] = useState([]);
   const [myTeaSeiNfts, setmyTeaSeiNfts] = useState([]);
-
+  const [myTaraxaNfts, setMyTaraxaNfts] = useState([]);
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
   const [isBnb, setisBnb] = useState(false);
@@ -798,6 +798,11 @@ function App() {
   const [taikoPrice, setTaikoPrice] = useState(0);
   const [taikoEarnToken, setTaikoEarnToken] = useState(0);
   const [taikoPoints, setTaikoPoints] = useState(0);
+
+  const [taraxaEarnUsd, setTaraxaEarnUsd] = useState(0);
+  const [taraxaPrice, setTaraxaPrice] = useState(0);
+  const [taraxaEarnToken, setTaraxaEarnToken] = useState(0);
+  const [taraxaPoints, setTaraxaPoints] = useState(0);
 
   const [cookieEarnUsd, setCookieEarnUsd] = useState(0);
   const [cookiePrice, setCookiePrice] = useState(0);
@@ -1147,6 +1152,9 @@ function App() {
           const taikoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "taiko";
           });
+          const taraxaEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taraxa";
+          });
 
           const multiversEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "multivers";
@@ -1308,6 +1316,20 @@ function App() {
             setTaikoPoints(pointsTaiko);
             setTaikoEarnUsd(userEarnedusd);
             setTaikoEarnToken(userEarnedusd / taikoPrice);
+          }
+
+          if (taraxaEvent && taraxaEvent[0]) {
+            if (taraxaEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
+
+            const userEarnedusd =
+              taraxaEvent[0].reward.earn.total /
+              taraxaEvent[0].reward.earn.multiplier;
+            const pointsTaraxa = taraxaEvent[0].reward.earn.totalPoints;
+            setTaraxaPoints(pointsTaraxa);
+            setTaraxaEarnUsd(userEarnedusd);
+            setTaraxaEarnToken(userEarnedusd / taraxaPrice);
           }
 
           if (midleEvent && midleEvent[0]) {
@@ -2664,6 +2686,9 @@ function App() {
       getMyNFTS(coinbase, "tea-sei").then((NFTS) => {
         setmyTeaSeiNfts(NFTS);
       });
+      getMyNFTS(coinbase, "taraxa").then((NFTS) => {
+        setMyTaraxaNfts(NFTS);
+      });
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -3631,7 +3656,54 @@ function App() {
       }
     }
   };
-  // console.log(myTeaBaseNfts, myTeaBnbNfts, myTeaSeiNfts, myTeaOpbnbNfts);
+
+  const handleMintTaraxa = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      const provider = ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const nft_contract = new ethers.Contract(
+        window.config.nft_taraxa_address,
+        window.TARAXA_NFT_ABI,
+        signer
+      );
+      const txResponse = await nft_contract.mintBetaPass().catch((e) => {
+        console.error(e);
+        setmintloading("error");
+        settextColor("#d87b7b");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setmintStatus("Success! Your Nft was minted successfully!");
+        setmintloading("success");
+        settextColor("rgb(123, 216, 176)");
+        setTimeout(() => {
+          setmintStatus("");
+          setmintloading("initial");
+        }, 5000);
+        getMyNFTS(coinbase, "taraxa").then((NFTS) => {
+          setMyTaraxaNfts(NFTS);
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     if (
       binanceData &&
@@ -4262,6 +4334,16 @@ function App() {
         console.log(e);
       });
   };
+  const fetchTaraxaPrice = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/price/taraxa`)
+      .then((obj) => {
+        setTaraxaPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const fetchCookiePrice = async () => {
     await axios
@@ -4326,6 +4408,7 @@ function App() {
     fetchSeiPrice();
     fetchMantaPrice();
     fetchTaikoPrice();
+    fetchTaraxaPrice();
     fetchCookiePrice();
     fetchCorePrice();
     fetchCFXPrice();
@@ -4625,6 +4708,43 @@ function App() {
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$30,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Apr 04, 2025",
+      },
+    },
+    {
+      title: "Taraxa",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+      eventStatus: "Coming Soon",
+      rewardType: "TARA",
+      rewardAmount: "$20,000",
+      location: [-0.06917415368919773, 0.08433401584625246],
+      image: "taikoBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$30,000 in Taraxa Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 04, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
+      userEarnUsd: taraxaEarnUsd,
+      userEarnCrypto: taraxaEarnToken,
+      userEarnPoints: taraxaPoints,
+      popupInfo: {
+        title: "Taraxa",
+        chain: "Taraxa",
+        linkState: "taraxa",
+        rewards: "TARA",
+        status: "Coming Soon",
+        id: "event30",
+        eventType: "Explore & Mine",
+        totalRewards: "$30,000 in Tara Rewards",
         eventDuration: taikoLastDay,
         minRewards: "0.5",
         maxRewards: "20",
@@ -6614,6 +6734,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 syncStatus={syncStatus}
                 userActiveEvents={userEvents}
@@ -6628,6 +6749,7 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
@@ -6711,6 +6833,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -6724,6 +6847,7 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
@@ -6917,6 +7041,22 @@ function App() {
           <Route
             exact
             path="/shop/beta-pass/tea-fi"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/taraxa"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -7277,6 +7417,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -7290,6 +7431,7 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
@@ -7475,6 +7617,8 @@ function App() {
                     ? handleMintTeaopBnb()
                     : networkId === 8453
                     ? handleMintTeaBase()
+                    : networkId === 841
+                    ? handleMintTaraxa()
                     : handleMintTeaSei();
                 }}
                 mintStatus={mintStatus}
@@ -7486,6 +7630,7 @@ function App() {
                     myTeaBaseNfts,
                     myTeaOpbnbNfts,
                     myTeaSeiNfts,
+                    // myTaraxaNfts,
                     myTeaBnbNfts,
                   ].find((item) => {
                     return item.length > 0;
@@ -7493,12 +7638,42 @@ function App() {
                 }
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
+                totalCreated={totalTimepieceCreated}
+              />
+            }
+          />*/}
+          <Route
+            exact
+            path="/shop/mint/taraxa"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleMintTaraxa}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                timepieceMetadata={timepieceMetadata}
+                nftCreated={myTaraxaNfts}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 totalCreated={totalTimepieceCreated}
               />
             }
-          /> */}
+          /> 
           {/* <Route
             exact
             path="/shop/mint/vanar"

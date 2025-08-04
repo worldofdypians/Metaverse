@@ -42,7 +42,9 @@ const MyRewardsPopupNew = ({
   // weeklyDataAmountTaiko,
   // monthlyDataAmountTaiko,
   allTaikoChests,
+  allTaraxaChests,
   taikoEarnUsd,
+  taraxaEarnUsd,
   immutableEarnUsd,
   cookieEarnUsd,
   landPremiumRewards,
@@ -82,6 +84,7 @@ const MyRewardsPopupNew = ({
   const [treasureRewardMoneyBase, setTreasureRewardMoneyBase] = useState(0);
 
   const [treasureRewardMoneyTaiko, setTreasureRewardMoneyTaiko] = useState(0);
+  const [treasureRewardMoneyTaraxa, setTreasureRewardMoneyTaraxa] = useState(0);
   const [treasureRewardMoneyMat, setTreasureRewardMoneyMat] = useState(0);
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
@@ -371,6 +374,7 @@ const MyRewardsPopupNew = ({
     var moneyResultBase = 0;
 
     var moneyResultTaiko = 0;
+    var moneyResultTaraxa = 0;
     var moneyResultMat = 0;
 
     var moneyResultSei = 0;
@@ -542,6 +546,24 @@ const MyRewardsPopupNew = ({
         }
       });
     }
+    if (allTaraxaChests && allTaraxaChests.length > 0) {
+      allTaraxaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultTaraxa += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
 
     if (allMatChests && allMatChests.length > 0) {
       allMatChests.forEach((chest) => {
@@ -570,6 +592,7 @@ const MyRewardsPopupNew = ({
     setTreasureRewardMoneyManta(moneyResultManta);
     setTreasureRewardMoneyBase(moneyResultBase);
     setTreasureRewardMoneyTaiko(moneyResultTaiko);
+    setTreasureRewardMoneyTaraxa(moneyResultTaraxa);
     setTreasureRewardMoneyMat(moneyResultMat);
     setTreasureRewardMoneySei(moneyResultSei);
   };
@@ -813,6 +836,7 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoneySkale) +
                       Number(seiEarnUsd) +
                       Number(taikoEarnUsd) +
+                      Number(taraxaEarnUsd) +
                       Number(mantaEarnUsd) +
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
@@ -1123,6 +1147,7 @@ const MyRewardsPopupNew = ({
                       Number(seiEarnUsd) +
                       Number(mantaEarnUsd) +
                       Number(vanarEarnUsd) +
+                      Number(taraxaEarnUsd) +
                       Number(teaEarnUsd),
                     2
                   )}
@@ -1248,6 +1273,11 @@ const MyRewardsPopupNew = ({
               style={{ width: 16, height: 16 }}
               alt=""
             />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
           </div>
         </span>
         <div
@@ -1357,6 +1387,12 @@ const MyRewardsPopupNew = ({
                 </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="item-name-left">Viction</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Taraxa</span>
                   <span className="item-name-right">
                     ${getFormattedNumber(0, 2)}
                   </span>
@@ -1533,6 +1569,15 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoneySei, 2)}
                 </span>
               </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Taraxa</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyTaraxa, 2)}
+                </span>
+              </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1701,6 +1746,19 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(teaEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Taraxa
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(taraxaEarnUsd, 2)}
                   </span>
                 </div>
                 {/* <div className="d-flex w-100 justify-content-between gap-2">
