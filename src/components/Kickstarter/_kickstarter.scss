@@ -118,10 +118,10 @@
   border-radius: 10px;
   border: 1px solid #4d4f77;
   backdrop-filter: blur(2px);
-  width: 150px;
+  width: 175px;
 
   @media screen and (max-width: 768px) {
-    width: 110px;
+    width: 250px;
   }
 }
 
@@ -136,7 +136,7 @@
   color: #8d98bc;
   text-align: right;
   font-family: "Montserrat";
-  font-size: 14px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 700;
   line-height: 16px; /* 100% */
@@ -218,3 +218,4 @@
     color: #f1edff;
   }
 }
+

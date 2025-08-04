@@ -154,81 +154,14 @@ const Kickstarter = ({
                 width={24}
                 height={24}
               />
-              opBNB Chain
+              opBNB
             </button>
           </div>
-          <h6 className="kickstarter-title mb-0 mt-4 fade-in">
+          <h6 className={`kickstarter-title mb-0 mt-4 fade-in ${step === 3 && "opacity-0"}`}>
             Unlock Container
           </h6>
           <div className="kickstarter-info-container px-3 py-3 px-lg-5 py-lg-4 d-flex flex-column gap-2 w-100 fade-in">
-            {/* <div className="kickstarter-divider mb-1"></div> */}
-
-            <div className="d-flex align-items-center w-100 flex-column flex-lg-row gap-2 gap-lg-0 justify-content-between">
-              <p className="kickstarter-desc mb-0">
-                BNB Chain is a decentralized blockchain network built for
-                high-speed, low-cost transactions, designed to support scalable
-                applications in Web3, DeFi, NFTs, gaming, and beyond. Its
-                ecosystem is known for low fees, fast confirmations, and a
-                growing community of builders, making it one of the most used
-                blockchains in the world.
-              </p>
-
-              <div className="d-flex flex-row gap-2 gap-lg-4">
-                <div className="d-flex align-items-center position-relative">
-                  <img
-                    src="https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
-                    alt=""
-                    className="kickstarter-reward-image"
-                  />
-                  <div
-                    className={`d-flex px-3 py-2 kickstarter-rewards-container ${
-                      rewards.includes(0) ? "kickstart-rewarded" : ""
-                    } justify-content-end`}
-                  >
-                    <span className="kickstarter-reward-title text-end">
-                      Stars
-                    </span>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center position-relative">
-                  <img
-                    src="https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
-                    alt=""
-                    className="kickstarter-reward-image"
-                  />
-                  <div
-                    className={`d-flex px-3 py-2 kickstarter-rewards-container ${
-                      rewards.includes(1) ? "kickstart-rewarded" : ""
-                    } justify-content-end`}
-                  >
-                    <span className="kickstarter-reward-title text-end">
-                      Points
-                    </span>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center position-relative">
-                  <img
-                    src="https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
-                    alt=""
-                    className="kickstarter-reward-image"
-                  />
-                  <div
-                    className={`d-flex px-3 py-2 kickstarter-rewards-container ${
-                      rewards.includes(2) ? "kickstart-rewarded" : ""
-                    } justify-content-end`}
-                  >
-                    <span className="kickstarter-reward-title text-end">
-                      Rewards
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="kickstarter-divider mb-1"></div>
-            <div className="row">
-              <div className="col-12 col-lg-4 d-flex">
-                <div className="d-flex align-items-center w-100 justify-content-between justify-content-lg-start gap-3 mb-3 mb-lg-0">
+            <div className="d-flex align-items-center w-100 justify-content-between justify-content-lg-start gap-3 ">
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src="https://cdn.worldofdypians.com/wod/bnbIcon.svg"
@@ -287,6 +220,74 @@ const Kickstarter = ({
                     </a>
                   </div>
                 </div>
+            <div className="kickstarter-divider mb-1"></div>
+
+            <div className="d-flex align-items-center w-100 flex-column flex-lg-row gap-2 gap-lg-0 justify-content-between">
+              <p className="kickstarter-desc mb-0">
+                BNB Chain is a decentralized blockchain network built for
+                high-speed, low-cost transactions, designed to support scalable
+                applications in Web3, DeFi, NFTs, gaming, and beyond. Its
+                ecosystem is known for low fees, fast confirmations, and a
+                growing community of builders, making it one of the most used
+                blockchains in the world.
+              </p>
+
+              <div className="d-flex flex-column flex-lg-row gap-2 gap-lg-4">
+                <div className="d-flex align-items-center position-relative">
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
+                    alt=""
+                    className="kickstarter-reward-image"
+                  />
+                  <div
+                    className={`d-flex px-3 py-2 kickstarter-rewards-container ${
+                      rewards.includes(0) ? "kickstart-rewarded" : ""
+                    } justify-content-end`}
+                  >
+                    <span className="kickstarter-reward-title text-end">
+                      1-5 Stars
+                    </span>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center position-relative">
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
+                    alt=""
+                    className="kickstarter-reward-image"
+                  />
+                  <div
+                    className={`d-flex px-3 py-2 kickstarter-rewards-container ${
+                      rewards.includes(1) ? "kickstart-rewarded" : ""
+                    } justify-content-end`}
+                  >
+                    <span className="kickstarter-reward-title text-end">
+                      500-5000 Points
+                    </span>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center position-relative">
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
+                    alt=""
+                    className="kickstarter-reward-image"
+                  />
+                  <div
+                    className={`d-flex px-3 py-2 kickstarter-rewards-container ${
+                      rewards.includes(2) ? "kickstart-rewarded" : ""
+                    } justify-content-end`}
+                  >
+                    <span className="kickstarter-reward-title text-end">
+                      $1-$5 Rewards
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="kickstarter-divider mb-1"></div>
+            <div className="row">
+              <div className="col-12 col-lg-4 d-flex">
+                
               </div>
               <div className="col-12 col-lg-4 d-flex justify-content-center">
                 {!email && coinbase && (
