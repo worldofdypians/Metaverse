@@ -41,7 +41,6 @@ import Countdown from "react-countdown";
 import {
   baseStars,
   bnbStars,
-  mantaStars,
   monthlyStarPrizes,
   monthlyExtraStarPrizes,
   skaleStars,
@@ -52,6 +51,7 @@ import {
   taraxaStars,
   matStars,
   vanarStars,
+  coreStars,
 } from "./stars";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
@@ -661,6 +661,9 @@ function Dashboard({
   const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
 
   const recaptchaRef = useRef(null);
+  const effectRan = useRef(false);
+  const effectRan2 = useRef(false);
+
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
 
@@ -3785,6 +3788,7 @@ function Dashboard({
       activePlayerTaiko,
       activePlayerMat,
       activePlayerSei,
+      activePlayerVanar,
     ];
     const allFalse = playerActiveArray.every((v) => v === false);
 
@@ -4071,6 +4075,7 @@ function Dashboard({
     activePlayerTaiko,
     activePlayerMat,
     activePlayerSei,
+    activePlayerVanar,
   ]);
 
   useEffect(() => {
@@ -4142,8 +4147,8 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: baseStars,
-        previous_rewards: baseStars,
+        rewards: coreStars,
+        previous_rewards: coreStars,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,
         player_data: userDataCore,
@@ -4165,8 +4170,8 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: baseStars,
-        previous_rewards: baseStars,
+        rewards: matStars,
+        previous_rewards: matStars,
         activeData: dailyRecordsViction,
         previousData: prevDataViction,
         player_data: userDataViction,
@@ -6233,12 +6238,31 @@ function Dashboard({
   ]);
 
   useEffect(() => {
-    if (userId && email && username) {
+    if (effectRan2.current) return;
+    if (userId && username) {
       fetchGenesisAroundPlayer(userId, username);
       fetchDailyRecordsAroundPlayerStar([]);
       fetchWeeklyRecordsAroundPlayerStar([]);
+      effectRan2.current = true;
     }
-  }, [userId, username, email, goldenPassRemainingTime]);
+  }, [userId, username, goldenPassRemainingTime]);
+
+  useEffect(() => {
+    if (effectRan.current) return;
+    if (userId !== undefined && userId !== null) {
+      fetchDailyRecordsAroundPlayer([]);
+      fetchDailyRecordsAroundPlayerBase([]);
+      fetchDailyRecordsAroundPlayerCore([]);
+      fetchDailyRecordsAroundPlayerManta([]);
+      fetchDailyRecordsAroundPlayerSei([]);
+      fetchDailyRecordsAroundPlayerTaiko([]);
+      fetchDailyRecordsAroundPlayerVanar([]);
+      fetchDailyRecordsAroundPlayerMat([]);
+      fetchDailyRecordsAroundPlayerViction([]);
+      fetchDailyRecordsAroundPlayerSkale([]);
+      effectRan.current = true;
+    }
+  }, [userId]);
 
   useEffect(() => {
     if (hashValue === "#prime") {

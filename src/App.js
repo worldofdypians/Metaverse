@@ -1305,9 +1305,9 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            if (taikoEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (taikoEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -4538,9 +4538,9 @@ function App() {
       title: "Tea-Fi",
       logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
       eventStatus: "Live",
-      totalRewards: "$40,000 in TEA Rewards",
+      totalRewards: "$50,000 in TEA Rewards",
       myEarnings: 0.0,
-      rewardAmount: "$40,000",
+      rewardAmount: "$50,000",
       location: [-0.06892739063903598, 0.08374929428100586],
       eventType: "Explore & Mine",
       eventDate: "Jul 18, 2025",
@@ -4561,7 +4561,7 @@ function App() {
         status: "Live",
         id: "event4",
         eventType: "Explore & Mine",
-        totalRewards: "$40,000 in TEA Rewards",
+        totalRewards: "$50,000 in TEA Rewards",
         eventDuration: teaLastDay,
         minRewards: "0.5",
         maxRewards: "20",
@@ -4683,7 +4683,7 @@ function App() {
     {
       title: "Taiko",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
       location: [-0.06942812516951939, 0.08510112762451173],
@@ -4704,7 +4704,7 @@ function App() {
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Live",
+        status: "Expired",
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$30,000 in TAIKO Rewards",
@@ -6438,6 +6438,27 @@ function App() {
               />
             }
           />
+
+            <Route
+            exact
+            path="/pool2-dynamic"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="pool2-dynamic"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
 
           <Route
             exact

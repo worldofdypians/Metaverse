@@ -199,7 +199,7 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "taiko-mint-bg",
       wrapperClassName: "taiko-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$30,000 in Taiko rewards",
       rewardType: "Taiko",
       userEarned: taikoEarnUsd,
