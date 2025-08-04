@@ -41,7 +41,6 @@ import Countdown from "react-countdown";
 import {
   baseStars,
   bnbStars,
-  mantaStars,
   monthlyStarPrizes,
   monthlyExtraStarPrizes,
   skaleStars,
@@ -51,6 +50,7 @@ import {
   seiStars,
   matStars,
   vanarStars,
+  coreStars,
 } from "./stars";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
@@ -3959,8 +3959,8 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: baseStars,
-        previous_rewards: baseStars,
+        rewards: coreStars,
+        previous_rewards: coreStars,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,
         player_data: userDataCore,
@@ -3982,8 +3982,8 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: baseStars,
-        previous_rewards: baseStars,
+        rewards: matStars,
+        previous_rewards: matStars,
         activeData: dailyRecordsViction,
         previousData: prevDataViction,
         player_data: userDataViction,
