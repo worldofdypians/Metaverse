@@ -1,7 +1,7 @@
 .kickstarter-container {
   width: 80vw;
   height: 80vh;
-  z-index: 10000;
+  z-index: 1000;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -35,22 +35,27 @@
   position: absolute;
   left: 0;
   top: 0;
-   opacity: 0;
+  opacity: 0;
   z-index: -1;
   border-radius: 16px;
-
 }
 
 .kickstarter-title {
   color: #fff;
   text-align: center;
-  text-shadow: 0px 4px 4px rgba(28, 26, 66, 0.4),
-    0px 4px 4px rgba(28, 26, 66, 0.4);
+  // text-shadow: 0px 4px 4px rgba(28, 26, 66, 0.4),
+  //   0px 4px 4px rgba(28, 26, 66, 0.4);
   font-family: "Montserrat";
   font-size: 30px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 800;
   line-height: 20px; /* 83.333% */
+    text-shadow: 
+    -1px -1px 0 #471f06,  
+     1px -1px 0 #471f06,
+    -1px  1px 0 #471f06,
+     1px  1px 0 #471f06; /* Blue outline */
+   
 }
 
 .kickstarter-info-container {
@@ -58,6 +63,12 @@
   border: 1px solid rgba(77, 79, 119, 0.8);
   backdrop-filter: blur(10px);
   border-radius: 16px 16px 0px 0;
+}
+.switch-info-container {
+  background: rgb(1 1 7 / 60%);
+  border: 1px solid rgba(77, 79, 119, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
 }
 
 .kickstarter-chain-title {
@@ -92,11 +103,15 @@
 }
 
 .kickstarter-reward-image {
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   position: absolute;
   left: -5px;
   z-index: 1;
+  @media screen and (max-width: 786px) {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .kickstarter-rewards-container {
@@ -104,18 +119,17 @@
   border: 1px solid #4d4f77;
   backdrop-filter: blur(2px);
   width: 150px;
- 
+
   @media screen and (max-width: 768px) {
     width: 110px;
   }
 }
 
-.kickstart-rewarded{
+.kickstart-rewarded {
   border: 1px solid #5957c5 !important;
-  span{
+  span {
     color: #5957c5;
   }
-
 }
 
 .kickstarter-reward-title {
@@ -128,7 +142,7 @@
   line-height: 16px; /* 100% */
 }
 
-.kickstarter-close{
+.kickstarter-close {
   z-index: 1;
   position: absolute;
   right: 20px;
@@ -137,7 +151,6 @@
   height: 30px;
   cursor: pointer;
 }
-
 
 .fade-in {
   opacity: 0;
@@ -150,7 +163,6 @@
   }
 }
 
-
 .kickstarter-video.visible {
   opacity: 1;
 }
@@ -160,10 +172,49 @@
   pointer-events: none;
 }
 
-.kickstarter-hero-wrapper{
-  background-image: url('./assets/kickstarterBackground.webp');
+.kickstarter-hero-wrapper {
+  background-image: url("./assets/kickstarterBackground.webp");
   height: 100vh;
   background-size: cover;
   background-position: bottom;
+}
 
+.switch-chain-position {
+  position: absolute;
+  left: 1%;
+  top: 1%;
+}
+
+.switch-btn-2 {
+  background: rgba(25, 28, 67, 0.5);
+  border: 1px solid #262b4a;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.35s;
+  span {
+    color: #828fbb;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 300% */
+  }
+}
+
+
+.switch-btn-2:hover {
+  background: rgba(246, 202, 74, 0.5);
+  border: 1px solid #f6ca4a;
+  span {
+    color: #f1edff;
+  }
+}
+
+.switch-btn-2-active {
+  background: rgba(246, 202, 74, 0.5);
+  border: 1px solid #f6ca4a;
+  span {
+    color: #f1edff;
+  }
 }

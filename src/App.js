@@ -6075,7 +6075,7 @@ function App() {
           !location.pathname.includes("wod-okxwallet") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
-        openKickstarter={() => setKickstarter(true)}
+          openKickstarter={() => setKickstarter(true)}
           authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
@@ -8176,11 +8176,7 @@ function App() {
             path="/map"
             element={<Map dummyBetaPassData2={dummyBetaPassData2} />}
           />
-          <Route
-            exact
-            path="/kickstarter"
-            element={<KickstarterPage />}
-          />
+          <Route exact path="/kickstarter" element={<KickstarterPage />} />
         </Routes>
 
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
@@ -8258,9 +8254,20 @@ function App() {
       )}
 
       {fireAppcontent === true && <AppContent />}
-      {kickstarter &&
-      <Kickstarter onClose={() => setKickstarter(false)} />
-      }
+      {kickstarter && (
+        <Kickstarter
+          onClose={() => setKickstarter(false)}
+          coinbase={coinbase}
+          chainId={networkId}
+          handleSwitchNetwork={handleSwitchNetwork}
+          isConnected={isConnected}
+          email={email}
+          address={address}
+          onConnectWallet={() => {
+            setwalletModal(true);
+          }}
+        />
+      )}
     </>
   );
 }

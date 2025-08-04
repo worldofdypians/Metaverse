@@ -2295,12 +2295,13 @@ const NewChestItem = ({
 
   return (
     <div
-      className={`new-chest-item ${open && "new-chest-item-open"}  ${
+      className={` ${open && chestIndex === 5 ? "new-chest-item-open-premium" : open ? "new-chest-item-open" : "" }  ${
         isActive === chestId &&
         isActiveIndex === chestIndex &&
         "chest-item-active"
       } ${selectedChest === chestId ? "selected-new-chest" : ""} 
       ${claimingChest === true ? "disable-chest" : ""}
+      ${chestIndex === 5 ? "premium-chest-item" : "new-chest-item"}
       d-flex align-items-center justify-content-center position-relative`}
       onClick={() => handleChestClick()}
       style={{
@@ -2319,6 +2320,8 @@ const NewChestItem = ({
       {rewardTypes !== "premium" ? (
         <img
           className={` ${
+            chestIndex === 5
+              ? "premium-chest-item-img":
             chain !== "skale"
               ? "new-chest-item-img"
               : "new-chest-item-img-skale"
@@ -2326,7 +2329,7 @@ const NewChestItem = ({
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
           src={
-            chestIndex === 6
+            chestIndex === 5
               ? `https://cdn.worldofdypians.com/wod/${
                   open ? "premiumChestOpenFront" : "premiumChest"
                 }.png`
