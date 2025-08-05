@@ -1639,7 +1639,7 @@ const MyProfile = ({
                     {/* {!aiQuestionCompleted && ( */}
                     <div className={`d-flex flex-column infotips-holder`}>
                       <div className="d-flex align-items-center gap-1">
-                        <div className="yellow-dot-small"></div>
+                        <div className="yellow-dot"></div>
                         <span
                           className="beast-siege-timer"
                           style={{
@@ -1652,7 +1652,7 @@ const MyProfile = ({
                         </span>
                       </div>
                       <div className="d-flex align-items-center gap-1">
-                        <div className="yellow-dot-small"></div>
+                        <div className="yellow-dot"></div>
                         <span
                           className="beast-siege-timer"
                           style={{
@@ -1665,7 +1665,7 @@ const MyProfile = ({
                         </span>
                       </div>
                       <div className="d-flex align-items-center gap-1">
-                        <div className="yellow-dot-small"></div>
+                        <div className="yellow-dot"></div>
                         <span
                           className="beast-siege-timer"
                           style={{
@@ -1703,9 +1703,7 @@ const MyProfile = ({
                     )}
                   </div>
                   <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/wingStormArrow.svg"
-                    }
+                    src={"https://cdn.worldofdypians.com/wod/goldArrow.svg"}
                     width={20}
                     height={20}
                     alt=""
@@ -1717,20 +1715,15 @@ const MyProfile = ({
                   className="royalty-chest-wrapper position-relative d-flex flex-column justify-content-between p-3 h-100"
                   onClick={openKickstarter}
                 >
-                  <h6
-                    className="royalty-chest-title"
-                    style={{ color: "#ffcb14" }}
-                  >
-                    Royalty Chest
-                  </h6>
+                  <h6 className="royalty-chest-title">Royalty Chest</h6>
 
                   <div className="d-flex flex-column gap-2">
                     <img
-                      src="https://cdn.worldofdypians.com/wod/rewardGroup.png"
-                      width={40}
+                      src="https://cdn.worldofdypians.com/wod/royalRewards.png"
+                      className="royal-rewards-img"
                       alt=""
                     />
-                    <span
+                    {/* <span
                       className="special-rewards-total"
                       style={{
                         color: "#f3de91ff",
@@ -1740,7 +1733,15 @@ const MyProfile = ({
                       }}
                     >
                       Royal Rewards
-                    </span>
+                    </span> */}
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/wingStormArrow.svg"
+                      }
+                      width={20}
+                      height={20}
+                      alt=""
+                    />
                   </div>
                 </div>
               </div>
@@ -1750,18 +1751,18 @@ const MyProfile = ({
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                       <div className="d-flex align-items-center gap-2">
-                        <img
+                        {/* <img
                           src={
                             "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                           }
                           alt=""
                           style={{ width: 44, height: 44 }}
-                        />
+                        /> */}
                         <div className="d-flex flex-column">
-                          <span className="user-blue-rank">
+                          <span className="user-blue-rank-2">
                             Loyalty Program
                           </span>
-                          <span className="user-rank-text">Season three</span>
+                          <span className="user-rank-text-2">Season 3</span>
                         </div>
                       </div>
 
@@ -1772,7 +1773,7 @@ const MyProfile = ({
                           background: "#7E52D2",
                         }}
                       >
-                        View More
+                        View
                       </NavLink>
                     </div>
                   </div>
@@ -1793,13 +1794,20 @@ const MyProfile = ({
                       alt=""
                     /> */}
                     <div className="d-flex flex-column justify-content-between h-100 mb-0">
-                      <h6
-                        className="special-rewards-title mb-0"
-                        style={{ color: "#9e3c7a", fontSize: "15px" }}
-                      >
-                        Special Rewards
-                      </h6>
-                     
+                      <div className="d-flex flex-column">
+                        <span
+                          className="user-blue-rank-2"
+                          style={{ color: "#9e3c7a" }}
+                        >
+                          Special Rewards
+                        </span>
+                        <span
+                          className="user-rank-text-2"
+                          style={{ color: "#3B5896" }}
+                        >
+                          ${getFormattedNumber(specialRewards)} Rewards
+                        </span>
+                      </div>
                     </div>
                   </div>
                   {/* <img
@@ -1808,14 +1816,24 @@ const MyProfile = ({
                     height={20}
                     alt=""
                   /> */}
-                   <div className="d-flex gap-2 align-items-center">
+                  {/* <div className="d-flex gap-2 align-items-center">
                         <h6 className="special-rewards-total mb-0">
                           ${getFormattedNumber(specialRewards)}
                         </h6>
                         <span className="special-rewards-total-span">
                           Rewards
                         </span>
-                      </div>
+                      </div> */}
+
+                  <button
+                    onClick={openSpecialRewards}
+                    className="activate-btn2 px-3 py-1"
+                    style={{
+                      background: "#9E3C7A",
+                    }}
+                  >
+                    Apply
+                  </button>
                 </div>
               </div>
               {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>

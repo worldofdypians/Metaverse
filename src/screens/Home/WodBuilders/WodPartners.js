@@ -370,10 +370,7 @@ const WodPartners = ({ full }) => {
                 >
                   <div className="partner-logo-container">
                     <img
-                      src={
-                        partner.icon.includes("changeNow")
-                           `https://cdn.worldofdypians.com/wod/${partner.icon}`
-                      }
+                      src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
                       alt=""
                       style={{
                         width: "60px",

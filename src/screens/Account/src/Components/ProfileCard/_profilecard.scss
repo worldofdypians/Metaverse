@@ -1000,7 +1000,7 @@
 }
 
 .ai-question-banner {
-  background-image: url("https://cdn.worldofdypians.com/wod/aiQuestionBannerYellow.svg");
+  background-image: url("https://cdn.worldofdypians.com/wod/aiQuestionBanner2.svg");
   border-radius: 12px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1023,12 +1023,13 @@
 }
 
 .total-stars-premium-wrapper2 {
-  background-image: url("https://cdn.worldofdypians.com/wod/totalStarsPremium.svg");
+  background-image: url("https://cdn.worldofdypians.com/wod/loyaltyProgramTabBg.png");
   border-radius: 12px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   transition: all .25s;
+  min-height: 60px;
 }
 
 .total-stars-premium-wrapper2:hover {

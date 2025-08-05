@@ -23,6 +23,75 @@ const Kickstarter = ({
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [rewards, setRewards] = useState([]);
+  const [activeChain, setActiveChain] = useState("bnb");
+  const [hoverState, setHoverState] = useState("");
+
+  const handleMouseEnter = (chain) => {
+    setHoverState(chain);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverState("");
+  };
+
+  const chains = [
+    {
+      id: "bnb",
+      name: "BNB Chain",
+      activeImage: "bnbIcon.svg",
+      hoverImage: "bnbWhite.svg",
+      inactiveImage: "bnbInactive.svg",
+    },
+    {
+      id: "opbnb",
+      name: "opBNB",
+      activeImage: "opbnbChain.png",
+      hoverImage: "bnbWhite.svg",
+      inactiveImage: "bnbInactive.svg",
+    },
+    // {
+    //   id: "core",
+    //   name: "CORE",
+    //   activeImage : "core.svg",
+    //   hoverImage: "coreWhite.svg",
+    //   inactiveImage: "coreInactive.svg"
+    // },
+    // {
+    //   id: "taiko",
+    //   name: "Taiko",
+    //   activeImage : "taiko.svg",
+    //   hoverImage: "taikoWhite.svg",
+    //   inactiveImage: "taikoInactive.svg"
+    // },
+    // {
+    //   id: "sei",
+    //   name: "SEI",
+    //   activeImage : "seiLogo.svg",
+    //   hoverImage: "seiWhite.svg",
+    //   inactiveImage: "seiInactive.svg"
+    // },
+    // {
+    //   id: "base",
+    //   name: "Base",
+    //   activeImage : "base.svg",
+    //   hoverImage: "baseWhite.svg",
+    //   inactiveImage: "baseInactive.svg"
+    // },
+    // {
+    //   id: "manta",
+    //   name: "Manta",
+    //   activeImage : "manta.png",
+    //   hoverImage: "mantaWhite.png",
+    //   inactiveImage: "mantaInactive.png"
+    // },
+    // {
+    //   id: "vanar",
+    //   name: "Vanar",
+    //   activeImage : "vanar.svg",
+    //   hoverImage: "vanarWhite.svg",
+    //   inactiveImage: "vanarInactive.svg"
+    // },
+  ];
 
   const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
@@ -123,8 +192,8 @@ const Kickstarter = ({
 
       {showContent && (
         <>
-          <div className="d-flex align-items-center gap-2 switch-chain-position switch-info-container p-3">
-            <button
+          <div className="d-flex flex-column gap-1 switch-chain-position switch-info-container p-3">
+            {/* <button
               className={`switch-btn-2 ${
                 chainId === 56 ? "switch-btn-2-active" : ""
               } px-2 py-2 d-flex align-items-center gap-2 text-white`}
@@ -155,71 +224,114 @@ const Kickstarter = ({
                 height={24}
               />
               opBNB
-            </button>
+            </button> */}
+            {chains.map((item, index) => (
+              <div
+                key={index}
+                className={`${
+                  activeChain === item.id
+                    ? "kickstarter-chain-item-active"
+                    : "kickstarter-chain-item"
+                } align-items-center p-2 d-flex flex-column gap-1`}
+                onMouseEnter={() => handleMouseEnter(item.id)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => setActiveChain(item.id)}
+              >
+                <img
+                  src={`https://cdn.worldofdypians.com/wod/${
+                    activeChain === item.id
+                      ? item.activeImage
+                      : hoverState === item.id
+                      ? item.hoverImage
+                      : item.inactiveImage
+                  }`}
+                  width={30}
+                  height={30}
+                  alt=""
+                />
+                <span
+                  className="kickstarter-chain-span"
+                  style={{
+                    color:
+                      hoverState === item.id
+                        ? "#fff"
+                        : activeChain === item.id
+                        ? "gold"
+                        : "#828FBB",
+                  }}
+                >
+                  {item.name}
+                </span>
+              </div>
+            ))}
           </div>
-          <h6 className={`kickstarter-title mb-0 mt-4 fade-in ${step === 3 && "opacity-0"}`}>
+          <h6
+            className={`kickstarter-title mb-0 mt-4 fade-in ${
+              step === 3 && "opacity-0"
+            }`}
+          >
             Unlock Container
           </h6>
           <div className="kickstarter-info-container px-3 py-3 px-lg-5 py-lg-4 d-flex flex-column gap-2 w-100 fade-in">
             <div className="d-flex align-items-center w-100 justify-content-between justify-content-lg-start gap-3 ">
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src="https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                      alt=""
-                    />
-                    <span className="kickstarter-chain-title">BNB Chain</span>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <a
-                      href="https://x.com/BNBCHAIN"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <img
-                        src="https://cdn.worldofdypians.com/wod/twitterMap.svg"
-                        alt="kickstarter-twitter"
-                        width={24}
-                        height={24}
-                      />
-                    </a>
-                    <a
-                      href="https://t.me/bnbchain"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <img
-                        src="https://cdn.worldofdypians.com/wod/telegramMap.svg"
-                        alt="kickstarter-telegram"
-                        width={24}
-                        height={24}
-                      />
-                    </a>
-                    <a
-                      href="https://discord.com/invite/bnbchain"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <img
-                        src="https://cdn.worldofdypians.com/wod/discordMap.svg"
-                        alt="kickstarter-discord"
-                        width={24}
-                        height={24}
-                      />
-                    </a>
-                    <a
-                      href="https://www.bnbchain.org/en"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <img
-                        src="https://cdn.worldofdypians.com/wod/websiteMap.svg"
-                        alt="kickstarter-website"
-                        width={24}
-                        height={24}
-                      />
-                    </a>
-                  </div>
-                </div>
+              <div className="d-flex align-items-center gap-2">
+                <img
+                  src="https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                  alt=""
+                />
+                <span className="kickstarter-chain-title">BNB Chain</span>
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <a
+                  href="https://x.com/BNBCHAIN"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/twitterMap.svg"
+                    alt="kickstarter-twitter"
+                    width={24}
+                    height={24}
+                  />
+                </a>
+                <a
+                  href="https://t.me/bnbchain"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/telegramMap.svg"
+                    alt="kickstarter-telegram"
+                    width={24}
+                    height={24}
+                  />
+                </a>
+                <a
+                  href="https://discord.com/invite/bnbchain"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/discordMap.svg"
+                    alt="kickstarter-discord"
+                    width={24}
+                    height={24}
+                  />
+                </a>
+                <a
+                  href="https://www.bnbchain.org/en"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/websiteMap.svg"
+                    alt="kickstarter-website"
+                    width={24}
+                    height={24}
+                  />
+                </a>
+              </div>
+            </div>
             <div className="kickstarter-divider mb-1"></div>
 
             <div className="d-flex align-items-center w-100 flex-column flex-lg-row gap-2 gap-lg-0 justify-content-between">
@@ -286,9 +398,7 @@ const Kickstarter = ({
 
             <div className="kickstarter-divider mb-1"></div>
             <div className="row">
-              <div className="col-12 col-lg-4 d-flex">
-                
-              </div>
+              <div className="col-12 col-lg-4 d-flex"></div>
               <div className="col-12 col-lg-4 d-flex justify-content-center">
                 {!email && coinbase && (
                   <NavLink

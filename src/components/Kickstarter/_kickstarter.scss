@@ -50,12 +50,8 @@
   font-style: normal;
   font-weight: 800;
   line-height: 20px; /* 83.333% */
-    text-shadow: 
-    -1px -1px 0 #471f06,  
-     1px -1px 0 #471f06,
-    -1px  1px 0 #471f06,
-     1px  1px 0 #471f06; /* Blue outline */
-   
+  text-shadow: -1px -1px 0 #471f06, 1px -1px 0 #471f06, -1px 1px 0 #471f06,
+    1px 1px 0 #471f06; /* Blue outline */
 }
 
 .kickstarter-info-container {
@@ -173,7 +169,7 @@
 }
 
 .kickstarter-hero-wrapper {
-  background-image: url("./assets/kickstarterBackground.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/kickstarterGifBg.gif");
   height: 100vh;
   background-size: cover;
   background-position: bottom;
@@ -202,7 +198,6 @@
   }
 }
 
-
 .switch-btn-2:hover {
   background: rgba(246, 202, 74, 0.5);
   border: 1px solid #f6ca4a;
@@ -219,3 +214,31 @@
   }
 }
 
+.kickstarter-chain-item {
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.25s;
+  border: 1px solid transparent;
+}
+
+.kickstarter-chain-item-active{
+  cursor: pointer;
+  border-radius: 6px;
+  background: rgba(243, 192, 9, 0.20);
+  border: 1px solid #F3C009;
+}
+
+.kickstarter-chain-item:hover {
+  background: rgba(130, 143, 187, 0.2);
+  border: 1px solid #4d4f77;
+}
+
+.kickstarter-chain-span {
+  text-align: center;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 333.333% */
+}
