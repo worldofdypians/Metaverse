@@ -1689,7 +1689,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(seiEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
@@ -1701,7 +1701,7 @@ const MyRewardsPopupNew = ({
                   <span className="item-name-right">
                     ${getFormattedNumber(taraxaEarnUsd, 2)}
                   </span>
-                </div>
+                </div> */}
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
