@@ -64,20 +64,20 @@ const MarketMint = ({
   //   mobileBg: "gateMobileBg.png",
   // };
   const allMints = [
-    {
-      id: "taraxa",
-      cardTitle: "Taraxa Beta Pass",
-      title: "Taraxa Beta Pass",
-      background: "taraxa-mint-bg",
-      mobileBg: "taraxaMobileBg.png",
-      activeClass: "taraxa-active",
-      emptyClass: "conflux-empty",
-      nftcreated: nftCreated,
-      nft_address: window.config.nft_taraxa_address,
-      chainId: 841,
-      chainName: "Taraxa",
-      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-    },
+    // {
+    //   id: "taraxa",
+    //   cardTitle: "Taraxa Beta Pass",
+    //   title: "Taraxa Beta Pass",
+    //   background: "taraxa-mint-bg",
+    //   mobileBg: "taraxaMobileBg.png",
+    //   activeClass: "taraxa-active",
+    //   emptyClass: "conflux-empty",
+    //   nftcreated: nftCreated,
+    //   nft_address: window.config.nft_taraxa_address,
+    //   chainId: 841,
+    //   chainName: "Taraxa",
+    //   logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    // },
     {
       id: "kucoin",
       cardTitle: "KuCoin Beta Pass",
@@ -275,10 +275,10 @@ const MarketMint = ({
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(
     allMints.find((obj) => {
-      return obj.id === "taraxa";
+      return obj.id === "timepiece";
     })
   );
-  const [mintTitle, setMintTitle] = useState("taraxa");
+  const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
 
   const slider = useRef(null);
@@ -865,17 +865,17 @@ const MarketMint = ({
     //   class: "mint-teafi",
     //   id: "tea-fi",
     // },
-    {
-      title: "Taraxa Pass",
-      eventId: "taraxa",
-      desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
-      img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
-      data: allMints.find((item) => {
-        return item.id === "taraxa";
-      }),
-      class: "mint-taraxa",
-      id: "taraxa",
-    },
+    // {
+    //   title: "Taraxa Pass",
+    //   eventId: "taraxa",
+    //   desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
+    //   img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
+    //   data: allMints.find((item) => {
+    //     return item.id === "taraxa";
+    //   }),
+    //   class: "mint-taraxa",
+    //   id: "taraxa",
+    // },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -1225,9 +1225,6 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
                     Live
                   </h6>
                   <h6
@@ -1236,6 +1233,9 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Upcoming
                   </h6>
                   <h6
@@ -2084,36 +2084,38 @@ const MarketMint = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    <h6 className="upcoming-stake">Mints are coming...</h6>
-                    <span className="upcoming-stake-desc">
-                      Check back soon!
-                    </span>
-                  </div>
-                </div>
-
-                // <div className="upcoming-mint-wrapper upcoming-teafi-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                //   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                //     <h6 className="upcoming-mint-title">Tea-Fi Beta Pass</h6>
-                //     <p className="upcoming-mint-desc">
-                //       Get access to a special ticket to enter the metaverse and
-                //       participate in an exclusive event hosted by Tea-Fi
-                //     </p>
+                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                //   <div className="d-flex flex-column align-items-center gap-2">
+                //     <h6 className="upcoming-stake">Mints are coming...</h6>
+                //     <span className="upcoming-stake-desc">
+                //       Check back soon!
+                //     </span>
                 //   </div>
-                //   <img
-                //     src={"https://cdn.worldofdypians.com/wod/teafiEventBg.webp"}
-                //     alt=""
-                //     className="upcoming-mint-img d-none d-lg-block"
-                //   />
-                //   <img
-                //     src={
-                //       "https://cdn.worldofdypians.com/wod/teafiMobileMint.webp"
-                //     }
-                //     alt=""
-                //     className="upcoming-mint-img d-block d-lg-none d-md-none"
-                //   />
                 // </div>
+
+                <div className="upcoming-mint-wrapper upcoming-taraxa-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                    <h6 className="upcoming-mint-title">Taraxa Beta Pass</h6>
+                    <p className="upcoming-mint-desc">
+                      Get access to a special ticket to enter the metaverse and
+                      participate in an exclusive event hosted by Taraxa
+                    </p>
+                  </div>
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp"
+                    }
+                    alt=""
+                    className="upcoming-mint-img d-none d-lg-block"
+                  />
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/taraxaMobileMint.webp"
+                    }
+                    alt=""
+                    className="upcoming-mint-img d-block d-lg-none d-md-none"
+                  />
+                </div>
                 //   <div className="upcoming-mint-wrapper upcoming-matchain-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                 //     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                 //       <h6 className="upcoming-mint-title">

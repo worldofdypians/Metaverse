@@ -947,13 +947,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-     
     ],
-    pastEvents: [ {
+    pastEvents: [
+      {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
-      },],
+      },
+    ],
     socials: [
       {
         link: "https://x.com/taikoxyz",
@@ -1611,7 +1612,7 @@ const chainAreas = [
 
     icon: "https://cdn.worldofdypians.com/wod/taraxa.svg",
     location: [-0.06917415368919773, 0.08433401584625246],
-    banner: "teafiArea.webp",
+    banner: "taraxaArea.webp",
     area: [
       [
         [-0.06900785685118961, 0.08438229560852052],
@@ -1626,7 +1627,6 @@ const chainAreas = [
       //   image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
       //   link: "/account#dailybonus",
       // },
-
       // {
       //   title: "Leaderboard",
       //   image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",

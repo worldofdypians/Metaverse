@@ -4724,15 +4724,15 @@ function App() {
       rewardType: "TARA",
       rewardAmount: "$20,000",
       location: [-0.06917415368919773, 0.08433401584625246],
-      image: "taikoBanner.png",
+      image: "taraxaArea.webp",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       marker: markers.treasureMarker,
-      totalRewards: "$30,000 in Taraxa Rewards",
+      totalRewards: "$20,000 in TARA Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 04, 2025",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
+      eventDate: "Coming Soon",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp",
       userEarnUsd: taraxaEarnUsd,
       userEarnCrypto: taraxaEarnToken,
       userEarnPoints: taraxaPoints,
@@ -4744,14 +4744,14 @@ function App() {
         status: "Coming Soon",
         id: "event30",
         eventType: "Explore & Mine",
-        totalRewards: "$30,000 in Tara Rewards",
+        totalRewards: "$20,000 in TARA Rewards",
         eventDuration: taikoLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 04, 2025",
+        eventDate: "Coming Soon",
       },
     },
     {
@@ -7643,7 +7643,7 @@ function App() {
               />
             }
           />*/}
-          <Route
+          {/* <Route
             exact
             path="/shop/mint/taraxa"
             element={
@@ -7673,7 +7673,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          /> 
+          />  */}
           {/* <Route
             exact
             path="/shop/mint/vanar"

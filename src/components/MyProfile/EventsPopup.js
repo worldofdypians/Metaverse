@@ -100,7 +100,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                     : dummyEvent.popupInfo.linkState === "core"
                     ? "https://cdn.worldofdypians.com/wod/coreThumb.png"
                     : dummyEvent.popupInfo.linkState === "taraxa"
-                    ? "https://cdn.worldofdypians.com/wod/taraxaThumb.png"
+                    ? "https://cdn.worldofdypians.com/wod/taraxaThumb.webp"
                     : dummyEvent.popupInfo.linkState === "sei"
                     ? "https://cdn.worldofdypians.com/wod/seiThumb.png"
                     : dummyEvent.popupInfo.linkState === "immutable"
