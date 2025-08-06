@@ -330,6 +330,9 @@
   top: 0;
   bottom: 60px;
   margin: auto;
+  @media screen and (max-width: 786px) {
+    right: 60px;
+  }
 }
 
 .question-of-the-day-title {

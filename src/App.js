@@ -6073,6 +6073,7 @@ function App() {
           !location.pathname.includes("ResetPassword") &&
           !location.pathname.includes("forgotPassword") &&
           !location.pathname.includes("wod-okxwallet") &&
+          !location.pathname.includes("kickstarter") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           openKickstarter={() => setKickstarter(true)}

@@ -41,6 +41,8 @@ const Kickstarter = ({
       activeImage: "bnbIcon.svg",
       hoverImage: "bnbWhite.svg",
       inactiveImage: "bnbInactive.svg",
+      tag: "0x38",
+      chainId: 56,
     },
     {
       id: "opbnb",
@@ -48,6 +50,8 @@ const Kickstarter = ({
       activeImage: "opbnbChain.png",
       hoverImage: "bnbWhite.svg",
       inactiveImage: "bnbInactive.svg",
+         tag: "0xcc",
+      chainId: 204,
     },
     // {
     //   id: "core",
@@ -235,7 +239,8 @@ const Kickstarter = ({
                 } align-items-center p-2 d-flex flex-column gap-1`}
                 onMouseEnter={() => handleMouseEnter(item.id)}
                 onMouseLeave={handleMouseLeave}
-                onClick={() => setActiveChain(item.id)}
+                onClick={() => {setActiveChain(item.id); switchNetwork(item.tag, item.chainId);}}
+
               >
                 <img
                   src={`https://cdn.worldofdypians.com/wod/${
@@ -334,7 +339,7 @@ const Kickstarter = ({
             </div>
             <div className="kickstarter-divider mb-1"></div>
 
-            <div className="d-flex align-items-center w-100 flex-column flex-lg-row gap-2 gap-lg-0 justify-content-between">
+            <div className="d-flex align-items-center w-100 flex-column flex-lg-row gap-2 gap-lg-0 justify-content-between kickstarter-scrollable">
               <p className="kickstarter-desc mb-0">
                 BNB Chain is a decentralized blockchain network built for
                 high-speed, low-cost transactions, designed to support scalable
@@ -344,7 +349,10 @@ const Kickstarter = ({
                 blockchains in the world.
               </p>
 
-              <div className="d-flex flex-column flex-lg-row gap-2 gap-lg-4">
+           <div className="d-flex flex-column justify-content-start gap-4 h-100">
+                <span className="kickstarter-chain-title" style={{fontSize: "22px"}}>Rewards</span>
+
+               <div className="d-flex flex-column flex-lg-row gap-2 gap-lg-4">
                 <div className="d-flex align-items-center position-relative">
                   <img
                     src="https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
@@ -389,11 +397,12 @@ const Kickstarter = ({
                     } justify-content-end`}
                   >
                     <span className="kickstarter-reward-title text-end">
-                      $1-$5 Rewards
+                      $1-$5 
                     </span>
                   </div>
                 </div>
               </div>
+           </div>
             </div>
 
             <div className="kickstarter-divider mb-1"></div>
