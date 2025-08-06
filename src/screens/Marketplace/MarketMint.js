@@ -26,6 +26,7 @@ const renderer2 = ({ days, hours, minutes }) => {
 };
 
 const MarketMint = ({
+  isEOA,
   showWalletConnect,
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
@@ -1026,9 +1027,14 @@ const MarketMint = ({
           if (chainId !== 1) {
             setactiveButton(false);
             setStatus("Switch to Ethereum Chain to continue minting.");
-          } else if (chainId === 1) {
+          } else if (chainId === 1 && isEOA) {
             setactiveButton(true);
             setStatus("");
+          } else if (chainId === 1 && !isEOA) {
+            setactiveButton(false);
+            setStatus(
+              "Smart contract wallets are not supported for this action."
+            );
           }
         } else if (selectedMint.id === "skale") {
           if (chainId !== 1482601649) {
@@ -1132,7 +1138,7 @@ const MarketMint = ({
         }
       }
     }
-  }, [isConnected, chainId, coinbase, selectedMint]);
+  }, [isConnected, chainId, coinbase, selectedMint, isEOA]);
 
   useEffect(() => {
     getTimepieceLatestMint();
@@ -1853,12 +1859,14 @@ const MarketMint = ({
                                           )) ||
                                         (status !== "Connect your wallet." &&
                                           status !== "") ||
-                                        nftCreated.length > 0
+                                        nftCreated.length > 0 ||
+                                        !isEOA
                                       ? "outline-btn-disabled"
                                       : "stake-wod-btn"
                                   }  px-4 w-100`}
                                   onClick={() => {
                                     isConnected === true &&
+                                    isEOA &&
                                     selectedMint.chainId.includes(chainId)
                                       ? handleMint()
                                       : isConnected === true &&
@@ -1868,6 +1876,7 @@ const MarketMint = ({
                                   }}
                                   disabled={
                                     mintloading === "error" ||
+                                    !isEOA ||
                                     mintloading === "success" ||
                                     (isConnected === true &&
                                       !selectedMint.chainId.includes(
