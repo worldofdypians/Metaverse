@@ -613,11 +613,12 @@ function App() {
   const [successMessage, setSuccessMessage] = useState("");
   const [successDomain, setSuccessDomain] = useState(false);
   const [dogePrice, setDogePrice] = useState(0);
-
+  const [isEOA, setIsEOA] = useState(true);
   const [domainName, setDomainName] = useState(null);
   const [loadingDomain, setLoadingDomain] = useState(false);
   const [domainMetaData, setDomainMetaData] = useState(null);
   const [totalTx, setTotalTx] = useState(0);
+
   const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
@@ -1558,6 +1559,17 @@ function App() {
       }
     } catch (error) {
       console.log("Error:", error);
+    }
+  };
+
+  const checkIfEOA = async (address) => {
+    if (window.ethereum) {
+      if (address) {
+        let web3 = new Web3(window.ethereum);
+        const code = await web3.eth.getCode(address);
+        setIsEOA(code === "0x");
+        // return code === "0x"; // true = EOA, false = Contract
+      }
     }
   };
 
@@ -6004,6 +6016,12 @@ function App() {
     }
   }, [loginListener, userWallet]);
 
+  useEffect(() => {
+    if (isConnected && coinbase) {
+      checkIfEOA(coinbase);
+    }
+  }, [isConnected, coinbase]);
+
   // useEffect(() => {
   //   if (address && address.length > 0) {
   //     if (window.WALLET_TYPE === "matchId") {
@@ -6108,6 +6126,7 @@ function App() {
             element={
               <SingleNft
                 coinbase={coinbase}
+                isEOA={isEOA}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
@@ -6133,6 +6152,7 @@ function App() {
             path="/list-my-nft"
             element={
               <ListNFT
+                isEOA={isEOA}
                 coinbase={coinbase}
                 showWalletConnect={() => {
                   setwalletModal(true);
@@ -6196,6 +6216,7 @@ function App() {
                   setwalletModal(true);
                 }}
                 email={email}
+                isEOA={isEOA}
                 premiumOryn={premiumOryn}
                 chainId={networkId}
                 handleSwitchNetwork={handleSwitchNetwork}
@@ -6225,6 +6246,7 @@ function App() {
             path="/cliff-and-vesting"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6244,6 +6266,7 @@ function App() {
             path="/pool"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6264,6 +6287,7 @@ function App() {
             path="/pool2"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6284,6 +6308,7 @@ function App() {
             path="/pool-bonus"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6304,6 +6329,7 @@ function App() {
             path="/pool-dynamic"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6319,11 +6345,12 @@ function App() {
             }
           />
 
-            <Route
+          <Route
             exact
             path="/pool2-dynamic"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6339,12 +6366,12 @@ function App() {
             }
           />
 
-
           <Route
             exact
             path="/wod-dynamic"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6365,6 +6392,7 @@ function App() {
             path="/special-otc"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6385,6 +6413,7 @@ function App() {
             path="/bonus-otc"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6405,6 +6434,7 @@ function App() {
             path="/token-claim"
             element={
               <Release
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6598,6 +6628,7 @@ function App() {
             path="/account"
             element={
               <Dashboard
+                isEOA={isEOA}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
@@ -6694,6 +6725,7 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+                isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
@@ -7260,6 +7292,7 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
@@ -7425,6 +7458,7 @@ function App() {
             path="/shop/mint/timepiece"
             element={
               <MarketMint
+                isEOA={isEOA}
                 coinbase={coinbase}
                 showWalletConnect={() => {
                   setwalletModal(true);
@@ -7603,6 +7637,7 @@ function App() {
             path="/staking"
             element={
               <Earn
+                isEOA={isEOA}
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}

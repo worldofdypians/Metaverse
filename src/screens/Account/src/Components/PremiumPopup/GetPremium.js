@@ -9,6 +9,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import ChainPopup from "../../../../../components/Header/ChainPopup";
 
 const GetPremiumPopup = ({
+  isEOA,
   coinbase,
   chainId,
   onClose,
@@ -4070,12 +4071,18 @@ const GetPremiumPopup = ({
                 <div className="d-flex align-items-center gap-3 justify-content-center">
                   <button
                     className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? "disabled-btn"
                         : "connectbtn"
                     } px-4`}
                     disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? true
                         : false
                     }
@@ -4114,7 +4121,9 @@ const GetPremiumPopup = ({
 
                   <button
                     className={`btn ${
-                      isApproved === false ? "disabled-btn" : "connectbtn"
+                      isApproved === false || !isEOA
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     onClick={() => handleSubscribe()}
                   >
@@ -4154,12 +4163,18 @@ const GetPremiumPopup = ({
                 <div className="d-flex align-items-center gap-3 justify-content-center">
                   <button
                     className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? "disabled-btn"
                         : "connectbtn"
                     } px-4`}
                     disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? true
                         : false
                     }
@@ -4198,7 +4213,9 @@ const GetPremiumPopup = ({
 
                   <button
                     className={`btn ${
-                      isApproved === false ? "disabled-btn" : "connectbtn"
+                      isApproved === false || !isEOA
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     onClick={() => handleSubscribe()}
                   >
@@ -4239,12 +4256,18 @@ const GetPremiumPopup = ({
                 <div className="d-flex align-items-center gap-3 justify-content-center">
                   <button
                     className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? "disabled-btn"
                         : "connectbtn"
                     } px-4`}
                     disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? true
                         : false
                     }
@@ -4283,7 +4306,9 @@ const GetPremiumPopup = ({
 
                   <button
                     className={`btn ${
-                      isApproved === false ? "disabled-btn" : "connectbtn"
+                      isApproved === false || !isEOA
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     onClick={() => handleSubscribe()}
                   >
@@ -4324,12 +4349,18 @@ const GetPremiumPopup = ({
                 <div className="d-flex align-items-center gap-3 justify-content-center">
                   <button
                     className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? "disabled-btn"
                         : "connectbtn"
                     } px-4`}
                     disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? true
                         : false
                     }
@@ -4368,7 +4399,9 @@ const GetPremiumPopup = ({
 
                   <button
                     className={`btn ${
-                      isApproved === false ? "disabled-btn" : "connectbtn"
+                      isApproved === false || !isEOA
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     onClick={() => handleSubscribe()}
                   >
@@ -4409,12 +4442,18 @@ const GetPremiumPopup = ({
                 <div className="d-flex align-items-center gap-3 justify-content-center">
                   <button
                     className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? "disabled-btn"
                         : "connectbtn"
                     } px-4`}
                     disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      isApproved ||
+                      !isEOA
                         ? true
                         : false
                     }
@@ -4453,7 +4492,9 @@ const GetPremiumPopup = ({
 
                   <button
                     className={`btn ${
-                      isApproved === false ? "disabled-btn" : "connectbtn"
+                      isApproved === false || !isEOA
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     onClick={() => handleSubscribe()}
                   >
@@ -4589,12 +4630,18 @@ const GetPremiumPopup = ({
                 <div className="d-flex align-items-center gap-3 justify-content-center">
                   <button
                     className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !isEOA ||
+                      !coinbase ||
+                      isApproved
                         ? "disabled-btn"
                         : "connectbtn"
                     } px-4`}
                     disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
+                      approveStatus === "fail" ||
+                      !isEOA ||
+                      !coinbase ||
+                      isApproved
                         ? true
                         : false
                     }
@@ -4626,10 +4673,15 @@ const GetPremiumPopup = ({
 
                   <button
                     className={`btn ${
-                      isApproved === false ? "disabled-btn" : "connectbtn"
+                      isApproved === false || !isEOA
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     disabled={
-                      approveStatus === "fail" || !coinbase || !isApproved
+                      approveStatus === "fail" ||
+                      !coinbase ||
+                      !isApproved ||
+                      !isEOA
                         ? true
                         : false
                     }
@@ -4686,6 +4738,12 @@ const GetPremiumPopup = ({
               {!coinbase && (
                 <span style={{ color: "rgb(227, 6 ,19)" }}>
                   Please connect your wallet first
+                </span>
+              )}
+
+              {isConnected && coinbase && !isEOA && (
+                <span className="text-danger">
+                  Smart contract wallets are not supported for this action.
                 </span>
               )}
             </div>

@@ -112,6 +112,7 @@ const useSharedDataLatest20BoughtNFTS = (nftId, nftAddress) => {
 };
 
 const SingleNft = ({
+  isEOA,
   coinbase,
   showWalletConnect,
   chainId,
@@ -2605,6 +2606,18 @@ const SingleNft = ({
       setPurchaseColor("#FF6232");
     }
   }, [purchaseStatus, data]);
+
+  useEffect(() => {
+    if (!isEOA && isConnected && coinbase) {
+      setPurchaseStatus(
+        "Smart contract wallets are not supported for this action."
+      );
+      setPurchaseColor("#FF6232");
+    } else if (isEOA && isConnected && coinbase) {
+      setPurchaseStatus("");
+      setPurchaseColor("#00FECF");
+    }
+  }, [isEOA, isConnected, coinbase]);
   return (
     <div
       className="container-fluid d-flex mt-lg-5 pt-lg-5 justify-content-end p-0"
@@ -3139,7 +3152,10 @@ const SingleNft = ({
                         ? "BNB Chain Beta Pass"
                         : type === "skale"
                         ? "SKALE Beta Pass"
-                        : type === "tea-bnb" ||type === "tea-opbnb"||type === "tea-sei"||type === "tea-base"
+                        : type === "tea-bnb" ||
+                          type === "tea-opbnb" ||
+                          type === "tea-sei" ||
+                          type === "tea-base"
                         ? "Tea-Fi Beta Pass"
                         : type === "cmc"
                         ? "CoinMarketCap Beta Pass"
@@ -3301,10 +3317,10 @@ const SingleNft = ({
                       type !== "mat" &&
                       type !== "sei" &&
                       type !== "kucoin" &&
-                      type !== "vanar"&&
-                      type !== "tea-bnb"&&
-                      type !== "tea-opbnb"&&
-                      type !== "tea-base"&&
+                      type !== "vanar" &&
+                      type !== "tea-bnb" &&
+                      type !== "tea-opbnb" &&
+                      type !== "tea-base" &&
                       type !== "tea-sei" &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
@@ -3478,10 +3494,10 @@ const SingleNft = ({
                       type !== "mat" &&
                       type !== "sei" &&
                       type !== "kucoin" &&
-                      type !== "vanar"&&
-                      type !== "tea-bnb"&&
-                      type !== "tea-opbnb"&&
-                      type !== "tea-base"&&
+                      type !== "vanar" &&
+                      type !== "tea-bnb" &&
+                      type !== "tea-opbnb" &&
+                      type !== "tea-base" &&
                       type !== "tea-sei" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
@@ -3686,7 +3702,7 @@ const SingleNft = ({
                         type === "mat" ||
                         type === "sei" ||
                         type === "kucoin" ||
-                        type === "vanar"||
+                        type === "vanar" ||
                         type === "tea-bnb" ||
                         type === "tea-opbnb" ||
                         type === "tea-sei" ||
@@ -3714,14 +3730,14 @@ const SingleNft = ({
                                 type === "cawsbnb" ||
                                 type === "landbnb" ||
                                 type === "cookie3" ||
-                                type === "multivers"||
+                                type === "multivers" ||
                                 type === "tea-bnb"
                                   ? `https://bscscan.com/address/${owner}`
                                   : type === "conflux"
                                   ? `https://evm.confluxscan.net/address/${owner}`
                                   : type === "base" ||
                                     type === "cawsbase" ||
-                                    type === "landbase"||
+                                    type === "landbase" ||
                                     type === "tea-base"
                                   ? `https://basescan.org/address/${owner}`
                                   : type === "cawsavax" || type === "landavax"
@@ -3736,13 +3752,15 @@ const SingleNft = ({
                                   ? `https://pacific-explorer.manta.network/address/${owner}`
                                   : type === "taiko"
                                   ? `https://taikoscan.io/address/${owner}`
-                                  : type === "opbnb" || type === "kucoin"|| type === "tea-opbnb"
+                                  : type === "opbnb" ||
+                                    type === "kucoin" ||
+                                    type === "tea-opbnb"
                                   ? `https://opbnbscan.com/address/${owner}`
                                   : type === "vanar"
                                   ? `https://explorer.vanarchain.com/address/${owner}`
                                   : type === "mat"
                                   ? `https://matchscan.io/address/${owner}`
-                                  : type === "sei"||type === "tea-sei"
+                                  : type === "sei" || type === "tea-sei"
                                   ? `https://seitrace.com/address/${owner}`
                                   : `https://etherscan.io/address/${owner}`
                               }
@@ -3760,7 +3778,9 @@ const SingleNft = ({
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
                           <button
                             disabled={
-                              buyloading === true || buyStatus === "failed"
+                              buyloading === true ||
+                              buyStatus === "failed" ||
+                              !isEOA
                                 ? true
                                 : false
                             }
@@ -3768,7 +3788,8 @@ const SingleNft = ({
                               buyStatus === "success"
                                 ? "successbtn"
                                 : buyStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
+                                  (chainId !== 5 && chainId !== 1) ||
+                                  !isEOA
                                 ? "errorbtn"
                                 : null
                             } d-flex justify-content-center align-items-center gap-2`}
@@ -3807,6 +3828,7 @@ const SingleNft = ({
                               onClick={() => {
                                 setshowMakeOffer(true);
                               }}
+                              disabled={!isEOA}
                             >
                               <img
                                 src={
@@ -3826,7 +3848,8 @@ const SingleNft = ({
                           <button
                             disabled={
                               updateLoading === true ||
-                              updateStatus === "failed"
+                              updateStatus === "failed" ||
+                              !isEOA
                                 ? true
                                 : false
                             }
@@ -3834,7 +3857,8 @@ const SingleNft = ({
                               updateStatus === "success"
                                 ? "successbtn"
                                 : updateStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
+                                  (chainId !== 5 && chainId !== 1) ||
+                                  !isEOA
                                 ? "errorbtn"
                                 : null
                             } d-flex justify-content-center align-items-center gap-2`}
@@ -3875,11 +3899,7 @@ const SingleNft = ({
                           </button>
 
                           <button
-                            // disabled={
-                            //   cancelLoading === true || cancelStatus === "failed"
-                            //     ? true
-                            //     : false
-                            // }
+                            disabled={!isEOA}
                             className={`unlistbtn col-lg-6 col-xxl-6 d-flex justify-content-center d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
@@ -3947,14 +3967,16 @@ const SingleNft = ({
                         type !== "mat" &&
                         type !== "sei" &&
                         type !== "kucoin" &&
-                        type !== "vanar"&&
-                      type !== "tea-bnb"&&
-                      type !== "tea-opbnb"&&
-                      type !== "tea-base"&&
-                      type !== "tea-sei" && (
+                        type !== "vanar" &&
+                        type !== "tea-bnb" &&
+                        type !== "tea-opbnb" &&
+                        type !== "tea-base" &&
+                        type !== "tea-sei" && (
                           <button
                             disabled={
-                              sellLoading === true || sellStatus === "failed"
+                              sellLoading === true ||
+                              sellStatus === "failed" ||
+                              !isEOA
                                 ? true
                                 : false
                             }
@@ -3962,7 +3984,8 @@ const SingleNft = ({
                               sellStatus === "success"
                                 ? "successbtn"
                                 : sellStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
+                                  (chainId !== 5 && chainId !== 1) ||
+                                  !isEOA
                                 ? "errorbtn"
                                 : null
                             } d-flex justify-content-center align-items-center gap-2`}
@@ -4034,15 +4057,16 @@ const SingleNft = ({
                         type !== "sei" &&
                         type !== "kucoin" &&
                         type !== "vanar" &&
-                      type !== "tea-bnb"&&
-                      type !== "tea-opbnb"&&
-                      type !== "tea-base"&&
-                      type !== "tea-sei"&& (
+                        type !== "tea-bnb" &&
+                        type !== "tea-opbnb" &&
+                        type !== "tea-base" &&
+                        type !== "tea-sei" && (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
                               setshowMakeOffer(true);
                             }}
+                            disabled={!isEOA}
                           >
                             <img
                               src={
@@ -4082,11 +4106,11 @@ const SingleNft = ({
                         type !== "mat" &&
                         type !== "sei" &&
                         type !== "kucoin" &&
-                        type !== "vanar"&&
-                      type !== "tea-bnb"&&
-                      type !== "tea-opbnb"&&
-                      type !== "tea-base"&&
-                      type !== "tea-sei" && (
+                        type !== "vanar" &&
+                        type !== "tea-bnb" &&
+                        type !== "tea-opbnb" &&
+                        type !== "tea-base" &&
+                        type !== "tea-sei" && (
                           <button
                             className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
@@ -4136,11 +4160,11 @@ const SingleNft = ({
             type !== "mat" &&
             type !== "sei" &&
             type !== "kucoin" &&
-            type !== "vanar"&&
-                      type !== "tea-bnb"&&
-                      type !== "tea-opbnb"&&
-                      type !== "tea-base"&&
-                      type !== "tea-sei" && (
+            type !== "vanar" &&
+            type !== "tea-bnb" &&
+            type !== "tea-opbnb" &&
+            type !== "tea-base" &&
+            type !== "tea-sei" && (
               <div className="px-2">
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -4417,7 +4441,7 @@ const SingleNft = ({
             type === "mat" ||
             type === "sei" ||
             type === "kucoin" ||
-            type === "vanar"||
+            type === "vanar" ||
             type === "tea-bnb" ||
             type === "tea-opbnb" ||
             type === "tea-base" ||
@@ -4462,7 +4486,7 @@ const SingleNft = ({
                           Earn{" "}
                           {type === "conflux"
                             ? "CFX"
-                            : type === "base" || type==='tea-base'
+                            : type === "base" || type === "tea-base"
                             ? "ETH"
                             : type === "manta"
                             ? "MANTA"
@@ -4480,7 +4504,7 @@ const SingleNft = ({
                             ? "IMX"
                             : type === "cookie3"
                             ? "COOKIE"
-                            : type === "sei"|| type==='tea-sei'
+                            : type === "sei" || type === "tea-sei"
                             ? "SEI"
                             : type === "vanar"
                             ? "VANRY"

@@ -37,6 +37,7 @@ const renderer2 = ({ hours, minutes }) => {
 };
 
 const Whitelist = ({
+  isEOA,
   chainId,
   isConnected,
   handleConnection,
@@ -239,7 +240,7 @@ const Whitelist = ({
       window.config.otcpooldynamic_address
     );
 
-        const otcScPool2Dynamic = new window.bscWeb3.eth.Contract(
+    const otcScPool2Dynamic = new window.bscWeb3.eth.Contract(
       OTCPOOL2DYNAMIC_ABI,
       window.config.otcpool2dynamic_address
     );
@@ -385,11 +386,7 @@ const Whitelist = ({
 
     setcanClaimOTCPoolDynamic(Number(availableTGE_OTCPoolDynamic) === 1);
 
-
-
-
-
-        let availableTGE_OTCPool2Dynamic = 0;
+    let availableTGE_OTCPool2Dynamic = 0;
     if (coinbase) {
       availableTGE_OTCPool2Dynamic = await otcScPool2Dynamic.methods
         .availableTGE(coinbase)
@@ -401,9 +398,6 @@ const Whitelist = ({
     }
 
     setcanClaimOTCPool2Dynamic(Number(availableTGE_OTCPool2Dynamic) === 1);
-
-
-
 
     let availableTGE_OTCWodDynamic = 0;
     if (coinbase) {
@@ -589,11 +583,6 @@ const Whitelist = ({
     setcanClaimOTCPoolDynamic(tokensToClaimAmountOTCPoolDynamic_formatted > 0);
     setpendingTokensOTCPoolDynamic(tokensToClaimAmountOTCPoolDynamic_formatted);
 
-
-
-
-
-    
     let tokensToClaimAmountOTCPool2Dynamic = 0;
     if (coinbase) {
       tokensToClaimAmountOTCPool2Dynamic = await otcScPool2Dynamic.methods
@@ -608,12 +597,12 @@ const Whitelist = ({
     const tokensToClaimAmountOTCPool2Dynamic_formatted = new window.BigNumber(
       tokensToClaimAmountOTCPool2Dynamic / 1e18
     ).toFixed(6);
-    setcanClaimOTCPool2Dynamic(tokensToClaimAmountOTCPool2Dynamic_formatted > 0);
-    setpendingTokensOTCPool2Dynamic(tokensToClaimAmountOTCPool2Dynamic_formatted);
-
-
-
-
+    setcanClaimOTCPool2Dynamic(
+      tokensToClaimAmountOTCPool2Dynamic_formatted > 0
+    );
+    setpendingTokensOTCPool2Dynamic(
+      tokensToClaimAmountOTCPool2Dynamic_formatted
+    );
 
     let tokensToClaimAmountOTCWodDynamic = 0;
     if (coinbase) {
@@ -826,9 +815,7 @@ const Whitelist = ({
       );
     }
 
-
-
-       let totalClaimedTokensByUserOTCPool2Dynamic = 0;
+    let totalClaimedTokensByUserOTCPool2Dynamic = 0;
     if (coinbase) {
       totalClaimedTokensByUserOTCPool2Dynamic = await otcScPool2Dynamic.methods
         .totalClaimedWodTokens(coinbase)
@@ -846,7 +833,6 @@ const Whitelist = ({
         totalClaimedTokensByUserOTCPool2Dynamic_formatted
       );
     }
-
 
     let totalClaimedTokensByUserOTCWodDynamic = 0;
     if (coinbase) {
@@ -1047,9 +1033,7 @@ const Whitelist = ({
       );
     }
 
-
-
-     let totalVestedTokensPerUserOTCPool2Dynamic = 0;
+    let totalVestedTokensPerUserOTCPool2Dynamic = 0;
     if (coinbase) {
       totalVestedTokensPerUserOTCPool2Dynamic = await otcScPool2Dynamic.methods
         .vestedTokens(coinbase)
@@ -1067,8 +1051,6 @@ const Whitelist = ({
         totalVestedTokensPerUserOTCPool2Dynamic_formatted
       );
     }
-
-
 
     let totalVestedTokensPerUserOTCWodDynamic = 0;
     if (coinbase) {
@@ -1364,7 +1346,6 @@ const Whitelist = ({
 
     setcliffTimeOtcPoolDynamic(Number(lastClaimedTimeOTCPoolDynamic * 1000));
     setcliffTimeOtcPool2Dynamic(Number(lastClaimedTimeOTCPool2Dynamic * 1000));
-
 
     setcliffTimeOtcWodDynamic(Number(lastClaimedTimeOTCWodDynamic * 1000));
 
@@ -2424,7 +2405,7 @@ const Whitelist = ({
     }
   };
 
-    const handleClaimOTCPool2Dynamic = async () => {
+  const handleClaimOTCPool2Dynamic = async () => {
     console.log("otc pool 2 dynamic");
     setclaimLoadingOTCPool2Dynamic(true);
     if (window.WALLET_TYPE === "matchId") {
@@ -3133,6 +3114,12 @@ const Whitelist = ({
     }
   }, [coinbase, isConnected]);
 
+  useEffect(() => {
+    document.title = "WOD Claim";
+
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="container-fluid whitelist-mainhero-wrapper token-wrapper px-0">
       <div className="d-flex flex-column">
@@ -3144,6 +3131,7 @@ const Whitelist = ({
         />
         <StakingBanner />
         <WhitelistContent
+          isEOA={isEOA}
           isConnected={isConnected}
           chainId={chainId}
           coinbase={coinbase}
