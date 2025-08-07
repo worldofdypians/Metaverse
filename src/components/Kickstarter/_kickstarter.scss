@@ -18,25 +18,35 @@
 }
 
 .metrics-bg {
-  background-image: linear-gradient(to right bottom, oklab(0.398 -0.0473885 -0.0515202 / 0.3) 0%, oklab(0.381 0.100917 -0.144194 / 0.4) 50%, oklab(0.408 0.152862 0.00649235 / 0.3) 100%);
+  background-image: linear-gradient(
+    to right bottom,
+    oklab(0.398 -0.0473885 -0.0515202 / 0.3) 0%,
+    oklab(0.381 0.100917 -0.144194 / 0.4) 50%,
+    oklab(0.408 0.152862 0.00649235 / 0.3) 100%
+  );
 }
 
 .metrics-title {
   font-family: "Montserrat";
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
 
 .metrics-wrapper {
-  background-image: url("https://cdn.worldofdypians.com/wod/metricsbg.webp"), linear-gradient(to right, oklab(0 0 0 / 0.8) 0%, rgba(0, 0, 0, 0) 50%, oklab(0 0 0 / 0.8) 100%);
+  background-image: url("https://cdn.worldofdypians.com/wod/metricsbg.webp"),
+    linear-gradient(
+      to right,
+      oklab(0 0 0 / 0.8) 0%,
+      rgba(0, 0, 0, 0) 50%,
+      oklab(0 0 0 / 0.8) 100%
+    );
   background-size: 100% 100%;
   background-repeat: no-repeat;
   border-bottom: 3px solid black;
   @media screen and (max-width: 786px) {
-  background-image: url("https://cdn.worldofdypians.com/wod/metricsbg.webp");
-    
+    background-image: url("https://cdn.worldofdypians.com/wod/metricsbg.webp");
   }
 }
 
@@ -207,8 +217,7 @@
   }
 }
 
-
-.kickstarter-scrollable{
+.kickstarter-scrollable {
   @media screen and (max-width: 786px) {
     height: 170px;
     overflow-y: scroll;
@@ -255,11 +264,11 @@
   border: 1px solid transparent;
 }
 
-.kickstarter-chain-item-active{
+.kickstarter-chain-item-active {
   cursor: pointer;
   border-radius: 6px;
-  background: rgba(243, 192, 9, 0.20);
-  border: 1px solid #F3C009;
+  background: rgba(243, 192, 9, 0.2);
+  border: 1px solid #f3c009;
 }
 
 .kickstarter-chain-item:hover {
@@ -275,4 +284,12 @@
   font-style: normal;
   font-weight: 700;
   line-height: 20px; /* 333.333% */
+}
+
+@media only screen and (max-width: 600px) {
+  .kickstart-partner-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 10px;
+    overflow-x: auto;
+  }
 }

@@ -121,7 +121,7 @@ const KickstarterBenefits = () => {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto relative">
+      <div className="custom-container mx-auto relative">
         <div className="text-center mb-20">
           <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 bordertw border-purple-400/30 rounded-full backdrop-blur-sm mb-8">
             {/* <Sparkles className="w-4 h-4 text-purple-300 mr-2" /> */}

@@ -100,7 +100,7 @@ const KickstarterStats = ({ monthlyPlayers, totalVolumeNew }) => {
     },
     {
       icon: "https://cdn.worldofdypians.com/wod/valueStats.svg",
-      number: "$" + abbreviateNumber(totalVolumeNew, 1) + "+",
+      number: "$" + abbreviateNumber(totalVolumeNew, 1).replace("G", "B") + "+",
       label: "Volume Created",
       color: "from-purple-400 to-pink-500",
       glowColor: "shadow-purple-500/50",
@@ -160,7 +160,7 @@ const KickstarterStats = ({ monthlyPlayers, totalVolumeNew }) => {
       {/* Background Image */}
       <div className="position-absolute top-0 end-0 bottom-0 start-0">
         <img
-          src="https://images.unsplash.com/photo-1485740112426-0c2549fa8c86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmdXR1cmlzdGljJTIwdGVjaG5vbG9neXxlbnwxfHx8fDE3NTQ0ODU5NDd8MA&ixlib=rb-4.1.0&q=80&w=1080"
+          src="https://cdn.worldofdypians.com/wod/metricsbg.webp"
           alt="Futuristic Technology"
           className="w-100 h-100 object-fit-cover"
           style={{ opacity: 0.2 }}
@@ -168,7 +168,7 @@ const KickstarterStats = ({ monthlyPlayers, totalVolumeNew }) => {
         <div className="position-absolute top-0 end-0 bottom-0 start-0 bg-gradient-to-r from-black/80 via-transparent to-black/80"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto relative">
+      <div className="custom-container mx-auto relative">
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 bordertw border-cyan-400/30 rounded-full backdrop-blur-sm mb-6">
             <span className="text-cyan-300 font-semibold text-sm uppercase tracking-wider">

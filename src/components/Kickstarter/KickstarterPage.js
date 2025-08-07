@@ -3,19 +3,25 @@ import "./_kickstarter.scss";
 import KickstarterHero from "./components/KickstarterHero";
 import KickstarterBenefits from "./components/KickstarterBenefits";
 import KickstarterStats from "./components/KickstarterStats";
-import KickstarterOnboarding from "./components/KickstarterOnboarding";
+// import KickstarterOnboarding from "./components/KickstarterOnboarding";
 import KickstarterApply from "./components/KickstarterApply";
-import WodPartners from "../../screens/Home/WodBuilders/WodPartners";
+import KickstarterPartners from "./components/KickStarterPartners";
+import KickstarterVideoContent from "./components/KickstarterVideoContent";
+import KickstarterMobile from "./components/KickstarterMobile";
 
-const KickstarterPage = ({monthlyPlayers, totalVolumeNew}) => {
+const KickstarterPage = ({ monthlyPlayers, totalVolumeNew }) => {
   return (
     <div className="d-flex flex-column w-100">
       <KickstarterHero />
-      <KickstarterStats monthlyPlayers={monthlyPlayers} totalVolumeNew={totalVolumeNew} />
+      <KickstarterStats
+        monthlyPlayers={monthlyPlayers}
+        totalVolumeNew={totalVolumeNew}
+      />
       <KickstarterBenefits />
-      <KickstarterOnboarding />
-      <WodPartners full={true} />
-
+      {/* <KickstarterOnboarding /> */}
+      <KickstarterPartners />
+      <KickstarterVideoContent />
+      <KickstarterMobile />
       <KickstarterApply />
     </div>
   );
