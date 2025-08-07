@@ -1226,9 +1226,9 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            if (bnbEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (bnbEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /
@@ -4434,12 +4434,12 @@ function App() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Coming Soon",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       location: [-0.06735561726792588, 0.08666753768920898],
       eventType: "Explore & Mine",
-      eventDate: "Apr 09, 2025",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
       userEarnUsd: bnbEarnUsd,
       userEarnCrypto: bnbEarnToken,
@@ -4454,7 +4454,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Live",
+        status: "Coming Soon",
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4464,7 +4464,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 09, 2025",
+        eventDate: "Coming Soon",
       },
     },
     {
