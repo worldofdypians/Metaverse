@@ -4447,7 +4447,6 @@ function App() {
       image: "bnbBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
-
       marker: markers.treasureMarker,
       popupInfo: {
         title: "BNB Chain",
