@@ -1713,7 +1713,7 @@ const MyProfile = ({
               <div className="col-12 col-lg-3 mt-3">
                 <div
                   className="royalty-chest-wrapper position-relative d-flex flex-column justify-content-between p-3"
-                  onClick={() => {openKickstarter(); window.scrollTo(0,0)}}
+                  onClick={openKickstarter}
                 >
                   <h6 className="royalty-chest-title">Royalty Chest</h6>
 

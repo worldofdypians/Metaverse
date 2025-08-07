@@ -350,7 +350,7 @@ const Kickstarter = ({
               </p>
 
            <div className="d-flex flex-column justify-content-start gap-4 h-100">
-                <span className="kickstarter-chain-title" style={{fontSize: "22px"}}>Rewards</span>
+                <span className="kickstarter-chain-title">Rewards</span>
 
                <div className="d-flex flex-column flex-lg-row gap-2 gap-lg-4">
                 <div className="d-flex align-items-center position-relative">
