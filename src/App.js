@@ -653,6 +653,8 @@ function App() {
 
   let mantaLastDay = new Date("2025-08-13T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
+  let taikoLastDay2 = new Date("2025-12-06T14:00:00.000+02:00");
+
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
@@ -1224,9 +1226,9 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            if (bnbEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (bnbEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /
@@ -1566,7 +1568,9 @@ function App() {
     if (window.ethereum) {
       if (address) {
         let web3 = new Web3(window.ethereum);
-        const code = await web3.eth.getCode(address);
+        const code = await web3.eth.getCode(address).catch((e) => {
+          console.error(e);
+        });
         setIsEOA(code === "0x");
         // return code === "0x"; // true = EOA, false = Contract
       }
@@ -4430,16 +4434,16 @@ function App() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Coming Soon",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       location: [-0.06735561726792588, 0.08666753768920898],
       eventType: "Explore & Mine",
-      eventDate: "Apr 09, 2025",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
-      userEarnUsd: bnbEarnUsd,
-      userEarnCrypto: bnbEarnToken,
-      userEarnPoints: bnbPoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       image: "bnbBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
@@ -4450,7 +4454,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Live",
+        status: "Coming Soon",
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4460,7 +4464,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 09, 2025",
+        eventDate: "Coming Soon",
       },
     },
     {
@@ -4612,7 +4616,7 @@ function App() {
     {
       title: "Taiko",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
-      eventStatus: "Expired",
+      eventStatus: "Coming Soon",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
       location: [-0.06942812516951939, 0.08510112762451173],
@@ -4620,30 +4624,30 @@ function App() {
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       marker: markers.treasureMarker,
-      totalRewards: "$30,000 in TAIKO Rewards",
+      totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 04, 2025",
+      eventDate: "Aug 08, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
-      userEarnUsd: taikoEarnUsd,
-      userEarnCrypto: taikoEarnToken,
-      userEarnPoints: taikoPoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       popupInfo: {
         title: "TAIKO",
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Expired",
+        status: "Coming Soon",
         id: "event22",
         eventType: "Explore & Mine",
-        totalRewards: "$30,000 in TAIKO Rewards",
-        eventDuration: taikoLastDay,
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay2,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 04, 2025",
+        eventDate: "Aug 08, 2025",
       },
     },
     {
