@@ -8177,7 +8177,7 @@ function App() {
             path="/map"
             element={<Map dummyBetaPassData2={dummyBetaPassData2} />}
           />
-          <Route exact path="/kickstarter" element={<KickstarterPage />} />
+          <Route exact path="/kickstarter" element={<KickstarterPage monthlyPlayers={monthlyPlayers} totalVolumeNew={totalVolumeNew} />} />
         </Routes>
 
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
