@@ -3635,7 +3635,7 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        <div
+                        {/* <div
                           className={`position-relative chain-item ${
                             chain === "taraxa" && "chain-item-active"
                           } w-100`}
@@ -3741,7 +3741,7 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div
                           className={`position-relative chain-item ${
                             chain === "taiko" && "chain-item-active"
@@ -4616,12 +4616,40 @@ const NewDailyBonus = ({
                           <div
                             className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
                           >
+                            <div className="d-flex flex-column align-items-center gap-2">
+                               <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                            }
+                            height={32}
+                            width={32}
+                            alt=""
+                          />
+                              <span className="percentage-span">
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                          
+                        </div>
+                        <div className={`position-relative chain-item w-100`}>
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon.png"
+                            }
+                            className={`chain-img`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                          >
                             <div className="d-flex align-items-center gap-2">
                               <span className="percentage-span">
                                 Coming Soon
                               </span>
                             </div>
                           </div>
+                          
                         </div>
                       </div>
                     ) : windowSize.width && windowSize.width <= 992 ? (
@@ -4757,7 +4785,7 @@ const NewDailyBonus = ({
                             </button>
                           </div>
                         </div>
-                        <div
+                        {/* <div
                           className={`position-relative chain-item ${
                             chain === "taraxa" && "chain-item-active"
                           } w-auto`}
@@ -4806,7 +4834,7 @@ const NewDailyBonus = ({
                               </button>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div
                           className={`position-relative chain-item ${
                             chain === "taiko" && "chain-item-active"
@@ -5215,6 +5243,33 @@ const NewDailyBonus = ({
                               </button>
                             </div>
                           </div>
+                        </div>
+                         <div className={`position-relative chain-item w-100`}>
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon.png"
+                            }
+                            className={`chain-img`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                          >
+                            <div className="d-flex flex-column align-items-center gap-2">
+                               <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                            }
+                            height={32}
+                            width={32}
+                            alt=""
+                          />
+                              <span className="percentage-span">
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                          
                         </div>
                       </Slider>
                     ) : (
