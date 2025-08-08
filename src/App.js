@@ -4628,9 +4628,9 @@ function App() {
       eventType: "Explore & Mine",
       eventDate: "Dec 06, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
+      userEarnUsd: taikoEarnUsd,
+      userEarnCrypto: taikoEarnToken,
+      userEarnPoints: taikoPoints,
       popupInfo: {
         title: "TAIKO",
         chain: "Taiko",
