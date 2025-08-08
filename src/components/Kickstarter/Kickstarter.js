@@ -177,7 +177,7 @@ const Kickstarter = ({
       {/* VIDEO ONE (Intro) */}
       <video
         ref={videoRef1}
-        src={firstPart}
+        src={"https://cdn.worldofdypians.com/wod/firstPart.mp4"}
         className={`kickstarter-video ${step === 1 ? "visible" : "hidden"}`}
         playsInline
         preload="auto"
@@ -186,7 +186,7 @@ const Kickstarter = ({
       {/* VIDEO TWO (Reward animation) */}
       <video
         ref={videoRef2}
-        src={secondPart}
+        src={"https://cdn.worldofdypians.com/wod/secondPart.mp4"}
         className={`kickstarter-video ${
           step === 2 || step === 3 ? "visible" : "hidden"
         }`}
