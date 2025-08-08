@@ -1300,9 +1300,9 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            // if (taikoEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (taikoEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -4615,7 +4615,7 @@ function App() {
     {
       title: "Taiko",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
       location: [-0.06942812516951939, 0.08510112762451173],
@@ -4626,17 +4626,17 @@ function App() {
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Aug 08, 2025",
+      eventDate: "Dec 06, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
+      userEarnUsd: taikoEarnUsd,
+      userEarnCrypto: taikoEarnToken,
+      userEarnPoints: taikoPoints,
       popupInfo: {
         title: "TAIKO",
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Coming Soon",
+        status: "Live",
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TAIKO Rewards",
@@ -4646,7 +4646,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Aug 08, 2025",
+        eventDate: "Dec 06, 2025",
       },
     },
     {
