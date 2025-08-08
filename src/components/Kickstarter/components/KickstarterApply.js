@@ -51,7 +51,7 @@ const KickstarterApply = () => {
           opportunities for your brand.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+        <div className="flex mt-3 flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
           <a
             href="https://forms.gle/MUYyzKpS23yrzGcB7"
             target="_blank"

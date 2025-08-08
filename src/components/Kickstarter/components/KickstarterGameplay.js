@@ -30,6 +30,34 @@ const KickstarterGameplay = () => {
       rarity: "Explorer Hunt",
       link: "/account/challenges/explorer-hunt",
     },
+    {
+      src: "https://cdn.worldofdypians.com/wod/kickstarterMazeDay.webp",
+      alt: "BNB Chain Maze Day",
+      //   icon: Gem,
+      rarity: "BNB Chain Maze Day",
+      link: "https://www.youtube.com/watch?v=MZFgQjwzhjE",
+    },
+    {
+      src: "https://cdn.worldofdypians.com/wod/kickstarterScorpion.webp",
+      alt: "Scorpion King",
+      //   icon: Coins,
+      rarity: "Scorpion King",
+      link: "https://www.youtube.com/watch?v=xYm5gwIhwKY",
+    },
+    {
+      src: "https://cdn.worldofdypians.com/wod/kickstarterOpenWorld.webp",
+      alt: "Open World",
+      //   icon: Star,
+      rarity: "Open World",
+      link: "https://www.youtube.com/watch?v=n97e0a7oWgE",
+    },
+    {
+      src: "https://cdn.worldofdypians.com/wod/kickstarterFuryBeast.webp",
+      alt: "Fury Beast",
+      //   icon: Star,
+      rarity: "Fury Beast",
+      link: "https://www.youtube.com/watch?v=gJjlI1Za9pk",
+    },
   ];
 
   return (
@@ -69,11 +97,16 @@ const KickstarterGameplay = () => {
         </div>
 
         {/* 4 Game Images Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto mb-20">
           {gameImages.map((game, index) => {
             // const IconComponent = game.icon;
             return (
-              <NavLink to={game.link} key={index} className="relative group">
+              <NavLink
+                to={game.link}
+                key={index}
+                className="relative group"
+                target={index > 3 ? "_blank" : ""}
+              >
                 {/* Glow effect behind each image */}
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-cyan-500/30 to-purple-400/30 blur-2xl rounded-2xl scale-110 opacitytw-60 group-hover:opacitytw-100 transition-opacity duration-500"></div>
 
