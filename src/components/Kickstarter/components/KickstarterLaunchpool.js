@@ -55,18 +55,18 @@ const KickstarterLaunchpool = () => {
         </div>
 
         {/* Main Value Proposition */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
           {/* Value propositions */}
           <div className="space-y-8">
             <div className="mb-8">
               <h3 className="text-3xl text-white mb-4">
                 What We Offer{" "}
-                <span className="text-emerald-400">Early Projects</span>
+                {/* <span className="text-emerald-400">Early Projects</span> */}
               </h3>
-              <p className="text-gray-300 text-lg">
+              {/* <p className="text-gray-300 text-lg">
                 From concept to launch, we provide the foundation for
                 sustainable growth in the BNB Chain ecosystem.
-              </p>
+              </p> */}
             </div>
 
             {valueProps.map((prop, index) => {

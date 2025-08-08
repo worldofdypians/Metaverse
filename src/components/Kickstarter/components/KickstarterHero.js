@@ -8,7 +8,7 @@ const KickstarterHero = () => {
       <div className="custom-container">
         <div className="row">
           <div className="col-12 col-lg-6">
-            <div className="d-flex flex-column gap-2 align-items-center align-items-lg-start">
+            <div className="d-flex flex-column gap-2 align-items-start">
               <div className="inline-flex items-center px-4 py-2 gap-3 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 bordertw border-yellow-400/50 rounded-full backdrop-blur-sm relative overflow-hidden">
                 <span className="text-white text-xs font-normal">
                   Powered by

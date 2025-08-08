@@ -28,13 +28,13 @@ const KickstarterVideoContent = () => {
       id: "rJNbNdeg4U8",
     },
     {
-      title: "World of Dypians: Enter the Colosseum",
+      title: "Humanoid AI: The Future Is Now",
       thumbnail: "https://cdn.worldofdypians.com/wod/kickstarterVideo4.webp",
-      views: "33k",
-      duration: "3:28",
+      views: "77K",
+      duration: "1:50",
       gradient: "from-green-500 to-emerald-600",
-      link: "https://www.youtube.com/watch?v=OXrwnnx_RaY",
-      id: "OXrwnnx_RaY",
+      link: "https://www.youtube.com/watch?v=P8HTt5M4VKw",
+      id: "P8HTt5M4VKw",
     },
     {
       title: "World of Dypians: Viking Saga",

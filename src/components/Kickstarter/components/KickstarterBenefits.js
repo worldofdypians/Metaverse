@@ -68,6 +68,13 @@ import "./kickstarter_newcss.scss";
 const KickstarterBenefits = () => {
   const benefits = [
     {
+      icon: "https://cdn.worldofdypians.com/wod/benefitPartnership.svg",
+      title: "Free Integration",
+      description:
+        "Launch and grow your early-stage project with zero cost. Gain access to our community, resources, and strategic guidance without any barriers.",
+      gradient: "from-cyan-400 to-teal-600",
+    },
+    {
       icon: "https://cdn.worldofdypians.com/wod/benefitRocket.svg",
       title: "Accelerated Growth",
       description:
@@ -95,13 +102,7 @@ const KickstarterBenefits = () => {
         "Unlock exclusive in-game features, special events, and premium placement opportunities for your brand.",
       gradient: "from-yellow-400 to-orange-600",
     },
-    {
-      icon: "https://cdn.worldofdypians.com/wod/benefitPartnership.svg",
-      title: "Free Support",
-      description:
-        "Launch and grow your early-stage project with zero cost. Gain access to our community, resources, and strategic guidance without any barriers.",
-      gradient: "from-cyan-400 to-teal-600",
-    },
+
     {
       icon: "https://cdn.worldofdypians.com/wod/benefitStar.svg",
       title: "Creative Freedom",
