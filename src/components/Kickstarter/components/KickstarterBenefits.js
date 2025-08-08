@@ -97,9 +97,9 @@ const KickstarterBenefits = () => {
     },
     {
       icon: "https://cdn.worldofdypians.com/wod/benefitPartnership.svg",
-      title: "Verified Partnership",
+      title: "Free Support",
       description:
-        "Get official verification and trusted partnership status within the World of Dypians ecosystem.",
+        "Launch and grow your early-stage project with zero cost. Gain access to our community, resources, and strategic guidance without any barriers.",
       gradient: "from-cyan-400 to-teal-600",
     },
     {
@@ -133,8 +133,8 @@ const KickstarterBenefits = () => {
           <h2 className="text-4xl md:text-6xl mb-6">
             <span className="text-white metrics-title">WHY CHOOSE</span>
             <br />
-            <span className="metrics-title bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-              KICKSTART?
+            <span className="metrics-title text-uppercase bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+              Keep Building?
             </span>
           </h2>
         </div>

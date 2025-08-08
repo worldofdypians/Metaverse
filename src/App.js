@@ -51,8 +51,8 @@ import MarketMint from "./screens/Marketplace/MarketMint";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import SIDRegister from "@web3-name-sdk/register";
-import { createWeb3Name } from "@web3-name-sdk/core";
-import { ethers, providers } from "ethers";
+// import { createWeb3Name } from "@web3-name-sdk/core";
+import { ethers } from "ethers";
 import { getWeb3Connector } from "@binance/w3w-web3-connector";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
@@ -472,12 +472,12 @@ function App() {
   };
 
   const { useUserInfo, useWallet } = Hooks;
-  const { login, address, username, logout: logoutUser } = useUserInfo();
+  const { login, address,  logout: logoutUser } = useUserInfo();
   const { signMessage, createWalletClient } = useWallet();
   const {
     data,
     refetch: refetchPlayer,
-    loading: loadingPlayer,
+    loading,
   } = useQuery(GET_PLAYER, {
     fetchPolicy: "network-only",
   });
@@ -500,17 +500,17 @@ function App() {
   const [gameAccount, setGameAccount] = useState();
 
   const [networkId, setChainId] = useState();
-  const [currencyAmount, setCurrencyAmount] = useState(0);
+  
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
-  const [myNFTs, setMyNFTs] = useState([]);
+  // const [myNFTs, setMyNFTs] = useState([]);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState();
-  const [mystakes, setMystakes] = useState([]);
+  // const [mystakes, setMystakes] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [listedNFTS, setListedNFTS] = useState([]);
-  const [count44, setCount44] = useState(0);
+  // const [count44, setCount44] = useState(0);
   const [count55, setCount55] = useState(0);
   const [cawsListed, setcawsListed] = useState([]);
   const [wodListed, setwodListed] = useState([]);
@@ -521,7 +521,7 @@ function App() {
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([]);
 
-  const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
+  // const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
   const [walletId, setwalletId] = useState("connect");
@@ -2513,7 +2513,7 @@ function App() {
 
       nfts = await Promise.all(nfts);
       nfts.reverse();
-      setMyNFTs(nfts);
+      // setMyNFTs(nfts);
     }
   };
 
@@ -2631,7 +2631,7 @@ function App() {
       getMyNFTS(coinbase, "land").then((NFTS) => {
         setMyNFTSLand(NFTS);
         setMyLandNFTs(NFTS);
-        setMyNFTs(NFTS);
+        // setMyNFTs(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
@@ -2785,7 +2785,7 @@ function App() {
       let stakes = myStakes.map((stake) => window.getLandNft(stake));
       stakes = await Promise.all(stakes);
       stakes.reverse();
-      setMystakes(stakes);
+      // setMystakes(stakes);
     }
   };
 
@@ -6073,7 +6073,7 @@ function App() {
           !location.pathname.includes("ResetPassword") &&
           !location.pathname.includes("forgotPassword") &&
           !location.pathname.includes("wod-okxwallet") &&
-          !location.pathname.includes("kickstarter") &&
+          !location.pathname.includes("keep-building") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           openKickstarter={() => setKickstarter(true)}
@@ -6819,7 +6819,6 @@ function App() {
                 handleRegister={handleRegister}
                 chainId={networkId}
                 showForms={showForms2}
-                balance={currencyAmount}
                 socials={socials}
               />
             }
@@ -8179,7 +8178,7 @@ function App() {
           />
           <Route
             exact
-            path="/kickstarter"
+            path="/keep-building"
             element={
               <KickstarterPage
                 monthlyPlayers={monthlyPlayers}

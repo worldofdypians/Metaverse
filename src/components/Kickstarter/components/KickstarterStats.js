@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import getFormattedNumber from "../../../screens/Caws/functions/get-formatted-number";
+import { useEffect, useState } from "react";
+// import getFormattedNumber from "../../../screens/Caws/functions/get-formatted-number";
 import "./kickstarter_newcss.scss";
 import { abbreviateNumber } from "js-abbreviation-number";
 import axios from "axios";
@@ -74,7 +74,7 @@ import axios from "axios";
 
 const KickstarterStats = ({ monthlyPlayers, totalVolumeNew }) => {
   const [totalTx2, setTotalTx] = useState(0);
-  const [totalvolume2, setTotalVolume] = useState(0);
+  const [, setTotalVolume] = useState(0);
 
   const stats = [
     {

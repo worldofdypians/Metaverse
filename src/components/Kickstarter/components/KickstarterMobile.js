@@ -9,31 +9,30 @@ const KickstarterMobile = () => {
           {/* Content */}
           <div className="space-y-6">
             <h2 className="text-3xl md:text-4xl text-white metrics-title">
-              TAKE WOD WITH YOU EVERYWHERE
+              Telegram Mini App Exposure
             </h2>
 
-            <p className="text-gray-300 text-lg leading-relaxed">
-              Access World of Dypians directly through Telegram! Manage your
-              partnerships, track performance, and stay connected with the
-              community right from your favorite messaging app.
+            <p className="text-gray-300 mb-4 text-lg leading-relaxed">
+              Unlock new ways to grow, connect, and manage your experience. Stay
+              engaged with the community and keep everything at your fingertips.
             </p>
 
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                <span className="text-gray-300">Real-time notifications</span>
+                <span className="text-gray-300">Viral User Growth</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                <span className="text-gray-300">Partnership management</span>
+                <span className="text-gray-300">Built-In Referral System</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                <span className="text-gray-300">Community interaction</span>
+                <span className="text-gray-300">Flexible Monetization</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span className="text-gray-300">Performance analytics</span>
+                <span className="text-gray-300">Trusted by Partners</span>
               </div>
             </div>
           </div>
@@ -52,7 +51,7 @@ const KickstarterMobile = () => {
                   {/* Screen Content */}
                   <div className="bg-gradient-to-b from-blue-50 to-white h-[600px] relative overflow-hidden">
                     <img
-                      src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300&h=600&fit=crop"
+                      src="https://cdn.worldofdypians.com/wod/tgBackground.webp"
                       alt="WOD Telegram Mini App Interface"
                       className="w-full h-full object-cover"
                     />
@@ -63,14 +62,18 @@ const KickstarterMobile = () => {
                       <div className="bg-white/90 backdrop-blur rounded-xl p-4 shadow-lg">
                         <div className="flex items-center space-x-3 mb-3">
                           <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            {/* <MessageCircle className="w-4 h-4 text-white" /> */}
+                            <img
+                              src="https://cdn.worldofdypians.com/wod/kickstarterMobile.svg"
+                              className="w-4 h-4 text-white"
+                              alt=""
+                            />
                           </div>
                           <div>
                             <div className="text-gray-900 text-sm">
                               World of Dypians
                             </div>
                             <div className="text-gray-500 text-xs">
-                              Partnership Dashboard
+                              Mini App
                             </div>
                           </div>
                         </div>
@@ -80,6 +83,9 @@ const KickstarterMobile = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div className="relative bg-black h-6 flex justify-center">
+                    <div className="bg-black rounded-b-2xl w-32 h-4"></div>
                   </div>
                 </div>
               </div>

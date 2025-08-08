@@ -37,9 +37,9 @@ const KickstarterApply = () => {
       <div className="absolute bottom-20 left-1/4 w-12 h-12 bordertw border-yellow-400/20 rounded-full"></div>
       <div className="absolute bottom-40 right-1/3 w-8 h-8 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full"></div>
 
-      <div className="custom-container mx-auto text-center relative">
+      <div className="custom-container mx-auto d-flex flex-column gap-3 text-center relative">
         <h2 className="text-4xl md:text-6xl text-white mb-6 metrics-title">
-          READY TO KICKSTART
+          READY TO BUILD
           <br />
           <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent metrics-title">
             YOUR GROWTH?
@@ -47,8 +47,8 @@ const KickstarterApply = () => {
         </h2>
 
         <p className="text-gray-300 text-xl leading-relaxed mb-8 max-w-2xl mx-auto">
-          Join the most innovative gaming partnership program and unlock
-          unprecedented opportunities for your brand in the metaverse.
+          Join the most innovative on BNB Chain and unlock unprecedented
+          opportunities for your brand.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
@@ -56,7 +56,7 @@ const KickstarterApply = () => {
             href="https://forms.gle/MUYyzKpS23yrzGcB7"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded transition-all disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-yellow-400 to-orange-500 font-medium hover:from-yellow-300 hover:to-orange-400 text-black px-8 py-2 text-lg group"
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded transition-all disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-yellow-400 to-orange-500 font-semibold hover:from-yellow-300 hover:to-orange-400 text-black px-8 py-2 text-lg group"
           >
             {/* <Rocket className="w-5 h-5 mr-2 group-hover:animate-pulse" /> */}
             START YOUR JOURNEY

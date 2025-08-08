@@ -206,6 +206,10 @@
   height: 100vh;
   background-size: cover;
   background-position: bottom;
+
+  @media screen and (max-width: 786px) {
+    height: 50vh;
+  }
 }
 
 .switch-chain-position {

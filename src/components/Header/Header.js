@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./_header.scss";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
+// import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
@@ -37,14 +37,14 @@ const Header = ({
   loginListener,
   onSyncClick,
   network_matchain,
-  openKickstarter
+  openKickstarter,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
   const [showmenuAccount, setshowmenuAccount] = useState(false);
   const [showChainDropdown, setshowChainDropdown] = useState(false);
 
-  const [isUnread, setisUnread] = useState(false);
+  const [, setisUnread] = useState(false);
   const [unreadNotifications, setunreadNotifications] = useState(0);
   const [chainState, setchainState] = useState("");
 
@@ -71,7 +71,7 @@ const Header = ({
   const [openNotifications, setOpenNotifications] = useState(false);
   const { logout } = useAuth();
 
-  let id = Math.random().toString(36);
+  // let id = Math.random().toString(36);
 
   const manageDisconnect = () => {
     handleDisconnect();
@@ -712,15 +712,21 @@ const Header = ({
                   </div>
                 </div>
               </div>
-               <NavLink to={"/kickstarter"} className="d-flex align-items-center gap-2 kickstarter-header-item p-2">
-                <img src="https://cdn.worldofdypians.com/wod/kickstartIcon.svg" alt="" />
-                <div
-                className={`nav-anchor kickstarter-anchor`}
-                style={{cursor: "pointer"}}
+              <NavLink
+                to={"/keep-building"}
+                className="d-flex align-items-center gap-2 kickstarter-header-item p-2"
               >
-                Kickstarter
-              </div>
-               </NavLink>
+                <img
+                  src="https://cdn.worldofdypians.com/wod/kickstartIcon.svg"
+                  alt=""
+                />
+                <div
+                  className={`nav-anchor kickstarter-anchor`}
+                  style={{ cursor: "pointer" }}
+                >
+                  Keep Building
+                </div>
+              </NavLink>
             </div>
             <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
               <div
@@ -1831,7 +1837,6 @@ const Header = ({
             activeChain={chainState}
             isMobile={false}
             isPremium={false}
-
           />
         </OutsideClickHandler>
       )}
