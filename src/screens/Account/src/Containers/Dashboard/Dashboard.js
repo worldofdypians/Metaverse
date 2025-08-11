@@ -6131,7 +6131,6 @@ function Dashboard({
                 // Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
                 Number(mantaEarnUsd) +
-                Number(coreEarnUsd) +
                 Number(seiEarnUsd) +
                 Number(taikoEarnUsd) +
                 Number(vanarEarnUsd) +

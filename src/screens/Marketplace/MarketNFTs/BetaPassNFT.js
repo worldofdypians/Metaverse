@@ -242,7 +242,7 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "core-mint-bg",
       wrapperClassName: "core-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Coming Soon",
       rewardsTitle: "$20,000 in CORE rewards",
       rewardType: "CORE",
       userEarned: 0,

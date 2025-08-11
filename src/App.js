@@ -1351,9 +1351,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            if (coreEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (coreEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -4730,26 +4730,26 @@ function App() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Live",
+      eventStatus: "Coming Soon",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 10, 2025",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
       image: "coreBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       location: [-0.06862698344579729, 0.08752048015594482],
       marker: markers.treasureMarker,
-      userEarnUsd: coreEarnUsd,
-      userEarnCrypto: coreEarnToken,
-      userEarnPoints: corePoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       popupInfo: {
         title: "CORE",
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Live",
+        status: "Coming Soon",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -4759,7 +4759,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 10, 2025",
+        eventDate: "Coming Soon",
       },
     },
     {
