@@ -87,7 +87,7 @@ const MarketSidebar = () => {
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
-                      to="/shop/beta-pass/base"
+                      to="/shop/beta-pass/bnb"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -192,7 +192,7 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/shop/mint/tea-fi"
+            to="/shop/mint/timepiece"
             end
             className={({ isActive }) =>
               isActive || location.pathname.includes("mint")

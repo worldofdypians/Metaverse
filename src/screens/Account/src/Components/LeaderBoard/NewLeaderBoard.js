@@ -88,6 +88,7 @@ const NewLeaderBoard = ({
   allBaseData,
   allTaikoData,
   allMatData,
+  allTaraxaData,
   onPremiumClick,
   onGoldenpassClick,
   allSeiData,
@@ -152,6 +153,9 @@ const NewLeaderBoard = ({
     if (allVanarData && allVanarData.length > 0 && optionText2 === "vanar") {
       setAllData(allVanarData);
     }
+    if (allTaraxaData && allTaraxaData.length > 0 && optionText2 === "taraxa") {
+      setAllData(allTaraxaData);
+    }
     if (
       allVictionData &&
       allVictionData.length > 0 &&
@@ -170,6 +174,7 @@ const NewLeaderBoard = ({
     allTaikoData,
     allVictionData,
     allVanarData,
+    allTaraxaData,
   ]);
 
   // useEffect(() => {
@@ -278,6 +283,45 @@ const NewLeaderBoard = ({
                           ? "Vanar"
                           : windowSize.width < 786 && optionText2 === "vanar"
                           ? "Vanar"
+                          : ""}
+                      </button>
+                      <button
+                        onMouseEnter={() => handleMouseEnter("taraxa")}
+                        onMouseLeave={handleMouseLeave}
+                        className={` 
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "taraxa" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("taraxa");
+                          setAllData(allTaraxaData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "taraxa"
+                              ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                              : optionText2 !== "taraxa" &&
+                                hoverState === "taraxa"
+                              ? "https://cdn.worldofdypians.com/wod/taraxaWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/taraxaInactive.svg"
+                          }
+                          taraxa
+                          className={`${
+                            optionText2 === "taraxa"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Taraxa"
+                          : windowSize.width < 786 && optionText2 === "taraxa"
+                          ? "Taraxa"
                           : ""}
                       </button>
                       <button
@@ -467,7 +511,7 @@ const NewLeaderBoard = ({
                           ? "Base"
                           : ""}
                       </button>
-                        <button
+                      <button
                         onMouseEnter={() => handleMouseEnter("skale")}
                         onMouseLeave={handleMouseLeave}
                         className={` 
@@ -720,34 +764,34 @@ const NewLeaderBoard = ({
                   </span>
                 </div>
                 {optionText !== "genesis" ? (
-                  <div className="position-relative">
+                  <div className={`position-relative`}>
                     {allData[0]?.loading === true ? (
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <CircularProgress size={20} />
                       </div>
                     ) : (
-                      //  : optionText2 === "base" && inactiveBoard === true ? (
-                      //   <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center">
-                      //     <h6
-                      //       className="mb-0 text-center"
-                      //       style={{ fontSize: 18 }}
-                      //     >
-                      //       Coming Soon
-                      //     </h6>
-                      //     <h6
-                      //       className="mb-0 text-center"
-                      //       style={{ fontSize: 14 }}
-                      //     >
-                      //       The leaderboard is under maintenance.
-                      //     </h6>
-                      //     <h6
-                      //       className="mb-0 text-center"
-                      //       style={{ fontSize: 14 }}
-                      //     >
-                      //       The points and stars will be live tomorrow{" "}
-                      //     </h6>
-                      //   </div>
-                      // )
+                        optionText2 === "taraxa"  ? (
+                        <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
+                          <h6
+                            className="mb-0 text-center"
+                            style={{ fontSize: 18 }}
+                          >
+                            Coming Soon
+                          </h6>
+                          {/* <h6
+                            className="mb-0 text-center"
+                            style={{ fontSize: 14 }}
+                          >
+                            The leaderboard is under maintenance.
+                          </h6>
+                          <h6
+                            className="mb-0 text-center"
+                            style={{ fontSize: 14 }}
+                          >
+                            The points and stars will be live tomorrow{" "}
+                          </h6> */}
+                        </div>
+                      ) :
                       <></>
                     )}
                     {/* <img

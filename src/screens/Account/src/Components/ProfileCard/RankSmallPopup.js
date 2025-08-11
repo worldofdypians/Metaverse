@@ -55,7 +55,11 @@ const RankSmallPopup = ({
   userRankVanar,
   userVanarScore,
   userVanarStars,
+  userRankTaraxa,
+  userTaraxaScore,
+  userTaraxaStars,
 }) => {
+  console.log(userTaraxaScore);
   return (
     <div className="package-popup-wrapper">
       <div className="package-popup my-progress-popup p-4">
@@ -212,6 +216,43 @@ const RankSmallPopup = ({
                     <span className="rank-dropdown-text">Stars</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userSeiStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+              </div>
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
+                  width={30}
+                  height={30}
+                  alt=""
+                />
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Rank</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {userTaraxaScore === 0 || userTaraxaScore === undefined
+                        ? "No Rank"
+                        : ` #${getFormattedNumber(userRankTaraxa + 1, 0)}`}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Score</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userTaraxaScore, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userTaraxaStars, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>

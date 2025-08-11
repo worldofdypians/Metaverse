@@ -14,6 +14,7 @@ import { ethers } from "ethers";
 import Modal from "../../../../../components/General/Modal";
 
 const LandDetails = ({
+  isEOA,
   coinbase,
   isConnected,
   listType,
@@ -563,7 +564,8 @@ const LandDetails = ({
                       className={`btn w-100 claim-inner-btn ${
                         (claimStatus === "claimed" &&
                           claimStatus === "initial") ||
-                        EthRewards === 0
+                        EthRewards === 0 ||
+                        !isEOA
                           ? //
                             "disabled-btn"
                           : claimStatus === "failed"
@@ -574,7 +576,7 @@ const LandDetails = ({
                       } d-flex justify-content-center align-items-center gap-2`}
                       style={{ height: "fit-content" }}
                       onClick={claimRewards}
-                      disabled={EthRewards === 0}
+                      disabled={EthRewards === 0 || !isEOA}
                     >
                       {claimLoading ? (
                         <div
@@ -592,6 +594,11 @@ const LandDetails = ({
                       )}
                     </button>
                   </div>
+                  {isConnected && coinbase && !isEOA && (
+                    <span className="text-danger">
+                      Smart contract wallets are not supported for this action.
+                    </span>
+                  )}
                 </div>
               </div>
             )}
@@ -614,7 +621,7 @@ const LandDetails = ({
                       Anytime
                     </h6>
                     <button
-                      disabled={false}
+                      disabled={!isEOA}
                       className={"outline-btn-stake btn"}
                       onClick={() => {
                         setshowChecklistModal(true);

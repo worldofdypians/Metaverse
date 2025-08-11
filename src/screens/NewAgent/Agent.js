@@ -15,6 +15,7 @@ import Web3 from "web3";
 import { ethers } from "ethers";
 
 const Agent = ({
+  isEOA,
   email,
   coinbase,
   handleConnectWallet,
@@ -832,6 +833,7 @@ const Agent = ({
             unlockLoading={unlockLoading}
             unlockStatus={unlockStatus}
             network_matchain={network_matchain}
+            isEOA={isEOA}
           />
         </OutsideClickHandler>
       )}

@@ -110,6 +110,8 @@ const Header = ({
         setchainState("sei");
       } else if (chainId === 2040) {
         setchainState("vanar");
+      } else if (chainId === 841) {
+        setchainState("taraxa");
       } else {
         setchainState("");
       }
@@ -1341,6 +1343,8 @@ const Header = ({
                                       ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                                       : chainState === "vanar"
                                       ? "https://cdn.worldofdypians.com/wod/vanar.svg"
+                                      : chainState === "taraxa"
+                                      ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
                                       : "https://cdn.worldofdypians.com/wod/error.svg"
                                   }
                                   width={20}

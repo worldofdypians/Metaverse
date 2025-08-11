@@ -34,6 +34,7 @@ const renderer = ({ days, hours, minutes }) => {
 };
 
 const GoldenPassPopup = ({
+  isEOA,
   onClosePopup,
   coinbase,
   wallet,
@@ -42,6 +43,7 @@ const GoldenPassPopup = ({
   wodPrice,
   publicClient,
   walletClient,
+  isConnected,
 }) => {
   const [goldenPassWodAmount, setGoldenPassWodAmount] = useState(0);
   const [countdown, setCountdown] = useState(0);
@@ -369,6 +371,16 @@ const GoldenPassPopup = ({
     }
   }, [wallet, chainId, coinbase]);
 
+  useEffect(() => {
+    if (!isEOA && isConnected && coinbase) {
+      setStatus("Smart contract wallets are not supported for this action.");
+      setStatusColor("#FE7A00");
+    } else if (isEOA && isConnected && coinbase) {
+      setStatus("");
+      setStatusColor("#00FECF");
+    }
+  }, [isEOA, isConnected, coinbase]);
+
   return (
     <div className="package-popup-wrapper">
       <div className="package-popup golden-pass-popup p-4">
@@ -629,7 +641,8 @@ const GoldenPassPopup = ({
                   disabled={
                     bundleState === "deposit" ||
                     bundleState === "loading" ||
-                    checkWallet === false
+                    checkWallet === false ||
+                    !isEOA
                       ? true
                       : false
                   }
@@ -655,7 +668,8 @@ const GoldenPassPopup = ({
                   disabled={
                     bundleState === "deposit" ||
                     depositState === "loading-deposit" ||
-                    checkWallet === true
+                    checkWallet === true ||
+                    isEOA
                       ? false
                       : true
                   }

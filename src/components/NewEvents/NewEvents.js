@@ -62,6 +62,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 const NewEvents = ({
+  isEOA,
   events,
   onEventClick,
   coinbase,
@@ -2843,10 +2844,18 @@ const NewEvents = ({
         );
       } else if (
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
-        chainId === 56
+        chainId === 56 &&
+        isEOA
       ) {
         setCheckWallet(true);
         setStatus("");
+      } else if (
+        coinbase?.toLowerCase() === wallet?.toLowerCase() &&
+        chainId === 56 &&
+        !isEOA
+      ) {
+        setCheckWallet(false);
+        setStatus("Smart contract wallets are not supported for this action.");
       }
     } else if (wallet) {
       setCheckWallet(true);
@@ -2918,7 +2927,7 @@ const NewEvents = ({
       setScorpionShowApproval(false);
       setScorpionBundleState("initial");
     }
-  }, [wallet, coinbase, chainId, email]);
+  }, [wallet, coinbase, chainId, email, isEOA]);
 
   const eventinfos = [
     {
@@ -3434,7 +3443,7 @@ const NewEvents = ({
         style={{ scrollMarginTop: "100px" }}
       >
         <div className="row">
-          <div className="col-12">
+          <div className="col-12 px-0 px-lg-2">
             <div className="d-flex flex-column">
               <div className="new-events-top-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
                 <h6 className="challenges-text mb-0">CHALLENGES & EVENTS</h6>
@@ -3676,9 +3685,8 @@ const NewEvents = ({
                             <span>Past</span>
                           </div>
                         </div>
-                        {
-                          eventDuration === "Live" ||
-                          eventDuration === "Expired" && (
+                        {eventDuration === "Live" ||
+                          (eventDuration === "Expired" && (
                             <div className="d-flex align-items-center gap-2 mb-3">
                               <div
                                 className={`${
@@ -3704,21 +3712,20 @@ const NewEvents = ({
                               >
                                 <span>2</span>
                               </div>
-                              {/* <div
-                              className={`${
-                                page === 3
-                                  ? "active-challenge-tab"
-                                  : "challenge-tab"
-                              } px-4 py-2 d-flex align-items-center justify-content-center`}
-                              onClick={() => {
-                                setPage(3);
-                              }}
-                            >
-                              <span>3</span>
-                            </div> */}
+                              <div
+                                className={`${
+                                  page === 3
+                                    ? "active-challenge-tab"
+                                    : "challenge-tab"
+                                } px-4 py-2 d-flex align-items-center justify-content-center`}
+                                onClick={() => {
+                                  setPage(3);
+                                }}
+                              >
+                                <span>3</span>
+                              </div>
                             </div>
-                          )
-                        }
+                          ))}
                       </div>
                     )}
                     {challenge === "treasure-hunt" ? (
@@ -4170,7 +4177,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 dragonBundleState ===
                                                   "loading" ||
-                                                checkWallet === false
+                                                checkWallet === false ||
+                                                !isEOA
                                                   ? true
                                                   : false
                                               }
@@ -4204,6 +4212,7 @@ const NewEvents = ({
                                             <button
                                               disabled={
                                                 checkWallet === true &&
+                                                isEOA &&
                                                 dragonDepositState !==
                                                   "loading-deposit"
                                                   ? false
@@ -4273,7 +4282,8 @@ const NewEvents = ({
                                               disabled={
                                                 bearBundleState === "deposit" ||
                                                 bearBundleState === "loading" ||
-                                                checkWallet === false
+                                                checkWallet === false ||
+                                                !isEOA
                                                   ? true
                                                   : false
                                               }
@@ -4304,6 +4314,7 @@ const NewEvents = ({
                                             <button
                                               disabled={
                                                 checkWallet === true &&
+                                                isEOA &&
                                                 bearDepositState !==
                                                   "loading-deposit"
                                                   ? false
@@ -4375,7 +4386,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 beastBundleState ===
                                                   "loading" ||
-                                                checkWallet === false
+                                                checkWallet === false ||
+                                                !isEOA
                                                   ? true
                                                   : false
                                               }
@@ -4408,6 +4420,7 @@ const NewEvents = ({
                                             <button
                                               disabled={
                                                 checkWallet === true &&
+                                                isEOA &&
                                                 beastDepositState !==
                                                   "loading-deposit"
                                                   ? false
@@ -4479,7 +4492,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 eagleBundleState ===
                                                   "loading" ||
-                                                checkWallet === false
+                                                checkWallet === false ||
+                                                !isEOA
                                                   ? true
                                                   : false
                                               }
@@ -4512,6 +4526,7 @@ const NewEvents = ({
                                             <button
                                               disabled={
                                                 checkWallet === true &&
+                                                isEOA &&
                                                 eagleDepositState !==
                                                   "loading-deposit"
                                                   ? false
@@ -4583,7 +4598,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 scorpionBundleState ===
                                                   "loading" ||
-                                                checkWallet === false
+                                                checkWallet === false ||
+                                                !isEOA
                                                   ? true
                                                   : false
                                               }
@@ -4616,6 +4632,7 @@ const NewEvents = ({
                                             <button
                                               disabled={
                                                 checkWallet === true &&
+                                                isEOA &&
                                                 scorpionDepositState !==
                                                   "loading-deposit"
                                                   ? false
@@ -4687,7 +4704,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 cyclopsBundleState ===
                                                   "loading" ||
-                                                checkWallet === false
+                                                checkWallet === false ||
+                                                !isEOA
                                                   ? true
                                                   : false
                                               }
@@ -4720,6 +4738,7 @@ const NewEvents = ({
                                             <button
                                               disabled={
                                                 checkWallet === true &&
+                                                isEOA &&
                                                 cyclopsDepositState !==
                                                   "loading-deposit"
                                                   ? false
@@ -5232,104 +5251,105 @@ const NewEvents = ({
                                             )}
                                           </div>
                                         )} */}
-                                                           <div className="d-flex align-items-center gap-2">
-                                            {!isConnected && (
+                                        <div className="d-flex align-items-center gap-2">
+                                          {!isConnected && (
+                                            <button
+                                              className="beast-siege-btn"
+                                              onClick={onConnectWallet}
+                                            >
+                                              {" "}
+                                              Connect Wallet
+                                            </button>
+                                          )}
+                                          {!email && isConnected && (
+                                            <NavLink
+                                              className="beast-siege-btn"
+                                              to={"/auth"}
+                                            >
+                                              {" "}
+                                              Log In
+                                            </NavLink>
+                                          )}
+                                          {isConnected && email && (
+                                            <>
                                               <button
-                                                className="beast-siege-btn"
-                                                onClick={onConnectWallet}
+                                                disabled={
+                                                  puzzleMadnessBundleState ===
+                                                    "deposit" ||
+                                                  puzzleMadnessBundleState ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  puzzleMadnessBundleState ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  puzzleMadnessShowApproval ===
+                                                    false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "beast-siege-btn"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalPuzzle()
+                                                }
                                               >
-                                                {" "}
-                                                Connect Wallet
+                                                {puzzleMadnessBundleState ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
+                                                )}
                                               </button>
-                                            )}
-                                            {!email && isConnected && (
-                                              <NavLink
-                                                className="beast-siege-btn"
-                                                to={"/auth"}
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  puzzleMadnessDepositState !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  puzzleMadnessShowApproval ===
+                                                    true && checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : puzzleMadnessShowApproval ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "beast-siege-btn"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleDepositPuzzle()
+                                                }
                                               >
-                                                {" "}
-                                                Log In
-                                              </NavLink>
-                                            )}
-                                            {isConnected && email && (
-                                              <>
-                                                <button
-                                                  disabled={
-                                                    puzzleMadnessBundleState ===
-                                                      "deposit" ||
-                                                    puzzleMadnessBundleState ===
-                                                      "loading" ||
-                                                    checkWallet === false
-                                                      ? true
-                                                      : false
-                                                  }
-                                                  className={` ${
-                                                    puzzleMadnessBundleState ===
-                                                      "deposit" ||
-                                                    checkWallet === false ||
-                                                    puzzleMadnessShowApproval ===
-                                                      false
-                                                      ? "beast-siege-btn-inactive d-none"
-                                                      : "beast-siege-btn"
-                                                  }  py-2 px-4`}
-                                                  onClick={() =>
-                                                    handleApprovalPuzzle()
-                                                  }
-                                                >
-                                                  {puzzleMadnessBundleState ===
-                                                  "loading" ? (
-                                                    <div
-                                                      className="spinner-border spinner-border-sm text-light"
-                                                      role="status"
-                                                    >
-                                                      <span className="visually-hidden">
-                                                        Loading...
-                                                      </span>
-                                                    </div>
-                                                  ) : (
-                                                    "Approve"
-                                                  )}
-                                                </button>
-                                                <button
-                                                  disabled={
-                                                    checkWallet === true &&
-                                                    puzzleMadnessDepositState !==
-                                                      "loading-deposit"
-                                                      ? false
-                                                      : true
-                                                  }
-                                                  className={` ${
-                                                    puzzleMadnessShowApproval ===
-                                                      true &&
-                                                    checkWallet === true
-                                                      ? "beast-siege-btn-inactive d-none"
-                                                      : puzzleMadnessShowApproval ===
-                                                          false &&
-                                                        checkWallet === true
-                                                      ? "beast-siege-btn"
-                                                      : "beast-siege-btn-inactive"
-                                                  }  py-2 px-4`}
-                                                  onClick={() =>
-                                                    handleDepositPuzzle()
-                                                  }
-                                                >
-                                                  {puzzleMadnessDepositState ===
-                                                  "loading-deposit" ? (
-                                                    <div
-                                                      className="spinner-border spinner-border-sm text-light"
-                                                      role="status"
-                                                    >
-                                                      <span className="visually-hidden">
-                                                        Loading...
-                                                      </span>
-                                                    </div>
-                                                  ) : (
-                                                    "Activate"
-                                                  )}
-                                                </button>
-                                              </>
-                                            )}
-                                          </div>
+                                                {puzzleMadnessDepositState ===
+                                                "loading-deposit" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Activate"
+                                                )}
+                                              </button>
+                                            </>
+                                          )}
+                                        </div>
                                       </>
                                     ) : (
                                       <></>
