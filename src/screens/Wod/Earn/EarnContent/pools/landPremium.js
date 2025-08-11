@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import LandPremiumStakeModal from "../../../../../components/StakeModal/LandPremiumModal";
 
 const LandDetailsPremium = ({
+  isEOA,
   coinbase,
   isConnected,
   listType,
@@ -525,7 +526,7 @@ const LandDetailsPremium = ({
               </div>
               <div className="d-flex flex-column gap-2 justify-content-between">
                 <div className="d-flex align-items-center justify-content-between gap-2">
-                <button
+                  <button
                     className={`btn w-100 disabled-btn 
                      d-flex justify-content-center align-items-center`}
                     disabled={true}
@@ -545,7 +546,7 @@ const LandDetailsPremium = ({
                 Connect Wallet
               </button>
             )}
-{isConnected && chainId !== "1" && (
+            {isConnected && chainId !== "1" && (
               <button
                 className={`btn w-100 fail-button  d-flex justify-content-center align-items-center`}
                 onClick={() => {
@@ -560,10 +561,7 @@ const LandDetailsPremium = ({
               <div
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-                }  ${
-                  (chainId !== "1" || !isPremium) &&
-                  "blurrypool"
-                } `}
+                }  ${(chainId !== "1" || !isPremium) && "blurrypool"} `}
               >
                 <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
                   <h6
@@ -620,7 +618,8 @@ const LandDetailsPremium = ({
                       className={`btn w-100 outline-btn-stake ${
                         (claimStatus === "claimed" &&
                           claimStatus === "initial") ||
-                        EthRewards === 0
+                        EthRewards === 0 ||
+                        !isEOA
                           ? //
                             "disabled-btn"
                           : claimStatus === "failed"
@@ -631,7 +630,7 @@ const LandDetailsPremium = ({
                       } d-flex justify-content-center align-items-center gap-2`}
                       style={{ height: "fit-content" }}
                       onClick={claimRewards}
-                      disabled={!isPremium || EthRewards === 0}
+                      disabled={!isPremium || EthRewards === 0 || !isEOA}
                     >
                       {claimLoading ? (
                         <div
@@ -649,6 +648,11 @@ const LandDetailsPremium = ({
                       )}
                     </button>
                   </div>
+                  {isConnected && coinbase && !isEOA && (
+                    <span className="text-danger">
+                      Smart contract wallets are not supported for this action.
+                    </span>
+                  )}
                 </div>
               </div>
             )}
@@ -675,7 +679,7 @@ const LandDetailsPremium = ({
                         </h6>
                       </div>
                       <button
-                        disabled={false}
+                        disabled={isEOA ? false : true}
                         className={"outline-btn-stake btn"}
                         onClick={() => {
                           setshowChecklistModal(true);
@@ -690,8 +694,12 @@ const LandDetailsPremium = ({
                 </div>
               </div>
             )}
-              <div
-              className={`info-pool-wrapper2 mt-2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+            <div
+              className={`info-pool-wrapper2 mt-2 p-1 d-flex ${
+                mystakes.length > 0
+                  ? "justify-content-center"
+                  : "justify-content-center"
+              } `}
               style={{
                 cursor: "pointer",
                 width: mystakes.length > 0 ? "auto" : "fit-content",

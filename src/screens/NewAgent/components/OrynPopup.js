@@ -39,7 +39,8 @@ const OrynPopup = ({
   getWithdrawTimer,
   unlockLoading,
   unlockStatus,
-  network_matchain
+  network_matchain,
+  isEOA,
 }) => {
   const benefits = [
     "No chat restrictions",
@@ -54,13 +55,13 @@ const OrynPopup = ({
     if (window.WALLET_TYPE === "matchId") {
       network_matchain?.showChangeNetwork();
     } else {
-    await handleSwitchNetworkhook("0x38")
-      .then(() => {
-        handleSwitchNetwork(56);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      await handleSwitchNetworkhook("0x38")
+        .then(() => {
+          handleSwitchNetwork(56);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
   };
 
@@ -122,7 +123,7 @@ const OrynPopup = ({
         !hasStartedTimer ? (
           <button
             className={`${
-              unlockStatus === "fail"
+              unlockStatus === "fail" || !isEOA
                 ? "reverse-btn"
                 : unlockStatus === "success"
                 ? "action-btn"
@@ -131,7 +132,8 @@ const OrynPopup = ({
             disabled={
               unlockLoading ||
               unlockStatus === "fail" ||
-              unlockStatus === "success"
+              unlockStatus === "success" ||
+              !isEOA
             }
             onClick={() => {
               startWithdrawTimer();
@@ -161,7 +163,7 @@ const OrynPopup = ({
           hasStartedTimer ? (
           <button
             className={`${
-              withdrawStatus === "failed"
+              withdrawStatus === "failed" || !isEOA
                 ? "reverse-btn"
                 : withdrawStatus === "success"
                 ? "action-btn"
@@ -170,7 +172,8 @@ const OrynPopup = ({
             disabled={
               withdrawLoading ||
               withdrawStatus === "failed" ||
-              withdrawStatus === "success"
+              withdrawStatus === "success" ||
+              !isEOA
             }
             onClick={() => {
               handleWithdraw();
@@ -213,7 +216,10 @@ const OrynPopup = ({
         ) : (
           <button
             className={`${
-              !isConnected || chainId !== 56 || depositStatus === "fail"
+              !isConnected ||
+              chainId !== 56 ||
+              depositStatus === "fail" ||
+              !isEOA
                 ? "reverse-btn"
                 : depositStatus === "success"
                 ? "action-btn"
@@ -233,7 +239,8 @@ const OrynPopup = ({
             disabled={
               depositLoading ||
               depositStatus === "fail" ||
-              depositStatus === "success"
+              depositStatus === "success" ||
+              !isEOA
             }
           >
             {!isConnected ? (
@@ -259,6 +266,11 @@ const OrynPopup = ({
           </button>
         )}
       </div>
+      {isConnected && !isEOA && (
+        <span className="text-danger">
+          Smart contract wallets are not supported for this action.
+        </span>
+      )}
     </div>
   );
 };

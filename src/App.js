@@ -613,11 +613,12 @@ function App() {
   const [successMessage, setSuccessMessage] = useState("");
   const [successDomain, setSuccessDomain] = useState(false);
   const [dogePrice, setDogePrice] = useState(0);
-
+  const [isEOA, setIsEOA] = useState(true);
   const [domainName, setDomainName] = useState(null);
   const [loadingDomain, setLoadingDomain] = useState(false);
   const [domainMetaData, setDomainMetaData] = useState(null);
   const [totalTx, setTotalTx] = useState(0);
+
   const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
@@ -652,6 +653,8 @@ function App() {
 
   let mantaLastDay = new Date("2025-08-13T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
+  let taikoLastDay2 = new Date("2025-12-06T14:00:00.000+02:00");
+
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
@@ -1231,9 +1234,9 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            if (bnbEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (bnbEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /
@@ -1305,9 +1308,9 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            // if (taikoEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (taikoEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -1370,9 +1373,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            if (coreEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (coreEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -1580,6 +1583,19 @@ function App() {
       }
     } catch (error) {
       console.log("Error:", error);
+    }
+  };
+
+  const checkIfEOA = async (address) => {
+    if (window.ethereum) {
+      if (address) {
+        let web3 = new Web3(window.ethereum);
+        const code = await web3.eth.getCode(address).catch((e) => {
+          console.error(e);
+        });
+        setIsEOA(code === "0x");
+        // return code === "0x"; // true = EOA, false = Contract
+      }
     }
   };
 
@@ -4501,27 +4517,26 @@ function App() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Coming Soon",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       location: [-0.06735561726792588, 0.08666753768920898],
       eventType: "Explore & Mine",
-      eventDate: "Apr 09, 2025",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
-      userEarnUsd: bnbEarnUsd,
-      userEarnCrypto: bnbEarnToken,
-      userEarnPoints: bnbPoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       image: "bnbBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
-
       marker: markers.treasureMarker,
       popupInfo: {
         title: "BNB Chain",
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Live",
+        status: "Coming Soon",
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4531,7 +4546,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 09, 2025",
+        eventDate: "Coming Soon",
       },
     },
     {
@@ -4683,7 +4698,7 @@ function App() {
     {
       title: "Taiko",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
-      eventStatus: "Expired",
+      eventStatus: "Live",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
       location: [-0.06942812516951939, 0.08510112762451173],
@@ -4691,10 +4706,10 @@ function App() {
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       marker: markers.treasureMarker,
-      totalRewards: "$30,000 in TAIKO Rewards",
+      totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 04, 2025",
+      eventDate: "Dec 06, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
@@ -4704,17 +4719,17 @@ function App() {
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Expired",
+        status: "Live",
         id: "event22",
         eventType: "Explore & Mine",
-        totalRewards: "$30,000 in TAIKO Rewards",
-        eventDuration: taikoLastDay,
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay2,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 04, 2025",
+        eventDate: "Dec 06, 2025",
       },
     },
     {
@@ -4835,26 +4850,26 @@ function App() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Live",
+      eventStatus: "Coming Soon",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 10, 2025",
+      eventDate: "Coming Soon",
       backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
       image: "coreBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       location: [-0.06862698344579729, 0.08752048015594482],
       marker: markers.treasureMarker,
-      userEarnUsd: coreEarnUsd,
-      userEarnCrypto: coreEarnToken,
-      userEarnPoints: corePoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       popupInfo: {
         title: "CORE",
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Live",
+        status: "Coming Soon",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -4864,7 +4879,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 10, 2025",
+        eventDate: "Coming Soon",
       },
     },
     {
@@ -6124,6 +6139,12 @@ function App() {
     }
   }, [loginListener, userWallet]);
 
+  useEffect(() => {
+    if (isConnected && coinbase) {
+      checkIfEOA(coinbase);
+    }
+  }, [isConnected, coinbase]);
+
   // useEffect(() => {
   //   if (address && address.length > 0) {
   //     if (window.WALLET_TYPE === "matchId") {
@@ -6228,6 +6249,7 @@ function App() {
             element={
               <SingleNft
                 coinbase={coinbase}
+                isEOA={isEOA}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
@@ -6253,6 +6275,7 @@ function App() {
             path="/list-my-nft"
             element={
               <ListNFT
+                isEOA={isEOA}
                 coinbase={coinbase}
                 showWalletConnect={() => {
                   setwalletModal(true);
@@ -6316,6 +6339,7 @@ function App() {
                   setwalletModal(true);
                 }}
                 email={email}
+                isEOA={isEOA}
                 premiumOryn={premiumOryn}
                 chainId={networkId}
                 handleSwitchNetwork={handleSwitchNetwork}
@@ -6345,6 +6369,7 @@ function App() {
             path="/cliff-and-vesting"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6364,6 +6389,7 @@ function App() {
             path="/pool"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6384,6 +6410,7 @@ function App() {
             path="/pool2"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6404,6 +6431,7 @@ function App() {
             path="/pool-bonus"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6424,6 +6452,7 @@ function App() {
             path="/pool-dynamic"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6439,11 +6468,12 @@ function App() {
             }
           />
 
-            <Route
+          <Route
             exact
             path="/pool2-dynamic"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6459,12 +6489,12 @@ function App() {
             }
           />
 
-
           <Route
             exact
             path="/wod-dynamic"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6485,6 +6515,7 @@ function App() {
             path="/special-otc"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6505,6 +6536,7 @@ function App() {
             path="/bonus-otc"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6525,6 +6557,7 @@ function App() {
             path="/token-claim"
             element={
               <Release
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6718,6 +6751,7 @@ function App() {
             path="/account"
             element={
               <Dashboard
+                isEOA={isEOA}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
@@ -6816,6 +6850,7 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+                isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
@@ -7400,6 +7435,7 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
@@ -7567,6 +7603,7 @@ function App() {
             path="/shop/mint/timepiece"
             element={
               <MarketMint
+                isEOA={isEOA}
                 coinbase={coinbase}
                 showWalletConnect={() => {
                   setwalletModal(true);
@@ -7778,6 +7815,7 @@ function App() {
             path="/staking"
             element={
               <Earn
+                isEOA={isEOA}
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}

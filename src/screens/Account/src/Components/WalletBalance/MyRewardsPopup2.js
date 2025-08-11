@@ -822,7 +822,8 @@ const MyRewardsPopupNew = ({
                       Number(chainlinkEarnUsd) +
                       Number(baseEarnUSD) +
                       Number(kucoinEarnUsd) +
-                      Number(midleEarnUsd),
+                      Number(midleEarnUsd) +
+                      Number(coreEarnUsd),
                     2
                   )
                 : getFormattedNumber(
@@ -839,7 +840,6 @@ const MyRewardsPopupNew = ({
                       Number(taraxaEarnUsd) +
                       Number(mantaEarnUsd) +
                       Number(bnbEarnUsd) +
-                      Number(coreEarnUsd) +
                       Number(vanarEarnUsd) +
                       Number(teaEarnUsd) +
                       // Number(dailyDataAmountCore) +
@@ -1135,15 +1135,15 @@ const MyRewardsPopupNew = ({
                       Number(matEarnUsd) +
                       Number(chainlinkEarnUsd) +
                       Number(multiversEarnUsd) +
+                      Number(bnbEarnUsd) +
                       Number(midleEarnUsd) +
                       Number(baseEarnUSD) +
-                      Number(kucoinEarnUsd),
+                      Number(kucoinEarnUsd) +
+                      Number(coreEarnUsd),
                     2
                   )
                 : getFormattedNumber(
                     Number(taikoEarnUsd) +
-                      Number(bnbEarnUsd) +
-                      Number(coreEarnUsd) +
                       Number(seiEarnUsd) +
                       Number(mantaEarnUsd) +
                       Number(vanarEarnUsd) +
@@ -1663,19 +1663,6 @@ const MyRewardsPopupNew = ({
             <div className="treasure-hunt-item-wrapper-active">
               {/* <div className="d-flex justify-content-between gap-4 align-items-start"> */}
               <div className="d-flex flex-column gap-2">
-                <div className="d-flex gap-2 align-items-center justify-content-between">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    BNB Chain
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(bnbEarnUsd, 2)}
-                  </span>
-                </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1689,45 +1676,17 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(seiEarnUsd, 2)}
                   </span>
                 </div>
-                {/* <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Taraxa
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(taraxaEarnUsd, 2)}
-                  </span>
-                </div> */}
-              </div>
-              <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/core.svg"}
+                      src={"https://cdn.worldofdypians.com/wod/teafi.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
-                    CORE
+                    Tea-Fi
                   </span>
                   <span className="item-name-right">
-                    ${getFormattedNumber(coreEarnUsd, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Vanar
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(vanarEarnUsd, 2)}
+                    ${getFormattedNumber(teaEarnUsd, 2)}
                   </span>
                 </div>
               </div>
@@ -1749,14 +1708,14 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/teafi.svg"}
+                      src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
-                    Tea-Fi
+                    Taiko
                   </span>
                   <span className="item-name-right">
-                    ${getFormattedNumber(teaEarnUsd, 2)}
+                    ${getFormattedNumber(taikoEarnUsd, 2)}
                   </span>
                 </div>
 
@@ -1773,6 +1732,21 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(mantaEarnUsd, 2)}
                   </span>
                 </div> */}
+              </div>
+              <div className="d-flex flex-column gap-2">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Vanar
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(vanarEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
               {/* </div> */}
             </div>
@@ -1883,6 +1857,34 @@ const MyRewardsPopupNew = ({
                   <span className="item-name-right">
                     ${getFormattedNumber(victionEarnUsd, 2)}
                   </span>
+                </div>
+                <div className="d-flex flex-column gap-2">
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/core.svg"}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      CORE
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(coreEarnUsd, 2)}
+                    </span>
+                  </div>
+                  {/* <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      Vanar
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(vanarEarnUsd, 2)}
+                    </span>
+                  </div> */}
                 </div>
               </div>
 
@@ -2049,17 +2051,17 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(matEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
+                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
-                    Taiko
+                    BNB Chain
                   </span>
                   <span className="item-name-right">
-                    ${getFormattedNumber(taikoEarnUsd, 2)}
+                    ${getFormattedNumber(bnbEarnUsd, 2)}
                   </span>
                 </div>
               </div>

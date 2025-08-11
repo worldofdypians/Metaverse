@@ -105,6 +105,7 @@ const StyledTextField = styled(TextField)({
 });
 
 function Dashboard({
+  isEOA,
   dailyBonuslistedNFTS,
   account,
   isConnected,
@@ -6418,7 +6419,6 @@ function Dashboard({
                 // Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
                 Number(mantaEarnUsd) +
-                Number(coreEarnUsd) +
                 Number(seiEarnUsd) +
                 Number(taikoEarnUsd) +
                 Number(taraxaEarnUsd) +
@@ -6539,6 +6539,7 @@ function Dashboard({
               onLinkWallet={onManageLogin}
             />
             <NewEvents
+              isEOA={isEOA}
               events={dummyBetaPassData2}
               onEventClick={(value) => {
                 setselectedEvent(value);
@@ -6614,6 +6615,7 @@ function Dashboard({
           />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
+            isEOA={isEOA}
             chainId={chainId}
             coinbase={coinbase}
             isPremium={isPremium}
@@ -7217,6 +7219,7 @@ function Dashboard({
               setgoldenPassPopup(false);
               handleClosePopup();
             }}
+            isConnected={isConnected}
             coinbase={coinbase}
             chainId={chainId}
             wodPrice={wodPrice}
@@ -7224,6 +7227,7 @@ function Dashboard({
             wallet={data?.getPlayer?.wallet?.publicAddress}
             walletClient={walletClient}
             publicClient={publicClient}
+            isEOA={isEOA}
           />
         )}
 

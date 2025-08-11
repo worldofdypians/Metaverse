@@ -85,6 +85,7 @@ const ReleaseContent = ({
   userClaimedTokens,
   totalVestedTokens,
   cliffTime,
+  isEOA,
 }) => {
   const [timerFinished, settimerFinished] = useState(false);
   const today = new Date();
@@ -225,6 +226,11 @@ const ReleaseContent = ({
                       )}
                     </span>
                   </div>
+                  {isConnected && coinbase && !isEOA && (
+                    <span className="text-danger">
+                      Smart contract wallets are not supported for this action.
+                    </span>
+                  )}
                 </div>
               </div>
             )}
@@ -245,14 +251,12 @@ const ReleaseContent = ({
               chainId === 56 &&
               selectedRound?.id === "airdrop" && (
                 <button
-                  className={` w-100 py-2 disabled-btn2
-                
-              
-                `}
+                  className={` w-100 py-2 disabled-btn2`}
                   disabled={
                     canClaim === false ||
                     timerFinished === false ||
-                    Number(wodBalance) === 0
+                    Number(wodBalance) === 0 ||
+                    !isEOA
                       ? true
                       : false
                   }
@@ -281,7 +285,8 @@ const ReleaseContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinished === false
+                  timerFinished === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -292,7 +297,8 @@ const ReleaseContent = ({
                 disabled={
                   canClaim === false ||
                   timerFinished === false ||
-                  Number(wodBalance) === 0
+                  Number(wodBalance) === 0 ||
+                  !isEOA
                     ? true
                     : false
                 }

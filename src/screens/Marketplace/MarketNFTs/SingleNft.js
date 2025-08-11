@@ -112,6 +112,7 @@ const useSharedDataLatest20BoughtNFTS = (nftId, nftAddress) => {
 };
 
 const SingleNft = ({
+  isEOA,
   coinbase,
   showWalletConnect,
   chainId,
@@ -2626,6 +2627,18 @@ const SingleNft = ({
       setPurchaseColor("#FF6232");
     }
   }, [purchaseStatus, data]);
+
+  useEffect(() => {
+    if (!isEOA && isConnected && coinbase) {
+      setPurchaseStatus(
+        "Smart contract wallets are not supported for this action."
+      );
+      setPurchaseColor("#FF6232");
+    } else if (isEOA && isConnected && coinbase) {
+      setPurchaseStatus("");
+      setPurchaseColor("#00FECF");
+    }
+  }, [isEOA, isConnected, coinbase]);
   return (
     <div
       className="container-fluid d-flex mt-lg-5 pt-lg-5 justify-content-end p-0"
@@ -3811,7 +3824,9 @@ const SingleNft = ({
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
                           <button
                             disabled={
-                              buyloading === true || buyStatus === "failed"
+                              buyloading === true ||
+                              buyStatus === "failed" ||
+                              !isEOA
                                 ? true
                                 : false
                             }
@@ -3819,7 +3834,8 @@ const SingleNft = ({
                               buyStatus === "success"
                                 ? "successbtn"
                                 : buyStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
+                                  (chainId !== 5 && chainId !== 1) ||
+                                  !isEOA
                                 ? "errorbtn"
                                 : null
                             } d-flex justify-content-center align-items-center gap-2`}
@@ -3858,6 +3874,7 @@ const SingleNft = ({
                               onClick={() => {
                                 setshowMakeOffer(true);
                               }}
+                              disabled={!isEOA}
                             >
                               <img
                                 src={
@@ -3877,7 +3894,8 @@ const SingleNft = ({
                           <button
                             disabled={
                               updateLoading === true ||
-                              updateStatus === "failed"
+                              updateStatus === "failed" ||
+                              !isEOA
                                 ? true
                                 : false
                             }
@@ -3885,7 +3903,8 @@ const SingleNft = ({
                               updateStatus === "success"
                                 ? "successbtn"
                                 : updateStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
+                                  (chainId !== 5 && chainId !== 1) ||
+                                  !isEOA
                                 ? "errorbtn"
                                 : null
                             } d-flex justify-content-center align-items-center gap-2`}
@@ -3926,11 +3945,7 @@ const SingleNft = ({
                           </button>
 
                           <button
-                            // disabled={
-                            //   cancelLoading === true || cancelStatus === "failed"
-                            //     ? true
-                            //     : false
-                            // }
+                            disabled={!isEOA}
                             className={`unlistbtn col-lg-6 col-xxl-6 d-flex justify-content-center d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
@@ -4006,7 +4021,9 @@ const SingleNft = ({
                         type !== "tea-sei" && (
                           <button
                             disabled={
-                              sellLoading === true || sellStatus === "failed"
+                              sellLoading === true ||
+                              sellStatus === "failed" ||
+                              !isEOA
                                 ? true
                                 : false
                             }
@@ -4014,7 +4031,8 @@ const SingleNft = ({
                               sellStatus === "success"
                                 ? "successbtn"
                                 : sellStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
+                                  (chainId !== 5 && chainId !== 1) ||
+                                  !isEOA
                                 ? "errorbtn"
                                 : null
                             } d-flex justify-content-center align-items-center gap-2`}
@@ -4096,6 +4114,7 @@ const SingleNft = ({
                             onClick={() => {
                               setshowMakeOffer(true);
                             }}
+                            disabled={!isEOA}
                           >
                             <img
                               src={
