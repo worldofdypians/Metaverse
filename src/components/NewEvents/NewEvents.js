@@ -3400,7 +3400,7 @@ const NewEvents = ({
         style={{ scrollMarginTop: "100px" }}
       >
         <div className="row">
-          <div className="col-12">
+          <div className="col-12 px-0 px-lg-2">
             <div className="d-flex flex-column">
               <div className="new-events-top-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
                 <h6 className="challenges-text mb-0">CHALLENGES & EVENTS</h6>
