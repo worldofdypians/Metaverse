@@ -1351,9 +1351,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            if (coreEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (coreEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -4730,7 +4730,7 @@ function App() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -4749,7 +4749,7 @@ function App() {
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Live",
+        status: "Expired",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
