@@ -1918,7 +1918,9 @@
 }
 
 .package-popup-wrapper2 {
-  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
   z-index: 99;
   position: fixed;
   top: 0;
@@ -3330,6 +3332,12 @@
   background: linear-gradient(to bottom, #181636 15.48%, #0057ff 254.86%);
 }
 
+
+.taraxa-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #181636 15.48%, #18a85d 254.86%);
+}
+
 .cmc-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #201d52 15.48%, #0057ff 254.86%);
@@ -3629,6 +3637,9 @@
 
 .mint-teafi {
   background: linear-gradient(90deg, #181b38 0%, rgb(255 29 254 / 50%) 168.67%);
+}
+.mint-taraxa {
+  background: linear-gradient(90deg, #181b38 0%, #15ab5a 168.67%);
 }
 
 .mint-viction {
@@ -4827,6 +4838,11 @@
   background: linear-gradient(90deg, #171a3a 0%, rgb(255 29 254 / 50%) 168.67%);
 }
 
+.upcoming-taraxa-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181636 0%, #18a85d 168.67%);
+}
+ 
 
 .upcoming-taiko-event {
   border-radius: 20px;

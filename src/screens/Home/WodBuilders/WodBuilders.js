@@ -200,6 +200,13 @@ const WodBuilders = ({ page }) => {
       backer: false,
     },
     {
+      name: "Taraxa",
+      icon: "taraxa",
+      banner: "taraxaBuilderBanner.webp",
+      // link: "https://x.com/TeaFi_Official/status/1945511408570880105",
+      backer: false,
+    },
+    {
       name: "Binance Wallet",
       icon: "binanceWallet",
       banner: "bnbChainBanner.png",
@@ -437,7 +444,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="d-flex align-items-center gap-2 view-more-partners position-relative"
-                onClick={() => (slice === 2 ? setSlice(27) : setSlice(2))}
+                onClick={() => (slice === 2 ? setSlice(28) : setSlice(2))}
                 style={{ bottom: "0" }}
               >
                 <span className="view-all-partners ">
@@ -459,7 +466,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="d-flex align-items-center gap-2 view-more-partners position-relative"
-                onClick={() => (slice === 8 ? setSlice(27) : setSlice(8))}
+                onClick={() => (slice === 8 ? setSlice(28) : setSlice(8))}
                 style={{ bottom: "0" }}
               >
                 <span className="view-all-partners ">

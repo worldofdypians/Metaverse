@@ -253,6 +253,18 @@ const ChainPopup = ({
               />
               Vanar
             </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => onSwitchNetwork("0x349", 841)}
+              className={activeChain === "taraxa" ? "active-chain-btn" : ""}
+            >
+              <img
+                src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
+                alt=""
+                width={20}
+                height={20}
+              />
+              Taraxa
+            </Dropdown.Item>
           </div>
         </div>
         {!isMobile && (
