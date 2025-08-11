@@ -140,7 +140,7 @@ const Earn = ({
   }, [nftPools]);
   return (
     <>
-      <div className="container-fluid earn-mainhero-wrapper  px-0">
+      <div className="container-fluid earn-mainhero-wrapper px-0">
         <div className="d-flex flex-column gap-3">
           <EarnHero />
           <EarnContent

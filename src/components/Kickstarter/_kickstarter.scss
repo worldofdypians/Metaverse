@@ -1,0 +1,299 @@
+.kickstarter-container {
+  width: 80vw;
+  height: 80vh;
+  z-index: 1000;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(77, 79, 119, 0.8);
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+  pointer-events: auto !important;
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+.metrics-bg {
+  background-image: linear-gradient(
+    to right bottom,
+    oklab(0.398 -0.0473885 -0.0515202 / 0.3) 0%,
+    oklab(0.381 0.100917 -0.144194 / 0.4) 50%,
+    oklab(0.408 0.152862 0.00649235 / 0.3) 100%
+  );
+}
+
+.metrics-title {
+  font-family: "Montserrat";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.metrics-wrapper {
+  background-image: url("https://cdn.worldofdypians.com/wod/metricsbg.webp"),
+    linear-gradient(
+      to right,
+      oklab(0 0 0 / 0.8) 0%,
+      rgba(0, 0, 0, 0) 50%,
+      oklab(0 0 0 / 0.8) 100%
+    );
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-bottom: 3px solid black;
+  @media screen and (max-width: 786px) {
+    background-image: url("https://cdn.worldofdypians.com/wod/metricsbg.webp");
+  }
+}
+
+.slide-in {
+  right: -100%;
+  animation: slideIn 1s ease-out forwards;
+}
+
+@keyframes slideIn {
+  to {
+    right: 0;
+  }
+}
+
+.kickstarter-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  z-index: -1;
+  border-radius: 16px;
+}
+
+.kickstarter-title {
+  color: #fff;
+  text-align: center;
+  // text-shadow: 0px 4px 4px rgba(28, 26, 66, 0.4),
+  //   0px 4px 4px rgba(28, 26, 66, 0.4);
+  font-family: "Montserrat";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 20px; /* 83.333% */
+  text-shadow: -1px -1px 0 #471f06, 1px -1px 0 #471f06, -1px 1px 0 #471f06,
+    1px 1px 0 #471f06; /* Blue outline */
+}
+
+.kickstarter-info-container {
+  background: rgb(1 1 7 / 60%);
+  border: 1px solid rgba(77, 79, 119, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 16px 16px 0px 0;
+}
+.switch-info-container {
+  background: rgb(1 1 7 / 60%);
+  border: 1px solid rgba(77, 79, 119, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+}
+
+.kickstarter-chain-title {
+  color: #fff;
+  text-shadow: 0px 4px 4px rgba(28, 26, 66, 0.4),
+    0px 4px 4px rgba(28, 26, 66, 0.4);
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 111.111% */
+}
+
+.kickstarter-divider {
+  width: 100%;
+  height: 1px;
+  background: #4d4f77;
+}
+
+.kickstarter-desc {
+  color: #828fbb;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+  width: 50%;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.kickstarter-reward-image {
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  left: -5px;
+  z-index: 1;
+  @media screen and (max-width: 786px) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.kickstarter-rewards-container {
+  border-radius: 10px;
+  border: 1px solid #4d4f77;
+  backdrop-filter: blur(2px);
+  width: 175px;
+
+  @media screen and (max-width: 768px) {
+    width: 250px;
+  }
+}
+
+.kickstart-rewarded {
+  border: 1px solid #5957c5 !important;
+  span {
+    color: #5957c5;
+  }
+}
+
+.kickstarter-reward-title {
+  color: #8d98bc;
+  text-align: right;
+  font-family: "Montserrat";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px; /* 100% */
+}
+
+.kickstarter-close {
+  z-index: 1;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.kickstarter-video.visible {
+  opacity: 1;
+}
+
+.kickstarter-video.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.kickstarter-hero-wrapper {
+  background-image: url("https://cdn.worldofdypians.com/wod/kickstarterGifBg.gif");
+  height: 100vh;
+  background-size: cover;
+  background-position: bottom;
+
+  @media screen and (max-width: 786px) {
+    height: 50vh;
+  }
+}
+
+.switch-chain-position {
+  position: absolute;
+  left: 1%;
+  top: 1%;
+  @media screen and (max-width: 786px) {
+    top: 10%;
+  }
+}
+
+.kickstarter-scrollable {
+  @media screen and (max-width: 786px) {
+    height: 170px;
+    overflow-y: scroll;
+  }
+}
+
+.switch-btn-2 {
+  background: rgba(25, 28, 67, 0.5);
+  border: 1px solid #262b4a;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.35s;
+  span {
+    color: #828fbb;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 300% */
+  }
+}
+
+.switch-btn-2:hover {
+  background: rgba(246, 202, 74, 0.5);
+  border: 1px solid #f6ca4a;
+  span {
+    color: #f1edff;
+  }
+}
+
+.switch-btn-2-active {
+  background: rgba(246, 202, 74, 0.5);
+  border: 1px solid #f6ca4a;
+  span {
+    color: #f1edff;
+  }
+}
+
+.kickstarter-chain-item {
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.25s;
+  border: 1px solid transparent;
+}
+
+.kickstarter-chain-item-active {
+  cursor: pointer;
+  border-radius: 6px;
+  background: rgba(243, 192, 9, 0.2);
+  border: 1px solid #f3c009;
+}
+
+.kickstarter-chain-item:hover {
+  background: rgba(130, 143, 187, 0.2);
+  border: 1px solid #4d4f77;
+}
+
+.kickstarter-chain-span {
+  text-align: center;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 333.333% */
+}
+
+@media only screen and (max-width: 600px) {
+  .kickstart-partner-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 10px;
+    overflow-x: auto;
+  }
+}

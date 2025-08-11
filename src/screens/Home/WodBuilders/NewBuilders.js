@@ -474,11 +474,7 @@ const NewBuilders = () => {
                   className={`d-flex flex-column align-items-center gap-2`}
                 >
                   <img
-                    src={
-                      item.icon.includes("changeNow")
-                        ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
-                        : `https://cdn.worldofdypians.com/wod/${item.icon}`
-                    }
+                    src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                     width={45}
                     height={45}
                     alt=""
