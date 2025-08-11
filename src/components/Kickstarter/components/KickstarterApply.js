@@ -28,7 +28,7 @@ const KickstarterApply = () => {
   // );
 
   return (
-    <section className="py-20 px-6 relative overflow-hidden">
+    <section className="py-20 px-lg-6 px-2 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-purple-900/30 to-blue-900/30"></div>
 
       {/* Background decorative elements */}

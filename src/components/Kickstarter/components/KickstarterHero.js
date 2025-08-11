@@ -25,7 +25,10 @@ const KickstarterHero = () => {
               <h6 className="main-hero-title font-montserrat text-start text-capitalize">
                 "Keep Building" Program
               </h6>
-              <p className="market-banner-desc font-montserrat">
+              <p
+                className="market-banner-desc font-montserrat"
+                style={{ textAlign: "start" }}
+              >
                 The World of Dypians Keep Building Program helps creators and
                 partners launch unique experiences, grow their brand, and build
                 strong engagement in the game.

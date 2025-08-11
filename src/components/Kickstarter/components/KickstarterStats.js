@@ -156,7 +156,7 @@ const KickstarterStats = ({ monthlyPlayers, totalVolumeNew }) => {
   }, []);
 
   return (
-    <div className="py-20 px-6 position-relative overflow-hidden metrics-bg">
+    <div className="py-20 px-lg-6 px-2 position-relative overflow-hidden metrics-bg">
       {/* Background Image */}
       <div className="position-absolute top-0 end-0 bottom-0 start-0">
         <img

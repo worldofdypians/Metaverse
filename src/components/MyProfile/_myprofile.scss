@@ -908,6 +908,7 @@ filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
 .new-profile-img {
   height: 106px;
   width: 82px;
+  // max-width: fit-content;
 }
 
 @media (min-width: 1610px) {

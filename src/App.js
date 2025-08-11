@@ -8417,6 +8417,7 @@ function App() {
               <KickstarterPage
                 monthlyPlayers={monthlyPlayers}
                 totalVolumeNew={totalVolumeNew}
+                wodHolders={wodHolders}
               />
             }
           />
