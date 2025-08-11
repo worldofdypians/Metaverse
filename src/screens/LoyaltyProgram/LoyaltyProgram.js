@@ -93,7 +93,7 @@ const LoyaltyProgram = ({
     });
   };
 
-  let loyaltyCd = new Date("2025-07-30T12:59:59.000+02:00");
+  let loyaltyCd = new Date("2025-08-25T12:59:59.000+02:00");
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -459,16 +459,7 @@ const LoyaltyProgram = ({
                                             alt=""
                                             className="participant-chain"
                                           />
-                                        ) : item === "taraxa" ? (
-                                          <img
-                                            key={index}
-                                            src={`https://cdn.worldofdypians.com/wod/${item}Logo.svg`}
-                                            width={16}
-                                            height={16}
-                                            alt=""
-                                            className="participant-chain"
-                                          />
-                                        ) : (
+                                        )  : (
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}
@@ -520,15 +511,6 @@ const LoyaltyProgram = ({
                                             className="participant-chain"
                                           />
                                         ) : item === "sei" ? (
-                                          <img
-                                            key={index}
-                                            src={`https://cdn.worldofdypians.com/wod/${item}Logo.svg`}
-                                            width={16}
-                                            height={16}
-                                            alt=""
-                                            className="participant-chain"
-                                          />
-                                        ) : item === "taraxa" ? (
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Logo.svg`}
