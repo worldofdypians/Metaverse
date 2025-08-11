@@ -3619,12 +3619,11 @@ function Dashboard({
     }
   }, [seicount]);
 
-  useEffect(() => {
-    if (taraxacount !== 0) {
-      // fetchDailyRecordstaraxa();
-      getAllTaraxaChests(email);
-    }
-  }, [taraxacount]);
+  // useEffect(() => {
+  //   if (taraxacount !== 0) {
+  //     getAllTaraxaChests(email);
+  //   }
+  // }, [taraxacount]);
 
   useEffect(() => {
     // if (!lastUpdated.current) {
@@ -4235,8 +4234,8 @@ function Dashboard({
         type: "stars",
         rewards: taraxaStars,
         previous_rewards: taraxaStars,
-        activeData: dailyRecordsTaraxa,
-        previousData: prevDataTaraxa,
+        activeData: placeholderplayerData.slice(0, 10),
+        previousData: placeholderplayerData.slice(0, 10),
         player_data: userDataTaraxa,
         is_active: activePlayerTaraxa, //change when apis are ready
         loading: loadingTaraxa,
@@ -4363,11 +4362,13 @@ function Dashboard({
       if (dailyRecordsSei.length === 0) {
         fetchDailyRecordsSei();
       }
-    } else if (chain === "taraxa") {
-      if (dailyRecordsTaraxa.length === 0) {
-        fetchDailyRecordsTaraxa();
-      }
-    } else if (chain === "manta") {
+    }
+    // else if (chain === "taraxa") {
+    //   if (dailyRecordsTaraxa.length === 0) {
+    //     fetchDailyRecordsTaraxa();
+    //   }
+    // }
+    else if (chain === "manta") {
       if (dailyRecordsManta.length === 0) {
         fetchDailyRecordsManta();
       }
@@ -4400,6 +4401,7 @@ function Dashboard({
       fetchDailyRecordsAroundPlayerSkale([]);
       fetchDailyRecordsAroundPlayerStar([]);
       fetchWeeklyRecordsAroundPlayerStar([]);
+      fetchDailyRecordsAroundPlayerTaraxa([]);
     }
   };
 
@@ -6193,7 +6195,7 @@ function Dashboard({
       getAllVanarChests(email);
       getAllMatChests(email);
       getAllSeiChests(email);
-      getAllTaraxaChests(email);
+      // getAllTaraxaChests(email);
     }
   }, [email, userWallet]);
 
@@ -6261,6 +6263,7 @@ function Dashboard({
       fetchDailyRecordsAroundPlayerMat([]);
       fetchDailyRecordsAroundPlayerViction([]);
       fetchDailyRecordsAroundPlayerSkale([]);
+      fetchDailyRecordsAroundPlayerTaraxa([]);
       effectRan.current = true;
     }
   }, [userId]);

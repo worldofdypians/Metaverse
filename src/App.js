@@ -4709,7 +4709,7 @@ function App() {
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 06, 2025",
+      eventDate: "Aug 08, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
@@ -4729,7 +4729,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 06, 2025",
+        eventDate: "Aug 08, 2025",
       },
     },
     {
