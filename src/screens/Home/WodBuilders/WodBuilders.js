@@ -202,7 +202,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "Taraxa",
       icon: "taraxa",
-      banner: "teafiBuilderBanner.webp",
+      banner: "taraxaBuilderBanner.webp",
       // link: "https://x.com/TeaFi_Official/status/1945511408570880105",
       backer: false,
     },

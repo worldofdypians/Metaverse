@@ -161,8 +161,8 @@ const BetaPassNFT = ({
       rewardType: "TARA",
       userEarned: taraxaEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Coming Soon",
-      eventEndDate: "Coming Soon",
+      eventStartDate: "Aug. 15, 2025",
+      eventEndDate: "Dec. 13, 2025",
     },
     {
       id: "taiko",

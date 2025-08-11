@@ -4746,7 +4746,7 @@ function App() {
       totalRewards: "$20,000 in TARA Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "Aug 15, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp",
       userEarnUsd: taraxaEarnUsd,
       userEarnCrypto: taraxaEarnToken,
@@ -4766,7 +4766,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Aug 15, 2025",
       },
     },
     {
