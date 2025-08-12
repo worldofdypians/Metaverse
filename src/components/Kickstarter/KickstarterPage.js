@@ -11,7 +11,7 @@ import KickstarterMobile from "./components/KickstarterMobile";
 import KickstarterGameplay from "./components/KickstarterGameplay";
 import KickstarterLaunchpool from "./components/KickstarterLaunchpool";
 
-const KickstarterPage = ({ monthlyPlayers, totalVolumeNew }) => {
+const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
   useEffect(() => {
     document.title = "Keep Building Program";
     window.scrollTo(0, 0);
@@ -28,7 +28,7 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew }) => {
       <KickstarterPartners />
       <KickstarterVideoContent />
       <KickstarterGameplay />
-      <KickstarterLaunchpool />
+      <KickstarterLaunchpool wodHolders={wodHolders} />
       <KickstarterMobile />
       <KickstarterApply />
     </div>

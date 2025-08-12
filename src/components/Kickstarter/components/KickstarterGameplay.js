@@ -61,7 +61,7 @@ const KickstarterGameplay = () => {
   ];
 
   return (
-    <section className="py-20 px-6 relative overflow-hidden">
+    <section className="py-20 px-lg-6 px-2 relative overflow-hidden">
       {/* Enhanced background with gaming imagery */}
       <div className="absolute inset-0">
         <img

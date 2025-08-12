@@ -384,10 +384,10 @@
     display: block;
   }
 
-  img, video {
-    max-width: 100%;
-    height: auto;
-  }
+  // img, video {
+  //   max-width: 100%;
+  //   height: auto;
+  // }
 
   button, input, select, optgroup, textarea {
     font: inherit;
@@ -6954,7 +6954,7 @@
 }
 
 :root {
-  --font-size: 14px;
+  --font-size: 16px;
   --background: #fff;
   --foreground: oklch(.145 0 0);
   --card: #fff;
@@ -7031,9 +7031,9 @@
   --sidebar-ring: oklch(.439 0 0);
 }
 
-// html {
-//   font-size: var(--font-size);
-// }
+  html {
+  font-size: var(--font-size);
+}
 
 @property --tw-translate-x {
   syntax: "*";

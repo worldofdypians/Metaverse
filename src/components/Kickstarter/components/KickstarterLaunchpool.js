@@ -1,4 +1,6 @@
-const KickstarterLaunchpool = () => {
+import { abbreviateNumber } from "js-abbreviation-number";
+
+const KickstarterLaunchpool = ({ wodHolders }) => {
   const valueProps = [
     {
       icon: "https://cdn.worldofdypians.com/wod/benefitGlobal.svg",
@@ -21,7 +23,7 @@ const KickstarterLaunchpool = () => {
   ];
 
   return (
-    <section className="py-20 px-6 relative overflow-hidden">
+    <section className="py-20 px-lg-6 px-2 relative overflow-hidden">
       {/* Enhanced background */}
       <div className="absolute inset-0">
         <img
@@ -55,20 +57,45 @@ const KickstarterLaunchpool = () => {
         </div>
 
         {/* Main Value Proposition */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Value propositions */}
           <div className="space-y-8">
-            <div className="mb-8">
-              <h3 className="text-3xl text-white mb-4">
-                What We Offer{" "}
-                {/* <span className="text-emerald-400">Early Projects</span> */}
-              </h3>
-              {/* <p className="text-gray-300 text-lg">
-                From concept to launch, we provide the foundation for
-                sustainable growth in the BNB Chain ecosystem.
-              </p> */}
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="bg-black/40 backdrop-blur-sm d-flex align-items-center justify-content-center rounded-xl p-6 bordertw border-white/20 hover:scale-105 transition-all duration-300 hover:border-green-400/30 group">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-1">
+                    <h2 className="text-xl text-white  text-center">
+                      {abbreviateNumber(wodHolders, 0)}+
+                    </h2>
+                    <p className="text-gray-300 mb-0 leading-relaxed text-center">
+                      WOD Holders
+                    </p>
+                  </div>
+                </div>
+              </div>
 
+              <div className="bg-black/40 backdrop-blur-sm rounded-xl p-6 d-flex align-items-center justify-content-center bordertw border-white/20 hover:scale-105 transition-all duration-300 hover:border-green-400/30 group">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-1">
+                    <h2 className="text-xl text-white text-center">2.5M+</h2>
+                    <p className="text-gray-300 leading-relaxed mb-0 text-center">
+                      Community Members
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-black/40 backdrop-blur-sm rounded-xl d-flex align-items-center justify-content-center p-6 bordertw border-white/20 hover:scale-105 transition-all duration-300 hover:border-green-400/30 group">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-1">
+                    <h2 className="text-xl text-white  text-center">320%</h2>
+                    <p className="text-gray-300 mb-0 leading-relaxed text-center">
+                      Average Growth
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
             {valueProps.map((prop, index) => {
               return (
                 <div
@@ -125,13 +152,11 @@ const KickstarterLaunchpool = () => {
                       alt=""
                       className="w-5 h-5 text-yellow-400"
                     />
-                    <span className="text-white">
-                      Lightning Fast Integration
-                    </span>
+                    <span className="text-white">Fast Launch</span>
                   </div>
                   <p className="text-gray-300 text-sm">
-                    Seamlessly integrate with BNB Chain's infrastructure for
-                    optimal performance and cost efficiency.
+                    Setup the launchpool quickly and get your project live with
+                    a smooth, streamlined process from start to finish.
                   </p>
                 </div>
 

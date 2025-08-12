@@ -1785,7 +1785,7 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
                 <div
                   className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-2 pe-3"
                   style={{ height: "60px" }}
