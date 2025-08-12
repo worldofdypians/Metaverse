@@ -1,8 +1,9 @@
 .kickstarter-container {
-  width: 80vw;
-  height: 80vh;
+  width: 90vw;
+  height: 90vh;
   z-index: 1000;
   position: absolute;
+  overflow: hidden;
   left: 0;
   bottom: 0;
   top: 0;
@@ -88,11 +89,54 @@
 }
 
 .kickstarter-info-container {
-  background: rgb(1 1 7 / 60%);
-  border: 1px solid rgba(77, 79, 119, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 16px 16px 0px 0;
+  // background: rgb(1 1 7 / 60%);
+  // border: 1px solid rgba(77, 79, 119, 0.8);
+  // backdrop-filter: blur(10px);
+  // border-radius: 16px 16px 0px 0;
+  position: relative;
+  background: rgba(1, 1, 7, 0.35);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(1, 1, 7, 0.3);
+overflow: hidden;
 }
+
+ .wave-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 80px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .wave {
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50% 50% 0 0;
+    filter: blur(10px);
+    animation: waveMove 4s linear infinite;
+  }
+
+  .wave:nth-child(2) {
+    left: 50%;
+    animation-delay: 2s;
+  }
+
+  @keyframes waveMove {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
 .switch-info-container {
   background: rgb(1 1 7 / 60%);
   border: 1px solid rgba(77, 79, 119, 0.8);
