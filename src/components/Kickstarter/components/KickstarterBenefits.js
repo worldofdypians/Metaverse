@@ -113,7 +113,10 @@ const KickstarterBenefits = () => {
   ];
 
   return (
-    <section className="py-20 px-lg-6 px-2 relative overflow-hidden">
+    <section
+      className="py-20 px-lg-6 px-2 relative overflow-hidden bordertw-3 border-black"
+      id="benefits"
+    >
       {/* Animated background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 via-purple-900/20 to-pink-900/20"></div>

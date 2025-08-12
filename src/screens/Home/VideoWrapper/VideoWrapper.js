@@ -228,6 +228,45 @@ const VideoWrapper = ({
           className="row gap-4 gap-lg-0"
          
         > */}
+        <NavLink className="absolute right-4 top-24 z-5" to="/keep-building">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-xl rounded-lg" />
+            <div className="relative bg-black/80 backdrop-blur-lg rounded-lg bordertw border-yellow-400/30 shadow-2xl">
+              <div className="h-0.5 bg-gradient-to-r from-yellow-400 to-orange-600 rounded-t-lg" />
+              <div className="px-4 py-3 bg-[rgba(8,11,42,1)]">
+                <div className="text-center space-y-2">
+                  <div className="text-xl text-white tracking-wider">
+                    <span className="text-uppercase bg-gradient-to-r from-yellow-400 to-orange-600 bg-clip-text text-transparent font-bold text-[20px]">
+                      Keep Building
+                    </span>
+                  </div>
+                  <div className="text-xs text-white uppercase tracking-widest">
+                    Partner Program
+                  </div>
+                  <div className="sidebar-separator2 my-2"></div>
+                  <div className="flex justify-center items-center space-x-3 pt-1">
+                    <div className="flex items-center space-x-1">
+                      <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full" />
+                      <span className="text-gray-400 d-flex align-items-center gap-2 text-xs font-normal">
+                        Powered by{" "}
+                        <img
+                          src="https://cdn.worldofdypians.com/wod/kickstarterBnb.png"
+                          alt="powered by bnb chain"
+                          className="h-5"
+                        />
+                      </span>
+                    </div>
+                    {/* <div className="flex items-center space-x-1">
+                      <span className="text-emerald-400 text-xs">
+                        Trusted by Partners
+                      </span>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </NavLink>
         <div className="">
           <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center align-items-lg-center custom-container">
             <h4 className="main-hero-title font-montserrat">

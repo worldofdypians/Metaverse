@@ -3,7 +3,10 @@ import "./kickstarter_newcss.scss";
 
 const KickstarterMobile = () => {
   return (
-    <section className="py-20 px-lg-6 px-2 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
+    <section
+      className="py-20 px-lg-6 px-2 bg-gradient-to-r from-blue-900/20 to-purple-900/20 bordertw-3 border-black"
+      id="mini-app"
+    >
       <div className="custom-container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
