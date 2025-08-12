@@ -45,7 +45,7 @@ const KickstarterHero = () => {
           </div>
         </div>
       </div>
-      <div className="anchors-wrapper flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-2 gap-lg-5">
+      <div className="anchors-wrapper m-0 flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-2 gap-lg-5">
         <NavLink
           to={"/keep-building#metrics"}
           className="d-flex align-items-center gap-2"
