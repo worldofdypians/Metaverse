@@ -3705,7 +3705,7 @@ function App() {
       setmintloading("mint");
       setmintStatus("Minting in progress...");
       settextColor("rgb(123, 216, 176)");
-      const provider = ethers.providers.Web3Provider(window.ethereum);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
 
       const nft_contract = new ethers.Contract(
@@ -7725,11 +7725,12 @@ function App() {
               />
             }
           />*/}
-          {/* <Route
+          <Route
             exact
             path="/shop/mint/taraxa"
             element={
               <MarketMint
+                isEOA={isEOA}
                 coinbase={coinbase}
                 showWalletConnect={() => {
                   setwalletModal(true);
@@ -7755,7 +7756,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          />  */}
+          />
           {/* <Route
             exact
             path="/shop/mint/vanar"
