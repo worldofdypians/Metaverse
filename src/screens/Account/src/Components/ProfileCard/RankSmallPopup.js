@@ -149,7 +149,7 @@ const RankSmallPopup = ({
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img
-                  src={"https://cdn.worldofdypians.com/wod/matchainIcon.svg"}
+                  src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
                   width={30}
                   height={30}
                   alt=""
@@ -158,9 +158,9 @@ const RankSmallPopup = ({
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      {userMatScore === 0
+                      {userVictionScore === 0
                         ? "No Rank"
-                        : ` #${getFormattedNumber(userRankMat + 1, 0)}`}
+                        : ` #${getFormattedNumber(userRankVanar + 1, 0)}`}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
@@ -169,7 +169,7 @@ const RankSmallPopup = ({
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userMatScore, 0)}
+                      {getFormattedNumber(userVanarScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
@@ -178,44 +178,7 @@ const RankSmallPopup = ({
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Stars</span>
                     <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userMatStars, 0)}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-              </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
-                  width={30}
-                  height={30}
-                  alt=""
-                />
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Rank</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {userSeiScore === 0
-                        ? "No Rank"
-                        : ` #${getFormattedNumber(userRankSei + 1, 0)}`}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Score</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userSeiScore, 0)}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userSeiStars, 0)}
+                      {getFormattedNumber(userVanarStars, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
@@ -260,80 +223,6 @@ const RankSmallPopup = ({
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img
-                  src={"https://cdn.worldofdypians.com/wod/manta.png"}
-                  width={30}
-                  height={30}
-                  alt=""
-                />
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Rank</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {userMantaScore === 0
-                        ? "No Rank"
-                        : ` #${getFormattedNumber(userRankManta + 1, 0)}`}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Score</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userMantaScore, 0)}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userMantaStars, 0)}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-              </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/base.svg"}
-                  width={30}
-                  height={30}
-                  alt=""
-                />
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Rank</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {userBaseScore === 0
-                        ? "No Rank"
-                        : ` #${getFormattedNumber(userRankBase + 1, 0)}`}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Score</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userBaseScore, 0)}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userBaseStars, 0)}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-              </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img
                   src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
                   width={30}
                   height={30}
@@ -364,43 +253,6 @@ const RankSmallPopup = ({
                     <span className="rank-dropdown-text">Stars</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userTaikoStars, 0)}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-              </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
-                  width={30}
-                  height={30}
-                  alt=""
-                />
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Rank</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {userSkaleScore === 0
-                        ? "No Rank"
-                        : ` #${getFormattedNumber(userRankSkale + 1, 0)}`}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Score</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userSkaleScore, 0)}
-                    </span>
-                  </div>
-                  <div className="sidebar-separator2"></div>
-                </div>
-                <div className="d-flex flex-column w-100">
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
-                    <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userSkaleStars, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
@@ -445,6 +297,157 @@ const RankSmallPopup = ({
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img
+                  src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
+                  width={30}
+                  height={30}
+                  alt=""
+                />
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Rank</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {userSeiScore === 0
+                        ? "No Rank"
+                        : ` #${getFormattedNumber(userRankSei + 1, 0)}`}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Score</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userSeiScore, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userSeiStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+              </div>
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/manta.png"}
+                  width={30}
+                  height={30}
+                  alt=""
+                />
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Rank</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {userMantaScore === 0
+                        ? "No Rank"
+                        : ` #${getFormattedNumber(userRankManta + 1, 0)}`}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Score</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userMantaScore, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userMantaStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+              </div>
+
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/base.svg"}
+                  width={30}
+                  height={30}
+                  alt=""
+                />
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Rank</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {userBaseScore === 0
+                        ? "No Rank"
+                        : ` #${getFormattedNumber(userRankBase + 1, 0)}`}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Score</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userBaseScore, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userBaseStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+              </div>
+
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
+                  width={30}
+                  height={30}
+                  alt=""
+                />
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Rank</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {userSkaleScore === 0
+                        ? "No Rank"
+                        : ` #${getFormattedNumber(userRankSkale + 1, 0)}`}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Score</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userSkaleScore, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userSkaleStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+              </div>
+
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
+                <img
                   src={"https://cdn.worldofdypians.com/wod/viction.svg"}
                   width={30}
                   height={30}
@@ -482,7 +485,7 @@ const RankSmallPopup = ({
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img
-                  src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                  src={"https://cdn.worldofdypians.com/wod/matchainIcon.svg"}
                   width={30}
                   height={30}
                   alt=""
@@ -491,9 +494,9 @@ const RankSmallPopup = ({
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      {userVictionScore === 0
+                      {userMatScore === 0
                         ? "No Rank"
-                        : ` #${getFormattedNumber(userRankVanar + 1, 0)}`}
+                        : ` #${getFormattedNumber(userRankMat + 1, 0)}`}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
@@ -502,7 +505,7 @@ const RankSmallPopup = ({
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userVanarScore, 0)}
+                      {getFormattedNumber(userMatScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
@@ -511,7 +514,7 @@ const RankSmallPopup = ({
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Stars</span>
                     <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userVanarStars, 0)}
+                      {getFormattedNumber(userMatStars, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>

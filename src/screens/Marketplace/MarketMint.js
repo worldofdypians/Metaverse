@@ -64,20 +64,20 @@ const MarketMint = ({
   //   mobileBg: "gateMobileBg.png",
   // };
   const allMints = [
-    // {
-    //   id: "taraxa",
-    //   cardTitle: "Taraxa Beta Pass",
-    //   title: "Taraxa Beta Pass",
-    //   background: "taraxa-mint-bg",
-    //   mobileBg: "taraxaMobileBg.png",
-    //   activeClass: "taraxa-active",
-    //   emptyClass: "conflux-empty",
-    //   nftcreated: nftCreated,
-    //   nft_address: window.config.nft_taraxa_address,
-    //   chainId: 841,
-    //   chainName: "Taraxa",
-    //   logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-    // },
+    {
+      id: "taraxa",
+      cardTitle: "Taraxa Beta Pass",
+      title: "Taraxa Beta Pass",
+      background: "taraxa-mint-bg",
+      mobileBg: "taraxaMobileBg.png",
+      activeClass: "taraxa-active",
+      emptyClass: "conflux-empty",
+      nftcreated: nftCreated,
+      nft_address: window.config.nft_taraxa_address,
+      chainId: [841],
+      chainName: "Taraxa",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    },
     {
       id: "kucoin",
       cardTitle: "KuCoin Beta Pass",
@@ -88,7 +88,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_kucoin_address,
-      chainId: 204,
+      chainId: [204],
       chainName: "opBNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
     },
@@ -102,7 +102,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_conflux_address,
-      chainId: 1030,
+      chainId: [1030],
       chainName: "Conflux Network",
       logo: "https://cdn.worldofdypians.com/wod/confluxIcon.svg",
     },
@@ -130,7 +130,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_immutable_address,
-      chainId: 13371,
+      chainId: [13371],
       chainName: "Immutable Chain",
       logo: "https://cdn.worldofdypians.com/wod/immutable.svg",
     },
@@ -144,7 +144,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_sei_address,
-      chainId: 1329,
+      chainId: [1329],
       chainName: "SEI Network",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
     },
@@ -158,7 +158,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_bnb_address,
-      chainId: 56,
+      chainId: [56],
       chainName: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
     },
@@ -172,7 +172,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_opbnb_address,
-      chainId: 204,
+      chainId: [204],
       logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
     },
     {
@@ -185,7 +185,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_manta_address,
-      chainId: 169,
+      chainId: [169],
       chainName: "Manta Network",
       logo: "https://cdn.worldofdypians.com/wod/manta.png",
     },
@@ -199,7 +199,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_taiko_address,
-      chainId: 167000,
+      chainId: [167000],
       chainName: "Taiko Network",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
     },
@@ -213,7 +213,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_vanar_address,
-      chainId: 2040,
+      chainId: [2040],
       chainName: "Vanar Chain",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
     },
@@ -275,10 +275,10 @@ const MarketMint = ({
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(
     allMints.find((obj) => {
-      return obj.id === "timepiece";
+      return obj.id === "taraxa";
     })
   );
-  const [mintTitle, setMintTitle] = useState("timepiece");
+  const [mintTitle, setMintTitle] = useState("taraxa");
   const [sliderCut, setSliderCut] = useState();
 
   const slider = useRef(null);
@@ -604,9 +604,9 @@ const MarketMint = ({
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x531")
+          await handleSwitchNetworkhook("0x349")
             .then(() => {
-              handleSwitchNetwork(1329);
+              handleSwitchNetwork(841);
             })
             .catch((e) => {
               console.log(e);
@@ -701,7 +701,7 @@ const MarketMint = ({
     html.classList.remove("hidescroll");
   }, []);
 
-  let countToExpiresei = new Date("2025-07-31T14:00:00.000+02:00");
+  let countToExpiresei = new Date("2025-08-26T14:00:00.000+02:00");
   const dummyCards = [
     // {
     //   title: "Avalanche Pass",
@@ -865,17 +865,17 @@ const MarketMint = ({
     //   class: "mint-teafi",
     //   id: "tea-fi",
     // },
-    // {
-    //   title: "Taraxa Pass",
-    //   eventId: "taraxa",
-    //   desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
-    //   img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
-    //   data: allMints.find((item) => {
-    //     return item.id === "taraxa";
-    //   }),
-    //   class: "mint-taraxa",
-    //   id: "taraxa",
-    // },
+    {
+      title: "Taraxa Pass",
+      eventId: "taraxa",
+      desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
+      img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
+      data: allMints.find((item) => {
+        return item.id === "taraxa";
+      }),
+      class: "mint-taraxa",
+      id: "taraxa",
+    },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -1235,7 +1235,9 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("live")}
                   >
-                   
+                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
+                      <span className="mb-0">New</span>
+                    </div>
                     Live
                   </h6>
                   <h6
@@ -1244,9 +1246,6 @@ const MarketMint = ({
                     } px-3 py-2`}
                     onClick={() => setActiveTab("upcoming")}
                   >
-                    <div className="new-upcoming-tag d-flex align-items-center justify-content-center px-1">
-                      <span className="mb-0">New</span>
-                    </div>
                     Upcoming
                   </h6>
                   <h6
@@ -1407,25 +1406,11 @@ const MarketMint = ({
                                 activeButton === false ||
                                 nftCreated.length === 0
                               }
-                              to={`/shop/nft/${nftCreated[0]}/${
-                                myTeaBnbNfts.length > 0
-                                  ? window.config.nft_teabnb_address
-                                  : myTeaOpbnbNfts.length > 0
-                                  ? window.config.nft_teaopbnb_address
-                                  : myTeaBaseNfts.length > 0
-                                  ? window.config.nft_teabase_address
-                                  : window.config.nft_teasei_address
-                              }`}
+                              to={`/shop/nft/${nftCreated[0]}/${window.config.nft_taraxa_address}`}
                               onClick={() => {
                                 updateViewCount(
                                   nftCreated[0],
-                                  myTeaBnbNfts.length > 0
-                                    ? window.config.nft_teabnb_address
-                                    : myTeaOpbnbNfts.length > 0
-                                    ? window.config.nft_teaopbnb_address
-                                    : myTeaBaseNfts.length > 0
-                                    ? window.config.nft_teabase_address
-                                    : window.config.nft_teasei_address
+                                  window.config.nft_taraxa_address
                                 );
                               }}
                             >
@@ -1743,7 +1728,7 @@ const MarketMint = ({
                                   </h6>
                                 </div>
                               </div>
-                              <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
+                              {/* <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
                                 <span className="mb-0 latest-mint">
                                   Select chain
                                 </span>
@@ -1814,7 +1799,7 @@ const MarketMint = ({
                                     />
                                   </div>
                                 </div>
-                              </div>
+                              </div> */}
                               <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
                                 <span className="mb-0 latest-mint">
                                   Minting ends in
@@ -1894,8 +1879,7 @@ const MarketMint = ({
                             )}
                             <hr className="gray-divider" />
                             <div className="d-flex w-100 justify-content-center">
-                              {selectedMint.id !== "timepiece" &&
-                                selectedMint.id !== "taraxa" && (
+                              {selectedMint.id !== "timepiece" && (
                                 <button
                                   className={`py-2 ${
                                     mintloading === "error"
@@ -1907,7 +1891,7 @@ const MarketMint = ({
                                         (status !== "Connect your wallet." &&
                                           status !== "") ||
                                         nftCreated.length > 0 ||
-                                        !isEOA
+                                        (!isEOA && isConnected)
                                       ? "outline-btn-disabled"
                                       : "stake-wod-btn"
                                   }  px-4 w-100`}
@@ -1923,7 +1907,7 @@ const MarketMint = ({
                                   }}
                                   disabled={
                                     mintloading === "error" ||
-                                    !isEOA ||
+                                    (!isEOA && isConnected) ||
                                     mintloading === "success" ||
                                     (isConnected === true &&
                                       !selectedMint.chainId.includes(
@@ -2002,37 +1986,37 @@ const MarketMint = ({
                 </>
               )}
               {activeTab === "upcoming" && (
-                // <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
-                //   <div className="d-flex flex-column align-items-center gap-2">
-                //     <h6 className="upcoming-stake">Mints are coming...</h6>
-                //     <span className="upcoming-stake-desc">
-                //       Check back soon!
-                //     </span>
-                //   </div>
-                // </div>
-                <div className="upcoming-mint-wrapper upcoming-taraxa-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
-                  <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
-                    <h6 className="upcoming-mint-title">Taraxa Beta Pass</h6>
-                    <p className="upcoming-mint-desc">
-                      Get access to a special ticket to enter the metaverse and
-                      participate in an exclusive event hosted by Taraxa
-                    </p>
+                <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <div className="d-flex flex-column align-items-center gap-2">
+                    <h6 className="upcoming-stake">Mints are coming...</h6>
+                    <span className="upcoming-stake-desc">
+                      Check back soon!
+                    </span>
                   </div>
-                  <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp"
-                    }
-                    alt=""
-                    className="upcoming-mint-img d-none d-lg-block"
-                  />
-                  <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/taraxaMobileMint.webp"
-                    }
-                    alt=""
-                    className="upcoming-mint-img d-block d-lg-none d-md-none"
-                  />
                 </div>
+                // <div className="upcoming-mint-wrapper upcoming-taraxa-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //     <h6 className="upcoming-mint-title">Taraxa Beta Pass</h6>
+                //     <p className="upcoming-mint-desc">
+                //       Get access to a special ticket to enter the metaverse and
+                //       participate in an exclusive event hosted by Taraxa
+                //     </p>
+                //   </div>
+                //   <img
+                //     src={
+                //       "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp"
+                //     }
+                //     alt=""
+                //     className="upcoming-mint-img d-none d-lg-block"
+                //   />
+                //   <img
+                //     src={
+                //       "https://cdn.worldofdypians.com/wod/taraxaMobileMint.webp"
+                //     }
+                //     alt=""
+                //     className="upcoming-mint-img d-block d-lg-none d-md-none"
+                //   />
+                // </div>
 
                 // <div className="upcoming-mint-wrapper upcoming-teafi-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                 //   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
