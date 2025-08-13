@@ -16,6 +16,7 @@ import { ethers } from "ethers";
 import Modal from "../../../../../components/General/Modal";
 
 const CawsWodDetails = ({
+  isEOA,
   coinbase,
   isConnected,
   listType,
@@ -707,7 +708,8 @@ const CawsWodDetails = ({
                       className={`btn w-100 outline-btn-stake ${
                         (claimStatus === "claimed" &&
                           claimStatus === "initial") ||
-                        EthRewards === 0
+                        EthRewards === 0 ||
+                        !isEOA
                           ? //
                             "disabled-btn"
                           : claimStatus === "failed"
@@ -718,7 +720,7 @@ const CawsWodDetails = ({
                       } d-flex justify-content-center align-items-center gap-2`}
                       style={{ height: "fit-content" }}
                       onClick={claimRewards}
-                      disabled={EthRewards === 0}
+                      disabled={EthRewards === 0 || !isEOA}
                     >
                       {claimLoading ? (
                         <div
@@ -736,6 +738,11 @@ const CawsWodDetails = ({
                       )}
                     </button>
                   </div>
+                  {isConnected && coinbase && !isEOA && (
+                    <span className="text-danger">
+                      Smart contract wallets are not supported for this action.
+                    </span>
+                  )}
                 </div>
               </div>
             )}
@@ -757,7 +764,7 @@ const CawsWodDetails = ({
                       Anytime
                     </h6>
                     <button
-                      disabled={false}
+                      disabled={!isEOA}
                       className={"outline-btn-stake btn"}
                       onClick={() => {
                         setshowChecklistModal(true);

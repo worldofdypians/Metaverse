@@ -135,7 +135,7 @@ const MobileNav = () => {
           }}
         />
         <NavLink
-          to="/shop/mint/timepiece"
+          to="/shop/mint/taraxa"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
@@ -201,7 +201,7 @@ const MobileNav = () => {
           } nft-outer-wrapper-1 mobile-nft-wrapper d-flex flex-column p-3 gap-3 w-100`}
         >
           <NavLink
-            to={"/shop/beta-pass/base"}
+            to={"/shop/beta-pass/bnb"}
             className={({ isActive }) =>
               isActive
                 ? "nft-link-active d-flex align-items-center justify-content-between"

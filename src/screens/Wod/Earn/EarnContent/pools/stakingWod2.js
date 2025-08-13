@@ -42,6 +42,7 @@ const renderer2 = ({ days, hours, minutes }) => {
 };
 
 const StakeWodDetails2 = ({
+  isEOA,
   staking,
   apr,
   expiration_time,
@@ -975,7 +976,7 @@ const StakeWodDetails2 = ({
         }, 10000);
       });
 
-      if (txResponse) { 
+      if (txResponse) {
         const txReceipt = await txResponse.wait().catch((e) => {
           console.log(e);
         });
@@ -1408,20 +1409,28 @@ const StakeWodDetails2 = ({
 
   useEffect(() => {
     const result = Number(depositAmount) + Number(totalDeposited);
-    if (result > poolCap) {
+    if (result > poolCap && isEOA) {
       seterrorMsg(
         "Deposit amount is greater than available quota. Please add another amount."
       );
       setCanDeposit(false);
-    } else {
+    } else if (isEOA && result <= poolCap) {
       seterrorMsg("");
       setCanDeposit(true);
     }
-  }, [depositAmount, totalDeposited, poolCap]);
+  }, [depositAmount, totalDeposited, poolCap, isEOA]);
 
   useEffect(() => {
     getAvailableQuota();
   }, [staking, poolCap]);
+
+  useEffect(() => {
+    if (!isEOA && isConnected && coinbase) {
+      seterrorMsg("Smart contract wallets are not supported for this action.");
+    } else if (isEOA && isConnected && coinbase) {
+      seterrorMsg("");
+    }
+  }, [isEOA, isConnected, coinbase]);
 
   return (
     <div className={`p-0 ${listType === "list" && "pt-4"} `}>
@@ -1629,22 +1638,26 @@ const StakeWodDetails2 = ({
 
                 <button
                   disabled={
-                    (depositAmount === "" || depositLoading === true) &&
-                    isConnected &&
-                    chainId === "56"
+                    chainId !== "56"
+                      ? false
+                      : depositAmount === "" ||
+                        depositLoading === true ||
+                        (isConnected && chainId === "56" && !isEOA)
                       ? true
                       : false
                   }
                   className={`btn w-100 ${
-                    depositAmount === "" &&
-                    isConnected &&
-                    chainId === "56" &&
+                    ((depositAmount === "" &&
+                      isConnected &&
+                      chainId === "56") ||
+                      !isEOA) &&
                     "disabled-btn"
                   } ${
                     depositStatus === "initial" &&
                     depositAmount !== "" &&
                     isConnected &&
                     chainId === "56" &&
+                    isEOA &&
                     "outline-btn-stake"
                   }  ${
                     ((depositStatus === "deposit" &&
@@ -1667,7 +1680,9 @@ const StakeWodDetails2 = ({
                       ? handleEthPool()
                       : depositStatus === "deposit"
                       ? handleStake()
-                      : depositStatus === "initial" && depositAmount !== ""
+                      : depositStatus === "initial" &&
+                        depositAmount !== "" &&
+                        isEOA
                       ? handleApprove()
                       : console.log("");
                   }}
@@ -1715,7 +1730,10 @@ const StakeWodDetails2 = ({
               <div
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-                }  ${(expired === true || chainId !== "56") && "blurrypool"} `}
+                }  ${
+                  (expired === true || chainId !== "56" || !isEOA) &&
+                  "blurrypool"
+                } `}
               >
                 <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
                   <h6
@@ -1762,7 +1780,8 @@ const StakeWodDetails2 = ({
                         disabled={
                           claimStatus === "claimed" ||
                           claimStatus === "success" ||
-                          pendingDivs <= 0
+                          pendingDivs <= 0 ||
+                          !isEOA
                             ? //
                               true
                             : false
@@ -1770,7 +1789,8 @@ const StakeWodDetails2 = ({
                         className={`btn w-100 outline-btn-stake ${
                           (claimStatus === "claimed" &&
                             claimStatus === "initial") ||
-                          pendingDivs <= 0
+                          pendingDivs <= 0 ||
+                          !isEOA
                             ? //
                               "disabled-btn"
                             : claimStatus === "failed"
@@ -1808,9 +1828,11 @@ const StakeWodDetails2 = ({
                         )}
                       </button>
                       <button
-                        disabled={pendingDivs > 0 ? false : true}
+                        disabled={pendingDivs > 0 && isEOA ? false : true}
                         className={`btn w-100 outline-btn-stake ${
-                          reInvestStatus === "invest" || pendingDivs <= 0
+                          reInvestStatus === "invest" ||
+                          pendingDivs <= 0 ||
+                          !isEOA
                             ? "disabled-btn"
                             : reInvestStatus === "failed"
                             ? "fail-button"
@@ -1895,7 +1917,7 @@ const StakeWodDetails2 = ({
                       </div>
 
                       <button
-                        disabled={false}
+                        disabled={!isEOA ? true : false}
                         className={"outline-btn-stake btn"}
                         onClick={() => {
                           setshowWithdrawModal(true);

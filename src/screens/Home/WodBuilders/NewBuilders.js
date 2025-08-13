@@ -160,6 +160,12 @@ const NewBuilders = () => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "Taraxa",
+      icon: "taraxa.svg",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
 
     {
       name: "SEI",

@@ -60,6 +60,7 @@ const LoyaltyProgram = ({
     viction: { title: "Viction", value: "viction", checked: false },
     vanar: { title: "Vanar", value: "vanar", checked: false },
     sei: { title: "Sei", value: "sei", checked: false },
+    taraxa: { title: "Taraxa", value: "taraxa", checked: false },
   });
   const [reqChains, setReqChains] = useState([]);
   const selectedCount = Object.values(chains).filter(
@@ -92,7 +93,7 @@ const LoyaltyProgram = ({
     });
   };
 
-  let loyaltyCd = new Date("2025-07-30T12:59:59.000+02:00");
+  let loyaltyCd = new Date("2025-08-25T12:59:59.000+02:00");
 
   const convertEthToUsd = async () => {
     const res = axios
@@ -298,7 +299,7 @@ const LoyaltyProgram = ({
                         />
                       )}
                       {expired && (
-                        <h6 className="loyalty-timer mb-0">Season four</h6>
+                        <h6 className="loyalty-timer mb-0">Season five</h6>
                       )}
                       <span className="loyalty-time-left">
                         {expired ? "Coming soon" : "Time left"}
@@ -458,7 +459,7 @@ const LoyaltyProgram = ({
                                             alt=""
                                             className="participant-chain"
                                           />
-                                        ) : (
+                                        )  : (
                                           <img
                                             key={index}
                                             src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}
