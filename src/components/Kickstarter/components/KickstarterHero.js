@@ -7,7 +7,7 @@ const KickstarterHero = () => {
   return (
     <div className="container-fluid kickstarter-hero-wrapper d-flex align-items-center flex-column justify-content-center position-relative bordertw-3 border-black">
       <div className="custom-container">
-        <div className="row">
+        <div className="row mt-5 mt-lg-0 pt-5 pt-lg-0">
           <div className="col-12 col-lg-6">
             <div className="d-flex flex-column gap-2 align-items-start">
               <div className="inline-flex items-center px-4 py-2 gap-3 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 bordertw border-yellow-400/50 rounded-full backdrop-blur-sm relative overflow-hidden">
@@ -45,7 +45,7 @@ const KickstarterHero = () => {
           </div>
         </div>
       </div>
-      <div className="anchors-wrapper m-0 flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-2 gap-lg-5">
+      <div className="anchors-wrapper flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-2 gap-lg-5">
         <NavLink
           to={"/keep-building#metrics"}
           className="d-flex align-items-center gap-2"

@@ -228,42 +228,53 @@ const VideoWrapper = ({
           className="row gap-4 gap-lg-0"
          
         > */}
-        <NavLink className="absolute right-4 top-24 z-5" to="/keep-building">
-          <div className="relative">
+        <NavLink
+          className="absolute d-none d-lg-block left-4 top-24 z-5"
+          to="/keep-building"
+        >
+          <div className="group relative">
+            <div
+              className={`position-absolute top-0 end-0 bottom-0 start-0 bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-20 rounded-2xl blur-xl group-hover:opacitytw-40 transition-all duration-500`}
+            ></div>
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-xl rounded-lg" />
-            <div className="relative bg-black/80 backdrop-blur-lg rounded-lg bordertw border-yellow-400/30 shadow-2xl">
-              <div className="h-0.5 bg-gradient-to-r from-yellow-400 to-orange-600 rounded-t-lg" />
-              <div className="px-4 py-3 bg-[rgba(8,11,42,1)]">
-                <div className="text-center space-y-2">
-                  <div className="text-xl text-white tracking-wider">
-                    <span className="text-uppercase bg-gradient-to-r from-yellow-400 to-orange-600 bg-clip-text text-transparent font-bold text-[20px]">
-                      Keep Building
+
+            <div
+              className={`position-relative bg-[rgba(8,11,42,1)] backdrop-blur-sm rounded-2xl p-8 bordertw border-white/20 hover:border-white/40 transition-all duration-500 hover:transform hover:scale-105 shadow-yellow-500/50 group-hover:shadow-3xl`}
+            >
+              <div className="text-center space-y-2">
+                <div className="text-xl text-white tracking-wider">
+                  <span className="text-uppercase bg-gradient-to-r from-yellow-400 to-orange-600 bg-clip-text text-transparent font-bold text-[20px]">
+                    Keep Building
+                  </span>
+                </div>
+                <div className="text-xs text-white uppercase tracking-widest">
+                  Partner Program
+                </div>
+                <div className="sidebar-separator2 my-2"></div>
+                <div className="flex justify-center items-center space-x-3 pt-1">
+                  <div className="flex items-center space-x-1">
+                    <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full" />
+                    <span className="text-gray-400 d-flex align-items-center gap-2 text-xs font-normal">
+                      Powered by{" "}
+                      <img
+                        src="https://cdn.worldofdypians.com/wod/kickstarterBnb.png"
+                        alt="powered by bnb chain"
+                        className="h-4"
+                      />
                     </span>
                   </div>
-                  <div className="text-xs text-white uppercase tracking-widest">
-                    Partner Program
-                  </div>
-                  <div className="sidebar-separator2 my-2"></div>
-                  <div className="flex justify-center items-center space-x-3 pt-1">
-                    <div className="flex items-center space-x-1">
-                      <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full" />
-                      <span className="text-gray-400 d-flex align-items-center gap-2 text-xs font-normal">
-                        Powered by{" "}
-                        <img
-                          src="https://cdn.worldofdypians.com/wod/kickstarterBnb.png"
-                          alt="powered by bnb chain"
-                          className="h-5"
-                        />
-                      </span>
-                    </div>
-                    {/* <div className="flex items-center space-x-1">
+                  {/* <div className="flex items-center space-x-1">
                       <span className="text-emerald-400 text-xs">
                         Trusted by Partners
                       </span>
                     </div> */}
-                  </div>
                 </div>
               </div>
+
+              {/* Animated border */}
+              <div
+                className={`position-absolute top-0 end-0 bottom-0 start-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 pointer-events-none`}
+              ></div>
             </div>
           </div>
         </NavLink>

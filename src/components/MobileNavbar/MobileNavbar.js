@@ -981,7 +981,9 @@ const MobileNavbar = ({
                       }
                       onClick={() => setOpenNavbar(false)}
                     >
-                      <span className={`sidebar-title`}>
+                      <span
+                        className={`sidebar-title d-flex px-2 align-items-center gap-2`}
+                      >
                         Keep Building Program{" "}
                         <img
                           src={
