@@ -317,8 +317,8 @@ const BetaPassNFT = ({
       rewardType: "CORE",
       userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Coming Soon",
-      eventEndDate: "Coming Soon",
+      eventStartDate: "Aug 14, 2025",
+      eventEndDate: "Dec 13, 2025",
     },
     {
       id: "sei",
