@@ -1335,7 +1335,10 @@ const BetaPassNFT = ({
                                 </div>
                               </div>
                               <div className="d-flex gap-1 align-items-center justify-content-center">
-                                <NavLink to="/account/challenges/treasure-hunt">
+                                <NavLink
+                                  to="/account/challenges/treasure-hunt"
+                                  className={"d-flex align-items-center gap-1"}
+                                >
                                   <span className="coingecko-eventdetails">
                                     Event details
                                   </span>
