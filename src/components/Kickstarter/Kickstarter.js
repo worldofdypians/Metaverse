@@ -804,7 +804,7 @@ const Kickstarter = ({
               bottom: "24px",
               left: "24px",
               right: "24px",
-              height: "40%",
+              height: "30%",
               background:
                 "linear-gradient(135deg, rgba(8, 16, 32, 0.95) 0%, rgba(12, 20, 40, 0.85) 30%, rgba(6, 12, 28, 0.75) 70%, rgba(4, 8, 20, 0.65) 100%)",
               backdropFilter: "blur(30px)",
@@ -1051,17 +1051,17 @@ const Kickstarter = ({
                         <div className="d-flex gap-1">
                           {[
                             {
-                              Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+                              Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
                               label: "Twitter",
                               color: "#1DA1F2",
                             },
                             {
-                              Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+                              Icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
                               label: "Telegram",
                               color: "#0088CC",
                             },
                             {
-                              Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+                              Icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
                               label: "Discord",
                               color: "#5865F2",
                             },
@@ -1112,7 +1112,7 @@ const Kickstarter = ({
                                 {/* <Icon
                                   style={{ width: "12px", height: "12px" }}
                                 /> */}
-                                <img src={Icon} width={12} height={12} alt="" />
+                                <img src={Icon} width={18} height={18} alt="" />
                               </button>
                             </motion.div>
                           ))}
@@ -1182,7 +1182,7 @@ const Kickstarter = ({
                   >
                     {/* VERTICAL Rewards List - No Header */}
                     <div
-                      className="p-3 d-flex flex-column justify-content-center gap-2 h-100"
+                      className="p-3 d-flex align-items-center justify-content-center gap-2 w-100"
                       style={{ zIndex: 2 }}
                     >
                       {rewardCategories.map((category, index) => (
@@ -1200,7 +1200,7 @@ const Kickstarter = ({
                             stiffness: 120,
                           }}
                           whileHover={{ scale: 1.02, y: -2, x: 3 }}
-                          className="position-relative overflow-hidden"
+                          className="position-relative overflow-hidden col-4"
                           style={{
                             padding: "6px 12px",
                             background:
@@ -1329,7 +1329,7 @@ const Kickstarter = ({
                                   ease: "easeInOut",
                                 }}
                               >
-                               <img src={category.icon} alt="" />
+                               <img src={category.icon} width={32} height={32} alt="" />
 
                                 {/* Rotating ring effects */}
                                 <motion.div
@@ -1366,36 +1366,7 @@ const Kickstarter = ({
                                   >
                                     {category.name}
                                   </div>
-                                  <motion.div
-                                    className="badge px-1 py-0"
-                                    style={{
-                                      fontSize: "8px",
-                                      fontWeight: "600",
-                                      letterSpacing: "0.05em",
-                                      color: "rgba(255,255,255,0.9)",
-                                      background:
-                                        "linear-gradient(45deg, rgba(120, 170, 255, 0.3), rgba(59, 130, 246, 0.4))",
-                                      border:
-                                        "1px solid rgba(59, 130, 246, 0.5)",
-                                      textTransform: "uppercase",
-                                    }}
-                                    animate={{
-                                      scale:
-                                        activatedReward === category.id
-                                          ? [1, 1.05, 1]
-                                          : 1,
-                                    }}
-                                    transition={{
-                                      duration: 1,
-                                      repeat:
-                                        activatedReward === category.id
-                                          ? Infinity
-                                          : 0,
-                                      ease: "easeInOut",
-                                    }}
-                                  >
-                                    {category.tier}
-                                  </motion.div>
+                               
                                 </div>
                                 <div className="d-flex align-items-center gap-1">
                                   <div
