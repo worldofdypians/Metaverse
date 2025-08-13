@@ -646,7 +646,7 @@ function App() {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let teaLastDay = new Date("2025-10-16T13:00:00.000+02:00");
-  let bnbLastDay = new Date("2025-08-07T14:00:00.000+02:00");
+  let bnbLastDay = new Date("2025-12-11T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
   let coreLastDay2 = new Date("2025-08-08T14:00:00.000+02:00");
@@ -1234,9 +1234,9 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            // if (bnbEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (bnbEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /
@@ -4517,16 +4517,16 @@ function App() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in BNB Rewards",
+      eventStatus: "Live",
+      totalRewards: "$30,000 in BNB Rewards",
       myEarnings: 0.0,
       location: [-0.06735561726792588, 0.08666753768920898],
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "Aug 13, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
+      userEarnUsd: bnbEarnUsd,
+      userEarnCrypto: bnbEarnToken,
+      userEarnPoints: bnbPoints,
       image: "bnbBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
@@ -4536,17 +4536,17 @@ function App() {
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event20",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
+        totalRewards: "$30,000 in BNB Rewards",
         eventDuration: bnbLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Aug 13, 2025",
       },
     },
     {
