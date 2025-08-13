@@ -6421,7 +6421,7 @@ function Dashboard({
                 // Number(baseEarnUSD) +
                 // Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
-                Number(mantaEarnUsd) +
+                // Number(mantaEarnUsd) +
                 Number(seiEarnUsd) +
                 Number(taikoEarnUsd) +
                 Number(taraxaEarnUsd) +

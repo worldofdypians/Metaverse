@@ -289,7 +289,7 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "manta-mint-bg",
       wrapperClassName: "manta-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in Manta rewards",
       rewardType: "Manta",
       userEarned: mantaEarnUsd,
