@@ -769,29 +769,31 @@ const NewLeaderBoard = ({
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <CircularProgress size={20} />
                       </div>
-                    ) : (
-                        optionText2 === "taraxa"  ? (
-                        <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
-                          <h6
-                            className="mb-0 text-center"
-                            style={{ fontSize: 18 }}
-                          >
-                            Coming Soon
-                          </h6>
-                          {/* <h6
-                            className="mb-0 text-center"
-                            style={{ fontSize: 14 }}
-                          >
-                            The leaderboard is under maintenance.
-                          </h6>
-                          <h6
-                            className="mb-0 text-center"
-                            style={{ fontSize: 14 }}
-                          >
-                            The points and stars will be live tomorrow{" "}
-                          </h6> */}
-                        </div>
-                      ) :
+                    ) : 
+                    (
+                    //     optionText2 === "taraxa"  ? (
+                    //     <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
+                    //       <h6
+                    //         className="mb-0 text-center"
+                    //         style={{ fontSize: 18 }}
+                    //       >
+                    //         Coming Soon
+                    //       </h6>
+                    //       <h6
+                    //         className="mb-0 text-center"
+                    //         style={{ fontSize: 14 }}
+                    //       >
+                    //         The leaderboard is under maintenance.
+                    //       </h6>
+                    //       <h6
+                    //         className="mb-0 text-center"
+                    //         style={{ fontSize: 14 }}
+                    //       >
+                    //         The points and stars will be live tomorrow{" "}
+                    //       </h6>
+                    //     </div>
+                    //   ) 
+                    //   :
                       <></>
                     )}
                     {/* <img
