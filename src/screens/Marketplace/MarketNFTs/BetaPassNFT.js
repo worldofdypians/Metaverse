@@ -112,12 +112,12 @@ const BetaPassNFT = ({
       cardClassName: "bnb-mint-bg",
       wrapperClassName: "bnb-eventwrapper",
       treasureHuntStatus: "Live",
-      rewardsTitle: "$20,000 in BNB rewards",
+      rewardsTitle: "$30,000 in BNB rewards",
       rewardType: "BNB",
-      userEarned: 0,
+      userEarned: bnbEarnUSD,
       eventType: "Explore & Mine",
-      eventStartDate: "Apr 09, 2025",
-      eventEndDate: "Aug 07, 2025",
+      eventStartDate: "Aug. 13, 2025",
+      eventEndDate: "Dec. 11, 2025",
     },
 
     {
@@ -149,10 +149,10 @@ const BetaPassNFT = ({
       heroImage: "https://cdn.worldofdypians.com/wod/taraxaBetaBanner.webp",
       logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
       buttonTitle: "Taraxa",
-      giveawayButton: false,
+      giveawayButton: true,
       isComingSoon: false,
-      giveawayButtonTitle: "",
-      giveawayLink: "",
+      giveawayButtonTitle: "Mint your NFT",
+      giveawayLink: "/shop/mint/taraxa",
       areaImage: undefined,
       cardClassName: "taraxa-mint-bg",
       wrapperClassName: "taraxa-eventwrapper",
@@ -317,8 +317,8 @@ const BetaPassNFT = ({
       rewardType: "CORE",
       userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Coming Soon",
-      eventEndDate: "Coming Soon",
+      eventStartDate: "Aug 14, 2025",
+      eventEndDate: "Dec 13, 2025",
     },
     {
       id: "sei",
@@ -1335,7 +1335,10 @@ const BetaPassNFT = ({
                                 </div>
                               </div>
                               <div className="d-flex gap-1 align-items-center justify-content-center">
-                                <NavLink to="/account/challenges/treasure-hunt">
+                                <NavLink
+                                  to="/account/challenges/treasure-hunt"
+                                  className={"d-flex align-items-center gap-1"}
+                                >
                                   <span className="coingecko-eventdetails">
                                     Event details
                                   </span>

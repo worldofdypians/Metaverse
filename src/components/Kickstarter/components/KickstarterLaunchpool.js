@@ -23,7 +23,10 @@ const KickstarterLaunchpool = ({ wodHolders }) => {
   ];
 
   return (
-    <section className="py-20 px-lg-6 px-2 relative overflow-hidden">
+    <section
+      className="py-20 px-lg-6 px-2 relative overflow-hidden bordertw-3 border-black"
+      id="launchpool"
+    >
       {/* Enhanced background */}
       <div className="absolute inset-0">
         <img
@@ -48,10 +51,10 @@ const KickstarterLaunchpool = ({ wodHolders }) => {
           </div>
 
           <h2 className="text-4xl md:text-6xl mb-6">
-            <span className="text-white metrics-title">EMPOWERING</span>
+            <span className="text-white metrics-title">ACCELERATING</span>
             <br />
             <span className="bg-gradient-to-r from-green-400 via-emerald-400 to-cyan-400 bg-clip-text text-transparent metrics-title">
-              BNB CHAIN PROJECTS
+              NEXT-GEN PROJECTS
             </span>
           </h2>
         </div>
@@ -131,16 +134,14 @@ const KickstarterLaunchpool = ({ wodHolders }) => {
               <div className="text-center mb-8">
                 <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
                   <img
-                    src="https://cdn.worldofdypians.com/wod/kickstarterWhitebnb.svg"
+                    src="https://cdn.worldofdypians.com/wod/benefitRocket.svg"
                     alt="Kickstarter BNB"
                     className="w-8 h-8"
                   />
                 </div>
-                <h4 className="text-2xl text-white mb-4">
-                  Built for BNB Chain
-                </h4>
+                <h4 className="text-2xl text-white mb-4">Built for Anyone</h4>
                 <p className="text-gray-300">
-                  Supporting the next generation of blockchain innovation
+                  Powering the future of interactive blockchain experiences
                 </p>
               </div>
 

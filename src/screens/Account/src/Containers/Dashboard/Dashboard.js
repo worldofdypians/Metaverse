@@ -3694,11 +3694,11 @@ function Dashboard({
     }
   }, [seicount]);
 
-  // useEffect(() => {
-  //   if (taraxacount !== 0) {
-  //     getAllTaraxaChests(email);
-  //   }
-  // }, [taraxacount]);
+  useEffect(() => {
+    if (taraxacount !== 0) {
+      getAllTaraxaChests(email);
+    }
+  }, [taraxacount]);
 
   useEffect(() => {
     // if (!lastUpdated.current) {
@@ -4309,8 +4309,8 @@ function Dashboard({
         type: "stars",
         rewards: taraxaStars,
         previous_rewards: taraxaStars,
-        activeData: placeholderplayerData.slice(0, 10),
-        previousData: placeholderplayerData.slice(0, 10),
+        activeData: dailyRecordsTaraxa,
+        previousData: prevDataTaraxa,
         player_data: userDataTaraxa,
         is_active: activePlayerTaraxa, //change when apis are ready
         loading: loadingTaraxa,
@@ -4438,11 +4438,11 @@ function Dashboard({
         fetchDailyRecordsSei();
       }
     }
-    // else if (chain === "taraxa") {
-    //   if (dailyRecordsTaraxa.length === 0) {
-    //     fetchDailyRecordsTaraxa();
-    //   }
-    // }
+    else if (chain === "taraxa") {
+      if (dailyRecordsTaraxa.length === 0) {
+        fetchDailyRecordsTaraxa();
+      }
+    }
     else if (chain === "manta") {
       if (dailyRecordsManta.length === 0) {
         fetchDailyRecordsManta();
@@ -6406,7 +6406,7 @@ function Dashboard({
       getAllVanarChests(email);
       getAllMatChests(email);
       getAllSeiChests(email);
-      // getAllTaraxaChests(email);
+      getAllTaraxaChests(email);
     }
   }, [email, userWallet]);
 

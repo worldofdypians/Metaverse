@@ -22,11 +22,11 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const renderer = ({ hours, minutes }) => {
+const renderer = ({ days, hours, minutes }) => {
   return (
     <div className="d-flex flex-column gap-2 justify-content-center align-items-center ">
       <h6 className="timer-text2 mb-0">
-        {hours}h:{minutes}m
+        {days}d:{hours}h:{minutes}m
       </h6>
       <h6 className="timer-text2 mb-0">Next in</h6>
     </div>
@@ -389,7 +389,7 @@ const MyProfile = ({
   return (
     <>
       <div className="custom-container mt-5">
-        <div className="row mt-4 gap-5 gap-xl-0 mt-lg-0">
+        <div className="row mt-5 gap-5 gap-xl-0 mt-lg-3">
           <div className="col-12 col-xl-4 px-0 px-lg-2">
             <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
               <div className="d-flex align-items-center gap-2">
@@ -1066,7 +1066,7 @@ const MyProfile = ({
               </div>
               <div className="sidebar-separator2 my-2"></div>
 
-              <div className="daily-progress-wrapper p-3 d-flex flex-column gap-3">
+              <div className="daily-progress-wrapper px-3 py-4 d-flex flex-column gap-3">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="progress-line"></div>
                   <span className="daily-progress-span mx-2">
@@ -1244,9 +1244,9 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 5
+                        {userActiveEvents === 6
                           ? "Completed"
-                          : userActiveEvents + "/5"}
+                          : userActiveEvents + "/6"}
                       </span>
                     </div>
 
@@ -1754,7 +1754,7 @@ const MyProfile = ({
 
               <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
                 <NavLink to="/loyalty-program">
-                  <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
+                  <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                       <div className="d-flex align-items-center gap-2">
                         {/* <img
@@ -1787,7 +1787,7 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
                 <div
-                  className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-2 pe-3"
+                  className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
                   style={{ height: "60px" }}
                   onClick={openSpecialRewards}
                 >

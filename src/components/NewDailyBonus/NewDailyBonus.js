@@ -3045,82 +3045,82 @@ const NewDailyBonus = ({
       }
       // setMessage("comingsoon");
     } else if (chain === "taraxa") {
-      // if (
-      //   window.WALLET_TYPE !== "binance" &&
-      //   window.WALLET_TYPE !== "matchId"
-      // ) {
-      //   if (!email) {
-      //     setMessage("login");
-      //     setDisable(true);
-      //   } else if (email && coinbase && address) {
-      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
-      //       if (isPremium) {
-      //         if (
-      //           claimedTaraxaChests + claimedTaraxaPremiumChests === 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase()
-      //         ) {
-      //           setMessage("complete");
-      //         } else if (
-      //           claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 841
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 841
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       } else if (!isPremium) {
-      //         if (
-      //           claimedTaraxaChests === 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 841
-      //         ) {
-      //           setMessage("premium");
-      //           setDisable(true);
-      //         } else if (
-      //           claimedTaraxaChests < 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 841
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedTaraxaChests < 10 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 841
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       }
-      //     } else {
-      //       setMessage("switchAccount");
-      //       setDisable(true);
-      //     }
-      //   } else {
-      //     setMessage("connect");
-      //     setDisable(true);
-      //   }
-      // } else if (
-      //   window.WALLET_TYPE === "binance" ||
-      //   window.WALLET_TYPE === "matchId" ||
-      //   window.ethereum?.isBinance
-      // ) {
-      //   setMessage("notsupported");
-      // }
-      setMessage("comingsoon");
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedTaraxaChests + claimedTaraxaPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 841
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 841
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedTaraxaChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 841
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedTaraxaChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 841
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedTaraxaChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 841
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
+          }
+        } else {
+          setMessage("connect");
+          setDisable(true);
+        }
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.WALLET_TYPE === "matchId" ||
+        window.ethereum?.isBinance
+      ) {
+        setMessage("notsupported");
+      }
+      // setMessage("comingsoon");
     }
   }, [
     email,
@@ -3378,7 +3378,7 @@ const NewDailyBonus = ({
               </div>
               <div className="daily-bonus-inner-wrapper container p-4 p-lg-5 mt-3 mt-lg-0">
                 <div
-                  className="row daily-bonus-row 
+                  className="row daily-bonus-row p-3
                gap-lg-0 mx-3 mx-lg-2 mt-3 mt-lg-3"
                   style={{ height: "auto", marginTop: "64px" }}
                 >
@@ -3684,7 +3684,7 @@ const NewDailyBonus = ({
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
-                              {/* <div className="d-flex align-items-center">
+                              <div className="d-flex align-items-center">
                                 <img
                                   className="percent-img"
                                   src={
@@ -3735,10 +3735,9 @@ const NewDailyBonus = ({
                                   height={8}
                                   alt=""
                                 />
-                              </div> */}
+                              </div>
                               <span className="percentage-span">
-                                {/* {parseInt(taraxaPercentage)}% */}
-                                Coming Soon
+                                {parseInt(taraxaPercentage)}% 
                               </span>
                             </div>
                           </div>
@@ -4606,33 +4605,7 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        {/* <div className={`position-relative chain-item w-100`}>
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon.png"
-                            }
-                            className={`chain-img`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
-                          >
-                            <div className="d-flex flex-column align-items-center gap-2">
-                               <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/taraxa.svg"
-                            }
-                            height={32}
-                            width={32}
-                            alt=""
-                          />
-                              <span className="percentage-span">
-                                Coming Soon
-                              </span>
-                            </div>
-                          </div>
-                          
-                        </div> */}
+                        
                         <div className={`position-relative chain-item w-100`}>
                           <img
                             src={

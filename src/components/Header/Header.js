@@ -468,6 +468,24 @@ const Header = ({
                       Game Updates
                     </NavLink>
                     <NavLink
+                      to={"/keep-building"}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                          : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                      }
+                    >
+                      Keep Building Program
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/kickstartIcon.svg"
+                        }
+                        height={20}
+                        width={20}
+                        alt=""
+                      />
+                    </NavLink>
+                    <NavLink
                       to={"https://t.me/WorldOfDypians_bot"}
                       target="_blank"
                       className={({ isActive }) =>
@@ -714,7 +732,7 @@ const Header = ({
                   </div>
                 </div>
               </div>
-              <NavLink
+              {/* <NavLink
                 to={"/keep-building"}
                 className="d-flex align-items-center gap-2 kickstarter-header-item p-2"
               >
@@ -728,7 +746,7 @@ const Header = ({
                 >
                   Keep Building
                 </div>
-              </NavLink>
+              </NavLink> */}
             </div>
             <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
               <div

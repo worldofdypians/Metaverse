@@ -49,7 +49,10 @@ const KickstarterVideoContent = () => {
 
   return (
     <>
-      <section className="py-20 px-lg-6 px-2 relative overflow-hidden">
+      <section
+        className="py-20 px-lg-6 px-2 relative overflow-hidden bordertw-3 border-black"
+        id="videos"
+      >
         {/* Dynamic background */}
         <div className="absolute inset-0">
           <img
@@ -154,13 +157,13 @@ const KickstarterVideoContent = () => {
                         <span>{video.views} views</span>
                       </div>
 
-                      <div
+                      {/* <div
                         className={`px-3 py-1 bg-gradient-to-r ${video.gradient} bg-opacity-20 rounded-full bordertw border-current opacitytw-20`}
                       >
                         <span className="text-xs text-white uppercase tracking-wide">
                           Watch
                         </span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
 

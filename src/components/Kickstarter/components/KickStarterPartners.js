@@ -339,7 +339,10 @@ const KickstarterPartners = () => {
   ];
 
   return (
-    <section className="py-20 px-lg-6 px-2 relative overflow-hidden">
+    <section
+      className="py-20 px-lg-6 px-2 relative overflow-hidden bordertw-3 border-black"
+      id="partners"
+    >
       {/* Enhanced background with multiple layers */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-orange-900/20 via-yellow-900/20 to-amber-900/20"></div>
@@ -368,7 +371,7 @@ const KickstarterPartners = () => {
         </div>
 
         {/* Partners showcase container */}
-        <div className="bg-black/40 backdrop-blur-sm rounded-3xl p-lg-8 p-3 bordertw border-white/20 mb-12 relative overflow-hidden">
+        <div className="bg-black/40 backdrop-blur-sm rounded-3xl p-lg-8 p-3 bordertw border-white/20 mb-12 relative">
           {/* Glow effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-yellow-500/10 to-amber-500/10 rounded-3xl"></div>
 
