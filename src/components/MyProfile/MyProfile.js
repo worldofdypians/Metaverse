@@ -822,6 +822,25 @@ const MyProfile = ({
                                         BloFin
                                       </h6>
                                     </a>
+                                    <a
+                                      href="https://coinrabbit.io/exchange/"
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      onClick={() => {
+                                        setshowBuyTooltip(false);
+                                      }}
+                                      className="getwod-item"
+                                    >
+                                      <h6 className="bottomitems mb-0">
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/coinrabbit.png"
+                                          }
+                                          className="buywodimg"
+                                        />
+                                        CoinRabbit
+                                      </h6>
+                                    </a>
                                   </div>
                                 </div>
                               </div>
