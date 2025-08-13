@@ -7,39 +7,35 @@ import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 
-
-
 const rewardCategories = [
-  { 
-    id: 'stars', 
-    name: 'STARS', 
-    icon: "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp", 
-    count: 150, 
-    color: 'from-yellow-400 to-orange-500',
-    rarity: 'COMMON',
-    tier: 'TIER I'
+  {
+    id: "stars",
+    name: "STARS",
+    icon: "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp",
+    count: 150,
+    color: "from-yellow-400 to-orange-500",
+    rarity: "COMMON",
+    tier: "TIER I",
   },
-  { 
-    id: 'points', 
-    name: 'XP POINTS', 
-    icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp", 
-    count: 2500, 
-    color: 'from-blue-400 to-purple-500',
-    rarity: 'RARE',
-    tier: 'TIER II'
+  {
+    id: "points",
+    name: "XP POINTS",
+    icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+    count: 2500,
+    color: "from-blue-400 to-purple-500",
+    rarity: "RARE",
+    tier: "TIER II",
   },
-  { 
-    id: 'rewards', 
-    name: 'REWARDS', 
-    icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp", 
-    count: 8, 
-    color: 'from-purple-500 to-pink-500',
-    rarity: 'EPIC',
-    tier: 'TIER III'
+  {
+    id: "rewards",
+    name: "REWARDS",
+    icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp",
+    count: 8,
+    color: "from-purple-500 to-pink-500",
+    rarity: "EPIC",
+    tier: "TIER III",
   },
 ];
-
-
 
 const Kickstarter = ({
   onClose,
@@ -76,24 +72,49 @@ const Kickstarter = ({
   const [hoveredChain, setHoveredChain] = useState(null);
   const [isClaimLoading, setIsClaimLoading] = useState(false);
   const [activatedReward, setActivatedReward] = useState(null);
- 
 
-    const handleClaim = async () => {
+  // const onClaim = () => {
+
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //     setStep(2);
+  //   }, 2000);
+  // };
+
+  const handleClaim = async () => {
+    const video = videoRef2.current;
+
     setIsClaimLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    setIsClaimLoading(false);
-    setChestOpened(true);
-    const randomReward = rewardCategories[Math.floor(Math.random() * rewardCategories.length)];
-    setActivatedReward(randomReward.id);
+
+    setTimeout(() => {
+      setIsClaimLoading(false);
+      setChestOpened(true);
+      setStep(2);
+
+      if (video) {
+        video.play().catch((err) => console.error("Play failed:", err));
+        setTimeout(() => {
+          video.pause();
+          setStep(3);
+          setRewards([0, 2]);
+          const randomReward =
+            rewardCategories[
+              Math.floor(Math.random() * rewardCategories.length)
+            ];
+          setActivatedReward(randomReward.id);
+        }, 8000);
+      }
+    }, 3000);
   };
 
-
-
   const getRewardGradient = (category) => {
-  if (category.color.includes('yellow')) return { background: 'linear-gradient(135deg, #FBBF24, #F97316)' };
-  if (category.color.includes('blue')) return { background: 'linear-gradient(135deg, #60A5FA, #A855F7)' };
-  return { background: 'linear-gradient(135deg, #A855F7, #EC4899)' };
-};
+    if (category.color.includes("yellow"))
+      return { background: "linear-gradient(135deg, #FBBF24, #F97316)" };
+    if (category.color.includes("blue"))
+      return { background: "linear-gradient(135deg, #60A5FA, #A855F7)" };
+    return { background: "linear-gradient(135deg, #A855F7, #EC4899)" };
+  };
 
   const getChainGradient = (chain) => ({
     background: `linear-gradient(135deg, ${chain.gradientFrom}, ${chain.gradientTo})`,
@@ -104,38 +125,24 @@ const Kickstarter = ({
       id: "bnb",
       name: "BNB Chain",
       symbol: "BNB",
-      logo: "🔶",
+      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
       color: "from-yellow-400 to-orange-500",
+      desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and gaming.",
       gradientFrom: "#F59E0B",
       gradientTo: "#F97316",
     },
     {
-      id: "ethereum",
-      name: "Ethereum",
-      symbol: "ETH",
-      logo: "⬢",
+      id: "opbnb",
+      name: "opBNB",
+      symbol: "BNB",
+      logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
+      desc: "An optimized layer-2 solution that delivers lower fees and higher throughput to unlock the full potential of the BNB Chain",
+
       color: "from-blue-400 to-purple-600",
-      gradientFrom: "#60A5FA",
-      gradientTo: "#9333EA",
+      gradientFrom: "#F59E0B",
+      gradientTo: "#1a1024ff",
     },
-    {
-      id: "polygon",
-      name: "Polygon",
-      symbol: "MATIC",
-      logo: "⬟",
-      color: "from-purple-500 to-pink-500",
-      gradientFrom: "#A855F7",
-      gradientTo: "#EC4899",
-    },
-    {
-      id: "arbitrum",
-      name: "Arbitrum",
-      symbol: "ARB",
-      logo: "🔷",
-      color: "from-blue-500 to-cyan-400",
-      gradientFrom: "#3B82F6",
-      gradientTo: "#22D3EE",
-    },
+   
   ];
 
   const selectedChainData = chains.find((c) => c.id === selectedChain);
@@ -262,27 +269,6 @@ const Kickstarter = ({
 
     return () => clearTimeout(timeout1);
   }, []);
-
-  const onClaim = () => {
-    const video = videoRef2.current;
-
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setStep(2);
-
-      if (video) {
-        video.play().catch((err) => console.error("Play failed:", err));
-        setTimeout(() => {
-          video.pause();
-          setStep(3);
-          setRewards([0, 2]);
-        }, 8000);
-      }
-    }, 2000);
-  };
-
-  console.log(chainId !== 56 || chainId !== 204);
 
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
@@ -439,7 +425,7 @@ const Kickstarter = ({
             style={{ top: "32px", left: "24px", zIndex: 30 }}
           >
             <motion.div
-              className="p-4"
+              className="py-2 px-4"
               style={glassyContainerStyle}
               whileHover={{ scale: 1.02 }}
             >
@@ -536,7 +522,7 @@ const Kickstarter = ({
                           repeat: selectedChain === chain.id ? Infinity : 0,
                         }}
                       >
-                        {chain.logo}
+                        <img src={chain.logo} width={16} height={16} alt="" />
                       </motion.span>
 
                       {selectedChain === chain.id && (
@@ -943,7 +929,7 @@ const Kickstarter = ({
 
                     {/* Chain Display with integrated Description */}
                     <motion.div
-                      className="mb-3"
+                      className="h-100"
                       style={{
                         padding: "8px",
                         background:
@@ -984,7 +970,7 @@ const Kickstarter = ({
                             className="text-white"
                             style={{ fontSize: "14px", zIndex: 2 }}
                           >
-                            {selectedChainData?.logo}
+                            <img src={selectedChainData?.logo} width={20} height={20} alt="" />
                           </span>
 
                           {/* Rotating ring effect */}
@@ -1147,13 +1133,9 @@ const Kickstarter = ({
                       >
                         {selectedChain === "bnb" &&
                           "BNB Chain delivers high-speed, low-cost transactions for Web3, DeFi, NFTs, and gaming applications. Built for developers who want Ethereum compatibility with superior performance and minimal fees."}
-                        {selectedChain === "ethereum" &&
-                          "Ethereum powers the world's largest ecosystem of smart contracts and decentralized applications. Experience the original programmable blockchain with unmatched security and developer community."}
-                        {selectedChain === "polygon" &&
-                          "Polygon provides Layer 2 scaling for Ethereum with faster transactions and lower fees. Perfect for gaming applications that require high throughput and seamless user experiences."}
-                        {selectedChain === "arbitrum" &&
-                          "Arbitrum offers optimistic rollup scaling for Ethereum, enabling efficient DeFi and gaming experiences. Built for developers who want Ethereum's security with improved transaction efficiency."}
-                      </motion.div>
+                        {selectedChain === "opbnb" &&
+                          "An optimized layer-2 solution that delivers lower fees and higher throughput to unlock the full potential of the BNB Chain"}
+                       </motion.div>
                     </motion.div>
                   </div>
                 </motion.div>
@@ -1181,7 +1163,20 @@ const Kickstarter = ({
                     }}
                   >
                     {/* VERTICAL Rewards List - No Header */}
-                    <div
+                    <div className="d-flex flex-column h-100 justify-content-between">
+                      <div className="py-4 px-2"
+                                    style={{
+                                      color: "rgba(219, 234, 254, 1)",
+                                      fontSize: "13px",
+                                      fontWeight: "700",
+                                      letterSpacing: "0.05em",
+                                      textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                                      textTransform: "uppercase",
+                                    }}
+                                  >
+                                    REWARDS
+                                  </div>
+                      <div
                       className="p-3 d-flex align-items-center justify-content-center gap-2 w-100"
                       style={{ zIndex: 2 }}
                     >
@@ -1329,7 +1324,12 @@ const Kickstarter = ({
                                   ease: "easeInOut",
                                 }}
                               >
-                               <img src={category.icon} width={32} height={32} alt="" />
+                                <img
+                                  src={category.icon}
+                                  width={32}
+                                  height={32}
+                                  alt=""
+                                />
 
                                 {/* Rotating ring effects */}
                                 <motion.div
@@ -1366,7 +1366,6 @@ const Kickstarter = ({
                                   >
                                     {category.name}
                                   </div>
-                               
                                 </div>
                                 <div className="d-flex align-items-center gap-1">
                                   <div
@@ -1498,6 +1497,7 @@ const Kickstarter = ({
                           )} */}
                         </motion.div>
                       ))}
+                    </div>
                     </div>
 
                     {/* Gaming panel ambient effect */}
@@ -1649,7 +1649,7 @@ const Kickstarter = ({
                         >
                           ✅
                         </motion.div>
-                        <span>VAULT UNLOCKED!</span>
+                        <span>CHEST UNLOCKED!</span>
                         <motion.div
                           animate={{
                             scale: [1, 1.4, 1],
