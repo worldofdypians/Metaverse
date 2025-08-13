@@ -1983,20 +1983,21 @@ const MyRewardsPopupNew = ({
                   </span>
                 </div>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="d-flex align-items-center gap-2 item-name-left">
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/manta.png"}
-                    alt=""
-                    style={{ width: 16, height: 16 }}
-                  />
-                  Manta
-                </span>
-                <span className="item-name-right">
-                  ${getFormattedNumber(mantaEarnUsd, 2)}
-                </span>
-              </div>
+
               <div className="d-flex flex-column gap-2">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/manta.png"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Manta
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(mantaEarnUsd, 2)}
+                  </span>
+                </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
