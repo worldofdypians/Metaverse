@@ -100,14 +100,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/Coredao_Org",
