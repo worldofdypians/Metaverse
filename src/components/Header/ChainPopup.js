@@ -9,7 +9,7 @@ const ChainPopup = ({
   isPremium,
 }) => {
   return (
-    <div className="challenge-popup-wrapper popup-active p-3">
+    <div className="chain-popup-wrapper popup-active p-3">
       <div className="d-flex align-items-center justify-content-between mb-3">
         <span className="select-gray-txt ">SELECT A NETWORK</span>
         <img

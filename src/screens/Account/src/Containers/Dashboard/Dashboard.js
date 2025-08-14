@@ -4362,13 +4362,11 @@ function Dashboard({
       if (dailyRecordsSei.length === 0) {
         fetchDailyRecordsSei();
       }
-    }
-    else if (chain === "taraxa") {
+    } else if (chain === "taraxa") {
       if (dailyRecordsTaraxa.length === 0) {
         fetchDailyRecordsTaraxa();
       }
-    }
-    else if (chain === "manta") {
+    } else if (chain === "manta") {
       if (dailyRecordsManta.length === 0) {
         fetchDailyRecordsManta();
       }
@@ -6418,10 +6416,10 @@ function Dashboard({
                 Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
-                // Number(baseEarnUSD) +
+                Number(coreEarnUsd) +
                 // Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
-                Number(mantaEarnUsd) +
+                // Number(mantaEarnUsd) +
                 Number(seiEarnUsd) +
                 Number(taikoEarnUsd) +
                 Number(taraxaEarnUsd) +

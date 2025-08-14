@@ -1373,9 +1373,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            // if (coreEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (coreEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -1442,9 +1442,9 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            if (mantaEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (mantaEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -4850,7 +4850,7 @@ function App() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -4861,15 +4861,15 @@ function App() {
       infoType: "Treasure Hunt",
       location: [-0.06862698344579729, 0.08752048015594482],
       marker: markers.treasureMarker,
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
+      userEarnUsd: coreEarnUsd,
+      userEarnCrypto: coreEarnToken,
+      userEarnPoints: corePoints,
       popupInfo: {
         title: "CORE",
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Coming Soon",
+        status: "Live",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -5110,7 +5110,7 @@ function App() {
     {
       title: "Manta",
       logo: "https://cdn.worldofdypians.com/wod/mantaLogoBig.png",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.07001821071588557, 0.08503675460815431],
@@ -5132,7 +5132,7 @@ function App() {
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Live",
+        status: "Expired",
         id: "event21",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in MANTA Rewards",
