@@ -45,6 +45,9 @@
   @media screen and (max-height: 850px) {
     height: 35%;
   }
+  @media screen and (max-width: 786px) {
+    height: 45%;
+  }
 }
 
 .metrics-bg {
@@ -77,6 +80,25 @@
   border-bottom: 3px solid black;
   @media screen and (max-width: 786px) {
     background-image: url("https://cdn.worldofdypians.com/wod/metricsbg.webp");
+  }
+}
+
+.chain-info-inner-wrapper {
+  padding: 8px;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 16, 32, 0.9) 0%,
+    rgba(12, 20, 40, 0.7) 100%
+  );
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  position: relative;
+  z-index: 2;
+
+  @media screen and (max-width: 786px) {
+    padding: 0px;
+    background: none;
+    border: none;
   }
 }
 
