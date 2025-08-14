@@ -73,6 +73,18 @@ const Kickstarter = ({
   const [isClaimLoading, setIsClaimLoading] = useState(false);
   const [activatedReward, setActivatedReward] = useState(null);
 
+
+
+    function handleEsc(event) {
+      if (event.key === "Escape" || event.keyCode === 27) {
+        onClose();
+      }
+    }
+
+    // Attach listener
+    window.addEventListener("keydown", handleEsc);
+  
+
   // const onClaim = () => {
 
   //   setLoading(true);
@@ -785,23 +797,23 @@ const Kickstarter = ({
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
-            className="position-absolute"
-            style={{
-              bottom: "24px",
-              left: "24px",
-              right: "24px",
-              height: "30%",
-              background:
-                "linear-gradient(135deg, rgba(8, 16, 32, 0.95) 0%, rgba(12, 20, 40, 0.85) 30%, rgba(6, 12, 28, 0.75) 70%, rgba(4, 8, 20, 0.65) 100%)",
-              backdropFilter: "blur(30px)",
-              WebkitBackdropFilter: "blur(30px)",
-              border: "2px solid rgba(59, 130, 246, 0.4)",
-              borderRadius: "20px",
-              boxShadow:
-                "0 25px 80px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(120, 170, 255, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.2)",
-              position: "relative",
-              overflow: "hidden",
-            }}
+            className="position-absolute new-info-container"
+            // style={{
+            //   bottom: "24px",
+            //   left: "24px",
+            //   right: "24px",
+            //   height: "30%",
+            //   background:
+            //     "linear-gradient(135deg, rgba(8, 16, 32, 0.95) 0%, rgba(12, 20, 40, 0.85) 30%, rgba(6, 12, 28, 0.75) 70%, rgba(4, 8, 20, 0.65) 100%)",
+            //   backdropFilter: "blur(30px)",
+            //   WebkitBackdropFilter: "blur(30px)",
+            //   border: "2px solid rgba(59, 130, 246, 0.4)",
+            //   borderRadius: "20px",
+            //   boxShadow:
+            //     "0 25px 80px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(120, 170, 255, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.2)",
+            //   position: "relative",
+            //   overflow: "hidden",
+            // }}
           >
             {/* Gaming-style animated border system */}
             <motion.div
