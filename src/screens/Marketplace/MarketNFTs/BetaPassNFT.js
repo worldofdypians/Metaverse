@@ -156,7 +156,7 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "taraxa-mint-bg",
       wrapperClassName: "taraxa-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
+      treasureHuntStatus: "Live",
       rewardsTitle: "$20,000 in TARA rewards",
       rewardType: "TARA",
       userEarned: taraxaEarnUsd,

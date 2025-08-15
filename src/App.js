@@ -637,7 +637,7 @@ function App() {
 
   const { activate, deactivate, library, provider } = useWeb3React();
 
-  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let taraxaLastDay = new Date("2025-12-13T14:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2025-07-10T16:00:00.000+02:00");
@@ -4735,7 +4735,7 @@ function App() {
     {
       title: "Taraxa",
       logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       rewardType: "TARA",
       rewardAmount: "$20,000",
       location: [-0.06917415368919773, 0.08433401584625246],
@@ -4756,11 +4756,11 @@ function App() {
         chain: "Taraxa",
         linkState: "taraxa",
         rewards: "TARA",
-        status: "Coming Soon",
+        status: "Live",
         id: "event30",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TARA Rewards",
-        eventDuration: taikoLastDay,
+        eventDuration: taraxaLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
