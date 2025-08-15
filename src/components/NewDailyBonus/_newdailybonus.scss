@@ -201,7 +201,7 @@
   }
 }
 
-.chains-container::-webkit-scrollbar {
+.chains-container::-webkit-scrollbar,.leaderboard-chains-container::-webkit-scrollbar {
   display: none;
 }
 
@@ -303,7 +303,7 @@
       height: 100% !important;
     }
   }
-  .chains-container {
+  .chains-container,.leaderboard-chains-container {
     overflow-x: scroll;
   }
 }
@@ -318,6 +318,13 @@
 .chains-container {
   display: grid;
   grid-template-columns: repeat(2,1fr);
+  grid-auto-rows: min-content;
+  place-content: space-between;
+}
+
+.leaderboard-chains-container {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
   grid-auto-rows: min-content;
   place-content: space-between;
 }

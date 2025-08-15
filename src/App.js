@@ -658,7 +658,7 @@ function App() {
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
-  let seiLastDay = new Date("2025-08-16T14:00:00.000+02:00");
+  let seiLastDay = new Date("2025-08-18T14:00:00.000+02:00");
 
   let vanarLastDay = new Date("2025-09-16T14:00:00.000+02:00");
 
