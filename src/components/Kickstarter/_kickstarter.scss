@@ -23,10 +23,10 @@
 }
 
 .new-info-container {
-  bottom: 24px;
+  bottom: 90px;
   left: 24px;
   right: 24px;
-  height: 30%;
+  height: 20%;
   background: linear-gradient(
     135deg,
     rgba(8, 16, 32, 0.95) 0%,
@@ -46,7 +46,21 @@
     height: 35%;
   }
   @media screen and (max-width: 786px) {
-    height: 45%;
+    height: 32%;
+  }
+}
+
+.kickstarter-button-position{
+  width: 100%;
+  position: absolute;
+    bottom: 24px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: center;
+
+  @media screen and (max-width: 786px) {
+    width: auto;
   }
 }
 
