@@ -340,7 +340,7 @@ const BetaPassNFT = ({
       userEarned: seiEarnUsd,
       eventType: "Explore & Mine",
       eventStartDate: "Apr 18, 2025",
-      eventEndDate: "Aug 16, 2025",
+      eventEndDate: "Aug 18, 2025",
     },
     {
       id: "viction",
