@@ -240,7 +240,9 @@
   cursor: pointer;
 
   transition: all 0.25s ease;
-  background-position: center;
+  background-position: right;
+
+
 
   @media screen and (max-width: 786px) {
     height: 155px;
@@ -330,6 +332,11 @@
   top: 0;
   bottom: 60px;
   margin: auto;
+
+  @media screen and (max-width: 1500px) {
+    scale: 0.8;
+  }
+
   @media screen and (max-width: 786px) {
     right: 60px;
   }
@@ -675,6 +682,12 @@
   right: 20px;
   bottom: 0;
   width: 28%;
+
+    @media screen and (max-width: 991px) {
+    width: auto;
+    bottom: 0;
+    right: 0;
+  }
 }
 
 .ai-question-img {
@@ -683,10 +696,14 @@
   bottom: 0;
   width: 21%;
 filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
-
-  @media screen and (max-width: 500px) {
-    width: 16%;
+ @media screen and (max-width: 991px) {
+    width: auto;
+    bottom: 0;
+    right: 0;
   }
+  // @media screen and (max-width: 500px) {
+  //   width: 16%;
+  // }
 }
 
 .daily-progress-wrapper {
@@ -1007,6 +1024,7 @@ filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
   @media screen and (max-width: 1500px) {
     width: 60px;
     height: 60px;
+    left: 40px;
   }
 }
 
@@ -1016,6 +1034,11 @@ filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
   right: 0;
   bottom: 0;
   top: 25px;
+
+    @media screen and (max-width: 1500px) {
+   
+    left: 25px;
+  }
 }
 
 .ready-circle-2 {
@@ -1273,11 +1296,9 @@ filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
   line-height: normal;
 
   @media screen and (max-width: 1500px) {
-    font-size: 16px;
-  }
-  @media screen and (max-width: 1200px) {
     font-size: 15px;
   }
+  
 }
 
 .beast-siege-timer-db {
