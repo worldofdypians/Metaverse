@@ -687,6 +687,7 @@
     width: auto;
     bottom: 0;
     right: 0;
+    height: inherit;
   }
 }
 
@@ -700,6 +701,7 @@ filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
     width: auto;
     bottom: 0;
     right: 0;
+    height: inherit;
   }
   // @media screen and (max-width: 500px) {
   //   width: 16%;

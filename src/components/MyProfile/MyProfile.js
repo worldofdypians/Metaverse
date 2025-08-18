@@ -1624,7 +1624,7 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <div
-                  className="ai-question-banner d-flex position-relative flex-column justify-content-between p-3 h-100"
+                  className="ai-question-banner d-flex position-relative flex-column justify-content-between p-3"
                   onClick={onDailyQuestionClick}
                 >
                   <img
