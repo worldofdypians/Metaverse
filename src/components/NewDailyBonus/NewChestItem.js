@@ -32,6 +32,8 @@ const NewChestItem = ({
   binanceW3WProvider,
   walletClient,
   publicClient,
+  openKickstarter,
+  closeDaily
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -2409,7 +2411,7 @@ const NewChestItem = ({
       ${claimingChest === true ? "disable-chest" : ""}
       ${chestIndex === 5 ? "premium-chest-item" : "new-chest-item"}
       d-flex align-items-center justify-content-center position-relative`}
-      onClick={() => handleChestClick()}
+      onClick={() => {closeDaily(); openKickstarter();}}
       style={{
         pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
       }}

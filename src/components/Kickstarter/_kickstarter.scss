@@ -50,10 +50,26 @@
   }
 }
 
-.kickstarter-button-position{
+.kickstarter-chain-description {
+  color: rgba(219, 234, 254, 0.85);
+  line-height: 1.5;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  position: relative;
+  z-index: 2;
+  padding: 8px 4px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+
+  @media screen and (max-width: 786px) {
+    font-size: 11px;
+  }
+}
+
+.kickstarter-button-position {
   width: 100%;
   position: absolute;
-    bottom: 24px;
+  bottom: 24px;
   left: 24px;
   right: 24px;
   display: flex;

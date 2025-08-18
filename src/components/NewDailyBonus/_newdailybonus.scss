@@ -437,12 +437,23 @@
 .premium-chest-item {
   position: relative;
   border-radius: 20px;
-  border: 2px solid #7eabe9;
- background: linear-gradient(135deg, #3c99d5 0%, #437352 34.54%, #8e7d12 66.84%, #7a6918 100%);
+  border: 2px solid #a57900;
+ background: linear-gradient(135deg, #f1ef69 0%, #d1c632 34.54%, #8e7d12 66.84%, #7a6918 100%);
   width: 100%;
   height: 100%;
   cursor: pointer;
   transition: all 0.25s;
+  .new-claim-chest-btn {
+  border: 1px solid #a57900;
+ background: linear-gradient(
+  92deg,
+  #b48a00 0%,
+  #c89d2a 35%,
+  #d1a600 70%,
+  #9e7400 100%
+);
+    color: #022722;
+  }
 }
 
 .premium-chest-item:hover {
