@@ -1147,18 +1147,8 @@ const Kickstarter = ({
                       key={selectedChain}
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-center"
-                      style={{
-                        color: "rgba(219, 234, 254, 0.85)",
-                        lineHeight: "1.5",
-                        fontSize: "11px",
-                        fontWeight: "400",
-                        letterSpacing: "0.025em",
-                        position: "relative",
-                        zIndex: 2,
-                        padding: "8px 4px",
-                        textShadow: "0 1px 4px rgba(0,0,0,0.5)",
-                      }}
+                      className="kickstarter-chain-description"
+                
                       // animate={{
                       //   color: ["rgba(219, 234, 254, 0.85)", "rgba(191, 219, 254, 0.75)", "rgba(219, 234, 254, 0.85)"]
                       // }}

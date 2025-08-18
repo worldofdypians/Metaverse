@@ -472,7 +472,7 @@ function App() {
   };
 
   const { useUserInfo, useWallet } = Hooks;
-  const { login, address,  logout: logoutUser } = useUserInfo();
+  const { login, address, logout: logoutUser } = useUserInfo();
   const { signMessage, createWalletClient } = useWallet();
   const {
     data,
@@ -500,7 +500,7 @@ function App() {
   const [gameAccount, setGameAccount] = useState();
 
   const [networkId, setChainId] = useState();
-  
+
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
   // const [myNFTs, setMyNFTs] = useState([]);
@@ -6892,6 +6892,7 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+                openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
@@ -7478,6 +7479,7 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);

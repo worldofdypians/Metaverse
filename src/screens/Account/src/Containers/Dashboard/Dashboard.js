@@ -6892,6 +6892,7 @@ function Dashboard({
           //   }}
           // >
           <NewDailyBonus
+          openKickstarter={openKickstarter}
             isPremium={isPremium}
             bnbImages={bnbImages}
             skaleImages={skaleImages}

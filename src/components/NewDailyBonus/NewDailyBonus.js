@@ -146,6 +146,7 @@ const NewDailyBonus = ({
   openedTaraxaChests,
   allTaraxaChests,
   onTaraxaChestClaimed,
+  openKickstarter
 }) => {
   const html = document.querySelector("html");
 
@@ -5256,6 +5257,8 @@ const NewDailyBonus = ({
                           ? allChests && allChests.length > 0
                             ? allChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5306,6 +5309,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5362,6 +5367,8 @@ const NewDailyBonus = ({
                           ? allCoreChests && allCoreChests.length > 0
                             ? allCoreChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5412,6 +5419,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5468,6 +5477,8 @@ const NewDailyBonus = ({
                           ? allMantaChests && allMantaChests.length > 0
                             ? allMantaChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5518,6 +5529,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5574,6 +5587,8 @@ const NewDailyBonus = ({
                           ? allBaseChests && allBaseChests.length > 0
                             ? allBaseChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5623,6 +5638,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5678,6 +5695,8 @@ const NewDailyBonus = ({
                           ? allTaikoChests && allTaikoChests.length > 0
                             ? allTaikoChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5727,6 +5746,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5782,6 +5803,8 @@ const NewDailyBonus = ({
                           ? allVanarChests && allVanarChests.length > 0
                             ? allVanarChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5830,6 +5853,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5883,6 +5908,8 @@ const NewDailyBonus = ({
                           ? allMatChests && allMatChests.length > 0
                             ? allMatChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5932,6 +5959,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -5987,6 +6016,8 @@ const NewDailyBonus = ({
                           ? allSeiChests && allSeiChests.length > 0
                             ? allSeiChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -6036,6 +6067,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -6091,6 +6124,8 @@ const NewDailyBonus = ({
                           ? allTaraxaChests && allTaraxaChests.length > 0
                             ? allTaraxaChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -6140,6 +6175,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -6195,6 +6232,8 @@ const NewDailyBonus = ({
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -6245,6 +6284,8 @@ const NewDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
+                                closeDaily={onclose}
+                                openKickstarter={openKickstarter}
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -6302,6 +6343,8 @@ const NewDailyBonus = ({
                             allSkaleChests.length > 0
                           ? allSkaleChests.map((item, index) => (
                               <NewChestItem
+                              closeDaily={onclose}
+                              openKickstarter={openKickstarter}
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
@@ -6351,6 +6394,8 @@ const NewDailyBonus = ({
                             ))
                           : window.range(0, 19).map((item, index) => (
                               <NewChestItem
+                              closeDaily={onclose}
+                              openKickstarter={openKickstarter}
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
