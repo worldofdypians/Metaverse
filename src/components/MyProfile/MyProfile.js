@@ -962,7 +962,7 @@ const MyProfile = ({
                   </div>
                 </NavLink>
                 <div className="wallet-address-wrapper2 p-2 w-100">
-                  <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-center justify-content-between gap-1">
                     <div className="d-flex gap-1 align-items-center">
                       <img
                         src={
@@ -974,7 +974,7 @@ const MyProfile = ({
                       <div className="d-flex flex-column">
                         <span className="user-data-item-left">Golden Pass</span>
                         <span className="user-data-item-left">
-                          {!isgoldenPassActive ? `` : "Activated"}
+                          {/* {!isgoldenPassActive ? `` : "Activated"} */}
                         </span>
                       </div>
                     </div>
@@ -1624,7 +1624,7 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <div
-                  className="ai-question-banner d-flex position-relative flex-column justify-content-between p-3 h-100"
+                  className="ai-question-banner d-flex position-relative flex-column justify-content-between p-3"
                   onClick={onDailyQuestionClick}
                 >
                   <img
@@ -1721,12 +1721,12 @@ const MyProfile = ({
                   className="royalty-chest-wrapper position-relative d-flex flex-column justify-content-between p-3"
                   onClick={openKickstarter}
                 >
-                  <h6 className="royalty-chest-title">Royalty Chest</h6>
+                  <h6 className="royalty-chest-title z-1">Royalty Chest</h6>
 
                   <div className="d-flex flex-column gap-2">
                     <img
                       src="https://cdn.worldofdypians.com/wod/royalRewards.png"
-                      className="royal-rewards-img"
+                      className="royal-rewards-img z-0"
                       alt=""
                     />
                     {/* <span
