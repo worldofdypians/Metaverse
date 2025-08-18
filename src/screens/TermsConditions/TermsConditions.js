@@ -957,11 +957,7 @@ const TermsConditions = () => {
                 waiver by either party of any breach or default hereunder shall
                 be deemed to be a waiver of any preceding or subsequent breach
                 or default. The section headings used herein are for reference
-                only and shall not be read to have any legal effect. The
-                Services are operated by us in the United States. Those who
-                choose to access the Services from locations outside the United
-                States do so at their own initiative and are responsible for
-                compliance with applicable local laws.
+                only and shall not be read to have any legal effect.
               </p>
             </div>
           </div>
