@@ -12,7 +12,7 @@
   border: 1px solid rgba(77, 79, 119, 0.8);
   box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
   pointer-events: auto !important;
-  @media screen and (max-width: 1400px) {
+  @media screen and (max-width: 1440px) {
     width: 95vw;
     height: 95vh;
   }
@@ -42,8 +42,11 @@
     inset 0 2px 0 rgba(120, 170, 255, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.2);
   position: relative;
   overflow: hidden;
-  @media screen and (max-height: 850px) {
-    height: 35%;
+  @media screen and (max-height: 800px) {
+    height: 32%;
+  }
+  @media screen and (max-width: 1400px) {
+    height: 32%;
   }
   @media screen and (max-width: 786px) {
     height: 32%;
@@ -287,13 +290,15 @@
 }
 
 .kickstarter-reward-title {
-  color: #8d98bc;
-  text-align: right;
-  font-family: "Montserrat";
+  color: rgba(219, 234, 254, 1);
   font-size: 13px;
-  font-style: normal;
   font-weight: 700;
-  line-height: 16px; /* 100% */
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  @media screen and (max-width: 1440px) {
+    font-size: 11px;
+  }
 }
 
 .kickstarter-close {
@@ -426,5 +431,59 @@
     grid-template-columns: repeat(12, 1fr);
     gap: 10px;
     overflow-x: auto;
+  }
+}
+
+
+.selected-kick-reward{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 150px;
+  margin: auto;
+  width: 200px;
+ padding: 6px 12px;
+ background: linear-gradient(135deg, rgba(14, 25, 48, 0.95) 0%, rgba(29, 78, 216, 0.8) 50%, rgba(59, 130, 246, 0.7) 100%); 
+  border: 2px solid rgba(59, 130, 246, 0.6);
+  border-radius: 10px;
+  box-shadow: rgba(59, 130, 246, 0.25) 0px 0px 20px, rgba(120, 170, 255, 0.15) 0px 1px 0px inset;
+  transition: all 0.3s ease;
+
+  @media screen and (max-width: 786px) {
+    top: 275px;
+    width: 150px;
+  }
+}
+
+.selected-kick-indicator{
+  width: 3px;
+  height: 100%;
+  border-radius: 2px 0 0 2px;
+  background: linear-gradient(135deg, #FBBF24, #F97316);
+}
+
+.selected-kick-scan{
+  border-radius: 8px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent); 
+}
+
+.selected-kick-count{
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(219, 234, 254, 1);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  letter-spacing: 0.025em;
+
+}
+
+.selected-kick-title{
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  @media screen and (max-width: 1440px) {
+    font-size: 13px;
   }
 }
