@@ -13,7 +13,7 @@ const rewardCategories = [
     id: "points",
     name: "XP POINTS",
     icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-    count: 2500,
+    count: "1K-20K",
     color: "from-blue-400 to-purple-500",
     rarity: "COMMON",
     tier: "TIER II",
@@ -22,16 +22,16 @@ const rewardCategories = [
     id: "stars",
     name: "STARS",
     icon: "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp",
-    count: 150,
+    count: "5-25",
     color: "from-yellow-400 to-orange-500",
     rarity: "RARE",
     tier: "TIER I",
   },
   {
     id: "rewards",
-    name: "REWARDS",
+    name: "USD",
     icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp",
-    count: 8,
+    count: "$1-$10",
     color: "from-purple-500 to-pink-500",
     rarity: "EPIC",
     tier: "TIER III",
@@ -390,7 +390,7 @@ const Kickstarter = ({
             Unlock Container
           </h6> */}
 
-          <div className="position-absolute top-0 start-0 w-100 h-100">
+          {/* <div className="position-absolute top-0 start-0 w-100 h-100">
             {Array.from({ length: chestOpened ? 80 : 40 }).map((_, i) => (
               <motion.div
                 key={`particle-${i}`}
@@ -420,12 +420,14 @@ const Kickstarter = ({
                 }}
               />
             ))}
-          </div>
+          </div> */}
 
           <motion.div
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="position-absolute start-50 translate-middle-x d-none d-lg-flex"
+            className={`position-absolute start-50 translate-middle-x d-none ${
+              step === 3 ? "d-none" : "d-lg-flex"
+            }`}
             style={{ top: "20px", zIndex: 30 }}
           >
             <motion.div
@@ -459,6 +461,115 @@ const Kickstarter = ({
               </motion.h1>
             </motion.div>
           </motion.div>
+          {step === 3 && (
+            <motion.div
+              key={rewardCategories[0].id}
+              initial={{ opacity: 0, scale: 0, x: 30 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                x: 0,
+              }}
+              transition={{
+                delay: 0.9 + 0 * 0.1,
+                type: "spring",
+                stiffness: 120,
+              }}
+              whileHover={{ scale: 1.02, y: -2, x: 3 }}
+              className="selected-kick-reward overflow-hidden col-12 col-xxl-4"
+            >
+              {/* Gaming-style tier indicator */}
+
+              {/* Animated scan line for active rewards */}
+              {activatedReward === rewardCategories[0].id && (
+                <motion.div
+                  className="selected-kick-scan position-absolute top-0 start-0 w-100 h-100"
+                  animate={{
+                    x: ["-100%", "200%"],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+              )}
+
+              <div
+                className="d-flex flex-column gap-2 align-items-center justify-content-between position-relative"
+                style={{ zIndex: 2 }}
+              >
+                <div className="d-flex flex-column align-items-center gap-2">
+                  {/* Reward icon */}
+                  <img
+                    src={rewardCategories[0].icon}
+                    width={32}
+                    height={32}
+                    alt=""
+                  />
+
+                  {/* Reward info */}
+                </div>
+
+                {/* Count display */}
+                <div className="text-center">
+                  <motion.span
+                    className="d-block selected-kick-count"
+                    animate={{
+                      scale: [1, 1.1, 1],
+
+                      color: [
+                        "rgba(219, 234, 254, 1)",
+                        "rgba(96, 165, 250, 1)",
+                        "rgba(219, 234, 254, 1)",
+                      ],
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    5,265 {rewardCategories[0].name}
+                  </motion.span>
+                </div>
+              </div>
+
+              {/* Activation indicator */}
+              {/* {activatedReward === category.id && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 3 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              className="text-center mt-2 position-relative"
+                              style={{ zIndex: 2 }}
+                            >
+                              <motion.div
+                                className="px-2 py-1 rounded"
+                                style={{
+                                  background:
+                                    "linear-gradient(90deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.3), rgba(34, 197, 94, 0.2))",
+                                  border: "1px solid rgba(34, 197, 94, 0.4)",
+                                  color: "rgba(147, 197, 253, 0.9)",
+                                  letterSpacing: "0.05em",
+                                  fontSize: "9px",
+                                  fontWeight: "600",
+                                  textTransform: "uppercase",
+                                }}
+                                animate={{
+                                  scale: [1, 1.03, 1],
+                                }}
+                                transition={{
+                                  duration: 1.5,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                }}
+                              >
+                                🎉 ACTIVATED 🎉
+                              </motion.div>
+                            </motion.div>
+                          )} */}
+            </motion.div>
+          )}
           <motion.div
             initial={{ opacity: 0, x: -50, y: -50 }}
             animate={{ opacity: 1, x: 0, y: 0 }}
@@ -828,7 +939,7 @@ const Kickstarter = ({
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, type: "spring", stiffness: 100 }}
+            transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
             className="position-absolute new-info-container"
             // style={{
             //   bottom: "24px",
@@ -892,36 +1003,6 @@ const Kickstarter = ({
             />
 
             {/* Corner accent lights */}
-            {[
-              { top: "6px", left: "6px" },
-              { top: "6px", right: "6px" },
-              { bottom: "6px", left: "6px" },
-              { bottom: "6px", right: "6px" },
-            ].map((position, index) => (
-              <motion.div
-                key={index}
-                className="position-absolute"
-                style={{
-                  ...position,
-                  width: "16px",
-                  height: "16px",
-                  background:
-                    "radial-gradient(circle, rgba(59, 130, 246, 0.6), transparent)",
-                  borderRadius: "50%",
-                  zIndex: 2,
-                }}
-                animate={{
-                  opacity: [0.4, 1, 0.4],
-                  scale: [1, 1.3, 1],
-                }}
-                transition={{
-                  duration: 2 + index * 0.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: index * 0.3,
-                }}
-              />
-            ))}
 
             <div
               className="h-100 px-3 py-2 d-flex flex-column position-relative"
@@ -954,22 +1035,6 @@ const Kickstarter = ({
                     }}
                   >
                     {/* Gaming panel scan line */}
-                    <motion.div
-                      className="position-absolute top-0 start-0 w-100 h-100"
-                      style={{
-                        background:
-                          "linear-gradient(180deg, rgba(59, 130, 246, 0.1), transparent, rgba(59, 130, 246, 0.1))",
-                        borderRadius: "10px",
-                      }}
-                      animate={{
-                        y: ["-100%", "200%"],
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                    />
 
                     {/* Chain Display with integrated Description */}
                     {/* Chain Header with Logo and Name */}
@@ -1117,7 +1182,7 @@ const Kickstarter = ({
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.color = color;
                                 e.currentTarget.style.borderColor = `${color}60`;
-                                e.currentTarget.style.boxShadow = `0 0 16px ${color}40`;
+                                e.currentTarget.style.boxShadow = `0 0 8px ${color}40`;
                                 e.currentTarget.style.background = `linear-gradient(135deg, rgba(8, 16, 32, 0.9) 0%, ${color}20 100%)`;
                               }}
                               onMouseLeave={(e) => {
@@ -1148,7 +1213,6 @@ const Kickstarter = ({
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="kickstarter-chain-description"
-                
                       // animate={{
                       //   color: ["rgba(219, 234, 254, 0.85)", "rgba(191, 219, 254, 0.75)", "rgba(219, 234, 254, 0.85)"]
                       // }}
@@ -1178,43 +1242,47 @@ const Kickstarter = ({
                         REWARDS
                       </div>
                       <div className="d-flex gap-2 w-100 align-items-center justify-content-between">
-                      {rewardCategories.map((category, index) => (
-                        <div key={index} className="d-flex align-items-center justify-content-between" style={{width: "fit-content"}}> 
-                          <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={category.icon}
-                              width={20}
-                              height={20}
-                              alt=""
-                            />
-                            <div className="d-flex flex-column gap-1">
-                              <div
-                                      style={{
-                                        color: "rgba(219, 234, 254, 1)",
-                                        fontSize: "10px",
-                                        fontWeight: "700",
-                                        letterSpacing: "0.05em",
-                                        textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                                        textTransform: "uppercase",
-                                      }}
-                                    >
-                                      {category.name}
-                                    </div>
-                            <div
-                                      style={{
-                                        color: "rgba(168, 192, 255, 0.7)",
-                                        fontSize: "8px",
-                                        fontWeight: "500",
-                                        textTransform: "uppercase",
-                                        letterSpacing: "0.05em",
-                                      }}
-                                    >
-                                      {category.rarity}
-                                    </div>
+                        {rewardCategories.map((category, index) => (
+                          <div
+                            key={index}
+                            className="d-flex align-items-center justify-content-between"
+                            style={{ width: "fit-content" }}
+                          >
+                            <div className="d-flex align-items-center gap-2">
+                              <img
+                                src={category.icon}
+                                width={20}
+                                height={20}
+                                alt=""
+                              />
+                              <div className="d-flex flex-column gap-1">
+                                <div
+                                  style={{
+                                    color: "rgba(219, 234, 254, 1)",
+                                    fontSize: "10px",
+                                    fontWeight: "700",
+                                    letterSpacing: "0.05em",
+                                    textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                                    textTransform: "uppercase",
+                                  }}
+                                >
+                                  {category.name}
+                                </div>
+                                <div
+                                  style={{
+                                    color: "rgba(168, 192, 255, 0.7)",
+                                    fontSize: "8px",
+                                    fontWeight: "500",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.05em",
+                                  }}
+                                >
+                                  {category.rarity}
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -1225,7 +1293,7 @@ const Kickstarter = ({
                   initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.7 }}
-                  className="col-lg-6 d-none d-lg-flex"
+                  className="col-lg-6 d-none d-lg-flex position-relative"
                 >
                   <div
                     style={{
@@ -1240,13 +1308,29 @@ const Kickstarter = ({
                       // height: "100%",
                       position: "relative",
                       overflow: "hidden",
-                      width: "100%"
+                      width: "100%",
                     }}
                   >
+                    <motion.div
+                      className="position-absolute top-0 start-0 w-100 h-100"
+                      style={{
+                        background:
+                          "linear-gradient(180deg, rgba(59, 130, 246, 0.1), transparent, rgba(59, 130, 246, 0.1))",
+                        borderRadius: "10px",
+                      }}
+                      animate={{
+                        y: ["-100%", "200%"],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                    />
                     {/* VERTICAL Rewards List - No Header */}
                     <div className="d-flex flex-column h-100 justify-content-between">
                       <div
-                        className="py-4 px-2"
+                        className="py-2 py-xxl-4 px-2"
                         style={{
                           color: "rgba(219, 234, 254, 1)",
                           fontSize: "13px",
@@ -1259,7 +1343,7 @@ const Kickstarter = ({
                         REWARDS
                       </div>
                       <div
-                        className="p-3 d-flex align-items-center justify-content-center gap-2 w-100"
+                        className="py-0 py-xxl-3 px-3 d-flex flex-column flex-xxl-row align-items-center justify-content-center gap-2 w-100"
                         style={{ zIndex: 2 }}
                       >
                         {rewardCategories.map((category, index) => (
@@ -1277,7 +1361,7 @@ const Kickstarter = ({
                               stiffness: 120,
                             }}
                             whileHover={{ scale: 1.02, y: -2, x: 3 }}
-                            className="position-relative overflow-hidden col-4"
+                            className="position-relative overflow-hidden col-12 col-xxl-4"
                             style={{
                               padding: "6px 12px",
                               background:
@@ -1364,16 +1448,7 @@ const Kickstarter = ({
                                 {/* Reward info */}
                                 <div className="flex-grow-1">
                                   <div className="d-flex align-items-center gap-1 mb-1">
-                                    <div
-                                      style={{
-                                        color: "rgba(219, 234, 254, 1)",
-                                        fontSize: "13px",
-                                        fontWeight: "700",
-                                        letterSpacing: "0.05em",
-                                        textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                                        textTransform: "uppercase",
-                                      }}
-                                    >
+                                    <div className="kickstarter-reward-title">
                                       {category.name}
                                     </div>
                                   </div>
@@ -1456,7 +1531,7 @@ const Kickstarter = ({
                                     ease: "easeInOut",
                                   }}
                                 >
-                                  {category.count.toLocaleString()}
+                                  {category.count}
                                 </motion.span>
                               </div>
                             </div>
