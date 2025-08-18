@@ -6420,7 +6420,7 @@ function Dashboard({
                 // Number(kucoinEarnUsd) +
                 Number(bnbEarnUsd) +
                 // Number(mantaEarnUsd) +
-                Number(seiEarnUsd) +
+                // Number(seiEarnUsd) +
                 Number(taikoEarnUsd) +
                 Number(taraxaEarnUsd) +
                 Number(vanarEarnUsd) +

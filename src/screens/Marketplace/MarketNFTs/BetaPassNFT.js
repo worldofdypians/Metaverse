@@ -334,7 +334,7 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "sei-mint-bg",
       wrapperClassName: "sei-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in SEI rewards",
       rewardType: "SEI",
       userEarned: seiEarnUsd,

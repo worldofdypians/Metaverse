@@ -1387,9 +1387,9 @@ function App() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            if (seiEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (seiEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
@@ -4885,7 +4885,7 @@ function App() {
     {
       title: "SEI",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "SEI",
       rewardAmount: "$20,000",
       location: [-0.06734488843929015, 0.08361518383026124],
@@ -4906,7 +4906,7 @@ function App() {
         chain: "Sei Network",
         linkState: "sei",
         rewards: "SEI",
-        status: "Live",
+        status: "Expired",
         id: "event13",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SEI Rewards",
