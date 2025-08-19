@@ -2369,6 +2369,8 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_SEI"
             : chainId === 841
             ? "SUBSCRIPTION_TARAXA"
+            : chainId === 167000
+            ? "SUBSCRIPTION_TAIKO"
             : "",
       });
 
