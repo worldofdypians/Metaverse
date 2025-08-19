@@ -242,8 +242,6 @@
   transition: all 0.25s ease;
   background-position: right;
 
-
-
   @media screen and (max-width: 786px) {
     height: 155px;
   }
@@ -683,7 +681,7 @@
   bottom: 0;
   width: 28%;
 
-    @media screen and (max-width: 991px) {
+  @media screen and (max-width: 991px) {
     width: auto;
     bottom: 0;
     right: 0;
@@ -696,8 +694,8 @@
   right: 20px;
   bottom: 0;
   width: 21%;
-filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
- @media screen and (max-width: 991px) {
+  filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.7));
+  @media screen and (max-width: 991px) {
     width: auto;
     bottom: 0;
     right: 0;
@@ -1028,6 +1026,10 @@ filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
     height: 60px;
     left: 40px;
   }
+
+  @media screen and (max-width: 991px) {
+    left: 0px;
+  }
 }
 
 .ready-circle-2-position {
@@ -1037,9 +1039,12 @@ filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
   bottom: 0;
   top: 25px;
 
-    @media screen and (max-width: 1500px) {
-   
+  @media screen and (max-width: 1500px) {
     left: 25px;
+  }
+
+  @media screen and (max-width: 991px) {
+    left: 0px;
   }
 }
 
@@ -1300,7 +1305,6 @@ filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.70));
   @media screen and (max-width: 1500px) {
     font-size: 15px;
   }
-  
 }
 
 .beast-siege-timer-db {

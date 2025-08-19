@@ -1222,8 +1222,8 @@ const MyRewardsPopupNew = ({
         <span
           className={
             rewardCategory === "leaderboard"
-              ? "item-name-title-selected d-flex align-items-center gap-2"
-              : "item-name-title d-flex align-items-center gap-2"
+              ? "item-name-title-selected d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2"
+              : "item-name-title d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2"
           }
         >
           Global Leaderboards

@@ -608,6 +608,7 @@ function App() {
   const [premiumOryn, setPremiumOryn] = useState(false);
 
   const [domainPopup, setDomainPopup] = useState(false);
+  const [kickstarterAddClass, setKickstarterAddClass] = useState(false);
   const [showSync, setshowSync] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [availableDomain, setAvailableDomain] = useState("initial");
@@ -1998,12 +1999,12 @@ function App() {
   const html = document.querySelector("html");
 
   useEffect(() => {
-    if (domainPopup === true || kickstarter === true) {
+    if (domainPopup === true || kickstarterAddClass === true) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [domainPopup, kickstarter]);
+  }, [domainPopup, kickstarterAddClass]);
 
   // const web3Name = createWeb3Name();
 
@@ -8512,6 +8513,9 @@ function App() {
           address={address}
           onConnectWallet={() => {
             setwalletModal(true);
+          }}
+          onAddClass={(value) => {
+            setKickstarterAddClass(value);
           }}
         />
       )}
