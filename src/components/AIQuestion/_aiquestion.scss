@@ -92,6 +92,24 @@
   }
 }
 
+.answer-inner-wrapper-disabled {
+  background-image: url("https://cdn.worldofdypians.com/wod/ai-option-bg3.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-color: #1d203f;
+  background-blend-mode: luminosity;
+  filter: brightness(0.6);
+  // min-height: 55px;
+  height: 55px;
+  width: 100%;
+  min-width: 0;
+
+  @media screen and (max-width: 500px) {
+    min-height: auto;
+  }
+}
+
 .answer-inner-wrapper:hover,
 .answer-inner-wrapper-active {
   background-image: url("https://cdn.worldofdypians.com/wod/ai-option-bg3.webp");

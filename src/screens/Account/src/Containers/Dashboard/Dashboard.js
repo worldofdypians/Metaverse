@@ -6635,7 +6635,7 @@ function Dashboard({
                   Number(cawsPremiumRewards) +
                   Number(landPremiumRewards) +
                   // Number(baseEarnUSD) +
-                  Number(kucoinEarnUsd) +
+                  // Number(kucoinEarnUsd) +
                   Number(bnbEarnUsd) +
                   Number(mantaEarnUsd) +
                   Number(seiEarnUsd) +
@@ -6649,12 +6649,14 @@ function Dashboard({
                         item.rewardType === "Money" && item.status === "Claimed"
                       );
                     }) !== undefined
-                    ? aiQuestionRewards.find((item) => {
-                        return (
-                          item.rewardType === "Money" &&
-                          item.status === "Claimed"
-                        );
-                      }).reward
+                    ? Number(
+                        aiQuestionRewards.find((item) => {
+                          return (
+                            item.rewardType === "Money" &&
+                            item.status === "Claimed"
+                          );
+                        }).reward
+                      )
                     : 0
                   : 0
                 // Number(coingeckoEarnUsd) +

@@ -1247,6 +1247,7 @@ const MyProfile = ({
                         {userActiveEvents === 6
                           ? "Completed"
                           : userActiveEvents + "/6"}
+
                       </span>
                     </div>
 
