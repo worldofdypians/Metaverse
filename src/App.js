@@ -1999,12 +1999,16 @@ function App() {
   const html = document.querySelector("html");
 
   useEffect(() => {
-    if (domainPopup === true || kickstarter === true) {
+    if (
+      domainPopup === true ||
+      kickstarter === true ||
+      kickstarterAddClass === true
+    ) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [domainPopup, kickstarter]);
+  }, [domainPopup, kickstarter, kickstarterAddClass]);
 
   // const web3Name = createWeb3Name();
 
@@ -6218,7 +6222,6 @@ function App() {
           !location.pathname.includes("keep-building") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
-          openKickstarter={() => setKickstarter(true)}
           authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}

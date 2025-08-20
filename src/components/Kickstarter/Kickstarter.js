@@ -292,7 +292,7 @@ const Kickstarter = ({
       return () => clearTimeout(timeout1);
     }
   }, [windowSize.width]);
-  
+
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column justify-content-between align-items-center">
@@ -1489,7 +1489,6 @@ const Kickstarter = ({
                                       >
                                         {category.rarity}
                                       </div>
-                                    
                                     </div>
                                   </div>
                                 </div>
@@ -1768,6 +1767,7 @@ const Kickstarter = ({
                   to="/auth"
                   onClick={() => {
                     onClose();
+                    onAddClass(false);
                   }}
                   className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
                   style={{

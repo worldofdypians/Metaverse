@@ -37,7 +37,6 @@ const Header = ({
   loginListener,
   onSyncClick,
   network_matchain,
-  openKickstarter,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
