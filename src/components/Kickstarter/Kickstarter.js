@@ -29,7 +29,7 @@ const rewardCategories = [
   },
   {
     id: "rewards",
-    name: "USD",
+    name: "REWARDS",
     icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp",
     count: "$1-$10",
     color: "from-purple-500 to-pink-500",
@@ -1264,7 +1264,7 @@ const Kickstarter = ({
                             textTransform: "uppercase",
                           }}
                         >
-                          REWARDS
+                          PRIZES
                         </div>
                         <div className="d-flex gap-2 w-100 align-items-center justify-content-between">
                           {rewardCategories.map((category, index) => (
@@ -1489,32 +1489,7 @@ const Kickstarter = ({
                                       >
                                         {category.rarity}
                                       </div>
-                                      <motion.div
-                                        style={{
-                                          width: "3px",
-                                          height: "3px",
-                                          borderRadius: "50%",
-                                          background: category.color.includes(
-                                            "yellow"
-                                          )
-                                            ? "rgba(251, 191, 36, 0.8)"
-                                            : category.color.includes("blue")
-                                            ? "rgba(59, 130, 246, 0.8)"
-                                            : "rgba(168, 85, 247, 0.8)",
-                                        }}
-                                        animate={{
-                                          opacity: [0.5, 1, 0.5],
-                                          scale:
-                                            activatedReward === category.id
-                                              ? [1, 1.3, 1]
-                                              : [1, 1.1, 1],
-                                        }}
-                                        transition={{
-                                          duration: 1.5,
-                                          repeat: Infinity,
-                                          ease: "easeInOut",
-                                        }}
-                                      />
+                                    
                                     </div>
                                   </div>
                                 </div>
@@ -2110,7 +2085,7 @@ const Kickstarter = ({
                       </div>
                     ) : (
                       <div className="d-flex align-items-center gap-3">
-                        <span>CLAIM REWARDS</span>
+                        <span>CLAIM</span>
                       </div>
                     )}
                   </button>

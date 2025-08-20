@@ -1999,12 +1999,12 @@ function App() {
   const html = document.querySelector("html");
 
   useEffect(() => {
-    if (domainPopup === true || kickstarterAddClass === true) {
+    if (domainPopup === true || kickstarter === true) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [domainPopup, kickstarterAddClass]);
+  }, [domainPopup, kickstarter]);
 
   // const web3Name = createWeb3Name();
 
