@@ -1365,7 +1365,7 @@ const Kickstarter = ({
                             textTransform: "uppercase",
                           }}
                         >
-                          REWARDS
+                          PRIZES
                         </div>
                         <div
                           className="py-0 py-xxl-3 px-3 d-flex flex-column flex-xxl-row align-items-center justify-content-center gap-2 w-100"
