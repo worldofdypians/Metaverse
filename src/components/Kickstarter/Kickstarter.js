@@ -495,11 +495,11 @@ const Kickstarter = ({
                   x: 0,
                 }}
                 transition={{
-                  delay: 0.9 + 0 * 0.1,
+                  delay: 0.1 + 0 * 0.1,
                   type: "spring",
                   stiffness: 120,
                 }}
-                whileHover={{ scale: 1.02, y: -2, x: 3 }}
+                // whileHover={{ scale: 1.02, y: -2, x: 3 }}
                 className="selected-kick-reward overflow-hidden col-12 col-xxl-4"
               >
                 {/* Gaming-style tier indicator */}
@@ -523,17 +523,7 @@ const Kickstarter = ({
                   className="d-flex flex-column gap-2 align-items-center justify-content-between position-relative"
                   style={{ zIndex: 2 }}
                 >
-                  <div className="d-flex flex-column align-items-center gap-2">
-                    {/* Reward icon */}
-                    <img
-                      src={rewardCategories[0].icon}
-                      width={32}
-                      height={32}
-                      alt=""
-                    />
-
-                    {/* Reward info */}
-                  </div>
+                  
 
                   {/* Count display */}
                   <div className="text-center">
@@ -598,15 +588,15 @@ const Kickstarter = ({
               initial={{ opacity: 0, x: -50, y: -50 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
               className="position-absolute"
-              style={{ top: "32px", left: "24px", zIndex: 30 }}
+              style={{ top: "16px", left: "24px", zIndex: 30 }}
             >
               <motion.div
-                className="py-2 px-4"
+                className="py-2 px-4 gap-2 gap-lg-0 d-flex flex-row flex-lg-column align-items-center"
                 style={glassyContainerStyle}
                 whileHover={{ scale: 1.02 }}
               >
                 <motion.div
-                  className="text-center mb-3"
+                  className="text-center mb-0 mb-lg-3"
                   style={{
                     color: "rgba(219, 234, 254, 0.9)",
                     fontSize: "0.75rem",
@@ -630,7 +620,8 @@ const Kickstarter = ({
                   Chain
                 </motion.div>
 
-                <div className="d-flex gap-2">
+                <div className="d-flex flex-column align-items-center">
+                  <div className="d-flex gap-2">
                   {chains.map((chain, index) => (
                     <motion.div
                       key={chain.id}
@@ -732,13 +723,13 @@ const Kickstarter = ({
                   ))}
                 </div>
 
-                <AnimatePresence mode="wait">
+                <AnimatePresence  mode="wait">
                   <motion.div
                     key={selectedChain}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    className="text-center mt-3"
+                    className="text-center d-none d-lg-flex mt-3"
                   >
                     <motion.div
                       style={{
@@ -763,6 +754,7 @@ const Kickstarter = ({
                     </motion.div>
                   </motion.div>
                 </AnimatePresence>
+                </div>
               </motion.div>
             </motion.div>
 
@@ -1385,7 +1377,7 @@ const Kickstarter = ({
                                 type: "spring",
                                 stiffness: 120,
                               }}
-                              whileHover={{ scale: 1.02, y: -2, x: 3 }}
+                              // whileHover={{ scale: 1.02, y: -2, x: 3 }}
                               className="position-relative overflow-hidden col-12 col-xxl-4"
                               style={{
                                 padding: "6px 12px",
@@ -1408,7 +1400,7 @@ const Kickstarter = ({
                                           : "#A855F7"
                                       }40, inset 0 1px 0 rgba(120, 170, 255, 0.15)`
                                     : "0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(120, 170, 255, 0.1)",
-                                cursor: "pointer",
+                                // cursor: "pointer",
                                 transition: "all 0.3s ease",
                               }}
                             >
