@@ -20,7 +20,6 @@ const Land = ({
   handleRegister,
   chainId,
   showForms,
-  balance,
   socials
 }) => {
   const [showUnstakeModal, setShowUnstakeModal] = useState(false);

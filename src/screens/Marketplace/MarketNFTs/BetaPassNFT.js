@@ -62,6 +62,7 @@ const BetaPassNFT = ({
   const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
   const [bnbEarnUSD, setbnbEarnUSD] = useState(0);
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
+  const [taraxaEarnUsd, setTaraxaEarnUsd] = useState(0);
 
   const [coreEarnUsd, setCoreEarnUsd] = useState(0);
   const [multiversEarnUsd, setmultiversEarnUsd] = useState(0);
@@ -97,48 +98,93 @@ const BetaPassNFT = ({
 
   const betaPasses = [
     {
-      id: "base",
-      mainTitle: "Base Beta Pass",
-      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by our partners. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
-      heroImage: "https://cdn.worldofdypians.com/wod/baseBetaBanner.png",
-      logo: "https://cdn.worldofdypians.com/wod/base.svg",
-      buttonTitle: "Base",
-      giveawayButton: false,
+      id: "bnb",
+      mainTitle: "BNB Chain Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by BNB Chain. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/bnbBetaBanner.png",
+      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
+      buttonTitle: "BNB",
       isComingSoon: false,
+      giveawayButton: false,
       giveawayButtonTitle: "",
       giveawayLink: "",
       areaImage: undefined,
-      cardClassName: "base-mint-bg2",
-      wrapperClassName: "base-eventwrapper",
-      treasureHuntStatus: "Expired",
-      rewardsTitle: "$20,000 in ETH rewards",
-      rewardType: "ETH",
-      userEarned: baseEarnUSD,
+      cardClassName: "bnb-mint-bg",
+      wrapperClassName: "bnb-eventwrapper",
+      treasureHuntStatus: "Live",
+      rewardsTitle: "$30,000 in BNB rewards",
+      rewardType: "BNB",
+      userEarned: bnbEarnUSD,
       eventType: "Explore & Mine",
-      eventStartDate: "Mar. 12, 2025",
-      eventEndDate: "Jul. 10, 2025",
+      eventStartDate: "Aug. 13, 2025",
+      eventEndDate: "Dec. 11, 2025",
+    },
+
+    {
+      id: "vanar",
+      mainTitle: "Vanar Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Vanar. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/vanarHero.webp",
+      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+      buttonTitle: "Vanar",
+      isComingSoon: false,
+      giveawayButton: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
+      areaImage: undefined,
+      cardClassName: "vanar-mint-bg",
+      wrapperClassName: "vanar-eventwrapper",
+      treasureHuntStatus: "Live",
+      rewardsTitle: "$20,000 in VANRY rewards",
+      rewardType: "VANRY",
+      userEarned: vanarEarnUsd,
+      eventType: "Explore & Mine",
+      eventStartDate: "May. 19, 2025",
+      eventEndDate: "Sep. 16, 2025",
     },
     {
-      id: "matchain",
-      mainTitle: "Matchain Beta Pass",
-      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Matchain. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
-      heroImage: "https://cdn.worldofdypians.com/wod/matchainBetaBanner.webp",
-      logo: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
-      buttonTitle: "Matchain",
+      id: "taraxa",
+      mainTitle: "Taraxa Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by our partners. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/taraxaBetaBanner.webp",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+      buttonTitle: "Taraxa",
+      giveawayButton: true,
+      isComingSoon: false,
+      giveawayButtonTitle: "Mint your NFT",
+      giveawayLink: "/shop/mint/taraxa",
+      areaImage: undefined,
+      cardClassName: "taraxa-mint-bg",
+      wrapperClassName: "taraxa-eventwrapper",
+      treasureHuntStatus: "Coming Soon",
+      rewardsTitle: "$20,000 in TARA rewards",
+      rewardType: "TARA",
+      userEarned: taraxaEarnUsd,
+      eventType: "Explore & Mine",
+      eventStartDate: "Aug. 15, 2025",
+      eventEndDate: "Dec. 13, 2025",
+    },
+    {
+      id: "taiko",
+      mainTitle: "Taiko Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Taiko Network. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/taikoBanner.webp",
+      logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
+      buttonTitle: "Taiko",
       isComingSoon: false,
       giveawayButton: false,
       giveawayButtonTitle: "",
       giveawayLink: "",
       areaImage: undefined,
-      cardClassName: "matchain-mint-bg",
-      wrapperClassName: "mat-eventwrapper",
-      treasureHuntStatus: "Expired",
-      rewardsTitle: "$20,000 in BNB rewards",
-      rewardType: "BNB",
-      userEarned: matChainEarnUsd,
+      cardClassName: "taiko-mint-bg",
+      wrapperClassName: "taiko-eventwrapper",
+      treasureHuntStatus: "Live",
+      rewardsTitle: "$20,000 in Taiko rewards",
+      rewardType: "Taiko",
+      userEarned: taikoEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 04, 2024",
-      eventEndDate: "Apr. 04, 2025",
+      eventStartDate: "Aug 08, 2025",
+      eventEndDate: "Dec. 06, 2025",
     },
     {
       id: "cookie3",
@@ -163,26 +209,71 @@ const BetaPassNFT = ({
       eventEndDate: "Nov. 24, 2024",
     },
     {
-      id: "taiko",
-      mainTitle: "Taiko Beta Pass",
-      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Taiko Network. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
-      heroImage: "https://cdn.worldofdypians.com/wod/taikoBanner.webp",
-      logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
-      buttonTitle: "Taiko",
+      id: "kucoin",
+      mainTitle: "KuCoin Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by KuCoin. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/kucoinhero.webp",
+      logo: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
+      buttonTitle: "KuCoin",
       isComingSoon: false,
       giveawayButton: false,
       giveawayButtonTitle: "",
       giveawayLink: "",
       areaImage: undefined,
-      cardClassName: "taiko-mint-bg",
-      wrapperClassName: "taiko-eventwrapper",
-      treasureHuntStatus: "Live",
-      rewardsTitle: "$30,000 in Taiko rewards",
-      rewardType: "Taiko",
-      userEarned: taikoEarnUsd,
+      cardClassName: "kucoin-mint-bg2",
+      wrapperClassName: "kucoin-eventwrapper",
+      treasureHuntStatus: "Expired",
+      rewardsTitle: "$2,000 in KCS rewards",
+      rewardType: "KCS",
+      userEarned: userEarnUsdKucoin,
       eventType: "Explore & Mine",
-      eventStartDate: "Apr. 04, 2025",
-      eventEndDate: "Aug. 02, 2025",
+      eventStartDate: "Apr. 01, 2025",
+      eventEndDate: "Jul. 30, 2025",
+    },
+
+    {
+      id: "tea-fi",
+      mainTitle: "Tea-Fi Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Tea-Fi. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/teaBetaBanner.webp",
+      logo: "https://cdn.worldofdypians.com/wod/teafiLogo.svg",
+      buttonTitle: "Tea-Fi",
+      isComingSoon: false,
+      giveawayButton: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
+      areaImage: undefined,
+      cardClassName: "teafi-mint-bg",
+      wrapperClassName: "tea-eventwrapper",
+      treasureHuntStatus: "Live",
+      rewardsTitle: "$40,000 in TEA rewards",
+      rewardType: "TEA",
+      userEarned: teafiEarnUsd,
+      eventType: "Explore & Mine",
+      eventStartDate: "Jul. 18, 2025",
+      eventEndDate: "Oct. 16, 2025",
+    },
+    {
+      id: "base",
+      mainTitle: "Base Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by our partners. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/baseBetaBanner.png",
+      logo: "https://cdn.worldofdypians.com/wod/base.svg",
+      buttonTitle: "Base",
+      giveawayButton: false,
+      isComingSoon: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
+      areaImage: undefined,
+      cardClassName: "base-mint-bg2",
+      wrapperClassName: "base-eventwrapper",
+      treasureHuntStatus: "Expired",
+      rewardsTitle: "$20,000 in ETH rewards",
+      rewardType: "ETH",
+      userEarned: baseEarnUSD,
+      eventType: "Explore & Mine",
+      eventStartDate: "Mar. 12, 2025",
+      eventEndDate: "Jul. 10, 2025",
     },
     {
       id: "manta",
@@ -206,28 +297,7 @@ const BetaPassNFT = ({
       eventStartDate: "Apr 15, 2025",
       eventEndDate: "Aug 13, 2025",
     },
-    {
-      id: "bnb",
-      mainTitle: "BNB Chain Beta Pass",
-      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by BNB Chain. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
-      heroImage: "https://cdn.worldofdypians.com/wod/bnbBetaBanner.png",
-      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      buttonTitle: "BNB",
-      isComingSoon: false,
-      giveawayButton: false,
-      giveawayButtonTitle: "",
-      giveawayLink: "",
-      areaImage: undefined,
-      cardClassName: "bnb-mint-bg",
-      wrapperClassName: "bnb-eventwrapper",
-      treasureHuntStatus: "Live",
-      rewardsTitle: "$20,000 in BNB rewards",
-      rewardType: "BNB",
-      userEarned: 0,
-      eventType: "Explore & Mine",
-      eventStartDate: "Apr 09, 2025",
-      eventEndDate: "Aug 07, 2025",
-    },
+
     {
       id: "core",
       mainTitle: "Core Beta Pass",
@@ -242,35 +312,13 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "core-mint-bg",
       wrapperClassName: "core-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Coming Soon",
       rewardsTitle: "$20,000 in CORE rewards",
       rewardType: "CORE",
       userEarned: 0,
       eventType: "Explore & Mine",
-      eventStartDate: "Apr 10, 2025",
-      eventEndDate: "Aug 08, 2025",
-    },
-    {
-      id: "multiversx",
-      mainTitle: "MultiversX Beta Pass",
-      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by MultiversX. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
-      heroImage: "https://cdn.worldofdypians.com/wod/multiversBanner.webp",
-      logo: "https://cdn.worldofdypians.com/wod/multiversx.svg",
-      buttonTitle: "MultiversX",
-      isComingSoon: false,
-      giveawayButton: false,
-      giveawayButtonTitle: "",
-      giveawayLink: "",
-      areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
-      cardClassName: "multivers-mint-bg",
-      wrapperClassName: "multivers-eventwrapper",
-      treasureHuntStatus: "Coming Soon",
-      rewardsTitle: "$20,000 in EGLD rewards",
-      rewardType: "EGLD",
-      userEarned: 0,
-      eventType: "Explore & Mine",
-      eventStartDate: "Coming Soon",
-      eventEndDate: "Coming Soon",
+      eventStartDate: "Aug 14, 2025",
+      eventEndDate: "Dec 13, 2025",
     },
     {
       id: "sei",
@@ -338,6 +386,29 @@ const BetaPassNFT = ({
       eventStartDate: "Dec. 03, 2024",
       eventEndDate: "Apr. 03, 2025",
     },
+    {
+      id: "multiversx",
+      mainTitle: "MultiversX Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by MultiversX. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/multiversBanner.webp",
+      logo: "https://cdn.worldofdypians.com/wod/multiversx.svg",
+      buttonTitle: "MultiversX",
+      isComingSoon: false,
+      giveawayButton: false,
+      giveawayButtonTitle: "",
+      giveawayLink: "",
+      areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
+      cardClassName: "multivers-mint-bg",
+      wrapperClassName: "multivers-eventwrapper",
+      treasureHuntStatus: "Coming Soon",
+      rewardsTitle: "$20,000 in EGLD rewards",
+      rewardType: "EGLD",
+      userEarned: 0,
+      eventType: "Explore & Mine",
+      eventStartDate: "Coming Soon",
+      eventEndDate: "Coming Soon",
+    },
+
     {
       id: "coinmarketcap",
       mainTitle: "CoinMarketCap Beta Pass",
@@ -448,6 +519,7 @@ const BetaPassNFT = ({
       eventStartDate: "Oct. 06, 2023",
       eventEndDate: "Nov. 06, 2023",
     },
+
     {
       id: "kucoin",
       mainTitle: "KuCoin Beta Pass",
@@ -511,8 +583,8 @@ const BetaPassNFT = ({
       rewardType: "TEA",
       userEarned: teafiEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Jul. 18, 2025",
-      eventEndDate: "Oct. 16, 2025",
+      eventStartDate: "Dec. 04, 2024",
+      eventEndDate: "Apr. 04, 2025",
     },
   ];
 
@@ -622,6 +694,9 @@ const BetaPassNFT = ({
 
           const mantaEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "manta";
+          });
+          const taraxaEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taraxa";
           });
 
           const taikoEvent = responseData.events.filter((obj) => {
@@ -741,6 +816,12 @@ const BetaPassNFT = ({
               mantaEvent[0].reward.earn.total /
               mantaEvent[0].reward.earn.multiplier;
             setMantaEarnUsd(usdValue);
+          }
+          if (taraxaEvent && taraxaEvent[0]) {
+            const usdValue =
+              taraxaEvent[0].reward.earn.total /
+              taraxaEvent[0].reward.earn.multiplier;
+            setTaraxaEarnUsd(usdValue);
           }
 
           if (taikoEvent && taikoEvent[0]) {
@@ -1004,7 +1085,7 @@ const BetaPassNFT = ({
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <h6 className="nft-page-title pt-4 pt-lg-0 mt-5 mt-lg-4">
-                      {selectedMint?.mainTitle} Beta Pass
+                      {selectedMint?.mainTitle}
                     </h6>
 
                     <p className="collection-desc">{selectedMint?.desc}</p>
@@ -1298,7 +1379,10 @@ const BetaPassNFT = ({
                                 </div>
                               </div>
                               <div className="d-flex gap-1 align-items-center justify-content-center">
-                                <NavLink to="/account/challenges/treasure-hunt">
+                                <NavLink
+                                  to="/account/challenges/treasure-hunt"
+                                  className={"d-flex align-items-center gap-1"}
+                                >
                                   <span className="coingecko-eventdetails">
                                     Event details
                                   </span>

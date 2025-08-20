@@ -6,6 +6,7 @@ import axios from "axios";
 // import useWindowSize from "../../../hooks/useWindowSize";
 
 const Earn = ({
+  isEOA,
   isConnected,
   coinbase,
   chainId,
@@ -143,6 +144,7 @@ const Earn = ({
         <div className="d-flex flex-column gap-3">
           <EarnHero />
           <EarnContent
+          isEOA={isEOA}
             onSelectFilter={(value, expirevalue) => {
               setSelectedFilter(value);
               handleSetPools(value, expirevalue);

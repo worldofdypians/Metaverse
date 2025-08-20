@@ -81,6 +81,8 @@ const MobileNavbar = ({
         setchainState("sei");
       } else if (chainId === 2040) {
         setchainState("vanar");
+      } else if (chainId === 841) {
+        setchainState("taraxa");
       } else {
         setchainState("");
       }
@@ -232,7 +234,9 @@ const MobileNavbar = ({
                           : chainState === "sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                           : chainState === "vanar"
-                          ? "https://cdn.worldofdypians.com/wod/svg.png"
+                          ? "https://cdn.worldofdypians.com/wod/vanar.svg"
+                          : chainState === "taraxa"
+                          ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
                           : "https://cdn.worldofdypians.com/wod/error.svg"
                       }
                       alt=""
@@ -966,6 +970,30 @@ const MobileNavbar = ({
                       onClick={() => setOpenNavbar(false)}
                     >
                       <span className={`sidebar-title`}>Game Updates</span>
+                    </NavLink>
+                    <NavLink
+                      to="/keep-building"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span
+                        className={`sidebar-title d-flex px-2 align-items-center gap-2`}
+                      >
+                        Keep Building Program{" "}
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/kickstartIcon.svg"
+                          }
+                          height={20}
+                          width={20}
+                          alt=""
+                        />
+                      </span>
                     </NavLink>
                     <NavLink
                       to={"https://t.me/WorldOfDypians_bot"}

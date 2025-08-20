@@ -81,6 +81,7 @@ const renderer2 = ({ days, hours, minutes, completed }) => {
 };
 
 const WhitelistContent = ({
+  isEOA,
   isConnected,
   chainId,
   coinbase,
@@ -108,6 +109,8 @@ const WhitelistContent = ({
     useState(false);
 
   const [timerFinishedOTCPoolDynamic, settimerFinishedOTCPoolDynamic] =
+    useState(false);
+  const [timerFinishedOTCPool2Dynamic, settimerFinishedOTCPool2Dynamic] =
     useState(false);
   const [timerFinishedOTCWodDynamic, settimerFinishedOTCWodDynamic] =
     useState(false);
@@ -161,6 +164,13 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCPoolDynamic(true);
+        }
+      } else if (selectedRound.id == "pool2-dynamic") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedOTCPool2Dynamic(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedOTCPool2Dynamic(true);
         }
       } else if (selectedRound.id == "wod-dynamic") {
         if (today.getTime() > cliffTime) {
@@ -275,6 +285,7 @@ const WhitelistContent = ({
                 <span className="whitelist-balance-amount">
                   {getFormattedNumber(wodBalance)}{" "}
                   {selectedRound?.id == "pool-dynamic" ||
+                  selectedRound?.id == "pool2-dynamic" ||
                   selectedRound?.id == "wod-dynamic"
                     ? "USD"
                     : "WOD"}
@@ -293,6 +304,7 @@ const WhitelistContent = ({
                   <span className="whitelist-bottom-txt">
                     Total{" "}
                     {selectedRound?.id == "pool-dynamic" ||
+                    selectedRound?.id == "pool2-dynamic" ||
                     selectedRound?.id == "wod-dynamic"
                       ? "USD"
                       : "WOD"}
@@ -306,6 +318,7 @@ const WhitelistContent = ({
                   <span className="whitelist-bottom-txt">WOD Withdrew</span>
                 </div>
                 {selectedRound?.id !== "pool-dynamic" &&
+                  selectedRound?.id !== "pool2-dynamic" &&
                   selectedRound?.id !== "wod-dynamic" && (
                     <div className="d-flex flex-column">
                       <span className="whitelist-upper-txt">
@@ -389,6 +402,17 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedOTCPoolDynamic(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "pool2-dynamic" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTCPool2Dynamic(true);
                           onTimerFinished(true);
                         }}
                       />
@@ -480,7 +504,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinished === false
+                  timerFinished === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -491,7 +516,8 @@ const WhitelistContent = ({
                 disabled={
                   canClaim === false ||
                   timerFinished === false ||
-                  Number(wodBalance) === 0
+                  Number(wodBalance) === 0 ||
+                  !isEOA
                     ? true
                     : false
                 }
@@ -520,7 +546,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedOTC === false
+                  timerFinishedOTC === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -531,7 +558,8 @@ const WhitelistContent = ({
                 disabled={
                   canClaim === false ||
                   timerFinishedOTC === false ||
-                  Number(wodBalance) === 0
+                  Number(wodBalance) === 0 ||
+                  !isEOA
                     ? true
                     : false
                 }
@@ -560,7 +588,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedOTC2 === false
+                  timerFinishedOTC2 === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -571,7 +600,8 @@ const WhitelistContent = ({
                 disabled={
                   canClaim === false ||
                   timerFinishedOTC2 === false ||
-                  Number(wodBalance) === 0
+                  Number(wodBalance) === 0 ||
+                  !isEOA
                     ? true
                     : false
                 }
@@ -602,7 +632,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedOTCSpecial === false
+                  timerFinishedOTCSpecial === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -613,7 +644,8 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedOTCSpecial === false ||
-                    Number(wodBalance) === 0
+                    Number(wodBalance) === 0 ||
+                    !isEOA
                       ? true
                       : false
                   }
@@ -644,7 +676,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedOTCPoolBonus === false
+                  timerFinishedOTCPoolBonus === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -655,7 +688,8 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedOTCPoolBonus === false ||
-                    Number(wodBalance) === 0
+                    Number(wodBalance) === 0 ||
+                    !isEOA
                       ? true
                       : false
                   }
@@ -686,7 +720,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedOTCPoolDynamic === false
+                  timerFinishedOTCPoolDynamic === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -697,7 +732,51 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedOTCPoolDynamic === false ||
-                    Number(wodBalance) === 0
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "pool2-dynamic" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTCPool2Dynamic === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedOTCPool2Dynamic === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
                       ? true
                       : false
                   }
@@ -728,7 +807,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedOTCWodDynamic === false
+                  timerFinishedOTCWodDynamic === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -739,7 +819,8 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedOTCWodDynamic === false ||
-                    Number(wodBalance) === 0
+                    Number(wodBalance) === 0 ||
+                    !isEOA
                       ? true
                       : false
                   }
@@ -770,7 +851,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedOTCBonus === false
+                  timerFinishedOTCBonus === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -781,7 +863,8 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedOTCBonus === false ||
-                    Number(wodBalance) === 0
+                    Number(wodBalance) === 0 ||
+                    !isEOA
                       ? true
                       : false
                   }
@@ -812,7 +895,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedPrivate === false
+                  timerFinishedPrivate === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -823,7 +907,8 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedPrivate === false ||
-                    Number(wodBalance) === 0
+                    Number(wodBalance) === 0 ||
+                    !isEOA
                       ? true
                       : false
                   }
@@ -852,7 +937,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedKol === false
+                  timerFinishedKol === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -863,7 +949,8 @@ const WhitelistContent = ({
                 disabled={
                   canClaim === false ||
                   timerFinishedKol === false ||
-                  Number(wodBalance) === 0
+                  Number(wodBalance) === 0 ||
+                  !isEOA
                     ? true
                     : false
                 }
@@ -894,7 +981,8 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinishedAdvisors === false
+                  timerFinishedAdvisors === false ||
+                  !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -905,7 +993,8 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedAdvisors === false ||
-                    Number(wodBalance) === 0
+                    Number(wodBalance) === 0 ||
+                    !isEOA
                       ? true
                       : false
                   }
@@ -925,6 +1014,11 @@ const WhitelistContent = ({
                   )}
                 </button>
               )}
+            {isConnected && coinbase && !isEOA && (
+              <span className="text-danger">
+                Smart contract wallets are not supported for this action.
+              </span>
+            )}
           </div>
         </div>
       </div>

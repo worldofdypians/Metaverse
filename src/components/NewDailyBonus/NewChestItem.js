@@ -32,6 +32,8 @@ const NewChestItem = ({
   binanceW3WProvider,
   walletClient,
   publicClient,
+  openKickstarter,
+  closeDaily
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -402,6 +404,10 @@ const NewChestItem = ({
       window.DAILY_BONUS_TAIKO_ABI,
       window.config.daily_bonus_taiko_address
     );
+    const daily_bonus_contract_taraxa = new window.web3.eth.Contract(
+      window.DAILY_BONUS_TARAXA_ABI,
+      window.config.daily_bonus_taraxa_address
+    );
 
     const daily_bonus_contract_mat = new window.web3.eth.Contract(
       window.DAILY_BONUS_MAT_ABI,
@@ -416,6 +422,7 @@ const NewChestItem = ({
       window.DAILY_BONUS_SEI_ABI,
       window.config.daily_bonus_vanar_address
     );
+
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (window.WALLET_TYPE !== "binance") {
@@ -1558,6 +1565,104 @@ const NewChestItem = ({
             return () => clearTimeout(timer);
           });
       }
+    } else if (chainId === 841) {
+      if (rewardTypes === "premium" && isPremium) {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.taraxaWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_taraxa.methods
+          .openPremiumChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+        await daily_bonus_contract_taraxa.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+            ...transactionParameters,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "taraxa"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.taraxaWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_taraxa.methods
+          .openChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+        await daily_bonus_contract_taraxa.methods
+          .openChest()
+          .send({
+            from: address,
+            ...transactionParameters,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "taraxa"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
     } else if (chainId === 1329) {
       if (rewardTypes === "premium" && isPremium) {
         const web3 = new Web3(window.ethereum);
@@ -2294,15 +2399,19 @@ const NewChestItem = ({
   };
 
   return (
-    <div
-      className={`new-chest-item ${open && "new-chest-item-open"}  ${
+    <>
+    {chestIndex === 5 
+     ?
+     <div
+      className={` ${open && chestIndex === 5 ? "new-chest-item-open-premium" : open ? "new-chest-item-open" : "" }  ${
         isActive === chestId &&
         isActiveIndex === chestIndex &&
         "chest-item-active"
       } ${selectedChest === chestId ? "selected-new-chest" : ""} 
       ${claimingChest === true ? "disable-chest" : ""}
+      ${chestIndex === 5 ? "premium-chest-item" : "new-chest-item"}
       d-flex align-items-center justify-content-center position-relative`}
-      onClick={() => handleChestClick()}
+      onClick={() => {closeDaily(); openKickstarter();}}
       style={{
         pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
       }}
@@ -2319,12 +2428,20 @@ const NewChestItem = ({
       {rewardTypes !== "premium" ? (
         <img
           className={` ${
-            chain !== "skale" ? "new-chest-item-img" : "new-chest-item-img-skale"
+            chestIndex === 5
+              ? "premium-chest-item-img":
+            chain !== "skale"
+              ? "new-chest-item-img"
+              : "new-chest-item-img-skale"
           } ${
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
           src={
-            chain !== "skale"
+            chestIndex === 5
+              ? `https://cdn.worldofdypians.com/wod/${
+                  open ? "premiumChestOpenFront" : "premiumChest"
+                }.png`
+              : chain !== "skale"
               ? `https://cdn.worldofdypians.com/wod/${
                   open ? image + "open" : image
                 }.png`
@@ -2380,6 +2497,109 @@ const NewChestItem = ({
         {open ? "Claimed" : rewardTypes === "premium" ? "Prime" : "Claim "}
       </div>
     </div>
+    :
+    <div
+      className={` ${open && chestIndex === 5 ? "new-chest-item-open-premium" : open ? "new-chest-item-open" : "" }  ${
+        isActive === chestId &&
+        isActiveIndex === chestIndex &&
+        "chest-item-active"
+      } ${selectedChest === chestId ? "selected-new-chest" : ""} 
+      ${claimingChest === true ? "disable-chest" : ""}
+      ${chestIndex === 5 ? "premium-chest-item" : "new-chest-item"}
+      d-flex align-items-center justify-content-center position-relative`}
+      onClick={() => handleChestClick()}
+      style={{
+        pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
+      }}
+    >
+      {/* <img
+    className='new-chest-item-img'
+      src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/blueCrystal${
+        !open ? "" :  "OpenGems"
+      }.png`)}
+      
+      alt=""
+      style={{ position: "relative", bottom: "5px", filter: item.premium && "blur(5px)" }}
+    /> */}
+      {rewardTypes !== "premium" ? (
+        <img
+          className={` ${
+            chestIndex === 5
+              ? "premium-chest-item-img":
+            chain !== "skale"
+              ? "new-chest-item-img"
+              : "new-chest-item-img-skale"
+          } ${
+            loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
+          }`}
+          src={
+            chestIndex === 5
+              ? `https://cdn.worldofdypians.com/wod/${
+                  open ? "premiumChestOpenFront" : "premiumChest"
+                }.png`
+              : chain !== "skale"
+              ? `https://cdn.worldofdypians.com/wod/${
+                  open ? image + "open" : image
+                }.png`
+              : `https://cdn.worldofdypians.com/wod/${
+                  open ? chestIndex + "openskale" : chestIndex + "skale"
+                }.png`
+          }
+          alt=""
+          style={{
+            position: "relative",
+            bottom: "5px",
+            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+          }}
+        />
+      ) : rewardTypes === "premium" && dummypremiumChests ? (
+        <img
+          className={`${
+            chain !== "skale"
+              ? "new-chest-item-img"
+              : "new-chest-item-img-skale"
+          } ${
+            loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
+          }`}
+          src={
+            chain !== "skale"
+              ? `https://cdn.worldofdypians.com/wod/${
+                  open
+                    ? chestIndex % 2 === 1
+                      ? dummypremiumChests + "OpenCoins"
+                      : dummypremiumChests + "OpenGems"
+                    : dummypremiumChests
+                }.png`
+              : `https://cdn.worldofdypians.com/wod/${
+                  open
+                    ? chestIndex - 10 + "openskalepremium"
+                    : chestIndex - 10 + "skalepremium"
+                }.png`
+          }
+          alt=""
+          style={{
+            position: "relative",
+            bottom: "5px",
+            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+          }}
+        />
+      ) : (
+        <></>
+      )}
+      {rewardTypes === "premium" && !isPremium && (
+        <img
+          src={"https://cdn.worldofdypians.com/wod/premiumLock.png"}
+          className={`premium-lock ${shake && "shake-lock"}`}
+          alt=""
+        />
+      )}
+      <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">
+        {open ? "Claimed" : rewardTypes === "premium" ? "Prime" : "Claim "}
+      </div>
+    </div>
+    
+    }
+    </>
   );
 };
 

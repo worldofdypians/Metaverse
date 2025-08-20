@@ -231,6 +231,33 @@
     height: 155px;
   }
 }
+.royalty-chest-wrapper {
+  background-image: url("./royaltyChestBg.png");
+  border-radius: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 145px;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+  background-position: right;
+
+  @media screen and (max-width: 786px) {
+    height: 155px;
+  }
+
+  //   &::before {
+  //   content: "";
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   border-radius: 10px;
+  //   background: rgba(0, 0, 0, 0.4); // ← your shadow overlay (change opacity as needed)
+  //   z-index: 1;
+  // }
+}
 
 .wod-domain-name-wrapper {
   background-image: url("https://cdn.worldofdypians.com/wod/domainNameBg.webp");
@@ -271,6 +298,9 @@
 .new-special-rewards-wrapper:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
+.royalty-chest-wrapper:hover {
+  filter: drop-shadow(0px 0px 10px #c09645);
+}
 
 .special-rewards-title {
   color: #9e3c7a;
@@ -281,19 +311,41 @@
   line-height: normal;
   text-transform: uppercase;
 }
+.royalty-chest-title {
+  color: #cedbfe;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
+  text-shadow: -1px -1px 0 #471f06, 1px -1px 0 #471f06, -1px 1px 0 #471f06,
+    1px 1px 0 #471f06; /* Blue outline */
+}
 
+.royal-rewards-img {
+  width: 80px;
+  position: absolute;
+  right: 20px;
+  top: 0;
+  bottom: 60px;
+  margin: auto;
 
+  @media screen and (max-width: 1500px) {
+    scale: 0.8;
+  }
 
-.question-of-the-day-title{
- font-family: 'Bowlby One SC', sans-serif;
-    font-size: 16px;
-  color: #ffdf83; /* White text */
-  text-shadow: 
-    -1px -1px 0 #471f06,  
-     1px -1px 0 #471f06,
-    -1px  1px 0 #471f06,
-     1px  1px 0 #471f06; /* Blue outline */
+  @media screen and (max-width: 786px) {
+    right: 60px;
+  }
+}
 
+.question-of-the-day-title {
+  font-family: "Bowlby One SC", sans-serif;
+  font-size: 16px;
+  color: #fac926; /* White text */
+  text-shadow: -1px -1px 0 #471f06, 1px -1px 0 #471f06, -1px 1px 0 #471f06,
+    1px 1px 0 #471f06; /* Blue outline */
 }
 
 .special-rewards-span {
@@ -628,6 +680,13 @@
   right: 20px;
   bottom: 0;
   width: 28%;
+
+  @media screen and (max-width: 991px) {
+    width: auto;
+    bottom: 0;
+    right: 0;
+    height: inherit;
+  }
 }
 
 .ai-question-img {
@@ -635,10 +694,16 @@
   right: 20px;
   bottom: 0;
   width: 21%;
-
-    @media screen and (max-width: 500px) {
-    width: 16%;
+  filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.7));
+  @media screen and (max-width: 991px) {
+    width: auto;
+    bottom: 0;
+    right: 0;
+    height: inherit;
   }
+  // @media screen and (max-width: 500px) {
+  //   width: 16%;
+  // }
 }
 
 .daily-progress-wrapper {
@@ -844,7 +909,6 @@
     font-style: normal;
     font-weight: bold;
     line-height: 16px;
- 
   }
 
   h6 {
@@ -861,6 +925,7 @@
 .new-profile-img {
   height: 106px;
   width: 82px;
+  // max-width: fit-content;
 }
 
 @media (min-width: 1610px) {
@@ -959,6 +1024,11 @@
   @media screen and (max-width: 1500px) {
     width: 60px;
     height: 60px;
+    left: 40px;
+  }
+
+  @media screen and (max-width: 991px) {
+    left: 0px;
   }
 }
 
@@ -968,6 +1038,14 @@
   right: 0;
   bottom: 0;
   top: 25px;
+
+  @media screen and (max-width: 1500px) {
+    left: 25px;
+  }
+
+  @media screen and (max-width: 991px) {
+    left: 0px;
+  }
 }
 
 .ready-circle-2 {
@@ -1045,7 +1123,8 @@
   overflow: hidden;
 }
 
-.new-stake-nft-wrapper:hover,.ai-question-banner:hover {
+.new-stake-nft-wrapper:hover,
+.ai-question-banner:hover {
   .ready-circle {
     box-shadow: 0px 0px 20px gold;
   }
@@ -1224,9 +1303,6 @@
   line-height: normal;
 
   @media screen and (max-width: 1500px) {
-    font-size: 16px;
-  }
-  @media screen and (max-width: 1200px) {
     font-size: 15px;
   }
 }

@@ -1,72 +1,74 @@
-import React from 'react'
-import './_game.scss'
+import React from "react";
+import "./_game.scss";
 
-import { NavLink } from 'react-router-dom';
-
+import { NavLink } from "react-router-dom";
 
 const AmplifyExperience = () => {
-    const rows = [
-        {
-          title: "Access to Basic Features",
-          free: true,
-          betaPass: true,
-          premium: true,
-        },
-        {
-          title: "Explore Every Game Map",
-          free: true,
-          betaPass: true,
-          premium: true,
-        },
-        {
-          title: "Ability to Buy Bundles",
-          free: true,
-          betaPass: true,
-          premium: true,
-        },
-        {
-          title: "Access to Specific Treasure Hunt events",
-          free: false,
-          betaPass: true,
-          premium: true,
-        },
-        {
-          title: "Full Participation in Game Events",
-          free: false,
-          betaPass: true,
-          premium: true,
-        },
-        {
-          title: "Unlock 20 Chests on Daily Bonus",
-          free: false,
-          betaPass: false,
-          premium: true,
-        },
-        {
-          title: "Receive Special Rewards",
-          free: false,
-          betaPass: false,
-          premium: true,
-        },
-        {
-          title: "Get Premium Items",
-          free: false,
-          betaPass: false,
-          premium: true,
-        },
-        {
-          title: "Access to Special Quests",
-          free: false,
-          betaPass: false,
-          premium: true,
-        },
-      ];
-    
+  const rows = [
+    {
+      title: "Access to Basic Features",
+      free: true,
+      betaPass: true,
+      premium: true,
+    },
+    {
+      title: "Explore Every Game Map",
+      free: true,
+      betaPass: true,
+      premium: true,
+    },
+    {
+      title: "Ability to Buy Bundles",
+      free: true,
+      betaPass: true,
+      premium: true,
+    },
+    {
+      title: "Access to Specific Treasure Hunt events",
+      free: false,
+      betaPass: true,
+      premium: true,
+    },
+    {
+      title: "Full Participation in Game Events",
+      free: false,
+      betaPass: true,
+      premium: true,
+    },
+    {
+      title: "Unlock 20 Chests on Daily Bonus",
+      free: false,
+      betaPass: false,
+      premium: true,
+    },
+    {
+      title: "Receive Special Rewards",
+      free: false,
+      betaPass: false,
+      premium: true,
+    },
+    {
+      title: "Get Premium Items",
+      free: false,
+      betaPass: false,
+      premium: true,
+    },
+    {
+      title: "Access to Special Quests",
+      free: false,
+      betaPass: false,
+      premium: true,
+    },
+  ];
+
   return (
     <>
-     <div className="container-fluid d-flex align-items-center justify-content-center">
+      <div className="container-fluid d-flex align-items-center justify-content-center">
         <div className="custom-container d-flex flex-column align-items-center align-items-lg-start  mt-5 w-100">
-          <h2 className="explorer-grid-title px-0" style={{width: "fit-content"}}>
+          <h2
+            className="explorer-grid-title px-0"
+            style={{ width: "fit-content" }}
+          >
             Amplify Experience
           </h2>
           <span
@@ -100,13 +102,40 @@ const AmplifyExperience = () => {
                 >
                   <td className="game-table-text py-3 ps-3">{item.title}</td>
                   <td>
-                    {item.free ? <img src={"https://cdn.worldofdypians.com/wod/amplifyCheck.svg"} alt="" /> : <></>}
+                    {item.free ? (
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/amplifyCheck.svg"
+                        }
+                        alt=""
+                      />
+                    ) : (
+                      <></>
+                    )}
                   </td>
                   <td>
-                    {item.betaPass ? <img src={"https://cdn.worldofdypians.com/wod/amplifyCheck.svg"} alt="" /> : <></>}
+                    {item.betaPass ? (
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/amplifyCheck.svg"
+                        }
+                        alt=""
+                      />
+                    ) : (
+                      <></>
+                    )}
                   </td>
                   <td>
-                    {item.premium ? <img src={"https://cdn.worldofdypians.com/wod/amplifyCheck.svg"} alt="" /> : <></>}
+                    {item.premium ? (
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/amplifyCheck.svg"
+                        }
+                        alt=""
+                      />
+                    ) : (
+                      <></>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -122,7 +151,6 @@ const AmplifyExperience = () => {
                     <NavLink
                       className="stake-wod-btn px-4 py-2 mt-4"
                       to={"/join-beta"}
-                     
                     >
                       Join Beta
                     </NavLink>
@@ -132,7 +160,7 @@ const AmplifyExperience = () => {
                   <div className="py-4">
                     <NavLink
                       className="stake-wod-btn px-4 py-2 mt-4"
-                      to={"/shop/beta-pass/base"}
+                      to={"/shop/beta-pass/bnb"}
                     >
                       Get Beta Pass
                     </NavLink>
@@ -154,7 +182,7 @@ const AmplifyExperience = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AmplifyExperience
+export default AmplifyExperience;

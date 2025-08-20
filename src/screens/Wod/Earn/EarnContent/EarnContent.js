@@ -13,6 +13,7 @@ import StakeWodDetails2 from "./pools/stakingWod2";
 import { NavLink } from "react-router-dom";
 
 const EarnContent = ({
+  isEOA,
   isConnected,
   coinbase,
   chainId,
@@ -494,6 +495,7 @@ const EarnContent = ({
                             }}
                           >
                             <CawsDetails
+                              isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -524,6 +526,7 @@ const EarnContent = ({
                             }}
                           >
                             <LandDetails
+                            isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -554,6 +557,7 @@ const EarnContent = ({
                             }}
                           >
                             <CawsWodDetails
+                            isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -583,6 +587,7 @@ const EarnContent = ({
                             }}
                           >
                             <CawsDetailsPremium
+                            isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -614,6 +619,7 @@ const EarnContent = ({
                             }}
                           >
                             <LandDetailsPremium
+                            isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -645,7 +651,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
-                            
+                            isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -681,6 +687,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
+                            isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -716,6 +723,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
+                            isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -751,6 +759,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
+                            isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -786,6 +795,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
+                            isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}

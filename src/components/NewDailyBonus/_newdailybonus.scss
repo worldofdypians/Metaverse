@@ -57,6 +57,15 @@
     .daily-bonus-inner-wrapper {
       height: 80%;
     }
+
+     
+  }
+
+    @media screen and (max-width: 767px) {
+   
+    .daily-bonus-inner-wrapper {
+      max-width: 100%;
+    }
   }
 }
 
@@ -72,7 +81,7 @@
   background-image: url("https://cdn.worldofdypians.com/wod/rewardsBg2.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  height: 80%;
+  // height: 80%;
   overflow: hidden;
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5)) !important;
 
@@ -212,7 +221,7 @@
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  height: 14%;
+  // height: 14%;
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5));
 
   @media screen and (max-width: 991px) {
@@ -251,9 +260,9 @@
   cursor: pointer;
   border: 2px solid transparent;
   border-radius: 18px;
+  @media screen and (max-width: 767px) {
+        height: 105px;
 
-  @media screen and (max-width: 991px) {
-    // width: 207px;
     // height: 100%;
   }
 }
@@ -270,6 +279,8 @@
   border-radius: 18px;
 
   @media screen and (max-width: 991px) {
+    // height: 60px;
+
     // width: 207px;
     // height: 100%;
   }
@@ -385,11 +396,15 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 14px;
   place-items: center;
-
-  @media screen and (max-width: 991px) {
+   @media screen and (max-width: 670px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+   @media screen and (max-width: 606px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 500px) {
     grid-template-columns: repeat(2, 1fr);
   }
-
   @media screen and (max-height: 840px) {
     gap: 10px;
   }
@@ -419,6 +434,43 @@
   cursor: pointer;
   transition: all 0.25s;
 }
+.premium-chest-item {
+  position: relative;
+  border-radius: 20px;
+  border: 2px solid #a57900;
+ background: linear-gradient(135deg, #f1ef69 0%, #d1c632 34.54%, #8e7d12 66.84%, #7a6918 100%);
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.25s;
+  .new-claim-chest-btn {
+  border: 1px solid #a57900;
+ background: linear-gradient(
+  92deg,
+  #b48a00 0%,
+  #c89d2a 35%,
+  #d1a600 70%,
+  #9e7400 100%
+);
+    color: #022722;
+  }
+}
+
+.premium-chest-item:hover {
+  border: 2px solid #d6c100;
+  filter: drop-shadow(0 0 6px #cdb900) !important;
+
+  .new-claim-chest-btn {
+    border: 1px solid #cdb900;
+    background: linear-gradient(92deg,
+        #cda700 0%,
+        #d6c800 33.5%,
+        #d6c100 68%,
+        #cdb900 100%);
+    color: #022722;
+  }
+}
+
 
 .new-chest-item-img {
   width: 80px;
@@ -429,11 +481,33 @@
     height: 65px;
   }
 }
+.premium-chest-item-img {
+  width: 80px;
+  height: 80px;
+  animation: pulseShadow 2s infinite ease-in-out;
+  @media screen and (max-height: 800px) {
+    width: 65px;
+    height: 65px;
+  }
+}
+
+
+@keyframes pulseShadow {
+  0% {
+    filter: drop-shadow(0 0 0px rgba(255, 208, 0, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgb(255, 230, 0));
+  }
+  100% {
+    filter: drop-shadow(0 0 0px rgba(255, 238, 0, 0.6));
+  }
+}
 
 .new-chest-item-img-skale {
   width: 80px;
   height: 80px;
-
+      scale: 0.8;
   @media screen and (max-height: 800px) {
     width: 65px;
     height: 80px;
@@ -441,10 +515,7 @@
 }
 
 @media screen and (max-height: 875px) {
-  .chain-img {
-    height: 105px;
-  }
-
+ 
   .chain-img-2 {
     height: 105px;
   }
@@ -455,7 +526,7 @@
     height: 100%;
 
     @media screen and (max-width: 991px) {
-      height: 105% !important;
+      height: 100% !important;
     }
   }
 
@@ -464,10 +535,18 @@
   }
 }
 
+@media screen and (max-height: 770px) {
+  .chain-img {
+    height: 60px;
+  }
+  
+}
+
 .chains-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: min-content;
+  place-content: space-between;
 }
 
 .chains-container-2 {
@@ -529,13 +608,40 @@
         #bb3104 100%) !important;
   }
 }
+.new-chest-item-open-premium {
+  background-image: url("https://cdn.worldofdypians.com/wod/chestShine.png") !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 2px solid #007782;
+  background-position: center;
+  background-blend-mode: luminosity;
+  background-color: #007782;
+  
+  .new-claim-chest-btn {
+    border: 1px solid #cdb900;
+    background: linear-gradient(92deg,
+        #cda700 0%,
+        #d6c800 33.5%,
+        #d6c100 68%,
+        #cdb900 100%);
+    color: #022722;
+  }
+}
 
 .chest-test-wrapper {
   overflow-y: auto;
-  height: 97%;
+  // height: 97%;
 }
 
 .new-chest-item-open:hover {
+  // border: 2px solid #00b9cd !important;
+  filter: drop-shadow(0 0 6px #00b9cd) !important;
+
+  .new-claim-chest-btn {
+    border: 2px solid #00b9cd !important;
+  }
+}
+.new-chest-item-open-premium:hover {
   // border: 2px solid #00b9cd !important;
   filter: drop-shadow(0 0 6px #00b9cd) !important;
 
@@ -669,6 +775,8 @@
   height: 100%;
 }
 
+ 
+
 @media screen and (max-width: 991px) {
   .grid-overall-wrapper {
     height: 40%;
@@ -676,6 +784,28 @@
 
   .grid-scroll {
     height: 100%;
+    overflow-y: scroll;
+  }
+}
+
+@media screen and (max-width: 670px) {
+
+  .grid-scroll {
+    height: 70%;
+    overflow-y: scroll;
+  }
+}
+@media screen and (max-width: 606px) {
+
+  .grid-scroll {
+    height: 48%;
+    overflow-y: scroll;
+  }
+}
+@media screen and (max-width: 500px) {
+
+  .grid-scroll {
+    height: 30%;
     overflow-y: scroll;
   }
 }
@@ -1392,6 +1522,8 @@
 
 .percent-img {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
+  // width: 20px;
+  // height: auto;
 }
 
 .buy-nft-popup-wrapper {
@@ -1427,13 +1559,16 @@
     height: 20% !important;
   }
 
-  .grid-overall-wrapper {
-    height: 60% !important;
+  .grid-overall-wrapper{
+    // height: 60% !important;
+    height: auto !important;
+
+    padding: 10px !important;
   }
 
   .message-height-wrapper {
     margin-top: 20px !important;
-    height: 20% !important;
+    // height: 20% !important;
   }
 }
 
@@ -1445,10 +1580,9 @@
   .grid-overall-wrapper {
     height: 45% !important;
   }
-
-  .message-height-wrapper {
-    height: 20% !important;
-  }
+  // .message-height-wrapper{
+  //   height: 20% !important;
+  // }
 }
 
 @media screen and (max-height: 740px) and (max-width: 786px) {
@@ -1459,10 +1593,9 @@
   .grid-overall-wrapper {
     height: 40% !important;
   }
-
-  .message-height-wrapper {
-    height: 20% !important;
-  }
+  // .message-height-wrapper{
+  //   height: 20% !important;
+  // }
 }
 
 .disable-chest {
