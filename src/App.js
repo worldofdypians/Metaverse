@@ -7762,7 +7762,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          /> */}
+          />  
           {/* <Route
             exact
             path="/shop/mint/vanar"
