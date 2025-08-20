@@ -642,7 +642,7 @@ function App() {
 
   const { activate, deactivate, library, provider } = useWeb3React();
 
-  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let taraxaLastDay = new Date("2025-12-13T14:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2025-07-10T16:00:00.000+02:00");
@@ -663,7 +663,7 @@ function App() {
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
-  let seiLastDay = new Date("2025-08-16T14:00:00.000+02:00");
+  let seiLastDay = new Date("2025-08-18T14:00:00.000+02:00");
 
   let vanarLastDay = new Date("2025-09-16T14:00:00.000+02:00");
 
@@ -1379,9 +1379,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            // if (coreEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (coreEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -1393,9 +1393,9 @@ function App() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            if (seiEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (seiEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
@@ -1448,9 +1448,9 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            if (mantaEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (mantaEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -4773,7 +4773,7 @@ function App() {
     {
       title: "Taraxa",
       logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       rewardType: "TARA",
       rewardAmount: "$20,000",
       location: [-0.06917415368919773, 0.08433401584625246],
@@ -4794,11 +4794,11 @@ function App() {
         chain: "Taraxa",
         linkState: "taraxa",
         rewards: "TARA",
-        status: "Coming Soon",
+        status: "Live",
         id: "event30",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TARA Rewards",
-        eventDuration: taikoLastDay,
+        eventDuration: taraxaLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -4888,7 +4888,7 @@ function App() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -4899,15 +4899,15 @@ function App() {
       infoType: "Treasure Hunt",
       location: [-0.06862698344579729, 0.08752048015594482],
       marker: markers.treasureMarker,
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
+      userEarnUsd: coreEarnUsd,
+      userEarnCrypto: coreEarnToken,
+      userEarnPoints: corePoints,
       popupInfo: {
         title: "CORE",
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Coming Soon",
+        status: "Live",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
@@ -4923,7 +4923,7 @@ function App() {
     {
       title: "SEI",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "SEI",
       rewardAmount: "$20,000",
       location: [-0.06734488843929015, 0.08361518383026124],
@@ -4944,7 +4944,7 @@ function App() {
         chain: "Sei Network",
         linkState: "sei",
         rewards: "SEI",
-        status: "Live",
+        status: "Expired",
         id: "event13",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SEI Rewards",
@@ -5148,7 +5148,7 @@ function App() {
     {
       title: "Manta",
       logo: "https://cdn.worldofdypians.com/wod/mantaLogoBig.png",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.07001821071588557, 0.08503675460815431],
@@ -5170,7 +5170,7 @@ function App() {
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Live",
+        status: "Expired",
         id: "event21",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in MANTA Rewards",

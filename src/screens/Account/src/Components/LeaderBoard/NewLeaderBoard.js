@@ -208,7 +208,7 @@ const NewLeaderBoard = ({
                     Select Chain
                   </span>
                   <div className="new-leaderboard-btns-wrapper">
-                    <div className="chains-container mt-0 gap-2 d-lg-grid d-flex">
+                    <div className="leaderboard-chains-container mt-0 gap-2 d-lg-grid d-flex">
                       <button
                         onMouseEnter={() => handleMouseEnter("bnb")}
                         onMouseLeave={handleMouseLeave}
@@ -236,8 +236,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -275,8 +275,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -314,8 +314,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -352,8 +352,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -389,8 +389,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -426,8 +426,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -464,8 +464,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -501,8 +501,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -539,8 +539,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -578,8 +578,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           style={{ borderRadius: "50%" }}
                           alt=""
                         />
@@ -617,8 +617,8 @@ const NewLeaderBoard = ({
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
-                          width={20}
-                          height={20}
+                          width={18}
+                          height={18}
                           alt=""
                         />
                         {windowSize.width > 768
@@ -767,33 +767,32 @@ const NewLeaderBoard = ({
                   <div className={`position-relative`}>
                     {allData[0]?.loading === true ? (
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
-                        <CircularProgress size={20} />
+                        <CircularProgress size={18} />
                       </div>
-                    ) : 
-                    (
-                    //     optionText2 === "taraxa"  ? (
-                    //     <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
-                    //       <h6
-                    //         className="mb-0 text-center"
-                    //         style={{ fontSize: 18 }}
-                    //       >
-                    //         Coming Soon
-                    //       </h6>
-                    //       <h6
-                    //         className="mb-0 text-center"
-                    //         style={{ fontSize: 14 }}
-                    //       >
-                    //         The leaderboard is under maintenance.
-                    //       </h6>
-                    //       <h6
-                    //         className="mb-0 text-center"
-                    //         style={{ fontSize: 14 }}
-                    //       >
-                    //         The points and stars will be live tomorrow{" "}
-                    //       </h6>
-                    //     </div>
-                    //   ) 
-                    //   :
+                    ) : (
+                      //     optionText2 === "taraxa"  ? (
+                      //     <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
+                      //       <h6
+                      //         className="mb-0 text-center"
+                      //         style={{ fontSize: 18 }}
+                      //       >
+                      //         Coming Soon
+                      //       </h6>
+                      //       <h6
+                      //         className="mb-0 text-center"
+                      //         style={{ fontSize: 14 }}
+                      //       >
+                      //         The leaderboard is under maintenance.
+                      //       </h6>
+                      //       <h6
+                      //         className="mb-0 text-center"
+                      //         style={{ fontSize: 14 }}
+                      //       >
+                      //         The points and stars will be live tomorrow{" "}
+                      //       </h6>
+                      //     </div>
+                      //   )
+                      //   :
                       <></>
                     )}
                     {/* <img
@@ -1208,8 +1207,8 @@ const NewLeaderBoard = ({
                                               >
                                                 <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
                                                   <img
-                                                    width={20}
-                                                    height={20}
+                                                    width={18}
+                                                    height={18}
                                                     src={
                                                       "https://cdn.worldofdypians.com/wod/lbStar.png"
                                                     }
@@ -1329,8 +1328,8 @@ const NewLeaderBoard = ({
                                               >
                                                 <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
                                                   <img
-                                                    width={20}
-                                                    height={20}
+                                                    width={18}
+                                                    height={18}
                                                     src={
                                                       "https://cdn.worldofdypians.com/wod/lbStar.png"
                                                     }
@@ -1392,7 +1391,7 @@ const NewLeaderBoard = ({
                                     optionText === "daily" &&
                                     optionText !== "genesis" && (
                                       <CircularProgress
-                                        size={20}
+                                        size={18}
                                         style={{
                                           alignSelf: "center",
                                           margin: "auto",
@@ -1503,8 +1502,8 @@ const NewLeaderBoard = ({
                                         >
                                           <div className="d-flex align-items-center justify-content-center ms-2 me-4 gap-1">
                                             <img
-                                              width={20}
-                                              height={20}
+                                              width={18}
+                                              height={18}
                                               src={
                                                 "https://cdn.worldofdypians.com/wod/lbStar.png"
                                               }
@@ -1589,7 +1588,7 @@ const NewLeaderBoard = ({
                                                 whiteSpace: "nowrap",
                                               }}
                                             >
-                                              + <img src={"https://cdn.worldofdypians.com/wod/lbStar.png"} width={20} height={20} alt="" />
+                                              + <img src={"https://cdn.worldofdypians.com/wod/lbStar.png"} width={18} height={18} alt="" />
                                               {getFormattedNumber(
                                                 leaderboard.rewards[
                                                   leaderboard.player_data

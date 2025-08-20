@@ -100,6 +100,11 @@ const VideoWrapper = ({
       logo: "blofinBuywod.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
+    {
+      title: "CoinRabbit",
+      logo: "coinrabbit.png",
+      link: "https://coinrabbit.io/exchange/",
+    },
   ];
 
   const dummyBetaPassData2 = [

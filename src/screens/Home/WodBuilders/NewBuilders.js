@@ -458,6 +458,14 @@ const NewBuilders = () => {
       name: "Melitho Ventures",
       icon: "melitho.png",
     },
+    {
+      name: "CoinRabbit",
+      icon: "coinrabbit.png",
+    },
+    {
+      name: "Vameon",
+      icon: "vameon.svg",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>

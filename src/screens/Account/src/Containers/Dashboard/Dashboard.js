@@ -182,7 +182,7 @@ function Dashboard({
   myTaraxaNfts,
   myTeaBaseNfts,
   teaEarnUsd,
-  openKickstarter
+  openKickstarter,
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -4437,13 +4437,11 @@ function Dashboard({
       if (dailyRecordsSei.length === 0) {
         fetchDailyRecordsSei();
       }
-    }
-    else if (chain === "taraxa") {
+    } else if (chain === "taraxa") {
       if (dailyRecordsTaraxa.length === 0) {
         fetchDailyRecordsTaraxa();
       }
-    }
-    else if (chain === "manta") {
+    } else if (chain === "manta") {
       if (dailyRecordsManta.length === 0) {
         fetchDailyRecordsManta();
       }
@@ -6532,7 +6530,7 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
-            openKickstarter={openKickstarter}
+              openKickstarter={openKickstarter}
               wodBalance={wodBalance}
               aiQuestionCompleted={aiQuestionCompleted}
               greatCollectionData={greatCollectionData}
@@ -6634,12 +6632,13 @@ function Dashboard({
                   Number(dataAmountStarWeekly) +
                   Number(cawsPremiumRewards) +
                   Number(landPremiumRewards) +
-                  // Number(baseEarnUSD) +
+                  Number(coreEarnUsd) +
                   // Number(kucoinEarnUsd) +
                   Number(bnbEarnUsd) +
-                  Number(mantaEarnUsd) +
-                  Number(seiEarnUsd) +
+                  // Number(mantaEarnUsd) +
+                  // Number(seiEarnUsd) +
                   Number(taikoEarnUsd) +
+                  Number(taraxaEarnUsd) +
                   Number(vanarEarnUsd) +
                   Number(teaEarnUsd) +
                   aiQuestionRewards.length >
@@ -6894,7 +6893,7 @@ function Dashboard({
           //   }}
           // >
           <NewDailyBonus
-          openKickstarter={openKickstarter}
+            openKickstarter={openKickstarter}
             isPremium={isPremium}
             bnbImages={bnbImages}
             skaleImages={skaleImages}
