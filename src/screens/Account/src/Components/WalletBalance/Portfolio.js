@@ -71,6 +71,7 @@ const Portfolio = ({
   myTeaSeiNfts,
   myTaraxaNfts,
   myTeaBaseNfts,
+  mybnb5yaNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -418,6 +419,7 @@ const Portfolio = ({
     let teaBaseArray = [];
     let teaSeiArray = [];
     let taraxaArray = [];
+    let bnb5yaNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -901,6 +903,22 @@ const Portfolio = ({
         );
       }
 
+      if (mybnb5yaNfts && mybnb5yaNfts.length > 0) {
+        await Promise.all(
+          mybnb5yaNfts.map(async (i) => {
+            bnb5yaNftsArray.push({
+              nftAddress: window.config.nft_bnb5ya_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "5ya",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
       if (myTaikoNfts && myTaikoNfts.length > 0) {
         await Promise.all(
           myTaikoNfts.map(async (i) => {
@@ -1118,6 +1136,7 @@ const Portfolio = ({
       setmyNftsOffer(recievedOffers);
 
       finalCollection = [
+        ...bnb5yaNftsArray,
         ...teaBaseArray,
         ...teaBnbArray,
         ...teaSeiArray,
@@ -1344,6 +1363,10 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_taraxa_address
       );
 
+      let bnb5yaFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_bnb5ya_address
+      );
+
       let teaFilter = collectedItems.filter(
         (item) =>
           item.nftAddress === window.config.nft_teabnb_address ||
@@ -1353,6 +1376,7 @@ const Portfolio = ({
       );
 
       const allBetapassArray = [
+        ...bnb5yaFilter,
         ...teaFilter,
         ...taraxaFilter,
         ...coingeckoFilter,
@@ -1982,6 +2006,8 @@ const Portfolio = ({
                                   ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
                                   : item.type === "taraxa"
                                   ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
+                                  : item.type === "5ya"
+                                  ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
@@ -2026,6 +2052,8 @@ const Portfolio = ({
                                   ? "VNBP"
                                   : item.type === "taraxa"
                                   ? "TXBP"
+                                  : item.type === "5ya"
+                                  ? "5YABP"
                                   : item.type === "immutable"
                                   ? "IMXBP"
                                   : item.type === "multivers"
@@ -2829,6 +2857,9 @@ const Portfolio = ({
                                 : nft.nftAddress ===
                                   window.config.nft_taraxa_address
                                 ? "taraxa"
+                                : nft.nftAddress ===
+                                  window.config.nft_bnb5ya_address
+                                ? "5ya"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -2952,6 +2983,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taraxa_address
                                     ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb5ya_address
+                                    ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -3049,6 +3083,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taraxa_address
                                     ? "TXBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb5ya_address
+                                    ? "5YABP"
                                     : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address
@@ -3263,6 +3300,9 @@ const Portfolio = ({
                                 : nft.nftAddress ===
                                   window.config.nft_taraxa_address
                                 ? "taraxa"
+                                : nft.nftAddress ===
+                                  window.config.nft_bnb5ya_address
+                                ? "5ya"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3385,6 +3425,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taraxa_address
                                     ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb5ya_address
+                                    ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -3484,6 +3527,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taraxa_address
                                     ? "TXBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb5ya_address
+                                    ? "5YABP"
                                     : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address

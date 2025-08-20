@@ -181,6 +181,7 @@ function Dashboard({
   myTaraxaNfts,
   myTeaBaseNfts,
   teaEarnUsd,
+  mybnb5yaNfts,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -7384,6 +7385,7 @@ function Dashboard({
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
                 myTaraxaNfts={myTaraxaNfts}
+                mybnb5yaNfts={mybnb5yaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
               />
             </div>
