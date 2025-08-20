@@ -972,6 +972,30 @@ const MobileNavbar = ({
                       <span className={`sidebar-title`}>Game Updates</span>
                     </NavLink>
                     <NavLink
+                      to="/keep-building"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span
+                        className={`sidebar-title d-flex px-2 align-items-center gap-2`}
+                      >
+                        Keep Building Program{" "}
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/kickstartIcon.svg"
+                          }
+                          height={20}
+                          width={20}
+                          alt=""
+                        />
+                      </span>
+                    </NavLink>
+                    <NavLink
                       to={"https://t.me/WorldOfDypians_bot"}
                       target="_blank"
                       className={({ isActive }) =>

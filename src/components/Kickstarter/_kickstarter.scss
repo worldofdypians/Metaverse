@@ -1,0 +1,489 @@
+.kickstarter-container {
+  width: 90vw;
+  height: 90vh;
+  z-index: 1000;
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(77, 79, 119, 0.8);
+  box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+  pointer-events: auto !important;
+  @media screen and (max-width: 1440px) {
+    width: 95vw;
+    height: 95vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    height: auto;
+  }
+}
+
+.new-info-container {
+  bottom: 90px;
+  left: 24px;
+  right: 24px;
+  height: 20%;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 16, 32, 0.95) 0%,
+    rgba(12, 20, 40, 0.85) 30%,
+    rgba(6, 12, 28, 0.75) 70%,
+    rgba(4, 8, 20, 0.65) 100%
+  );
+  backdrop-filter: blur(30px);
+  --webkit-backdrop-filter: blur(30px);
+  border: 2px solid rgba(59, 130, 246, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6),
+    inset 0 2px 0 rgba(120, 170, 255, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.2);
+  position: relative;
+  overflow: hidden;
+  @media screen and (max-height: 800px) {
+    height: 32%;
+  }
+  @media screen and (max-width: 1400px) {
+    height: 32%;
+  }
+  @media screen and (max-width: 786px) {
+    height: 32%;
+  }
+}
+
+.kickstarter-chain-description {
+  color: rgba(219, 234, 254, 0.85);
+  line-height: 1.5;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  position: relative;
+  z-index: 2;
+  padding: 8px 4px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+
+  @media screen and (max-width: 786px) {
+    font-size: 11px;
+  }
+}
+
+.kickstarter-button-position {
+  width: 100%;
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: center;
+
+  @media screen and (max-width: 786px) {
+    width: auto;
+  }
+}
+
+.metrics-bg {
+  background-image: linear-gradient(
+    to right bottom,
+    oklab(0.398 -0.0473885 -0.0515202 / 0.3) 0%,
+    oklab(0.381 0.100917 -0.144194 / 0.4) 50%,
+    oklab(0.408 0.152862 0.00649235 / 0.3) 100%
+  );
+}
+
+.metrics-title {
+  font-family: "Montserrat";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.metrics-wrapper {
+  background-image: url("https://cdn.worldofdypians.com/wod/metricsbg.webp"),
+    linear-gradient(
+      to right,
+      oklab(0 0 0 / 0.8) 0%,
+      rgba(0, 0, 0, 0) 50%,
+      oklab(0 0 0 / 0.8) 100%
+    );
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-bottom: 3px solid black;
+  @media screen and (max-width: 786px) {
+    background-image: url("https://cdn.worldofdypians.com/wod/metricsbg.webp");
+  }
+}
+
+.chain-info-inner-wrapper {
+  padding: 8px;
+  background: linear-gradient(
+    135deg,
+    rgba(8, 16, 32, 0.9) 0%,
+    rgba(12, 20, 40, 0.7) 100%
+  );
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  position: relative;
+  z-index: 2;
+
+  @media screen and (max-width: 786px) {
+    padding: 0px;
+    background: none;
+    border: none;
+  }
+}
+
+.slide-in {
+  right: -100%;
+  animation: slideIn 1s ease-out forwards;
+}
+
+@keyframes slideIn {
+  to {
+    right: 0;
+  }
+}
+
+.kickstarter-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  z-index: -1;
+  border-radius: 16px;
+}
+
+.kickstarter-title {
+  color: #fff;
+  text-align: center;
+  // text-shadow: 0px 4px 4px rgba(28, 26, 66, 0.4),
+  //   0px 4px 4px rgba(28, 26, 66, 0.4);
+  font-family: "Montserrat";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 20px; /* 83.333% */
+  text-shadow: -1px -1px 0 #471f06, 1px -1px 0 #471f06, -1px 1px 0 #471f06,
+    1px 1px 0 #471f06; /* Blue outline */
+}
+
+.kickstarter-info-container {
+  // background: rgb(1 1 7 / 60%);
+  // border: 1px solid rgba(77, 79, 119, 0.8);
+  // backdrop-filter: blur(10px);
+  // border-radius: 16px 16px 0px 0;
+  position: relative;
+  background: rgba(1, 1, 7, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(1, 1, 7, 0.3);
+  overflow: hidden;
+}
+
+.wave-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 80px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50% 50% 0 0;
+  filter: blur(10px);
+  animation: waveMove 4s linear infinite;
+}
+
+.wave:nth-child(2) {
+  left: 50%;
+  animation-delay: 2s;
+}
+
+@keyframes waveMove {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.switch-info-container {
+  background: rgb(1 1 7 / 60%);
+  border: 1px solid rgba(77, 79, 119, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+}
+
+.kickstarter-chain-title {
+  color: #fff;
+  text-shadow: 0px 4px 4px rgba(28, 26, 66, 0.4),
+    0px 4px 4px rgba(28, 26, 66, 0.4);
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 111.111% */
+}
+
+.kickstarter-divider {
+  width: 100%;
+  height: 1px;
+  background: #4d4f77;
+}
+
+.kickstarter-desc {
+  color: #828fbb;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+  width: 50%;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.kickstarter-reward-image {
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  left: -5px;
+  z-index: 1;
+  @media screen and (max-width: 786px) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.kickstarter-rewards-container {
+  border-radius: 10px;
+  border: 1px solid #4d4f77;
+  backdrop-filter: blur(2px);
+  width: 175px;
+
+  @media screen and (max-width: 768px) {
+    width: 250px;
+  }
+}
+
+.kickstart-rewarded {
+  border: 1px solid #5957c5 !important;
+  span {
+    color: #5957c5;
+  }
+}
+
+.kickstarter-reward-title {
+  color: rgba(219, 234, 254, 1);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  @media screen and (max-width: 1440px) {
+    font-size: 11px;
+  }
+}
+
+.kickstarter-close {
+  z-index: 1;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.kickstarter-video.visible {
+  opacity: 1;
+}
+
+.kickstarter-video.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.kickstarter-hero-wrapper {
+  background-image: url("https://cdn.worldofdypians.com/wod/kickstarterGifBg.gif"),
+    linear-gradient(0deg, #080b2a 0%, rgba(8, 11, 42, 0) 50%);
+  height: 100vh;
+  background-size: cover;
+  background-position: bottom;
+  background-blend-mode: color;
+
+  @media screen and (max-width: 786px) {
+    height: auto;
+    background-image: url("https://cdn.worldofdypians.com/wod/kickstarterHeroMobile.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+.switch-chain-position {
+  position: absolute;
+  left: 1%;
+  top: 1%;
+  @media screen and (max-width: 786px) {
+    top: 10%;
+  }
+}
+
+.kickstarter-scrollable {
+  @media screen and (max-width: 786px) {
+    height: 170px;
+    overflow-y: scroll;
+  }
+}
+
+.switch-btn-2 {
+  background: rgba(25, 28, 67, 0.5);
+  border: 1px solid #262b4a;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.35s;
+  span {
+    color: #828fbb;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 300% */
+  }
+}
+
+.switch-btn-2:hover {
+  background: rgba(246, 202, 74, 0.5);
+  border: 1px solid #f6ca4a;
+  span {
+    color: #f1edff;
+  }
+}
+
+.switch-btn-2-active {
+  background: rgba(246, 202, 74, 0.5);
+  border: 1px solid #f6ca4a;
+  span {
+    color: #f1edff;
+  }
+}
+
+.kickstarter-chain-item {
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.25s;
+  border: 1px solid transparent;
+}
+
+.kickstarter-chain-item-active {
+  cursor: pointer;
+  border-radius: 6px;
+  background: rgba(243, 192, 9, 0.2);
+  border: 1px solid #f3c009;
+}
+
+.kickstarter-chain-item:hover {
+  background: rgba(130, 143, 187, 0.2);
+  border: 1px solid #4d4f77;
+}
+
+.kickstarter-chain-span {
+  text-align: center;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 333.333% */
+}
+
+@media only screen and (max-width: 600px) {
+  .kickstart-partner-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 10px;
+    overflow-x: auto;
+  }
+}
+
+
+.selected-kick-reward{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 150px;
+  margin: auto;
+  width: 200px;
+ padding: 6px 12px;
+ background: linear-gradient(135deg, rgba(14, 25, 48, 0.95) 0%, rgba(29, 78, 216, 0.8) 50%, rgba(59, 130, 246, 0.7) 100%); 
+  border: 2px solid rgba(59, 130, 246, 0.6);
+  border-radius: 10px;
+  box-shadow: rgba(59, 130, 246, 0.25) 0px 0px 20px, rgba(120, 170, 255, 0.15) 0px 1px 0px inset;
+  transition: all 0.3s ease;
+
+  @media screen and (max-width: 786px) {
+    top: 275px;
+    width: 150px;
+  }
+}
+
+.selected-kick-indicator{
+  width: 3px;
+  height: 100%;
+  border-radius: 2px 0 0 2px;
+  background: linear-gradient(135deg, #FBBF24, #F97316);
+}
+
+.selected-kick-scan{
+  border-radius: 8px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent); 
+}
+
+.selected-kick-count{
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(219, 234, 254, 1);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  letter-spacing: 0.025em;
+
+}
+
+.selected-kick-title{
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  @media screen and (max-width: 1440px) {
+    font-size: 13px;
+  }
+}

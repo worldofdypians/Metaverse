@@ -2834,7 +2834,7 @@ const BnbDailyBonus = ({
               </div>
               <div className="daily-bonus-inner-wrapper container p-4 p-lg-5 mt-3 mt-lg-0">
                 <div
-                  className="row daily-bonus-row 
+                  className="row daily-bonus-row p-3 
                gap-lg-0 mx-3 mx-lg-2 mt-3 mt-lg-3"
                   style={{ height: "100%", marginTop: "64px" }}
                 >
@@ -6827,7 +6827,7 @@ const BnbDailyBonus = ({
             onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               chain === "bnb"
                 ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
                 : chain === "core"
@@ -6864,6 +6864,7 @@ const BnbDailyBonus = ({
                     isActiveIndex - 1
                   );
             }, 2000);
+            return () => clearTimeout(timer);
           }}
         />
       )}
