@@ -2085,7 +2085,7 @@ const Kickstarter = ({
                       </div>
                     ) : (
                       <div className="d-flex align-items-center gap-3">
-                        <span>CLAIM REWARDS</span>
+                        <span>CLAIM</span>
                       </div>
                     )}
                   </button>
