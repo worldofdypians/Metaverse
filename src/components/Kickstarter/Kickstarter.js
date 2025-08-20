@@ -588,7 +588,7 @@ const Kickstarter = ({
               initial={{ opacity: 0, x: -50, y: -50 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
               className="position-absolute"
-              style={{ top: "32px", left: "24px", zIndex: 30 }}
+              style={{ top: "16px", left: "24px", zIndex: 30 }}
             >
               <motion.div
                 className="py-2 px-4 gap-2 gap-lg-0 d-flex flex-row flex-lg-column align-items-center"
@@ -723,13 +723,13 @@ const Kickstarter = ({
                   ))}
                 </div>
 
-                <AnimatePresence mode="wait">
+                <AnimatePresence  mode="wait">
                   <motion.div
                     key={selectedChain}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    className="text-center mt-3"
+                    className="text-center d-none d-lg-flex mt-3"
                   >
                     <motion.div
                       style={{
