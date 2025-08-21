@@ -487,3 +487,7 @@
     font-size: 13px;
   }
 }
+
+.kick-claim-btn:disabled{
+  opacity: 0.8 !important;
+}
