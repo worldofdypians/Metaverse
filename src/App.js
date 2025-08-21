@@ -2001,7 +2001,7 @@ function App() {
   useEffect(() => {
     if (
       domainPopup === true ||
-      kickstarter === true ||
+      // kickstarter === true ||
       kickstarterAddClass === true
     ) {
       html.classList.add("hidescroll");
