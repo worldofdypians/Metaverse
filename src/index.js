@@ -16,6 +16,7 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { getWeb3ReactContext } from "@web3-react/core";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { WagmiProvider } from "wagmi";
+import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 // const queryClient = new QueryClient({
 //   defaultOptions: {
@@ -52,12 +53,14 @@ root.render(
           >
             <AuthProvider>
               <WagmiProvider config={wagmiConfig}>
-                <MatchProvider
-                  appid="ipgjm4nszcr36mcz"
-                  wallet={{ type: "UserPasscode" }}
-                >
-                  <App />
-                </MatchProvider>
+                <TonConnectUIProvider manifestUrl="https://betatools.dyp.finance/tonconnect-manifest.json">
+                  <MatchProvider
+                    appid="ipgjm4nszcr36mcz"
+                    wallet={{ type: "UserPasscode" }}
+                  >
+                    <App />
+                  </MatchProvider>
+                </TonConnectUIProvider>
               </WagmiProvider>
             </AuthProvider>
           </PersistQueryClientProvider>

@@ -3,7 +3,7 @@ import Modal from "../General/Modal";
 import OutsideClickHandler from "react-outside-click-handler";
 import { isMobile } from "react-device-detect";
 import { Components } from "@matchain/matchid-sdk-react";
-const { LoginButton } = Components;
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 const WalletModal = ({
   handleClose,
@@ -12,6 +12,7 @@ const WalletModal = ({
   handleConnectionPassport,
   handleConnectBinance,
   handleConnectionMatchId,
+  // handleTonConnect,
 }) => {
   return (
     <Modal visible={show} onModalClose={handleClose} maxWidth={500}>
@@ -138,6 +139,37 @@ const WalletModal = ({
               </div>
               <span className="my-profile-email mt-4">More Wallets</span>
               <div className="top-wallets-wrapper px-0">
+                {(!isMobile ||
+                  (isMobile &&
+                    !window.ethereum?.isBinance &&
+                    window.ethereum?.isMetaMask === true) ||
+                  !window.ethereum) && (
+                  <TonConnectButton
+                    className="walletbutton"
+                    style={{ float: "right" }}
+                  />
+                  // <button
+                  //   className="walletbutton"
+                  //   onClick={() => handleTonConnect()}
+                  //   id="connect-matchid"
+                  // >
+                  //   <div className="justify-content-between d-flex flex-column-reverse w-100 align-items-center">
+
+                  //     <span className="text-white wallet-item-name">
+                  //       TON Wallet
+                  //     </span>
+
+                  //     <img
+                  //       src={
+                  //         "https://cdn.worldofdypians.com/wod/tonWallet.svg"
+                  //       }
+                  //       className="wallet-item-icon"
+                  //       alt="Icon"
+                  //     />
+                  //   </div>
+                  // </button>
+                )}
+
                 {(!isMobile ||
                   (isMobile &&
                     !window.ethereum?.isBinance &&
