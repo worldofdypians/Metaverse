@@ -288,7 +288,6 @@ const Kickstarter = ({
             setDisable(false);
             onAddClass(true);
             console.log("Hello");
-            
           }, 6200);
 
           return () => clearTimeout(pauseTimeout);
@@ -1767,149 +1766,16 @@ const Kickstarter = ({
             </motion.div>
             <div className="kickstarter-button-position">
               {!email && coinbase && (
-                <NavLink
-                  to="/auth"
-                  onClick={() => {
-                    onClose();
-                  }}
-                  className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
-                  style={{
-                    padding: "14px 48px",
-                    fontSize: "16px",
-                    fontWeight: "700",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    background:
-                      "linear-gradient(135deg, #10b96aff, #05963dff, #04782bff)",
-
-                    border: "2px solid rgba(16, 185, 100, 0.8)",
-
-                    borderRadius: "14px",
-                    boxShadow:
-                      "0 0 50px rgba(34, 197, 121, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
-
-                    backdropFilter: "blur(10px)",
-                    WebkitBackdropFilter: "blur(10px)",
-                    transition: "all 0.3s ease",
-                    textShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                    zIndex: 10,
-                  }}
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
                 >
-                  <motion.div
-                    className="position-absolute top-0 start-0 w-100 h-100"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-                      transform: "skewX(-20deg)",
+                  <NavLink
+                    to="/auth"
+                    onClick={() => {
+                      onClose();
                     }}
-                    animate={{
-                      x: ["-150%", "250%"],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: Math.random() * 2,
-                    }}
-                  />
-
-                  <motion.div
-                    className="position-absolute top-0 start-0 w-100 h-100"
-                    style={{
-                      border: "2px solid rgba(255,255,255,0.3)",
-                      borderRadius: "14px",
-                    }}
-                    animate={{
-                      scale: [1, 1.05, 1],
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-
-                  <div className="d-flex align-items-center gap-3">
-                    <span>LOG IN</span>
-                  </div>
-                </NavLink>
-              )}
-              {!isConnected && !coinbase && (
-                <button
-                  disabled={disable}
-                  onClick={onConnectWallet}
-                  className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
-                  style={{
-                    padding: "14px 48px",
-                    fontSize: "16px",
-                    fontWeight: "700",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    background:
-                      "linear-gradient(135deg, #1083b9ff, #056196ff, #042978ff)",
-
-                    border: "2px solid rgba(16, 165, 185, 0.8)",
-
-                    borderRadius: "14px",
-                    boxShadow:
-                      "0 0 50px rgba(34, 165, 197, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
-
-                    backdropFilter: "blur(10px)",
-                    WebkitBackdropFilter: "blur(10px)",
-                    transition: "all 0.3s ease",
-                    textShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                    zIndex: 10,
-                  }}
-                >
-                  <motion.div
-                    className="position-absolute top-0 start-0 w-100 h-100"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-                      transform: "skewX(-20deg)",
-                    }}
-                    animate={{
-                      x: ["-150%", "250%"],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: Math.random() * 2,
-                    }}
-                  />
-
-                  <motion.div
-                    className="position-absolute top-0 start-0 w-100 h-100"
-                    style={{
-                      border: "2px solid rgba(255,255,255,0.3)",
-                      borderRadius: "14px",
-                    }}
-                    animate={{
-                      scale: [1, 1.05, 1],
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-
-                  <div className="d-flex align-items-center gap-3">
-                    <span>CONNECT WALLET</span>
-                  </div>
-                </button>
-              )}
-              {isConnected &&
-                coinbase &&
-                email &&
-                chainId !== 56 &&
-                chainId !== 204 && (
-                  <button
-                    disabled={disable}
-                    onClick={() => switchNetwork("0x38", 56)}
                     className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
                     style={{
                       padding: "14px 48px",
@@ -1918,13 +1784,13 @@ const Kickstarter = ({
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
                       background:
-                        "linear-gradient(135deg, #b6b910ff, #968005ff, #785304ff)",
+                        "linear-gradient(135deg, #10b96aff, #05963dff, #04782bff)",
 
-                      border: "2px solid rgba(185, 168, 16, 0.8)",
+                      border: "2px solid rgba(16, 185, 100, 0.8)",
 
                       borderRadius: "14px",
                       boxShadow:
-                        "0 0 50px rgba(197, 181, 34, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
+                        "0 0 50px rgba(34, 197, 121, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
 
                       backdropFilter: "blur(10px)",
                       WebkitBackdropFilter: "blur(10px)",
@@ -1969,38 +1835,39 @@ const Kickstarter = ({
                     />
 
                     <div className="d-flex align-items-center gap-3">
-                      <span>SWITCH CHAIN</span>
+                      <span>LOG IN</span>
                     </div>
-                  </button>
-                )}
-              {isConnected &&
-                coinbase &&
-                email &&
-                (chainId === 56 || chainId === 204) && (
+                  </NavLink>
+                </motion.div>
+              )}
+              {!isConnected && !coinbase && (
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+                >
                   <button
-                    onClick={handleClaim}
-                    disabled={isClaimLoading || chestOpened || disable}
-                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden kick-claim-btn"
+                    disabled={disable}
+                    onClick={onConnectWallet}
+                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
                     style={{
                       padding: "14px 48px",
                       fontSize: "16px",
                       fontWeight: "700",
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
-                      background: chestOpened
-                        ? "linear-gradient(135deg, #10B981, #059669, #047857)"
-                        : "linear-gradient(135deg, #F97316, #DC2626, #BE185D)",
-                      border: chestOpened
-                        ? "2px solid rgba(16, 185, 129, 0.8)"
-                        : "2px solid rgba(249, 115, 22, 0.8)",
+                      background:
+                        "linear-gradient(135deg, #1083b9ff, #056196ff, #042978ff)",
+
+                      border: "2px solid rgba(16, 165, 185, 0.8)",
+
                       borderRadius: "14px",
-                      boxShadow: chestOpened
-                        ? "0 0 50px rgba(34, 197, 94, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)"
-                        : "0 0 50px rgba(249, 115, 22, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
+                      boxShadow:
+                        "0 0 50px rgba(34, 165, 197, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
+
                       backdropFilter: "blur(10px)",
                       WebkitBackdropFilter: "blur(10px)",
                       transition: "all 0.3s ease",
-                      opacity: isClaimLoading || chestOpened ? 0.9 : 1,
                       textShadow: "0 2px 8px rgba(0,0,0,0.4)",
                       zIndex: 10,
                     }}
@@ -2040,27 +1907,182 @@ const Kickstarter = ({
                       }}
                     />
 
-                    {isClaimLoading ? (
+                    <div className="d-flex align-items-center gap-3">
+                      <span>CONNECT WALLET</span>
+                    </div>
+                  </button>
+                </motion.div>
+              )}
+              {isConnected &&
+                coinbase &&
+                email &&
+                chainId !== 56 &&
+                chainId !== 204 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+                  >
+                    <button
+                      disabled={disable}
+                      onClick={() => switchNetwork("0x38", 56)}
+                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
+                      style={{
+                        padding: "14px 48px",
+                        fontSize: "16px",
+                        fontWeight: "700",
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        background:
+                          "linear-gradient(135deg, #b6b910ff, #968005ff, #785304ff)",
+
+                        border: "2px solid rgba(185, 168, 16, 0.8)",
+
+                        borderRadius: "14px",
+                        boxShadow:
+                          "0 0 50px rgba(197, 181, 34, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
+
+                        backdropFilter: "blur(10px)",
+                        WebkitBackdropFilter: "blur(10px)",
+                        transition: "all 0.3s ease",
+                        textShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                        zIndex: 10,
+                      }}
+                    >
+                      <motion.div
+                        className="position-absolute top-0 start-0 w-100 h-100"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                          transform: "skewX(-20deg)",
+                        }}
+                        animate={{
+                          x: ["-150%", "250%"],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: Math.random() * 2,
+                        }}
+                      />
+
+                      <motion.div
+                        className="position-absolute top-0 start-0 w-100 h-100"
+                        style={{
+                          border: "2px solid rgba(255,255,255,0.3)",
+                          borderRadius: "14px",
+                        }}
+                        animate={{
+                          scale: [1, 1.05, 1],
+                          opacity: [0.5, 1, 0.5],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
+
                       <div className="d-flex align-items-center gap-3">
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            duration: 1,
-                            repeat: Infinity,
-                            ease: "linear",
-                          }}
-                          className="border border-white rounded-circle"
-                          style={{
-                            width: "18px",
-                            height: "18px",
-                            borderTop: "3px solid transparent",
-                          }}
-                        />
-                        <span>UNLOCKING CHEST</span>
+                        <span>SWITCH CHAIN</span>
                       </div>
-                    ) : chestOpened ? (
-                      <div className="d-flex align-items-center gap-3">
-                        {/* <motion.div
+                    </button>
+                  </motion.div>
+                )}
+              {isConnected &&
+                coinbase &&
+                email &&
+                (chainId === 56 || chainId === 204) && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+                  >
+                    <button
+                      onClick={handleClaim}
+                      disabled={isClaimLoading || chestOpened || disable}
+                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden kick-claim-btn"
+                      style={{
+                        padding: "14px 48px",
+                        fontSize: "16px",
+                        fontWeight: "700",
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        background: chestOpened
+                          ? "linear-gradient(135deg, #10B981, #059669, #047857)"
+                          : "linear-gradient(135deg, #F97316, #DC2626, #BE185D)",
+                        border: chestOpened
+                          ? "2px solid rgba(16, 185, 129, 0.8)"
+                          : "2px solid rgba(249, 115, 22, 0.8)",
+                        borderRadius: "14px",
+                        boxShadow: chestOpened
+                          ? "0 0 50px rgba(34, 197, 94, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)"
+                          : "0 0 50px rgba(249, 115, 22, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
+                        backdropFilter: "blur(10px)",
+                        WebkitBackdropFilter: "blur(10px)",
+                        transition: "all 0.3s ease",
+                        opacity: isClaimLoading || chestOpened ? 0.9 : 1,
+                        textShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                        zIndex: 10,
+                      }}
+                    >
+                      <motion.div
+                        className="position-absolute top-0 start-0 w-100 h-100"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                          transform: "skewX(-20deg)",
+                        }}
+                        animate={{
+                          x: ["-150%", "250%"],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: Math.random() * 2,
+                        }}
+                      />
+
+                      <motion.div
+                        className="position-absolute top-0 start-0 w-100 h-100"
+                        style={{
+                          border: "2px solid rgba(255,255,255,0.3)",
+                          borderRadius: "14px",
+                        }}
+                        animate={{
+                          scale: [1, 1.05, 1],
+                          opacity: [0.5, 1, 0.5],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
+
+                      {isClaimLoading ? (
+                        <div className="d-flex align-items-center gap-3">
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{
+                              duration: 1,
+                              repeat: Infinity,
+                              ease: "linear",
+                            }}
+                            className="border border-white rounded-circle"
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                              borderTop: "3px solid transparent",
+                            }}
+                          />
+                          <span>UNLOCKING CHEST</span>
+                        </div>
+                      ) : chestOpened ? (
+                        <div className="d-flex align-items-center gap-3">
+                          {/* <motion.div
                               animate={{
                                 scale: [1, 1.3, 1],
                                 rotate: [0, 360, 0],
@@ -2073,8 +2095,8 @@ const Kickstarter = ({
                             >
                               ✅
                             </motion.div> */}
-                        <span>CHEST UNLOCKED!</span>
-                        {/* <motion.div
+                          <span>CHEST UNLOCKED!</span>
+                          {/* <motion.div
                               animate={{
                                 scale: [1, 1.4, 1],
                                 rotate: [0, 15, -15, 0],
@@ -2087,13 +2109,14 @@ const Kickstarter = ({
                             >
                               🎉
                             </motion.div> */}
-                      </div>
-                    ) : (
-                      <div className="d-flex align-items-center gap-3">
-                        <span>CLAIM</span>
-                      </div>
-                    )}
-                  </button>
+                        </div>
+                      ) : (
+                        <div className="d-flex align-items-center gap-3">
+                          <span>CLAIM</span>
+                        </div>
+                      )}
+                    </button>
+                  </motion.div>
                 )}
             </div>
           </>
