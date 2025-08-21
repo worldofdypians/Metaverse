@@ -1,0 +1,192 @@
+.booster-title {
+  color: #e8e9f3;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  /* 120% */
+}
+
+.booster-desc {
+  color: #9ca3c4;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  /* 150% */
+}
+
+.booster-list-title {
+  color: #e8e9f3;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  /* 200% */
+}
+
+.booster-list-text {
+  color: #9ca3c4;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  // line-height: 12px;
+  list-style-type: disc;
+}
+
+.boost-rank-wrapper {
+  border-radius: 12px;
+  background: #161a40;
+}
+
+.booster-status-eligible {
+  color: #5ce4ff;
+  font-family: "Montserrat";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  list-style-type: disc;
+  /* 200% */
+}
+
+.booster-status-loser {
+  color: #F3BF09;
+  font-family: "Montserrat";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  list-style-type: disc;
+  /* 200% */
+}
+
+.boost-rank {
+  border-radius: 8px;
+  background: #4f46e5;
+}
+
+.boost-rank-yellow {
+  border-radius: 8px;
+  background: #f3bf09;
+}
+
+.booster-rank-text-dark {
+  color: #49291c;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  /* 200% */
+}
+
+.boost-winner-wrapper {
+  border-radius: 12px;
+  background: rgba(92, 228, 255, 0.1);
+}
+
+.boost-loser-wrapper {
+  border-radius: 12px;
+  background: rgba(243, 191, 9, 0.1);
+}
+
+.boost-neutral-wrapper {
+  border-radius: 12px;
+background: rgba(156, 163, 196, 0.10);
+}
+
+
+.booster-popup {
+  background: #0f1239 !important;
+  width: fit-content !important;
+}
+
+.booster-winner-title {
+  color: #5ce4ff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.booster-winner-desc {
+  color: #5ce4ff;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  /* 180% */
+}
+
+.booster-loser-title {
+  color: #f3bf09;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.booster-loser-desc {
+  color: #f3bf09;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  /* 180% */
+}
+
+
+.booster-neutral-title {
+  color: #E8E9F3;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.booster-neutral-desc {
+  color: #9CA3C4;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  /* 180% */
+}
+
+.selection-time {
+  color: #fff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  margin: 0;
+}
+
+.selection-days {
+  color: #9ca3c4;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  margin: 0;
+}
+
+.timer-item {
+  border-radius: 8px;
+  background: #252a59;
+  padding: 5px 10px;
+  width: 60px;
+}

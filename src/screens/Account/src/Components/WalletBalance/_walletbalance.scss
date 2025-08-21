@@ -1764,6 +1764,16 @@ background: rgba(142, 151, 205, 0.20) !important;
   }
 }
 
+.rewardstable-wrapper3 {
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  @media only screen and (max-width: 991px) {
+    height: 500px;
+    overflow-x: auto;
+  }
+}
+
 .game-news-desc {
   p,
   span {

@@ -56,6 +56,7 @@ import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
 import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
+import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -483,6 +484,8 @@ function Dashboard({
 
   const [loading, setLoading] = useState(false);
   const [showDailyQuestion, setShowDailyQuestion] = useState(false);
+  const [booster, setBooster] = useState(false);
+
   const [tooltip, setTooltip] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
@@ -6372,7 +6375,8 @@ function Dashboard({
       leaderboard === true ||
       globalLeaderboard === true ||
       genesisLeaderboard === true ||
-      showDailyQuestion === true
+      showDailyQuestion === true ||
+      booster === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -6387,6 +6391,7 @@ function Dashboard({
     globalLeaderboard,
     genesisLeaderboard,
     showDailyQuestion,
+    booster,
   ]);
 
   const logoutItem = localStorage.getItem("logout");
@@ -6530,6 +6535,7 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+              onOpenBooster={() => setBooster(true)}
               openKickstarter={openKickstarter}
               wodBalance={wodBalance}
               aiQuestionCompleted={aiQuestionCompleted}
@@ -7458,6 +7464,37 @@ function Dashboard({
                 userId={userId}
                 monthlyPlayers={monthlyPlayers}
                 percent={percent}
+              />
+            </div>
+          </OutsideClickHandler>
+        )}
+
+        {booster && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setBooster(false);
+            }}
+          >
+            <div className="popup-wrapper booster-popup popup-active p-3">
+              <div className="d-flex align-items-center justify-content-end">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => {
+                    setBooster(false);
+                  }}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+
+              <BoosterPopup
+                userDataStar={
+                  !userDataStar?.statValue || userDataStar?.statValue === 0
+                    ? 0
+                    : userDataStar.position
+                    ? userDataStar.position + 1
+                    : 0
+                }
               />
             </div>
           </OutsideClickHandler>
