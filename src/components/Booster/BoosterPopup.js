@@ -54,7 +54,7 @@ const BoosterPopup = ({ userDataStar }) => {
       <div className="d-flex flex-column gap-3 rewardstable-wrapper3 px-3 px-lg-0">
         <div className="p-4 rounded-2xl bordertw border-white/20">
           <div className="d-flex flex-lg-row flex-column gap-lg-5 gap-3 justify-content-between">
-            <div>
+            {/* <div>
               <span className="booster-list-title">Eligibility</span>
               <ul className="booster-list-text mb-0">
                 <li>Ranked 101+ on monthly leaderboard </li>
@@ -71,6 +71,57 @@ const BoosterPopup = ({ userDataStar }) => {
                 <li>Results announced after month end</li>
                 <li>Equal chances for all eligible players</li>
               </ul>
+            </div> */}
+            {/* Grand Prize */}
+            <div className="relative overflow-hidden rounded-lg bg-gradient-to-r from-yellow-500/40 via-orange-500/40 to-red-500/40 border-2 border-yellow-400/60 p-4">
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-orange-500/10" />
+              <div className="relative flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  {/* <div className="w-10 h-10 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center shadow-lg">
+                    <Crown className="w-5 h-5 text-white" />
+                  </div> */}
+                  <div>
+                    <p className="font-medium text-yellow-200">Grand Prize</p>
+                    <p className="text-sm text-yellow-100/90">1 Lucky Winner</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-medium text-yellow-200">
+                    1500
+                  </div>
+                  <div className="text-sm text-yellow-100/90">WOD</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Regular Winners */}
+            <div className="relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-500/40 via-purple-500/40 to-indigo-500/40 border-2 border-blue-400/60 p-4">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10" />
+              <div className="relative flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  {/* <div className="w-10 h-10 bg-gradient-to-br from-blue-300 to-purple-400 rounded-full flex items-center justify-center shadow-lg">
+                    <Coins className="w-5 h-5 text-white" />
+                  </div> */}
+                  <div>
+                    <p className="font-medium text-blue-200">Regular Winners</p>
+                    <p className="text-sm text-blue-100/90">1000 Winners</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-medium text-blue-200">40</div>
+                  <div className="text-sm text-blue-100/90">WOD</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Prizes Display */}
+            <div className="text-center py-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-500/30 to-emerald-500/30 rounded-full border border-green-400/50">
+                {/* <Gift className="w-4 h-4 text-green-300" /> */}
+                <span className="text-sm text-green-200">
+                  1001 Total Winners Each Month
+                </span>
+              </div>
             </div>
           </div>
         </div>
