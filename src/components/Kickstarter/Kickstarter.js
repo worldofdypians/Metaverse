@@ -1980,7 +1980,7 @@ const Kickstarter = ({
                   <button
                     onClick={handleClaim}
                     disabled={isClaimLoading || chestOpened || disable}
-                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
+                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden kick-claim-btn"
                     style={{
                       padding: "14px 48px",
                       fontSize: "16px",
