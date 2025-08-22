@@ -152,7 +152,7 @@ const Kickstarter = ({
   const [activatedReward, setActivatedReward] = useState(null);
   const [disable, setDisable] = useState(true);
   const [socials, setSocials] = useState(chains[0].socials);
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -308,59 +308,65 @@ const Kickstarter = ({
     }
   };
 
- 
-
   const html = document.querySelector("html");
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
     if (isOpen) {
-      html.classList.add("hidescroll");
+      if (window.scrollY === 0) {
+        html.classList.add("hidescroll");
+        console.log("yes 1");
+      } else {
+        const onScroll = () => {
+          if (window.scrollY === 0) {
+            html.classList.add("hidescroll");
+            console.log("yes 2");
+            window.removeEventListener("scroll", onScroll);
+          }
+        };
+        window.addEventListener("scroll", onScroll);
+      }
     } else {
       html.classList.remove("hidescroll");
     }
+
     return () => {
       html.classList.remove("hidescroll");
-
-    }
-
+      window.removeEventListener("scroll", () => {});
+    };
   }, [isOpen]);
 
   useEffect(() => {
-    if(count === 0){
-      setCount(1)
+    if (count === 0) {
+      setCount(1);
     }
 
-    if (windowSize.width !== undefined) {
-      window.scrollTo(0, 0);
-      const video = videoRef1.current;
+    // window.scrollTo(0, 0);
+    const video = videoRef1.current;
 
-      setTimeout(() => {
-        setShowContent(true);
-      }, 4000);
+    setTimeout(() => {
+      setShowContent(true);
+    }, 4000);
 
-      const timeout1 = setTimeout(() => {
-        console.log(video);
-        
-        if (video) {
-        
-          
-          video.play().catch((err) => console.error("Play failed:", err));
+    const timeout1 = setTimeout(() => {
+      console.log(video);
 
-          const pauseTimeout = setTimeout(() => {
-            video.pause();
-            setDisable(false);
-            onAddClass(true);
-            console.log("Hello");
-          }, 6200);
+      if (video) {
+        video.play().catch((err) => console.error("Play failed:", err));
 
-          return () => clearTimeout(pauseTimeout);
-        }
-      }, 1500);
+        const pauseTimeout = setTimeout(() => {
+          video.pause();
+          setDisable(false);
+          onAddClass(true);
+          console.log("Hello");
+        }, 6200);
 
-      return () => clearTimeout(timeout1);
-    }
+        return () => clearTimeout(pauseTimeout);
+      }
+    }, 1500);
+
+    return () => clearTimeout(timeout1);
   }, [count]);
 
   return (
