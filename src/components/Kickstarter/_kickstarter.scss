@@ -446,12 +446,8 @@ transform: scale(1.15);
   right: 0;
   top: 150px;
   margin: auto;
-  width: 200px;
  padding: 6px 12px;
- background: linear-gradient(135deg, rgba(14, 25, 48, 0.95) 0%, rgba(29, 78, 216, 0.8) 50%, rgba(59, 130, 246, 0.7) 100%); 
-  border: 2px solid rgba(59, 130, 246, 0.6);
-  border-radius: 10px;
-  box-shadow: rgba(59, 130, 246, 0.25) 0px 0px 20px, rgba(120, 170, 255, 0.15) 0px 1px 0px inset;
+
   transition: all 0.3s ease;
 
   @media screen and (max-width: 786px) {
@@ -473,10 +469,10 @@ transform: scale(1.15);
 }
 
 .selected-kick-count{
-  font-size: 15px;
+  font-size: 24px;
   font-weight: 700;
   color: rgba(219, 234, 254, 1);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  text-shadow: -1px -1px 0 #b18d19, 1px -1px 0 #b18d19, -1px 1px 0 #471f06, 1px 1px 0 #471f06;
   letter-spacing: 0.025em;
 
 }

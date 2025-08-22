@@ -185,7 +185,7 @@ const Kickstarter = ({
         const randomReward =
           rewardCategories[Math.floor(Math.random() * rewardCategories.length)];
         setActivatedReward(randomReward.id);
-      }, 4000);
+      }, 3600);
 
       if (video) {
         video.play().catch((err) => console.error("Play failed:", err));
@@ -564,11 +564,11 @@ const Kickstarter = ({
             {activatedReward !== null && (
               <motion.div
                 key={rewardCategories[0].id}
-                initial={{ opacity: 0, scale: 0, x: 30 }}
+                initial={{ opacity: 0, scale: 0, y: 30 }}
                 animate={{
                   opacity: 1,
                   scale: 1,
-                  x: 0,
+                  y: 0,
                 }}
                 transition={{
                   delay: 0.1 + 0 * 0.1,
@@ -581,81 +581,29 @@ const Kickstarter = ({
                 {/* Gaming-style tier indicator */}
 
                 {/* Animated scan line for active rewards */}
-                {activatedReward === rewardCategories[0].id && (
-                  <motion.div
-                    className="selected-kick-scan position-absolute top-0 start-0 w-100 h-100"
+                
+
+                <div className="text-center">
+                  <motion.span
+                    className="d-block selected-kick-count"
                     animate={{
-                      x: ["-100%", "200%"],
+                      scale: [1, 1.1, 1],
+
+                      color: [
+                        "rgba(255, 255, 255, 1)",
+                        "rgba(132, 183, 247, 1)",
+                        "rgba(255, 255, 255, 1)",
+                      ],
                     }}
                     transition={{
-                      duration: 2,
+                      duration: 0.8,
                       repeat: Infinity,
-                      ease: "linear",
+                      ease: "easeInOut",
                     }}
-                  />
-                )}
-
-                <div
-                  className="d-flex flex-column gap-2 align-items-center justify-content-between position-relative"
-                  style={{ zIndex: 2 }}
-                >
-                  {/* Count display */}
-                  <div className="text-center">
-                    <motion.span
-                      className="d-block selected-kick-count"
-                      animate={{
-                        scale: [1, 1.1, 1],
-
-                        color: [
-                          "rgba(219, 234, 254, 1)",
-                          "rgba(96, 165, 250, 1)",
-                          "rgba(219, 234, 254, 1)",
-                        ],
-                      }}
-                      transition={{
-                        duration: 0.8,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      5,265 {rewardCategories[0].name}
-                    </motion.span>
-                  </div>
+                  >
+                    5,265 {rewardCategories[0].name}
+                  </motion.span>
                 </div>
-
-                {/* Activation indicator */}
-                {/* {activatedReward === category.id && (
-                            <motion.div
-                              initial={{ opacity: 0, y: 3 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              className="text-center mt-2 position-relative"
-                              style={{ zIndex: 2 }}
-                            >
-                              <motion.div
-                                className="px-2 py-1 rounded"
-                                style={{
-                                  background:
-                                    "linear-gradient(90deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.3), rgba(34, 197, 94, 0.2))",
-                                  border: "1px solid rgba(34, 197, 94, 0.4)",
-                                  color: "rgba(147, 197, 253, 0.9)",
-                                  letterSpacing: "0.05em",
-                                  fontSize: "9px",
-                                  fontWeight: "600",
-                                  textTransform: "uppercase",
-                                }}
-                                animate={{
-                                  scale: [1, 1.03, 1],
-                                }}
-                                transition={{
-                                  duration: 1.5,
-                                  repeat: Infinity,
-                                  ease: "easeInOut",
-                                }}
-                              >
-                                🎉 ACTIVATED 🎉
-                              </motion.div>
-                            </motion.div>
-                          )} */}
               </motion.div>
             )}
             <motion.div
@@ -1147,14 +1095,14 @@ const Kickstarter = ({
                                   </div>
                                   <div
                                     style={{
-                                      color: "rgba(168, 192, 255, 0.7)",
-                                      fontSize: "8px",
-                                      fontWeight: "500",
+                                      color: "rgba(168, 192, 255, 0.9)",
+                                      fontSize: "12px",
+                                      fontWeight: "700",
                                       textTransform: "uppercase",
                                       letterSpacing: "0.05em",
                                     }}
                                   >
-                                    {category.rarity}
+                                    {category.count}
                                   </div>
                                 </div>
                               </div>
