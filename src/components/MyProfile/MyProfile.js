@@ -1757,7 +1757,7 @@ const MyProfile = ({
                 className="col-12 col-lg-4 mt-3 px-0 px-lg-2"
                 onClick={onOpenBooster}
               >
-                <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                <div className="booster-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
                   <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                     <div className="d-flex align-items-center gap-2">
                       {/* <img

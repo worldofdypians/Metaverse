@@ -2,7 +2,7 @@ import Countdown from "react-countdown";
 import "./_booster.scss";
 import { useEffect, useState } from "react";
 import "../Kickstarter/components/kickstarter_newcss.scss";
-
+import Switch from "@mui/material/Switch";
 const renderer = ({ days, hours, minutes }) => {
   return (
     <div className="d-flex align-items-center gap-1 justify-content-center">
@@ -26,16 +26,38 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const BoosterPopup = ({ userDataStar }) => {
+const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
   const nextSelectionDate = new Date("2025-12-13T14:00:00.000+02:00");
-  const [isEligible, setisEligible] = useState(false);
-  const [isWinner, setIsWinner] = useState(true);
 
-  useEffect(() => {
-    if (userDataStar > 101) {
-      setisEligible(true);
-    }
-  }, [userDataStar]);
+  const [isWinner, setIsWinner] = useState(false);
+  const [showPreviousMonth, setShowPreviousMonth] = useState(false);
+  const currentDate = new Date();
+  const currentMonth = currentDate.toLocaleString("default", {
+    month: "long",
+    year: "numeric",
+  });
+  // Calculate previous month
+  const previousDate = new Date(currentDate);
+  previousDate.setMonth(previousDate.getMonth() - 1);
+  const previousMonth = previousDate.toLocaleString("default", {
+    month: "long",
+    year: "numeric",
+  });
+  let previousIsWinner = Math.random() > 0.85;
+  // Use current or previous month data based on toggle
+  const displayRank = showPreviousMonth ? userPreviousDataStar : userDataStar;
+  const displayIsWinner = showPreviousMonth ? previousIsWinner : isWinner;
+  const displayRewardAmount = showPreviousMonth ? "40 WOD" : "40 WOD";
+  const displayMonth = showPreviousMonth ? previousMonth : currentMonth;
+  const displayStatus = showPreviousMonth ? "completed" : "ongoing";
+
+  const isEligible = displayRank > 100;
+
+  // useEffect(() => {
+  //   if (userDataStar > 101) {
+  //     setisEligible(true);
+  //   }
+  // }, [userDataStar]);
 
   return (
     <div
@@ -45,12 +67,12 @@ const BoosterPopup = ({ userDataStar }) => {
         <img
           src="https://cdn.worldofdypians.com/wod/boosterImg.png"
           alt=""
-          className="h-24"
+          className="h-16"
         />
       </div>
       <span className="booster-title">Booster 1001</span>
       <span className="booster-desc text-center">
-        Special rewards for players outside the top 100
+        Special monthly rewards for players outside the top 100
       </span>
       <div className="d-flex flex-column gap-3 rewardstable-wrapper3 px-3 px-lg-0">
         <div className="">
@@ -93,11 +115,13 @@ const BoosterPopup = ({ userDataStar }) => {
                     </p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="d-flex flex-column align-items-end">
                   <div className="text-2xl font-medium text-yellow-200">
                     1500
                   </div>
-                  <div className="text-sm text-yellow-100/90">WOD</div>
+                  <div className="text-sm text-yellow-100/90 text-right">
+                    WOD
+                  </div>
                 </div>
               </div>
             </div>
@@ -114,15 +138,13 @@ const BoosterPopup = ({ userDataStar }) => {
                     />
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-0">
-                      Regular Winners
-                    </p>
+                    <p className="font-medium text-blue-200 mb-0">Regular</p>
                     <p className="text-sm text-blue-100/90 mb-0">
                       1000 Winners
                     </p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="d-flex flex-column align-items-end">
                   <div className="text-2xl font-medium text-blue-200">40</div>
                   <div className="text-sm text-blue-100/90">WOD</div>
                 </div>
@@ -176,7 +198,42 @@ const BoosterPopup = ({ userDataStar }) => {
         <div className="trading-comp-divider"></div>
         <div className="p-4 rounded-2xl bordertw border-white/20">
           <div className="d-flex flex-column gap-3">
-            <span className="booster-list-title">August 2025 Status</span>
+            <div className="d-flex align-items-center gap-3 justify-content-start">
+              <span className="booster-list-title">August Status</span>
+              <div
+                variant="outline"
+                className="inline-flex items-center justify-center rounded-md bordertw px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 bg-blue-500/10 text-blue-400 border-blue-500/30"
+              >
+                <img
+                  src="https://cdn.worldofdypians.com/wod/ongoingClock.svg"
+                  alt=""
+                  className="w-3 h-3 mr-1"
+                />
+                Ongoing
+              </div>
+            </div>
+            <div className="d-flex align-items-center gap-3 justify-content-between p-4 boost-rank-wrapper">
+              <span className="booster-list-title capitalize">
+                My Global Rank
+              </span>
+              <div
+                className={`d-flex px-3 justify-content-center align-items-center ${
+                  userDataStar > 100 && userDataStar > 0
+                    ? " boost-rank"
+                    : "boost-rank-yellow"
+                }`}
+              >
+                <span
+                  className={`${
+                    userDataStar > 100 && userDataStar > 0
+                      ? "booster-list-title"
+                      : "booster-rank-text-dark"
+                  }`}
+                >
+                  #{userDataStar === 0 ? "---" : userDataStar}
+                </span>
+              </div>
+            </div>
             {isEligible && isWinner ? (
               <div className="p-3 boost-winner-wrapper">
                 <div className="d-flex align-items-center gap-3 flex-column flex-lg-row">
@@ -191,7 +248,7 @@ const BoosterPopup = ({ userDataStar }) => {
                   </div>
                 </div>
               </div>
-            ) : !isWinner ? (
+            ) : isEligible && !isWinner ? (
               <div className="p-3 boost-loser-wrapper">
                 <div className="d-flex align-items-center gap-3 flex-column flex-lg-row">
                   <h3>🎁</h3>
@@ -209,12 +266,17 @@ const BoosterPopup = ({ userDataStar }) => {
             ) : (
               <div className="p-3 boost-neutral-wrapper">
                 <div className="d-flex align-items-center gap-3 flex-column flex-lg-row">
-                  <h3>🍀</h3>
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/ongoingClock.svg"
+                    alt=""
+                    className="w-3 h-3 mr-1"
+                  />
                   <div className="d-flex flex-column">
-                    <span className="booster-neutral-title">Not Eligible</span>
+                    <span className="booster-neutral-title">
+                      Selection In Progress
+                    </span>
                     <span className="booster-neutral-desc">
-                      You were in the top 100! Boosted rewards are for players
-                      ranked 101+.
+                      Winners will be announced within 10 days. Good luck!
                     </span>
                   </div>
                 </div>
@@ -222,6 +284,15 @@ const BoosterPopup = ({ userDataStar }) => {
             )}
           </div>
         </div>
+
+        <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+          <div className="flex items-center gap-2">
+            {/* <History className="w-4 h-4 text-muted-foreground" /> */}
+            <span className="viewWinners">View previous winners</span>
+          </div>
+          <Switch onChange={setShowPreviousMonth} />
+        </div>
+
         {/* <div className="p-4  boost-rank-wrapper">
           <div className="d-flex flex-column flex-lg-row align-items-center gap-3 justify-content-lg-between justify-content-center">
             <span className="booster-list-title">Next Selection in</span>
@@ -232,9 +303,16 @@ const BoosterPopup = ({ userDataStar }) => {
         </div> */}
         <div className="p-4 rounded-2xl bordertw border-white/20">
           <div>
-            <span className="booster-list-title">Eligibility</span>
+            <span className="booster-list-title d-flex align-items-center gap-1">
+              <img
+                src="https://cdn.worldofdypians.com/wod/eligibleStar.svg"
+                alt=""
+              />
+              Eligibility
+            </span>
             <ul className="booster-list-text mb-0">
               <li>Must be ranked 101+ on monthly leaderboard</li>
+              <li>Must have a minimum score</li>
               <li>1001 lucky winners selected each month</li>
               <li>
                 Rewards are distributed within 10 days after the month ends
