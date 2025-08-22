@@ -804,6 +804,7 @@ function Dashboard({
   const [activePlayerStar, setActivePlayerStar] = useState([]);
   const [activePlayerStarWeekly, setActivePlayerStarWeekly] = useState([]);
   const [userDataStar, setUserDataStar] = useState({});
+  const [userPreviousDataStar, setUserPreviousDataStar] = useState({});
   const [userDataStarWeekly, setUserDataStarWeekly] = useState({});
   const [prevDataStar, setPrevDataStar] = useState([]);
   const [prevDataStarWeekly, setPrevDataStarWeekly] = useState([]);
@@ -2964,6 +2965,25 @@ function Dashboard({
     }
   };
 
+  const fetchPreviousUserDataStar = async (version, userId) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        Version: version - 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer?Version=-1`,
+        data
+      );
+      setUserPreviousDataStar(...result.data.data.leaderboard);
+    } else {
+      setUserPreviousDataStar([]);
+    }
+  };
+
   const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
     const data = {
       StatisticName: "GlobalStarMonthlyLeaderboard",
@@ -2975,6 +2995,7 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
+      fetchPreviousUserDataStar(parseInt(result.data.data.version), userId);
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
@@ -6487,7 +6508,7 @@ function Dashboard({
       navigate("/account/prime");
     }
   }, [hashValue]);
-
+  // console.log(userPreviousDataStar);
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -7493,6 +7514,14 @@ function Dashboard({
                     ? 0
                     : userDataStar.position
                     ? userDataStar.position + 1
+                    : 0
+                }
+                userPreviousDataStar={
+                  !userPreviousDataStar?.statValue ||
+                  userPreviousDataStar?.statValue === 0
+                    ? 0
+                    : userPreviousDataStar.position !== undefined
+                    ? userPreviousDataStar.position + 1
                     : 0
                 }
               />

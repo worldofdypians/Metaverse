@@ -34,22 +34,49 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
   const currentDate = new Date();
   const currentMonth = currentDate.toLocaleString("default", {
     month: "long",
-    year: "numeric",
+    year: undefined,
   });
   // Calculate previous month
   const previousDate = new Date(currentDate);
   previousDate.setMonth(previousDate.getMonth() - 1);
   const previousMonth = previousDate.toLocaleString("default", {
     month: "long",
-    year: "numeric",
+    year: undefined,
   });
+
+  const previousDate2 = new Date(currentDate);
+  previousDate2.setMonth(previousDate2.getMonth() - 1);
+  const previousMonth2 = previousDate2.toLocaleString("default", {
+    month: "long",
+    year: undefined,
+  });
+
   let previousIsWinner = Math.random() > 0.85;
+  const now = new Date();
+  const utcDate = new Date().getUTCDate();
+  const utcHours = now.getUTCHours();
+  const utcMinutes = now.getUTCMinutes();
+  const isAfterCutoff = utcHours === 0 && utcMinutes >= 30;
+  const cutoffDate = 11;
+
   // Use current or previous month data based on toggle
-  const displayRank = showPreviousMonth ? userPreviousDataStar : userDataStar;
+  const displayRank = showPreviousMonth
+    ? utcDate < cutoffDate || (isAfterCutoff && utcDate === 1)
+      ? 0
+      : 200 //userPreviousDataStar
+    : userDataStar;
   const displayIsWinner = showPreviousMonth ? previousIsWinner : isWinner;
   const displayRewardAmount = showPreviousMonth ? "40 WOD" : "40 WOD";
-  const displayMonth = showPreviousMonth ? previousMonth : currentMonth;
-  const displayStatus = showPreviousMonth ? "completed" : "ongoing";
+  const displayMonth = showPreviousMonth
+    ? utcDate < cutoffDate || (isAfterCutoff && utcDate === 1)
+      ? previousMonth2
+      : previousMonth
+    : currentMonth;
+  const displayStatus = showPreviousMonth
+    ? "completed"
+    : utcDate < cutoffDate || (isAfterCutoff && utcDate === 1)
+    ? "ongoing"
+    : "";
 
   const isEligible = displayRank > 100;
 
@@ -199,20 +226,22 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
         <div className="p-4 rounded-2xl bordertw border-white/20">
           <div className="d-flex flex-column gap-3">
             <div className="d-flex align-items-center gap-3 justify-content-start">
-              <span className="booster-list-title">August Status</span>
-              <div
-                variant="outline"
-                className="inline-flex items-center justify-center rounded-md bordertw px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 bg-blue-500/10 text-blue-400 border-blue-500/30"
-              >
-                <img
-                  src="https://cdn.worldofdypians.com/wod/ongoingClock.svg"
-                  alt=""
-                  className="w-3 h-3 mr-1"
-                />
-                Ongoing
-              </div>
+              <span className="booster-list-title">{displayMonth} Status</span>
+              {displayStatus === "ongoing" && (
+                <div
+                  variant="outline"
+                  className="inline-flex items-center justify-center rounded-md bordertw px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 bg-blue-500/10 text-blue-400 border-blue-500/30"
+                >
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/ongoingClock.svg"
+                    alt=""
+                    className="w-3 h-3 mr-1"
+                  />
+                  Ongoing
+                </div>
+              )}
             </div>
-            <div className="d-flex align-items-center gap-3 justify-content-between p-4 boost-rank-wrapper">
+            <div className="d-flex align-items-center gap-3 justify-content-between p-2 boost-rank-wrapper">
               <span className="booster-list-title capitalize">
                 My Global Rank
               </span>
@@ -234,7 +263,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
                 </span>
               </div>
             </div>
-            {isEligible && isWinner ? (
+            {isEligible && displayIsWinner && displayStatus === "completed" ? (
               <div className="p-3 boost-winner-wrapper">
                 <div className="d-flex align-items-center gap-3 flex-column flex-lg-row">
                   <h3>🎉</h3>
@@ -248,7 +277,9 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
                   </div>
                 </div>
               </div>
-            ) : isEligible && !isWinner ? (
+            ) : isEligible &&
+              !displayIsWinner &&
+              displayStatus === "completed" ? (
               <div className="p-3 boost-loser-wrapper">
                 <div className="d-flex align-items-center gap-3 flex-column flex-lg-row">
                   <h3>🎁</h3>
@@ -263,7 +294,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
                   </div>
                 </div>
               </div>
-            ) : (
+            ) : displayStatus === "ongoing" ? (
               <div className="p-3 boost-neutral-wrapper">
                 <div className="d-flex align-items-center gap-3 flex-column flex-lg-row">
                   <img
@@ -281,18 +312,23 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
                   </div>
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
         </div>
-
-        <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-          <div className="flex items-center gap-2">
-            {/* <History className="w-4 h-4 text-muted-foreground" /> */}
-            <span className="viewWinners">View previous winners</span>
+        {currentMonth !== "September"  && (
+          <div
+            className={`optionsWrapper2 boost-rank-wrapper p-2 d-flex align-items-center justify-content-between gap-2`}
+          >
+            <div className="flex items-center gap-2">
+              <span className="viewWinners">View previous month</span>
+            </div>
+            <Switch
+              onChange={() => {
+                setShowPreviousMonth(!showPreviousMonth);
+              }}
+            />
           </div>
-          <Switch onChange={setShowPreviousMonth} />
-        </div>
-
+        )}
         {/* <div className="p-4  boost-rank-wrapper">
           <div className="d-flex flex-column flex-lg-row align-items-center gap-3 justify-content-lg-between justify-content-center">
             <span className="booster-list-title">Next Selection in</span>
