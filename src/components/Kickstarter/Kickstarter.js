@@ -46,6 +46,7 @@ const Kickstarter = ({
   email,
   address,
   handleSwitchNetwork,
+  isOpen,
 }) => {
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
@@ -62,18 +63,96 @@ const Kickstarter = ({
     borderRadius: "16px",
   };
 
+  const chains = [
+    {
+      id: "bnb",
+      name: "BNB Chain",
+      symbol: "BNB",
+      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
+      color: "from-yellow-400 to-orange-500",
+      desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and gaming.",
+      gradientFrom: "#F59E0B",
+      gradientTo: "#F97316",
+      hex: "0x38",
+      chainId: 56,
+      // switchNetwork("0x38", 56)
+      socials: [
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+          label: "Twitter",
+          color: "#1DA1F2",
+          link: "https://x.com/BNBChain",
+        },
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+          label: "Telegram",
+          color: "#0088CC",
+          link: "https://t.me/bnbchain",
+        },
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+          label: "Discord",
+          color: "#5865F2",
+          link: "https://discord.com/invite/bnbchain",
+        },
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+          label: "Website",
+          color: "#059669",
+          link: "https://www.bnbchain.org/en",
+        },
+      ],
+    },
+    {
+      id: "opbnb",
+      name: "opBNB",
+      symbol: "BNB",
+      logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
+      desc: "An optimized layer-2 solution that delivers lower fees and higher throughput to unlock the full potential of the BNB Chain",
+      color: "from-blue-400 to-purple-600",
+      gradientFrom: "#F59E0B",
+      gradientTo: "#1a1024ff",
+      hex: "0xcc",
+      chainId: 204,
+      socials: [
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+          label: "Twitter",
+          color: "#1DA1F2",
+          link: "https://x.com/BNBChain",
+        },
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+          label: "Telegram",
+          color: "#0088CC",
+          link: "https://t.me/bnbchain",
+        },
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+          label: "Discord",
+          color: "#5865F2",
+          link: "https://discord.com/invite/bnbchain",
+        },
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+          label: "Website",
+          color: "#059669",
+          link: "https://opbnb.bnbchain.org/en",
+        },
+      ],
+    },
+  ];
+
   const [showContent, setShowContent] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
-  const [rewards, setRewards] = useState([]);
-  const [activeChain, setActiveChain] = useState("bnb");
-  const [hoverState, setHoverState] = useState("");
   const [chestOpened, setChestOpened] = useState(false);
   const [selectedChain, setSelectedChain] = useState("bnb");
   const [hoveredChain, setHoveredChain] = useState(null);
   const [isClaimLoading, setIsClaimLoading] = useState(false);
   const [activatedReward, setActivatedReward] = useState(null);
   const [disable, setDisable] = useState(true);
+  const [socials, setSocials] = useState(chains[0].socials);
+  const [count, setCount] = useState(0)
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -102,18 +181,17 @@ const Kickstarter = ({
       setIsClaimLoading(false);
       setChestOpened(true);
       setStep(2);
+      setTimeout(() => {
+        const randomReward =
+          rewardCategories[Math.floor(Math.random() * rewardCategories.length)];
+        setActivatedReward(randomReward.id);
+      }, 4000);
 
       if (video) {
         video.play().catch((err) => console.error("Play failed:", err));
         setTimeout(() => {
           video.pause();
           setStep(3);
-          setRewards([0, 2]);
-          const randomReward =
-            rewardCategories[
-              Math.floor(Math.random() * rewardCategories.length)
-            ];
-          setActivatedReward(randomReward.id);
         }, 8000);
       }
     }, 3000);
@@ -131,43 +209,7 @@ const Kickstarter = ({
     background: `linear-gradient(135deg, ${chain.gradientFrom}, ${chain.gradientTo})`,
   });
 
-  const chains = [
-    {
-      id: "bnb",
-      name: "BNB Chain",
-      symbol: "BNB",
-      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      color: "from-yellow-400 to-orange-500",
-      desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and gaming.",
-      gradientFrom: "#F59E0B",
-      gradientTo: "#F97316",
-      hex: "0x38",
-      chainId: 56,
-      // switchNetwork("0x38", 56)
-    },
-    {
-      id: "opbnb",
-      name: "opBNB",
-      symbol: "BNB",
-      logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
-      desc: "An optimized layer-2 solution that delivers lower fees and higher throughput to unlock the full potential of the BNB Chain",
-      color: "from-blue-400 to-purple-600",
-      gradientFrom: "#F59E0B",
-      gradientTo: "#1a1024ff",
-      hex: "0xcc",
-      chainId: 204,
-    },
-  ];
-
   const selectedChainData = chains.find((c) => c.id === selectedChain);
-
-  const handleMouseEnter = (chain) => {
-    setHoverState(chain);
-  };
-
-  const handleMouseLeave = () => {
-    setHoverState("");
-  };
 
   // const chains = [
   //   {
@@ -266,11 +308,30 @@ const Kickstarter = ({
     }
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+ 
+
+  const html = document.querySelector("html");
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
+    if (isOpen) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+    return () => {
+      html.classList.remove("hidescroll");
+
+    }
+
+  }, [isOpen]);
+
+  useEffect(() => {
+    if(count === 0){
+      setCount(1)
+    }
+
     if (windowSize.width !== undefined) {
       window.scrollTo(0, 0);
       const video = videoRef1.current;
@@ -280,7 +341,11 @@ const Kickstarter = ({
       }, 4000);
 
       const timeout1 = setTimeout(() => {
+        console.log(video);
+        
         if (video) {
+        
+          
           video.play().catch((err) => console.error("Play failed:", err));
 
           const pauseTimeout = setTimeout(() => {
@@ -288,7 +353,6 @@ const Kickstarter = ({
             setDisable(false);
             onAddClass(true);
             console.log("Hello");
-            
           }, 6200);
 
           return () => clearTimeout(pauseTimeout);
@@ -297,7 +361,7 @@ const Kickstarter = ({
 
       return () => clearTimeout(timeout1);
     }
-  }, [windowSize.width]);
+  }, [count]);
 
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
@@ -491,7 +555,7 @@ const Kickstarter = ({
                 </motion.h1>
               </motion.div>
             </motion.div> */}
-            {step === 3 && (
+            {activatedReward !== null && (
               <motion.div
                 key={rewardCategories[0].id}
                 initial={{ opacity: 0, scale: 0, x: 30 }}
@@ -641,6 +705,7 @@ const Kickstarter = ({
                           disabled={disable}
                           onClick={() => {
                             setSelectedChain(chain.id);
+                            setSocials(chain.socials);
                             switchNetwork(chain.hex, chain.chainId);
                           }}
                           onMouseEnter={() => setHoveredChain(chain.id)}
@@ -770,222 +835,11 @@ const Kickstarter = ({
               </motion.div>
             </motion.div>
 
-            {/* 
-          <div className="kickstarter-info-container px-3 py-3 px-lg-5 py-lg-4 d-flex flex-column gap-2 w-100 fade-in">
-            <div class="wave-wrapper">
-              <div class="wave"></div>
-              <div class="wave"></div>
-            </div>
-            <div className="d-flex align-items-center w-100 justify-content-between justify-content-lg-start gap-3 ">
-              <div className="d-flex align-items-center gap-2">
-                <img
-                  src="https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                  alt=""
-                />
-                <span className="kickstarter-chain-title">BNB Chain</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <a
-                  href="https://x.com/BNBCHAIN"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img
-                    src="https://cdn.worldofdypians.com/wod/twitterMap.svg"
-                    alt="kickstarter-twitter"
-                    width={24}
-                    height={24}
-                  />
-                </a>
-                <a
-                  href="https://t.me/bnbchain"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img
-                    src="https://cdn.worldofdypians.com/wod/telegramMap.svg"
-                    alt="kickstarter-telegram"
-                    width={24}
-                    height={24}
-                  />
-                </a>
-                <a
-                  href="https://discord.com/invite/bnbchain"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img
-                    src="https://cdn.worldofdypians.com/wod/discordMap.svg"
-                    alt="kickstarter-discord"
-                    width={24}
-                    height={24}
-                  />
-                </a>
-                <a
-                  href="https://www.bnbchain.org/en"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img
-                    src="https://cdn.worldofdypians.com/wod/websiteMap.svg"
-                    alt="kickstarter-website"
-                    width={24}
-                    height={24}
-                  />
-                </a>
-              </div>
-            </div>
-            <div className="kickstarter-divider mb-1"></div>
-
-            <div className="d-flex align-items-center w-100 flex-column flex-lg-row gap-2 gap-lg-0 justify-content-between kickstarter-scrollable">
-              <p className="kickstarter-desc mb-0">
-                BNB Chain is a decentralized blockchain network built for
-                high-speed, low-cost transactions, designed to support scalable
-                applications in Web3, DeFi, NFTs, gaming, and beyond. Its
-                ecosystem is known for low fees, fast confirmations, and a
-                growing community of builders, making it one of the most used
-                blockchains in the world.
-              </p>
-
-              <div className="d-flex flex-column justify-content-start gap-4 h-100">
-                <span className="kickstarter-chain-title">Rewards</span>
-
-                <div className="d-flex flex-column flex-lg-row gap-2 gap-lg-4">
-                  <div className="d-flex align-items-center position-relative">
-                    <img
-                      src="https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
-                      alt=""
-                      className="kickstarter-reward-image"
-                    />
-                    <div
-                      className={`d-flex px-3 py-2 kickstarter-rewards-container ${
-                        rewards.includes(0) ? "kickstart-rewarded" : ""
-                      } justify-content-end`}
-                    >
-                      <span className="kickstarter-reward-title text-end">
-                        1-5 Stars
-                      </span>
-                    </div>
-                  </div>
-                  <div className="d-flex align-items-center position-relative">
-                    <img
-                      src="https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
-                      alt=""
-                      className="kickstarter-reward-image"
-                    />
-                    <div
-                      className={`d-flex px-3 py-2 kickstarter-rewards-container ${
-                        rewards.includes(1) ? "kickstart-rewarded" : ""
-                      } justify-content-end`}
-                    >
-                      <span className="kickstarter-reward-title text-end">
-                        500-5000 Points
-                      </span>
-                    </div>
-                  </div>
-                  <div className="d-flex align-items-center position-relative">
-                    <img
-                      src="https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
-                      alt=""
-                      className="kickstarter-reward-image"
-                    />
-                    <div
-                      className={`d-flex px-3 py-2 kickstarter-rewards-container ${
-                        rewards.includes(2) ? "kickstart-rewarded" : ""
-                      } justify-content-end`}
-                    >
-                      <span className="kickstarter-reward-title text-end">
-                        $1-$5
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="kickstarter-divider mb-1"></div>
-            <div className="row">
-              <div className="col-12 col-lg-4 d-flex"></div>
-              <div className="col-12 col-lg-4 d-flex justify-content-center">
-                {!email && coinbase && (
-                  <NavLink
-                    className="explore-btn px-3 py-2"
-                    to="/auth"
-                    onClick={() => {
-                      onClose();
-                    }}
-                  >
-                    Log in
-                  </NavLink>
-                )}
-                {!isConnected && !coinbase && (
-                  <button
-                    className="explore-btn px-3 py-2"
-                    onClick={onConnectWallet}
-                  >
-                    Connect Wallet
-                  </button>
-                )}
-                {isConnected &&
-                  coinbase &&
-                  email &&
-                  chainId !== 56 &&
-                  chainId !== 204 && (
-                    <button
-                      className="explore-btn px-3 py-2"
-                      onClick={() => switchNetwork("0x38", 56)}
-                    >
-                      Switch Chain
-                    </button>
-                  )}
-                {isConnected &&
-                  coinbase &&
-                  email &&
-                  (chainId === 56 || chainId === 204) && (
-                    <button className="explore-btn px-3 py-2" onClick={onClaim}>
-                      {loading ? (
-                        <div
-                          className="spinner-border spinner-border-sm text-light"
-                          role="status"
-                        >
-                          <span className="visually-hidden">Loading...</span>
-                        </div>
-                      ) : step === 1 ? (
-                        "Claim"
-                      ) : step === 2 ? (
-                        "In Progress"
-                      ) : (
-                        "Claimed"
-                      )}
-                    </button>
-                  )}
-              </div>
-              <div className="col-12 col-lg-4"></div>
-
-              <div></div>
-            </div>
-          </div> */}
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
               className="position-absolute new-info-container"
-              // style={{
-              //   bottom: "24px",
-              //   left: "24px",
-              //   right: "24px",
-              //   height: "30%",
-              //   background:
-              //     "linear-gradient(135deg, rgba(8, 16, 32, 0.95) 0%, rgba(12, 20, 40, 0.85) 30%, rgba(6, 12, 28, 0.75) 70%, rgba(4, 8, 20, 0.65) 100%)",
-              //   backdropFilter: "blur(30px)",
-              //   WebkitBackdropFilter: "blur(30px)",
-              //   border: "2px solid rgba(59, 130, 246, 0.4)",
-              //   borderRadius: "20px",
-              //   boxShadow:
-              //     "0 25px 80px rgba(0, 0, 0, 0.6), inset 0 2px 0 rgba(120, 170, 255, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.2)",
-              //   position: "relative",
-              //   overflow: "hidden",
-              // }}
             >
               {/* Gaming-style animated border system */}
               <motion.div
@@ -1166,73 +1020,61 @@ const Kickstarter = ({
 
                         {/* Compact Social Links */}
                         <div className="d-flex gap-1">
-                          {[
-                            {
-                              Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-                              label: "Twitter",
-                              color: "#1DA1F2",
-                            },
-                            {
-                              Icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-                              label: "Telegram",
-                              color: "#0088CC",
-                            },
-                            {
-                              Icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-                              label: "Discord",
-                              color: "#5865F2",
-                            },
-                            {
-                              Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-                              label: "Website",
-                              color: "#059669",
-                            },
-                          ].map(({ Icon, label, color }, index) => (
-                            <motion.div
-                              key={index}
-                              whileHover={{ scale: 1.2, rotate: 10 }}
-                              whileTap={{ scale: 0.9 }}
-                              initial={{ opacity: 0, x: 20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.8 + index * 0.05 }}
-                            >
-                              <button
-                                className="btn p-1 rounded border-0 position-relative overflow-hidden"
-                                style={{
-                                  width: "24px",
-                                  height: "24px",
-                                  background:
-                                    "linear-gradient(135deg, rgba(8, 16, 32, 0.9) 0%, rgba(12, 20, 40, 0.7) 100%)",
-                                  border: "1px solid rgba(59, 130, 246, 0.3)",
-                                  color: "rgba(191, 219, 254, 0.8)",
-                                  boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
-                                  transition: "all 0.3s ease",
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.color = color;
-                                  e.currentTarget.style.borderColor = `${color}60`;
-                                  e.currentTarget.style.boxShadow = `0 0 8px ${color}40`;
-                                  e.currentTarget.style.background = `linear-gradient(135deg, rgba(8, 16, 32, 0.9) 0%, ${color}20 100%)`;
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.color =
-                                    "rgba(191, 219, 254, 0.8)";
-                                  e.currentTarget.style.borderColor =
-                                    "rgba(59, 130, 246, 0.3)";
-                                  e.currentTarget.style.boxShadow =
-                                    "0 2px 8px rgba(0,0,0,0.3)";
-                                  e.currentTarget.style.background =
-                                    "linear-gradient(135deg, rgba(8, 16, 32, 0.9) 0%, rgba(12, 20, 40, 0.7) 100%)";
-                                }}
-                                aria-label={label}
-                              >
-                                {/* <Icon
+                          {socials.map(
+                            ({ link, Icon, label, color }, index) => (
+                              <a href={link} target="_blank" key={index}>
+                                <motion.div
+                                  whileHover={{ scale: 1.2, rotate: 10 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  initial={{ opacity: 0, x: 20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ delay: 0.8 + index * 0.05 }}
+                                >
+                                  <button
+                                    className="btn p-1 rounded border-0 position-relative overflow-hidden"
+                                    style={{
+                                      width: "24px",
+                                      height: "24px",
+                                      background:
+                                        "linear-gradient(135deg, rgba(8, 16, 32, 0.9) 0%, rgba(12, 20, 40, 0.7) 100%)",
+                                      border:
+                                        "1px solid rgba(59, 130, 246, 0.3)",
+                                      color: "rgba(191, 219, 254, 0.8)",
+                                      boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                                      transition: "all 0.3s ease",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.currentTarget.style.color = color;
+                                      e.currentTarget.style.borderColor = `${color}60`;
+                                      e.currentTarget.style.boxShadow = `0 0 8px ${color}40`;
+                                      e.currentTarget.style.background = `linear-gradient(135deg, rgba(8, 16, 32, 0.9) 0%, ${color}20 100%)`;
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.currentTarget.style.color =
+                                        "rgba(191, 219, 254, 0.8)";
+                                      e.currentTarget.style.borderColor =
+                                        "rgba(59, 130, 246, 0.3)";
+                                      e.currentTarget.style.boxShadow =
+                                        "0 2px 8px rgba(0,0,0,0.3)";
+                                      e.currentTarget.style.background =
+                                        "linear-gradient(135deg, rgba(8, 16, 32, 0.9) 0%, rgba(12, 20, 40, 0.7) 100%)";
+                                    }}
+                                    aria-label={label}
+                                  >
+                                    {/* <Icon
                                   style={{ width: "12px", height: "12px" }}
                                 /> */}
-                                <img src={Icon} width={18} height={18} alt="" />
-                              </button>
-                            </motion.div>
-                          ))}
+                                    <img
+                                      src={Icon}
+                                      width={18}
+                                      height={18}
+                                      alt=""
+                                    />
+                                  </button>
+                                </motion.div>
+                              </a>
+                            )
+                          )}
                         </div>
                       </div>
 
@@ -1256,12 +1098,12 @@ const Kickstarter = ({
                         {selectedChain === "opbnb" &&
                           "An optimized layer-2 solution that delivers lower fees and higher throughput to unlock the full potential of the BNB Chain"}
                       </motion.div>
-                      <div className="d-flex flex-column h-100 justify-content-between d-flex d-lg-none">
+                      <div className="d-flex flex-column h-100 justify-content-end justify-content-lg-between gap-3 gap-lg-0 d-flex d-lg-none">
                         <div
                           className="mt-2"
                           style={{
                             color: "rgba(219, 234, 254, 1)",
-                            fontSize: "13px",
+                            fontSize: "15px",
                             fontWeight: "700",
                             letterSpacing: "0.05em",
                             textShadow: "0 1px 2px rgba(0,0,0,0.3)",
@@ -1359,10 +1201,10 @@ const Kickstarter = ({
                       {/* VERTICAL Rewards List - No Header */}
                       <div className="d-flex flex-column h-100 justify-content-between">
                         <div
-                          className="py-2 py-xxl-4 px-2"
+                          className="py-2 py-xxl-3 px-2"
                           style={{
                             color: "rgba(219, 234, 254, 1)",
-                            fontSize: "13px",
+                            fontSize: "15px",
                             fontWeight: "700",
                             letterSpacing: "0.05em",
                             textShadow: "0 1px 2px rgba(0,0,0,0.3)",
@@ -1614,154 +1456,7 @@ const Kickstarter = ({
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                  >
-                    {/* <button
-                    onClick={handleClaim}
-                    disabled={isClaimLoading || chestOpened}
-                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
-                    style={{
-                      padding: "14px 48px",
-                      fontSize: "16px",
-                      fontWeight: "700",
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      background: chestOpened
-                        ? "linear-gradient(135deg, #10B981, #059669, #047857)"
-                        : "linear-gradient(135deg, #F97316, #DC2626, #BE185D)",
-                      border: chestOpened
-                        ? "2px solid rgba(16, 185, 129, 0.8)"
-                        : "2px solid rgba(249, 115, 22, 0.8)",
-                      borderRadius: "14px",
-                      boxShadow: chestOpened
-                        ? "0 0 50px rgba(34, 197, 94, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)"
-                        : "0 0 50px rgba(249, 115, 22, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
-                      backdropFilter: "blur(10px)",
-                      WebkitBackdropFilter: "blur(10px)",
-                      transition: "all 0.3s ease",
-                      opacity: isClaimLoading || chestOpened ? 0.9 : 1,
-                      textShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                      zIndex: 10,
-                    }}
-                  >
-             
-                    <motion.div
-                      className="position-absolute top-0 start-0 w-100 h-100"
-                      style={{
-                        background:
-                          "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-                        transform: "skewX(-20deg)",
-                      }}
-                      animate={{
-                        x: ["-150%", "250%"],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: Math.random() * 2,
-                      }}
-                    />
-
-                 
-                    <motion.div
-                      className="position-absolute top-0 start-0 w-100 h-100"
-                      style={{
-                        border: "2px solid rgba(255,255,255,0.3)",
-                        borderRadius: "14px",
-                      }}
-                      animate={{
-                        scale: [1, 1.05, 1],
-                        opacity: [0.5, 1, 0.5],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    />
-
-                    {isClaimLoading ? (
-                      <div className="d-flex align-items-center gap-3">
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            duration: 1,
-                            repeat: Infinity,
-                            ease: "linear",
-                          }}
-                          className="border border-white rounded-circle"
-                          style={{
-                            width: "18px",
-                            height: "18px",
-                            borderTop: "3px solid transparent",
-                          }}
-                        />
-                        <span>UNLOCKING VAULT...</span>
-                        <motion.div
-                          animate={{
-                            scale: [1, 1.3, 1],
-                            opacity: [0.5, 1, 0.5],
-                          }}
-                          transition={{
-                            duration: 1,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          ⚡
-                        </motion.div>
-                      </div>
-                    ) : chestOpened ? (
-                      <div className="d-flex align-items-center gap-3">
-                        <motion.div
-                          animate={{
-                            scale: [1, 1.3, 1],
-                            rotate: [0, 360, 0],
-                          }}
-                          transition={{
-                            duration: 2.5,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          ✅
-                        </motion.div>
-                        <span>CHEST UNLOCKED!</span>
-                        <motion.div
-                          animate={{
-                            scale: [1, 1.4, 1],
-                            rotate: [0, 15, -15, 0],
-                          }}
-                          transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          🎉
-                        </motion.div>
-                      </div>
-                    ) : (
-                      <div className="d-flex align-items-center gap-3">
-                       
-                        <span>CLAIM REWARDS</span>
-                        <motion.div
-                          animate={{
-                            scale: [1, 1.3, 1],
-                            rotate: [0, 15, -15, 0],
-                          }}
-                          transition={{
-                            duration: 1.8,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        >
-                          ✨
-                        </motion.div>
-                      </div>
-                    )}
-                  </button> */}
-                  </motion.div>
+                  ></motion.div>
                 </div>
               </div>
             </motion.div>
@@ -1799,6 +1494,7 @@ const Kickstarter = ({
                       transition: "all 0.3s ease",
                       textShadow: "0 2px 8px rgba(0,0,0,0.4)",
                       zIndex: 10,
+                      width: "276px",
                     }}
                   >
                     <motion.div
@@ -1872,6 +1568,7 @@ const Kickstarter = ({
                       transition: "all 0.3s ease",
                       textShadow: "0 2px 8px rgba(0,0,0,0.4)",
                       zIndex: 10,
+                      width: "276px",
                     }}
                   >
                     <motion.div
@@ -1949,6 +1646,7 @@ const Kickstarter = ({
                         transition: "all 0.3s ease",
                         textShadow: "0 2px 8px rgba(0,0,0,0.4)",
                         zIndex: 10,
+                        width: "276px",
                       }}
                     >
                       <motion.div
@@ -2004,7 +1702,7 @@ const Kickstarter = ({
                     <button
                       onClick={handleClaim}
                       disabled={isClaimLoading || chestOpened || disable}
-                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden kick-claim-btn"
+                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden kick-claim-btn d-flex justify-content-center align-items-center"
                       style={{
                         padding: "14px 48px",
                         fontSize: "16px",
@@ -2027,6 +1725,7 @@ const Kickstarter = ({
                         opacity: isClaimLoading || chestOpened ? 0.9 : 1,
                         textShadow: "0 2px 8px rgba(0,0,0,0.4)",
                         zIndex: 10,
+                        width: "276px",
                       }}
                     >
                       <motion.div
@@ -2080,7 +1779,7 @@ const Kickstarter = ({
                               borderTop: "3px solid transparent",
                             }}
                           />
-                          <span>UNLOCKING CHEST</span>
+                          <span>UNLOCKING</span>
                         </div>
                       ) : chestOpened ? (
                         <div className="d-flex align-items-center gap-3">
@@ -2097,7 +1796,7 @@ const Kickstarter = ({
                             >
                               ✅
                             </motion.div> */}
-                          <span>CHEST UNLOCKED!</span>
+                          <span>UNLOCKED!</span>
                           {/* <motion.div
                               animate={{
                                 scale: [1, 1.4, 1],

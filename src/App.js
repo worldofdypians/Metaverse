@@ -1999,16 +1999,12 @@ function App() {
   const html = document.querySelector("html");
 
   useEffect(() => {
-    if (
-      domainPopup === true ||
-      kickstarter === true ||
-      kickstarterAddClass === true
-    ) {
+    if (domainPopup === true) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [domainPopup, kickstarter, kickstarterAddClass]);
+  }, [domainPopup]);
 
   // const web3Name = createWeb3Name();
 
@@ -7762,7 +7758,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          />  
+          />
           {/* <Route
             exact
             path="/shop/mint/vanar"
@@ -8507,7 +8503,11 @@ function App() {
       {fireAppcontent === true && <AppContent />}
       {kickstarter && (
         <Kickstarter
-          onClose={() => setKickstarter(false)}
+          onClose={() => {
+            setKickstarter(false);
+            html.classList.remove("hidescroll");
+          }}
+          isOpen={kickstarter}
           coinbase={coinbase}
           chainId={networkId}
           handleSwitchNetwork={handleSwitchNetwork}
