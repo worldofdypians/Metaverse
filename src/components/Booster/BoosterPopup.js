@@ -1,6 +1,7 @@
 import Countdown from "react-countdown";
 import "./_booster.scss";
 import { useEffect, useState } from "react";
+import "../Kickstarter/components/kickstarter_newcss.scss";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -52,8 +53,8 @@ const BoosterPopup = ({ userDataStar }) => {
         Special rewards for players outside the top 100
       </span>
       <div className="d-flex flex-column gap-3 rewardstable-wrapper3 px-3 px-lg-0">
-        <div className="p-4 rounded-2xl bordertw border-white/20">
-          <div className="d-flex flex-lg-row flex-column gap-lg-5 gap-3 justify-content-between">
+        <div className="">
+          <div className="d-flex flex-column gap-3 justify-content-between">
             {/* <div>
               <span className="booster-list-title">Eligibility</span>
               <ul className="booster-list-text mb-0">
@@ -73,16 +74,23 @@ const BoosterPopup = ({ userDataStar }) => {
               </ul>
             </div> */}
             {/* Grand Prize */}
-            <div className="relative overflow-hidden rounded-lg bg-gradient-to-r from-yellow-500/40 via-orange-500/40 to-red-500/40 border-2 border-yellow-400/60 p-4">
+            <div className="relative overflow-hidden rounded-lg bg-gradient-to-r from-yellow-500/40 via-orange-500/40 to-red-500/40 bordertw-2 border-yellow-400/60 p-3">
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-orange-500/10" />
               <div className="relative flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  {/* <div className="w-10 h-10 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center shadow-lg">
-                    <Crown className="w-5 h-5 text-white" />
-                  </div> */}
+                  <div className="w-10 h-10 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center shadow-lg">
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/crown.svg"
+                      alt=""
+                    />
+                  </div>
                   <div>
-                    <p className="font-medium text-yellow-200">Grand Prize</p>
-                    <p className="text-sm text-yellow-100/90">1 Lucky Winner</p>
+                    <p className="font-medium text-yellow-200 mb-0">
+                      Grand Prize
+                    </p>
+                    <p className="text-sm text-yellow-100/90 mb-0">
+                      1 Lucky Winner
+                    </p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -95,16 +103,23 @@ const BoosterPopup = ({ userDataStar }) => {
             </div>
 
             {/* Regular Winners */}
-            <div className="relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-500/40 via-purple-500/40 to-indigo-500/40 border-2 border-blue-400/60 p-4">
+            <div className="relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-500/40 via-purple-500/40 to-indigo-500/40 bordertw-2 border-blue-400/60 p-3">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10" />
               <div className="relative flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  {/* <div className="w-10 h-10 bg-gradient-to-br from-blue-300 to-purple-400 rounded-full flex items-center justify-center shadow-lg">
-                    <Coins className="w-5 h-5 text-white" />
-                  </div> */}
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-300 to-purple-400 rounded-full flex items-center justify-center shadow-lg">
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/coins.svg"
+                      alt=""
+                    />
+                  </div>
                   <div>
-                    <p className="font-medium text-blue-200">Regular Winners</p>
-                    <p className="text-sm text-blue-100/90">1000 Winners</p>
+                    <p className="font-medium text-blue-200 mb-0">
+                      Regular Winners
+                    </p>
+                    <p className="text-sm text-blue-100/90 mb-0">
+                      1000 Winners
+                    </p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -115,17 +130,17 @@ const BoosterPopup = ({ userDataStar }) => {
             </div>
 
             {/* Total Prizes Display */}
-            <div className="text-center py-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-500/30 to-emerald-500/30 rounded-full border border-green-400/50">
-                {/* <Gift className="w-4 h-4 text-green-300" /> */}
+            {/* <div className="text-center py-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-green-500/30 to-emerald-500/30 rounded-full bordertw border-green-400/50">
+            
                 <span className="text-sm text-green-200">
                   1001 Total Winners Each Month
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
-        <div className="px-4 py-3 boost-rank-wrapper">
+        {/* <div className="px-4 py-3 boost-rank-wrapper">
           <div className="d-flex align-items-center gap-2 justify-content-between">
             <div className="d-flex flex-column">
               <span className="booster-list-title">September Rank</span>
@@ -157,7 +172,7 @@ const BoosterPopup = ({ userDataStar }) => {
               </span>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="trading-comp-divider"></div>
         <div className="p-4 rounded-2xl bordertw border-white/20">
           <div className="d-flex flex-column gap-3">
@@ -207,19 +222,25 @@ const BoosterPopup = ({ userDataStar }) => {
             )}
           </div>
         </div>
-        <div className="p-4  boost-rank-wrapper">
+        {/* <div className="p-4  boost-rank-wrapper">
           <div className="d-flex flex-column flex-lg-row align-items-center gap-3 justify-content-lg-between justify-content-center">
             <span className="booster-list-title">Next Selection in</span>
             <div className="d-flex align-items-center">
               <Countdown date={nextSelectionDate} renderer={renderer} />
             </div>
           </div>
-        </div>
-        <div className="px-4">
-          <div className="d-flex">
-            <span className="booster-list-text mb-0">
-              *Winners will be displayed at the beginning of next month
-            </span>
+        </div> */}
+        <div className="p-4 rounded-2xl bordertw border-white/20">
+          <div>
+            <span className="booster-list-title">Eligibility</span>
+            <ul className="booster-list-text mb-0">
+              <li>Must be ranked 101+ on monthly leaderboard</li>
+              <li>1001 lucky winners selected each month</li>
+              <li>
+                Rewards are distributed within 10 days after the month ends
+              </li>
+              <li>Random selection from all eligible players</li>
+            </ul>
           </div>
         </div>
       </div>
