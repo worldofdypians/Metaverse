@@ -100,14 +100,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/Coredao_Org",
@@ -1167,13 +1166,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/mantanetwork",
@@ -1438,13 +1438,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/SeiNetwork",
@@ -1622,21 +1623,21 @@ const chainAreas = [
       ],
     ],
     events: [
-      // {
-      //   title: "Daily Bonus",
-      //   image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
-      //   link: "/account#dailybonus",
-      // },
-      // {
-      //   title: "Leaderboard",
-      //   image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
-      //   link: "/account#leaderboard",
-      // },
-      // {
-      //   title: "Treasure Hunt",
-      //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-      //   link: "/account/challenges/treasure-hunt",
-      // },
+      {
+        title: "Daily Bonus",
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+        link: "/account#dailybonus",
+      },
+      {
+        title: "Leaderboard",
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+        link: "/account#leaderboard",
+      },
+      {
+        title: "Treasure Hunt",
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+        link: "/account/challenges/treasure-hunt",
+      },
     ],
     pastEvents: [],
     socials: [

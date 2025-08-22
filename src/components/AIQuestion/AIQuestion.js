@@ -80,6 +80,8 @@ const AIQuestion = ({
   const [activeClass, setActiveClass] = useState("");
   const [showSelect, setShowSelect] = useState(false);
   const [pause, setPause] = useState(false);
+  const [pulse, setPulse] = useState(false);
+
   const [avatarState, setAvatarState] = useState("idle");
   const radius = 25;
   const circumference = 2 * Math.PI * radius;
@@ -519,6 +521,7 @@ const AIQuestion = ({
   };
 
   const checkAnswer = async () => {
+    setPulse(true);
     const data = {
       walletAddress: coinbase,
       email: email,
@@ -630,10 +633,10 @@ const AIQuestion = ({
       return "answer-inner-wrapper";
 
     if (option === selectedAnswer && selectedOption === undefined) {
-      return "answer-inner-wrapper-answer"; // selected and correct
+      return "answer-inner-wrapper-disabled"; //not selected, time's up
     }
     if (selectedOption === undefined && selectedAnswer !== undefined)
-      return "answer-inner-wrapper-wrong";
+      return "answer-inner-wrapper-disabled"; //not selected, time's up
 
     if (selectedAnswer === undefined) {
       return selectedOption === option
@@ -650,7 +653,7 @@ const AIQuestion = ({
     }
 
     if (option === selectedOption && option !== selectedAnswer) {
-      return "answer-inner-wrapper-wrong"; // selected and wrong
+      return "answer-inner-wrapper-active"; // selected and wrong
     }
 
     if (option === selectedAnswer) {
@@ -1171,7 +1174,7 @@ const AIQuestion = ({
                           timeLeft <= 10 && timeLeft > 0 ? "blinking" : ""
                         }`}
                         stroke={
-                          timeLeft > 16
+                          timeLeft > 12
                             ? "url(#gradient)"
                             : timeLeft > 8
                             ? "url(#gradient2)"
@@ -1300,7 +1303,9 @@ const AIQuestion = ({
                           className={`${getAnswerClass(
                             answers[index]
                           )} px-4 py-3 d-flex align-items-center justify-content-between  ${
-                            pause && selectedOption === answers[index]
+                            answers[index] ===
+                              answers[aiQuestionObjectAnswered.correctIndex] &&
+                            pulse
                               ? "drumroll-background"
                               : ""
                           }   `}
@@ -1356,7 +1361,8 @@ const AIQuestion = ({
                 (email &&
                   coinbase &&
                   address &&
-                  address.toLowerCase() !== coinbase.toLowerCase())
+                  address.toLowerCase() !== coinbase.toLowerCase() &&
+                  step === 0)
                   ? "ai-answer-result-warning-wrapper"
                   : selectedAnswer === undefined && timeLeft === 0
                   ? "ai-answer-result-error-wrapper"
@@ -1574,7 +1580,8 @@ const AIQuestion = ({
                 isConnected &&
                 address &&
                 coinbase.toLowerCase() !== address.toLowerCase() &&
-                email
+                email &&
+                step === 0
               ? "ai-question-footer-wrapper-error"
               : // (selectedOption === undefined &&
               //   selectedAnswer === undefined &&
@@ -1650,7 +1657,8 @@ const AIQuestion = ({
             coinbase &&
             email &&
             chainId !== 56 &&
-            chainId !== 204 && (
+            chainId !== 204 &&
+            step === 0 && (
               <button
                 className="ai-main-button text-white text-uppercase d-flex align-items-center gap-2 col-lg-5 justify-content-center py-2"
                 onClick={() => {
@@ -1708,7 +1716,7 @@ const AIQuestion = ({
             coinbase &&
             email &&
             address &&
-            coinbase.toLowerCase() === address.toLowerCase() &&
+            // && coinbase.toLowerCase() === address.toLowerCase()
             (chainId === 56 || chainId === 204) &&
             step === 1 && (
               <button
@@ -1751,6 +1759,7 @@ const AIQuestion = ({
             email &&
             address &&
             (chainId === 56 || chainId === 204) &&
+            step === 0 &&
             coinbase.toLowerCase() !== address.toLowerCase() && (
               <button
                 disabled

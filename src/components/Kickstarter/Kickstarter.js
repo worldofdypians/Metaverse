@@ -288,6 +288,7 @@ const Kickstarter = ({
             setDisable(false);
             onAddClass(true);
             console.log("Hello");
+            
           }, 6200);
 
           return () => clearTimeout(pauseTimeout);
@@ -1775,6 +1776,7 @@ const Kickstarter = ({
                     to="/auth"
                     onClick={() => {
                       onClose();
+                      onAddClass(false);
                     }}
                     className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
                     style={{

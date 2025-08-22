@@ -1768,7 +1768,7 @@ const MyProfile = ({
                           <span className="user-blue-rank-2">
                             Loyalty Program
                           </span>
-                          <span className="user-rank-text-2">Season 3</span>
+                          <span className="user-rank-text-2">Season 4</span>
                         </div>
                       </div>
 

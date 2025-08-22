@@ -56,6 +56,12 @@
   background-image: url("https://cdn.worldofdypians.com/wod/newLeaderboardBackground.webp") !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
+  @media screen and (max-width: 1500px) {
+    width: 65% !important;
+  }
+  @media screen and (max-width: 1400px) {
+    width: 75% !important;
+  }
   @media screen and (max-width: 1200px) {
     width: 95% !important;
   }
@@ -69,6 +75,12 @@
   // margin-top: -31px;
   height: 366px;
   overflow: auto;
+  @media screen and (max-height: 850px) {
+   height: 250px;
+  }
+  @media screen and (max-height: 786px) {
+   height: 266px;
+  }
   @media screen and (max-width: 786px) {
    height: 266px;
   }
