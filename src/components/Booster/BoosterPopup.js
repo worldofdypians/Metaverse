@@ -324,9 +324,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
               >
                 <span
                   className={`${
-                    userDataStar > 100 && userDataStar > 0
-                      ? "booster-list-title"
-                      : "booster-rank-text-dark"
+                    "booster-list-title" 
                   }`}
                 >
                   {displayRank === 0 ? "No rank" : "#" + displayRank}
