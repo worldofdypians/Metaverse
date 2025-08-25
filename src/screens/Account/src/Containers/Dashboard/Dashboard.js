@@ -183,6 +183,7 @@ function Dashboard({
   myTeaBaseNfts,
   teaEarnUsd,
   openKickstarter,
+  royaltyCount,
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -3624,11 +3625,11 @@ function Dashboard({
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
-    if (count !== 0) {
+    if (count !== 0 || royaltyCount !== 0) {
       // fetchDailyRecords();
       getAllChests(email);
     }
-  }, [count]);
+  }, [count, royaltyCount]);
 
   useEffect(() => {
     if (corecount !== 0) {

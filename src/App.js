@@ -487,7 +487,7 @@ function App() {
   const authToken = localStorage.getItem("authToken");
   const [orynPop, setOrynPop] = useState(true);
   const [showWalletModal, setShowWalletModal] = useState(false);
-
+  const [royaltyCount, setRoyaltyCount] = useState(0)
   const [betaModal, setBetaModal] = useState(false);
 
   const [totalSupply, setTotalSupply] = useState(0);
@@ -6790,6 +6790,7 @@ function App() {
             path="/account"
             element={
               <Dashboard
+              royaltyCount={royaltyCount}
                 isEOA={isEOA}
                 wodBalance={wodBalance}
                 authToken={authToken}
@@ -6892,6 +6893,7 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+              royaltyCount={royaltyCount}
                 openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
@@ -7479,6 +7481,7 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+              royaltyCount={royaltyCount}
                 openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
@@ -8503,6 +8506,10 @@ function App() {
       {fireAppcontent === true && <AppContent />}
       {kickstarter && (
         <Kickstarter
+          publicClient={publicClient}
+          onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
+          walletClient={walletClient}
+          binanceW3WProvider={library}
           onClose={() => {
             setKickstarter(false);
             html.classList.remove("hidescroll");
@@ -8513,7 +8520,7 @@ function App() {
           handleSwitchNetwork={handleSwitchNetwork}
           isConnected={isConnected}
           email={email}
-          address={address}
+          address={gameAccount}
           onConnectWallet={() => {
             setwalletModal(true);
           }}

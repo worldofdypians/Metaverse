@@ -5,6 +5,10 @@ import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import useWindowSize from "../../hooks/useWindowSize";
+import { ethers } from "ethers";
+import Web3 from "web3";
+import axios from "axios";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
 const rewardCategories = [
   {
@@ -47,6 +51,10 @@ const Kickstarter = ({
   address,
   handleSwitchNetwork,
   isOpen,
+  binanceW3WProvider,
+  walletClient,
+  publicClient,
+  onClaimRewards,
 }) => {
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
@@ -62,6 +70,7 @@ const Kickstarter = ({
       "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(120, 170, 255, 0.15)",
     borderRadius: "16px",
   };
+
 
   const chains = [
     {
@@ -148,11 +157,16 @@ const Kickstarter = ({
   const [chestOpened, setChestOpened] = useState(false);
   const [selectedChain, setSelectedChain] = useState("bnb");
   const [hoveredChain, setHoveredChain] = useState(null);
-  const [isClaimLoading, setIsClaimLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [activatedReward, setActivatedReward] = useState(null);
   const [disable, setDisable] = useState(true);
   const [socials, setSocials] = useState(chains[0].socials);
   const [count, setCount] = useState(0);
+  const [ischestOpen, setIsChestOpen] = useState(false);
+  const [rewards, setRewards] = useState({
+    rewardType: null,
+    reward: null
+  })
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -163,22 +177,279 @@ const Kickstarter = ({
   // Attach listener
   window.addEventListener("keydown", handleEsc);
 
-  // const onClaim = () => {
+  const chestIndex = 5;
 
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //     setStep(2);
-  //   }, 2000);
-  // };
+
+  const getUserRewardsByChest = async (
+    userEmail,
+    txHash,
+    chestId,
+    chainText
+  ) => {
+    const userData = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+    };
+
+    const userData_bnb = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+      chainId: chainText,
+    };
+
+    if (chainText) {
+      const result = await axios
+        .post(
+          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          userData_bnb
+        )
+        .catch((e) => {
+          if (e.response.status === 400) {
+            const timer = setTimeout(() => {
+              getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
+            }, 2000);
+          } else {
+            setLoading(false);
+            setIsChestOpen(false);
+            window.alertify.error(e?.message);
+            console.error(e);
+          }
+        });
+      if (result && result.status === 200) {
+        // if (chainText === "opbnb" || chainText === "bnb") {
+        //   handleSecondTask(coinbase);
+        // }
+        onClaimRewards(result.data);
+        console.log(result.data);
+        setTimeout(() => {
+            setRewards({
+          rewardType: result.data.rewards[0].rewardType,
+          reward: result.data.rewards[0].reward,
+        })
+        }, 3600);
+        console.log(result.data.rewards[0].rewardType,
+result.data.rewards[0].reward);
+        setIsChestOpen(true);
+        setLoading(false);
+      }
+    } else {
+      const result = await axios
+        .post(
+          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          userData
+        )
+        .catch((e) => {
+          if (e.response.status === 400) {
+            const timer = setTimeout(() => {
+              getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
+            }, 2000);
+          } else {
+            setLoading(false);
+            setIsChestOpen(false);
+            window.alertify.error(e?.message);
+            console.error(e);
+          }
+        });
+      if (result && result.status === 200) {
+        onClaimRewards(result.data);
+        console.log(result.data);
+       setTimeout(() => {
+            setRewards({
+          rewardType: result.data.rewards[0].rewardType,
+          reward: result.data.rewards[0].reward,
+        })
+        }, 3600);
+                console.log(result.data.rewards[0].rewardType,
+result.data.rewards[0].reward);
+        setIsChestOpen(true);
+        setLoading(false);
+      }
+    }
+  };
+  const getUserRewardsByChest2 = async (
+    userEmail,
+    txHash,
+    chestId,
+    chainText
+  ) => {
+    const userData = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+    };
+
+    const userData_bnb = {
+      transactionHash: txHash,
+      emailAddress: userEmail,
+      chestIndex: chestId,
+      chainId: chainText,
+    };
+
+    if (chainText) {
+      const result = await axios
+        .post(
+          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          userData_bnb
+        )
+        .catch((e) => {
+          setLoading(false);
+
+          setIsChestOpen(false);
+          window.alertify.error(e?.message);
+        });
+      if (result && result.status === 200) {
+        onClaimRewards(result.data);
+        console.log(result.data);
+         setTimeout(() => {
+            setRewards({
+          rewardType: result.data.rewards[0].rewardType,
+          reward: result.data.rewards[0].reward,
+        })
+        }, 3600);
+                console.log(result.data.rewards[0].rewardType,
+result.data.rewards[0].reward);
+        setIsChestOpen(true);
+
+        setLoading(false);
+      }
+    } else {
+      const result = await axios
+        .post(
+          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          userData
+        )
+        .catch((e) => {
+          setLoading(false);
+
+          setIsChestOpen(false);
+          window.alertify.error(e?.message);
+        });
+      if (result && result.status === 200) {
+        // if (chainText === "opbnb" || chainText === "bnb") {
+        //   handleSecondTask(coinbase);
+        // }
+        onClaimRewards(result.data);
+        console.log(result.data);
+           setTimeout(() => {
+            setRewards({
+          rewardType: result.data.rewards[0].rewardType,
+          reward: result.data.rewards[0].reward,
+        })
+        }, 3600);
+        
+        setIsChestOpen(true);
+        setLoading(false);
+      }
+    }
+  };
+
+  const handleCheckIfTxExists = async (
+    email,
+    txHash,
+    chestIndex,
+    chainText
+  ) => {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      window.web3 = new Web3(window.ethereum);
+      const txResult = await window.web3.eth
+        .getTransaction(txHash)
+        .catch((e) => {
+          console.error(e);
+        });
+
+      console.log(txResult);
+
+      if (txResult) {
+        getUserRewardsByChest(email, txHash, chestIndex, chainText);
+      } else {
+        if (count < 10) {
+          const timer = setTimeout(
+            () => {
+              handleCheckIfTxExists(txHash);
+            },
+            count === 9 ? 5000 : 2000
+          );
+          return () => clearTimeout(timer);
+        } else {
+          window.alertify.error("Something went wrong.");
+          setLoading(false);
+        }
+      }
+      count = count + 1;
+    } else if (window.WALLET_TYPE === "binance") {
+      const txResult_binance = await binanceW3WProvider
+        .getTransaction(txHash)
+        .catch((e) => {
+          console.error(e);
+        });
+      console.log(txResult_binance);
+
+      if (txResult_binance) {
+        getUserRewardsByChest(email, txHash, chestIndex, chainText);
+      } else {
+        if (count < 10) {
+          const timer = setTimeout(
+            () => {
+              handleCheckIfTxExists(txHash);
+            },
+            count === 9 ? 5000 : 2000
+          );
+          return () => clearTimeout(timer);
+        } else {
+          window.alertify.error("Something went wrong.");
+          setLoading(false);
+        }
+      }
+      count = count + 1;
+    } else if (window.WALLET_TYPE === "matchId") {
+      console.log(txHash);
+      const txResult_matchain = await publicClient
+        .getTransaction({ hash: txHash })
+        .catch((e) => {
+          console.error(e);
+        });
+      console.log(txResult_matchain, txHash);
+
+      if (txResult_matchain) {
+        getUserRewardsByChest(email, txHash, chestIndex, chainText);
+      } else {
+        if (count < 10) {
+          const timer = setTimeout(
+            () => {
+              handleCheckIfTxExists(txHash);
+            },
+            count === 9 ? 5000 : 2000
+          );
+          return () => clearTimeout(timer);
+        } else {
+          window.alertify.error("Something went wrong.");
+          setLoading(false);
+        }
+      }
+      count = count + 1;
+    }
+  };
+
+  const handleThirdTask = async (wallet) => {
+    const result2 = await axios
+      .get(`https://api.worldofdypians.com/api/dappbay/task3/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result2 && result2.status === 200) {
+      console.log(result2);
+    }
+  };
 
   const handleClaim = async () => {
     const video = videoRef2.current;
 
-    setIsClaimLoading(true);
+    setLoading(true);
 
     setTimeout(() => {
-      setIsClaimLoading(false);
+      setLoading(false);
       setChestOpened(true);
       setStep(2);
       setTimeout(() => {
@@ -195,6 +466,254 @@ const Kickstarter = ({
         }, 8000);
       }
     }, 3000);
+  };
+
+  const handleOpenChest = async () => {
+    setLoading(true);
+    const video = videoRef2.current;
+
+    window.web3 = new Web3(window.ethereum);
+    // console.log(window.config.daily_bonus_address, address);
+    const daily_bonus_contract = new window.web3.eth.Contract(
+      window.DAILY_BONUS_ABI,
+      window.config.daily_bonus_address
+    );
+
+    const daily_bonus_contract_bnb = new window.web3.eth.Contract(
+      window.DAILY_BONUS_BNB_ABI,
+      window.config.daily_bonus_bnb_address
+    );
+
+    // console.log(daily_bonus_contract);
+    if (chainId === 204) {
+      if (window.WALLET_TYPE !== "binance") {
+        await daily_bonus_contract.methods
+          .openChest()
+          .send({
+            from: address,
+          })
+          .then((data) => {
+            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1, "opbnb");
+            handleThirdTask(coinbase);
+
+            setLoading(false);
+            setChestOpened(true);
+            setStep(2);
+            setTimeout(() => {
+              const randomReward =
+                rewardCategories[
+                  Math.floor(Math.random() * rewardCategories.length)
+                ];
+              setActivatedReward(randomReward.id);
+            }, 3600);
+
+            if (video) {
+              video.play().catch((err) => console.error("Play failed:", err));
+              setTimeout(() => {
+                video.pause();
+                setStep(3);
+              }, 8000);
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            setLoading(false);
+          });
+      } else if (window.WALLET_TYPE === "binance") {
+        const daily_bonus_contract_opbnb_binance = new ethers.Contract(
+          window.config.daily_bonus_address,
+          window.DAILY_BONUS_ABI,
+          binanceW3WProvider.getSigner()
+        );
+        const txResponse = await daily_bonus_contract_opbnb_binance
+          .openChest()
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            setLoading(false);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "opbnb");
+          handleThirdTask(coinbase);
+          setLoading(false);
+          setChestOpened(true);
+          setStep(2);
+          setTimeout(() => {
+            const randomReward =
+              rewardCategories[
+                Math.floor(Math.random() * rewardCategories.length)
+              ];
+            setActivatedReward(randomReward.id);
+          }, 3600);
+
+          if (video) {
+            video.play().catch((err) => console.error("Play failed:", err));
+            setTimeout(() => {
+              video.pause();
+              setStep(3);
+            }, 8000);
+          }
+        }
+      }
+    } else if (chainId === 56) {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        // console.log("standard");
+
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await web3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        const increasedGwei = parseInt(currentGwei) + 1;
+        console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_bnb.methods
+          .openChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+        await daily_bonus_contract_bnb.methods
+          .openChest()
+          .send({
+            from: address,
+            ...transactionParameters,
+          })
+          .then((data) => {
+            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1, "bnb");
+            handleThirdTask(coinbase);
+
+            setLoading(false);
+            setChestOpened(true);
+            setStep(2);
+            setTimeout(() => {
+              const randomReward =
+                rewardCategories[
+                  Math.floor(Math.random() * rewardCategories.length)
+                ];
+              setActivatedReward(randomReward.id);
+            }, 3600);
+
+            if (video) {
+              video.play().catch((err) => console.error("Play failed:", err));
+              setTimeout(() => {
+                video.pause();
+                setStep(3);
+              }, 8000);
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            setLoading(false);
+          });
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: window.config.daily_bonus_bnb_address,
+              abi: window.DAILY_BONUS_BNB_ABI,
+              functionName: "openChest",
+              args: [],
+            })
+            .catch((e) => {
+              window.alertify.error(e?.shortMessage);
+              setLoading(false);
+              console.error(e);
+            });
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (receipt) {
+              console.log("Transaction confirmed:", receipt);
+              handleCheckIfTxExists(email, result, chestIndex - 1, "bnb");
+            }
+          }
+        }
+      } else if (window.WALLET_TYPE === "binance") {
+        const daily_bonus_contract_bnb_binance = new ethers.Contract(
+          window.config.daily_bonus_bnb_address,
+          window.DAILY_BONUS_BNB_ABI,
+          binanceW3WProvider.getSigner()
+        );
+        const gasPrice = await binanceW3WProvider.getGasPrice();
+        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+        const gasPriceInWei = ethers.utils.parseUnits(
+          currentGwei.toString().slice(0, 14),
+          "gwei"
+        );
+
+        const transactionParameters = {
+          gasPrice: gasPriceInWei,
+        };
+
+        let gasLimit;
+        try {
+          gasLimit =
+            await daily_bonus_contract_bnb_binance.estimateGas.openPremiumChest();
+          transactionParameters.gasLimit = gasLimit;
+          console.log("transactionParameters", transactionParameters);
+        } catch (error) {
+          console.error(error);
+        }
+
+        const txResponse = await daily_bonus_contract_bnb_binance
+          .openChest({ ...transactionParameters })
+          // .send({
+          //   from: address,
+          //   ...transactionParameters,
+          // })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            setLoading(false);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "bnb");
+          handleThirdTask(coinbase);
+          setLoading(false);
+          setChestOpened(true);
+          setStep(2);
+          setTimeout(() => {
+            const randomReward =
+              rewardCategories[
+                Math.floor(Math.random() * rewardCategories.length)
+              ];
+            setActivatedReward(randomReward.id);
+          }, 3600);
+
+          if (video) {
+            video.play().catch((err) => console.error("Play failed:", err));
+            setTimeout(() => {
+              video.pause();
+              setStep(3);
+            }, 8000);
+          }
+        }
+      }
+    }
   };
 
   const getRewardGradient = (category) => {
@@ -350,7 +869,6 @@ const Kickstarter = ({
     }, 4000);
 
     const timeout1 = setTimeout(() => {
-      console.log(video);
 
       if (video) {
         video.play().catch((err) => console.error("Play failed:", err));
@@ -359,7 +877,6 @@ const Kickstarter = ({
           video.pause();
           setDisable(false);
           onAddClass(true);
-          console.log("Hello");
         }, 6200);
 
         return () => clearTimeout(pauseTimeout);
@@ -561,7 +1078,7 @@ const Kickstarter = ({
                 </motion.h1>
               </motion.div>
             </motion.div> */}
-            {activatedReward !== null && (
+            {rewards?.rewardType !== null && (
               <motion.div
                 key={rewardCategories[0].id}
                 initial={{ opacity: 0, scale: 0, y: 30 }}
@@ -581,7 +1098,6 @@ const Kickstarter = ({
                 {/* Gaming-style tier indicator */}
 
                 {/* Animated scan line for active rewards */}
-                
 
                 <div className="text-center">
                   <motion.span
@@ -601,7 +1117,7 @@ const Kickstarter = ({
                       ease: "easeInOut",
                     }}
                   >
-                    5,265 {rewardCategories[0].name}
+                    {getFormattedNumber(rewards?.reward, 0)} {rewards?.rewardType}
                   </motion.span>
                 </div>
               </motion.div>
@@ -1190,16 +1706,16 @@ const Kickstarter = ({
                               style={{
                                 padding: "6px 12px",
                                 background:
-                                  activatedReward === category.id
+                                  rewards?.rewardType?.toLowerCase() === category.id
                                     ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 50%, rgba(8, 16, 32, 0.8) 100%)"
                                     : "linear-gradient(135deg, rgba(8, 16, 32, 0.8) 0%, rgba(12, 20, 40, 0.6) 50%, rgba(6, 12, 28, 0.4) 100%)",
                                 border:
-                                  activatedReward === category.id
+                                  rewards?.rewardType?.toLowerCase() === category.id
                                     ? "2px solid rgba(59, 130, 246, 0.6)"
                                     : "1px solid rgba(59, 130, 246, 0.25)",
                                 borderRadius: "10px",
                                 boxShadow:
-                                  activatedReward === category.id
+                                  rewards?.rewardType?.toLowerCase() === category.id
                                     ? `0 0 20px ${
                                         category.color.includes("yellow")
                                           ? "#F59E0B"
@@ -1223,14 +1739,14 @@ const Kickstarter = ({
                                 }}
                                 animate={{
                                   opacity:
-                                    activatedReward === category.id
+                                    rewards?.rewardType?.toLowerCase() === category.id
                                       ? [0.6, 1, 0.6]
                                       : 0.4,
                                 }}
                                 transition={{
                                   duration: 1.5,
                                   repeat:
-                                    activatedReward === category.id
+                                    rewards?.rewardType?.toLowerCase() === category.id
                                       ? Infinity
                                       : 0,
                                   ease: "easeInOut",
@@ -1238,7 +1754,7 @@ const Kickstarter = ({
                               />
 
                               {/* Animated scan line for active rewards */}
-                              {activatedReward === category.id && (
+                              {rewards?.rewardType?.toLowerCase() === category.id && (
                                 <motion.div
                                   className="position-absolute top-0 start-0 w-100 h-100"
                                   style={{
@@ -1301,7 +1817,7 @@ const Kickstarter = ({
                                       fontSize: "15px",
                                       fontWeight: "700",
                                       color:
-                                        activatedReward === category.id
+                                        rewards?.rewardType?.toLowerCase() === category.id
                                           ? "rgba(219, 234, 254, 1)"
                                           : "rgba(168, 192, 255, 0.9)",
                                       textShadow: "0 1px 2px rgba(0,0,0,0.3)",
@@ -1309,11 +1825,11 @@ const Kickstarter = ({
                                     }}
                                     animate={{
                                       scale:
-                                        activatedReward === category.id
+                                        rewards?.rewardType?.toLowerCase() === category.id
                                           ? [1, 1.1, 1]
                                           : 1,
                                       color:
-                                        activatedReward === category.id
+                                        rewards?.rewardType?.toLowerCase() === category.id
                                           ? [
                                               "rgba(219, 234, 254, 1)",
                                               "rgba(96, 165, 250, 1)",
@@ -1324,7 +1840,7 @@ const Kickstarter = ({
                                     transition={{
                                       duration: 0.8,
                                       repeat:
-                                        activatedReward === category.id
+                                        rewards?.rewardType?.toLowerCase() === category.id
                                           ? Infinity
                                           : 0,
                                       ease: "easeInOut",
@@ -1654,8 +2170,8 @@ const Kickstarter = ({
                     transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
                   >
                     <button
-                      onClick={handleClaim}
-                      disabled={isClaimLoading || chestOpened || disable}
+                      onClick={handleOpenChest}
+                      disabled={loading || chestOpened || disable}
                       className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden kick-claim-btn d-flex justify-content-center align-items-center"
                       style={{
                         padding: "14px 48px",
@@ -1676,7 +2192,7 @@ const Kickstarter = ({
                         backdropFilter: "blur(10px)",
                         WebkitBackdropFilter: "blur(10px)",
                         transition: "all 0.3s ease",
-                        opacity: isClaimLoading || chestOpened ? 0.9 : 1,
+                        opacity: loading || chestOpened ? 0.9 : 1,
                         textShadow: "0 2px 8px rgba(0,0,0,0.4)",
                         zIndex: 10,
                         width: "276px",
@@ -1717,7 +2233,7 @@ const Kickstarter = ({
                         }}
                       />
 
-                      {isClaimLoading ? (
+                      {loading ? (
                         <div className="d-flex align-items-center gap-3">
                           <motion.div
                             animate={{ rotate: 360 }}

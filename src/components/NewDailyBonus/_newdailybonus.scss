@@ -623,12 +623,8 @@
   background-color: #007782;
   
   .new-claim-chest-btn {
-    border: 1px solid #cdb900;
-    background: linear-gradient(92deg,
-        #cda700 0%,
-        #d6c800 33.5%,
-        #d6c100 68%,
-        #cdb900 100%);
+    border: 2px solid #007782;
+    background: linear-gradient(92deg, #21b8c6 0%, #0c9ca9 33.5%, #239fab 68%, #007782 100%);
     color: #022722;
   }
 }
@@ -647,11 +643,12 @@
   }
 }
 .new-chest-item-open-premium:hover {
-  // border: 2px solid #00b9cd !important;
+  border: 2px solid #00b9cd !important;
   filter: drop-shadow(0 0 6px #00b9cd) !important;
 
   .new-claim-chest-btn {
     border: 2px solid #00b9cd !important;
+        background: linear-gradient(92deg, #21b8c6 0%, #0c9ca9 33.5%, #239fab 68%, #007782 100%);
   }
 }
 
