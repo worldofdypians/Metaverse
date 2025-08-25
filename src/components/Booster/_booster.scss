@@ -55,7 +55,7 @@
 }
 
 .booster-status-loser {
-  color: #F3BF09;
+  color: #f3bf09;
   font-family: "Montserrat";
   font-size: 13px;
   font-style: normal;
@@ -70,9 +70,9 @@
   background: #4f46e5;
 }
 
-.boost-rank-yellow {
+.boost-rank-gray {
   border-radius: 8px;
-  background: #f3bf09;
+  background: #737169;
 }
 
 .booster-rank-text-dark {
@@ -88,18 +88,26 @@
 .boost-winner-wrapper {
   border-radius: 12px;
   background: rgba(92, 228, 255, 0.1);
+  min-height: 82px;
+  align-items: center;
+  display: flex;
 }
 
 .boost-loser-wrapper {
   border-radius: 12px;
   background: rgba(243, 191, 9, 0.1);
+  min-height: 82px;
+  align-items: center;
+  display: flex;
 }
 
 .boost-neutral-wrapper {
   border-radius: 12px;
   background: rgba(43, 127, 255, 0.1);
+  min-height: 82px;
+  align-items: center;
+  display: flex;
 }
-
 
 .booster-popup {
   background: #0f1239 !important;
@@ -122,7 +130,9 @@
   font-style: normal;
   font-weight: 500;
   line-height: 18px;
-  /* 180% */
+    @media screen and (max-width: 500px) {
+    font-size: 11px;
+  }
 }
 
 .booster-loser-title {
@@ -141,12 +151,13 @@
   font-style: normal;
   font-weight: 500;
   line-height: 18px;
-  /* 180% */
+   @media screen and (max-width: 500px) {
+    font-size: 11px;
+  }
 }
 
-
 .booster-neutral-title {
-  color: #E8E9F3;
+  color: #e8e9f3;
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
@@ -155,13 +166,15 @@
 }
 
 .booster-neutral-desc {
-  color: #9CA3C4;
+  color: #9ca3c4;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: 18px;
-  /* 180% */
+    @media screen and (max-width: 500px) {
+    font-size: 11px;
+  }
 }
 
 .selection-time {

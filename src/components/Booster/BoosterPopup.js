@@ -3,6 +3,8 @@ import "./_booster.scss";
 import { useEffect, useState } from "react";
 import "../Kickstarter/components/kickstarter_newcss.scss";
 import Switch from "@mui/material/Switch";
+import { styled } from "@mui/material/styles";
+
 const renderer = ({ days, hours, minutes }) => {
   return (
     <div className="d-flex align-items-center gap-1 justify-content-center">
@@ -25,6 +27,53 @@ const renderer = ({ days, hours, minutes }) => {
     </div>
   );
 };
+
+const AntSwitch = styled(Switch)(({ theme }) => ({
+  width: 28,
+  height: 16,
+  padding: 0,
+  display: "flex",
+  "&:active": {
+    "& .MuiSwitch-thumb": {
+      width: 15,
+    },
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      transform: "translateX(9px)",
+    },
+  },
+  "& .MuiSwitch-switchBase": {
+    padding: 2,
+    "&.Mui-checked": {
+      transform: "translateX(12px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        opacity: 1,
+        backgroundColor: "#1890ff",
+        ...theme.applyStyles("dark", {
+          backgroundColor: "#177ddc",
+        }),
+      },
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    boxShadow: "0 2px 4px 0 rgb(0 35 11 / 20%)",
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    transition: theme.transitions.create(["width"], {
+      duration: 200,
+    }),
+  },
+  "& .MuiSwitch-track": {
+    borderRadius: 16 / 2,
+    opacity: 1,
+    backgroundColor: "rgba(0,0,0,.25)",
+    boxSizing: "border-box",
+    ...theme.applyStyles("dark", {
+      backgroundColor: "#2a2f5a",
+    }),
+  },
+}));
 
 const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
   const nextSelectionDate = new Date("2025-12-13T14:00:00.000+02:00");
@@ -103,7 +152,8 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
       </div>
       <span className="booster-title">Booster 1001</span>
       <span className="booster-desc text-center">
-        Special monthly rewards for players outside the top 100
+        Special monthly rewards for players outside the top 100 global
+        leaderboard
       </span>
       <div className="d-flex flex-column gap-3 rewardstable-wrapper3 px-3 px-lg-0">
         <div className="">
@@ -229,19 +279,35 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
         <div className="trading-comp-divider"></div>
         <div className="p-4 rounded-2xl bordertw border-white/20">
           <div className="d-flex flex-column gap-3">
-            <div className="d-flex align-items-center gap-3 justify-content-start">
-              <span className="booster-list-title">{displayMonth} Status</span>
-              {displayStatus === "" && (
+            <div className="d-flex align-items-center gap-2 justify-content-between">
+              <div className="d-flex align-items-center gap-3 justify-content-start">
+                <span className="booster-list-title">{displayMonth}</span>
+                {/* {displayStatus === "" && (
+                  <div
+                    variant="outline"
+                    className="inline-flex items-center justify-center rounded-md bordertw px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 bg-blue-500/10 text-blue-400 border-blue-500/30"
+                  >
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/ongoingClock.svg"
+                      alt=""
+                      className="w-3 h-3 mr-1"
+                    />
+                    Ongoing
+                  </div>
+                )} */}
+              </div>
+              {currentMonth !== "September" && (
                 <div
-                  variant="outline"
-                  className="inline-flex items-center justify-center rounded-md bordertw px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 bg-blue-500/10 text-blue-400 border-blue-500/30"
+                  className={`optionsWrapper3 w-fit boost-rank-wrapper p-2 d-flex align-items-center justify-content-between gap-2`}
                 >
-                  <img
-                    src="https://cdn.worldofdypians.com/wod/ongoingClock.svg"
-                    alt=""
-                    className="w-3 h-3 mr-1"
+                  <div className="flex items-center gap-2">
+                    <span className="viewWinners">Previous</span>
+                  </div>
+                  <AntSwitch
+                    onChange={() => {
+                      setShowPreviousMonth(!showPreviousMonth);
+                    }}
                   />
-                  Ongoing
                 </div>
               )}
             </div>
@@ -251,9 +317,9 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
               </span>
               <div
                 className={`d-flex px-3 justify-content-center align-items-center ${
-                  userDataStar > 100 && userDataStar > 0
+                  !showPreviousMonth
                     ? " boost-rank"
-                    : "boost-rank-yellow"
+                    : "boost-rank-gray"
                 }`}
               >
                 <span
@@ -263,13 +329,13 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
                       : "booster-rank-text-dark"
                   }`}
                 >
-                  #{displayRank === 0 ? "---" : displayRank}
+                  {displayRank === 0 ? "No rank" : "#" + displayRank}
                 </span>
               </div>
             </div>
             {isEligible && displayIsWinner && displayStatus === "completed" ? (
               <div className="p-3 boost-winner-wrapper">
-                <div className="d-flex align-items-center gap-3 flex-column flex-lg-row">
+                <div className="d-flex align-items-center gap-3">
                   <h3>🎉</h3>
                   <div className="d-flex flex-column">
                     <span className="booster-winner-title">
@@ -285,7 +351,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
               !displayIsWinner &&
               displayStatus === "completed" ? (
               <div className="p-3 boost-loser-wrapper">
-                <div className="d-flex align-items-center gap-3 flex-column flex-lg-row">
+                <div className="d-flex align-items-center gap-3">
                   <h3>🎁</h3>
                   <div className="d-flex flex-column">
                     <span className="booster-loser-title">
@@ -300,7 +366,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
               </div>
             ) : displayStatus === "ongoing" ? (
               <div className="p-3 boost-neutral-wrapper">
-                <div className="d-flex align-items-center gap-3 flex-column flex-lg-row">
+                <div className="d-flex align-items-center gap-3">
                   <img
                     src="https://cdn.worldofdypians.com/wod/ongoingClock.svg"
                     alt=""
@@ -311,15 +377,34 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
                       Selection In Progress
                     </span>
                     <span className="booster-neutral-desc">
-                      Winners will be announced within 10 days. Good luck!
+                      Winners and the rewards will be announced within 10 days.
+                      Good luck!
                     </span>
                   </div>
                 </div>
               </div>
-            ) : null}
+            ) : (
+              <div className="p-3 boost-neutral-wrapper">
+                <div className="d-flex align-items-center gap-3">
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/ongoingClock.svg"
+                    alt=""
+                    className="w-7 h-7 mr-1"
+                  />
+                  <div className="d-flex flex-column">
+                    <span className="booster-neutral-title">
+                      Ongoing Competition
+                    </span>
+                    <span className="booster-neutral-desc">
+                      The competition is in progress until the end of the month.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-        {currentMonth !== "September" && (
+        {/* {currentMonth !== "September" && (
           <div
             className={`optionsWrapper2 boost-rank-wrapper p-2 d-flex align-items-center justify-content-between gap-2`}
           >
@@ -332,7 +417,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
               }}
             />
           </div>
-        )}
+        )} */}
         {/* <div className="p-4  boost-rank-wrapper">
           <div className="d-flex flex-column flex-lg-row align-items-center gap-3 justify-content-lg-between justify-content-center">
             <span className="booster-list-title">Next Selection in</span>
