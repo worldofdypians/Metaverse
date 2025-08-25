@@ -44,7 +44,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
     year: undefined,
   });
 
-  const previousDate2 = new Date(currentDate);
+  const previousDate2 = new Date(previousDate);
   previousDate2.setMonth(previousDate2.getMonth() - 1);
   const previousMonth2 = previousDate2.toLocaleString("default", {
     month: "long",
@@ -62,8 +62,10 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
   // Use current or previous month data based on toggle
   const displayRank = showPreviousMonth
     ? utcDate < cutoffDate || (isAfterCutoff && utcDate === 1)
-      ? 0
+      ? 101 //userPreviousDataStar2
       : 200 //userPreviousDataStar
+    : utcDate < cutoffDate || (isAfterCutoff && utcDate === 1)
+    ? 200 //userPreviousDataStar
     : userDataStar;
   const displayIsWinner = showPreviousMonth ? previousIsWinner : isWinner;
   const displayRewardAmount = showPreviousMonth ? "40 WOD" : "40 WOD";
@@ -71,6 +73,8 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
     ? utcDate < cutoffDate || (isAfterCutoff && utcDate === 1)
       ? previousMonth2
       : previousMonth
+    : utcDate < cutoffDate || (isAfterCutoff && utcDate === 1)
+    ? previousMonth
     : currentMonth;
   const displayStatus = showPreviousMonth
     ? "completed"
@@ -227,7 +231,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
           <div className="d-flex flex-column gap-3">
             <div className="d-flex align-items-center gap-3 justify-content-start">
               <span className="booster-list-title">{displayMonth} Status</span>
-              {displayStatus === "ongoing" && (
+              {displayStatus === "" && (
                 <div
                   variant="outline"
                   className="inline-flex items-center justify-center rounded-md bordertw px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 bg-blue-500/10 text-blue-400 border-blue-500/30"
@@ -259,7 +263,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
                       : "booster-rank-text-dark"
                   }`}
                 >
-                  #{userDataStar === 0 ? "---" : userDataStar}
+                  #{displayRank === 0 ? "---" : displayRank}
                 </span>
               </div>
             </div>
@@ -315,7 +319,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
             ) : null}
           </div>
         </div>
-        {currentMonth !== "September"  && (
+        {currentMonth !== "September" && (
           <div
             className={`optionsWrapper2 boost-rank-wrapper p-2 d-flex align-items-center justify-content-between gap-2`}
           >
