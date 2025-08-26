@@ -950,8 +950,8 @@ const Kickstarter = ({
         });
       }, time);
     }
-  }, [openedRoyaltyChest, count]);
-  console.log(rewards, activatedReward);
+  }, [openedRoyaltyChest]);
+
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column justify-content-between align-items-center">

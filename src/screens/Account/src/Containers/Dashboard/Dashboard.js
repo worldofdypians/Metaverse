@@ -185,7 +185,7 @@ function Dashboard({
   teaEarnUsd,
   openKickstarter,
   royaltyCount,
-  onOpenRoyaltyChest
+  onOpenRoyaltyChest,
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -3219,7 +3219,7 @@ function Dashboard({
       setStarRecordsWeekly(result.data.data.leaderboard);
       fillRecordsStarWeekly(result.data.data.leaderboard);
 
-      if (userId && username) {
+      if (userId && username && result.data.data.leaderboard) {
         if (userId && username) {
           var testArray = result.data.data.leaderboard.filter(
             (item) => item.displayName === username
@@ -6508,7 +6508,13 @@ function Dashboard({
     if (hashValue === "#prime") {
       navigate("/account/prime");
     }
+
+    if (hashValue === "#global-leaderboard") {
+      fetchRecordsStarWeekly();
+      setleaderboardBtn("weekly");
+    }
   }, [hashValue]);
+
   // console.log(userPreviousDataStar);
   return (
     <div
@@ -7373,9 +7379,13 @@ function Dashboard({
           />
         )}
 
-        {genesisLeaderboard && (
+        {(genesisLeaderboard ||
+          hashValue === "#great-collection-leaderboard") && (
           <OutsideClickHandler
-            onOutsideClick={() => setGenesisLeaderboard(false)}
+            onOutsideClick={() => {
+              setGenesisLeaderboard(false);
+              window.location.hash = "";
+            }}
           >
             <div
               className="popup-wrapper leaderboard-popup popup-active p-3"
@@ -7393,7 +7403,10 @@ function Dashboard({
               >
                 <img
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                  onClick={() => setGenesisLeaderboard(false)}
+                  onClick={() => {
+                    setGenesisLeaderboard(false);
+                    window.location.hash = "";
+                  }}
                   alt=""
                   style={{ cursor: "pointer" }}
                 />
@@ -7412,11 +7425,12 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
-        {globalLeaderboard && (
+        {(globalLeaderboard || hashValue === "#global-leaderboard") && (
           <OutsideClickHandler
             onOutsideClick={() => {
               setGlobalLeaderboard(false);
               handleResetRecordsStars();
+              window.location.hash = "";
             }}
           >
             <div
@@ -7441,6 +7455,7 @@ function Dashboard({
                   onClick={() => {
                     setGlobalLeaderboard(false);
                     handleResetRecordsStars();
+                    window.location.hash = "";
                   }}
                   alt=""
                   style={{ cursor: "pointer" }}
@@ -7491,10 +7506,11 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {booster && (
+        {(booster || hashValue === "#booster-1001") && (
           <OutsideClickHandler
             onOutsideClick={() => {
               setBooster(false);
+              window.location.hash = "";
             }}
           >
             <div className="popup-wrapper booster-popup popup-active p-3">
@@ -7503,6 +7519,7 @@ function Dashboard({
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => {
                     setBooster(false);
+                    window.location.hash = "";
                   }}
                   alt=""
                   style={{ cursor: "pointer" }}
@@ -7530,11 +7547,14 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {(goldenPassPopup || eventId === "golden-pass") && (
+        {(goldenPassPopup ||
+          eventId === "golden-pass" ||
+          hashValue === "#golden-pass") && (
           <GoldenPassPopup
             onClosePopup={() => {
               setgoldenPassPopup(false);
               handleClosePopup();
+              window.location.hash = "";
             }}
             isConnected={isConnected}
             coinbase={coinbase}
@@ -7548,8 +7568,13 @@ function Dashboard({
           />
         )}
 
-        {myRewardsPopup && (
-          <OutsideClickHandler onOutsideClick={() => setmyRewardsPopup(false)}>
+        {(myRewardsPopup || hashValue === "#my-rewards") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setmyRewardsPopup(false);
+              window.location.hash = "";
+            }}
+          >
             <div
               className="popup-wrapper popup-active p-4"
               id="leaderboard"
@@ -7567,7 +7592,10 @@ function Dashboard({
                 </h2>
                 <img
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                  onClick={() => setmyRewardsPopup(false)}
+                  onClick={() => {
+                    setmyRewardsPopup(false);
+                    window.location.hash = "";
+                  }}
                   alt=""
                   style={{ cursor: "pointer" }}
                 />
@@ -7637,7 +7665,7 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {showDailyQuestion && (
+        {(showDailyQuestion || hashValue === "#daily-question") && (
           // <OutsideClickHandler
           //   onOutsideClick={() => setShowDailyQuestion(false)}
           // >
@@ -7787,7 +7815,7 @@ function Dashboard({
                                   <span
                                     className={"ai-rewards-title-active ps-3"}
                                   >
-                                    $5-$10 Rewards
+                                    $1-$5
                                   </span>
                                 </div>
                               </div>
@@ -7808,6 +7836,7 @@ function Dashboard({
                         clockSoundRef.current?.pause();
                         clockSoundRef.current.currentTime = 0;
                         html.classList.remove("hidescroll");
+                        window.location.hash = "";
                       } else {
                         setClosePopup(true);
                       }
@@ -7885,8 +7914,13 @@ function Dashboard({
             />
           </OutsideClickHandler>
         )}
-        {portfolio && (
-          <OutsideClickHandler onOutsideClick={() => setPortfolio(false)}>
+        {(portfolio || hashValue === "#portfolio") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setPortfolio(false);
+              window.location.hash = "";
+            }}
+          >
             <div
               className="popup-wrapper  popup-active p-3"
               id="portfolio"
@@ -7902,7 +7936,10 @@ function Dashboard({
 
                 <img
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                  onClick={() => setPortfolio(false)}
+                  onClick={() => {
+                    setPortfolio(false);
+                    window.location.hash = "";
+                  }}
                   alt=""
                   style={{ cursor: "pointer" }}
                 />
@@ -7972,9 +8009,12 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {specialRewardsPopup && (
+        {(specialRewardsPopup || hashValue === "#special-rewards") && (
           <OutsideClickHandler
-            onOutsideClick={() => setSpecialRewardsPopup(false)}
+            onOutsideClick={() => {
+              setSpecialRewardsPopup(false);
+              window.location.hash = "";
+            }}
           >
             <div
               className="popup-wrapper popup-active p-3"
@@ -7986,7 +8026,10 @@ function Dashboard({
                     <img
                       src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                       style={{ cursor: "pointer" }}
-                      onClick={() => setSpecialRewardsPopup(false)}
+                      onClick={() => {
+                        setSpecialRewardsPopup(false);
+                        window.location.hash = "";
+                      }}
                       alt=""
                     />
                   </div>
@@ -8025,7 +8068,10 @@ function Dashboard({
                     <img
                       src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                       style={{ cursor: "pointer" }}
-                      onClick={() => setSpecialRewardsPopup(false)}
+                      onClick={() => {
+                        setSpecialRewardsPopup(false);
+                        window.location.hash = "";
+                      }}
                       alt=""
                     />
                   </div>

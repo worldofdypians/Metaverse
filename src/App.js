@@ -6192,7 +6192,7 @@ function App() {
   //     setCoinbase();
   //   }
   // }, [address, window.WALLET_TYPE]);
-
+  const hashValue = window.location.hash;
   return (
     <>
       <div
@@ -8514,32 +8514,38 @@ function App() {
       )}
 
       {fireAppcontent === true && <AppContent />}
-      {kickstarter && (
-        <Kickstarter
-          publicClient={publicClient}
-          onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
-          walletClient={walletClient}
-          binanceW3WProvider={library}
-          onClose={() => {
-            setKickstarter(false);
-            html.classList.remove("hidescroll");
-          }}
-          isOpen={kickstarter}
-          coinbase={coinbase}
-          chainId={networkId}
-          handleSwitchNetwork={handleSwitchNetwork}
-          isConnected={isConnected}
-          email={email}
-          address={gameAccount}
-          onConnectWallet={() => {
-            setwalletModal(true);
-          }}
-          onAddClass={(value) => {
-            setKickstarterAddClass(value);
-          }}
-          openedRoyaltyChest={openedRoyaltyChest}
-        />
-      )}
+      {(kickstarter || hashValue === "#royalty-chest") &&
+        window.location.pathname === "/account" && (
+          <Kickstarter
+            publicClient={publicClient}
+            onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
+            walletClient={walletClient}
+            binanceW3WProvider={library}
+            onClose={() => {
+              setKickstarter(false);
+              html.classList.remove("hidescroll");
+              window.location.hash = "";
+            }}
+            isOpen={
+              kickstarter ||
+              (hashValue === "#royalty-chest" &&
+                window.location.pathname === "/account")
+            }
+            coinbase={coinbase}
+            chainId={networkId}
+            handleSwitchNetwork={handleSwitchNetwork}
+            isConnected={isConnected}
+            email={email}
+            address={gameAccount}
+            onConnectWallet={() => {
+              setwalletModal(true);
+            }}
+            onAddClass={(value) => {
+              setKickstarterAddClass(value);
+            }}
+            openedRoyaltyChest={openedRoyaltyChest}
+          />
+        )}
     </>
   );
 }
