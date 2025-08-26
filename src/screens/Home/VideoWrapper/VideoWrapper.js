@@ -41,6 +41,11 @@ const VideoWrapper = ({
 
   const exchanges = [
     {
+      title: "Binance Alpha",
+      logo: "binance-alpha.png",
+      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+    },
+    {
       title: "Kucoin",
       logo: "kucoinBuyWod.svg",
       link: "https://www.kucoin.com/trade/WOD-USDT",
