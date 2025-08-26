@@ -185,6 +185,7 @@ function Dashboard({
   teaEarnUsd,
   openKickstarter,
   royaltyCount,
+  onOpenRoyaltyChest
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -5087,18 +5088,17 @@ function Dashboard({
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
+                if (item === 4) {
+                  onOpenRoyaltyChest(chestOrder[item]);
                 }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
               standardChestsArray.push(chestOrder[item]);
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
               premiumChestsArray.push(chestOrder[item]);
             }

@@ -39,7 +39,7 @@ const NewChestItem = ({
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log(chain, "chain");
+ 
 
   const premiumImages = [
     "blueCrystal",

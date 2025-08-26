@@ -487,7 +487,7 @@ function App() {
   const authToken = localStorage.getItem("authToken");
   const [orynPop, setOrynPop] = useState(true);
   const [showWalletModal, setShowWalletModal] = useState(false);
-  const [royaltyCount, setRoyaltyCount] = useState(0)
+  const [royaltyCount, setRoyaltyCount] = useState(0);
   const [betaModal, setBetaModal] = useState(false);
 
   const [totalSupply, setTotalSupply] = useState(0);
@@ -606,6 +606,7 @@ function App() {
 
   const [isPremium, setIsPremium] = useState(false);
   const [premiumOryn, setPremiumOryn] = useState(false);
+  const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
 
   const [domainPopup, setDomainPopup] = useState(false);
   const [kickstarterAddClass, setKickstarterAddClass] = useState(false);
@@ -6790,7 +6791,10 @@ function App() {
             path="/account"
             element={
               <Dashboard
-              royaltyCount={royaltyCount}
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
                 isEOA={isEOA}
                 wodBalance={wodBalance}
                 authToken={authToken}
@@ -6893,7 +6897,10 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
-              royaltyCount={royaltyCount}
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
                 openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
@@ -7481,7 +7488,10 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
-              royaltyCount={royaltyCount}
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
                 openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
@@ -8527,6 +8537,7 @@ function App() {
           onAddClass={(value) => {
             setKickstarterAddClass(value);
           }}
+          openedRoyaltyChest={openedRoyaltyChest}
         />
       )}
     </>
