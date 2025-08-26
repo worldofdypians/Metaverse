@@ -1079,7 +1079,7 @@ const AIQuestion = ({
                               );
                             }).reward +
                             " Reward"
-                          : "$5-$10 Rewards"}
+                          : "$1-$5"}
                       </span>
                     </div>
                   </div>
