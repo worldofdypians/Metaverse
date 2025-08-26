@@ -497,9 +497,6 @@ const AIQuestion = ({
         setSelectedAnswer(correctAnswer);
         new Audio(successSound).play();
         setAvatarState("correct");
-        const timer = setTimeout(() => {
-          setAvatarState("idle");
-        }, 5040);
 
         onQuestionComplete(true);
         // const resetTimer = setTimeout(() => {
@@ -511,11 +508,6 @@ const AIQuestion = ({
         //   setTimeLeft(totalTime);
         //   setOptionsClickable(false);
         // }, 10000);
-
-        return () => {
-          clearTimeout(timer);
-          // clearTimeout(resetTimer);
-        };
       }
     }
   };
@@ -604,13 +596,13 @@ const AIQuestion = ({
       new Audio(timerEndedSound).play();
       setAvatarState("time");
       onQuestionComplete(true);
-      const timer = setTimeout(() => {
-        setAvatarState("idle");
-      }, 5040);
+      // const timer = setTimeout(() => {
+      //   setAvatarState("idle");
+      // }, 5040);
 
-      return () => {
-        clearTimeout(timer);
-      };
+      // return () => {
+      //   clearTimeout(timer);
+      // };
     }
   };
 
@@ -930,7 +922,7 @@ const AIQuestion = ({
                             : "ai-rewards-title ps-3"
                         }
                       >
-                        {questionRewards.find((item) => {
+                        {/* {questionRewards.find((item) => {
                           return item.rewardType === "Stars";
                         }) !== undefined && step === 1
                           ? getFormattedNumber(
@@ -939,8 +931,8 @@ const AIQuestion = ({
                               }).reward,
                               0
                             )
-                          : "Up to 100 - 500"}{" "}
-                        Stars
+                          : "Up to 100 - 500"}{" "} */}
+                        Up to 100 - 500 Stars
                       </span>
                     </div>
                   </div>
@@ -995,7 +987,7 @@ const AIQuestion = ({
                             : "ai-rewards-title ps-3"
                         }
                       >
-                        {questionRewards.find((item) => {
+                        {/* {questionRewards.find((item) => {
                           return item.rewardType === "Points";
                         }) !== undefined && step === 1
                           ? getFormattedNumber(
@@ -1004,8 +996,8 @@ const AIQuestion = ({
                               }).reward,
                               0
                             )
-                          : "Up to 10,000 - 30,000"}{" "}
-                        Points
+                          : "Up to 10,000 - 30,000"}{" "} */}
+                        Up to 10,000 - 30,000 Points
                       </span>
                     </div>
                   </div>
@@ -1065,7 +1057,7 @@ const AIQuestion = ({
                         }
                       >
                         {" "}
-                        {questionRewards.find((item) => {
+                        {/* {questionRewards.find((item) => {
                           return (
                             item.rewardType === "Money" &&
                             item.status === "Claimed"
@@ -1077,9 +1069,9 @@ const AIQuestion = ({
                                 item.rewardType === "Money" &&
                                 item.status === "Claimed"
                               );
-                            }).reward +
-                            " Reward"
-                          : "Up to $5 - $300"}
+                            }).reward
+                          : "Up to $5 - $300"} */}
+                        Up to $5 - $300
                       </span>
                     </div>
                   </div>
@@ -1496,6 +1488,9 @@ const AIQuestion = ({
                                   obj.rewardType === "Money" ? 2 : 0
                                 )}{" "}
                                 {obj.rewardType !== "Money" && obj.rewardType}
+                                {questionRewards.length > 1 &&
+                                  index < questionRewards.length - 1 &&
+                                  " + "}
                               </span>
                             );
                           })}
