@@ -175,6 +175,7 @@ const MyProfile = ({
   aiQuestionCompleted,
   onDailyQuestionClick,
   openKickstarter,
+  onOpenBooster,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -1752,7 +1753,31 @@ const MyProfile = ({
                 </div>
               </div>
 
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
+              <div
+                className="col-12 col-lg-4 mt-3 px-0 px-lg-2"
+                onClick={onOpenBooster}
+              >
+                <div className="booster-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                  <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
+                    <div className="d-flex align-items-center gap-2">
+                      {/* <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                          }
+                          alt=""
+                          style={{ width: 44, height: 44 }}
+                        /> */}
+                      <div className="d-flex flex-column">
+                        <span className="user-blue-rank-2">Booster 1001</span>
+                        <span className="user-rank-text-2">September Rank</span>
+                      </div>
+                    </div>
+
+                    <button className="activate-btn px-3 py-1">View</button>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <NavLink to="/loyalty-program">
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
@@ -1785,7 +1810,7 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <div
                   className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
                   style={{ height: "60px" }}

@@ -999,6 +999,16 @@
   cursor: pointer;
 }
 
+.booster-wrapper2 {
+  background-image: url("https://cdn.worldofdypians.com/wod/boosterBg.webp");
+  border-radius: 12px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all .25s;
+  cursor: pointer;
+}
+
 .ai-question-banner {
   background-image: url("https://cdn.worldofdypians.com/wod/aiQuestionBanner2.svg");
   border-radius: 12px;
@@ -1038,7 +1048,7 @@
 }
 
 .golden-pass-wrapper2:hover,
-.ai-question-banner:hover {
+.ai-question-banner:hover, .booster-wrapper2:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
 
