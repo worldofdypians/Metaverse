@@ -9,6 +9,7 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import royaltyChestIdle from './assets/royaltyChestIdle.webp'
 
 const rewardCategories = [
   {
@@ -221,7 +222,7 @@ const Kickstarter = ({
         //   handleSecondTask(coinbase);
         // }
         onClaimRewards(result.data);
-        console.log(result.data);
+
         setTimeout(() => {
           setRewards({
             rewardType: result.data.rewards[0].rewardType,
@@ -879,32 +880,52 @@ const Kickstarter = ({
       setCount(1);
     }
 
+    var time;
+
+    if(openedRoyaltyChest && openedRoyaltyChest.isOpened === true){
+      time = 0;
+    }else{
+      time = 4000;
+    }
+
+
+
     // window.scrollTo(0, 0);
     const video = videoRef1.current;
 
     setTimeout(() => {
       setShowContent(true);
-    }, 4000);
+    }, time);
 
-    const timeout1 = setTimeout(() => {
-      if (video) {
-        video.play().catch((err) => console.error("Play failed:", err));
+    if (!openedRoyaltyChest && openedRoyaltyChest.isOpened === false) {
+      const timeout1 = setTimeout(() => {
+        if (video) {
+          video.play().catch((err) => console.error("Play failed:", err));
 
-        const pauseTimeout = setTimeout(() => {
-          video.pause();
-          setDisable(false);
-          onAddClass(true);
-        }, 6200);
+          const pauseTimeout = setTimeout(() => {
+            video.pause();
+            setDisable(false);
+            onAddClass(true);
+          }, 6200);
 
-        return () => clearTimeout(pauseTimeout);
-      }
-    }, 1500);
+          return () => clearTimeout(pauseTimeout);
+        }
+      }, 1500);
 
-    return () => clearTimeout(timeout1);
+      return () => clearTimeout(timeout1);
+    }
   }, [count]);
 
   useEffect(() => {
     if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
+        var time;
+
+    if(openedRoyaltyChest && openedRoyaltyChest.isOpened === true){
+      time = 0;
+    }else{
+      time = 3600;
+    }
+      
       setChestOpened(true);
       setStep(3);
       const video = videoRef2.current;
@@ -927,9 +948,10 @@ const Kickstarter = ({
           rewardType: openedRoyaltyChest.rewards[0].rewardType,
           reward: openedRoyaltyChest.rewards[0].reward,
         });
-      }, 3600);
+      }, time);
     }
   }, [openedRoyaltyChest]);
+
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column justify-content-between align-items-center">
@@ -944,6 +966,10 @@ const Kickstarter = ({
           }}
         />
 
+      {openedRoyaltyChest &&  openedRoyaltyChest.isOpened === true ? 
+      <img src={royaltyChestIdle} className="kickstarter-video visible" alt="" />
+      :
+       <>
         {windowSize.width && windowSize.width > 700 ? (
           <>
             {/* VIDEO ONE (Intro) */}
@@ -995,7 +1021,9 @@ const Kickstarter = ({
         ) : (
           <></>
         )}
-
+       </>
+  
+    }
         {showContent && (
           <>
             {/* <div className="d-flex flex-column gap-1 switch-chain-position switch-info-container p-3">
