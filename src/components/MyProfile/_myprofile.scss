@@ -285,14 +285,11 @@
 
 
 .question-of-the-day-title{
- font-family: 'Bowlby One SC', sans-serif;
-    font-size: 16px;
-  color: #ffdf83; /* White text */
-  text-shadow: 
-    -1px -1px 0 #471f06,  
-     1px -1px 0 #471f06,
-    -1px  1px 0 #471f06,
-     1px  1px 0 #471f06; /* Blue outline */
+font-family: "Bowlby One SC", sans-serif;
+  font-size: 16px;
+  color: #fac926; /* White text */
+  text-shadow: -1px -1px 0 #471f06, 1px -1px 0 #471f06, -1px 1px 0 #471f06,
+    1px 1px 0 #471f06; /* Blue outline */
 
 }
 
@@ -628,6 +625,13 @@
   right: 20px;
   bottom: 0;
   width: 28%;
+
+  @media screen and (max-width: 991px) {
+    width: auto;
+    bottom: 0;
+    right: 0;
+    height: inherit;
+  }
 }
 
 .ai-question-img {
@@ -635,10 +639,16 @@
   right: 20px;
   bottom: 0;
   width: 21%;
-
-    @media screen and (max-width: 500px) {
-    width: 16%;
+  filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.7));
+  @media screen and (max-width: 991px) {
+    width: auto;
+    bottom: 0;
+    right: 0;
+    height: inherit;
   }
+  // @media screen and (max-width: 500px) {
+  //   width: 16%;
+  // }
 }
 
 .daily-progress-wrapper {

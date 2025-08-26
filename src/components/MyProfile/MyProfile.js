@@ -22,11 +22,11 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const renderer = ({ hours, minutes }) => {
+const renderer = ({ days, hours, minutes }) => {
   return (
     <div className="d-flex flex-column gap-2 justify-content-center align-items-center ">
       <h6 className="timer-text2 mb-0">
-        {hours}h:{minutes}m
+        {days}d:{hours}h:{minutes}m
       </h6>
       <h6 className="timer-text2 mb-0">Next in</h6>
     </div>
@@ -960,7 +960,10 @@ const MyProfile = ({
                     </div>
                   </div>
                 </NavLink>
-                <div className="wallet-address-wrapper2 p-2 w-100">
+                <div
+                  className="wallet-address-wrapper2 p-2 w-100"
+                  onClick={onGoldenpassClick}
+                >
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex gap-1 align-items-center">
                       <img
@@ -973,17 +976,14 @@ const MyProfile = ({
                       <div className="d-flex flex-column">
                         <span className="user-data-item-left">Golden Pass</span>
                         <span className="user-data-item-left">
-                          {!isgoldenPassActive ? `` : "Activated"}
+                          {/* {!isgoldenPassActive ? `` : "Activated"} */}
                         </span>
                       </div>
                     </div>
 
                     <div className="d-flex">
                       {!isgoldenPassActive ? (
-                        <button
-                          className="activate-btn2 px-3 py-1"
-                          onClick={onGoldenpassClick}
-                        >
+                        <button className="activate-btn2 px-3 py-1">
                           Activate
                         </button>
                       ) : (
@@ -1643,8 +1643,8 @@ const MyProfile = ({
                     )} */}
                     {/* {!aiQuestionCompleted && ( */}
                     <div className={`d-flex flex-column infotips-holder`}>
-                      <div className="d-flex align-items-center gap-1">
-                        <div className="yellow-dot-small"></div>
+                     <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot"></div>
                         <span
                           className="beast-siege-timer"
                           style={{
@@ -1657,7 +1657,7 @@ const MyProfile = ({
                         </span>
                       </div>
                       <div className="d-flex align-items-center gap-1">
-                        <div className="yellow-dot-small"></div>
+                        <div className="yellow-dot"></div>
                         <span
                           className="beast-siege-timer"
                           style={{
@@ -1670,7 +1670,7 @@ const MyProfile = ({
                         </span>
                       </div>
                       <div className="d-flex align-items-center gap-1">
-                        <div className="yellow-dot-small"></div>
+                        <div className="yellow-dot"></div>
                         <span
                           className="beast-siege-timer"
                           style={{
@@ -1698,20 +1698,18 @@ const MyProfile = ({
                             Time Remaining
                           </span>
                         </div>
-                       
                       </>
                     ) : (
                       <>
                         <div className="ready-circle d-flex">
                           <span className="beast-siege-timer">Ready</span>
                         </div>
-                       
                       </>
                     )}
                   </div>
                   <img
                     src={
-                      "https://cdn.worldofdypians.com/wod/wingStormArrow.svg"
+                      "https://cdn.worldofdypians.com/wod/goldArrow.svg"
                     }
                     width={20}
                     height={20}
@@ -1821,7 +1819,7 @@ const MyProfile = ({
                           <span className="user-blue-rank">
                             Loyalty Program
                           </span>
-                          <span className="user-rank-text">Season three</span>
+                          <span className="user-rank-text">Season five</span>
                         </div>
                       </div>
 

@@ -1871,7 +1871,7 @@ const Portfolio = ({
                         PancakeSwap
                       </h6>
                     </a>
-            
+
                     <a
                       href="https://short.trustwallet.com/app-download"
                       target="_blank"
@@ -1918,6 +1918,22 @@ const Portfolio = ({
                           className="buywodimg"
                         />
                         BloFin
+                      </h6>
+                    </a>
+                    <a
+                      href="https://coinrabbit.io/exchange/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/coinrabbit.png"
+                          }
+                          className="buywodimg"
+                        />
+                        CoinRabbit
                       </h6>
                     </a>
                   </div>
