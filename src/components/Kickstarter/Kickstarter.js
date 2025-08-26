@@ -895,7 +895,7 @@ const Kickstarter = ({
       setShowContent(true);
     }, time);
 
-    if (!openedRoyaltyChest && openedRoyaltyChest.isOpened === false) {
+    if (openedRoyaltyChest.length === 0) {
       const timeout1 = setTimeout(() => {
         if (video) {
           video.play().catch((err) => console.error("Play failed:", err));
