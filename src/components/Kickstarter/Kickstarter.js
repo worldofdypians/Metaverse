@@ -9,14 +9,14 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import royaltyChestIdle from './assets/royaltyChestIdle.webp'
+import royaltyChestIdle from "./assets/royaltyChestIdle.webp";
 
 const rewardCategories = [
   {
     id: "Points",
     name: "POINTS",
     icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-    count: "1K-20K",
+    count: "5K-20K",
     color: "from-blue-400 to-purple-500",
     rarity: "COMMON",
     tier: "TIER II",
@@ -25,7 +25,7 @@ const rewardCategories = [
     id: "Stars",
     name: "STARS",
     icon: "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp",
-    count: "5-25",
+    count: "50-350",
     color: "from-yellow-400 to-orange-500",
     rarity: "RARE",
     tier: "TIER I",
@@ -34,7 +34,7 @@ const rewardCategories = [
     id: "Money",
     name: "REWARDS",
     icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp",
-    count: "$1-$10",
+    count: "$51-$200",
     color: "from-purple-500 to-pink-500",
     rarity: "EPIC",
     tier: "TIER III",
@@ -882,13 +882,11 @@ const Kickstarter = ({
 
     var time;
 
-    if(openedRoyaltyChest && openedRoyaltyChest.isOpened === true){
+    if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
       time = 0;
-    }else{
+    } else {
       time = 4000;
     }
-
-
 
     // window.scrollTo(0, 0);
     const video = videoRef1.current;
@@ -897,7 +895,7 @@ const Kickstarter = ({
       setShowContent(true);
     }, time);
 
-    if (!openedRoyaltyChest && openedRoyaltyChest.isOpened === false) {
+    if (openedRoyaltyChest.length === 0) {
       const timeout1 = setTimeout(() => {
         if (video) {
           video.play().catch((err) => console.error("Play failed:", err));
@@ -918,14 +916,14 @@ const Kickstarter = ({
 
   useEffect(() => {
     if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
-        var time;
+      var time;
 
-    if(openedRoyaltyChest && openedRoyaltyChest.isOpened === true){
-      time = 0;
-    }else{
-      time = 3600;
-    }
-      
+      if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
+        time = 0;
+      } else {
+        time = 3600;
+      }
+
       setChestOpened(true);
       setStep(3);
       const video = videoRef2.current;
@@ -966,64 +964,71 @@ const Kickstarter = ({
           }}
         />
 
-      {openedRoyaltyChest &&  openedRoyaltyChest.isOpened === true ? 
-      <img src={royaltyChestIdle} className="kickstarter-video visible" alt="" />
-      :
-       <>
-        {windowSize.width && windowSize.width > 700 ? (
-          <>
-            {/* VIDEO ONE (Intro) */}
-            <video
-              ref={videoRef1}
-              src={"https://cdn.worldofdypians.com/wod/firstPart.mp4"}
-              className={`kickstarter-video ${
-                step === 1 ? "visible" : "hidden"
-              }`}
-              playsInline
-              preload="auto"
-            />
-
-            {/* VIDEO TWO (Reward animation) */}
-            <video
-              ref={videoRef2}
-              src={"https://cdn.worldofdypians.com/wod/secondPart.mp4"}
-              className={`kickstarter-video ${
-                step === 2 || step === 3 ? "visible" : "hidden"
-              }`}
-              playsInline
-              preload="auto"
-            />
-          </>
-        ) : windowSize.width && windowSize.width <= 700 ? (
-          <>
-            {/* VIDEO ONE (Intro) */}
-            <video
-              ref={videoRef1}
-              src={"https://cdn.worldofdypians.com/wod//firstPartMobile.mp4"}
-              className={`kickstarter-video ${
-                step === 1 ? "visible" : "hidden"
-              }`}
-              playsInline
-              preload="auto"
-            />
-
-            {/* VIDEO TWO (Reward animation) */}
-            <video
-              ref={videoRef2}
-              src={"https://cdn.worldofdypians.com/wod/secondPartMobile.mp4"}
-              className={`kickstarter-video ${
-                step === 2 || step === 3 ? "visible" : "hidden"
-              }`}
-              playsInline
-              preload="auto"
-            />
-          </>
+        {openedRoyaltyChest && openedRoyaltyChest.isOpened === true ? (
+          <img
+            src={royaltyChestIdle}
+            className="kickstarter-video visible"
+            alt=""
+          />
         ) : (
-          <></>
+          <>
+            {windowSize.width && windowSize.width > 700 ? (
+              <>
+                {/* VIDEO ONE (Intro) */}
+                <video
+                  ref={videoRef1}
+                  src={"https://cdn.worldofdypians.com/wod/firstPart.mp4"}
+                  className={`kickstarter-video ${
+                    step === 1 ? "visible" : "hidden"
+                  }`}
+                  playsInline
+                  preload="auto"
+                />
+
+                {/* VIDEO TWO (Reward animation) */}
+                <video
+                  ref={videoRef2}
+                  src={"https://cdn.worldofdypians.com/wod/secondPart.mp4"}
+                  className={`kickstarter-video ${
+                    step === 2 || step === 3 ? "visible" : "hidden"
+                  }`}
+                  playsInline
+                  preload="auto"
+                />
+              </>
+            ) : windowSize.width && windowSize.width <= 700 ? (
+              <>
+                {/* VIDEO ONE (Intro) */}
+                <video
+                  ref={videoRef1}
+                  src={
+                    "https://cdn.worldofdypians.com/wod//firstPartMobile.mp4"
+                  }
+                  className={`kickstarter-video ${
+                    step === 1 ? "visible" : "hidden"
+                  }`}
+                  playsInline
+                  preload="auto"
+                />
+
+                {/* VIDEO TWO (Reward animation) */}
+                <video
+                  ref={videoRef2}
+                  src={
+                    "https://cdn.worldofdypians.com/wod/secondPartMobile.mp4"
+                  }
+                  className={`kickstarter-video ${
+                    step === 2 || step === 3 ? "visible" : "hidden"
+                  }`}
+                  playsInline
+                  preload="auto"
+                />
+              </>
+            ) : (
+              <></>
+            )}
+          </>
         )}
-       </>
-  
-    }
         {showContent && (
           <>
             {/* <div className="d-flex flex-column gap-1 switch-chain-position switch-info-container p-3">
@@ -1889,48 +1894,58 @@ const Kickstarter = ({
                                 </div>
 
                                 {/* Count display */}
-                                <div className="text-end">
-                                  <motion.span
-                                    className="d-block"
+                                <div className="d-flex flex-column">
+                                  <span
+                                    className="text-end text-sm"
                                     style={{
-                                      fontSize: "15px",
-                                      fontWeight: "700",
-                                      color:
-                                        rewards?.rewardType?.toLowerCase() ===
-                                        category.id
-                                          ? "rgba(219, 234, 254, 1)"
-                                          : "rgba(168, 192, 255, 0.9)",
-                                      textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                                      letterSpacing: "0.025em",
-                                    }}
-                                    animate={{
-                                      scale:
-                                        rewards?.rewardType?.toLowerCase() ===
-                                        category.id.toLowerCase()
-                                          ? [1, 1.1, 1]
-                                          : 1,
-                                      color:
-                                        rewards?.rewardType?.toLowerCase() ===
-                                        category.id.toLowerCase()
-                                          ? [
-                                              "rgba(219, 234, 254, 1)",
-                                              "rgba(96, 165, 250, 1)",
-                                              "rgba(219, 234, 254, 1)",
-                                            ]
-                                          : "rgba(168, 192, 255, 0.9)",
-                                    }}
-                                    transition={{
-                                      duration: 0.8,
-                                      repeat:
-                                        rewards?.rewardType?.toLowerCase() ===
-                                        category.id.toLowerCase()
-                                          ? Infinity
-                                          : 0,
-                                      ease: "easeInOut",
+                                      color: "rgba(168, 192, 255, 0.7)",
                                     }}
                                   >
-                                    {category.count}
-                                  </motion.span>
+                                    Up to
+                                  </span>
+                                  <div className="text-end">
+                                    <motion.span
+                                      className="d-block"
+                                      style={{
+                                        fontSize: "15px",
+                                        fontWeight: "700",
+                                        color:
+                                          rewards?.rewardType?.toLowerCase() ===
+                                          category.id
+                                            ? "rgba(219, 234, 254, 1)"
+                                            : "rgba(168, 192, 255, 0.9)",
+                                        textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                                        letterSpacing: "0.025em",
+                                      }}
+                                      animate={{
+                                        scale:
+                                          rewards?.rewardType?.toLowerCase() ===
+                                          category.id.toLowerCase()
+                                            ? [1, 1.1, 1]
+                                            : 1,
+                                        color:
+                                          rewards?.rewardType?.toLowerCase() ===
+                                          category.id.toLowerCase()
+                                            ? [
+                                                "rgba(219, 234, 254, 1)",
+                                                "rgba(96, 165, 250, 1)",
+                                                "rgba(219, 234, 254, 1)",
+                                              ]
+                                            : "rgba(168, 192, 255, 0.9)",
+                                      }}
+                                      transition={{
+                                        duration: 0.8,
+                                        repeat:
+                                          rewards?.rewardType?.toLowerCase() ===
+                                          category.id.toLowerCase()
+                                            ? Infinity
+                                            : 0,
+                                        ease: "easeInOut",
+                                      }}
+                                    >
+                                      {category.count}
+                                    </motion.span>
+                                  </div>
                                 </div>
                               </div>
 
