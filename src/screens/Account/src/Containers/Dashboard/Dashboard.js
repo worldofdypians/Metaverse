@@ -6639,7 +6639,8 @@ function Dashboard({
                   Number(taraxaEarnUsd) +
                   Number(vanarEarnUsd) +
                   Number(teaEarnUsd) +
-                  aiQuestionRewards.length > 0
+                  aiQuestionRewards.length >
+                0
                   ? aiQuestionRewards.find((item) => {
                       return (
                         item.rewardType === "Money" && item.status === "Claimed"
@@ -7656,7 +7657,7 @@ function Dashboard({
                                   <span
                                     className={"ai-rewards-title-active ps-3"}
                                   >
-                                    50 - 250 Stars
+                                    Up to 100 - 500 Stars
                                   </span>
                                 </div>
                               </div>
@@ -7687,7 +7688,7 @@ function Dashboard({
                                   <span
                                     className={"ai-rewards-title-active ps-3"}
                                   >
-                                    15,000 - 80,000 Points
+                                    Up to 10,000 - 30,000 Points
                                   </span>
                                 </div>
                               </div>
@@ -7716,7 +7717,7 @@ function Dashboard({
                                   <span
                                     className={"ai-rewards-title-active ps-3"}
                                   >
-                                    $5-$10 Rewards
+                                    Up to $5-$300 Rewards
                                   </span>
                                 </div>
                               </div>
