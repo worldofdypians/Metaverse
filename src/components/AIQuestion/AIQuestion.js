@@ -1004,7 +1004,7 @@ const AIQuestion = ({
                               }).reward,
                               0
                             )
-                          : "Up to 10,000 -30,000"}{" "}
+                          : "Up to 10,000 - 30,000"}{" "}
                         Points
                       </span>
                     </div>
