@@ -402,6 +402,10 @@ const NewChestItem = ({
       window.DAILY_BONUS_TAIKO_ABI,
       window.config.daily_bonus_taiko_address
     );
+    const daily_bonus_contract_taraxa = new window.web3.eth.Contract(
+      window.DAILY_BONUS_TARAXA_ABI,
+      window.config.daily_bonus_taraxa_address
+    );
 
     const daily_bonus_contract_mat = new window.web3.eth.Contract(
       window.DAILY_BONUS_MAT_ABI,
@@ -416,6 +420,7 @@ const NewChestItem = ({
       window.DAILY_BONUS_SEI_ABI,
       window.config.daily_bonus_vanar_address
     );
+
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (window.WALLET_TYPE !== "binance") {
@@ -1558,6 +1563,104 @@ const NewChestItem = ({
             return () => clearTimeout(timer);
           });
       }
+    } else if (chainId === 841) {
+      if (rewardTypes === "premium" && isPremium) {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.taraxaWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_taraxa.methods
+          .openPremiumChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+        await daily_bonus_contract_taraxa.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+            ...transactionParameters,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "taraxa"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.taraxaWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_taraxa.methods
+          .openChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+        await daily_bonus_contract_taraxa.methods
+          .openChest()
+          .send({
+            from: address,
+            ...transactionParameters,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "taraxa"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
     } else if (chainId === 1329) {
       if (rewardTypes === "premium" && isPremium) {
         const web3 = new Web3(window.ethereum);
@@ -2319,7 +2422,9 @@ const NewChestItem = ({
       {rewardTypes !== "premium" ? (
         <img
           className={` ${
-            chain !== "skale" ? "new-chest-item-img" : "new-chest-item-img-skale"
+            chain !== "skale"
+              ? "new-chest-item-img"
+              : "new-chest-item-img-skale"
           } ${
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
@@ -2341,7 +2446,11 @@ const NewChestItem = ({
         />
       ) : rewardTypes === "premium" && dummypremiumChests ? (
         <img
-          className={`new-chest-item-img ${
+          className={`${
+            chain !== "skale"
+              ? "new-chest-item-img"
+              : "new-chest-item-img-skale"
+          } ${
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
           src={

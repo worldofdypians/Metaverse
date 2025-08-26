@@ -371,7 +371,7 @@
 .otheroptionsActive {
   // background: linear-gradient(90.31deg, #7344B3 0.27%, #20BBCA 99.74%);
   // font-weight: bold;
-  padding: 10px;
+  padding: 5px;
   border-radius: 12px;
   white-space: nowrap;
   // border-bottom: 1px solid #09f3d2 !important;
@@ -531,7 +531,7 @@ line-height: normal;
 }
 
 .optionswrapper-bg-new {
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid #f4e07b;
   background: #341553;
   transition: all 0.25s ease-in-out;
@@ -717,4 +717,8 @@ line-height: normal;
     font-weight: 500;
     color: #fff;
   }
+}
+
+.blur-lb{
+  backdrop-filter: blur(10px);
 }

@@ -1918,7 +1918,9 @@
 }
 
 .package-popup-wrapper2 {
-  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
   z-index: 99;
   position: fixed;
   top: 0;
@@ -2502,6 +2504,19 @@
   }
 }
 
+.past-taraxa-mint {
+  background-image: url("https://cdn.worldofdypians.com/wod/taraxaPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("https://cdn.worldofdypians.com/wod/taraxaPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
 .past-vanar-mint {
   background-image: url("https://cdn.worldofdypians.com/wod/pastVanarMintBg.webp");
   width: 100%;
@@ -2653,6 +2668,18 @@
   }
 }
 
+.past-taraxa-mint-amount {
+  color: #15AB5A;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
 .past-sei-mint-amount {
   color: #be2c2c;
   text-align: center;
@@ -2772,6 +2799,19 @@
 .past-taiko-mint-desc {
   color: #fff;
   text-shadow: 0px 3px 4px rgba(155, 67, 255, 0.7);
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-taraxa-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(21, 171, 90, 0.7);
   font-size: 40px;
   font-style: normal;
   font-weight: 700;
@@ -3330,6 +3370,12 @@
   background: linear-gradient(to bottom, #181636 15.48%, #0057ff 254.86%);
 }
 
+
+.taraxa-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #181636 15.48%, #18a85d 254.86%);
+}
+
 .cmc-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #201d52 15.48%, #0057ff 254.86%);
@@ -3629,6 +3675,9 @@
 
 .mint-teafi {
   background: linear-gradient(90deg, #181b38 0%, rgb(255 29 254 / 50%) 168.67%);
+}
+.mint-taraxa {
+  background: linear-gradient(90deg, #181b38 0%, #15ab5a 168.67%);
 }
 
 .mint-viction {
@@ -4827,6 +4876,11 @@
   background: linear-gradient(90deg, #171a3a 0%, rgb(255 29 254 / 50%) 168.67%);
 }
 
+.upcoming-taraxa-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181636 0%, #18a85d 168.67%);
+}
+ 
 
 .upcoming-taiko-event {
   border-radius: 20px;

@@ -994,7 +994,7 @@ const Marketplace = ({
                 <div className="col-12 col-lg-4 mt-0 mt-lg-4">
                   <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
-                      {getFormattedNumber(1500531, 0)}
+                      {getFormattedNumber(1553075, 0)}
                     </h6>
                     <span className="stats-desc">Total NFT Holders</span>
                   </div>
@@ -1649,16 +1649,16 @@ const Marketplace = ({
                   </div>
                   <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
-                      to={"/shop/mint/tea-fi"}
+                      to={"/shop/mint/taraxa"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
                     >
-                      <div className="p-4 mint-wrappernew market-mint-teafi w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-100">
+                      <div className="p-4 mint-wrappernew market-mint-taraxa w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-100">
                         <div className="d-flex align-items-center justify-content-center homepage-nft-mint-tag px-3 py-1">
                           <span>NFT Minting</span>
                         </div>
                         <div className="d-flex flex-column gap-2 mb-3">
                           <h6 className="newminttitlehome m-0 position-relative">
-                            Tea-Fi
+                            Taraxa
                           </h6>
                           <h6 className="newminttitlehome m-0 position-relative">
                             Beta Pass
@@ -1666,7 +1666,7 @@ const Marketplace = ({
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/shop/mint/tea-fi">
+                    <NavLink to="/shop/mint/taraxa">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}

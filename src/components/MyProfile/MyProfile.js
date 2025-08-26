@@ -169,6 +169,9 @@ const MyProfile = ({
   userRankVanar,
   userVanarScore,
   userVanarStars,
+  userRankTaraxa,
+  userTaraxaScore,
+  userTaraxaStars,
   aiQuestionCompleted,
   onDailyQuestionClick,
 }) => {
@@ -179,7 +182,7 @@ const MyProfile = ({
   let now2 = new Date();
 
   const midnight = new Date(now).setUTCHours(24, 30, 0, 0);
-  const chestPercentage = (totalClaimedChests / 200) * 100;
+  const chestPercentage = (totalClaimedChests / 220) * 100;
   const utcDayIndex = new Date().getUTCDay();
   const utcHours = now2.getUTCHours();
   const utcMinutes = now2.getUTCMinutes();
@@ -386,7 +389,7 @@ const MyProfile = ({
     <>
       <div className="custom-container mt-5">
         <div className="row mt-4 gap-5 gap-xl-0 mt-lg-0">
-          <div className="col-12 col-xl-4">
+          <div className="col-12 col-xl-4 px-0 px-lg-2">
             <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
               <div className="d-flex align-items-center gap-2">
                 <div
@@ -1042,6 +1045,9 @@ const MyProfile = ({
                       userTaikoStars={userTaikoStars}
                       userMatStars={userMatStars}
                       userSeiStars={userSeiStars}
+                      userRankTaraxa={userRankTaraxa}
+                      userTaraxaScore={userTaraxaScore}
+                      userTaraxaStars={userTaraxaStars}
                       globalMonthly={
                         userDataStar.position
                           ? userDataStar.position + 1
@@ -1147,8 +1153,8 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsstd < 100
-                          ? allClaimedChestsstd + "/100"
+                        {allClaimedChestsstd < 110
+                          ? allClaimedChestsstd + "/110"
                           : "Completed"}
                       </span>
                     </div>
@@ -1166,8 +1172,8 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsPremium < 100
-                          ? allClaimedChestsPremium + "/100"
+                        {allClaimedChestsPremium < 110
+                          ? allClaimedChestsPremium + "/110"
                           : "Completed"}
                       </span>
                     </div>
@@ -1237,9 +1243,9 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 7
+                        {userActiveEvents === 6
                           ? "Completed"
-                          : userActiveEvents + "/7"}
+                          : userActiveEvents + "/6"}
                       </span>
                     </div>
 
@@ -1314,7 +1320,7 @@ const MyProfile = ({
           </div>
           <div className="col-12 col-xl-8">
             <div className="row ">
-              <div className="col-12 col-lg-4">
+              <div className="col-12 col-lg-4 px-0 px-lg-2">
                 {/* <div className="new-special-rewards-wrapper d-flex flex-column gap-4 p-3">
                 <h6 className="special-rewards-title">Special Rewards</h6>
                 <div className="d-flex align-items-center gap-1">
@@ -1383,7 +1389,7 @@ const MyProfile = ({
                               color: "#fff",
                             }}
                           >
-                            200 Chests
+                            220 Chests
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-1">
@@ -1396,7 +1402,7 @@ const MyProfile = ({
                               color: "#fff",
                             }}
                           >
-                            11 Chains
+                            12 Chains
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-1">
@@ -1425,7 +1431,7 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-lg-8">
+              <div className="col-12 col-lg-8 px-0 px-lg-2">
                 <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-end  align-items-lg-center justify-content-center justify-content-lg-between p-3">
                   <div className="d-flex flex-row flex-lg-column align-items-center gap-2">
                     <h6 className="leaderboards-title mb-0">Leaderboards</h6>
@@ -2014,7 +2020,7 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
                 <NavLink
                   className="new-stake-nft-wrapper position-relative d-flex align-items-center justify-content-between p-3"
                   to={"/account/challenges/puzzle-madness"}

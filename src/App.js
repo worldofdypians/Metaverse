@@ -580,7 +580,7 @@ function App() {
   const [myTeaBnbNfts, setmyTeaBnbNfts] = useState([]);
   const [myTeaBaseNfts, setmyTeaBaseNfts] = useState([]);
   const [myTeaSeiNfts, setmyTeaSeiNfts] = useState([]);
-
+  const [myTaraxaNfts, setMyTaraxaNfts] = useState([]);
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
   const [isBnb, setisBnb] = useState(false);
@@ -615,11 +615,12 @@ function App() {
   const [successMessage, setSuccessMessage] = useState("");
   const [successDomain, setSuccessDomain] = useState(false);
   const [dogePrice, setDogePrice] = useState(0);
-
+  const [isEOA, setIsEOA] = useState(true);
   const [domainName, setDomainName] = useState(null);
   const [loadingDomain, setLoadingDomain] = useState(false);
   const [domainMetaData, setDomainMetaData] = useState(null);
   const [totalTx, setTotalTx] = useState(0);
+
   const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
@@ -638,7 +639,7 @@ function App() {
 
   const { activate, deactivate, library, provider } = useWeb3React();
 
-  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let taraxaLastDay = new Date("2025-12-13T14:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2025-07-10T16:00:00.000+02:00");
@@ -647,17 +648,19 @@ function App() {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let teaLastDay = new Date("2025-10-16T13:00:00.000+02:00");
-  let bnbLastDay = new Date("2025-08-07T14:00:00.000+02:00");
+  let bnbLastDay = new Date("2025-12-11T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
-  let coreLastDay2 = new Date("2025-08-08T14:00:00.000+02:00");
+  let coreLastDay2 = new Date("2025-12-12T14:00:00.000+02:00");
 
   let mantaLastDay = new Date("2025-08-13T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
+  let taikoLastDay2 = new Date("2025-12-06T14:00:00.000+02:00");
+
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
-  let seiLastDay = new Date("2025-08-16T14:00:00.000+02:00");
+  let seiLastDay = new Date("2025-08-18T14:00:00.000+02:00");
 
   let vanarLastDay = new Date("2025-09-16T14:00:00.000+02:00");
 
@@ -800,6 +803,11 @@ function App() {
   const [taikoPrice, setTaikoPrice] = useState(0);
   const [taikoEarnToken, setTaikoEarnToken] = useState(0);
   const [taikoPoints, setTaikoPoints] = useState(0);
+
+  const [taraxaEarnUsd, setTaraxaEarnUsd] = useState(0);
+  const [taraxaPrice, setTaraxaPrice] = useState(0);
+  const [taraxaEarnToken, setTaraxaEarnToken] = useState(0);
+  const [taraxaPoints, setTaraxaPoints] = useState(0);
 
   const [cookieEarnUsd, setCookieEarnUsd] = useState(0);
   const [cookiePrice, setCookiePrice] = useState(0);
@@ -1150,6 +1158,9 @@ function App() {
           const taikoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "taiko";
           });
+          const taraxaEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taraxa";
+          });
 
           const multiversEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "multivers";
@@ -1313,6 +1324,20 @@ function App() {
             setTaikoEarnToken(userEarnedusd / taikoPrice);
           }
 
+          if (taraxaEvent && taraxaEvent[0]) {
+            if (taraxaEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
+
+            const userEarnedusd =
+              taraxaEvent[0].reward.earn.total /
+              taraxaEvent[0].reward.earn.multiplier;
+            const pointsTaraxa = taraxaEvent[0].reward.earn.totalPoints;
+            setTaraxaPoints(pointsTaraxa);
+            setTaraxaEarnUsd(userEarnedusd);
+            setTaraxaEarnToken(userEarnedusd / taraxaPrice);
+          }
+
           if (midleEvent && midleEvent[0]) {
             // if (midleEvent[0].reward.earn.totalPoints > 0) {
             //   userActiveEvents = userActiveEvents + 1;
@@ -1365,9 +1390,9 @@ function App() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            if (seiEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (seiEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
@@ -1420,9 +1445,9 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            if (mantaEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (mantaEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -1561,6 +1586,19 @@ function App() {
       }
     } catch (error) {
       console.log("Error:", error);
+    }
+  };
+
+  const checkIfEOA = async (address) => {
+    if (window.ethereum) {
+      if (address) {
+        let web3 = new Web3(window.ethereum);
+        const code = await web3.eth.getCode(address).catch((e) => {
+          console.error(e);
+        });
+        setIsEOA(code === "0x");
+        // return code === "0x"; // true = EOA, false = Contract
+      }
     }
   };
 
@@ -1752,6 +1790,11 @@ function App() {
       window.config.nft_teasei_address
     );
 
+    const taraxaContract = new window.taraxaWeb3.eth.Contract(
+      window.TARAXA_NFT_ABI,
+      window.config.nft_taraxa_address
+    );
+
     const confluxresult = await confluxContract.methods
       .totalSupply()
       .call()
@@ -1914,6 +1957,14 @@ function App() {
         return 0;
       });
 
+    const taraxaresult = await taraxaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
 
     setTotalSupply(
@@ -1940,6 +1991,7 @@ function App() {
         Number(teaOPBNBResult) +
         Number(teaBaseResult) +
         Number(teaseiResult) +
+        Number(taraxaresult) +
         20002
     );
   };
@@ -2670,6 +2722,9 @@ function App() {
       });
       getMyNFTS(coinbase, "tea-sei").then((NFTS) => {
         setmyTeaSeiNfts(NFTS);
+      });
+      getMyNFTS(coinbase, "taraxa").then((NFTS) => {
+        setMyTaraxaNfts(NFTS);
       });
       //setmyBaseNFTs
     } else {
@@ -3656,7 +3711,54 @@ function App() {
       }
     }
   };
-  // console.log(myTeaBaseNfts, myTeaBnbNfts, myTeaSeiNfts, myTeaOpbnbNfts);
+
+  const handleMintTaraxa = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const nft_contract = new ethers.Contract(
+        window.config.nft_taraxa_address,
+        window.TARAXA_NFT_ABI,
+        signer
+      );
+      const txResponse = await nft_contract.mintBetaPass().catch((e) => {
+        console.error(e);
+        setmintloading("error");
+        settextColor("#d87b7b");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setmintStatus("Success! Your Nft was minted successfully!");
+        setmintloading("success");
+        settextColor("rgb(123, 216, 176)");
+        setTimeout(() => {
+          setmintStatus("");
+          setmintloading("initial");
+        }, 5000);
+        getMyNFTS(coinbase, "taraxa").then((NFTS) => {
+          setMyTaraxaNfts(NFTS);
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     if (
       binanceData &&
@@ -4292,6 +4394,16 @@ function App() {
         console.log(e);
       });
   };
+  const fetchTaraxaPrice = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/price/taraxa`)
+      .then((obj) => {
+        setTaraxaPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const fetchCookiePrice = async () => {
     await axios
@@ -4356,6 +4468,7 @@ function App() {
     fetchSeiPrice();
     fetchMantaPrice();
     fetchTaikoPrice();
+    fetchTaraxaPrice();
     fetchCookiePrice();
     fetchCorePrice();
     fetchCFXPrice();
@@ -4450,11 +4563,11 @@ function App() {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
       eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
+      totalRewards: "$30,000 in BNB Rewards",
       myEarnings: 0.0,
       location: [-0.06735561726792588, 0.08666753768920898],
       eventType: "Explore & Mine",
-      eventDate: "Apr 09, 2025",
+      eventDate: "Aug 13, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
       userEarnUsd: bnbEarnUsd,
       userEarnCrypto: bnbEarnToken,
@@ -4462,7 +4575,6 @@ function App() {
       image: "bnbBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
-
       marker: markers.treasureMarker,
       popupInfo: {
         title: "BNB Chain",
@@ -4472,23 +4584,23 @@ function App() {
         status: "Live",
         id: "event20",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
+        totalRewards: "$30,000 in BNB Rewards",
         eventDuration: bnbLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 09, 2025",
+        eventDate: "Aug 13, 2025",
       },
     },
     {
       title: "Tea-Fi",
       logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
       eventStatus: "Live",
-      totalRewards: "$40,000 in TEA Rewards",
+      totalRewards: "$50,000 in TEA Rewards",
       myEarnings: 0.0,
-      rewardAmount: "$40,000",
+      rewardAmount: "$50,000",
       location: [-0.06892739063903598, 0.08374929428100586],
       eventType: "Explore & Mine",
       eventDate: "Jul 18, 2025",
@@ -4509,7 +4621,7 @@ function App() {
         status: "Live",
         id: "event4",
         eventType: "Explore & Mine",
-        totalRewards: "$40,000 in TEA Rewards",
+        totalRewards: "$50,000 in TEA Rewards",
         eventDuration: teaLastDay,
         minRewards: "0.5",
         maxRewards: "20",
@@ -4639,10 +4751,10 @@ function App() {
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       marker: markers.treasureMarker,
-      totalRewards: "$30,000 in TAIKO Rewards",
+      totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 04, 2025",
+      eventDate: "Aug 08, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
@@ -4655,14 +4767,51 @@ function App() {
         status: "Live",
         id: "event22",
         eventType: "Explore & Mine",
-        totalRewards: "$30,000 in TAIKO Rewards",
-        eventDuration: taikoLastDay,
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay2,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 04, 2025",
+        eventDate: "Aug 08, 2025",
+      },
+    },
+    {
+      title: "Taraxa",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+      eventStatus: "Live",
+      rewardType: "TARA",
+      rewardAmount: "$20,000",
+      location: [-0.06917415368919773, 0.08433401584625246],
+      image: "taraxaArea.webp",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in TARA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp",
+      userEarnUsd: taraxaEarnUsd,
+      userEarnCrypto: taraxaEarnToken,
+      userEarnPoints: taraxaPoints,
+      popupInfo: {
+        title: "Taraxa",
+        chain: "Taraxa",
+        linkState: "taraxa",
+        rewards: "TARA",
+        status: "Live",
+        id: "event30",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TARA Rewards",
+        eventDuration: taraxaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 15, 2025",
       },
     },
     {
@@ -4750,7 +4899,7 @@ function App() {
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 10, 2025",
+      eventDate: "Aug 14, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
       image: "coreBanner.png",
       type: "Treasure Hunt",
@@ -4775,13 +4924,13 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 10, 2025",
+        eventDate: "Aug 14, 2025",
       },
     },
     {
       title: "SEI",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "SEI",
       rewardAmount: "$20,000",
       location: [-0.06734488843929015, 0.08361518383026124],
@@ -4802,7 +4951,7 @@ function App() {
         chain: "Sei Network",
         linkState: "sei",
         rewards: "SEI",
-        status: "Live",
+        status: "Expired",
         id: "event13",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SEI Rewards",
@@ -5006,7 +5155,7 @@ function App() {
     {
       title: "Manta",
       logo: "https://cdn.worldofdypians.com/wod/mantaLogoBig.png",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.07001821071588557, 0.08503675460815431],
@@ -5028,7 +5177,7 @@ function App() {
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Live",
+        status: "Expired",
         id: "event21",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in MANTA Rewards",
@@ -6036,6 +6185,12 @@ function App() {
   //   }
   // }, [loginListener, userWallet]);
 
+  useEffect(() => {
+    if (isConnected && coinbase) {
+      checkIfEOA(coinbase);
+    }
+  }, [isConnected, coinbase]);
+
   // useEffect(() => {
   //   if (address && address.length > 0) {
   //     if (window.WALLET_TYPE === "matchId") {
@@ -6143,6 +6298,7 @@ function App() {
             element={
               <SingleNft
                 coinbase={coinbase}
+                isEOA={isEOA}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
@@ -6168,6 +6324,7 @@ function App() {
             path="/list-my-nft"
             element={
               <ListNFT
+                isEOA={isEOA}
                 coinbase={coinbase}
                 showWalletConnect={() => {
                   setwalletModal(true);
@@ -6231,6 +6388,7 @@ function App() {
                   setwalletModal(true);
                 }}
                 email={email}
+                isEOA={isEOA}
                 premiumOryn={premiumOryn}
                 chainId={networkId}
                 handleSwitchNetwork={handleSwitchNetwork}
@@ -6260,6 +6418,7 @@ function App() {
             path="/cliff-and-vesting"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6279,6 +6438,7 @@ function App() {
             path="/pool"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6299,6 +6459,7 @@ function App() {
             path="/pool2"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6319,6 +6480,7 @@ function App() {
             path="/pool-bonus"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6339,6 +6501,7 @@ function App() {
             path="/pool-dynamic"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6356,9 +6519,31 @@ function App() {
 
           <Route
             exact
+            path="/pool2-dynamic"
+            element={
+              <Whitelist
+                isEOA={isEOA}
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="pool2-dynamic"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+          <Route
+            exact
             path="/wod-dynamic"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6379,6 +6564,7 @@ function App() {
             path="/special-otc"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6399,6 +6585,7 @@ function App() {
             path="/bonus-otc"
             element={
               <Whitelist
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6419,6 +6606,7 @@ function App() {
             path="/token-claim"
             element={
               <Release
+                isEOA={isEOA}
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {
@@ -6612,6 +6800,7 @@ function App() {
             path="/account"
             element={
               <Dashboard
+                isEOA={isEOA}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
@@ -6628,6 +6817,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 syncStatus={syncStatus}
                 syncCount={syncCount}
@@ -6644,6 +6834,7 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
@@ -6710,6 +6901,7 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+                isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
@@ -6727,6 +6919,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 syncCount={syncCount}
                 logoutCount={logoutCount}
@@ -6742,6 +6935,7 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
@@ -6935,6 +7129,22 @@ function App() {
           <Route
             exact
             path="/shop/beta-pass/tea-fi"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/taraxa"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -7278,6 +7488,7 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
@@ -7297,6 +7508,7 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -7310,6 +7522,7 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
@@ -7445,6 +7658,7 @@ function App() {
             path="/shop/mint/timepiece"
             element={
               <MarketMint
+                isEOA={isEOA}
                 coinbase={coinbase}
                 showWalletConnect={() => {
                   setwalletModal(true);
@@ -7495,6 +7709,8 @@ function App() {
                     ? handleMintTeaopBnb()
                     : networkId === 8453
                     ? handleMintTeaBase()
+                    : networkId === 841
+                    ? handleMintTaraxa()
                     : handleMintTeaSei();
                 }}
                 mintStatus={mintStatus}
@@ -7506,11 +7722,43 @@ function App() {
                     myTeaBaseNfts,
                     myTeaOpbnbNfts,
                     myTeaSeiNfts,
+                    // myTaraxaNfts,
                     myTeaBnbNfts,
                   ].find((item) => {
                     return item.length > 0;
                   }) ?? []
                 }
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
+                totalCreated={totalTimepieceCreated}
+              />
+            }
+          />*/}
+          {/* <Route
+            exact
+            path="/shop/mint/taraxa"
+            element={
+              <MarketMint
+                isEOA={isEOA}
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleMintTaraxa}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                timepieceMetadata={timepieceMetadata}
+                nftCreated={myTaraxaNfts}
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
@@ -7623,6 +7871,7 @@ function App() {
             path="/staking"
             element={
               <Earn
+                isEOA={isEOA}
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}

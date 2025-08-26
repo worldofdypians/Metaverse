@@ -16,6 +16,7 @@ import { ethers } from "ethers";
 import Modal from "../../../../../components/General/Modal";
 
 const CawsDetails = ({
+  isEOA,
   coinbase,
   isConnected,
   listType,

@@ -17,6 +17,7 @@ const renderer2 = ({ hours, minutes }) => {
 };
 
 const Release = ({
+  isEOA,
   chainId,
   isConnected,
   handleConnection,
@@ -25,7 +26,7 @@ const Release = ({
   network_matchain,
   walletClient,
   binanceW3WProvider,
-  publicClient
+  publicClient,
 }) => {
   const [cliffTime, setcliffTime] = useState(0);
   const [releaseProcent, setreleaseProcent] = useState(0);
@@ -345,6 +346,12 @@ const Release = ({
     }
   }, [coinbase, isConnected]);
 
+  useEffect(() => {
+    document.title = "Claim WOD";
+
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="container-fluid release-mainhero-wrapper token-wrapper px-0">
       <div className="d-flex flex-column">
@@ -355,6 +362,7 @@ const Release = ({
         />
         <StakingBanner />
         <ReleaseContent
+          isEOA={isEOA}
           isConnected={isConnected}
           chainId={chainId}
           coinbase={coinbase}
