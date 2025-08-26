@@ -1787,6 +1787,11 @@ function App() {
       window.config.nft_teasei_address
     );
 
+    const taraxaContract = new window.taraxaWeb3.eth.Contract(
+      window.TARAXA_NFT_ABI,
+      window.config.nft_taraxa_address
+    );
+
     const confluxresult = await confluxContract.methods
       .totalSupply()
       .call()
@@ -1949,6 +1954,14 @@ function App() {
         return 0;
       });
 
+    const taraxaresult = await taraxaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
 
     setTotalSupply(
@@ -1975,6 +1988,7 @@ function App() {
         Number(teaOPBNBResult) +
         Number(teaBaseResult) +
         Number(teaseiResult) +
+        Number(taraxaresult) +
         20002
     );
   };
@@ -7680,7 +7694,7 @@ function App() {
               />
             }
           />*/}
-          <Route
+          {/* <Route
             exact
             path="/shop/mint/taraxa"
             element={
@@ -7711,7 +7725,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          />
+          /> */}
           {/* <Route
             exact
             path="/shop/mint/vanar"
