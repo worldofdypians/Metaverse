@@ -101,7 +101,7 @@ const KickstarterStats = ({ monthlyPlayers, totalVolumeNew }) => {
     {
       icon: "https://cdn.worldofdypians.com/wod/valueStats.svg",
       number: "$" + abbreviateNumber(totalVolumeNew, 1).replace("G", "B") + "+",
-      label: "Volume Created",
+      label: "Volume",
       color: "from-purple-400 to-pink-500",
       glowColor: "shadow-purple-500/50",
     },

@@ -56,6 +56,7 @@ import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
 import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
+import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -184,6 +185,7 @@ function Dashboard({
   teaEarnUsd,
   openKickstarter,
   royaltyCount,
+  onOpenRoyaltyChest
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -484,6 +486,8 @@ function Dashboard({
 
   const [loading, setLoading] = useState(false);
   const [showDailyQuestion, setShowDailyQuestion] = useState(false);
+  const [booster, setBooster] = useState(false);
+
   const [tooltip, setTooltip] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
@@ -802,6 +806,7 @@ function Dashboard({
   const [activePlayerStar, setActivePlayerStar] = useState([]);
   const [activePlayerStarWeekly, setActivePlayerStarWeekly] = useState([]);
   const [userDataStar, setUserDataStar] = useState({});
+  const [userPreviousDataStar, setUserPreviousDataStar] = useState({});
   const [userDataStarWeekly, setUserDataStarWeekly] = useState({});
   const [prevDataStar, setPrevDataStar] = useState([]);
   const [prevDataStarWeekly, setPrevDataStarWeekly] = useState([]);
@@ -2962,6 +2967,25 @@ function Dashboard({
     }
   };
 
+  const fetchPreviousUserDataStar = async (version, userId) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        Version: version - 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer?Version=-1`,
+        data
+      );
+      setUserPreviousDataStar(...result.data.data.leaderboard);
+    } else {
+      setUserPreviousDataStar([]);
+    }
+  };
+
   const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
     const data = {
       StatisticName: "GlobalStarMonthlyLeaderboard",
@@ -2973,6 +2997,7 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
+      fetchPreviousUserDataStar(parseInt(result.data.data.version), userId);
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
@@ -5063,18 +5088,17 @@ function Dashboard({
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
+                if (item === 4) {
+                  onOpenRoyaltyChest(chestOrder[item]);
                 }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
               standardChestsArray.push(chestOrder[item]);
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
               premiumChestsArray.push(chestOrder[item]);
             }
@@ -6373,7 +6397,8 @@ function Dashboard({
       leaderboard === true ||
       globalLeaderboard === true ||
       genesisLeaderboard === true ||
-      showDailyQuestion === true
+      showDailyQuestion === true ||
+      booster === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -6388,6 +6413,7 @@ function Dashboard({
     globalLeaderboard,
     genesisLeaderboard,
     showDailyQuestion,
+    booster,
   ]);
 
   const logoutItem = localStorage.getItem("logout");
@@ -6483,7 +6509,7 @@ function Dashboard({
       navigate("/account/prime");
     }
   }, [hashValue]);
-
+  // console.log(userPreviousDataStar);
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -6531,6 +6557,7 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+              onOpenBooster={() => setBooster(true)}
               openKickstarter={openKickstarter}
               wodBalance={wodBalance}
               aiQuestionCompleted={aiQuestionCompleted}
@@ -7459,6 +7486,45 @@ function Dashboard({
                 userId={userId}
                 monthlyPlayers={monthlyPlayers}
                 percent={percent}
+              />
+            </div>
+          </OutsideClickHandler>
+        )}
+
+        {booster && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setBooster(false);
+            }}
+          >
+            <div className="popup-wrapper booster-popup popup-active p-3">
+              <div className="d-flex align-items-center justify-content-end">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => {
+                    setBooster(false);
+                  }}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+
+              <BoosterPopup
+                userDataStar={
+                  !userDataStar?.statValue || userDataStar?.statValue === 0
+                    ? 0
+                    : userDataStar.position
+                    ? userDataStar.position + 1
+                    : 0
+                }
+                userPreviousDataStar={
+                  !userPreviousDataStar?.statValue ||
+                  userPreviousDataStar?.statValue === 0
+                    ? 0
+                    : userPreviousDataStar.position !== undefined
+                    ? userPreviousDataStar.position + 1
+                    : 0
+                }
               />
             </div>
           </OutsideClickHandler>

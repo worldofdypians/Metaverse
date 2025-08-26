@@ -9,10 +9,11 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import royaltyChestIdle from './assets/royaltyChestIdle.webp'
 
 const rewardCategories = [
   {
-    id: "points",
+    id: "Points",
     name: "POINTS",
     icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
     count: "1K-20K",
@@ -21,7 +22,7 @@ const rewardCategories = [
     tier: "TIER II",
   },
   {
-    id: "stars",
+    id: "Stars",
     name: "STARS",
     icon: "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp",
     count: "5-25",
@@ -30,7 +31,7 @@ const rewardCategories = [
     tier: "TIER I",
   },
   {
-    id: "rewards",
+    id: "Money",
     name: "REWARDS",
     icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp",
     count: "$1-$10",
@@ -55,6 +56,7 @@ const Kickstarter = ({
   walletClient,
   publicClient,
   onClaimRewards,
+  openedRoyaltyChest,
 }) => {
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
@@ -70,7 +72,6 @@ const Kickstarter = ({
       "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(120, 170, 255, 0.15)",
     borderRadius: "16px",
   };
-
 
   const chains = [
     {
@@ -165,8 +166,8 @@ const Kickstarter = ({
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [rewards, setRewards] = useState({
     rewardType: null,
-    reward: null
-  })
+    reward: null,
+  });
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -178,7 +179,6 @@ const Kickstarter = ({
   window.addEventListener("keydown", handleEsc);
 
   const chestIndex = 5;
-
 
   const getUserRewardsByChest = async (
     userEmail,
@@ -222,15 +222,17 @@ const Kickstarter = ({
         //   handleSecondTask(coinbase);
         // }
         onClaimRewards(result.data);
-        console.log(result.data);
+
         setTimeout(() => {
-            setRewards({
-          rewardType: result.data.rewards[0].rewardType,
-          reward: result.data.rewards[0].reward,
-        })
+          setRewards({
+            rewardType: result.data.rewards[0].rewardType,
+            reward: result.data.rewards[0].reward,
+          });
         }, 3600);
-        console.log(result.data.rewards[0].rewardType,
-result.data.rewards[0].reward);
+        console.log(
+          result.data.rewards[0].rewardType,
+          result.data.rewards[0].reward
+        );
         setIsChestOpen(true);
         setLoading(false);
       }
@@ -255,14 +257,16 @@ result.data.rewards[0].reward);
       if (result && result.status === 200) {
         onClaimRewards(result.data);
         console.log(result.data);
-       setTimeout(() => {
-            setRewards({
-          rewardType: result.data.rewards[0].rewardType,
-          reward: result.data.rewards[0].reward,
-        })
+        setTimeout(() => {
+          setRewards({
+            rewardType: result.data.rewards[0].rewardType,
+            reward: result.data.rewards[0].reward,
+          });
         }, 3600);
-                console.log(result.data.rewards[0].rewardType,
-result.data.rewards[0].reward);
+        console.log(
+          result.data.rewards[0].rewardType,
+          result.data.rewards[0].reward
+        );
         setIsChestOpen(true);
         setLoading(false);
       }
@@ -302,14 +306,16 @@ result.data.rewards[0].reward);
       if (result && result.status === 200) {
         onClaimRewards(result.data);
         console.log(result.data);
-         setTimeout(() => {
-            setRewards({
-          rewardType: result.data.rewards[0].rewardType,
-          reward: result.data.rewards[0].reward,
-        })
+        setTimeout(() => {
+          setRewards({
+            rewardType: result.data.rewards[0].rewardType,
+            reward: result.data.rewards[0].reward,
+          });
         }, 3600);
-                console.log(result.data.rewards[0].rewardType,
-result.data.rewards[0].reward);
+        console.log(
+          result.data.rewards[0].rewardType,
+          result.data.rewards[0].reward
+        );
         setIsChestOpen(true);
 
         setLoading(false);
@@ -332,13 +338,13 @@ result.data.rewards[0].reward);
         // }
         onClaimRewards(result.data);
         console.log(result.data);
-           setTimeout(() => {
-            setRewards({
-          rewardType: result.data.rewards[0].rewardType,
-          reward: result.data.rewards[0].reward,
-        })
+        setTimeout(() => {
+          setRewards({
+            rewardType: result.data.rewards[0].rewardType,
+            reward: result.data.rewards[0].reward,
+          });
         }, 3600);
-        
+
         setIsChestOpen(true);
         setLoading(false);
       }
@@ -493,7 +499,12 @@ result.data.rewards[0].reward);
             from: address,
           })
           .then((data) => {
-            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1, "opbnb");
+            getUserRewardsByChest(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "opbnb"
+            );
             handleThirdTask(coinbase);
 
             setLoading(false);
@@ -536,7 +547,12 @@ result.data.rewards[0].reward);
 
         const txReceipt = await txResponse.wait();
         if (txReceipt) {
-          getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "opbnb");
+          getUserRewardsByChest(
+            email,
+            txResponse.hash,
+            chestIndex - 1,
+            "opbnb"
+          );
           handleThirdTask(coinbase);
           setLoading(false);
           setChestOpened(true);
@@ -594,7 +610,12 @@ result.data.rewards[0].reward);
             ...transactionParameters,
           })
           .then((data) => {
-            getUserRewardsByChest(email, data.transactionHash, chestIndex - 1, "bnb");
+            getUserRewardsByChest(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "bnb"
+            );
             handleThirdTask(coinbase);
 
             setLoading(false);
@@ -835,12 +856,10 @@ result.data.rewards[0].reward);
     if (isOpen) {
       if (window.scrollY === 0) {
         html.classList.add("hidescroll");
-        console.log("yes 1");
       } else {
         const onScroll = () => {
           if (window.scrollY === 0) {
             html.classList.add("hidescroll");
-            console.log("yes 2");
             window.removeEventListener("scroll", onScroll);
           }
         };
@@ -861,31 +880,78 @@ result.data.rewards[0].reward);
       setCount(1);
     }
 
+    var time;
+
+    if(openedRoyaltyChest && openedRoyaltyChest.isOpened === true){
+      time = 0;
+    }else{
+      time = 4000;
+    }
+
+
+
     // window.scrollTo(0, 0);
     const video = videoRef1.current;
 
     setTimeout(() => {
       setShowContent(true);
-    }, 4000);
+    }, time);
 
-    const timeout1 = setTimeout(() => {
+    if (!openedRoyaltyChest && openedRoyaltyChest.isOpened === false) {
+      const timeout1 = setTimeout(() => {
+        if (video) {
+          video.play().catch((err) => console.error("Play failed:", err));
 
-      if (video) {
-        video.play().catch((err) => console.error("Play failed:", err));
+          const pauseTimeout = setTimeout(() => {
+            video.pause();
+            setDisable(false);
+            onAddClass(true);
+          }, 6200);
 
-        const pauseTimeout = setTimeout(() => {
-          video.pause();
-          setDisable(false);
-          onAddClass(true);
-        }, 6200);
+          return () => clearTimeout(pauseTimeout);
+        }
+      }, 1500);
 
-        return () => clearTimeout(pauseTimeout);
-      }
-    }, 1500);
-
-    return () => clearTimeout(timeout1);
+      return () => clearTimeout(timeout1);
+    }
   }, [count]);
 
+  useEffect(() => {
+    if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
+        var time;
+
+    if(openedRoyaltyChest && openedRoyaltyChest.isOpened === true){
+      time = 0;
+    }else{
+      time = 3600;
+    }
+      
+      setChestOpened(true);
+      setStep(3);
+      const video = videoRef2.current;
+      if (video) {
+        video.play().catch((err) => console.error("Play failed:", err));
+        setTimeout(() => {
+          video.pause();
+          setStep(3);
+        }, 8000);
+      }
+
+      setTimeout(() => {
+        const randomReward = rewardCategories.find((item) => {
+          return item.id === openedRoyaltyChest.rewards[0].rewardType;
+        });
+
+        setActivatedReward(randomReward.id);
+
+        setRewards({
+          rewardType: openedRoyaltyChest.rewards[0].rewardType,
+          reward: openedRoyaltyChest.rewards[0].reward,
+        });
+      }, time);
+    }
+  }, [openedRoyaltyChest, count]);
+  console.log(rewards, activatedReward);
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column justify-content-between align-items-center">
@@ -900,6 +966,10 @@ result.data.rewards[0].reward);
           }}
         />
 
+      {openedRoyaltyChest &&  openedRoyaltyChest.isOpened === true ? 
+      <img src={royaltyChestIdle} className="kickstarter-video visible" alt="" />
+      :
+       <>
         {windowSize.width && windowSize.width > 700 ? (
           <>
             {/* VIDEO ONE (Intro) */}
@@ -951,7 +1021,9 @@ result.data.rewards[0].reward);
         ) : (
           <></>
         )}
-
+       </>
+  
+    }
         {showContent && (
           <>
             {/* <div className="d-flex flex-column gap-1 switch-chain-position switch-info-container p-3">
@@ -1117,7 +1189,8 @@ result.data.rewards[0].reward);
                       ease: "easeInOut",
                     }}
                   >
-                    {getFormattedNumber(rewards?.reward, 0)} {rewards?.rewardType}
+                    {getFormattedNumber(rewards?.reward, 0)}{" "}
+                    {rewards?.rewardType}
                   </motion.span>
                 </div>
               </motion.div>
@@ -1706,16 +1779,19 @@ result.data.rewards[0].reward);
                               style={{
                                 padding: "6px 12px",
                                 background:
-                                  rewards?.rewardType?.toLowerCase() === category.id
+                                  rewards?.rewardType?.toLowerCase() ===
+                                  category.id.toLowerCase()
                                     ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 50%, rgba(8, 16, 32, 0.8) 100%)"
                                     : "linear-gradient(135deg, rgba(8, 16, 32, 0.8) 0%, rgba(12, 20, 40, 0.6) 50%, rgba(6, 12, 28, 0.4) 100%)",
                                 border:
-                                  rewards?.rewardType?.toLowerCase() === category.id
+                                  rewards?.rewardType?.toLowerCase() ===
+                                  category.id.toLowerCase()
                                     ? "2px solid rgba(59, 130, 246, 0.6)"
                                     : "1px solid rgba(59, 130, 246, 0.25)",
                                 borderRadius: "10px",
                                 boxShadow:
-                                  rewards?.rewardType?.toLowerCase() === category.id
+                                  rewards?.rewardType?.toLowerCase() ===
+                                  category.id.toLowerCase()
                                     ? `0 0 20px ${
                                         category.color.includes("yellow")
                                           ? "#F59E0B"
@@ -1739,14 +1815,16 @@ result.data.rewards[0].reward);
                                 }}
                                 animate={{
                                   opacity:
-                                    rewards?.rewardType?.toLowerCase() === category.id
+                                    rewards?.rewardType?.toLowerCase() ===
+                                    category.id.toLowerCase()
                                       ? [0.6, 1, 0.6]
                                       : 0.4,
                                 }}
                                 transition={{
                                   duration: 1.5,
                                   repeat:
-                                    rewards?.rewardType?.toLowerCase() === category.id
+                                    rewards?.rewardType?.toLowerCase() ===
+                                    category.id.toLowerCase()
                                       ? Infinity
                                       : 0,
                                   ease: "easeInOut",
@@ -1754,7 +1832,8 @@ result.data.rewards[0].reward);
                               />
 
                               {/* Animated scan line for active rewards */}
-                              {rewards?.rewardType?.toLowerCase() === category.id && (
+                              {rewards?.rewardType?.toLowerCase() ===
+                                category.id && (
                                 <motion.div
                                   className="position-absolute top-0 start-0 w-100 h-100"
                                   style={{
@@ -1817,7 +1896,8 @@ result.data.rewards[0].reward);
                                       fontSize: "15px",
                                       fontWeight: "700",
                                       color:
-                                        rewards?.rewardType?.toLowerCase() === category.id
+                                        rewards?.rewardType?.toLowerCase() ===
+                                        category.id
                                           ? "rgba(219, 234, 254, 1)"
                                           : "rgba(168, 192, 255, 0.9)",
                                       textShadow: "0 1px 2px rgba(0,0,0,0.3)",
@@ -1825,11 +1905,13 @@ result.data.rewards[0].reward);
                                     }}
                                     animate={{
                                       scale:
-                                        rewards?.rewardType?.toLowerCase() === category.id
+                                        rewards?.rewardType?.toLowerCase() ===
+                                        category.id.toLowerCase()
                                           ? [1, 1.1, 1]
                                           : 1,
                                       color:
-                                        rewards?.rewardType?.toLowerCase() === category.id
+                                        rewards?.rewardType?.toLowerCase() ===
+                                        category.id.toLowerCase()
                                           ? [
                                               "rgba(219, 234, 254, 1)",
                                               "rgba(96, 165, 250, 1)",
@@ -1840,7 +1922,8 @@ result.data.rewards[0].reward);
                                     transition={{
                                       duration: 0.8,
                                       repeat:
-                                        rewards?.rewardType?.toLowerCase() === category.id
+                                        rewards?.rewardType?.toLowerCase() ===
+                                        category.id.toLowerCase()
                                           ? Infinity
                                           : 0,
                                       ease: "easeInOut",
