@@ -153,6 +153,7 @@ const RegisterModal = ({
     }, 500);
 
     setTimer(newTimer);
+    return () => clearTimeout(newTimer);
   };
 
   const handleSubmit = async (e) => {

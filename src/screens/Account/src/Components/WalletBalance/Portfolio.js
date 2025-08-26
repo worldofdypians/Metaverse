@@ -9,6 +9,7 @@ import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../../../hooks/useWindowSize";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 
 const Portfolio = ({
   address,
@@ -84,7 +85,7 @@ const Portfolio = ({
   const [listedItemsFiltered, setlistedItemsFiltered] = useState([]);
   const [listedItems, setlistedItems] = useState([]);
 
-  const [filterTitle, setFilterTitle] = useState("Collected");
+  const [filterTitle, setFilterTitle] = useState("Balance");
   const [nftItems, setNftItems] = useState([]);
   const [collectedItems, setcollectedItems] = useState([]);
   const [showNfts, setShowNfts] = useState(false);
@@ -109,7 +110,7 @@ const Portfolio = ({
   const [eventPopup, setEventPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [announcementsNews, setAnnouncementsNews] = useState([]);
-
+  const [balanceView, setBalanceView] = useState(true);
   const [showAllEvents, setShowAllEvents] = useState(false);
   const slider = useRef(null);
   const windowSize = useWindowSize();
@@ -224,36 +225,61 @@ const Portfolio = ({
   const sortNfts = (sortValue) => {
     if (sortValue === "collected") {
       setFilterTitle("Collected");
+      setBalanceView(false);
     } else if (sortValue === "favorites") {
       setFilterTitle("Favorites");
+      setBalanceView(false);
+
       getAllFavs();
       setLoading(true);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 2000);
+      return () => clearTimeout(timer);
+    } else if (sortValue === "balance") {
+      setFilterTitle("Balance");
+      setLoading(true);
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+      return () => clearTimeout(timer);
     } else if (sortValue === "listed") {
       setFilterTitle("Listed");
+      setBalanceView(false);
+
       setLoading(true);
       getListed();
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 2000);
+      return () => clearTimeout(timer);
     } else if (sortValue === "staked") {
       setFilterTitle("Staked");
+      setBalanceView(false);
+
       setLoading(true);
       // getStakes();
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 2000);
+      return () => clearTimeout(timer);
     } else if (sortValue === "eth") {
       setFilterTitle("");
-    } else if (sortValue === "offers") {
+      setBalanceView(false);
+    }
+    //  else if (sortValue === "balance") {
+    //   setFilterTitle("Balance");
+    // }
+    else if (sortValue === "offers") {
+      setBalanceView(false);
+
       setLoading(true);
       setFilterTitle("Offers");
       setmyOffersFiltered(myOffers);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -344,9 +370,10 @@ const Portfolio = ({
         setmyOffersFiltered(myOffers);
       }
     }
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setLoadingRecentListings(false);
     }, 1000);
+    return () => clearTimeout(timer);
   };
 
   const getListed = async () => {
@@ -1617,6 +1644,17 @@ const Portfolio = ({
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
                 <h6
                   className={`account-nft-sort ${
+                    filterTitle === "Balance" && "nft-sort-selected"
+                  } `}
+                  onClick={() => {
+                    sortNfts("balance");
+                    setShowNfts(false);
+                  }}
+                >
+                  Balance
+                </h6>
+                <h6
+                  className={`account-nft-sort ${
                     filterTitle === "Collected" && "nft-sort-selected"
                   } `}
                   onClick={() => {
@@ -1671,8 +1709,220 @@ const Portfolio = ({
                 >
                   Offers made
                 </h6>
+                {/* <h6
+                  className={`account-nft-sort ${
+                    filterTitle === "Balance" && "nft-sort-selected"
+                  } `}
+                  onClick={() => {
+                    sortNfts("balance");
+                    setShowNfts(false);
+                  }}
+                >
+                  Balance
+                </h6> */}
               </div>
+              {filterTitle === "Balance" && loading === false && (
+                <div className="row px-3 flex-column">
+                  <div className="d-flex align-items-center gap-2">
+                    <h6 className="mb-0 wod-balance-txt">My Balance:</h6>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/wodToken.svg"}
+                      width={20}
+                      height={20}
+                      alt=""
+                    />
+                    <h6 className="mb-0 wod-balance-txt">
+                      {getFormattedNumber(wodBalance, 2)}
+                    </h6>
+                  </div>
+                  <div className="d-flex flex-column gap-1">
+                    <h6 className="mb-0 wod-balance-txt w-100 text-center mt-3">
+                      Get WOD on
+                    </h6>
+                    <div className="sidebar-separator2 my-1"></div>
+                  </div>
 
+                  <div className="get-wod-portfolio-grid mt-2">
+                    <a
+                      href="https://www.kucoin.com/trade/WOD-USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        KuCoin
+                      </h6>
+                    </a>
+                    <a
+                      href="https://www.gate.io/trade/WOD_USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/gateBuyWod.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        Gate.io
+                      </h6>
+                    </a>
+                    <a
+                      href="https://www.mexc.com/exchange/WOD_USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        MEXC Global
+                      </h6>
+                    </a>
+                    <a
+                      href="https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/bitgetRound.png"
+                          }
+                          className="buywodimg"
+                        />
+                        Bitget
+                      </h6>
+                    </a>
+                    <a
+                      href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/bitpandaLogo.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        Bitpanda
+                      </h6>
+                    </a>
+                    <a
+                      href="https://www.binance.com/en/download"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        Binance Wallet
+                      </h6>
+                    </a>
+                    <a
+                      href="https://web3.okx.com/token/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/okxConnect.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        OKX Wallet
+                      </h6>
+                    </a>
+                    <a
+                      href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        PancakeSwap
+                      </h6>
+                    </a>
+            
+                    <a
+                      href="https://short.trustwallet.com/app-download"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        TrustWallet
+                      </h6>
+                    </a>
+                    <a
+                      href="https://changenow.io/currencies/world-of-dypians"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/changeNow.webp"
+                          }
+                          className="buywodimg"
+                        />
+                        ChangeNOW
+                      </h6>
+                    </a>
+                    <a
+                      href="https://blofin.com/spot/WOD-USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/blofinBuywod.png"
+                          }
+                          className="buywodimg"
+                        />
+                        BloFin
+                      </h6>
+                    </a>
+                  </div>
+                </div>
+              )}
               {filterTitle === "Favorites" && loading === false && (
                 <div
                   className="row px-3 mt-3"
@@ -2262,6 +2512,194 @@ const Portfolio = ({
                   )}
                 </div>
               )}
+              {/* 
+              {filterTitle === "Balance" && loading === false && (
+                <div className="d-flex flex-column  justify-content-center gap-2">
+                  <div className="d-flex flex-row gap-2 align-items-center">
+                    <h6 className="account-nft-title">Wallet Balance: </h6>
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/wodToken.svg"}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      <h6 className="account-nft-title">
+                        {getFormattedNumber(wodBalance, 2)}
+                      </h6>
+                    </div>
+                  </div>
+                  <div className="d-flex w-100 flex-column gap-2 align-items-start">
+                    <div className="d-flex justify-content-center align-items-center flex-column w-100">
+                      <h6 className="getwodon-title mb-0">Get WOD on</h6>
+                      <div className="sidebar-separator2 my-1"></div>
+                    </div>
+                    <div className="row mx-0 w-100">
+                      <a
+                        href="https://www.kucoin.com/trade/WOD-USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          KuCoin
+                        </h6>
+                      </a>
+                      <a
+                        href="https://www.gate.io/trade/WOD_USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/gateBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          Gate.io
+                        </h6>
+                      </a>
+
+                      <a
+                        href="https://www.mexc.com/exchange/WOD_USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          MEXC Global
+                        </h6>
+                      </a>
+                      <a
+                        href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/bitpandaLogo.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          Bitpanda
+                        </h6>
+                      </a>
+                      <a
+                        href="https://www.binance.com/en/download"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          Binance Wallet
+                        </h6>
+                      </a>
+                      <a
+                        href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          PancakeSwap
+                        </h6>
+                      </a>
+                      <a
+                        href="https://thena.fi/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8&swapType=1"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/thenaBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          THENA
+                        </h6>
+                      </a>
+                      <a
+                        href="https://short.trustwallet.com/app-download"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          TrustWallet
+                        </h6>
+                      </a>
+                      <a
+                        href="https://changenow.io/currencies/world-of-dypians"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/changeNow.webp"
+                            }
+                            className="buywodimg"
+                          />
+                          ChangeNOW
+                        </h6>
+                      </a>
+                      <a
+                        href="https://blofin.com/spot/WOD-USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/blofinBuywod.png"
+                            }
+                            className="buywodimg"
+                          />
+                          BloFin
+                        </h6>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )} */}
 
               {loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||

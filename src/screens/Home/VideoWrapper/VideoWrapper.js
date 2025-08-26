@@ -92,7 +92,7 @@ const VideoWrapper = ({
     },
     {
       title: "ChangeNOW",
-      logo: "changeNow.jpg",
+      logo: "changeNow.webp",
       link: "https://changenow.io/currencies/world-of-dypians",
     },
     {
