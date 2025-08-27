@@ -932,7 +932,7 @@ const AIQuestion = ({
                               0
                             )
                           : "Up to 100 - 500"}{" "} */}
-                        Up to 100 - 500 Stars
+                        Up to 500 Stars
                       </span>
                     </div>
                   </div>
@@ -997,7 +997,7 @@ const AIQuestion = ({
                               0
                             )
                           : "Up to 10,000 - 30,000"}{" "} */}
-                        Up to 10,000 - 30,000 Points
+                        Up to 30,000 Points
                       </span>
                     </div>
                   </div>
@@ -1071,7 +1071,7 @@ const AIQuestion = ({
                               );
                             }).reward
                           : "Up to $5 - $300"} */}
-                        Up to $5 - $300
+                        Up to $300
                       </span>
                     </div>
                   </div>
