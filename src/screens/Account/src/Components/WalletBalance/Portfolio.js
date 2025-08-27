@@ -1743,6 +1743,26 @@ const Portfolio = ({
                   </div>
 
                   <div className="get-wod-portfolio-grid mt-2">
+                      <a
+                                      href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      onClick={() => {
+                                        setshowBuyTooltip(false);
+                                      }}
+                                      className="getwod-item"
+                                    >
+                                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/binance-alpha.png"
+                                          }
+                                          className="buywodimg"
+                                        />
+                                        Binance Alpha
+                                      </h6>
+                                    </a>
+
                     <a
                       href="https://www.kucoin.com/trade/WOD-USDT"
                       target="_blank"
