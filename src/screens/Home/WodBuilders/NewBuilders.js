@@ -11,6 +11,10 @@ const NewBuilders = () => {
       backer: true,
     },
     {
+      name: "Binance Alpha",
+      icon: "binance-alpha.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
       banner: "victionBanner.png",
