@@ -297,10 +297,10 @@ const VideoWrapper = ({
               >
                 {/* Compact Announcement Card */}
                 <motion.div
-                  className="rounded-xl py-6 px-10 shadow-2xl relative overflow-hidden backdrop-blur-sm bordertw border-yellow-400/30"
+                  className="rounded-xl py-6 px-10 shadow-2xl relative overflow-hidden backdrop-blur-sm"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #F59E0B 0%, #F97316 25%, #EF4444 50%, #DC2626 75%, #B91C1C 100%)",
+                    background: "#181A20",
+                    border: "1px solid rgba(243, 186, 47, 0.4)",
                   }}
                   // initial={{ rotateX: 20 }}
                   // animate={{ rotateX: 0 }}
@@ -309,26 +309,25 @@ const VideoWrapper = ({
                 >
                   {/* Animated background pattern */}
                   <motion.div
-                    className="absolute inset-0"
+                    className="absolute inset-0 rounded-xl"
+                    style={{
+                      background:
+                        "linear-gradient(45deg, transparent 30%, rgba(243, 186, 47, 0.1) 50%, transparent 70%)",
+                    }}
                     animate={{
-                      background: [
-                        "linear-gradient(135deg, #F59E0B 0%, #F97316 25%, #EF4444 50%, #DC2626 75%, #B91C1C 100%)",
-                        "linear-gradient(225deg, #B91C1C 0%, #DC2626 25%, #EF4444 50%, #F97316 75%, #F59E0B 100%)",
-                        "linear-gradient(315deg, #F97316 0%, #F59E0B 25%, #B91C1C 50%, #EF4444 75%, #DC2626 100%)",
-                        "linear-gradient(45deg, #EF4444 0%, #B91C1C 25%, #F59E0B 50%, #F97316 75%, #DC2626 100%)",
-                        "linear-gradient(135deg, #F59E0B 0%, #F97316 25%, #EF4444 50%, #DC2626 75%, #B91C1C 100%)",
-                      ],
+                      x: ["-100%", "100%"],
                     }}
                     transition={{
-                      duration: 6,
+                      duration: 3,
                       repeat: Infinity,
                       ease: "linear",
+                      repeatDelay: 2,
                     }}
                   />
 
                   {/* Floating particles overlay */}
                   <motion.div
-                    className="absolute inset-0 opacity-30"
+                    className="absolute inset-0 opacity-15"
                     animate={{
                       backgroundPosition: ["0% 0%", "100% 100%"],
                     }}
@@ -338,7 +337,7 @@ const VideoWrapper = ({
                       ease: "linear",
                     }}
                     style={{
-                      backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)`,
+                      backgroundImage: `radial-gradient(circle, rgba(243, 186, 47, 0.8) 1px, transparent 1px)`,
                       backgroundSize: "25px 25px",
                     }}
                   />
@@ -363,7 +362,7 @@ const VideoWrapper = ({
                     >
                       <img
                         src={
-                          "https://cdn.worldofdypians.com/wod/binance-alpha-exchange-white.png"
+                          "https://cdn.worldofdypians.com/wod/binance-alpha-exchange.png"
                         }
                         alt="Binance"
                         className="h-6 w-auto opacity-90 filter brightness-110"
@@ -396,11 +395,16 @@ const VideoWrapper = ({
                         href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
                         target="_blank"
                         rel="noreferrer"
-                        className="bg-white rounded-md text-sm text-orange-600 hover:bg-yellow-50 font-bold px-3 py-1 shadow-xl flex items-center space-x-2 bordertw-2 border-white/50"
+                        className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"
+                        style={{
+                          background: "#F3BA2F",
+                          color: "#181A20",
+                          border: "2px solid rgba(243, 186, 47, 0.5)",
+                        }}
                       >
                         Trade Now
                         <img
-                          src="https://cdn.worldofdypians.com/wod/link-trade.svg"
+                          src="https://cdn.worldofdypians.com/wod/link-trade2.svg"
                           className="ps-3"
                         />
                       </a>
