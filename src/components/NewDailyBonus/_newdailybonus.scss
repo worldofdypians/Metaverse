@@ -414,8 +414,21 @@
 
 .new-rewards-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 5px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+
+  @media screen and (max-width: 991px) {
+    overflow-x: scroll;
+  }
+}
+
+.new-rewards-grid::-webkit-scrollbar {
+  display: none;
+}
+.new-rewards-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
 
   @media screen and (max-width: 991px) {
     overflow-x: scroll;
@@ -427,10 +440,36 @@
 }
 
 .new-rewards-item {
-  border-radius: 20px;
+  border-radius: 10px;
   // border: 3px solid #003c55;
   transition: all 0.25s;
+  border: 1px solid #4D4F77;
+  position: relative;
 }
+
+.manta-reward-item{
+  filter: brightness(0.5);
+  transition: all .25s;
+  cursor: pointer;
+}
+
+.manta-reward-item:hover{
+  filter: brightness(1);
+}
+
+
+
+.new-rewards-item-img{
+  filter: brightness(1) !important;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -10px;
+  margin: auto;
+  border: 1px solid #4D4F77;
+  border-radius: 50%;
+}
+
 .new-reward-amount {
   color: #fff;
   font-size: 14px;
