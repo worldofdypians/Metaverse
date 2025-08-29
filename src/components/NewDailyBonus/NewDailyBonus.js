@@ -286,7 +286,7 @@ const NewDailyBonus = ({
     {
       title: "Points",
       title2: "",
-      amount: "Points",
+      amount: "Up to 8,000",
       img: "ai-points-reward-active",
       error: true,
       threshold: [1, 200000],
@@ -304,7 +304,7 @@ const NewDailyBonus = ({
     {
       title: "Stars",
       title2: "",
-      amount: "Up to 200",
+      amount: "Up to 300",
       img: "ai-star-reward-active",
       error: true,
       threshold: [],
