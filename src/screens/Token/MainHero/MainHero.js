@@ -4,6 +4,11 @@ import "./_mainhero.scss";
 const MainHero = ({ scrollInto }) => {
   const exchanges = [
     {
+      title: "Binance Alpha",
+      logo: "binance-alpha-exchange.png",
+      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+    },
+    {
       title: "Kucoin",
       logo: "kucoin.svg",
       link: "https://www.kucoin.com/trade/WOD-USDT",
@@ -121,11 +126,13 @@ const MainHero = ({ scrollInto }) => {
                 >
                   <img
                     src={
-                      item.logo.includes("changeNow")
-                        ? require("./changeNowExchange.svg").default
+                      item.logo.includes("binance-alpha")
+                        ? require("../../../assets/binance-alpha-exchange.png")
                         : `https://cdn.worldofdypians.com/wod/${item.logo}`
                     }
-                    className=" exchange-grid-image"
+                    className={` exchange-grid-image ${
+                      index === 0 && "h-auto"
+                    }`}
                     alt=""
                   />
                 </a>

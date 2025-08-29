@@ -9,6 +9,10 @@ const WodPartners = ({ full }) => {
       icon: "bnbIcon.svg",
     },
     {
+      name: "Binance Alpha",
+      icon: "binance-alpha.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
     },
@@ -341,7 +345,7 @@ const WodPartners = ({ full }) => {
       name: "CoinRabbit",
       icon: "coinrabbit.png",
     },
-      {
+    {
       name: "Vameon",
       icon: "vameon.svg",
     },
@@ -383,8 +387,8 @@ const WodPartners = ({ full }) => {
                   <div className="partner-logo-container">
                     <img
                       src={
-                        partner.icon.includes("changeNow")
-                          ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
+                        partner.icon.includes("binance-alpha")
+                          ? require("../../../assets/binance-alpha.png")
                           : `https://cdn.worldofdypians.com/wod/${partner.icon}`
                       }
                       alt=""
