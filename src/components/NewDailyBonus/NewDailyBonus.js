@@ -287,15 +287,15 @@ const NewDailyBonus = ({
       title: "Points",
       title2: "",
       amount: "Points",
-      img: "points",
+      img: "ai-points-reward-active",
       error: true,
       threshold: [1, 200000],
     },
     {
       title: "Money",
       title2: "",
-      amount: "$0.5 - $5",
-      img: 2,
+      amount: "Up to $700",
+      img: 'ai-reward-active',
       error: false,
       threshold: [0.5, 5],
       min: 0.5,
@@ -304,33 +304,33 @@ const NewDailyBonus = ({
     {
       title: "Stars",
       title2: "",
-      amount: "Stars",
-      img: "star",
+      amount: "Up to 200",
+      img: "ai-star-reward-active",
       error: true,
       threshold: [],
       min: 10,
       max: 50,
     },
-    {
-      title: "Money",
-      title2: "needCaws",
-      amount: "$20-$30",
-      img: 30,
-      error: true,
-      threshold: [20, 30],
-      min: 20,
-      max: 30,
-    },
-    {
-      title: "Money",
-      title2: "needLand",
-      amount: "$350-$700",
-      img: 1500,
-      error: false,
-      threshold: [350, 700],
-      min: 350,
-      max: 700,
-    },
+    // {
+    //   title: "Money",
+    //   title2: "needCaws",
+    //   amount: "$20-$30",
+    //   img: 30,
+    //   error: true,
+    //   threshold: [20, 30],
+    //   min: 20,
+    //   max: 30,
+    // },
+    // {
+    //   title: "Money",
+    //   title2: "needLand",
+    //   amount: "$350-$700",
+    //   img: 1500,
+    //   error: false,
+    //   threshold: [350, 700],
+    //   min: 350,
+    //   max: 700,
+    // },
   ];
 
   const [chain, setChain] = useState("bnb");
@@ -8603,16 +8603,13 @@ const NewDailyBonus = ({
                           ? (rewardData &&
                               rewardData.rewards?.find((obj) => {
                                 return (
-                                  obj.rewardType === "Points" &&
-                                  Number(obj.reward) <= item.threshold[1]
+                                  obj.rewardType === "Points" 
                                 );
                               })) ||
                             (rewardData &&
                               rewardData.rewards?.find((obj) => {
                                 return (
                                   obj.rewardType !== "Points" &&
-                                  Number(obj.reward) > item.min &&
-                                  Number(obj.reward) <= item.max &&
                                   item.title === obj.rewardType
                                 );
                               }) &&
@@ -8630,16 +8627,13 @@ const NewDailyBonus = ({
                           : (rewardData &&
                               rewardData.rewards?.find((obj) => {
                                 return (
-                                  obj.rewardType === "Points" &&
-                                  Number(obj.reward) <= item.threshold[1]
+                                  obj.rewardType === "Points" 
                                 );
                               })) ||
                             (rewardData &&
                               rewardData.rewards?.find((obj) => {
                                 return (
                                   obj.rewardType !== "Points" &&
-                                  Number(obj.reward) > item.min &&
-                                  Number(obj.reward) <= item.max &&
                                   message === "needPremium"
                                 );
                               }))
@@ -8654,16 +8648,13 @@ const NewDailyBonus = ({
                             ? (rewardData &&
                                 rewardData.rewards?.find((obj) => {
                                   return (
-                                    obj.rewardType === "Points" &&
-                                    Number(obj.reward) <= item.threshold[1]
+                                    obj.rewardType === "Points" 
                                   );
                                 })) ||
                               (rewardData &&
                                 rewardData.rewards?.find((obj) => {
                                   return (
                                     obj.rewardType !== "Points" &&
-                                    Number(obj.reward) > item.min &&
-                                    Number(obj.reward) <= item.max &&
                                     item.title === obj.rewardType
                                   );
                                 }) &&
@@ -8681,24 +8672,21 @@ const NewDailyBonus = ({
                             : (rewardData &&
                                 rewardData.rewards?.find((obj) => {
                                   return (
-                                    obj.rewardType === "Points" &&
-                                    Number(obj.reward) <= item.threshold[1]
+                                    obj.rewardType === "Points" 
                                   );
                                 })) ||
                               (rewardData &&
                                 rewardData.rewards?.find((obj) => {
                                   return (
-                                    obj.rewardType !== "Points" &&
-                                    Number(obj.reward) > item.min &&
-                                    Number(obj.reward) <= item.max
+                                    obj.rewardType !== "Points" 
                                   );
                                 }) &&
                                 message === "needPremium")
                             ? "Active"
                             : ""
-                        }Icon.png`}
-                        width={60}
-                        height={60}
+                        }.webp`}
+                        width={30}
+                        height={30}
                         alt=""
                       />
                       {item.title2 !== "needPremium" ? (
@@ -8710,9 +8698,7 @@ const NewDailyBonus = ({
                         rewardData.rewards?.find((obj) => {
                           return (
                             obj.rewardType === item.title &&
-                            obj.status === "Unclaimed" &&
-                            obj.reward > item.min &&
-                            obj.reward <= item.max
+                            obj.status === "Unclaimed"
                           );
                         }) &&
                         message !== "needPremium" ? (
@@ -8733,9 +8719,7 @@ const NewDailyBonus = ({
                           rewardData.rewards?.find((obj) => {
                             return (
                               obj.rewardType === item.title &&
-                              obj.status === "Unclaimable" &&
-                              obj.reward > item.min &&
-                              obj.reward <= item.max
+                              obj.status === "Unclaimable" 
                             );
                           }) &&
                           message !== "needPremium" ? (
@@ -8759,9 +8743,7 @@ const NewDailyBonus = ({
                         rewardData.rewards?.find((obj) => {
                           return (
                             obj.rewardType === item.title &&
-                            obj.status === "Unclaimed" &&
-                            obj.reward > item.min &&
-                            obj.reward <= item.max
+                            obj.status === "Unclaimed" 
                           );
                         }) &&
                         message === "needPremium" ? (
@@ -8780,9 +8762,7 @@ const NewDailyBonus = ({
                         rewardData.rewards?.find((obj) => {
                           return (
                             obj.rewardType === item.title &&
-                            obj.status === "Unclaimable" &&
-                            obj.reward > item.min &&
-                            obj.reward <= item.max
+                            obj.status === "Unclaimable" 
                           );
                         }) &&
                         message === "needPremium" ? (
@@ -8805,8 +8785,7 @@ const NewDailyBonus = ({
                             rewardData &&
                             rewardData.rewards?.find((obj) => {
                               return (
-                                obj.rewardType === "Points" &&
-                                Number(obj.reward) <= item.threshold[1]
+                                obj.rewardType === "Points" 
                               );
                             })
                               ? "#F2C624"
@@ -8823,9 +8802,7 @@ const NewDailyBonus = ({
                                   return (
                                     obj.rewardType === item.title &&
                                     (obj.status !== "Unclaimed" ||
-                                      obj.status !== "Unclaimable") &&
-                                    obj.reward > item.min &&
-                                    obj.reward <= item.max
+                                      obj.status !== "Unclaimable") 
                                   );
                                 }) && message !== "needPremium"
                                 ? "#F2C624"
@@ -8834,9 +8811,7 @@ const NewDailyBonus = ({
                                   return (
                                     obj.rewardType === item.title &&
                                     (obj.status !== "Unclaimed" ||
-                                      obj.status !== "Unclaimable") &&
-                                    obj.reward > item.min &&
-                                    obj.reward <= item.max
+                                      obj.status !== "Unclaimable") 
                                   );
                                 }) && message === "needPremium"
                               ? "#F2C624"
