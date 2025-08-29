@@ -235,14 +235,14 @@ const VideoWrapper = ({
 
   return (
     <>
-      <div className="video-wrapper position-relative h-100">
+      <div className="video-wrapper binance-alpha-wrapper-mobile position-relative h-100">
         {/* <div
           className="row gap-4 gap-lg-0"
          
         > */}
         <div className="h-100">
           <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center align-items-lg-center custom-container">
-            <h4 className="main-hero-title font-montserrat">
+            <h4 className="main-hero-title-homepage font-montserrat">
               {/* The Biggest Metaverse
               <br />
               Ever Built */}
