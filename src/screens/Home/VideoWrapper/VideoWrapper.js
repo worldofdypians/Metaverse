@@ -116,17 +116,19 @@ const VideoWrapper = ({
 
   const dummyBetaPassData2 = [
     {
+      link: "https://www.binance.com/en/support/announcement/detail/7a596428195643a883bb927f7040caba",
+      title: "",
+      desc: "",
+      // desc: "Earn rewards by staking WOD tokens",
+      class: "tradingClass",
+    },
+    {
       link: "/token",
       title: "TOKEN",
       desc: "Power your gameplay with WOD",
       class: "tokenClass",
     },
-    {
-      link: "/staking",
-      title: "EARN",
-      desc: "Earn rewards by staking WOD tokens",
-      class: "earnClass",
-    },
+
     {
       link: "/game#challenges",
       title: "EVENTS & CHALLENGES",
@@ -462,6 +464,7 @@ const VideoWrapper = ({
                       item.link === "/" && setModal(true);
                     }}
                     key={index}
+                    target={item.title === "" ? "_blank" : "_self"}
                   >
                     <BetaEventCardHome data={item} isFrontPage={true} />
                   </NavLink>
@@ -502,6 +505,7 @@ const VideoWrapper = ({
                     item.link === "/" && setModal(true);
                   }}
                   key={index}
+                  target={item.title === "" ? "_blank" : "_self"}
                 >
                   <BetaEventCardHome data={item} isFrontPage={true} />
                 </NavLink>

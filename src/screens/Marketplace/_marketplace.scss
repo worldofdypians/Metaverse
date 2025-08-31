@@ -3318,9 +3318,12 @@
 
 .tea-eventwrapper {
   border-radius: 20px;
-  background: linear-gradient(to bottom, #171a3a 0%, rgb(255 29 254 / 50%) 168.67%);
+  background: linear-gradient(
+    to bottom,
+    #171a3a 0%,
+    rgb(255 29 254 / 50%) 168.67%
+  );
 }
-
 
 .gate-eventwrapper {
   border-radius: 20px;
@@ -3331,7 +3334,6 @@
   border-radius: 20px;
   background: linear-gradient(to bottom, #181636 15.48%, #0057ff 254.86%);
 }
-
 
 .taraxa-eventwrapper {
   border-radius: 20px;
@@ -3576,15 +3578,14 @@
 .mintchainwrapper {
   background: rgb(74 32 128 / 70%);
   cursor: pointer;
-
 }
 
-.mintchainwrapper-active,.mintchainwrapper:hover {
+.mintchainwrapper-active,
+.mintchainwrapper:hover {
   background: linear-gradient(180deg, #5b08d0 -17.02%, #7f2df7 100%);
   cursor: pointer;
   transition: all 0.25s;
 }
-
 
 .active-mint-selected {
   border: 2px solid #00fecf;
@@ -3770,6 +3771,17 @@
   backdrop-filter: blur(12.5px);
   min-height: 160px;
   background: url(https://cdn.worldofdypians.com/wod/earnBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.tradingClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(./assets/newTradingComp.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -4842,7 +4854,6 @@
   border-radius: 20px;
   background: linear-gradient(90deg, #181636 0%, #18a85d 168.67%);
 }
- 
 
 .upcoming-taiko-event {
   border-radius: 20px;
