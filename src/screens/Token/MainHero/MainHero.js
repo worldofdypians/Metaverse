@@ -6,7 +6,7 @@ const MainHero = ({ scrollInto }) => {
     {
       title: "Binance Alpha",
       logo: "binance-alpha-exchange.png",
-      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
     },
     {
       title: "Kucoin",
