@@ -45,7 +45,7 @@ const VideoWrapper = ({
     {
       title: "Binance Alpha",
       logo: "binance-alpha.png",
-      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
     },
     {
       title: "Kucoin",
@@ -395,7 +395,7 @@ const VideoWrapper = ({
                       whileTap={{ scale: 0.95 }}
                     >
                       <a
-                        href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                        href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
                         target="_blank"
                         rel="noreferrer"
                         className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"

@@ -597,7 +597,7 @@ const MyProfile = ({
                                   </div>
                                   <div className="buy-wod-wrapper gap-2">
                                     <a
-                                      href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                                      href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
                                       target="_blank"
                                       rel="noreferrer"
                                       onClick={() => {
