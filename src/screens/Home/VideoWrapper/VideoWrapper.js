@@ -7,6 +7,8 @@ import Slider from "react-slick";
 import useWindowSize from "../../../hooks/useWindowSize";
 import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard";
 import BuyWodCard from "../../../components/BuyWodCard/BuyWodCard";
+import { motion } from "motion/react";
+import "./binancetw.scss";
 
 const VideoWrapper = ({
   handleRegister,
@@ -40,6 +42,11 @@ const VideoWrapper = ({
   const html = document.querySelector("html");
 
   const exchanges = [
+    {
+      title: "Binance Alpha",
+      logo: "binance-alpha.png",
+      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+    },
     {
       title: "Kucoin",
       logo: "kucoinBuyWod.svg",
@@ -92,7 +99,7 @@ const VideoWrapper = ({
     },
     {
       title: "ChangeNOW",
-      logo: "changeNow.jpg",
+      logo: "changeNow.webp",
       link: "https://changenow.io/currencies/world-of-dypians",
     },
     {
@@ -228,14 +235,14 @@ const VideoWrapper = ({
 
   return (
     <>
-      <div className="video-wrapper position-relative">
+      <div className="video-wrapper binance-alpha-wrapper-mobile position-relative h-100">
         {/* <div
           className="row gap-4 gap-lg-0"
          
         > */}
-        <div className="">
+        <div className="h-100">
           <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center align-items-lg-center custom-container">
-            <h4 className="main-hero-title font-montserrat">
+            <h4 className="main-hero-title-homepage font-montserrat">
               {/* The Biggest Metaverse
               <br />
               Ever Built */}
@@ -247,34 +254,19 @@ const VideoWrapper = ({
               </h6>
               <Countdown date={releaseDate} renderer={renderer} />
             </div> */}
-            <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
-              {/* <a
-                  className="game-event-download py-2 px-5 d-flex align-items-center gap-2"
-                  onMouseEnter={() => setHoverState(true)}
-                  onMouseLeave={() => setHoverState(false)}
-                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                  target="_blank"
-                >
-                  <img src={hoverState ? epicwhite : epicblack} alt="icon" className="epicgame2" />
-                  Download
-                </a> */}
-
+            {/* <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
               <button
                 className="btn multiplayer-btn py-2 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
                 onClick={() => {
                   setBuyWodPopup(true);
                 }}
               >
-                {/* <img src={buyWod} alt="" /> */}
-                {/* Buy  */}
                 Get WOD
               </button>
               <NavLink
                 to={"/staking"}
                 className="btn stake-wod-btn2 py-2 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
               >
-                {/* <img src={buyWod} alt="" /> */}
-                {/* Buy  */}
                 Stake WOD
               </NavLink>
             </div>
@@ -294,17 +286,168 @@ const VideoWrapper = ({
                 className="home-line"
                 alt=""
               />
+            </div> */}
+
+            <div className="relative flex items-center justify-center z-5">
+              <motion.div
+                // initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                // animate={{ opacity: 1, scale: 1, y: 0 }}
+                // transition={{ duration: 0.8, ease: "easeOut" }}
+                className="text-center w-fit h-fit mx-auto px-6"
+              >
+                {/* Compact Announcement Card */}
+                <motion.div
+                  className="rounded-xl py-6 px-10 shadow-2xl relative overflow-hidden backdrop-blur-sm"
+                  style={{
+                    background: "#181A20",
+                    border: "1px solid rgba(243, 186, 47, 0.4)",
+                  }}
+                  // initial={{ rotateX: 20 }}
+                  // animate={{ rotateX: 0 }}
+                  // transition={{ duration: 0.8, ease: "easeOut" }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  {/* Animated background pattern */}
+                  <motion.div
+                    className="absolute inset-0 rounded-xl"
+                    style={{
+                      background:
+                        "linear-gradient(45deg, transparent 30%, rgba(243, 186, 47, 0.1) 50%, transparent 70%)",
+                    }}
+                    animate={{
+                      x: ["-100%", "100%"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear",
+                      repeatDelay: 2,
+                    }}
+                  />
+
+                  {/* Floating particles overlay */}
+                  <motion.div
+                    className="absolute inset-0 opacity-15"
+                    animate={{
+                      backgroundPosition: ["0% 0%", "100% 100%"],
+                    }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    style={{
+                      backgroundImage: `radial-gradient(circle, rgba(243, 186, 47, 0.8) 1px, transparent 1px)`,
+                      backgroundSize: "25px 25px",
+                    }}
+                  />
+
+                  {/* Binance Logo */}
+                  <motion.div
+                    className="flex justify-center mb-3 relative z-5"
+                    initial={{ y: -10, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                  >
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.05, 1],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      className="bg-white/10 backdrop-blur-sm rounded-lg p-3 bordertw border-white/20 shadow-lg"
+                    >
+                      <img
+                        src={
+                          // "https://cdn.worldofdypians.com/wod/binance-alpha-exchange.png"
+                          require("../../../assets/binance-alpha-exchange.png")
+                        }
+                        alt="Binance"
+                        className="h-6 w-auto opacity-90 filter brightness-110"
+                      />
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Compact Title */}
+                  <motion.h4
+                    className="text-2xl md:text-3xl font-bold text-white mb-3 relative z-5 drop-shadow-lg"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                  >
+                    WOD on Binance Alpha
+                  </motion.h4>
+
+                  {/* Single Action Button */}
+                  <motion.div
+                    className="flex justify-center relative z-5"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7, duration: 0.6 }}
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <a
+                        href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"
+                        style={{
+                          background: "#F3BA2F",
+                          color: "#181A20",
+                          border: "2px solid rgba(243, 186, 47, 0.5)",
+                        }}
+                      >
+                        Trade Now
+                        <img
+                          src="https://cdn.worldofdypians.com/wod/link-trade2.svg"
+                          className="ps-3"
+                        />
+                      </a>
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Enhanced corner animations */}
+                  {/* <motion.div
+                    className="absolute top-3 right-3 w-8 h-8 border-2 border-white/50 rounded-full relative z-6"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 12,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                  <motion.div
+                    className="absolute bottom-3 left-3 w-6 h-6 border-2 border-yellow-200/50 rounded-full relative z-6"
+                    animate={{ rotate: -360 }}
+                    transition={{
+                      duration: 10,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  /> */}
+
+                  {/* Additional glow effects */}
+                  <motion.div
+                    className="absolute top-1/2 left-1/2 w-32 h-32 bg-yellow-400/20 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.3, 0.6, 0.3],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+                </motion.div>
+              </motion.div>
             </div>
-            {/* <div className="join-beta-ribbon p-2 w-100">
-                <NavLink to="join-beta">
-                  <div className="d-flex justify-content-between gap-2 align-items-center">
-                    <span className="joinbeta-white-txt">
-                      Join Beta Program
-                    </span>
-                    <img src={whiteCircleArrow} alt="" />
-                  </div>
-                </NavLink>
-              </div> */}
           </div>
           {windowSize.width < 992 && (
             <div
@@ -326,10 +469,12 @@ const VideoWrapper = ({
               </Slider>
             </div>
           )}
+
           <video
             preload="auto"
             className="d-none d-lg-flex d-xl-flex elementor-video"
-            src="https://cdn.worldofdypians.com/media/wodhomepage.mp4"
+            // src="https://cdn.worldofdypians.com/media/wodTrailer2025.mp4"
+            src={require("../../../assets/wodTrailer2025.mp4")}
             autoPlay={true}
             loop={true}
             muted="muted"
