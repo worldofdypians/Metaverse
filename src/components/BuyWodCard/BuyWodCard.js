@@ -18,8 +18,8 @@ const BuyWodCard = ({ item }) => {
       <div className="d-flex flex-column align-items-center gap-2">
         <img
           src={
-            item.logo.includes("changeNow")
-              ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
+            item.logo.includes("binance-alpha")
+              ? require("../../assets/binance-alpha.png")
               : `https://cdn.worldofdypians.com/wod/${item.logo}`
           }
           alt=""

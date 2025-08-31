@@ -11,6 +11,10 @@ const NewBuilders = () => {
       backer: true,
     },
     {
+      name: "Binance Alpha",
+      icon: "binance-alpha.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
       banner: "victionBanner.png",
@@ -483,8 +487,8 @@ const NewBuilders = () => {
                 >
                   <img
                     src={
-                      item.icon.includes("changeNow")
-                        ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
+                      item.icon.includes("binance-alpha")
+                        ? require("../../../assets/binance-alpha.png")
                         : `https://cdn.worldofdypians.com/wod/${item.icon}`
                     }
                     width={45}
