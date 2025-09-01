@@ -594,7 +594,7 @@
 }
 .new-rewards-grid-2 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 15px;
 
   @media screen and (max-width: 991px) {

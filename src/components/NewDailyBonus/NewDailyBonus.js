@@ -286,7 +286,7 @@ const NewDailyBonus = ({
     {
       title: "Points",
       title2: "",
-      amount: "Up to 8,000",
+      amount: "Up to 8,000 Points",
       img: "ai-points-reward-active",
       error: true,
       threshold: [1, 200000],
@@ -304,7 +304,7 @@ const NewDailyBonus = ({
     {
       title: "Stars",
       title2: "",
-      amount: "Up to 300",
+      amount: "Up to 300 Stars",
       img: "ai-star-reward-active",
       error: true,
       threshold: [],
@@ -8592,7 +8592,11 @@ const NewDailyBonus = ({
           </div>
           <div className="rewards-container-outer custom-container-width d-flex align-items-center justify-content-center p-4">
             {windowSize.width > 992 ? (
-              <div className={`${chain === "manta" ? "new-rewards-grid-2" : "new-rewards-grid"}`}>
+              <div
+                className={`${
+                  chain === "manta" ? "new-rewards-grid-2" : "new-rewards-grid"
+                }`}
+              >
                 {dummyRewards.map((item, index) => (
                   <div
                     key={index}
@@ -8670,8 +8674,8 @@ const NewDailyBonus = ({
                                   message === "needPremium"
                                 );
                               }))
-                                  ? "1px solid #F2C624"
-                            : " 1px solid #4D4F77",
+                          ? "1px solid #F2C624"
+                          : " 1px solid #4D4F77",
                     }}
                   >
                     <img
@@ -8679,41 +8683,41 @@ const NewDailyBonus = ({
                       src={`https://cdn.worldofdypians.com/wod/${item.img}.webp`}
                       style={{
                         border:
-                        item.title2 !== "needPremium"
-                          ? (rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return obj.rewardType === item.title;
-                              })) ||
-                            (rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return (
-                                  obj.rewardType !== item.title &&
-                                  item.title === obj.rewardType
-                                );
-                              }) &&
-                              message != "needPremium") ||
-                            (rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return (
-                                  obj.rewardType === "Stars" &&
-                                  obj.rewardType === item.title
-                                );
-                              }) &&
-                              message != "needPremium")
+                          item.title2 !== "needPremium"
+                            ? (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return obj.rewardType === item.title;
+                                })) ||
+                              (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType !== item.title &&
+                                    item.title === obj.rewardType
+                                  );
+                                }) &&
+                                message != "needPremium") ||
+                              (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType === "Stars" &&
+                                    obj.rewardType === item.title
+                                  );
+                                }) &&
+                                message != "needPremium")
+                              ? "1px solid #F2C624"
+                              : " 1px solid #4D4F77"
+                            : (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return obj.rewardType === item.title;
+                                })) ||
+                              (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType !== item.title &&
+                                    message === "needPremium"
+                                  );
+                                }))
                             ? "1px solid #F2C624"
-                            : " 1px solid #4D4F77"
-                          : (rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return obj.rewardType === item.title;
-                              })) ||
-                            (rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return (
-                                  obj.rewardType !== item.title &&
-                                  message === "needPremium"
-                                );
-                              }))
-                                  ? "1px solid #F2C624"
                             : " 1px solid #4D4F77",
                       }}
                       width={30}
@@ -8848,34 +8852,24 @@ const NewDailyBonus = ({
                     </div>
                   </div>
                 ))}
-                {chain === "manta" &&
-                       <div
-                    className="new-rewards-item manta-reward-item p-2 d-flex justify-content-end align-items-center gap-2 ps-4"
-               
-                  >
+                {/* {chain === "manta" && (
+                  <div className="new-rewards-item manta-reward-item p-2 d-flex justify-content-end align-items-center gap-2 ps-4">
                     <img
                       className="new-rewards-item-img"
                       src={`https://cdn.worldofdypians.com/wod/manta-daily-bonus-reward.png`}
                       style={{
-                        border: " 1px solid #4D4F77"
-                        
+                        border: " 1px solid #4D4F77",
                       }}
                       width={30}
                       height={30}
                       alt=""
                     />
-             
+
                     <div className="d-flex align-items-bottom gap-1">
-                      <h6
-                        className="mb-0  new-reward-amount"
-                    
-                      >
-                        Lucky Charm
-                      </h6>
-                      {/* <span className="mb-0  new-reward-type">{item.title}</span> */}
+                      <h6 className="mb-0  new-reward-amount">Lucky Charm</h6>
                     </div>
                   </div>
-                }
+                )} */}
               </div>
             ) : (
               <></>
