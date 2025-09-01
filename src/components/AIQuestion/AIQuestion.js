@@ -781,7 +781,7 @@ const AIQuestion = ({
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
 
-  // console.log(selectedAnswer, selectedOption);
+
   return (
     <>
       <div className="d-flex w-100 gap-4 py-5 pt-3 pt-lg-0 py-lg-0">
@@ -872,9 +872,9 @@ const AIQuestion = ({
               {/* {step === 1 && ( */}
               <div
                 className={
-                  (selectedOption === selectedAnswer &&
-                    selectedAnswer !== undefined &&
-                    step === 1) ||
+                  // (selectedOption === selectedAnswer &&
+                  //   selectedAnswer !== undefined &&
+                  //   step === 1) ||
                   (questionRewards.find((item) => {
                     return item.rewardType === "Stars";
                   }) !== undefined &&
@@ -940,9 +940,9 @@ const AIQuestion = ({
               </div>
               <div
                 className={
-                  (selectedOption === selectedAnswer &&
-                    selectedAnswer !== undefined &&
-                    step === 1) ||
+                  // (selectedOption === selectedAnswer &&
+                  //   selectedAnswer !== undefined &&
+                  //   step === 1) ||
                   (questionRewards.find((item) => {
                     return item.rewardType === "Points";
                   }) !== undefined &&
@@ -1005,9 +1005,9 @@ const AIQuestion = ({
               </div>
               <div
                 className={
-                  (selectedOption === selectedAnswer &&
-                    selectedAnswer !== undefined &&
-                    step === 1) ||
+                  // (selectedOption === selectedAnswer &&
+                  //   selectedAnswer !== undefined &&
+                  //   step === 1) ||
                   (questionRewards.find((item) => {
                     return item.rewardType === "Money";
                   }) !== undefined &&
