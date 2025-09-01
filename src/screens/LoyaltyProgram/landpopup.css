@@ -16,6 +16,11 @@
 
 }
 
+.ai-popupbg {
+    background: rgba(18, 19, 63, 1) !important;
+    border: 0.5px solid #C0C9FF !important;
+}
+
 
 
 .popup-active{

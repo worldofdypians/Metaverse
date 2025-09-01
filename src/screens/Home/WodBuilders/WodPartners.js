@@ -349,6 +349,18 @@ const WodPartners = ({ full }) => {
       name: "Vameon",
       icon: "vameon.svg",
     },
+    {
+      name: "Phemex",
+      icon: "phemex.png",
+    },
+    {
+      name: "HiBt",
+      icon: "hibt.png",
+    },
+    {
+      name: "KCEX",
+      icon: "kcex.png",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
@@ -386,11 +398,7 @@ const WodPartners = ({ full }) => {
                 >
                   <div className="partner-logo-container">
                     <img
-                      src={
-                        partner.icon.includes("binance-alpha")
-                          ? require("../../../assets/binance-alpha.png")
-                          : `https://cdn.worldofdypians.com/wod/${partner.icon}`
-                      }
+                      src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
                       alt=""
                       style={{
                         width: "60px",

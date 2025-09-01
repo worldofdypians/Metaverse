@@ -45,7 +45,7 @@ const VideoWrapper = ({
     {
       title: "Binance Alpha",
       logo: "binance-alpha.png",
-      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
     },
     {
       title: "Kucoin",
@@ -112,21 +112,38 @@ const VideoWrapper = ({
       logo: "coinrabbit.png",
       link: "https://coinrabbit.io/exchange/",
     },
+    {
+      title: "HiBt",
+      logo: "hibt.png",
+      link: "https://hibt.com/trade/WOD-USDT",
+    },
+    {
+      title: "KCEX",
+      logo: "kcex.png",
+      link: "https://www.kcex.com/exchange/WOD_USDT",
+    },
+    {
+      title: "Phemex",
+      logo: "phemex.png",
+      link: "https://phemex.com/trade/WOD-USDT",
+    },
   ];
 
   const dummyBetaPassData2 = [
+    {
+      link: "https://www.binance.com/en/support/announcement/detail/7a596428195643a883bb927f7040caba",
+      title: "",
+      desc: "",
+      // desc: "Earn rewards by staking WOD tokens",
+      class: "tradingClass",
+    },
     {
       link: "/token",
       title: "TOKEN",
       desc: "Power your gameplay with WOD",
       class: "tokenClass",
     },
-    {
-      link: "/staking",
-      title: "EARN",
-      desc: "Earn rewards by staking WOD tokens",
-      class: "earnClass",
-    },
+
     {
       link: "/game#challenges",
       title: "EVENTS & CHALLENGES",
@@ -362,8 +379,7 @@ const VideoWrapper = ({
                     >
                       <img
                         src={
-                          // "https://cdn.worldofdypians.com/wod/binance-alpha-exchange.png"
-                          require("../../../assets/binance-alpha-exchange.png")
+                          "https://cdn.worldofdypians.com/wod/binance-alpha-exchange.png"
                         }
                         alt="Binance"
                         className="h-6 w-auto opacity-90 filter brightness-110"
@@ -393,7 +409,7 @@ const VideoWrapper = ({
                       whileTap={{ scale: 0.95 }}
                     >
                       <a
-                        href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                        href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
                         target="_blank"
                         rel="noreferrer"
                         className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"
@@ -462,6 +478,7 @@ const VideoWrapper = ({
                       item.link === "/" && setModal(true);
                     }}
                     key={index}
+                    target={item.title === "" ? "_blank" : "_self"}
                   >
                     <BetaEventCardHome data={item} isFrontPage={true} />
                   </NavLink>
@@ -502,6 +519,7 @@ const VideoWrapper = ({
                     item.link === "/" && setModal(true);
                   }}
                   key={index}
+                  target={item.title === "" ? "_blank" : "_self"}
                 >
                   <BetaEventCardHome data={item} isFrontPage={true} />
                 </NavLink>

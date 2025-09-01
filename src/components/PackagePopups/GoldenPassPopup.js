@@ -152,11 +152,12 @@ const GoldenPassPopup = ({
           setStatusColor("#FE7A00");
           setStatus(e?.message);
           setBundleState("fail");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBundleState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
@@ -192,11 +193,12 @@ const GoldenPassPopup = ({
             setStatusColor("#FE7A00");
             setStatus(e?.shortMessage);
             setBundleState("fail");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setBundleState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {
@@ -245,11 +247,12 @@ const GoldenPassPopup = ({
           setDepositState("failDeposit");
           console.log(e);
 
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       handleRefreshCountdown();
     } else if (window.WALLET_TYPE === "binance") {
@@ -281,11 +284,12 @@ const GoldenPassPopup = ({
           setStatus(e?.message);
           setDepositState("failDeposit");
           console.log(e);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setDepositState("initial");
           }, 3000);
+          return () => clearTimeout(timer);
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
@@ -312,11 +316,12 @@ const GoldenPassPopup = ({
             setStatus(e?.shortMessage);
             setDepositState("failDeposit");
             console.log(e);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setStatusColor("#00FECF");
               setStatus("");
               setDepositState("initial");
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
         if (result) {

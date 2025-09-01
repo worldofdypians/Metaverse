@@ -24,9 +24,12 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const renderer = ({ days, hours, minutes }) => {
   return (
-    <h6 className="timer-text2 mb-0">
-      {days}d: {hours}h:{minutes}m (UTC)
-    </h6>
+    <div className="d-flex flex-column gap-2 justify-content-center align-items-center ">
+      <h6 className="timer-text2 mb-0">
+        {days}d:{hours}h:{minutes}m
+      </h6>
+      <h6 className="timer-text2 mb-0">Next in</h6>
+    </div>
   );
 };
 
@@ -57,6 +60,27 @@ const renderer4 = ({ hours, minutes, seconds }) => {
     <span className="beast-siege-timer">
       {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
     </span>
+  );
+};
+
+const rendererAI = ({ hours, minutes }) => {
+  return (
+    <div className="d-flex flex-column gap-2 justify-content-center align-items-center ">
+      <div className="timer-wrapper d-flex align-items-start gap-1 justify-content-center">
+        <div className="d-flex flex-column gap-1">
+          <h6 className="mint-time m-0">{hours < 10 ? "0" + hours : hours}H</h6>
+          {/* <span className="days">Hours</span> */}
+        </div>
+        <h6 className="mint-time m-0">:</h6>
+        <div className="d-flex flex-column gap-1">
+          <h6 className="mint-time m-0">
+            {minutes < 10 ? "0" + minutes : minutes}M
+          </h6>
+          {/* <span className="days">minutes</span> */}
+        </div>
+      </div>
+      <span className="timer-text2">Next in</span>
+    </div>
   );
 };
 
@@ -148,6 +172,8 @@ const MyProfile = ({
   userRankTaraxa,
   userTaraxaScore,
   userTaraxaStars,
+  aiQuestionCompleted,
+  onDailyQuestionClick,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -362,7 +388,7 @@ const MyProfile = ({
   return (
     <>
       <div className="custom-container mt-5">
-        <div className="row mt-4 gap-5 gap-xl-0 mt-lg-0">
+        <div className="row mt-5 gap-5 gap-xl-0 mt-lg-3">
           <div className="col-12 col-xl-4 px-0 px-lg-2">
             <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
               <div className="d-flex align-items-center gap-2">
@@ -493,7 +519,7 @@ const MyProfile = ({
                               alt=""
                             />
                           )}
-                        {!domainName &&
+                        {/* {!domainName &&
                           isConnected &&
                           address &&
                           email &&
@@ -516,8 +542,8 @@ const MyProfile = ({
                                 // onClick={onDomainClick}
                               />
                             </a>
-                          )}
-                        {!domainName &&
+                          )} */}
+                        {/* {!domainName &&
                           isConnected &&
                           address &&
                           email &&
@@ -540,7 +566,7 @@ const MyProfile = ({
                                 // onClick={onDomainClick}
                               />
                             </a>
-                          )}
+                          )} */}
                       </div>
                     </div>
                     {(isConnected &&
@@ -551,325 +577,306 @@ const MyProfile = ({
                       address.toLowerCase() === coinbase.toLowerCase()) ||
                     (isConnected && !email && coinbase) ? (
                       <div
-                        className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2 p-2"
-                        onClick={() => {
-                          setshowBuyTooltip(true);
-                        }}
+                        className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2 wallet-address-wrapper2"
+                        onClick={openPortfolio}
                       >
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/wodToken.svg"
-                            }
-                            width={20}
-                            height={20}
-                            alt=""
-                          />
-                          <h6 className="mb-0">
-                            {getFormattedNumber(wodBalance, 2)}
-                          </h6>
-                        </div>
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/whiteArrows.svg"
-                          }
-                          alt=""
-                          style={{ width: 20, height: 20 }}
-                          className={showBuyTooltip ? "whitearrowUp" : ""}
-                        />
-                        {showBuyTooltip === true && (
-                          <div className="position-absolute w-100">
-                            <OutsideClickHandler
-                              onOutsideClick={() => {
-                                setshowBuyTooltip(false);
-                              }}
-                            >
-                              <div
-                                className="wodtooltip d-flex py-4 px-3"
-                                style={{ opacity: 1 }}
-                              >
-                                <div className="d-flex w-100 flex-column gap-2 align-items-start">
-                                  <div className="d-flex justify-content-center align-items-center flex-column w-100">
-                                    <h6 className="getwodon-title mb-0">
-                                      Get WOD on
-                                    </h6>
-                                    <div className="sidebar-separator2 my-1"></div>
-                                  </div>
-                                  <div className="buy-wod-wrapper gap-2">
-                                    <a
-                                      href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            // "https://cdn.worldofdypians.com/wod/binance-alpha.png"
-                                            require("../../assets/binance-alpha.png")
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        Binance Alpha
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://www.kucoin.com/trade/WOD-USDT"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        KuCoin
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://www.gate.io/trade/WOD_USDT"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/gateBuyWod.svg"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        Gate.io
-                                      </h6>
-                                    </a>
-
-                                    <a
-                                      href="https://www.mexc.com/exchange/WOD_USDT"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        MEXC Global
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/bitgetRound.png"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        Bitget
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/bitpandaLogo.svg"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        Bitpanda
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://www.binance.com/en/download"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        Binance Wallet
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://web3.okx.com/token/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/okxConnect.svg"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        OKX Wallet
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        PancakeSwap
-                                      </h6>
-                                    </a>
-                                    {/* <a
-                                      href="https://thena.fi/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8&swapType=1"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/thenaBuyWod.svg"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        THENA
-                                      </h6>
-                                    </a> */}
-                                    <a
-                                      href="https://short.trustwallet.com/app-download"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        TrustWallet
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://changenow.io/currencies/world-of-dypians"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/changeNow.webp"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        ChangeNOW
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://blofin.com/spot/WOD-USDT"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/blofinBuywod.png"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        BloFin
-                                      </h6>
-                                    </a>
-                                    <a
-                                      href="https://coinrabbit.io/exchange/"
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      onClick={() => {
-                                        setshowBuyTooltip(false);
-                                      }}
-                                      className="getwod-item"
-                                    >
-                                      <h6 className="bottomitems mb-0">
-                                        <img
-                                          src={
-                                            "https://cdn.worldofdypians.com/wod/coinrabbit.png"
-                                          }
-                                          className="buywodimg"
-                                        />
-                                        CoinRabbit
-                                      </h6>
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                            </OutsideClickHandler>
+                        <div className="d-flex gap-2 w-100 align-items-center justify-content-start">
+                          <div className=" border-0 p-2">
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/portfolio.svg"
+                              }
+                              width={25}
+                              height={25}
+                              alt=""
+                            />
                           </div>
-                        )}
+                          <div
+                            onClick={() => {
+                              setshowBuyTooltip(true);
+                            }}
+                            className="d-flex align-items-center gap-2 w-100 justify-content-between pe-2"
+                          >
+                            <div className="d-flex align-items-center gap-2">
+                              {/* <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/wodToken.svg"
+                                }
+                                width={20}
+                                height={20}
+                                alt=""
+                              /> */}
+                              <h6
+                                className="mb-0 wod-balance-txt"
+                                style={{ fontSize: "16px" }}
+                              >
+                                {/* {getFormattedNumber(wodBalance, 2)} */}
+                                Portfolio
+                              </h6>
+                            </div>
+                            {/* <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/whiteArrows.svg"
+                              }
+                              alt=""
+                              style={{ width: 20, height: 20 }}
+                              className={showBuyTooltip ? "whitearrowUp" : ""}
+                            /> */}
+                            {/* {showBuyTooltip === true && (
+                              <div className="position-absolute w-100">
+                                <OutsideClickHandler
+                                  onOutsideClick={() => {
+                                    setshowBuyTooltip(false);
+                                  }}
+                                >
+                                  <div
+                                    className="wodtooltip d-flex py-4 px-3"
+                                    style={{ opacity: 1 }}
+                                  >
+                                    <div className="d-flex w-100 flex-column gap-2 align-items-start">
+                                      <div className="d-flex justify-content-center align-items-center flex-column w-100">
+                                        <h6 className="getwodon-title mb-0">
+                                          Get WOD on
+                                        </h6>
+                                        <div className="sidebar-separator2 my-1"></div>
+                                      </div>
+                                      <div className="buy-wod-wrapper gap-2">
+                                        <a
+                                          href="https://www.kucoin.com/trade/WOD-USDT"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            KuCoin
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://www.gate.io/trade/WOD_USDT"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/gateBuyWod.svg"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            Gate.io
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://www.mexc.com/exchange/WOD_USDT"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            MEXC Global
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/bitgetRound.png"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            Bitget
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/bitpandaLogo.svg"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            Bitpanda
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://www.binance.com/en/download"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            Binance Wallet
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://web3.okx.com/token/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/okxConnect.svg"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            OKX Wallet
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            PancakeSwap
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://thena.fi/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8&swapType=1"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/thenaBuyWod.svg"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            THENA
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://short.trustwallet.com/app-download"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            TrustWallet
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://changenow.io/currencies/world-of-dypians"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/changeNow.webp"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            ChangeNOW
+                                          </h6>
+                                        </a>
+                                        <a
+                                          href="https://blofin.com/spot/WOD-USDT"
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          onClick={() => {
+                                            setshowBuyTooltip(false);
+                                          }}
+                                          className="getwod-item"
+                                        >
+                                          <h6 className="bottomitems mb-0">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/blofinBuywod.png"
+                                              }
+                                              className="buywodimg"
+                                            />
+                                            BloFin
+                                          </h6>
+                                        </a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </OutsideClickHandler>
+                              </div>
+                            )} */}
+                          </div>
+                        </div>
                       </div>
                     ) : !isConnected ? (
                       <button
@@ -924,72 +931,71 @@ const MyProfile = ({
               </div>
               <div className="sidebar-separator2 my-2"></div>
               <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row position-relative">
-                <div
+                <NavLink
                   className="wallet-address-wrapper2 p-2 w-100"
-                  onClick={() => {
-                    setRankDropdown(true);
-                    onShowRankPopup();
-                  }}
+                  to="/account/prime"
                 >
                   <div className="d-flex align-items-center justify-content-between">
-                    {/* <span className="user-data-item-left">My Progress</span> */}
-                    <div className="d-flex flex-column">
-                      <div className="d-flex">
-                        <span className="user-data-item-right">
-                          #
-                          {!userDataStar?.statValue ||
-                          userDataStar?.statValue === 0
-                            ? "---"
-                            : userDataStar.position
-                            ? userDataStar.position + 1
-                            : "---"}
+                    <div className="d-flex gap-1 align-items-center">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                        }
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <div className="d-flex flex-column">
+                        <span className="user-data-item-left">
+                          {!isPremium ? "Upgrade" : "Prime"}
+                        </span>
+                        <span className="user-data-item-left">
+                          {!isPremium ? "Status" : "Enabled"}
                         </span>
                       </div>
-                      <span className="user-data-item-left">Global Rank</span>
-                    </div>
-                    <div className="d-flex flex-column">
-                      <div className="d-flex">
-                        <span className="user-data-item-right">
-                          {getFormattedNumber(
-                            userDataStar.statValue ?? "---",
-                            0
-                          )}
-                        </span>
-                      </div>
-                      <span className="user-data-item-left">Stars</span>
-                    </div>
-                  </div>
-                </div>
-                {/* <div
-                  className="wallet-address-wrapper2 p-2 w-100"
-                  onClick={openGlobalLeaderboard}
-                >
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex flex-column">
-                      <span className="user-data-item-left">Stars</span>
-                      <span className="user-data-item-left">Collected</span>
                     </div>
                     <div className="d-flex">
                       <span className="user-data-item-right">
-                        {getFormattedNumber(userDataStar.statValue ?? "---", 0)}
+                        {!isPremium ? "Get" : "Lifetime"}
                       </span>
                     </div>
                   </div>
-                </div> */}
+                </NavLink>
                 <div
-                  onClick={openPortfolio}
                   className="wallet-address-wrapper2 p-2 w-100"
+                  onClick={onGoldenpassClick}
                 >
-                  <div className="d-flex gap-2 align-items-center justify-content-start">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/portfolio.svg"}
-                      width={25}
-                      height={25}
-                      alt=""
-                    />
-                    <h6 className="user-data-item-left mb-0">My Portfolio</h6>
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex gap-1 align-items-center">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/goldenPassBadge.png"
+                        }
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <div className="d-flex flex-column">
+                        <span className="user-data-item-left">Golden Pass</span>
+                        <span className="user-data-item-left">
+                          {/* {!isgoldenPassActive ? `` : "Activated"} */}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="d-flex">
+                      {!isgoldenPassActive ? (
+                        <button className="activate-btn2 px-3 py-1">
+                          Activate
+                        </button>
+                      ) : (
+                        <Countdown
+                          date={Number(isgoldenPassActive) * 1000}
+                          renderer={renderer}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
+
                 {rankDropdown === true && (
                   <OutsideClickHandler
                     onOutsideClick={() => {
@@ -1059,7 +1065,7 @@ const MyProfile = ({
               </div>
               <div className="sidebar-separator2 my-2"></div>
 
-              <div className="daily-progress-wrapper p-3 d-flex flex-column gap-3">
+              <div className="daily-progress-wrapper p-4 d-flex flex-column gap-3">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="progress-line"></div>
                   <span className="daily-progress-span mx-2">
@@ -1427,14 +1433,51 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-8 px-0 px-lg-2">
                 <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-end  align-items-lg-center justify-content-center justify-content-lg-between p-3">
-                  <div className="d-flex flex-row flex-lg-column gap-2 gap-lg-0">
-                    <h6 className="leaderboards-title">Game</h6>
-                    <h6
+                  <div className="d-flex flex-row flex-lg-column align-items-center gap-2">
+                    <h6 className="leaderboards-title mb-0">Leaderboards</h6>
+                    {/* <h6
                       className="leaderboards-title mb-0"
                       style={{ color: "#8C56FF" }}
                     >
                       Leaderboards
-                    </h6>
+                    </h6> */}
+                    <div
+                      className="wallet-address-wrapper2 p-2 w-100"
+                      onClick={() => {
+                        setRankDropdown(true);
+                        onShowRankPopup();
+                      }}
+                    >
+                      <div className="d-flex gap-2 align-items-center justify-content-between">
+                        <div className="d-flex flex-column">
+                          <div className="d-flex">
+                            <span className="user-data-item-right">
+                              #
+                              {!userDataStar?.statValue ||
+                              userDataStar?.statValue === 0
+                                ? "---"
+                                : userDataStar.position
+                                ? userDataStar.position + 1
+                                : "---"}
+                            </span>
+                          </div>
+                          <span className="user-data-item-left">
+                            Global Rank
+                          </span>
+                        </div>
+                        <div className="d-flex flex-column">
+                          <div className="d-flex">
+                            <span className="user-data-item-right">
+                              {getFormattedNumber(
+                                userDataStar.statValue ?? "---",
+                                0
+                              )}
+                            </span>
+                          </div>
+                          <span className="user-data-item-left">Stars</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className="d-flex align-items-center leaderboards-flag-wrapper gap-3">
                     <div
@@ -1507,7 +1550,7 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
+              <div className="col-12 col-lg-5 mt-3">
                 <div
                   className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
                   onClick={openMyRewards}
@@ -1578,9 +1621,105 @@ const MyProfile = ({
                   />
                 </div>
               </div>
-              <div className="col-12 col-lg-3 mt-3 px-0 px-lg-2">
+              <div className="col-12 col-lg-4 mt-3">
                 <div
-                  className="new-special-rewards-wrapper d-flex flex-column justify-content-between p-3 h-100"
+                  className="ai-question-banner d-flex position-relative flex-column justify-content-between p-3 h-100"
+                  onClick={onDailyQuestionClick}
+                >
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/aiQuestion-oryn.webp"
+                    }
+                    className="ai-question-img"
+                    alt=""
+                  />
+                  <h6 className=" question-of-the-day-title ">
+                    QUESTION OF THE DAY
+                  </h6>
+
+                  <div className="d-flex">
+                    {/* {aiQuestionCompleted && (
+                      <Countdown date={Number(midnight)} renderer={renderer} />
+                    )} */}
+                    {/* {!aiQuestionCompleted && ( */}
+                    <div className={`d-flex flex-column infotips-holder`}>
+                     <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot"></div>
+                        <span
+                          className="beast-siege-timer"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#fff",
+                          }}
+                        >
+                          Stars
+                        </span>
+                      </div>
+                      <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot"></div>
+                        <span
+                          className="beast-siege-timer"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#fff",
+                          }}
+                        >
+                          Points
+                        </span>
+                      </div>
+                      <div className="d-flex align-items-center gap-1">
+                        <div className="yellow-dot"></div>
+                        <span
+                          className="beast-siege-timer"
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 400,
+                            color: "#fff",
+                          }}
+                        >
+                          Rewards
+                        </span>
+                      </div>
+                    </div>
+                    {/* )} */}
+                    {aiQuestionCompleted ? (
+                      //   <div className="d-flex flex-column gap-1">
+                      //   <span className="beast-siege-ends-in">Available until:</span>
+                      //   <Countdown renderer={renderer4} date={midnight} />
+                      // </div>
+                      <>
+                        <div className="ready-circle-2-position d-flex flex-column gap-1 align-items-center justify-content-center">
+                          <div className="ready-circle-ai d-flex flex-column gap-1">
+                            <Countdown renderer={renderer4} date={midnight} />
+                          </div>
+                          <span className="new-time-remaining">
+                            Time Remaining
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="ready-circle d-flex">
+                          <span className="beast-siege-timer">Ready</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/goldArrow.svg"
+                    }
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className="col-12 col-lg-3 mt-3">
+                <div
+                  className="new-special-rewards-wrapper position-relative d-flex flex-column justify-content-between p-3 h-100"
                   onClick={openSpecialRewards}
                 >
                   <h6 className="special-rewards-title">Special Rewards</h6>
@@ -1598,7 +1737,7 @@ const MyProfile = ({
                   />
                 </div>
               </div>
-              <div className="col-12 col-lg-3 mt-3 px-0 px-lg-2">
+              {/* <div className="col-12 col-lg-3 mt-3">
                 <a
                   href="https://wod.space.id"
                   rel="noreferrer"
@@ -1632,9 +1771,40 @@ const MyProfile = ({
                     alt=""
                   />
                 </a>
+              </div> */}
+
+              <div className="col-12 col-lg-6 mt-3">
+                <a
+                  href="https://wod.space.id"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="wod-domain-name-wrapper h-auto d-flex align-items-center justify-content-between gap-2 p-2 pe-3"
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/domainNameIcon.png"
+                      }
+                      className="wod-domain-icon"
+                      alt=""
+                    />
+                    <div className="d-flex flex-column justify-content-between h-100 mb-0">
+                      <h6
+                        className="special-rewards-title mb-0"
+                        style={{ color: "#FFD9F1", fontSize: "15px" }}
+                      >
+                        .WOD Domain
+                      </h6>
+                      <span className="wod-domain-name-span">
+                        Claim Your Identity
+                      </span>
+                    </div>
+                  </div>
+                  <button className="get-wodname-button px-3">Get</button>
+                </a>
               </div>
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
-                <NavLink to="/account/prime">
+              <div className="col-12 col-lg-6 mt-3">
+                <NavLink to="/loyalty-program">
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                       <div className="d-flex align-items-center gap-2">
@@ -1646,44 +1816,27 @@ const MyProfile = ({
                           style={{ width: 44, height: 44 }}
                         />
                         <div className="d-flex flex-column">
-                          <span
-                            className="user-blue-rank"
-                            style={{ color: isPremium ? "#F3BF09" : "" }}
-                          >
-                            {!isPremium ? "Upgrade Status" : "Prime Enabled"}
+                          <span className="user-blue-rank">
+                            Loyalty Program
                           </span>
-                          <span className="user-rank-text">
-                            {!isPremium ? "Prime" : ""}
-                          </span>
+                          <span className="user-rank-text">Season five</span>
                         </div>
                       </div>
-                      {!isPremium ? (
-                        <NavLink
-                          className="activate-btn2 px-3 py-1"
-                          to="/account/prime"
-                          style={{
-                            background: "#7E52D2",
-                          }}
-                        >
-                          Get
-                        </NavLink>
-                      ) : (
-                        <button
-                          className="activate-btn2 px-3 py-1"
-                          style={{ background: "transparent" }}
-                          // onClick={onPremiumClick}
-                        >
-                          Lifetime
-                        </button>
-                      )}
+
+                      <NavLink
+                        className="activate-btn2 px-3 py-1"
+                        to="/loyalty-program"
+                        style={{
+                          background: "#7E52D2",
+                        }}
+                      >
+                        View More
+                      </NavLink>
                     </div>
                   </div>
                 </NavLink>
               </div>
-              <div
-                className="col-12 col-lg-6 mt-3 px-0 px-lg-2"
-                onClick={onGoldenpassClick}
-              >
+              {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
                     <div className="d-flex align-items-center gap-2">
@@ -1718,17 +1871,13 @@ const MyProfile = ({
                         <Countdown
                           date={Number(isgoldenPassActive) * 1000}
                           renderer={renderer}
-                          // onComplete={() => {
-                          //   setcountdown();
-                          //   setisActive(false);
-                          // }}
                         />
                       )}
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
+              </div> */}
+              <div className="col-12 col-lg-6 mt-3">
                 <NavLink
                   to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
                   onClick={onEventCardClick}
