@@ -75,10 +75,11 @@ function SingUpBNB({
               loginError: err?.message,
             };
           });
-          setTimeout(() => {
+         const timer = setTimeout(() => {
             setuserExists(true);
             onUserExists();
           }, 3000);
+          return () => clearTimeout(timer);
         }
         setLoginValues((prev) => {
           return {

@@ -120,9 +120,10 @@ const LandPremiumChecklist = ({
         .then(() => {
           setcheckPassiveBtn(false);
           setloading(false);
-          setTimeout(() => {
+        const timer =  setTimeout(() => {
             onUnstake();
           }, 2000);
+          return () => clearTimeout(timer);
         })
         .catch((err) => {
           console.log(err);
