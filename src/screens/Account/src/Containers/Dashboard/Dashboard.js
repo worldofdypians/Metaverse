@@ -7567,7 +7567,7 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {showDailyQuestion && (
+        {(showDailyQuestion || hashValue === "#daily-question") && (
           // <OutsideClickHandler
           //   onOutsideClick={() => setShowDailyQuestion(false)}
           // >
@@ -7730,6 +7730,7 @@ function Dashboard({
                   <img
                     src={"https://cdn.worldofdypians.com/wod/ai-popupx.png"}
                     onClick={() => {
+                      window.location.hash = "";
                       if (aiStep === 0) {
                         setSuspenseSound(true);
                         setShowDailyQuestion(false);
@@ -7776,6 +7777,7 @@ function Dashboard({
                   onClose={() => {
                     setSuspenseSound(true);
                     setShowDailyQuestion(false);
+                    window.location.hash = "";
                     suspenseMusicRef.current?.pause();
                     suspenseMusicRef.current.currentTime = 0;
                     clockSoundRef.current?.pause();
