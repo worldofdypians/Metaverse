@@ -109,9 +109,10 @@ const StakeModal = ({
         setloading(false);
         setColor("#52A8A4");
         setStatus("*Caws approved successfully");
-        setTimeout(() => {
+       const timer = setTimeout(() => {
           checkApproval();
         }, 3000);
+        return () => clearTimeout(timer);
       })
       .catch((err) => {
         window.alertify.error(err?.message);
@@ -133,9 +134,10 @@ const StakeModal = ({
         setloading(false);
         setColor("#52A8A4");
         setStatus("*WOD approved successfully");
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           checkApprovalLand();
         }, 3000);
+        return () => clearTimeout(timer);
       })
       .catch((err) => {
         setloading(false);

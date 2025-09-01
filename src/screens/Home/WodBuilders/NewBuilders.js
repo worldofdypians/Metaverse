@@ -470,6 +470,19 @@ const NewBuilders = () => {
       name: "Vameon",
       icon: "vameon.svg",
     },
+  
+    {
+      name: "Phemex",
+      icon: "phemex.png",
+    },
+    {
+      name: "HiBt",
+      icon: "hibt.png",
+    },
+    {
+      name: "KCEX",
+      icon: "kcex.png",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
@@ -486,11 +499,7 @@ const NewBuilders = () => {
                   className={`d-flex flex-column align-items-center gap-2`}
                 >
                   <img
-                    src={
-                      item.icon.includes("binance-alpha")
-                        ? require("../../../assets/binance-alpha.png")
-                        : `https://cdn.worldofdypians.com/wod/${item.icon}`
-                    }
+                    src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                     width={45}
                     height={45}
                     alt=""
