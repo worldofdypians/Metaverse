@@ -90,16 +90,18 @@ const TimePieceMint = ({
       } else if (cawsArray.length > 0) {
         if (cawsArray.length < nftCount && cawsArray.length > 0) {
           setNftStatus("*You don't have enough CAWS NFTs.");
-          setTimeout(() => {
+         const timer = setTimeout(() => {
             setNftCount(cawsArray.length);
             setNftStatus("*50 NFT limit.");
           }, 3000);
+          return () => clearTimeout(timer);
         } else if (nftCount > 50 && cawsArray.length === 50) {
           setNftStatus("*Exceeded mint limit of 10 NFTs.");
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setNftCount(cawsArray.length);
             setNftStatus("*50 NFT limit.");
           }, 3000);
+          return () => clearTimeout(timer);
         } else if (cawsArray.length > 0 && cawsArray.length >= nftCount) {
           setNftStatus("*50 NFT limit.");
         }

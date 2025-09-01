@@ -69,6 +69,21 @@ const MainHero = ({ scrollInto }) => {
       logo: "blofinExchange.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
+    {
+      title: "KCEX",
+      logo: "kcex-exchange.png",
+      link: "https://www.kcex.com/exchange/WOD_USDT",
+    },
+    {
+      title: "HiBt",
+      logo: "hibt-exchange-white.png",
+      link: "https://hibt.com/trade/WOD-USDT",
+    },
+    {
+      title: "Phemex",
+      logo: "phemex-exchange.png",
+      link: "https://phemex.com/trade/WOD-USDT",
+    },
   ];
 
   return (
@@ -125,13 +140,12 @@ const MainHero = ({ scrollInto }) => {
                   key={index}
                 >
                   <img
-                    src={
-                      item.logo.includes("binance-alpha")
-                        ? require("../../../assets/binance-alpha-exchange.png")
-                        : `https://cdn.worldofdypians.com/wod/${item.logo}`
-                    }
+                    src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
                     className={` exchange-grid-image ${
-                      index === 0 && "h-auto"
+                      (index === 0 ||
+                        item.title === "KCEX" ||
+                        item.title === "HiBt") &&
+                      "h-auto"
                     }`}
                     alt=""
                   />

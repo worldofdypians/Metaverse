@@ -112,6 +112,21 @@ const VideoWrapper = ({
       logo: "coinrabbit.png",
       link: "https://coinrabbit.io/exchange/",
     },
+    {
+      title: "HiBt",
+      logo: "hibt.png",
+      link: "https://hibt.com/trade/WOD-USDT",
+    },
+    {
+      title: "KCEX",
+      logo: "kcex.png",
+      link: "https://www.kcex.com/exchange/WOD_USDT",
+    },
+    {
+      title: "Phemex",
+      logo: "phemex.png",
+      link: "https://phemex.com/trade/WOD-USDT",
+    },
   ];
 
   const dummyBetaPassData2 = [
@@ -364,8 +379,7 @@ const VideoWrapper = ({
                     >
                       <img
                         src={
-                          // "https://cdn.worldofdypians.com/wod/binance-alpha-exchange.png"
-                          require("../../../assets/binance-alpha-exchange.png")
+                          "https://cdn.worldofdypians.com/wod/binance-alpha-exchange.png"
                         }
                         alt="Binance"
                         className="h-6 w-auto opacity-90 filter brightness-110"

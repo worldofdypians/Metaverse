@@ -216,10 +216,11 @@ function AuthBNB({
     ) {
       console.log(result3);
       setsuccessLink(true);
-      setTimeout(() => {
+    const timer =  setTimeout(() => {
         // window.location.reload();
         navigate("/account");
       }, 3000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -237,7 +238,7 @@ function AuthBNB({
         },
       }).then(() => {
         onWalletLinkComplete();
-        handleFirstTask(coinbase);
+        // handleFirstTask(coinbase);
       });
     } catch (error) {
       console.log(error);
@@ -382,6 +383,7 @@ function AuthBNB({
                           isLogin={isLogin}
                           handleGoToLogin={() => {
                             handleChange("click", 0);
+                            handleManageLoginStates();
                           }}
                           onShowVerify={(value) => {
                             setShowVerify(value);
