@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./_investors.scss";
 import NewBuilders from "../../Home/WodBuilders/NewBuilders";
+ 
 
 const Investors = ({ page }) => {
   const investors = [
@@ -15,11 +16,10 @@ const Investors = ({ page }) => {
       link: "https://trustwallet.com/",
     },
     {
-      title: "Immutable",
-      logo: "immutableBackers.svg",
-      link: "https://www.immutable.com/",
+      title: "Matchain",
+      logo: "matchainBackers.svg",
+      link: "https://www.matchain.io/",
     },
-
     {
       title: "CORE",
       logo: "coreBackers.svg",
@@ -71,19 +71,20 @@ const Investors = ({ page }) => {
       link: "https://www.easy2stake.com/",
     },
     {
-      title: "Matchain",
-      logo: "matchainBackers.svg",
-      link: "https://www.matchain.io/",
+      title: "Immutable",
+      logo: "immutableBackers.svg",
+      link: "https://www.immutable.com/",
     },
   ];
 
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (page !== "home") {
-      setShow(true);
+    if(page !== "home"){
+      setShow(true)
     }
-  }, []);
+  }, [])
+  
 
   return (
     <div
@@ -105,7 +106,7 @@ const Investors = ({ page }) => {
               key={index}
             >
               <img
-                src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
+                src={(`https://cdn.worldofdypians.com/wod/${item.logo}`)}
                 className="investors-img"
                 alt=""
               />
@@ -114,8 +115,14 @@ const Investors = ({ page }) => {
         </div>
       </div>
       {show && (
-        <div className={`d-flex custom-container flex-column gap-3`}>
-          <h6 className={`mb-0 explorer-grid-title`}>Partners</h6>
+        <div
+          className={`d-flex custom-container flex-column gap-3`}
+        >
+          <h6
+            className={`mb-0 explorer-grid-title`}
+          >
+            Partners
+          </h6>
           <NewBuilders />
         </div>
       )}
