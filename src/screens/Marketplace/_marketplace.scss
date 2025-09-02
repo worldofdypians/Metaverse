@@ -2504,6 +2504,19 @@
   }
 }
 
+.past-taraxa-mint {
+  background-image: url("https://cdn.worldofdypians.com/wod/taraxaPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("https://cdn.worldofdypians.com/wod/taraxaPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
 .past-vanar-mint {
   background-image: url("https://cdn.worldofdypians.com/wod/pastVanarMintBg.webp");
   width: 100%;
@@ -2655,6 +2668,18 @@
   }
 }
 
+.past-taraxa-mint-amount {
+  color: #15AB5A;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
 .past-sei-mint-amount {
   color: #be2c2c;
   text-align: center;
@@ -2774,6 +2799,19 @@
 .past-taiko-mint-desc {
   color: #fff;
   text-shadow: 0px 3px 4px rgba(155, 67, 255, 0.7);
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-taraxa-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(21, 171, 90, 0.7);
   font-size: 40px;
   font-style: normal;
   font-weight: 700;
@@ -3318,12 +3356,9 @@
 
 .tea-eventwrapper {
   border-radius: 20px;
-  background: linear-gradient(
-    to bottom,
-    #171a3a 0%,
-    rgb(255 29 254 / 50%) 168.67%
-  );
+  background: linear-gradient(to bottom, #171a3a 0%, rgb(255 29 254 / 50%) 168.67%);
 }
+
 
 .gate-eventwrapper {
   border-radius: 20px;
@@ -3334,6 +3369,7 @@
   border-radius: 20px;
   background: linear-gradient(to bottom, #181636 15.48%, #0057ff 254.86%);
 }
+
 
 .taraxa-eventwrapper {
   border-radius: 20px;
@@ -3578,14 +3614,15 @@
 .mintchainwrapper {
   background: rgb(74 32 128 / 70%);
   cursor: pointer;
+
 }
 
-.mintchainwrapper-active,
-.mintchainwrapper:hover {
+.mintchainwrapper-active,.mintchainwrapper:hover {
   background: linear-gradient(180deg, #5b08d0 -17.02%, #7f2df7 100%);
   cursor: pointer;
   transition: all 0.25s;
 }
+
 
 .active-mint-selected {
   border: 2px solid #00fecf;
@@ -3771,17 +3808,6 @@
   backdrop-filter: blur(12.5px);
   min-height: 160px;
   background: url(https://cdn.worldofdypians.com/wod/earnBg.webp);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.tradingClass {
-  border-radius: 10px;
-  border: 1px solid #b8b8e0;
-  backdrop-filter: blur(12.5px);
-  min-height: 160px;
-  background: url(./assets/newTradingComp.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -4854,6 +4880,7 @@
   border-radius: 20px;
   background: linear-gradient(90deg, #181636 0%, #18a85d 168.67%);
 }
+ 
 
 .upcoming-taiko-event {
   border-radius: 20px;

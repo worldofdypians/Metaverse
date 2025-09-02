@@ -56,6 +56,7 @@ import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
 import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
+import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -182,6 +183,9 @@ function Dashboard({
   myTaraxaNfts,
   myTeaBaseNfts,
   teaEarnUsd,
+  openKickstarter,
+  royaltyCount,
+  onOpenRoyaltyChest,
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -482,6 +486,8 @@ function Dashboard({
 
   const [loading, setLoading] = useState(false);
   const [showDailyQuestion, setShowDailyQuestion] = useState(false);
+  const [booster, setBooster] = useState(false);
+
   const [tooltip, setTooltip] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
@@ -800,6 +806,7 @@ function Dashboard({
   const [activePlayerStar, setActivePlayerStar] = useState([]);
   const [activePlayerStarWeekly, setActivePlayerStarWeekly] = useState([]);
   const [userDataStar, setUserDataStar] = useState({});
+  const [userPreviousDataStar, setUserPreviousDataStar] = useState({});
   const [userDataStarWeekly, setUserDataStarWeekly] = useState({});
   const [prevDataStar, setPrevDataStar] = useState([]);
   const [prevDataStarWeekly, setPrevDataStarWeekly] = useState([]);
@@ -2960,6 +2967,25 @@ function Dashboard({
     }
   };
 
+  const fetchPreviousUserDataStar = async (version, userId) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        Version: version - 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer?Version=-1`,
+        data
+      );
+      setUserPreviousDataStar(...result.data.data.leaderboard);
+    } else {
+      setUserPreviousDataStar([]);
+    }
+  };
+
   const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
     const data = {
       StatisticName: "GlobalStarMonthlyLeaderboard",
@@ -2971,6 +2997,7 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
+      fetchPreviousUserDataStar(parseInt(result.data.data.version), userId);
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
@@ -3192,7 +3219,7 @@ function Dashboard({
       setStarRecordsWeekly(result.data.data.leaderboard);
       fillRecordsStarWeekly(result.data.data.leaderboard);
 
-      if (userId && username) {
+      if (userId && username && result.data.data.leaderboard) {
         if (userId && username) {
           var testArray = result.data.data.leaderboard.filter(
             (item) => item.displayName === username
@@ -3623,11 +3650,11 @@ function Dashboard({
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
-    if (count !== 0) {
+    if (count !== 0 || royaltyCount !== 0) {
       // fetchDailyRecords();
       getAllChests(email);
     }
-  }, [count]);
+  }, [count, royaltyCount]);
 
   useEffect(() => {
     if (corecount !== 0) {
@@ -5061,18 +5088,17 @@ function Dashboard({
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
+                if (item === 4) {
+                  onOpenRoyaltyChest(chestOrder[item]);
                 }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
               standardChestsArray.push(chestOrder[item]);
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
               premiumChestsArray.push(chestOrder[item]);
             }
@@ -6371,7 +6397,8 @@ function Dashboard({
       leaderboard === true ||
       globalLeaderboard === true ||
       genesisLeaderboard === true ||
-      showDailyQuestion === true
+      showDailyQuestion === true ||
+      booster === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -6386,6 +6413,7 @@ function Dashboard({
     globalLeaderboard,
     genesisLeaderboard,
     showDailyQuestion,
+    booster,
   ]);
 
   const logoutItem = localStorage.getItem("logout");
@@ -6480,8 +6508,14 @@ function Dashboard({
     if (hashValue === "#prime") {
       navigate("/account/prime");
     }
+
+    if (hashValue === "#global-leaderboard") {
+      fetchRecordsStarWeekly();
+      setleaderboardBtn("weekly");
+    }
   }, [hashValue]);
 
+  // console.log(userPreviousDataStar);
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -6529,6 +6563,8 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+              onOpenBooster={() => setBooster(true)}
+              openKickstarter={openKickstarter}
               wodBalance={wodBalance}
               aiQuestionCompleted={aiQuestionCompleted}
               greatCollectionData={greatCollectionData}
@@ -6891,6 +6927,7 @@ function Dashboard({
           //   }}
           // >
           <NewDailyBonus
+            openKickstarter={openKickstarter}
             isPremium={isPremium}
             bnbImages={bnbImages}
             skaleImages={skaleImages}
@@ -7342,9 +7379,13 @@ function Dashboard({
           />
         )}
 
-        {genesisLeaderboard && (
+        {(genesisLeaderboard ||
+          hashValue === "#great-collection-leaderboard") && (
           <OutsideClickHandler
-            onOutsideClick={() => setGenesisLeaderboard(false)}
+            onOutsideClick={() => {
+              setGenesisLeaderboard(false);
+              window.location.hash = "";
+            }}
           >
             <div
               className="popup-wrapper leaderboard-popup popup-active p-3"
@@ -7362,7 +7403,10 @@ function Dashboard({
               >
                 <img
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                  onClick={() => setGenesisLeaderboard(false)}
+                  onClick={() => {
+                    setGenesisLeaderboard(false);
+                    window.location.hash = "";
+                  }}
                   alt=""
                   style={{ cursor: "pointer" }}
                 />
@@ -7381,11 +7425,12 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
-        {globalLeaderboard && (
+        {(globalLeaderboard || hashValue === "#global-leaderboard") && (
           <OutsideClickHandler
             onOutsideClick={() => {
               setGlobalLeaderboard(false);
               handleResetRecordsStars();
+              window.location.hash = "";
             }}
           >
             <div
@@ -7410,6 +7455,7 @@ function Dashboard({
                   onClick={() => {
                     setGlobalLeaderboard(false);
                     handleResetRecordsStars();
+                    window.location.hash = "";
                   }}
                   alt=""
                   style={{ cursor: "pointer" }}
@@ -7460,11 +7506,55 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {(goldenPassPopup || eventId === "golden-pass") && (
+        {(booster || hashValue === "#booster-1001") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setBooster(false);
+              window.location.hash = "";
+            }}
+          >
+            <div className="popup-wrapper booster-popup popup-active p-3">
+              <div className="d-flex align-items-center justify-content-end">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => {
+                    setBooster(false);
+                    window.location.hash = "";
+                  }}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+
+              <BoosterPopup
+                userDataStar={
+                  !userDataStar?.statValue || userDataStar?.statValue === 0
+                    ? 0
+                    : userDataStar.position
+                    ? userDataStar.position + 1
+                    : 0
+                }
+                userPreviousDataStar={
+                  !userPreviousDataStar?.statValue ||
+                  userPreviousDataStar?.statValue === 0
+                    ? 0
+                    : userPreviousDataStar.position !== undefined
+                    ? userPreviousDataStar.position + 1
+                    : 0
+                }
+              />
+            </div>
+          </OutsideClickHandler>
+        )}
+
+        {(goldenPassPopup ||
+          eventId === "golden-pass" ||
+          hashValue === "#golden-pass") && (
           <GoldenPassPopup
             onClosePopup={() => {
               setgoldenPassPopup(false);
               handleClosePopup();
+              window.location.hash = "";
             }}
             isConnected={isConnected}
             coinbase={coinbase}
@@ -7478,8 +7568,13 @@ function Dashboard({
           />
         )}
 
-        {myRewardsPopup && (
-          <OutsideClickHandler onOutsideClick={() => setmyRewardsPopup(false)}>
+        {(myRewardsPopup || hashValue === "#my-rewards") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setmyRewardsPopup(false);
+              window.location.hash = "";
+            }}
+          >
             <div
               className="popup-wrapper popup-active p-4"
               id="leaderboard"
@@ -7497,7 +7592,10 @@ function Dashboard({
                 </h2>
                 <img
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                  onClick={() => setmyRewardsPopup(false)}
+                  onClick={() => {
+                    setmyRewardsPopup(false);
+                    window.location.hash = "";
+                  }}
                   alt=""
                   style={{ cursor: "pointer" }}
                 />
@@ -7634,7 +7732,7 @@ function Dashboard({
                             <li>🔹 Win different rewards</li>
                           </ul>
 
-                          <div
+                           <div
                             className={"ai-rewards-info-active"}
                             // onMouseOver={() => {
                             //   setActiveClass("stars");
@@ -7730,7 +7828,6 @@ function Dashboard({
                   <img
                     src={"https://cdn.worldofdypians.com/wod/ai-popupx.png"}
                     onClick={() => {
-                      window.location.hash = "";
                       if (aiStep === 0) {
                         setSuspenseSound(true);
                         setShowDailyQuestion(false);
@@ -7739,6 +7836,7 @@ function Dashboard({
                         clockSoundRef.current?.pause();
                         clockSoundRef.current.currentTime = 0;
                         html.classList.remove("hidescroll");
+                        window.location.hash = "";
                       } else {
                         setClosePopup(true);
                       }
@@ -7777,7 +7875,6 @@ function Dashboard({
                   onClose={() => {
                     setSuspenseSound(true);
                     setShowDailyQuestion(false);
-                    window.location.hash = "";
                     suspenseMusicRef.current?.pause();
                     suspenseMusicRef.current.currentTime = 0;
                     clockSoundRef.current?.pause();
@@ -7817,8 +7914,13 @@ function Dashboard({
             />
           </OutsideClickHandler>
         )}
-        {portfolio && (
-          <OutsideClickHandler onOutsideClick={() => setPortfolio(false)}>
+        {(portfolio || hashValue === "#portfolio") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setPortfolio(false);
+              window.location.hash = "";
+            }}
+          >
             <div
               className="popup-wrapper  popup-active p-3"
               id="portfolio"
@@ -7834,7 +7936,10 @@ function Dashboard({
 
                 <img
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                  onClick={() => setPortfolio(false)}
+                  onClick={() => {
+                    setPortfolio(false);
+                    window.location.hash = "";
+                  }}
                   alt=""
                   style={{ cursor: "pointer" }}
                 />
@@ -7904,9 +8009,12 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {specialRewardsPopup && (
+        {(specialRewardsPopup || hashValue === "#special-rewards") && (
           <OutsideClickHandler
-            onOutsideClick={() => setSpecialRewardsPopup(false)}
+            onOutsideClick={() => {
+              setSpecialRewardsPopup(false);
+              window.location.hash = "";
+            }}
           >
             <div
               className="popup-wrapper popup-active p-3"
@@ -7918,7 +8026,10 @@ function Dashboard({
                     <img
                       src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                       style={{ cursor: "pointer" }}
-                      onClick={() => setSpecialRewardsPopup(false)}
+                      onClick={() => {
+                        setSpecialRewardsPopup(false);
+                        window.location.hash = "";
+                      }}
                       alt=""
                     />
                   </div>
@@ -7957,7 +8068,10 @@ function Dashboard({
                     <img
                       src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                       style={{ cursor: "pointer" }}
-                      onClick={() => setSpecialRewardsPopup(false)}
+                      onClick={() => {
+                        setSpecialRewardsPopup(false);
+                        window.location.hash = "";
+                      }}
                       alt=""
                     />
                   </div>

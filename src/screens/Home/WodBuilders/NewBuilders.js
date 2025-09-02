@@ -470,19 +470,6 @@ const NewBuilders = () => {
       name: "Vameon",
       icon: "vameon.svg",
     },
-  
-    {
-      name: "Phemex",
-      icon: "phemex.png",
-    },
-    {
-      name: "HiBt",
-      icon: "hibt.png",
-    },
-    {
-      name: "KCEX",
-      icon: "kcex.png",
-    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
