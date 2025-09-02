@@ -1961,8 +1961,8 @@ function App() {
         return 0;
       });
 
-    const taraxaresult = await taraxaContract.methods
-      .totalSupply()
+
+    const taraxaResult = await taraxaContract.methods.totalSupply()
       .call()
       .catch((e) => {
         console.error(e);
@@ -1995,7 +1995,7 @@ function App() {
         Number(teaOPBNBResult) +
         Number(teaBaseResult) +
         Number(teaseiResult) +
-        Number(taraxaresult) +
+        Number(taraxaResult) +
         20002
     );
   };

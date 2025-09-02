@@ -127,6 +127,16 @@ const VideoWrapper = ({
       logo: "phemex.png",
       link: "https://phemex.com/trade/WOD-USDT",
     },
+    {
+      title: "WEEX",
+      logo: "weex.svg",
+      link: "https://www.weex.com/spot/WOD-USDT",
+    },
+    {
+      title: "Toobit",
+      logo: "toobit.svg",
+      link: "https://www.toobit.com/en-US/spot/WOD_USDT",
+    },
   ];
 
   const dummyBetaPassData2 = [

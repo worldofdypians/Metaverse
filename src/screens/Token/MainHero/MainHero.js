@@ -69,6 +69,32 @@ const MainHero = ({ scrollInto }) => {
       logo: "blofinExchange.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
+    {
+      title: "KCEX",
+      logo: "kcex-exchange.png",
+      link: "https://www.kcex.com/exchange/WOD_USDT",
+    },
+    {
+      title: "HiBt",
+      logo: "hibt-exchange-white.png",
+      link: "https://hibt.com/trade/WOD-USDT",
+    },
+    {
+      title: "Phemex",
+      logo: "phemex-exchange.png",
+      link: "https://phemex.com/trade/WOD-USDT",
+    },
+    {
+      title: "WEEX",
+      logo: "weex-exchange.svg",
+      link: "https://www.weex.com/spot/WOD-USDT",
+    },
+    {
+      title: "Toobit",
+      logo: "toobit-exchange.svg",
+      link: "https://www.toobit.com/en-US/spot/WOD_USDT",
+    },
+
   ];
 
   return (

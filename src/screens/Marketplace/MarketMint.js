@@ -338,16 +338,16 @@ const MarketMint = ({
       window.OPBNB_NFT_ABI,
       window.config.nft_kucoin_address
     );
-
+    const taraxaContract = new window.taraxaWeb3.eth.Contract(
+      window.TARAXA_NFT_ABI,
+      window.config.nft_taraxa_address
+    );
     const vanarContract = new window.vanarWeb3.eth.Contract(
       window.VANAR_NFT_ABI,
       window.config.nft_vanar_address
     );
 
-    const taraxaContract = new window.taraxaWeb3.eth.Contract(
-      window.TARAXA_NFT_ABI,
-      window.config.nft_taraxa_address
-    );
+ 
     const teaseicontract = new window.seiWeb3.eth.Contract(
       window.SEI_NFT_ABI,
       window.config.nft_teasei_address
@@ -508,7 +508,7 @@ const MarketMint = ({
 
     setKucoinNftsSold(kucoinresult);
 
-    const taraxaresult = await taraxaContract.methods
+    const taraxaResult = await taraxaContract.methods
       .totalSupply()
       .call()
       .catch((e) => {
@@ -516,7 +516,8 @@ const MarketMint = ({
         return 0;
       });
 
-    setTaraxaNftsSold(taraxaresult);
+    setTaraxaNftsSold(taraxaResult);
+
   };
 
   const handleEthPool = async () => {
@@ -2353,7 +2354,9 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
+
                    <div className="col-12 col-lg-6 mt-lg-5">
+
                     <div className="past-taraxa-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
@@ -2369,6 +2372,7 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
+
                   {/* <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-vanar-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
