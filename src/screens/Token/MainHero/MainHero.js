@@ -58,17 +58,17 @@ const MainHero = ({ scrollInto }) => {
       logo: "trustwallet.svg",
       link: "https://short.trustwallet.com/app-download",
     },
+    {
+      title: "WEEX",
+      logo: "weex-exchange.svg",
+      link: "https://www.weex.com/spot/WOD-USDT",
+    },
+    {
+      title: "Toobit",
+      logo: "toobit-exchange.svg",
+      link: "https://www.toobit.com/en-US/spot/WOD_USDT",
+    },
 
-    {
-      title: "ChangeNOW",
-      logo: "changeNowExchange.svg",
-      link: "https://changenow.io/currencies/world-of-dypians",
-    },
-    {
-      title: "BloFin",
-      logo: "blofinExchange.png",
-      link: "https://blofin.com/spot/WOD-USDT",
-    },
     {
       title: "KCEX",
       logo: "kcex-exchange.png",
@@ -84,15 +84,16 @@ const MainHero = ({ scrollInto }) => {
       logo: "phemex-exchange.png",
       link: "https://phemex.com/trade/WOD-USDT",
     },
+
     {
-      title: "WEEX",
-      logo: "weex-exchange.svg",
-      link: "https://www.weex.com/spot/WOD-USDT",
+      title: "ChangeNOW",
+      logo: "changeNowExchange.svg",
+      link: "https://changenow.io/currencies/world-of-dypians",
     },
     {
-      title: "Toobit",
-      logo: "toobit-exchange.svg",
-      link: "https://www.toobit.com/en-US/spot/WOD_USDT",
+      title: "BloFin",
+      logo: "blofinExchange.png",
+      link: "https://blofin.com/spot/WOD-USDT",
     },
   ];
 
