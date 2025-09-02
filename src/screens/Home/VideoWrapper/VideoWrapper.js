@@ -98,14 +98,19 @@ const VideoWrapper = ({
       link: "https://short.trustwallet.com/app-download",
     },
     {
-      title: "ChangeNOW",
-      logo: "changeNow.webp",
-      link: "https://changenow.io/currencies/world-of-dypians",
+      title: "WEEX",
+      logo: "weex.svg",
+      link: "https://www.weex.com/spot/WOD-USDT",
     },
     {
-      title: "BloFin",
-      logo: "blofinBuywod.png",
-      link: "https://blofin.com/spot/WOD-USDT",
+      title: "Toobit",
+      logo: "toobit.svg",
+      link: "https://www.toobit.com/en-US/spot/WOD_USDT",
+    },
+    {
+      title: "KCEX",
+      logo: "kcex.png",
+      link: "https://www.kcex.com/exchange/WOD_USDT",
     },
     {
       title: "CoinRabbit",
@@ -118,19 +123,19 @@ const VideoWrapper = ({
       link: "https://hibt.com/trade/WOD-USDT",
     },
     {
-      title: "KCEX",
-      logo: "kcex.png",
-      link: "https://www.kcex.com/exchange/WOD_USDT",
-    },
-    {
       title: "Phemex",
       logo: "phemex.png",
       link: "https://phemex.com/trade/WOD-USDT",
     },
     {
-      title: "WEEX",
-      logo: "weex.svg",
-      link: "https://www.weex.com/spot/WOD-USDT",
+      title: "ChangeNOW",
+      logo: "changeNow.webp",
+      link: "https://changenow.io/currencies/world-of-dypians",
+    },
+    {
+      title: "BloFin",
+      logo: "blofinBuywod.png",
+      link: "https://blofin.com/spot/WOD-USDT",
     },
   ];
 
