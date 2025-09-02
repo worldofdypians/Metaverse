@@ -2001,6 +2001,22 @@ const Portfolio = ({
                         Phemex
                       </h6>
                     </a>
+                      <a
+                      href="https://www.weex.com/spot/WOD-USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/phemex.png"
+                          }
+                          className="buywodimg"
+                        />
+                        WEEX
+                      </h6>
+                    </a>
                   </div>
                 </div>
               )}

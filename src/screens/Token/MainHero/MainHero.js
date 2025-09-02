@@ -84,6 +84,11 @@ const MainHero = ({ scrollInto }) => {
       logo: "phemex-exchange.png",
       link: "https://phemex.com/trade/WOD-USDT",
     },
+    {
+      title: "WEEX",
+      logo: "weex-exchange.svg",
+      link: "https://www.weex.com/spot/WOD-USDT",
+    },
   ];
 
   return (
