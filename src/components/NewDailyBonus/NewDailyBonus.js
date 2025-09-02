@@ -286,16 +286,16 @@ const NewDailyBonus = ({
     {
       title: "Points",
       title2: "",
-      amount: "Points",
-      img: "points",
+      amount: "Up to 8,000 Points",
+      img: "ai-points-reward-active",
       error: true,
       threshold: [1, 200000],
     },
     {
       title: "Money",
       title2: "",
-      amount: "$0.5 - $5",
-      img: 2,
+      amount: "Up to $700",
+      img: "ai-reward-active",
       error: false,
       threshold: [0.5, 5],
       min: 0.5,
@@ -304,33 +304,33 @@ const NewDailyBonus = ({
     {
       title: "Stars",
       title2: "",
-      amount: "Stars",
-      img: "star",
+      amount: "Up to 300 Stars",
+      img: "ai-star-reward-active",
       error: true,
       threshold: [],
       min: 10,
       max: 50,
     },
-    {
-      title: "Money",
-      title2: "needCaws",
-      amount: "$20-$30",
-      img: 30,
-      error: true,
-      threshold: [20, 30],
-      min: 20,
-      max: 30,
-    },
-    {
-      title: "Money",
-      title2: "needLand",
-      amount: "$350-$700",
-      img: 1500,
-      error: false,
-      threshold: [350, 700],
-      min: 350,
-      max: 700,
-    },
+    // {
+    //   title: "Money",
+    //   title2: "needCaws",
+    //   amount: "$20-$30",
+    //   img: 30,
+    //   error: true,
+    //   threshold: [20, 30],
+    //   min: 20,
+    //   max: 30,
+    // },
+    // {
+    //   title: "Money",
+    //   title2: "needLand",
+    //   amount: "$350-$700",
+    //   img: 1500,
+    //   error: false,
+    //   threshold: [350, 700],
+    //   min: 350,
+    //   max: 700,
+    // },
   ];
 
   const [chain, setChain] = useState("bnb");
@@ -3447,7 +3447,7 @@ const NewDailyBonus = ({
                               >
                                 <img
                                   src={
-                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                    "https://cdn.worldofdypians.com/wod/opbnbChain.png"
                                   }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
@@ -3737,7 +3737,7 @@ const NewDailyBonus = ({
                                 />
                               </div>
                               <span className="percentage-span">
-                                {parseInt(taraxaPercentage)}% 
+                                {parseInt(taraxaPercentage)}%
                               </span>
                             </div>
                           </div>
@@ -4605,7 +4605,7 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className={`position-relative chain-item w-100`}>
                           <img
                             src={
@@ -4686,7 +4686,7 @@ const NewDailyBonus = ({
                               >
                                 <img
                                   src={
-                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                    "https://cdn.worldofdypians.com/wod/opbnbChain.png"
                                   }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
@@ -8592,27 +8592,26 @@ const NewDailyBonus = ({
           </div>
           <div className="rewards-container-outer custom-container-width d-flex align-items-center justify-content-center p-4">
             {windowSize.width > 992 ? (
-              <div className="new-rewards-grid">
+              <div
+                className={`${
+                  chain === "manta" ? "new-rewards-grid-2" : "new-rewards-grid"
+                }`}
+              >
                 {dummyRewards.map((item, index) => (
                   <div
                     key={index}
-                    className="new-rewards-item p-2 d-flex align-items-center gap-2"
+                    className="new-rewards-item p-2 d-flex justify-content-end align-items-center gap-2 ps-4"
                     style={{
                       filter:
                         item.title2 !== "needPremium"
                           ? (rewardData &&
                               rewardData.rewards?.find((obj) => {
-                                return (
-                                  obj.rewardType === "Points" &&
-                                  Number(obj.reward) <= item.threshold[1]
-                                );
+                                return obj.rewardType === item.title;
                               })) ||
                             (rewardData &&
                               rewardData.rewards?.find((obj) => {
                                 return (
-                                  obj.rewardType !== "Points" &&
-                                  Number(obj.reward) > item.min &&
-                                  Number(obj.reward) <= item.max &&
+                                  obj.rewardType !== item.title &&
                                   item.title === obj.rewardType
                                 );
                               }) &&
@@ -8629,41 +8628,70 @@ const NewDailyBonus = ({
                             : "brightness(0.5)"
                           : (rewardData &&
                               rewardData.rewards?.find((obj) => {
-                                return (
-                                  obj.rewardType === "Points" &&
-                                  Number(obj.reward) <= item.threshold[1]
-                                );
+                                return obj.rewardType === item.title;
                               })) ||
                             (rewardData &&
                               rewardData.rewards?.find((obj) => {
                                 return (
-                                  obj.rewardType !== "Points" &&
-                                  Number(obj.reward) > item.min &&
-                                  Number(obj.reward) <= item.max &&
+                                  obj.rewardType !== item.title &&
                                   message === "needPremium"
                                 );
                               }))
                           ? "brightness(1)"
                           : "brightness(0.5)",
+                      border:
+                        item.title2 !== "needPremium"
+                          ? (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return obj.rewardType === item.title;
+                              })) ||
+                            (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return (
+                                  obj.rewardType !== item.title &&
+                                  item.title === obj.rewardType
+                                );
+                              }) &&
+                              message != "needPremium") ||
+                            (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return (
+                                  obj.rewardType === "Stars" &&
+                                  obj.rewardType === item.title
+                                );
+                              }) &&
+                              message != "needPremium")
+                            ? "1px solid #F2C624"
+                            : " 1px solid #4D4F77"
+                          : (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return obj.rewardType === item.title;
+                              })) ||
+                            (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return (
+                                  obj.rewardType !== item.title &&
+                                  message === "needPremium"
+                                );
+                              }))
+                          ? "1px solid #F2C624"
+                          : " 1px solid #4D4F77",
                     }}
                   >
-                    <div className="position-relative">
-                      <img
-                        src={`https://cdn.worldofdypians.com/wod/${item.img}${
+                    <img
+                      className="new-rewards-item-img"
+                      src={`https://cdn.worldofdypians.com/wod/${item.img}.webp`}
+                      style={{
+                        border:
                           item.title2 !== "needPremium"
                             ? (rewardData &&
                                 rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType === "Points" &&
-                                    Number(obj.reward) <= item.threshold[1]
-                                  );
+                                  return obj.rewardType === item.title;
                                 })) ||
                               (rewardData &&
                                 rewardData.rewards?.find((obj) => {
                                   return (
-                                    obj.rewardType !== "Points" &&
-                                    Number(obj.reward) > item.min &&
-                                    Number(obj.reward) <= item.max &&
+                                    obj.rewardType !== item.title &&
                                     item.title === obj.rewardType
                                   );
                                 }) &&
@@ -8676,95 +8704,39 @@ const NewDailyBonus = ({
                                   );
                                 }) &&
                                 message != "needPremium")
-                              ? "Active"
-                              : ""
+                              ? "1px solid #F2C624"
+                              : " 1px solid #4D4F77"
                             : (rewardData &&
                                 rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType === "Points" &&
-                                    Number(obj.reward) <= item.threshold[1]
-                                  );
+                                  return obj.rewardType === item.title;
                                 })) ||
                               (rewardData &&
                                 rewardData.rewards?.find((obj) => {
                                   return (
-                                    obj.rewardType !== "Points" &&
-                                    Number(obj.reward) > item.min &&
-                                    Number(obj.reward) <= item.max
+                                    obj.rewardType !== item.title &&
+                                    message === "needPremium"
                                   );
-                                }) &&
-                                message === "needPremium")
-                            ? "Active"
-                            : ""
-                        }Icon.png`}
-                        width={60}
-                        height={60}
-                        alt=""
-                      />
-                      {item.title2 !== "needPremium" ? (
-                        rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return obj.rewardType === item.title;
-                        }) &&
-                        rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return (
-                            obj.rewardType === item.title &&
-                            obj.status === "Unclaimed" &&
-                            obj.reward > item.min &&
-                            obj.reward <= item.max
-                          );
-                        }) &&
-                        message !== "needPremium" ? (
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/warning.svg"
-                            }
-                            width={20}
-                            height={20}
-                            className="reward-warning"
-                            alt=""
-                          />
-                        ) : rewardData &&
-                          rewardData.rewards?.find((obj) => {
-                            return obj.rewardType === item.title;
-                          }) &&
-                          rewardData &&
-                          rewardData.rewards?.find((obj) => {
-                            return (
-                              obj.rewardType === item.title &&
-                              obj.status === "Unclaimable" &&
-                              obj.reward > item.min &&
-                              obj.reward <= item.max
-                            );
-                          }) &&
-                          message !== "needPremium" ? (
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/danger.svg"
-                            }
-                            width={20}
-                            height={20}
-                            className="reward-warning"
-                            alt=""
-                          />
-                        ) : (
-                          <></>
-                        )
-                      ) : rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return obj.rewardType === item.title;
-                        }) &&
-                        rewardData &&
-                        rewardData.rewards?.find((obj) => {
-                          return (
-                            obj.rewardType === item.title &&
-                            obj.status === "Unclaimed" &&
-                            obj.reward > item.min &&
-                            obj.reward <= item.max
-                          );
-                        }) &&
-                        message === "needPremium" ? (
+                                }))
+                            ? "1px solid #F2C624"
+                            : " 1px solid #4D4F77",
+                      }}
+                      width={30}
+                      height={30}
+                      alt=""
+                    />
+                    {item.title2 !== "needPremium" ? (
+                      rewardData &&
+                      rewardData.rewards?.find((obj) => {
+                        return obj.rewardType === item.title;
+                      }) &&
+                      rewardData &&
+                      rewardData.rewards?.find((obj) => {
+                        return (
+                          obj.rewardType === item.title &&
+                          obj.status === "Unclaimed"
+                        );
+                      }) &&
+                      message !== "needPremium" ? (
                         <img
                           src={"https://cdn.worldofdypians.com/wod/warning.svg"}
                           width={20}
@@ -8780,12 +8752,10 @@ const NewDailyBonus = ({
                         rewardData.rewards?.find((obj) => {
                           return (
                             obj.rewardType === item.title &&
-                            obj.status === "Unclaimable" &&
-                            obj.reward > item.min &&
-                            obj.reward <= item.max
+                            obj.status === "Unclaimable"
                           );
                         }) &&
-                        message === "needPremium" ? (
+                        message !== "needPremium" ? (
                         <img
                           src={"https://cdn.worldofdypians.com/wod/danger.svg"}
                           width={20}
@@ -8795,8 +8765,48 @@ const NewDailyBonus = ({
                         />
                       ) : (
                         <></>
-                      )}
-                    </div>
+                      )
+                    ) : rewardData &&
+                      rewardData.rewards?.find((obj) => {
+                        return obj.rewardType === item.title;
+                      }) &&
+                      rewardData &&
+                      rewardData.rewards?.find((obj) => {
+                        return (
+                          obj.rewardType === item.title &&
+                          obj.status === "Unclaimed"
+                        );
+                      }) &&
+                      message === "needPremium" ? (
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/warning.svg"}
+                        width={20}
+                        height={20}
+                        className="reward-warning"
+                        alt=""
+                      />
+                    ) : rewardData &&
+                      rewardData.rewards?.find((obj) => {
+                        return obj.rewardType === item.title;
+                      }) &&
+                      rewardData &&
+                      rewardData.rewards?.find((obj) => {
+                        return (
+                          obj.rewardType === item.title &&
+                          obj.status === "Unclaimable"
+                        );
+                      }) &&
+                      message === "needPremium" ? (
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/danger.svg"}
+                        width={20}
+                        height={20}
+                        className="reward-warning"
+                        alt=""
+                      />
+                    ) : (
+                      <></>
+                    )}
                     <div className="d-flex align-items-bottom gap-1">
                       <h6
                         className="mb-0  new-reward-amount"
@@ -8804,10 +8814,7 @@ const NewDailyBonus = ({
                           color:
                             rewardData &&
                             rewardData.rewards?.find((obj) => {
-                              return (
-                                obj.rewardType === "Points" &&
-                                Number(obj.reward) <= item.threshold[1]
-                              );
+                              return obj.rewardType === item.title;
                             })
                               ? "#F2C624"
                               : rewardData &&
@@ -8823,9 +8830,7 @@ const NewDailyBonus = ({
                                   return (
                                     obj.rewardType === item.title &&
                                     (obj.status !== "Unclaimed" ||
-                                      obj.status !== "Unclaimable") &&
-                                    obj.reward > item.min &&
-                                    obj.reward <= item.max
+                                      obj.status !== "Unclaimable")
                                   );
                                 }) && message !== "needPremium"
                                 ? "#F2C624"
@@ -8834,9 +8839,7 @@ const NewDailyBonus = ({
                                   return (
                                     obj.rewardType === item.title &&
                                     (obj.status !== "Unclaimed" ||
-                                      obj.status !== "Unclaimable") &&
-                                    obj.reward > item.min &&
-                                    obj.reward <= item.max
+                                      obj.status !== "Unclaimable")
                                   );
                                 }) && message === "needPremium"
                               ? "#F2C624"
@@ -8849,6 +8852,30 @@ const NewDailyBonus = ({
                     </div>
                   </div>
                 ))}
+                {chain === "manta" && (
+                  <a
+                    href="https://app.superfortune.xyz/fortunecharm"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="new-rewards-item manta-reward-item p-2 d-flex justify-content-end align-items-center gap-2 ps-4"
+                  >
+                    <img
+                      className="new-rewards-item-img"
+                      src={`https://cdn.worldofdypians.com/wod/manta-daily-bonus-reward.png`}
+                      style={{
+                        border: " 1px solid #4D4F77",
+                      }}
+                      width={30}
+                      height={30}
+                      alt=""
+                    />
+
+                    <div className="d-flex align-items-bottom gap-1">
+                      <h6 className="mb-0  new-reward-amount">Lucky Charm</h6>
+                      <img src="https://cdn.worldofdypians.com/wod/link.svg" />
+                    </div>
+                  </a>
+                )}
               </div>
             ) : (
               <></>
@@ -9110,7 +9137,7 @@ const NewDailyBonus = ({
             onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               chain === "bnb"
                 ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
                 : chain === "core"
@@ -9157,6 +9184,7 @@ const NewDailyBonus = ({
                     isActiveIndex - 1
                   );
             }, 2000);
+            return () => clearTimeout(timer);
           }}
         />
       )}

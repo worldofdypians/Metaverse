@@ -100,6 +100,9 @@ window.config = {
   daily_bonus_sei_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_vanar_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
 
+  daily_question_bnb_address: "0xE7DA7750f4604cdcA598726bF6631A9A463A8Ba9",
+  daily_question_opbnb_address: "0xfcCEC27EeAe7B2497A430459A1b3D3E7B5F96087",
+
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
 
   weth_address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7", // LOWERCASE! avax
@@ -123,8 +126,8 @@ window.config = {
   base_endpoint: "https://1rpc.io/base",
   all_base_endpoints: [
     "https://1rpc.io/base",
-    "https://1rpc.io/base",
     "https://base-rpc.publicnode.com",
+    "https://mainnet.base.org",
   ],
 
   opbnb_endpoint: "https://opbnb.publicnode.com",
@@ -182,6 +185,7 @@ window.config = {
   otc2_address: "0x8a3a80d4a3b1c6c534f0016c1d834d7d60b32bcf",
   otcbonus_address: "0xc828b41f27c6766fcc5c9f5b00321acd11f3e710",
   otcspecial_address: "0xd9d30dcf8dceaf4da5444cac87bea4ea965351e4",
+
   otcpoolbonus_address: "0x3b04c32afc70cc29e1f2040bf91e9924bef537f8",
   otcpooldynamic_address: "0x0fff73ac0935a31c3940aa081c99902e27357f78", //40%
   otcpool2dynamic_address: "0x8cbcfd8e29602608910f3ecc8909630e9fbbf1c7", //30%
@@ -14052,6 +14056,8 @@ window.DAILY_BONUS_TAIKO_ABI = [
     type: "function",
   },
 ];
+
+
 window.DAILY_BONUS_TARAXA_ABI = [
   {
     inputs: [
@@ -14232,6 +14238,442 @@ window.DAILY_BONUS_TARAXA_ABI = [
     type: "function",
   },
 ];
+
+window.DAILY_QUESTION_ABI = [
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    name: "QuestionOpened",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "openDailyQuestion",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
+window.ORYN_PREMIUM_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_wodToken",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_minimumLockAmount",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "deposit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "getRemainingTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "hasLocked",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "locks",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "unlockStart",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "isUnlockStarted",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "minimumLockAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_token",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "ownerWithdrawERC20",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_newMinimum",
+        type: "uint256",
+      },
+    ],
+    name: "setMinimumLockAmount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "startUnlock",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "wodToken",
+    outputs: [
+      {
+        internalType: "contract IERC20",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
+window.DAILY_BONUS_SEI_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "initialPremiumUsers",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    name: "ChestOpened",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    name: "PremiumChestOpened",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "PremiumUserAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "PremiumUserRemoved",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "addPremiumUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "isPremiumUser",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "lifetimeChestCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "lifetimePremiumChestCount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "openChest",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "openPremiumChest",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "premiumUsers",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "removePremiumUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
 
 window.DAILY_BONUS_MAT_ABI = [
   {

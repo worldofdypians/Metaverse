@@ -51,8 +51,8 @@ import MarketMint from "./screens/Marketplace/MarketMint";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import SIDRegister from "@web3-name-sdk/register";
-import { createWeb3Name } from "@web3-name-sdk/core";
-import { ethers, providers } from "ethers";
+// import { createWeb3Name } from "@web3-name-sdk/core";
+import { ethers } from "ethers";
 import { getWeb3Connector } from "@binance/w3w-web3-connector";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
@@ -97,6 +97,8 @@ import { http, createPublicClient } from "viem";
 import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
 import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.js";
 import WodBitGet from "./screens/Community/Campaigns/WodBitGet/WodBitGet.js";
+import Kickstarter from "./components/Kickstarter/Kickstarter.js";
+import KickstarterPage from "./components/Kickstarter/KickstarterPage.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -153,7 +155,7 @@ const useSharedData = () => {
     queryFn: fetchAllNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -173,7 +175,7 @@ const useSharedDataListedNfts = () => {
     queryFn: fetchListedNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -222,7 +224,7 @@ const useSharedDataLatest20BoughtNFTs = () => {
     queryFn: fetchLatest20BoughtNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -242,7 +244,7 @@ const useSharedDataCawsNfts = () => {
     queryFn: fetchAllCawsNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -262,7 +264,7 @@ const useSharedDataWodNfts = () => {
     queryFn: fetchAllWodNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -282,7 +284,7 @@ const useSharedDataTimepieceNfts = () => {
     queryFn: fetchAllTimepieceNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -319,7 +321,7 @@ const useSharedDataListedByUser = (wallet) => {
     queryFn: () => getAllnftsListed(wallet),
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!wallet,
   });
@@ -470,12 +472,12 @@ function App() {
   };
 
   const { useUserInfo, useWallet } = Hooks;
-  const { login, address, username, logout: logoutUser } = useUserInfo();
+  const { login, address, logout: logoutUser } = useUserInfo();
   const { signMessage, createWalletClient } = useWallet();
   const {
     data,
     refetch: refetchPlayer,
-    loading: loadingPlayer,
+    loading,
   } = useQuery(GET_PLAYER, {
     fetchPolicy: "network-only",
   });
@@ -485,7 +487,7 @@ function App() {
   const authToken = localStorage.getItem("authToken");
   const [orynPop, setOrynPop] = useState(true);
   const [showWalletModal, setShowWalletModal] = useState(false);
-
+  const [royaltyCount, setRoyaltyCount] = useState(0);
   const [betaModal, setBetaModal] = useState(false);
 
   const [totalSupply, setTotalSupply] = useState(0);
@@ -498,17 +500,17 @@ function App() {
   const [gameAccount, setGameAccount] = useState();
 
   const [networkId, setChainId] = useState();
-  const [currencyAmount, setCurrencyAmount] = useState(0);
+
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
-  const [myNFTs, setMyNFTs] = useState([]);
+  // const [myNFTs, setMyNFTs] = useState([]);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState();
-  const [mystakes, setMystakes] = useState([]);
+  // const [mystakes, setMystakes] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [listedNFTS, setListedNFTS] = useState([]);
-  const [count44, setCount44] = useState(0);
+  // const [count44, setCount44] = useState(0);
   const [count55, setCount55] = useState(0);
   const [cawsListed, setcawsListed] = useState([]);
   const [wodListed, setwodListed] = useState([]);
@@ -519,7 +521,7 @@ function App() {
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([]);
 
-  const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
+  // const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
   const [walletId, setwalletId] = useState("connect");
@@ -586,7 +588,8 @@ function App() {
 
   const [isBnb, setisBnb] = useState(false);
   const [isBnbSuccess, setisBnbSuccess] = useState(false);
-  const [logoutCount, setLogoutCount] = useState(0);
+  const [syncCount, setsyncCount] = useState(1);
+  const [logoutCount, setlogoutCount] = useState(1);
 
   const [nftCount, setNftCount] = useState(1);
   const [countBalance, setcountBalance] = useState(1);
@@ -605,8 +608,10 @@ function App() {
 
   const [isPremium, setIsPremium] = useState(false);
   const [premiumOryn, setPremiumOryn] = useState(false);
+  const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
 
   const [domainPopup, setDomainPopup] = useState(false);
+  const [kickstarterAddClass, setKickstarterAddClass] = useState(false);
   const [showSync, setshowSync] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [availableDomain, setAvailableDomain] = useState("initial");
@@ -626,6 +631,7 @@ function App() {
   const [skaleAmount, setSkaleAmount] = useState(0);
   const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
   const [wodPrice, setWodPrice] = useState(0);
+  const [kickstarter, setKickstarter] = useState(false);
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
   const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
@@ -910,11 +916,12 @@ function App() {
       });
     } catch (error) {
       setsyncStatus("error");
-      setTimeout(() => {
+      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      const timer = setTimeout(() => {
         setsyncStatus("initial");
         setshowSync(false);
       }, 3000);
-      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -1789,6 +1796,11 @@ function App() {
       window.config.nft_teasei_address
     );
 
+    const taraxaContract = new window.taraxaWeb3.eth.Contract(
+      window.TARAXA_NFT_ABI,
+      window.config.nft_taraxa_address
+    );
+
     const confluxresult = await confluxContract.methods
       .totalSupply()
       .call()
@@ -1951,6 +1963,14 @@ function App() {
         return 0;
       });
 
+    const taraxaresult = await taraxaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
 
     setTotalSupply(
@@ -1977,6 +1997,7 @@ function App() {
         Number(teaOPBNBResult) +
         Number(teaBaseResult) +
         Number(teaseiResult) +
+        Number(taraxaresult) +
         20002
     );
   };
@@ -2053,20 +2074,22 @@ function App() {
             "You have successfully registered your .bnb domain"
           );
           setSuccessDomain(true);
-          setTimeout(() => {
+          setLoadingDomain(false);
+          const timer = setTimeout(() => {
             setSuccessMessage("");
             setSuccessDomain(false);
           }, 5000);
-          setLoadingDomain(false);
+          return () => clearTimeout(timer);
         })
         .catch((e) => {
           setLoadingDomain(false);
           setSuccessDomain(false);
           setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
-          setTimeout(() => {
+          console.log(e);
+          const timer = setTimeout(() => {
             setSuccessMessage("");
           }, 5000);
-          console.log(e);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance" && library) {
       setLoadingDomain(true);
@@ -2084,11 +2107,12 @@ function App() {
             "You have successfully registered your .bnb domain"
           );
           setSuccessDomain(true);
-          setTimeout(() => {
+          setLoadingDomain(false);
+          const timer = setTimeout(() => {
             setSuccessMessage("");
             setSuccessDomain(false);
           }, 5000);
-          setLoadingDomain(false);
+          return () => clearTimeout(timer);
         })
         .catch((e) => {
           setLoadingDomain(false);
@@ -2096,10 +2120,11 @@ function App() {
           setSuccessMessage(
             `Something went wrong: ${{ e }.e.reason ?? "try again later"}`
           );
-          setTimeout(() => {
+          console.log({ e }.e.reason);
+          const timer = setTimeout(() => {
             setSuccessMessage("");
           }, 5000);
-          console.log({ e }.e.reason);
+          return () => clearTimeout(timer);
         });
     }
   };
@@ -2544,7 +2569,7 @@ function App() {
 
       nfts = await Promise.all(nfts);
       nfts.reverse();
-      setMyNFTs(nfts);
+      // setMyNFTs(nfts);
     }
   };
 
@@ -2662,7 +2687,7 @@ function App() {
       getMyNFTS(coinbase, "land").then((NFTS) => {
         setMyNFTSLand(NFTS);
         setMyLandNFTs(NFTS);
-        setMyNFTs(NFTS);
+        // setMyNFTs(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
@@ -2824,7 +2849,7 @@ function App() {
       let stakes = myStakes.map((stake) => window.getLandNft(stake));
       stakes = await Promise.all(stakes);
       stakes.reverse();
-      setMystakes(stakes);
+      // setMystakes(stakes);
     }
   };
 
@@ -2923,11 +2948,12 @@ function App() {
                 setmintStatus("Success! Your Nft was minted successfully!");
                 setmintloading("success");
                 settextColor("rgb(123, 216, 176)");
-                setTimeout(() => {
+                checkCawsToUse();
+                const timer = setTimeout(() => {
                   setmintStatus("");
                   setmintloading("initial");
                 }, 5000);
-                checkCawsToUse();
+                return () => clearTimeout(timer);
               })
               .catch((e) => {
                 console.error(e);
@@ -2941,10 +2967,11 @@ function App() {
                     "Oops, something went wrong! Refresh the page and try again!"
                   );
                 }
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setmintloading("initial");
                   setmintStatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (tokenId) {
@@ -2971,10 +2998,11 @@ function App() {
               ? String(e)
               : "Oops, something went wrong! Refresh the page and try again!"
           );
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setmintloading("initial");
             setmintStatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else {
         try {
@@ -3008,13 +3036,14 @@ function App() {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
-                setmintStatus("");
-                setmintloading("initial");
-              }, 5000);
               getMyNFTS(coinbase, "vanar").then((NFTS) => {
                 setmyVanarNFTs(NFTS);
               });
+              const timer = setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              return () => clearTimeout(timer);
             })
             .catch((e) => {
               console.error(e);
@@ -3028,10 +3057,11 @@ function App() {
                   "Oops, something went wrong! Refresh the page and try again!"
                 );
               }
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setmintloading("initial");
                 setmintStatus("");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         } catch (e) {
           setmintloading("error");
@@ -3050,10 +3080,11 @@ function App() {
               ? String(e)
               : "Oops, something went wrong! Refresh the page and try again!"
           );
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setmintloading("initial");
             setmintStatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else if (window.WALLET_TYPE === "binance") {
         try {
@@ -3079,10 +3110,11 @@ function App() {
                 "Oops, something went wrong! Refresh the page and try again!"
               );
             }
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setmintloading("initial");
               setmintStatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
           const txReceipt = txResponse.wait();
@@ -3090,13 +3122,14 @@ function App() {
             setmintStatus("Success! Your Nft was minted successfully!");
             setmintloading("success");
             settextColor("rgb(123, 216, 176)");
-            setTimeout(() => {
-              setmintStatus("");
-              setmintloading("initial");
-            }, 5000);
             getMyNFTS(coinbase, "vanar").then((NFTS) => {
               setmyVanarNFTs(NFTS);
             });
+            const timer = setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            return () => clearTimeout(timer);
           }
         } catch (e) {
           setmintloading("error");
@@ -3115,10 +3148,11 @@ function App() {
               ? String(e)
               : "Oops, something went wrong! Refresh the page and try again!"
           );
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setmintloading("initial");
             setmintStatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
@@ -3141,10 +3175,11 @@ function App() {
                   "Oops, something went wrong! Refresh the page and try again!"
                 );
               }
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setmintloading("initial");
                 setmintStatus("");
               }, 5000);
+              return () => clearTimeout(timer);
             });
 
           if (result) {
@@ -3160,13 +3195,14 @@ function App() {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
-                setmintStatus("");
-                setmintloading("initial");
-              }, 5000);
               getMyNFTS(coinbase, "vanar").then((NFTS) => {
                 setmyVanarNFTs(NFTS);
               });
+              const timer = setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              return () => clearTimeout(timer);
             }
           }
         }
@@ -3191,10 +3227,11 @@ function App() {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
+              return () => clearTimeout(timer);
               // getMyNFTS(coinbase, "skale").then((NFTS) => {
               //   setmyskaleNFTsCreated(NFTS);
               //   settotalSkaleNft(NFTS.length);
@@ -3213,10 +3250,11 @@ function App() {
                   "Oops, something went wrong! Refresh the page and try again!"
                 );
               }
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setmintloading("initial");
                 setmintStatus("");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         } else {
           // setShowWhitelistLoadingModal(true);
@@ -3238,10 +3276,11 @@ function App() {
             ? String(e)
             : "Oops, something went wrong! Refresh the page and try again!"
         );
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setmintloading("initial");
           setmintStatus("");
         }, 5000);
+        return () => clearTimeout(timer);
       }
     }
   };
@@ -3258,13 +3297,14 @@ function App() {
             setmintStatus("Success! Your Nft was minted successfully!");
             setmintloading("success");
             settextColor("rgb(123, 216, 176)");
-            setTimeout(() => {
-              setmintStatus("");
-              setmintloading("initial");
-            }, 5000);
             getMyNFTS(coinbase, "opbnb").then((NFTS) => {
               setmyOpbnbNfts(NFTS);
             });
+            const timer = setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            return () => clearTimeout(timer);
           })
           .catch((e) => {
             console.error(e);
@@ -3278,10 +3318,11 @@ function App() {
                 "Oops, something went wrong! Refresh the page and try again!"
               );
             }
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setmintloading("initial");
               setmintStatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       } else if (window.WALLET_TYPE === "binance") {
         const nft_contract = new ethers.Contract(
@@ -3301,10 +3342,11 @@ function App() {
               "Oops, something went wrong! Refresh the page and try again!"
             );
           }
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setmintloading("initial");
             setmintStatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         });
 
         const txReceipt = await txResponse.wait();
@@ -3312,13 +3354,14 @@ function App() {
           setmintStatus("Success! Your Nft was minted successfully!");
           setmintloading("success");
           settextColor("rgb(123, 216, 176)");
-          setTimeout(() => {
-            setmintStatus("");
-            setmintloading("initial");
-          }, 5000);
           getMyNFTS(coinbase, "opbnb").then((NFTS) => {
             setmyOpbnbNfts(NFTS);
           });
+          const timer = setTimeout(() => {
+            setmintStatus("");
+            setmintloading("initial");
+          }, 5000);
+          return () => clearTimeout(timer);
         }
       }
     }
@@ -4079,6 +4122,7 @@ function App() {
   };
 
   const handleManageLogin = async (signature, message) => {
+    setsyncCount(syncCount + 1);
     const data2 = {
       email: email,
       walletAddress: data?.getPlayer?.wallet?.publicAddress ?? coinbase,
@@ -4145,14 +4189,15 @@ function App() {
             );
           });
 
-        handleFirstTask(userWallet);
+        // handleFirstTask(userWallet);
       } catch (error) {
         setsyncStatus("error");
-        setTimeout(() => {
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+        const timer = setTimeout(() => {
           setsyncStatus("initial");
           setshowSync(false);
         }, 3000);
-        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+        return () => clearTimeout(timer);
       }
     } else if (window.WALLET_TYPE === "matchId" && address) {
       try {
@@ -4165,10 +4210,11 @@ function App() {
           }).catch((e) => {
             console.log(e);
             setsyncStatus("error");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setsyncStatus("initial");
               setshowSync(false);
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
           if (res) {
@@ -4197,10 +4243,11 @@ function App() {
       } catch (error) {
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
         setsyncStatus("error");
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setsyncStatus("initial");
           setshowSync(false);
         }, 3000);
+        return () => clearTimeout(timer);
       }
     } else if (coinbase && library) {
       try {
@@ -4225,10 +4272,11 @@ function App() {
       } catch (error) {
         console.log("🚀 ~ file: App.js:2248 ~ getTokens ~ error", error);
         setsyncStatus("error");
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setsyncStatus("initial");
           setshowSync(false);
         }, 3000);
+        return () => clearTimeout(timer);
       }
     }
   };
@@ -4637,10 +4685,11 @@ function App() {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
       setsyncStatus("success");
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setsyncStatus("initial");
         setshowSync(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   }, [dataVerify]);
 
@@ -5995,7 +6044,7 @@ function App() {
       if (window.WALLET_TYPE === "matchId") {
         await logoutUser();
       }
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         window.disconnectWallet();
         if (window.WALLET_TYPE === "matchId") {
           deactivate();
@@ -6009,6 +6058,7 @@ function App() {
         setIsPremium(false);
         window.WALLET_TYPE = "";
       }, 500);
+      return () => clearTimeout(timer);
     } else {
       localStorage.setItem("logout", "true");
     }
@@ -6293,11 +6343,11 @@ function App() {
     }
   }, [allTimepieceNfts]);
 
-  useEffect(() => {
-    if (loginListener !== 0 || userWallet !== undefined) {
-      handleFirstTask(userWallet);
-    }
-  }, [loginListener, userWallet]);
+  // useEffect(() => {
+  //   if (loginListener !== 0 || userWallet !== undefined) {
+  //     handleFirstTask(userWallet);
+  //   }
+  // }, [loginListener, userWallet]);
 
   useEffect(() => {
     if (isConnected && coinbase) {
@@ -6316,7 +6366,7 @@ function App() {
   //     setCoinbase();
   //   }
   // }, [address, window.WALLET_TYPE]);
-
+  const hashValue = window.location.hash;
   return (
     <>
       <div
@@ -6340,6 +6390,7 @@ function App() {
           !location.pathname.includes("ResetPassword") &&
           !location.pathname.includes("forgotPassword") &&
           !location.pathname.includes("wod-okxwallet") &&
+          !location.pathname.includes("keep-building") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -6363,6 +6414,7 @@ function App() {
           domainName={domainName}
           onLogout={() => {
             setCount55(count55 + 1);
+            setlogoutCount(logoutCount + 1);
           }}
           onSigninClick={checkData}
           gameAccount={gameAccount}
@@ -6386,6 +6438,7 @@ function App() {
           }}
           onLogout={() => {
             setCount55(count55 + 1);
+            setlogoutCount(logoutCount + 1);
           }}
           handleDisconnect={handleDisconnect}
           myOffers={myNftsOffer}
@@ -6404,6 +6457,7 @@ function App() {
 
         <Routes>
           <Route path="/news/:newsId?/:titleId?" element={<News />} />
+
           <Route
             path="shop/nft/:nftId/:nftAddress?"
             element={
@@ -6911,11 +6965,16 @@ function App() {
             path="/account"
             element={
               <Dashboard
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
                 isEOA={isEOA}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 wodPrice={wodPrice}
+                openKickstarter={() => setKickstarter(true)}
                 onSuccessDeposit={() => {
                   // setCount55(count55 + 1);
                   setTimeout(() => {
@@ -6933,6 +6992,8 @@ function App() {
 
                 myTeaBaseNfts={myTeaBaseNfts}
                 syncStatus={syncStatus}
+                syncCount={syncCount}
+                logoutCount={logoutCount}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -7012,6 +7073,11 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
+                openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
@@ -7033,6 +7099,8 @@ function App() {
                 myTaraxaNfts={myTaraxaNfts}
                 mybnb5yaNfts={mybnb5yaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
+                syncCount={syncCount}
+                logoutCount={logoutCount}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -7118,7 +7186,6 @@ function App() {
                 handleRegister={handleRegister}
                 chainId={networkId}
                 showForms={showForms2}
-                balance={currencyAmount}
                 socials={socials}
               />
             }
@@ -7598,11 +7665,18 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
+                openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
                 syncStatus={syncStatus}
+                syncCount={syncCount}
+                logoutCount={logoutCount}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}
@@ -7844,7 +7918,7 @@ function App() {
               />
             }
           />*/}
-          <Route
+          {/* <Route
             exact
             path="/shop/mint/taraxa"
             element={
@@ -7875,7 +7949,8 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          />
+
+          /> */}
 
           <Route
             exact
@@ -8564,6 +8639,17 @@ function App() {
             path="/map"
             element={<Map dummyBetaPassData2={dummyBetaPassData2} />}
           />
+          <Route
+            exact
+            path="/keep-building"
+            element={
+              <KickstarterPage
+                monthlyPlayers={monthlyPlayers}
+                totalVolumeNew={totalVolumeNew}
+                wodHolders={wodHolders}
+              />
+            }
+          />
         </Routes>
 
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
@@ -8641,6 +8727,38 @@ function App() {
       )}
 
       {fireAppcontent === true && <AppContent />}
+      {(kickstarter || hashValue === "#royalty-chest") &&
+        window.location.pathname === "/account" && (
+          <Kickstarter
+            publicClient={publicClient}
+            onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
+            walletClient={walletClient}
+            binanceW3WProvider={library}
+            onClose={() => {
+              setKickstarter(false);
+              html.classList.remove("hidescroll");
+              window.location.hash = "";
+            }}
+            isOpen={
+              kickstarter ||
+              (hashValue === "#royalty-chest" &&
+                window.location.pathname === "/account")
+            }
+            coinbase={coinbase}
+            chainId={networkId}
+            handleSwitchNetwork={handleSwitchNetwork}
+            isConnected={isConnected}
+            email={email}
+            address={gameAccount}
+            onConnectWallet={() => {
+              setwalletModal(true);
+            }}
+            onAddClass={(value) => {
+              setKickstarterAddClass(value);
+            }}
+            openedRoyaltyChest={openedRoyaltyChest}
+          />
+        )}
     </>
   );
 }

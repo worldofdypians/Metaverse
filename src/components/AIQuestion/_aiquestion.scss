@@ -1,0 +1,881 @@
+.aiLockedQuestion {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: all 0.25s;
+  transform: translateY(10px);
+
+  @media screen and (max-width: 640px) {
+    font-size: 12px;
+  }
+}
+
+@keyframes fadeInAI2 {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aiLockedDesc {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
+}
+
+.answer-outer-wrapper {
+  // border-radius: 8px;
+  // background: #3d4078;
+  cursor: pointer;
+  // overflow: hidden;
+  // position: relative;
+  // min-width: 0;
+  // height: 100%;
+  // display: flex;
+  // align-items: center;
+}
+
+.ai-question-text-wrapper {
+  background: url("https://cdn.worldofdypians.com/wod/ai-question-txt-wrapper.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  padding: 20px 30px;
+  position: relative;
+  top: -25px;
+  transform: translate(-50%, 0);
+  left: 50%;
+  // max-width: calc(100% - 20px);
+  width: 100%;
+  box-sizing: border-box;
+  height: 78px;
+  min-width: 0;
+
+  @media screen and (max-width: 500px) {
+    padding: 10px;
+    height: 60px;
+    max-width: 100%;
+  }
+}
+
+.answer-inner-wrapper {
+  background-image: url("https://cdn.worldofdypians.com/wod/ai-option-bg3.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-color: #1d203f;
+  background-blend-mode: luminosity;
+  // min-height: 55px;
+  height: 55px;
+  width: 100%;
+  min-width: 0;
+
+  @media screen and (max-width: 500px) {
+    min-height: auto;
+  }
+}
+
+.answer-inner-wrapper-disabled {
+  background-image: url("https://cdn.worldofdypians.com/wod/ai-option-bg3.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-color: #1d203f;
+  background-blend-mode: luminosity;
+  filter: brightness(0.6);
+  // min-height: 55px;
+  height: 55px;
+  width: 100%;
+  min-width: 0;
+
+  @media screen and (max-width: 500px) {
+    min-height: auto;
+  }
+}
+
+.answer-inner-wrapper:hover,
+.answer-inner-wrapper-active {
+  background-image: url("https://cdn.worldofdypians.com/wod/ai-option-bg3.webp");
+  background-color: #ff7c00;
+  background-blend-mode: luminosity;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  // min-height: 55px;
+  height: 55px;
+  width: 100%;
+
+  .radio-button-option {
+    border: 2px solid #ff7c00;
+  }
+
+  @media screen and (max-width: 500px) {
+    min-height: auto;
+  }
+}
+
+
+@keyframes pulseAnswer {
+  0%, 100% {
+    filter: brightness(1.4);
+  }
+  50% {
+    filter: brightness(0.8);
+  }
+}
+
+.drumroll-background{
+  animation: pulseAnswer .75s infinite;
+}
+
+
+.ai-answer-option-wrapper {
+  background-color: #010d22;
+  border: 1px solid #677a90;
+  border-radius: 20px;
+}
+
+.answer-inner-wrapper-answer {
+  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapper-answer.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  // min-height: 55px;
+  height: 55px;
+  width: 100%;
+
+  @media screen and (max-width: 500px) {
+    min-height: auto;
+  }
+}
+
+.answer-inner-wrapper-wrong {
+  background: url("https://cdn.worldofdypians.com/wod/answer-inner-wrapper-error.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  // min-height: 55px;
+  height: 55px;
+  width: 100%;
+
+  @media screen and (max-width: 500px) {
+    min-height: auto;
+  }
+}
+
+.radio-button-option-selected {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  background: #ff7c00;
+  border-radius: 50%;
+}
+
+.radio-button-option-correct {
+  width: 16px;
+  height: 16px;
+  background: url("https://cdn.worldofdypians.com/wod/aiCorrect.png");
+  background-position: center;
+  border: none !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.radio-button-option-wrong {
+  width: 16px;
+  height: 16px;
+  background: url("https://cdn.worldofdypians.com/wod/aiError.png");
+  background-position: center;
+  border: none !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.radio-button-option {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #3d4078;
+  border-radius: 50%;
+}
+
+.aiLockedImg {
+  width: auto;
+  height: 158px;
+
+  @media screen and (max-width: 500px) {
+    height: 110px;
+  }
+}
+
+.ai-answer-result-wrapper {
+  background: url("https://cdn.worldofdypians.com/wod/ai-answer-txt-wrapper2.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  // width: calc(100% - 60px);
+  width: 100%;
+
+  min-height: 76px;
+
+  @media screen and (max-width: 500px) {
+    min-height: 40px;
+    width: 100%;
+  }
+}
+
+.ai-answer-result-success-wrapper {
+  background: url("https://cdn.worldofdypians.com/wod/ai-answer-result-success.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  // width: calc(100% - 60px);
+  width: 100%;
+  min-height: 76px;
+  @media screen and (max-width: 785px) {
+    width: 100%;
+    min-height: 40px;
+  }
+}
+
+.ai-answer-result-error-wrapper {
+  background: url("https://cdn.worldofdypians.com/wod/ai-answer-result-error.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  // width: calc(100% - 60px);
+  width: 100%;
+  min-height: 76px;
+  @media screen and (max-width: 785px) {
+    width: 100%;
+    min-height: 40px;
+  }
+}
+
+.ai-answer-result-warning-wrapper {
+  background: url("https://cdn.worldofdypians.com/wod/ai-answer-result-warning.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  // width: calc(100% - 60px);
+  width: 100%;
+  min-height: 76px;
+  @media screen and (max-width: 785px) {
+    width: 100%;
+    min-height: 40px;
+  }
+}
+
+.options-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  overflow: hidden;
+  position: relative;
+  min-width: 0;
+  @media screen and (max-width: 800px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.ai-oryn-top {
+  background: url("https://cdn.worldofdypians.com/wod/ai-oryn-txt-wrapper.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  padding: 20px 20px 20px 84px;
+}
+
+.ai-oryn-bottom {
+  background: url("https://cdn.worldofdypians.com/wod/ai-oryn-txt-bottom-wrapper.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100%;
+}
+
+.ai-oryn-border {
+  position: absolute;
+  background-image: url("./ai-oryn-border2.webp");
+  height: 200px;
+  bottom: 2px;
+  min-width: 235px;
+  background-size: 100% 100%;
+  transform: translate(-45%, 3%);
+
+  @media screen and (max-width: 1210px) {
+    // height: 120px;
+    transform: translate(-40%, 3%);
+  }
+  @media screen and (max-width: 1000px) {
+    // height: 120px;
+    transform: translate(-35%, 3%);
+  }
+
+  @media screen and (max-width: 991px) {
+    height: 150px;
+    transform: translate(-55%, 3%);
+    min-width: 185px;
+  }
+}
+
+.oryn-inner-border {
+  border-radius: 50%;
+  width: 115px;
+  height: 115px;
+  position: relative;
+  bottom: 5px;
+
+  @media screen and (max-width: 991px) {
+    width: 85px;
+    height: 85px;
+  }
+}
+
+.gif-bg-time {
+  background: rgba(214, 160, 61, 0.5);
+}
+
+.gif-bg-idle {
+  background: rgba(127, 17, 224, 0.5);
+}
+
+.gif-bg-correct {
+  background: rgba(61, 214, 82, 0.5);
+}
+
+.gif-bg-wrong {
+  background: rgba(214, 61, 61, 0.5);
+}
+
+.ai-oryn-text {
+  color: #fff;
+  // text-align: right;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  width: 90%;
+}
+
+.ai-username {
+  color: #f3bf09;
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.aiAnswer-title {
+  color: #fff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
+}
+
+.ai-oryn-bottom-txt {
+  color: #8d98bc;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  list-style-type: none;
+}
+
+.answer-text {
+  color: #dfdced;
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 0;
+  margin: 0;
+  // line-height: 1.35;
+  // height: 32px;
+  // display: flex;
+  user-select: none;
+  // align-items: center;
+  @media (max-width: 992px) {
+    font-size: 12px !important ;
+    height: auto;
+  }
+}
+
+.aiAnswer-desc {
+  color: #eeedff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  /* 166.667% */
+}
+
+.ai-countdown-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+}
+
+.ai-progress-bar-bg {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background-color: #262859;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ai-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ed4d0 0%, #d4cf4e 100%);
+  transition: width 1s linear;
+}
+
+.ai-danger {
+  background: linear-gradient(90deg, #d44e4e 0%, #d46d4e 100%);
+  /* red alert */
+}
+
+.ai-timer-text {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 0px 0px 12px 12px;
+  background: #262859;
+
+  justify-content: center;
+}
+
+.ai-popup-x-wrapper {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+
+  .ai-x {
+    cursor: pointer;
+    width: 40px;
+    // border: 2px solid white;
+    // border-radius: 50%;
+    // padding: 2px;
+  }
+
+  @media screen and (max-width: 767px) {
+    right: 0px;
+    top: -20px;
+  }
+}
+
+.ai-chain-button {
+  background: url("https://cdn.worldofdypians.com/wod/ai-chain-inactive2.webp");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  color: #6c7caf;
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  line-height: normal;
+  border: none;
+  outline: none;
+  @media screen and (max-width: 500px) {
+    font-size: 11px;
+    white-space: nowrap;
+    min-height: auto;
+  }
+}
+
+.ai-chain-button-active {
+  background: url("https://cdn.worldofdypians.com/wod/ai-chain-active3.webp");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+  outline: none;
+  @media screen and (max-width: 500px) {
+    font-size: 11px;
+    white-space: nowrap;
+    min-height: 56px;
+  }
+}
+
+.ai-timer-bg-wrapper {
+  border-radius: 20px;
+  border: 1px solid #efcb86;
+  background: rgba(239, 203, 134, 0.05);
+  backdrop-filter: blur(2px);
+  min-height: 56px;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 767px) {
+    border: none;
+    background: transparent;
+  }
+}
+
+.ai-timer-title {
+  color: #efcb86;
+  font-family: Montserrat;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.ai-chain-icon {
+  width: 24px;
+  height: 24px;
+
+  @media screen and (max-width: 500px) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.ai-chain-button:hover {
+  background: url("https://cdn.worldofdypians.com/wod/ai-chain-hover2.webp");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+  outline: none;
+
+  @media screen and (max-width: 500px) {
+    font-size: 11px;
+    white-space: nowrap;
+    min-height: 56px;
+  }
+}
+
+.ai-main-button {
+  background: transparent;
+  color: #fff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  outline: none;
+  position: absolute;
+}
+
+.ai-question-confirm-answer {
+  background: linear-gradient(90deg, #13243a 0%, #273f5e 100%);
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.ai-question-confirm-answer:hover {
+  background: linear-gradient(90deg, #008ebf 0%, #00b7cc 100%);
+}
+
+.ai-timer-container {
+  width: 60px;
+  height: 60px;
+  scale: 0.8;
+  position: absolute;
+  right: 0;
+}
+
+.ai-progress-ring {
+  transform-origin: center;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.ai-ring-bg {
+  stroke-width: 6;
+  // opacity: 0.2;
+}
+
+.ai-ring-progress {
+  stroke-width: 6;
+  //  transform: rotate(-90deg);
+  transform: rotateY(-180deg) rotateZ(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.ai-timer-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.ai-rewards-stars {
+  color: #db2927;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 8px;
+}
+
+.ai-rewards-points {
+  color: #68e4fd;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 8px;
+}
+
+.ai-rewards-money {
+  color: #ffa557;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 8px;
+}
+
+.ai-rewards-title {
+  color: #6c7caf;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 13px;
+}
+
+.ai-rewards-title-active {
+  color: #f3c009;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 13px;
+}
+
+.ai-reward-logo {
+  width: 30px;
+  height: 30px;
+  filter: brightness(0.4);
+  position: absolute;
+  left: -5px;
+}
+
+.ai-reward-logo-active {
+  width: 30px;
+  height: 30px;
+  filter: brightness(1);
+  position: absolute;
+  left: -5px;
+}
+
+.ai-separator {
+  background: url("https://cdn.worldofdypians.com/wod/ai-question-separator.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 16px;
+  background-position: center;
+
+  @media screen and (max-width: 640px) {
+    height: 6px;
+  }
+}
+
+.ai-rewards-info {
+  border-radius: 20px;
+  border: 1px solid #255678;
+  background: rgba(15, 23, 47, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+.ai-rewards-info-active {
+  border-radius: 20px;
+  border: 1px solid #f3c009;
+  background: rgba(15, 23, 47, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.blinking {
+  animation: blink 1s infinite;
+}
+
+.ai-time-icon {
+  width: 25px;
+  height: 25px;
+}
+
+/* Typing effect keyframes */
+@keyframes typing-desktop {
+  from {
+    width: 0;
+  }
+  to {
+    width: 254px;
+  }
+}
+
+@keyframes typing-mobile {
+  from {
+    width: 0;
+  }
+  to {
+    width: 205px;
+  }
+}
+
+@keyframes fadeInAI {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// .fade-in-ai {
+//   opacity: 0;
+//   animation: fadeIn-ai 1s forwards;
+// }
+
+// .question, .option {
+//   overflow: hidden;
+//   white-space: nowrap;
+//   width: 0;
+//   animation: typing 1.5s steps(40, end) forwards;
+//   text-align: center;
+// }
+
+// #option1 { animation-delay: 1.5s; }
+// #option2 { animation-delay: 2.5s; }
+// #option3 { animation-delay: 3.5s; }
+// #option4 { animation-delay: 4.5s; }
+
+// #question {
+//   animation: 0.5s ease-out 1.2s 1 normal forwards running fadeInAI;
+// }
+
+.oryn-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.processing-fade {
+  transition: all 0.25s;
+  animation: fadeInOut 1.5s infinite ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+.question-close-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-image: url('./assets/closeBorder2.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  // background: #121235;
+  // border-radius: 12px;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+
+  pointer-events: auto !important;
+  @media screen and (max-width: 786px) {
+    width: 95%;
+  }
+}
+
+.close-ai-x {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}

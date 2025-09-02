@@ -9,6 +9,10 @@ const WodPartners = ({ full }) => {
       icon: "bnbIcon.svg",
     },
     {
+      name: "Binance Alpha",
+      icon: "binance-alpha.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
     },
@@ -341,9 +345,25 @@ const WodPartners = ({ full }) => {
       name: "CoinRabbit",
       icon: "coinrabbit.png",
     },
-      {
+    {
       name: "Vameon",
       icon: "vameon.svg",
+    },
+    {
+      name: "Phemex",
+      icon: "phemex.png",
+    },
+    {
+      name: "HiBt",
+      icon: "hibt.png",
+    },
+    {
+      name: "KCEX",
+      icon: "kcex.png",
+    },
+    {
+      name: "SUPERFORTUNE",
+      icon: "superfortune.png",
     },
   ];
 
@@ -382,11 +402,7 @@ const WodPartners = ({ full }) => {
                 >
                   <div className="partner-logo-container">
                     <img
-                      src={
-                        partner.icon.includes("changeNow")
-                          ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
-                          : `https://cdn.worldofdypians.com/wod/${partner.icon}`
-                      }
+                      src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
                       alt=""
                       style={{
                         width: "60px",

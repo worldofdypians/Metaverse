@@ -116,7 +116,7 @@ const ExplorerGrid = ({
           <div className="col-12 col-lg-4 mt-0 mt-lg-4 mb-3 mb-lg-0">
             <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
               <h6 className="mb-0 new-stats-value">
-                {getFormattedNumber(1500531, 0)}
+                {getFormattedNumber(1553075, 0)}
               </h6>
               <span className="new-stats-type">Total NFT Holders</span>
             </div>

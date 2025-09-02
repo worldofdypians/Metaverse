@@ -11,6 +11,10 @@ const NewBuilders = () => {
       backer: true,
     },
     {
+      name: "Binance Alpha",
+      icon: "binance-alpha.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
       banner: "victionBanner.png",
@@ -466,6 +470,22 @@ const NewBuilders = () => {
       name: "Vameon",
       icon: "vameon.svg",
     },
+    {
+      name: "Phemex",
+      icon: "phemex.png",
+    },
+    {
+      name: "HiBt",
+      icon: "hibt.png",
+    },
+    {
+      name: "KCEX",
+      icon: "kcex.png",
+    },
+    {
+      name: "SUPERFORTUNE",
+      icon: "superfortune.png",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
@@ -482,11 +502,7 @@ const NewBuilders = () => {
                   className={`d-flex flex-column align-items-center gap-2`}
                 >
                   <img
-                    src={
-                      item.icon.includes("changeNow")
-                        ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
-                        : `https://cdn.worldofdypians.com/wod/${item.icon}`
-                    }
+                    src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                     width={45}
                     height={45}
                     alt=""
