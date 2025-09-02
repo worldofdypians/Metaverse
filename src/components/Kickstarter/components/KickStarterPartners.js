@@ -7,7 +7,7 @@ const KickstarterPartners = () => {
       name: "Bnb Chain",
       icon: "bnbIcon.svg",
     },
-        {
+    {
       name: "Binance Alpha",
       icon: "binance-alpha.png",
     },
@@ -336,7 +336,7 @@ const KickstarterPartners = () => {
       name: "Tea-Fi",
       icon: "teafi.svg",
     },
-{
+    {
       name: "Melitho Ventures",
       icon: "melitho.png",
     },
@@ -347,6 +347,22 @@ const KickstarterPartners = () => {
     {
       name: "Vameon",
       icon: "vameon.svg",
+    },
+    {
+      name: "Phemex",
+      icon: "phemex.png",
+    },
+    {
+      name: "HiBt",
+      icon: "hibt.png",
+    },
+    {
+      name: "KCEX",
+      icon: "kcex.png",
+    },
+    {
+      name: "SUPERFORTUNE",
+      icon: "superfortune.png",
     },
   ];
 
