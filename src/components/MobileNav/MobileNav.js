@@ -135,7 +135,7 @@ const MobileNav = () => {
           }}
         />
         <NavLink
-          to="/shop/mint/timepiece"
+          to="/shop/mint/bnbchain-5ya"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
@@ -154,7 +154,7 @@ const MobileNav = () => {
             );
           }}
         />
-       
+
         {email && (
           <NavLink
             to="/loyalty-program"
@@ -175,7 +175,7 @@ const MobileNav = () => {
             }}
           />
         )}
-         {/* <a href="https://www.space.id/tld/21/" target="_blank">
+        {/* <a href="https://www.space.id/tld/21/" target="_blank">
             <img
               src="https://cdn.worldofdypians.com/wod/domainNameIcon.png"
               style={{ width: "22px", height: "22px" }}
