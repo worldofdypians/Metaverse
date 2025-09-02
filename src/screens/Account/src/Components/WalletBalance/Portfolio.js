@@ -1953,7 +1953,7 @@ const Portfolio = ({
                         CoinRabbit
                       </h6>
                     </a>
-                     <a
+                    <a
                       href="https://hibt.com/trade/WOD-USDT"
                       target="_blank"
                       rel="noreferrer"
@@ -1961,15 +1961,13 @@ const Portfolio = ({
                     >
                       <h6 className="bottomitems buy-wod-portfolio-text mb-0">
                         <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/hibt.png"
-                          }
+                          src={"https://cdn.worldofdypians.com/wod/hibt.png"}
                           className="buywodimg"
                         />
                         HiBt
                       </h6>
                     </a>
-                       <a
+                    <a
                       href="https://www.kcex.com/exchange/WOD_USDT"
                       target="_blank"
                       rel="noreferrer"
@@ -1977,15 +1975,13 @@ const Portfolio = ({
                     >
                       <h6 className="bottomitems buy-wod-portfolio-text mb-0">
                         <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/kcex.png"
-                          }
+                          src={"https://cdn.worldofdypians.com/wod/kcex.png"}
                           className="buywodimg"
                         />
                         KCEX
                       </h6>
                     </a>
-                       <a
+                    <a
                       href="https://phemex.com/trade/WOD-USDT"
                       target="_blank"
                       rel="noreferrer"
@@ -1993,9 +1989,7 @@ const Portfolio = ({
                     >
                       <h6 className="bottomitems buy-wod-portfolio-text mb-0">
                         <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/phemex.png"
-                          }
+                          src={"https://cdn.worldofdypians.com/wod/phemex.png"}
                           className="buywodimg"
                         />
                         Phemex

@@ -51,8 +51,8 @@ import MarketMint from "./screens/Marketplace/MarketMint";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import SIDRegister from "@web3-name-sdk/register";
-import { createWeb3Name } from "@web3-name-sdk/core";
-import { ethers, providers } from "ethers";
+// import { createWeb3Name } from "@web3-name-sdk/core";
+import { ethers } from "ethers";
 import { getWeb3Connector } from "@binance/w3w-web3-connector";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
@@ -97,7 +97,8 @@ import { http, createPublicClient } from "viem";
 import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
 import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.js";
 import WodBitGet from "./screens/Community/Campaigns/WodBitGet/WodBitGet.js";
-// import DailyQuestion from "./screens/DailyQuestion/DailyQuestion.js";
+import Kickstarter from "./components/Kickstarter/Kickstarter.js";
+import KickstarterPage from "./components/Kickstarter/KickstarterPage.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -471,12 +472,12 @@ function App() {
   };
 
   const { useUserInfo, useWallet } = Hooks;
-  const { login, address, username, logout: logoutUser } = useUserInfo();
+  const { login, address, logout: logoutUser } = useUserInfo();
   const { signMessage, createWalletClient } = useWallet();
   const {
     data,
     refetch: refetchPlayer,
-    loading: loadingPlayer,
+    loading,
   } = useQuery(GET_PLAYER, {
     fetchPolicy: "network-only",
   });
@@ -486,7 +487,7 @@ function App() {
   const authToken = localStorage.getItem("authToken");
   const [orynPop, setOrynPop] = useState(true);
   const [showWalletModal, setShowWalletModal] = useState(false);
-
+  const [royaltyCount, setRoyaltyCount] = useState(0);
   const [betaModal, setBetaModal] = useState(false);
 
   const [totalSupply, setTotalSupply] = useState(0);
@@ -499,17 +500,17 @@ function App() {
   const [gameAccount, setGameAccount] = useState();
 
   const [networkId, setChainId] = useState();
-  const [currencyAmount, setCurrencyAmount] = useState(0);
+
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
-  const [myNFTs, setMyNFTs] = useState([]);
+  // const [myNFTs, setMyNFTs] = useState([]);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState();
-  const [mystakes, setMystakes] = useState([]);
+  // const [mystakes, setMystakes] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [listedNFTS, setListedNFTS] = useState([]);
-  const [count44, setCount44] = useState(0);
+  // const [count44, setCount44] = useState(0);
   const [count55, setCount55] = useState(0);
   const [cawsListed, setcawsListed] = useState([]);
   const [wodListed, setwodListed] = useState([]);
@@ -520,7 +521,7 @@ function App() {
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([]);
 
-  const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
+  // const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
   const [walletId, setwalletId] = useState("connect");
@@ -605,8 +606,10 @@ function App() {
 
   const [isPremium, setIsPremium] = useState(false);
   const [premiumOryn, setPremiumOryn] = useState(false);
+  const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
 
   const [domainPopup, setDomainPopup] = useState(false);
+  const [kickstarterAddClass, setKickstarterAddClass] = useState(false);
   const [showSync, setshowSync] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [availableDomain, setAvailableDomain] = useState("initial");
@@ -626,6 +629,7 @@ function App() {
   const [skaleAmount, setSkaleAmount] = useState(0);
   const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
   const [wodPrice, setWodPrice] = useState(0);
+  const [kickstarter, setKickstarter] = useState(false);
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
   const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
@@ -1790,6 +1794,11 @@ function App() {
       window.config.nft_teasei_address
     );
 
+    const taraxaContract = new window.taraxaWeb3.eth.Contract(
+      window.TARAXA_NFT_ABI,
+      window.config.nft_taraxa_address
+    );
+
     const confluxresult = await confluxContract.methods
       .totalSupply()
       .call()
@@ -1952,6 +1961,14 @@ function App() {
         return 0;
       });
 
+    const taraxaresult = await taraxaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
 
     setTotalSupply(
@@ -1978,6 +1995,7 @@ function App() {
         Number(teaOPBNBResult) +
         Number(teaBaseResult) +
         Number(teaseiResult) +
+        Number(taraxaresult) +
         20002
     );
   };
@@ -2549,7 +2567,7 @@ function App() {
 
       nfts = await Promise.all(nfts);
       nfts.reverse();
-      setMyNFTs(nfts);
+      // setMyNFTs(nfts);
     }
   };
 
@@ -2667,7 +2685,7 @@ function App() {
       getMyNFTS(coinbase, "land").then((NFTS) => {
         setMyNFTSLand(NFTS);
         setMyLandNFTs(NFTS);
-        setMyNFTs(NFTS);
+        // setMyNFTs(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
@@ -2824,7 +2842,7 @@ function App() {
       let stakes = myStakes.map((stake) => window.getLandNft(stake));
       stakes = await Promise.all(stakes);
       stakes.reverse();
-      setMystakes(stakes);
+      // setMystakes(stakes);
     }
   };
 
@@ -6188,7 +6206,7 @@ function App() {
   //     setCoinbase();
   //   }
   // }, [address, window.WALLET_TYPE]);
-
+  const hashValue = window.location.hash;
   return (
     <>
       <div
@@ -6212,6 +6230,7 @@ function App() {
           !location.pathname.includes("ResetPassword") &&
           !location.pathname.includes("forgotPassword") &&
           !location.pathname.includes("wod-okxwallet") &&
+          !location.pathname.includes("keep-building") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -6786,11 +6805,16 @@ function App() {
             path="/account"
             element={
               <Dashboard
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
                 isEOA={isEOA}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 wodPrice={wodPrice}
+                openKickstarter={() => setKickstarter(true)}
                 onSuccessDeposit={() => {
                   // setCount55(count55 + 1);
                   setTimeout(() => {
@@ -6887,6 +6911,11 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
+                openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
@@ -6994,7 +7023,6 @@ function App() {
                 handleRegister={handleRegister}
                 chainId={networkId}
                 showForms={showForms2}
-                balance={currencyAmount}
                 socials={socials}
               />
             }
@@ -7474,6 +7502,11 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
+                openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
@@ -7721,7 +7754,7 @@ function App() {
               />
             }
           />*/}
-          <Route
+          {/* <Route
             exact
             path="/shop/mint/taraxa"
             element={
@@ -7752,7 +7785,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          />
+          /> */}
           {/* <Route
             exact
             path="/shop/mint/vanar"
@@ -8407,6 +8440,17 @@ function App() {
             path="/map"
             element={<Map dummyBetaPassData2={dummyBetaPassData2} />}
           />
+          <Route
+            exact
+            path="/keep-building"
+            element={
+              <KickstarterPage
+                monthlyPlayers={monthlyPlayers}
+                totalVolumeNew={totalVolumeNew}
+                wodHolders={wodHolders}
+              />
+            }
+          />
         </Routes>
 
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
@@ -8484,6 +8528,38 @@ function App() {
       )}
 
       {fireAppcontent === true && <AppContent />}
+      {(kickstarter || hashValue === "#royalty-chest") &&
+        window.location.pathname === "/account" && (
+          <Kickstarter
+            publicClient={publicClient}
+            onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
+            walletClient={walletClient}
+            binanceW3WProvider={library}
+            onClose={() => {
+              setKickstarter(false);
+              html.classList.remove("hidescroll");
+              window.location.hash = "";
+            }}
+            isOpen={
+              kickstarter ||
+              (hashValue === "#royalty-chest" &&
+                window.location.pathname === "/account")
+            }
+            coinbase={coinbase}
+            chainId={networkId}
+            handleSwitchNetwork={handleSwitchNetwork}
+            isConnected={isConnected}
+            email={email}
+            address={gameAccount}
+            onConnectWallet={() => {
+              setwalletModal(true);
+            }}
+            onAddClass={(value) => {
+              setKickstarterAddClass(value);
+            }}
+            openedRoyaltyChest={openedRoyaltyChest}
+          />
+        )}
     </>
   );
 }

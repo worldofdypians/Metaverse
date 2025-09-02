@@ -470,7 +470,6 @@ const NewBuilders = () => {
       name: "Vameon",
       icon: "vameon.svg",
     },
-
     {
       name: "Phemex",
       icon: "phemex.png",

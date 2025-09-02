@@ -434,6 +434,43 @@
   cursor: pointer;
   transition: all 0.25s;
 }
+.premium-chest-item {
+  position: relative;
+  border-radius: 20px;
+  border: 2px solid #a57900;
+ background: linear-gradient(135deg, #f1ef69 0%, #d1c632 34.54%, #8e7d12 66.84%, #7a6918 100%);
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.25s;
+  .new-claim-chest-btn {
+  border: 1px solid #a57900;
+ background: linear-gradient(
+  92deg,
+  #b48a00 0%,
+  #c89d2a 35%,
+  #d1a600 70%,
+  #9e7400 100%
+);
+    color: #022722;
+  }
+}
+
+.premium-chest-item:hover {
+  border: 2px solid #d6c100;
+  filter: drop-shadow(0 0 6px #cdb900) !important;
+
+  .new-claim-chest-btn {
+    border: 1px solid #cdb900;
+    background: linear-gradient(92deg,
+        #cda700 0%,
+        #d6c800 33.5%,
+        #d6c100 68%,
+        #cdb900 100%);
+    color: #022722;
+  }
+}
+
 
 .new-chest-item-img {
   width: 80px;
@@ -442,6 +479,28 @@
   @media screen and (max-height: 800px) {
     width: 65px;
     height: 65px;
+  }
+}
+.premium-chest-item-img {
+  width: 80px;
+  height: 80px;
+  animation: pulseShadow 2s infinite ease-in-out;
+  @media screen and (max-height: 800px) {
+    width: 65px;
+    height: 65px;
+  }
+}
+
+
+@keyframes pulseShadow {
+  0% {
+    filter: drop-shadow(0 0 0px rgba(255, 208, 0, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgb(255, 230, 0));
+  }
+  100% {
+    filter: drop-shadow(0 0 0px rgba(255, 238, 0, 0.6));
   }
 }
 
@@ -495,7 +554,6 @@
   grid-auto-rows: min-content;
   place-content: space-between;
 }
-
 .chains-container-2 {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -555,6 +613,21 @@
         #bb3104 100%) !important;
   }
 }
+.new-chest-item-open-premium {
+  background-image: url("https://cdn.worldofdypians.com/wod/chestShine.png") !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 2px solid #007782;
+  background-position: center;
+  background-blend-mode: luminosity;
+  background-color: #007782;
+  
+  .new-claim-chest-btn {
+    border: 2px solid #007782;
+    background: linear-gradient(92deg, #21b8c6 0%, #0c9ca9 33.5%, #239fab 68%, #007782 100%);
+    color: #022722;
+  }
+}
 
 .chest-test-wrapper {
   overflow-y: auto;
@@ -567,6 +640,15 @@
 
   .new-claim-chest-btn {
     border: 2px solid #00b9cd !important;
+  }
+}
+.new-chest-item-open-premium:hover {
+  border: 2px solid #00b9cd !important;
+  filter: drop-shadow(0 0 6px #00b9cd) !important;
+
+  .new-claim-chest-btn {
+    border: 2px solid #00b9cd !important;
+        background: linear-gradient(92deg, #21b8c6 0%, #0c9ca9 33.5%, #239fab 68%, #007782 100%)
   }
 }
 
