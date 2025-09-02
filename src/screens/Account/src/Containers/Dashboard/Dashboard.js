@@ -186,6 +186,7 @@ function Dashboard({
   openKickstarter,
   royaltyCount,
   onOpenRoyaltyChest,
+  mybnb5yaNfts,
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -8003,6 +8004,7 @@ function Dashboard({
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
                 myTaraxaNfts={myTaraxaNfts}
+                mybnb5yaNfts={mybnb5yaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
               />
             </div>

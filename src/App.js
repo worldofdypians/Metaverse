@@ -577,6 +577,8 @@ function App() {
   const [mykucoinNFTs, setMykucoinNFTs] = useState([]);
   const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
   const [myVanarNFTs, setmyVanarNFTs] = useState([]);
+  const [mybnb5yaNfts, setmyBnb5yaNfts] = useState([]);
+
   const [myTeaOpbnbNfts, setmyTeaOpbnbNfts] = useState([]);
   const [myTeaBnbNfts, setmyTeaBnbNfts] = useState([]);
   const [myTeaBaseNfts, setmyTeaBaseNfts] = useState([]);
@@ -2730,6 +2732,11 @@ function App() {
       getMyNFTS(coinbase, "taraxa").then((NFTS) => {
         setMyTaraxaNfts(NFTS);
       });
+
+      getMyNFTS(coinbase, "5ya").then((NFTS) => {
+        setmyBnb5yaNfts(NFTS);
+      });
+
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -3759,6 +3766,159 @@ function App() {
         getMyNFTS(coinbase, "taraxa").then((NFTS) => {
           setMyTaraxaNfts(NFTS);
         });
+      }
+    }
+  };
+
+  const handleMintBnb5ya = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        await window.bnb5ya_nft
+          .mintBnb5YANFT()
+          .then(() => {
+            setmintStatus("Success! Your Nft was minted successfully!");
+            setmintloading("success");
+            settextColor("rgb(123, 216, 176)");
+            setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            getMyNFTS(coinbase, "5ya").then((NFTS) => {
+              setmyBnb5yaNfts(NFTS);
+            });
+          })
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: window.config.nft_bnb5ya_address,
+              abi: window.BNB_NFT_ABI,
+              functionName: "mintBetaPass",
+              args: [],
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (receipt) {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "5ya").then((NFTS) => {
+                setmyBnb5yaNfts(NFTS);
+              });
+            }
+          }
+        }
+      } else if (window.WALLET_TYPE === "binance") {
+        const nft_contract = new ethers.Contract(
+          window.config.nft_bnb5ya_address,
+          window.BNB_NFT_ABI,
+          library.getSigner()
+        );
+
+        const gasPrice = await library.getGasPrice();
+        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+        const gasPriceInWei = ethers.utils.parseUnits(
+          currentGwei.toString().slice(0, 14),
+          "gwei"
+        );
+
+        const transactionParameters = {
+          gasPrice: gasPriceInWei,
+        };
+
+        let gasLimit;
+        try {
+          gasLimit = await nft_contract.estimateGas.mintBetaPass();
+          transactionParameters.gasLimit = gasLimit;
+          console.log("transactionParameters", transactionParameters);
+        } catch (error) {
+          console.error(error);
+        }
+
+        const txResponse = await nft_contract
+          .mintBetaPass({ ...transactionParameters })
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setmintStatus("Success! Your Nft was minted successfully!");
+          setmintloading("success");
+          settextColor("rgb(123, 216, 176)");
+          setTimeout(() => {
+            setmintStatus("");
+            setmintloading("initial");
+          }, 5000);
+          getMyNFTS(coinbase, "5ya").then((NFTS) => {
+            setmyBnb5yaNfts(NFTS);
+          });
+        }
       }
     }
   };
@@ -6828,6 +6988,8 @@ function App() {
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
                 myTaraxaNfts={myTaraxaNfts}
+                mybnb5yaNfts={mybnb5yaNfts}
+
                 myTeaBaseNfts={myTeaBaseNfts}
                 syncStatus={syncStatus}
                 syncCount={syncCount}
@@ -6935,6 +7097,7 @@ function App() {
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
                 myTaraxaNfts={myTaraxaNfts}
+                mybnb5yaNfts={mybnb5yaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 syncCount={syncCount}
                 logoutCount={logoutCount}
@@ -7528,6 +7691,7 @@ function App() {
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
                 myTaraxaNfts={myTaraxaNfts}
+                mybnb5yaNfts={mybnb5yaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -7785,7 +7949,42 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
+
           /> */}
+
+          <Route
+            exact
+            path="/shop/mint/bnbchain-5ya"
+            element={
+              <MarketMint
+                isEOA={isEOA}
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleMintBnb5ya}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                timepieceMetadata={timepieceMetadata}
+                nftCreated={mybnb5yaNfts}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
+                totalCreated={totalTimepieceCreated}
+              />
+            }
+          />
+
           {/* <Route
             exact
             path="/shop/mint/vanar"
