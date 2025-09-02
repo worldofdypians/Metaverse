@@ -561,8 +561,8 @@ const SingleNft = ({
       setowner(owner);
       return owner;
     } else if (nftType === "5ya") {
-      const nft_contract = new window.bscWeb3.eth.Contract(
-        window.BNB_NFT_ABI,
+      const nft_contract = new window.opBnbWeb3.eth.Contract(
+        window.OPBNB_NFT_ABI,
         window.config.nft_bnb5ya_address
       );
       const owner = await nft_contract.methods
@@ -3082,7 +3082,6 @@ const SingleNft = ({
                         type === "doge" ||
                         type === "cmc" ||
                         type === "bnb" ||
-                        type === "5ya" ||
                         type === "cawsbnb" ||
                         type === "landbnb" ||
                         type === "cookie3" ||
@@ -3103,7 +3102,8 @@ const SingleNft = ({
                           ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
                           : type === "opbnb" ||
                             type === "kucoin" ||
-                            type === "tea-opbnb"
+                            type === "tea-opbnb" ||
+                            type === "5ya"
                           ? "https://cdn.worldofdypians.com/wod/opbnbChain.png"
                           : type === "skale"
                           ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
@@ -3132,7 +3132,6 @@ const SingleNft = ({
                     type === "gate" ||
                     type === "doge" ||
                     type === "bnb" ||
-                    type === "5ya" ||
                     type === "cawsbnb" ||
                     type === "cmc" ||
                     type === "landbnb" ||
@@ -3168,7 +3167,8 @@ const SingleNft = ({
                       ? "Vanar"
                       : type === "opbnb" ||
                         type === "kucoin" ||
-                        type === "tea-opbnb"
+                        type === "tea-opbnb" ||
+                        type === "5ya"
                       ? "opBNB Chain"
                       : type === "immutable"
                       ? "Immutable"

@@ -88,9 +88,9 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_bnb5ya_address,
-      chainId: [56],
-      chainName: "BNB Chain",
-      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
+      chainId: [204],
+      chainName: "opBNB Chain",
+      logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
     },
     {
       id: "kucoin",
@@ -1220,13 +1220,13 @@ const MarketMint = ({
             setStatus("");
           }
         } else if (selectedMint.id === "bnbchain-5ya") {
-          if (chainId !== 56) {
+          if (chainId !== 204) {
             setactiveButton(false);
-            setStatus("Switch to BNB Chain to continue minting.");
-          } else if (chainId === 56 && isEOA) {
+            setStatus("Switch to opBNB Chain to continue minting.");
+          } else if (chainId === 204 && isEOA) {
             setactiveButton(true);
             setStatus("");
-          } else if (chainId === 56 && !isEOA) {
+          } else if (chainId === 204 && !isEOA) {
             setactiveButton(false);
             setStatus(
               "Smart contract wallets are not supported for this action."
@@ -2065,7 +2065,7 @@ const MarketMint = ({
                                       ? handleMint()
                                       : isConnected === true &&
                                         !selectedMint.chainId.includes(chainId)
-                                      ? handleBNBPool()
+                                      ? handleOpBnbPool()
                                       : showWalletConnect();
                                   }}
                                   disabled={
@@ -2501,7 +2501,7 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
-                   <div className="col-12 col-lg-6 mt-lg-5">
+                  <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-taraxa-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
@@ -2512,7 +2512,9 @@ const MarketMint = ({
                           <h6 className="past-taraxa-mint-amount">
                             {getFormattedNumber(taraxaNftsSold, 0)}
                           </h6>
-                          <span className="past-taraxa-mint-desc">SOLD OUT</span>
+                          <span className="past-taraxa-mint-desc">
+                            SOLD OUT
+                          </span>
                         </div>
                       </div>
                     </div>

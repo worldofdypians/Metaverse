@@ -33,7 +33,7 @@ window.config = {
   nft_sei_address: "0x8E4917c1Ba9598fBbF66934CB17AC28c3b5849Ab",
   nft_immutable_address: "0x49ce073Ce717425f1E0cB894C02A583a12cb0F90",
   nft_bnb_address: "0xe468df1606650452b2c08c36F79eaA8B78848E9C",
-  nft_bnb5ya_address: "0xe468df1606650452b2c08c36F79eaA8B78848E9C",
+  nft_bnb5ya_address: "0x7A95F56395001865c58F31779781197ba53B8892",
   nft_opbnb_address: "0x4e4A3f047fA8Fe69cB1a79a0452121ED6fca95ba",
   nft_multivers_address: "0x96A3F313679f2F5Ce098091BFf271bF4e848178B",
   nft_manta_address: "0xf894eBD7c4c850687D208246c42036EB951CE324",
@@ -2340,7 +2340,7 @@ async function getContractBNB5YANFT(key) {
   if (!window.cached_contracts[key]) {
     window.web3 = new Web3(window.ethereum);
     window.cached_contracts[key] = new window.web3.eth.Contract(
-      window.BNB_NFT_ABI,
+      window.OPBNB_NFT_ABI,
       window.config.nft_bnb5ya_address,
       {
         from: await getCoinbase(),
@@ -2379,8 +2379,8 @@ class BNB5YA_NFT {
       "totalSupply",
     ].forEach((fn_name) => {
       this[fn_name] = async function (...args) {
-        let contract = new window.bscWeb3.eth.Contract(
-          window.BNB_NFT_ABI,
+        let contract = new window.opBnbWeb3.eth.Contract(
+          window.OPBNB_NFT_ABI,
           window.config.nft_bnb5ya_address,
           {
             from: await getCoinbase(),
@@ -4183,8 +4183,8 @@ async function getMyNFTs(address, type = "") {
 
     return tokens;
   }  else if (type === "5ya") {
-    contract = new window.bscWeb3.eth.Contract(
-      window.BNB_NFT_ABI,
+    contract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
       window.config.nft_bnb5ya_address
     );
 

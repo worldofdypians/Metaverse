@@ -3780,7 +3780,7 @@ function App() {
         window.WALLET_TYPE !== "matchId"
       ) {
         await window.bnb5ya_nft
-          .mintBnb5YANFT()
+          .mintBNB5YANFT()
           .then(() => {
             setmintStatus("Success! Your Nft was minted successfully!");
             setmintloading("success");
@@ -3815,7 +3815,7 @@ function App() {
           const result = await walletClient
             .writeContract({
               address: window.config.nft_bnb5ya_address,
-              abi: window.BNB_NFT_ABI,
+              abi: window.OPBNB_NFT_ABI,
               functionName: "mintBetaPass",
               args: [],
             })
@@ -3862,7 +3862,7 @@ function App() {
       } else if (window.WALLET_TYPE === "binance") {
         const nft_contract = new ethers.Contract(
           window.config.nft_bnb5ya_address,
-          window.BNB_NFT_ABI,
+          window.OPBNB_NFT_ABI,
           library.getSigner()
         );
 
