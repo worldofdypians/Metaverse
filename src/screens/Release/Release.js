@@ -277,43 +277,51 @@ const Release = ({
       let web3 = new Web3(window.ethereum);
       const vestingSc = new web3.eth.Contract(
         IDO_ABI,
-        window.config.ido_address
+        window.config.ido_address,
+        { from: await window.getCoinbase() }
       );
 
-      const account = await window.getCoinbase();
-      const gasPrice = await web3.eth.getGasPrice();
+      const gasPrice = await window.bscWeb3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
 
       const transactionParameters = {
-        from: account,
-        gasPrice,
+        gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
       };
 
-      try {
-        const gas = await vestingSc.methods
-          .claim()
-          .estimateGas({ from: account });
-        transactionParameters.gas = web3.utils.toHex(gas);
+      await vestingSc.methods
+        .claim()
+        .estimateGas({ from: await window.getCoinbase() })
+        .then((gas) => {
+          transactionParameters.gas = web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
-        await vestingSc.methods.claim().call({ from: account });
+      await vestingSc.methods
+        .claim()
+        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .then(() => {
+          setclaimStatus("success");
+          setclaimLoading(false);
 
-        await vestingSc.methods.claim().send(transactionParameters);
+          setTimeout(() => {
+            setclaimStatus("initial");
+            getInfo();
+            getInfoTimer();
+          }, 5000);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
 
-        setclaimStatus("success");
-        setclaimLoading(false);
-
-        setTimeout(() => {
-          setclaimStatus("initial");
-          getInfo();
-          getInfoTimer();
-        }, 5000);
-      } catch (e) {
-        console.error("Claim failed:", e);
-        window.alertify.error(e?.message || "Transaction failed");
-
-        setclaimStatus("failed");
-        setclaimLoading(false);
-        setTimeout(() => setclaimStatus("initial"), 5000);
-      }
+          setclaimStatus("failed");
+          setclaimLoading(false);
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        });
     }
   };
 

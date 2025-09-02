@@ -1643,7 +1643,7 @@ const MyProfile = ({
                     )} */}
                     {/* {!aiQuestionCompleted && ( */}
                     <div className={`d-flex flex-column infotips-holder`}>
-                     <div className="d-flex align-items-center gap-1">
+                      <div className="d-flex align-items-center gap-1">
                         <div className="yellow-dot"></div>
                         <span
                           className="beast-siege-timer"
@@ -1708,9 +1708,7 @@ const MyProfile = ({
                     )}
                   </div>
                   <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/goldArrow.svg"
-                    }
+                    src={"https://cdn.worldofdypians.com/wod/goldArrow.svg"}
                     width={20}
                     height={20}
                     alt=""

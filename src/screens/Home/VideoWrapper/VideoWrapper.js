@@ -45,7 +45,7 @@ const VideoWrapper = ({
     {
       title: "Binance Alpha",
       logo: "binance-alpha.png",
-      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
     },
     {
       title: "Kucoin",
@@ -112,38 +112,21 @@ const VideoWrapper = ({
       logo: "coinrabbit.png",
       link: "https://coinrabbit.io/exchange/",
     },
-    {
-      title: "HiBt",
-      logo: "hibt.png",
-      link: "https://hibt.com/trade/WOD-USDT",
-    },
-    {
-      title: "KCEX",
-      logo: "kcex.png",
-      link: "https://www.kcex.com/exchange/WOD_USDT",
-    },
-    {
-      title: "Phemex",
-      logo: "phemex.png",
-      link: "https://phemex.com/trade/WOD-USDT",
-    },
   ];
 
   const dummyBetaPassData2 = [
-    {
-      link: "https://www.binance.com/en/support/announcement/detail/7a596428195643a883bb927f7040caba",
-      title: "",
-      desc: "",
-      // desc: "Earn rewards by staking WOD tokens",
-      class: "tradingClass",
-    },
     {
       link: "/token",
       title: "TOKEN",
       desc: "Power your gameplay with WOD",
       class: "tokenClass",
     },
-
+    {
+      link: "/staking",
+      title: "EARN",
+      desc: "Earn rewards by staking WOD tokens",
+      class: "earnClass",
+    },
     {
       link: "/game#challenges",
       title: "EVENTS & CHALLENGES",
@@ -252,14 +235,64 @@ const VideoWrapper = ({
 
   return (
     <>
-      <div className="video-wrapper binance-alpha-wrapper-mobile position-relative h-100">
+      <div className="video-wrapper position-relative h-100">
         {/* <div
           className="row gap-4 gap-lg-0"
          
         > */}
         <div className="h-100">
+          <NavLink
+            className="absolute d-none d-lg-block left-4 top-24 z-5"
+            to="/keep-building"
+          >
+            <div className="group relative">
+              <div
+                className={`position-absolute top-0 end-0 bottom-0 start-0 bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-20 rounded-2xl blur-xl group-hover:opacitytw-40 transition-all duration-500`}
+              ></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-xl rounded-lg" />
+
+              <div
+                className={`position-relative bg-[rgba(8,11,42,1)] backdrop-blur-sm rounded-2xl p-8 bordertw border-white/20 hover:border-white/40 transition-all duration-500 hover:transform hover:scale-105 shadow-yellow-500/50 group-hover:shadow-3xl`}
+              >
+                <div className="text-center space-y-2">
+                  <div className="text-xl text-white tracking-wider">
+                    <span className="text-uppercase bg-gradient-to-r from-yellow-400 to-orange-600 bg-clip-text text-transparent font-bold text-[20px]">
+                      Keep Building
+                    </span>
+                  </div>
+                  <div className="text-xs text-white uppercase tracking-widest">
+                    Partner Program
+                  </div>
+                  <div className="sidebar-separator2 my-2"></div>
+                  <div className="flex justify-center items-center space-x-3 pt-1">
+                    <div className="flex items-center space-x-1">
+                      <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full" />
+                      <span className="text-gray-400 d-flex align-items-center gap-2 text-xs font-normal">
+                        Powered by{" "}
+                        <img
+                          src="https://cdn.worldofdypians.com/wod/kickstarterBnb.png"
+                          alt="powered by bnb chain"
+                          className="h-4"
+                        />
+                      </span>
+                    </div>
+                    {/* <div className="flex items-center space-x-1">
+                      <span className="text-emerald-400 text-xs">
+                        Trusted by Partners
+                      </span>
+                    </div> */}
+                  </div>
+                </div>
+
+                {/* Animated border */}
+                <div
+                  className={`position-absolute top-0 end-0 bottom-0 start-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 pointer-events-none`}
+                ></div>
+              </div>
+            </div>
+          </NavLink>
           <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center align-items-lg-center custom-container">
-            <h4 className="main-hero-title-homepage font-montserrat">
+            <h4 className="main-hero-title font-montserrat">
               {/* The Biggest Metaverse
               <br />
               Ever Built */}
@@ -409,7 +442,7 @@ const VideoWrapper = ({
                       whileTap={{ scale: 0.95 }}
                     >
                       <a
-                        href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                        href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
                         target="_blank"
                         rel="noreferrer"
                         className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"
@@ -478,7 +511,6 @@ const VideoWrapper = ({
                       item.link === "/" && setModal(true);
                     }}
                     key={index}
-                    target={item.title === "" ? "_blank" : "_self"}
                   >
                     <BetaEventCardHome data={item} isFrontPage={true} />
                   </NavLink>
@@ -490,8 +522,7 @@ const VideoWrapper = ({
           <video
             preload="auto"
             className="d-none d-lg-flex d-xl-flex elementor-video"
-            // src="https://cdn.worldofdypians.com/media/wodTrailer2025.mp4"
-            src={require("../../../assets/wodTrailer2025.mp4")}
+            src="https://cdn.worldofdypians.com/media/wodTrailer2025.mp4"
             autoPlay={true}
             loop={true}
             muted="muted"
@@ -519,7 +550,6 @@ const VideoWrapper = ({
                     item.link === "/" && setModal(true);
                   }}
                   key={index}
-                  target={item.title === "" ? "_blank" : "_self"}
                 >
                   <BetaEventCardHome data={item} isFrontPage={true} />
                 </NavLink>
