@@ -8852,8 +8852,13 @@ const NewDailyBonus = ({
                     </div>
                   </div>
                 ))}
-                {/* {chain === "manta" && (
-                  <div className="new-rewards-item manta-reward-item p-2 d-flex justify-content-end align-items-center gap-2 ps-4">
+                {chain === "manta" && (
+                  <a
+                    href="https://app.superfortune.xyz/fortunecharm"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="new-rewards-item manta-reward-item p-2 d-flex justify-content-end align-items-center gap-2 ps-4"
+                  >
                     <img
                       className="new-rewards-item-img"
                       src={`https://cdn.worldofdypians.com/wod/manta-daily-bonus-reward.png`}
@@ -8867,9 +8872,10 @@ const NewDailyBonus = ({
 
                     <div className="d-flex align-items-bottom gap-1">
                       <h6 className="mb-0  new-reward-amount">Lucky Charm</h6>
+                      <img src="https://cdn.worldofdypians.com/wod/link.svg" />
                     </div>
-                  </div>
-                )} */}
+                  </a>
+                )}
               </div>
             ) : (
               <></>

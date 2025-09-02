@@ -361,6 +361,10 @@ const WodPartners = ({ full }) => {
       name: "KCEX",
       icon: "kcex.png",
     },
+    {
+      name: "SUPERFORTUNE",
+      icon: "superfortune.png",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
