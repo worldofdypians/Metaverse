@@ -64,20 +64,20 @@ const MarketMint = ({
   //   mobileBg: "gateMobileBg.png",
   // };
   const allMints = [
-    {
-      id: "taraxa",
-      cardTitle: "Taraxa Beta Pass",
-      title: "Taraxa Beta Pass",
-      background: "taraxa-mint-bg",
-      mobileBg: "taraxaMobileBg.png",
-      activeClass: "taraxa-active",
-      emptyClass: "conflux-empty",
-      nftcreated: nftCreated,
-      nft_address: window.config.nft_taraxa_address,
-      chainId: [841],
-      chainName: "Taraxa",
-      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-    },
+    // {
+    //   id: "taraxa",
+    //   cardTitle: "Taraxa Beta Pass",
+    //   title: "Taraxa Beta Pass",
+    //   background: "taraxa-mint-bg",
+    //   mobileBg: "taraxaMobileBg.png",
+    //   activeClass: "taraxa-active",
+    //   emptyClass: "conflux-empty",
+    //   nftcreated: nftCreated,
+    //   nft_address: window.config.nft_taraxa_address,
+    //   chainId: [841],
+    //   chainName: "Taraxa",
+    //   logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    // },
     {
       id: "kucoin",
       cardTitle: "KuCoin Beta Pass",
@@ -347,6 +347,7 @@ const MarketMint = ({
       window.config.nft_vanar_address
     );
 
+ 
     const teaseicontract = new window.seiWeb3.eth.Contract(
       window.SEI_NFT_ABI,
       window.config.nft_teasei_address
@@ -514,7 +515,9 @@ const MarketMint = ({
         console.error(e);
         return 0;
       });
+
     setTaraxaNftsSold(taraxaResult);
+
   };
 
   const handleEthPool = async () => {
@@ -2352,7 +2355,8 @@ const MarketMint = ({
                     </div>
                   </div>
 
-                  <div className="col-12 col-lg-6 mt-lg-5">
+                   <div className="col-12 col-lg-6 mt-lg-5">
+
                     <div className="past-taraxa-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>

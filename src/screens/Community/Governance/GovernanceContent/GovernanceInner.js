@@ -784,7 +784,7 @@ const GovernanceInner = ({
                                 />
 
                                 <button
-                                  className="inner-max-btn position-absolute"
+                                  className="inner-max-btn position-absolute px-2"
                                   onClick={handleSetMaxDeposit}
                                 >
                                   Max
@@ -946,7 +946,7 @@ const GovernanceInner = ({
                                   />
 
                                   <button
-                                    className="inner-max-btn position-absolute"
+                                    className="inner-max-btn position-absolute px-2"
                                     onClick={handleSetMaxWithdraw}
                                   >
                                     Max

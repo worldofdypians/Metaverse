@@ -269,6 +269,14 @@ const MarketSidebar = () => {
               );
             }}
           />
+          {/* <a href="https://www.space.id/tld/21/" target="_blank" className="d-flex p-2 align-items-center gap-2 sidebar-item">
+            <img
+              src="https://cdn.worldofdypians.com/wod/domainNameIcon.png"
+              style={{ width: "20px", height: "20px" }}
+              alt="wod domain"
+            />
+            <span className={`sidebar-title`}>.WOD Domain</span>
+          </a> */}
         </div>
       </div>
     </div>
