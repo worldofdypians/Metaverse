@@ -3,6 +3,7 @@ import "./whitelist.css";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import Web3 from "web3";
 // import wallet from "../FARMINNG/assets/wallet.svg";
+import axios from "axios";
 
 import {
   VESTING_ABI,
@@ -50,6 +51,8 @@ const Whitelist = ({
   binanceW3WProvider,
   publicClient,
 }) => {
+  const [checkStatus, setcheckStatus] = useState(true);
+
   const [cliffTime, setcliffTime] = useState(0);
   const [cliffTimePrivate, setcliffTimePrivate] = useState(0);
   const [cliffTimeKol, setcliffTimeKol] = useState(0);
@@ -200,6 +203,17 @@ const Whitelist = ({
   const [claimStatusAdvisors, setclaimStatusAdvisors] = useState("initial");
 
   const [selectedRound, setselectedRound] = useState();
+
+  const checkBlockchainStatus = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.worldofdypians.com/api/check-tx"
+      );
+      setcheckStatus(response.data.active);
+    } catch (error) {
+      console.error("Error checking status:", error);
+    }
+  };
 
   const getInfo = async () => {
     let isSpecial = false;
@@ -3361,7 +3375,7 @@ const Whitelist = ({
 
   useEffect(() => {
     document.title = "WOD Claim";
-
+    checkBlockchainStatus();
     window.scrollTo(0, 0);
   }, []);
 
@@ -3376,6 +3390,7 @@ const Whitelist = ({
         />
         <StakingBanner />
         <WhitelistContent
+          checkStatus={checkStatus}
           isEOA={isEOA}
           isConnected={isConnected}
           chainId={chainId}
