@@ -6222,6 +6222,7 @@ function App() {
           !location.pathname.includes("trading-competition") &&
           !location.pathname.includes("bonus-otc") &&
           !location.pathname.includes("special-otc") &&
+          !location.pathname.includes("special-otc-4") &&
           !location.pathname.includes("pool") &&
           !location.pathname.includes("pool2") &&
           !location.pathname.includes("auth") &&
@@ -6577,6 +6578,27 @@ function App() {
                 }}
                 coinbase={coinbase}
                 type="special-otc"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+           <Route
+            exact
+            path="/special-otc-4"
+            element={
+              <Whitelist
+                isEOA={isEOA}
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="special-otc-4"
                 network_matchain={chain}
                 walletClient={walletClient}
                 binanceW3WProvider={library}
