@@ -7565,6 +7565,10 @@ function Dashboard({
             walletClient={walletClient}
             publicClient={publicClient}
             isEOA={isEOA}
+            onSuccessDeposit={() => {
+              handleRefreshCountdown700(coinbase);
+            }}
+            goldenPassRemainingTime={goldenPassRemainingTime}
           />
         )}
 
@@ -7732,7 +7736,7 @@ function Dashboard({
                             <li>🔹 Win different rewards</li>
                           </ul>
 
-                           <div
+                          <div
                             className={"ai-rewards-info-active"}
                             // onMouseOver={() => {
                             //   setActiveClass("stars");
