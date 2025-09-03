@@ -81,6 +81,7 @@ const renderer2 = ({ days, hours, minutes, completed }) => {
 };
 
 const WhitelistContent = ({
+  checkStatus,
   isEOA,
   isConnected,
   chainId,
@@ -504,6 +505,20 @@ const WhitelistContent = ({
                 </div>
               </div>
             </div>
+            {isConnected && coinbase && !isEOA && (
+              <span className="text-danger">
+                Smart contract wallets are not supported for this action.
+              </span>
+            )}
+            {isConnected &&
+              coinbase &&
+              chainId === 56 &&
+              checkStatus === true && (
+                <span className="text-danger">
+                  We're not able to process your claim right now. Please try
+                  again in 30 minutes.
+                </span>
+              )}
             {!isConnected && (
               <button className="connectbtn w-100 py-2" onClick={onConnect}>
                 Connect Wallet
@@ -517,134 +532,150 @@ const WhitelistContent = ({
                 Switch to BNB Chain
               </button>
             )}
-            {isConnected && chainId === 56 && selectedRound?.id === "seed" && (
-              <button
-                className={` w-100 py-2
-                
-                ${
-                  ((claimStatus === "claimed" || claimStatus === "initial") &&
-                    Number(wodBalance) === 0) ||
-                  canClaim === false ||
-                  timerFinished === false ||
-                  !isEOA
-                    ? "disabled-btn2"
-                    : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
-                }`}
-                disabled={
-                  canClaim === false ||
-                  timerFinished === false ||
-                  Number(wodBalance) === 0 ||
-                  !isEOA
-                    ? true
-                    : false
-                }
-                onClick={handleClaim}
-              >
-                {claimLoading ? (
-                  <div
-                    className="spinner-border spinner-border-sm text-light"
-                    role="status"
-                  ></div>
-                ) : claimStatus === "failed" ? (
-                  <>Failed</>
-                ) : claimStatus === "success" ? (
-                  <>Success</>
-                ) : (
-                  <>Claim</>
-                )}
-              </button>
-            )}
-
-            {isConnected && chainId === 56 && selectedRound?.id === "otc" && (
-              <button
-                className={` w-100 py-2
-                
-                ${
-                  ((claimStatus === "claimed" || claimStatus === "initial") &&
-                    Number(wodBalance) === 0) ||
-                  canClaim === false ||
-                  timerFinishedOTC === false ||
-                  !isEOA
-                    ? "disabled-btn2"
-                    : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
-                }`}
-                disabled={
-                  canClaim === false ||
-                  timerFinishedOTC === false ||
-                  Number(wodBalance) === 0 ||
-                  !isEOA
-                    ? true
-                    : false
-                }
-                onClick={handleClaim}
-              >
-                {claimLoading ? (
-                  <div
-                    className="spinner-border spinner-border-sm text-light"
-                    role="status"
-                  ></div>
-                ) : claimStatus === "failed" ? (
-                  <>Failed</>
-                ) : claimStatus === "success" ? (
-                  <>Success</>
-                ) : (
-                  <>Claim</>
-                )}
-              </button>
-            )}
-
-            {isConnected && chainId === 56 && selectedRound?.id === "otc2" && (
-              <button
-                className={` w-100 py-2
-                
-                ${
-                  ((claimStatus === "claimed" || claimStatus === "initial") &&
-                    Number(wodBalance) === 0) ||
-                  canClaim === false ||
-                  timerFinishedOTC2 === false ||
-                  !isEOA
-                    ? "disabled-btn2"
-                    : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
-                }`}
-                disabled={
-                  canClaim === false ||
-                  timerFinishedOTC2 === false ||
-                  Number(wodBalance) === 0 ||
-                  !isEOA
-                    ? true
-                    : false
-                }
-                onClick={handleClaim}
-              >
-                {claimLoading ? (
-                  <div
-                    className="spinner-border spinner-border-sm text-light"
-                    role="status"
-                  ></div>
-                ) : claimStatus === "failed" ? (
-                  <>Failed</>
-                ) : claimStatus === "success" ? (
-                  <>Success</>
-                ) : (
-                  <>Claim</>
-                )}
+            {isConnected && chainId === 56 && checkStatus === true && (
+              <button className="fail-button w-100 py-2" disabled>
+                Error
               </button>
             )}
 
             {isConnected &&
               chainId === 56 &&
+              checkStatus === false &&
+              selectedRound?.id === "seed" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinished === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinished === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              chainId === 56 &&
+              checkStatus === false &&
+              selectedRound?.id === "otc" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTC === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedOTC === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              chainId === 56 &&
+              checkStatus === false &&
+              selectedRound?.id === "otc2" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTC2 === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedOTC2 === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              chainId === 56 &&
+              checkStatus === false &&
               selectedRound?.id === "special-otc" && (
                 <button
                   className={` w-100 py-2
@@ -732,6 +763,7 @@ const WhitelistContent = ({
 
             {isConnected &&
               chainId === 56 &&
+              checkStatus === false &&
               selectedRound?.id === "pool-bonus" && (
                 <button
                   className={` w-100 py-2
@@ -776,6 +808,7 @@ const WhitelistContent = ({
 
             {isConnected &&
               chainId === 56 &&
+              checkStatus === false &&
               selectedRound?.id === "pool-dynamic" && (
                 <button
                   className={` w-100 py-2
@@ -819,6 +852,7 @@ const WhitelistContent = ({
               )}
             {isConnected &&
               chainId === 56 &&
+              checkStatus === false &&
               selectedRound?.id === "pool2-dynamic" && (
                 <button
                   className={` w-100 py-2
@@ -863,6 +897,7 @@ const WhitelistContent = ({
 
             {isConnected &&
               chainId === 56 &&
+              checkStatus === false &&
               selectedRound?.id === "wod-dynamic" && (
                 <button
                   className={` w-100 py-2
@@ -907,6 +942,7 @@ const WhitelistContent = ({
 
             {isConnected &&
               chainId === 56 &&
+              checkStatus === false &&
               selectedRound?.id === "bonus-otc" && (
                 <button
                   className={` w-100 py-2
@@ -951,6 +987,7 @@ const WhitelistContent = ({
 
             {isConnected &&
               chainId === 56 &&
+              checkStatus === false &&
               selectedRound?.id === "private" && (
                 <button
                   className={` w-100 py-2
@@ -993,9 +1030,12 @@ const WhitelistContent = ({
                 </button>
               )}
 
-            {isConnected && chainId === 56 && selectedRound?.id === "kol" && (
-              <button
-                className={` w-100 py-2
+            {isConnected &&
+              chainId === 56 &&
+              checkStatus === false &&
+              selectedRound?.id === "kol" && (
+                <button
+                  className={` w-100 py-2
                 
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
@@ -1010,33 +1050,34 @@ const WhitelistContent = ({
                     ? "success-button"
                     : "connectbtn"
                 }`}
-                disabled={
-                  canClaim === false ||
-                  timerFinishedKol === false ||
-                  Number(wodBalance) === 0 ||
-                  !isEOA
-                    ? true
-                    : false
-                }
-                onClick={handleClaim}
-              >
-                {claimLoading ? (
-                  <div
-                    className="spinner-border spinner-border-sm text-light"
-                    role="status"
-                  ></div>
-                ) : claimStatus === "failed" ? (
-                  <>Failed</>
-                ) : claimStatus === "success" ? (
-                  <>Success</>
-                ) : (
-                  <>Claim</>
-                )}
-              </button>
-            )}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedKol === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
 
             {isConnected &&
               chainId === 56 &&
+              checkStatus === false &&
               selectedRound?.id === "advisors" && (
                 <button
                   className={` w-100 py-2
@@ -1078,11 +1119,6 @@ const WhitelistContent = ({
                   )}
                 </button>
               )}
-            {isConnected && coinbase && !isEOA && (
-              <span className="text-danger">
-                Smart contract wallets are not supported for this action.
-              </span>
-            )}
           </div>
         </div>
       </div>
