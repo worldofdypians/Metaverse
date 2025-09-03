@@ -7697,10 +7697,6 @@ function App() {
                 timepieceMetadata={timepieceMetadata}
                 nftCreated={totalTimepieceCreated}
                 totalCreated={totalTimepieceCreated}
-                myTeaBnbNfts={myTeaBnbNfts}
-                myTeaOpbnbNfts={myTeaOpbnbNfts}
-                myTeaSeiNfts={myTeaSeiNfts}
-                myTeaBaseNfts={myTeaBaseNfts}
               />
             }
           />

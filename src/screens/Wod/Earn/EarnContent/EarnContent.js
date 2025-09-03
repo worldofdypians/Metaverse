@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../_earn.scss";
 import TopPoolsCard from "./TopPoolsCard";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
@@ -7,8 +7,6 @@ import LandDetails from "./pools/land";
 import CawsWodDetails from "./pools/cawsWod";
 import CawsDetailsPremium from "./pools/cawsPremium";
 import LandDetailsPremium from "./pools/landPremium";
-import TopPoolsListCard from "./TopPoolsListCard";
-import StakeWodDetails from "./pools/stakingWod";
 import StakeWodDetails2 from "./pools/stakingWod2";
 import { NavLink } from "react-router-dom";
 
@@ -21,15 +19,14 @@ const EarnContent = ({
   onConnectWallet,
   selectedFilter,
   stakingPools,
-  onPoolSelect,
   selectedViewStyle,
   expired,
   binanceW3WProvider,
   isPremium,
-  onSelectFilter,
-  onSelectViewStyle,
+  // onSelectFilter,
+  // onSelectViewStyle,
   onViewPastPools,
-  onViewStakedOnlyPools,
+  // onViewStakedOnlyPools,
   tvl,
   wodBalance,
   userPools,
@@ -40,12 +37,12 @@ const EarnContent = ({
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet
 }) => {
-  const [sorting, setSorting] = useState("");
+  const [sorting, ] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
-  const [filterTitle, setFilterTitle] = useState("All");
+  const [filterTitle] = useState("All");
   // const [listStyle, setListStyle] = useState("table");
   const [pastPools, setpastPools] = useState(false);
-  const [stakedOnly, setstakedOnly] = useState(false);
+  // const [stakedOnly, setstakedOnly] = useState(false);
   const [isHover, setisHover] = useState(false);
   const [totalStakesLandPremium, settotalStakesLandPremium] = useState(0);
   const [totalStakesCawsPremium, settotalStakesCawsPremium] = useState(0);
@@ -96,7 +93,7 @@ const EarnContent = ({
     getTotalStakedNfts();
   }, []);
 
-  const tvlUsd = localStorage.getItem("tvl");
+  // const tvlUsd = localStorage.getItem("tvl");
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center mb-5 pb-4 earncontent-bg">

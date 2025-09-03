@@ -149,6 +149,7 @@ const MainHero = ({ scrollInto }) => {
                   href={item.link}
                   target="_blank"
                   className="investors-item py-2"
+                  rel="noreferrer"
                   key={index}
                 >
                   <img

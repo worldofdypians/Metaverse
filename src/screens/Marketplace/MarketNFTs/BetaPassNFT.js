@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Web3 from "web3";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
@@ -15,20 +15,20 @@ import {
   VERIFY_WALLET,
 } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 import OutsideClickHandler from "react-outside-click-handler";
-import axios from "axios";
+// import axios from "axios";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import SignUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
 // import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/PlayerCreationGecko";
 
 // import Countdown from "react-countdown";
 
-const renderer = ({ days, hours, minutes }) => {
-  return (
-    <span className="livein-timer">
-      {days}d : {hours}h : {minutes}m
-    </span>
-  );
-};
+// const renderer = ({ days, hours, minutes }) => {
+//   return (
+//     <span className="livein-timer">
+//       {days}d : {hours}h : {minutes}m
+//     </span>
+//   );
+// };
 
 const BetaPassNFT = ({
   isConnected,
@@ -43,7 +43,7 @@ const BetaPassNFT = ({
   const [selectedMint, setSelectedMint] = useState([]);
   const [mintTitle, setMintTitle] = useState("base");
   const [nftCount, setNftCount] = useState(1);
-  const [viewCollection, setViewCollection] = useState(false);
+  // const [viewCollection, setViewCollection] = useState(false);
   const [playerCreation, setplayerCreation] = useState(false);
   const [emailVerify, setEmailVerify] = useState(false);
   const [showVerify, setShowVerify] = useState(false);
@@ -521,67 +521,23 @@ const BetaPassNFT = ({
     },
 
     {
-      id: "kucoin",
-      mainTitle: "KuCoin Beta Pass",
-      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by KuCoin. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
-      heroImage: "https://cdn.worldofdypians.com/wod/kucoinhero.webp",
-      logo: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg",
-      buttonTitle: "KuCoin",
+      id: "matchain",
+      mainTitle: "Matchain Beta Pass",
+      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Matchain. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
+      heroImage: "https://cdn.worldofdypians.com/wod/matchainBetaBanner.webp",
+      logo: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
+      buttonTitle: "Matchain",
       isComingSoon: false,
       giveawayButton: false,
       giveawayButtonTitle: "",
       giveawayLink: "",
       areaImage: undefined,
-      cardClassName: "kucoin-mint-bg2",
-      wrapperClassName: "kucoin-eventwrapper",
+      cardClassName: "matchain-mint-bg",
+      wrapperClassName: "mat-eventwrapper",
       treasureHuntStatus: "Expired",
-      rewardsTitle: "$2,000 in KCS rewards",
-      rewardType: "KCS",
-      userEarned: userEarnUsdKucoin,
-      eventType: "Explore & Mine",
-      eventStartDate: "Apr. 01, 2025",
-      eventEndDate: "Jul. 30, 2025",
-    },
-    {
-      id: "vanar",
-      mainTitle: "Vanar Beta Pass",
-      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Vanar. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
-      heroImage: "https://cdn.worldofdypians.com/wod/vanarHero.webp",
-      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      buttonTitle: "Vanar",
-      isComingSoon: false,
-      giveawayButton: false,
-      giveawayButtonTitle: "",
-      giveawayLink: "",
-      areaImage: undefined,
-      cardClassName: "vanar-mint-bg",
-      wrapperClassName: "vanar-eventwrapper",
-      treasureHuntStatus: "Live",
-      rewardsTitle: "$20,000 in VANRY rewards",
-      rewardType: "VANRY",
-      userEarned: vanarEarnUsd,
-      eventType: "Explore & Mine",
-      eventStartDate: "May. 19, 2025",
-      eventEndDate: "Sep. 16, 2025",
-    },
-    {
-      id: "tea-fi",
-      mainTitle: "Tea-Fi Beta Pass",
-      desc: `The Beta Pass NFT provides you with a special ticket to enter the metaverse and participate in an exclusive event hosted by Tea-Fi. During this event, players have the opportunity to earn Points for their leaderboard rankings, and also collect rewards in different tokens, which are distributed on a monthly basis.`,
-      heroImage: "https://cdn.worldofdypians.com/wod/teaBetaBanner.webp",
-      logo: "https://cdn.worldofdypians.com/wod/teafiLogo.svg",
-      buttonTitle: "Tea-Fi",
-      isComingSoon: false,
-      giveawayButton: false,
-      giveawayButtonTitle: "",
-      giveawayLink: "",
-      areaImage: undefined,
-      cardClassName: "teafi-mint-bg",
-      wrapperClassName: "tea-eventwrapper",
-      treasureHuntStatus: "Live",
-      rewardsTitle: "$40,000 in TEA rewards",
-      rewardType: "TEA",
-      userEarned: teafiEarnUsd,
+      rewardsTitle: "$20,000 in BNB rewards",
+      rewardType: "BNB",
+      userEarned: matChainEarnUsd,
       eventType: "Explore & Mine",
       eventStartDate: "Dec. 04, 2024",
       eventEndDate: "Apr. 04, 2025",
