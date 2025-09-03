@@ -1511,7 +1511,7 @@ const StakeWodDetails2 = ({
                       />
 
                       <button
-                        className="inner-max-btn position-absolute"
+                        className="inner-max-btn position-absolute px-2"
                         onClick={handleSetMaxDeposit}
                       >
                         Max
@@ -2115,7 +2115,7 @@ const StakeWodDetails2 = ({
                         Withdraw Amount
                       </label>
                       <button
-                        className="inner-max-btn position-absolute"
+                        className="inner-max-btn position-absolute px-2"
                         onClick={handleSetMaxWithdraw}
                       >
                         Max

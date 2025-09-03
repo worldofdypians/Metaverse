@@ -6,7 +6,7 @@ const MainHero = ({ scrollInto }) => {
     {
       title: "Binance Alpha",
       logo: "binance-alpha-exchange.png",
-      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
     },
     {
       title: "Kucoin",
@@ -95,6 +95,7 @@ const MainHero = ({ scrollInto }) => {
       logo: "blofinExchange.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
+
   ];
 
   return (
@@ -148,15 +149,17 @@ const MainHero = ({ scrollInto }) => {
                   href={item.link}
                   target="_blank"
                   className="investors-item py-2"
+                  rel="noreferrer"
                   key={index}
                 >
                   <img
-                    src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
+                    src={
+                      item.logo.includes("changeNow")
+                        ? require("./changeNowExchange.svg").default
+                        : `https://cdn.worldofdypians.com/wod/${item.logo}`
+                    }
                     className={` exchange-grid-image ${
-                      (index === 0 ||
-                        item.title === "KCEX" ||
-                        item.title === "HiBt") &&
-                      "h-auto"
+                      index === 0 && "h-auto"
                     }`}
                     alt=""
                   />

@@ -781,7 +781,7 @@ const AIQuestion = ({
   const progress = timeLeft / totalTime;
   const dashOffset = circumference * (1 - progress);
 
-
+  // console.log(selectedAnswer, selectedOption);
   return (
     <>
       <div className="d-flex w-100 gap-4 py-5 pt-3 pt-lg-0 py-lg-0">

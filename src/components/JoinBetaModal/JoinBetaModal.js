@@ -369,7 +369,7 @@ const JoinBetaModal = ({
             >
               {showOptions === false ? (
                 <button
-                  className="getpremium-btn px-3 py-2"
+                  className="getpremium-btn px-3 py-2 d-flex align-items-center gap-1"
                   onClick={() => {
                     setShowOptions(true);
                   }}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Web3 from "web3";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
@@ -15,20 +15,20 @@ import {
   VERIFY_WALLET,
 } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 import OutsideClickHandler from "react-outside-click-handler";
-import axios from "axios";
+// import axios from "axios";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import SignUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
 // import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/PlayerCreationGecko";
 
 // import Countdown from "react-countdown";
 
-const renderer = ({ days, hours, minutes }) => {
-  return (
-    <span className="livein-timer">
-      {days}d : {hours}h : {minutes}m
-    </span>
-  );
-};
+// const renderer = ({ days, hours, minutes }) => {
+//   return (
+//     <span className="livein-timer">
+//       {days}d : {hours}h : {minutes}m
+//     </span>
+//   );
+// };
 
 const BetaPassNFT = ({
   isConnected,
@@ -43,7 +43,7 @@ const BetaPassNFT = ({
   const [selectedMint, setSelectedMint] = useState([]);
   const [mintTitle, setMintTitle] = useState("base");
   const [nftCount, setNftCount] = useState(1);
-  const [viewCollection, setViewCollection] = useState(false);
+  // const [viewCollection, setViewCollection] = useState(false);
   const [playerCreation, setplayerCreation] = useState(false);
   const [emailVerify, setEmailVerify] = useState(false);
   const [showVerify, setShowVerify] = useState(false);
@@ -1335,7 +1335,10 @@ const BetaPassNFT = ({
                                 </div>
                               </div>
                               <div className="d-flex gap-1 align-items-center justify-content-center">
-                                <NavLink to="/account/challenges/treasure-hunt">
+                                <NavLink
+                                  to="/account/challenges/treasure-hunt"
+                                  className={"d-flex align-items-center gap-1"}
+                                >
                                   <span className="coingecko-eventdetails">
                                     Event details
                                   </span>
