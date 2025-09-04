@@ -6634,7 +6634,7 @@ function Dashboard({
               email={email}
               username={username}
               isPremium={isPremium}
-              address={data?.getPlayer?.wallet?.publicAddress}
+              address={userWallet}
               coinbase={coinbase}
               // totalScore={userTotalScore}
               openChainsLeaderboard={() => setLeaderboard(true)}
@@ -6717,7 +6717,7 @@ function Dashboard({
                   ? 0
                   : userDataCore?.position > 100
                   ? 0
-                  : baseStars[userDataCore?.position]) ?? 0
+                  : coreStars[userDataCore?.position]) ?? 0
               }
               userRankViction={userDataViction?.position ?? 0}
               userVictionStars={
@@ -6725,7 +6725,7 @@ function Dashboard({
                   ? 0
                   : userDataViction?.position > 100
                   ? 0
-                  : baseStars[userDataViction?.position]) ?? 0
+                  : matStars[userDataViction?.position]) ?? 0
               }
               userRankVanar={userDataVanar?.position ?? 0}
               userVanarStars={
@@ -6822,7 +6822,7 @@ function Dashboard({
               explorerHuntData={explorerHuntData}
               availableTime={goldenPassRemainingTime}
               coinbase={coinbase}
-              wallet={data?.getPlayer?.wallet?.publicAddress}
+              wallet={userWallet}
               chainId={chainId}
               wodPrice={wodPrice}
               binanceW3WProvider={binanceW3WProvider}
@@ -7561,7 +7561,7 @@ function Dashboard({
             chainId={chainId}
             wodPrice={wodPrice}
             binanceW3WProvider={binanceW3WProvider}
-            wallet={data?.getPlayer?.wallet?.publicAddress}
+            wallet={userWallet}
             walletClient={walletClient}
             publicClient={publicClient}
             isEOA={isEOA}
@@ -7860,8 +7860,8 @@ function Dashboard({
                   getAiStep={getAiStep}
                   closePopup={closePopup}
                   setClosePopup={setClosePopup}
-                  username={data?.getPlayer?.displayName ?? "Player"}
-                  address={data?.getPlayer?.wallet?.publicAddress}
+                  username={username ?? "Player"}
+                  address={userWallet}
                   isConnected={isConnected}
                   coinbase={coinbase}
                   chainId={chainId}
@@ -7955,7 +7955,7 @@ function Dashboard({
                 dypTokenData={dypTokenData}
                 onOpenNfts={onOpenNfts}
                 allListed={listedNFTS}
-                address={data?.getPlayer?.wallet?.publicAddress}
+                address={userWallet}
                 coinbase={account}
                 isVerified={data?.getPlayer?.wallet}
                 favoritesArray={favorites}
@@ -7965,8 +7965,8 @@ function Dashboard({
                   handleConnect();
                 }}
                 email={email}
-                userId={data?.getPlayer?.playerId}
-                username={data?.getPlayer?.displayName}
+                userId={userId}
+                username={username}
                 myCawsCollected={MyNFTSCaws}
                 myCawsOldCollected={MyNFTSCawsOld}
                 myLandCollected={MyNFTSLand}
