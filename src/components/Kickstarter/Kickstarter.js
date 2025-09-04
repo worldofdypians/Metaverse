@@ -161,15 +161,11 @@ const Kickstarter = ({
   const [selectedChain, setSelectedChain] = useState("bnb");
   const [hoveredChain, setHoveredChain] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [activatedReward, setActivatedReward] = useState(null);
   const [disable, setDisable] = useState(true);
   const [socials, setSocials] = useState(chains[0].socials);
   const [count, setCount] = useState(0);
   const [ischestOpen, setIsChestOpen] = useState(false);
-  const [rewards, setRewards] = useState({
-    rewardType: null,
-    reward: null,
-  });
+  const [rewards, setRewards] = useState([]);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -180,7 +176,7 @@ const Kickstarter = ({
   // Attach listener
   window.addEventListener("keydown", handleEsc);
 
-  const chestIndex = royalChestIndex+1;
+  const chestIndex = royalChestIndex + 1;
 
   const getUserRewardsByChest = async (
     userEmail,
@@ -225,15 +221,9 @@ const Kickstarter = ({
         //   handleSecondTask(coinbase);
         // }
         setTimeout(() => {
-          setRewards({
-            rewardType: result.data.rewards[0].rewardType,
-            reward: result.data.rewards[0].reward,
-          });
+          setRewards(result.data.rewards);
         }, 3600);
-        console.log(
-          result.data.rewards[0].rewardType,
-          result.data.rewards[0].reward
-        );
+
         setIsChestOpen(true);
         setLoading(false);
       }
@@ -259,15 +249,9 @@ const Kickstarter = ({
       if (result && result.status === 200) {
         console.log(result.data);
         setTimeout(() => {
-          setRewards({
-            rewardType: result.data.rewards[0].rewardType,
-            reward: result.data.rewards[0].reward,
-          });
+          setRewards(result.data.rewards);
         }, 3600);
-        console.log(
-          result.data.rewards[0].rewardType,
-          result.data.rewards[0].reward
-        );
+
         setIsChestOpen(true);
         setLoading(false);
       }
@@ -308,15 +292,9 @@ const Kickstarter = ({
       if (result && result.status === 200) {
         console.log(result.data);
         setTimeout(() => {
-          setRewards({
-            rewardType: result.data.rewards[0].rewardType,
-            reward: result.data.rewards[0].reward,
-          });
+          setRewards(result.data.rewards);
         }, 3600);
-        console.log(
-          result.data.rewards[0].rewardType,
-          result.data.rewards[0].reward
-        );
+
         setIsChestOpen(true);
 
         setLoading(false);
@@ -340,10 +318,7 @@ const Kickstarter = ({
         // }
         console.log(result.data);
         setTimeout(() => {
-          setRewards({
-            rewardType: result.data.rewards[0].rewardType,
-            reward: result.data.rewards[0].reward,
-          });
+          setRewards(result.data.rewards);
         }, 3600);
 
         setIsChestOpen(true);
@@ -877,16 +852,7 @@ const Kickstarter = ({
       }
 
       setTimeout(() => {
-        const randomReward = rewardCategories.find((item) => {
-          return item.id === openedRoyaltyChest.rewards[0].rewardType;
-        });
-
-        setActivatedReward(randomReward.id);
-
-        setRewards({
-          rewardType: openedRoyaltyChest.rewards[0].rewardType,
-          reward: openedRoyaltyChest.rewards[0].reward,
-        });
+        setRewards(openedRoyaltyChest.rewards);
       }, time);
     }
   }, [openedRoyaltyChest]);
@@ -1115,7 +1081,7 @@ const Kickstarter = ({
                 </motion.h1>
               </motion.div>
             </motion.div> */}
-            {rewards?.rewardType !== null && (
+            {rewards && rewards.length > 0 && (
               <motion.div
                 key={rewardCategories[0].id}
                 initial={{ opacity: 0, scale: 0, y: 30 }}
@@ -1154,8 +1120,25 @@ const Kickstarter = ({
                       ease: "easeInOut",
                     }}
                   >
-                    {getFormattedNumber(rewards?.reward, 0)}{" "}
-                    {rewards?.rewardType}
+                    {/* {getFormattedNumber(rewards?.reward, 0)}{" "}
+                    {rewards?.rewardType} */}
+                    {rewards &&
+                      rewards.length > 0 &&
+                      rewards.map((obj, index) => {
+                        return (
+                          <span key={index}>
+                            {obj.rewardType === "Money" && "$"}
+                            {getFormattedNumber(
+                              obj.reward,
+                              obj.rewardType === "Money" ? 2 : 0
+                            )}{" "}
+                            {obj.rewardType !== "Money" && obj.rewardType}
+                            {rewards.length > 1 &&
+                              index < rewards.length - 1 &&
+                              " + "}
+                          </span>
+                        );
+                      })}
                   </motion.span>
                 </div>
               </motion.div>
@@ -1744,19 +1727,31 @@ const Kickstarter = ({
                               style={{
                                 padding: "6px 12px",
                                 background:
-                                  rewards?.rewardType?.toLowerCase() ===
-                                  category.id.toLowerCase()
+                                  rewards.find((item) => {
+                                    return (
+                                      item.rewardType.toLowerCase() ===
+                                      category.id.toLowerCase()
+                                    );
+                                  }) !== undefined
                                     ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 50%, rgba(8, 16, 32, 0.8) 100%)"
                                     : "linear-gradient(135deg, rgba(8, 16, 32, 0.8) 0%, rgba(12, 20, 40, 0.6) 50%, rgba(6, 12, 28, 0.4) 100%)",
                                 border:
-                                  rewards?.rewardType?.toLowerCase() ===
-                                  category.id.toLowerCase()
+                                  rewards.find((item) => {
+                                    return (
+                                      item.rewardType.toLowerCase() ===
+                                      category.id.toLowerCase()
+                                    );
+                                  }) !== undefined
                                     ? "2px solid rgba(59, 130, 246, 0.6)"
                                     : "1px solid rgba(59, 130, 246, 0.25)",
                                 borderRadius: "10px",
                                 boxShadow:
-                                  rewards?.rewardType?.toLowerCase() ===
-                                  category.id.toLowerCase()
+                                  rewards.find((item) => {
+                                    return (
+                                      item.rewardType.toLowerCase() ===
+                                      category.id.toLowerCase()
+                                    );
+                                  }) !== undefined
                                     ? `0 0 20px ${
                                         category.color.includes("yellow")
                                           ? "#F59E0B"
@@ -1780,16 +1775,24 @@ const Kickstarter = ({
                                 }}
                                 animate={{
                                   opacity:
-                                    rewards?.rewardType?.toLowerCase() ===
-                                    category.id.toLowerCase()
+                                    rewards.find((item) => {
+                                      return (
+                                        item.rewardType.toLowerCase() ===
+                                        category.id.toLowerCase()
+                                      );
+                                    }) !== undefined
                                       ? [0.6, 1, 0.6]
                                       : 0.4,
                                 }}
                                 transition={{
                                   duration: 1.5,
                                   repeat:
-                                    rewards?.rewardType?.toLowerCase() ===
-                                    category.id.toLowerCase()
+                                    rewards.find((item) => {
+                                      return (
+                                        item.rewardType.toLowerCase() ===
+                                        category.id.toLowerCase()
+                                      );
+                                    }) !== undefined
                                       ? Infinity
                                       : 0,
                                   ease: "easeInOut",
@@ -1797,8 +1800,12 @@ const Kickstarter = ({
                               />
 
                               {/* Animated scan line for active rewards */}
-                              {rewards?.rewardType?.toLowerCase() ===
-                                category.id && (
+                              {rewards.find((item) => {
+                                return (
+                                  item.rewardType.toLowerCase() ===
+                                  category.id.toLowerCase()
+                                );
+                              }) !== undefined && (
                                 <motion.div
                                   className="position-absolute top-0 start-0 w-100 h-100"
                                   style={{
@@ -1870,8 +1877,12 @@ const Kickstarter = ({
                                         fontSize: "15px",
                                         fontWeight: "700",
                                         color:
-                                          rewards?.rewardType?.toLowerCase() ===
-                                          category.id
+                                          rewards.find((item) => {
+                                            return (
+                                              item.rewardType.toLowerCase() ===
+                                              category.id.toLowerCase()
+                                            );
+                                          }) !== undefined
                                             ? "rgba(219, 234, 254, 1)"
                                             : "rgba(168, 192, 255, 0.9)",
                                         textShadow: "0 1px 2px rgba(0,0,0,0.3)",
@@ -1879,13 +1890,21 @@ const Kickstarter = ({
                                       }}
                                       animate={{
                                         scale:
-                                          rewards?.rewardType?.toLowerCase() ===
-                                          category.id.toLowerCase()
+                                          rewards.find((item) => {
+                                            return (
+                                              item.rewardType.toLowerCase() ===
+                                              category.id.toLowerCase()
+                                            );
+                                          }) !== undefined
                                             ? [1, 1.1, 1]
                                             : 1,
                                         color:
-                                          rewards?.rewardType?.toLowerCase() ===
-                                          category.id.toLowerCase()
+                                          rewards.find((item) => {
+                                            return (
+                                              item.rewardType.toLowerCase() ===
+                                              category.id.toLowerCase()
+                                            );
+                                          }) !== undefined
                                             ? [
                                                 "rgba(219, 234, 254, 1)",
                                                 "rgba(96, 165, 250, 1)",
@@ -1896,8 +1915,12 @@ const Kickstarter = ({
                                       transition={{
                                         duration: 0.8,
                                         repeat:
-                                          rewards?.rewardType?.toLowerCase() ===
-                                          category.id.toLowerCase()
+                                          rewards.find((item) => {
+                                            return (
+                                              item.rewardType.toLowerCase() ===
+                                              category.id.toLowerCase()
+                                            );
+                                          }) !== undefined
                                             ? Infinity
                                             : 0,
                                         ease: "easeInOut",
