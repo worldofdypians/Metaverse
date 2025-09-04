@@ -225,7 +225,8 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
                 <NavLink
-                  to={"/game-updates"}
+                  to={"https://medium.com/@worldofdypians"}
+                  target="_blank"
                   className="getpremium-btn col-lg-4 py-2"
                 >
                   Learn More

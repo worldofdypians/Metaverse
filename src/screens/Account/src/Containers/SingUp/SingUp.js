@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Auth } from "aws-amplify";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./SignUp.module.css";
+import ReCaptchaV2 from "react-google-recaptcha";
 
 function SingUp() {
   const {
@@ -21,6 +22,7 @@ function SingUp() {
 
   const [disabled, setDisabled] = useState(false);
   const [verifyCode, setVerifyCode] = useState("");
+  const recaptchaRef = useRef(null);
 
   const login = () => {
     LoginGlobal(username, password);
@@ -36,22 +38,25 @@ function SingUp() {
       });
   }
 
-  const signup = () => {
-    Auth.signUp({
-      username,
-      password,
-    })
-      .then((user) => {
-        login();
+  const signup = async () => {
+    const captchaToken = await recaptchaRef.current.executeAsync();
+    if (captchaToken) {
+      Auth.signUp({
+        username,
+        password,
       })
-      .catch((err) => {
-        setLoginValues((prev) => {
-          return {
-            ...prev,
-            loginError: err?.message,
-          };
+        .then((user) => {
+          login();
+        })
+        .catch((err) => {
+          setLoginValues((prev) => {
+            return {
+              ...prev,
+              loginError: err?.message,
+            };
+          });
         });
-      });
+    }
   };
 
   useEffect(() => {
@@ -105,7 +110,6 @@ function SingUp() {
         value={username}
         onChange={setUserName}
         inputType="email"
-
       />
       <Input
         inputType="password"
@@ -124,6 +128,13 @@ function SingUp() {
         style={{ margin: "auto" }}
         onPress={signup}
         title={"Create account"}
+      />
+      <ReCaptchaV2
+        sitekey="6LdBzb0rAAAAACitHtIIUPpDrVu62taNzj7r8jFK"
+        style={{ display: "inline-block" }}
+        theme="dark"
+        size="invisible"
+        ref={recaptchaRef}
       />
     </div>
   );
