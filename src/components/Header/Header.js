@@ -457,7 +457,8 @@ const Header = ({
                       Game Campaigns
                     </NavLink>
                     <NavLink
-                      to={"/game-updates"}
+                      to={"https://medium.com/@worldofdypians"}
+                      target="_blank"
                       className={({ isActive }) =>
                         isActive
                           ? "dropdown-nav nav-active p-2"

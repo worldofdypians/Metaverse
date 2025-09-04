@@ -8009,7 +8009,7 @@ function App() {
             path="/game"
             element={<Game allStarData={allStarData} />}
           />
-          <Route exact path="/game-updates" element={<GameUpdates />} />
+          {/* <Route exact path="/game-updates" element={<GameUpdates />} /> */}
           <Route exact path="/about" element={<About />} />
 
           {/* <Route
