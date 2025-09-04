@@ -5073,8 +5073,7 @@ function Dashboard({
       const emailData = { emailAddress: userEmail, chainId: "bnb" };
 
       const result = await axios.post(
-        // "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        "https://dypius-chests-testing.azurewebsites.net/api/GetRewards?",
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
         emailData
       );
       if (result.status === 200 && result.data) {

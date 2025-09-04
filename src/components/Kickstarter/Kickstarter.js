@@ -200,8 +200,7 @@ const Kickstarter = ({
     if (chainText) {
       const result = await axios
         .post(
-          // "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          "https://dypius-chests-testing.azurewebsites.net/api/CollectChest?",
+          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
           userData_bnb
         )
         .catch((e) => {
@@ -230,8 +229,7 @@ const Kickstarter = ({
     } else {
       const result = await axios
         .post(
-          // "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          "https://dypius-chests-testing.azurewebsites.net/api/CollectChest?",
+          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
           userData
         )
         .catch((e) => {
@@ -279,8 +277,7 @@ const Kickstarter = ({
     if (chainText) {
       const result = await axios
         .post(
-          // "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          "https://dypius-chests-testing.azurewebsites.net/api/CollectChest?",
+          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
           userData_bnb
         )
         .catch((e) => {
@@ -302,8 +299,7 @@ const Kickstarter = ({
     } else {
       const result = await axios
         .post(
-          // "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          "https://dypius-chests-testing.azurewebsites.net/api/CollectChest?",
+          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
           userData
         )
         .catch((e) => {
