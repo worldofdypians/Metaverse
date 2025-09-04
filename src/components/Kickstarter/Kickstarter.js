@@ -43,6 +43,7 @@ const rewardCategories = [
 ];
 
 const Kickstarter = ({
+  royalChestIndex,
   onClose,
   onAddClass,
   isConnected,
@@ -179,7 +180,7 @@ const Kickstarter = ({
   // Attach listener
   window.addEventListener("keydown", handleEsc);
 
-  const chestIndex = 5;
+  const chestIndex = royalChestIndex+1;
 
   const getUserRewardsByChest = async (
     userEmail,
@@ -472,7 +473,6 @@ const Kickstarter = ({
             setLoading(false);
             setChestOpened(true);
             setStep(2);
-          
 
             if (video) {
               video.play().catch((err) => console.error("Play failed:", err));
@@ -514,7 +514,6 @@ const Kickstarter = ({
           setLoading(false);
           setChestOpened(true);
           setStep(2);
-       
 
           if (video) {
             video.play().catch((err) => console.error("Play failed:", err));
@@ -568,12 +567,10 @@ const Kickstarter = ({
               chestIndex - 1,
               "bnb"
             );
-         
 
             setLoading(false);
             setChestOpened(true);
             setStep(2);
-           
 
             if (video) {
               video.play().catch((err) => console.error("Play failed:", err));
@@ -660,11 +657,11 @@ const Kickstarter = ({
         const txReceipt = await txResponse.wait();
         if (txReceipt) {
           getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "bnb");
-     
+
           setLoading(false);
           setChestOpened(true);
           setStep(2);
-        
+
           if (video) {
             video.play().catch((err) => console.error("Play failed:", err));
             setTimeout(() => {
@@ -893,6 +890,14 @@ const Kickstarter = ({
       }, time);
     }
   }, [openedRoyaltyChest]);
+
+  useEffect(() => {
+    if (chainId === 56) {
+      setSelectedChain("bnb");
+    } else if (chainId === 204) {
+      setSelectedChain("opbnb");
+    }
+  }, [chainId]);
 
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
