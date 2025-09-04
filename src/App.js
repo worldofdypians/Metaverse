@@ -8546,7 +8546,7 @@ function App() {
       )}
 
       {fireAppcontent === true && <AppContent />}
-      {(kickstarter || hashValue === "#royalty-chest") &&
+      {(kickstarter) &&
         window.location.pathname === "/account" && (
           <Kickstarter
             publicClient={publicClient}
@@ -8556,12 +8556,9 @@ function App() {
             onClose={() => {
               setKickstarter(false);
               html.classList.remove("hidescroll");
-              window.location.hash = "";
             }}
             isOpen={
-              kickstarter ||
-              (hashValue === "#royalty-chest" &&
-                window.location.pathname === "/account")
+              kickstarter 
             }
             coinbase={coinbase}
             chainId={networkId}
