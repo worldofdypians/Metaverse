@@ -32,6 +32,8 @@ const NewChestItem = ({
   binanceW3WProvider,
   walletClient,
   publicClient,
+  openKickstarter,
+  closeDaily,
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -2397,20 +2399,34 @@ const NewChestItem = ({
   };
 
   return (
-    <div
-      className={`new-chest-item ${open && "new-chest-item-open"}  ${
-        isActive === chestId &&
-        isActiveIndex === chestIndex &&
-        "chest-item-active"
-      } ${selectedChest === chestId ? "selected-new-chest" : ""} 
+    <>
+      {chestId === 99 && chain === "bnb" ? (
+        <div
+          className={` ${
+            open && chestId === 99
+              ? "new-chest-item-open-premium"
+              : open
+              ? "new-chest-item-open"
+              : ""
+          }  ${
+            isActive === chestId &&
+            isActiveIndex === chestIndex &&
+            "chest-item-active"
+          } ${selectedChest === chestId ? "selected-new-chest" : ""} 
       ${claimingChest === true ? "disable-chest" : ""}
+      ${chestId === 99 ? "premium-chest-item" : "new-chest-item"}
       d-flex align-items-center justify-content-center position-relative`}
-      onClick={() => handleChestClick()}
-      style={{
-        pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
-      }}
-    >
-      {/* <img
+          onClick={() => {
+            if (!open) {
+              closeDaily();
+              openKickstarter();
+            }
+          }}
+          style={{
+            pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
+          }}
+        >
+          {/* <img
     className='new-chest-item-img'
       src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/blueCrystal${
         !open ? "" :  "OpenGems"
@@ -2419,76 +2435,190 @@ const NewChestItem = ({
       alt=""
       style={{ position: "relative", bottom: "5px", filter: item.premium && "blur(5px)" }}
     /> */}
-      {rewardTypes !== "premium" ? (
-        <img
-          className={` ${
-            chain !== "skale"
-              ? "new-chest-item-img"
-              : "new-chest-item-img-skale"
-          } ${
-            loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
-          }`}
-          src={
-            chain !== "skale"
-              ? `https://cdn.worldofdypians.com/wod/${
-                  open ? image + "open" : image
-                }.png`
-              : `https://cdn.worldofdypians.com/wod/${
-                  open ? chestIndex + "openskale" : chestIndex + "skale"
-                }.png`
-          }
-          alt=""
-          style={{
-            position: "relative",
-            bottom: "5px",
-            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
-          }}
-        />
-      ) : rewardTypes === "premium" && dummypremiumChests ? (
-        <img
-          className={`${
-            chain !== "skale"
-              ? "new-chest-item-img"
-              : "new-chest-item-img-skale"
-          } ${
-            loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
-          }`}
-          src={
-            chain !== "skale"
-              ? `https://cdn.worldofdypians.com/wod/${
-                  open
-                    ? chestIndex % 2 === 1
-                      ? dummypremiumChests + "OpenCoins"
-                      : dummypremiumChests + "OpenGems"
-                    : dummypremiumChests
-                }.png`
-              : `https://cdn.worldofdypians.com/wod/${
-                  open
-                    ? chestIndex - 10 + "openskalepremium"
-                    : chestIndex - 10 + "skalepremium"
-                }.png`
-          }
-          alt=""
-          style={{
-            position: "relative",
-            bottom: "5px",
-            filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
-          }}
-        />
+          {rewardTypes !== "premium" ? (
+            <img
+              className={` ${
+                chestId === 99
+                  ? "premium-chest-item-img"
+                  : chain !== "skale"
+                  ? "new-chest-item-img"
+                  : "new-chest-item-img-skale"
+              } ${
+                loading
+                  ? chain === "skale"
+                    ? "chest-pulsate"
+                    : "chest-shake"
+                  : ""
+              }`}
+              src={
+                chestId === 99
+                  ? `https://cdn.worldofdypians.com/wod/${
+                      open ? "premiumChestOpenFront" : "premiumChest"
+                    }.png`
+                  : chain !== "skale"
+                  ? `https://cdn.worldofdypians.com/wod/${
+                      open ? image + "open" : image
+                    }.png`
+                  : `https://cdn.worldofdypians.com/wod/${
+                      open ? chestIndex + "openskale" : chestIndex + "skale"
+                    }.png`
+              }
+              alt=""
+              style={{
+                position: "relative",
+                bottom: "5px",
+                filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+              }}
+            />
+          ) : rewardTypes === "premium" && dummypremiumChests ? (
+            <img
+              className={`new-chest-item-img ${
+                loading
+                  ? chain === "skale"
+                    ? "chest-pulsate"
+                    : "chest-shake"
+                  : ""
+              }`}
+              src={
+                chain !== "skale"
+                  ? `https://cdn.worldofdypians.com/wod/${
+                      open
+                        ? chestIndex % 2 === 1
+                          ? dummypremiumChests + "OpenCoins"
+                          : dummypremiumChests + "OpenGems"
+                        : dummypremiumChests
+                    }.png`
+                  : `https://cdn.worldofdypians.com/wod/${
+                      open
+                        ? chestIndex - 10 + "openskalepremium"
+                        : chestIndex - 10 + "skalepremium"
+                    }.png`
+              }
+              alt=""
+              style={{
+                position: "relative",
+                bottom: "5px",
+                filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+              }}
+            />
+          ) : (
+            <></>
+          )}
+          {rewardTypes === "premium" && !isPremium && (
+            <img
+              src={"https://cdn.worldofdypians.com/wod/premiumLock.png"}
+              className={`premium-lock ${shake && "shake-lock"}`}
+              alt=""
+            />
+          )}
+          <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">
+            {open ? "Claimed" : rewardTypes === "premium" ? "Prime" : "Claim "}
+          </div>
+        </div>
       ) : (
-        <></>
+        <div
+          className={` ${open ? "new-chest-item-open" : ""}  ${
+            isActive === chestId &&
+            isActiveIndex === chestIndex &&
+            "chest-item-active"
+          } ${selectedChest === chestId ? "selected-new-chest" : ""} 
+      ${claimingChest === true ? "disable-chest" : ""}
+      ${"new-chest-item"}
+      d-flex align-items-center justify-content-center position-relative`}
+          onClick={() => handleChestClick()}
+          style={{
+            pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
+          }}
+        >
+          {/* <img
+    className='new-chest-item-img'
+      src={require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/blueCrystal${
+        !open ? "" :  "OpenGems"
+      }.png`)}
+      
+      alt=""
+      style={{ position: "relative", bottom: "5px", filter: item.premium && "blur(5px)" }}
+    /> */}
+          {rewardTypes !== "premium" ? (
+            <img
+              className={` ${
+                chain !== "skale"
+                  ? "new-chest-item-img"
+                  : "new-chest-item-img-skale"
+              } ${
+                loading
+                  ? chain === "skale"
+                    ? "chest-pulsate"
+                    : "chest-shake"
+                  : ""
+              }`}
+              src={
+                chain !== "skale"
+                  ? `https://cdn.worldofdypians.com/wod/${
+                      open ? image + "open" : image
+                    }.png`
+                  : `https://cdn.worldofdypians.com/wod/${
+                      open ? chestIndex + "openskale" : chestIndex + "skale"
+                    }.png`
+              }
+              alt=""
+              style={{
+                position: "relative",
+                bottom: "5px",
+                filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+              }}
+            />
+          ) : rewardTypes === "premium" && dummypremiumChests ? (
+            <img
+              className={`${
+                chain !== "skale"
+                  ? "new-chest-item-img"
+                  : "new-chest-item-img-skale"
+              } ${
+                loading
+                  ? chain === "skale"
+                    ? "chest-pulsate"
+                    : "chest-shake"
+                  : ""
+              }`}
+              src={
+                chain !== "skale"
+                  ? `https://cdn.worldofdypians.com/wod/${
+                      open
+                        ? chestIndex % 2 === 1
+                          ? dummypremiumChests + "OpenCoins"
+                          : dummypremiumChests + "OpenGems"
+                        : dummypremiumChests
+                    }.png`
+                  : `https://cdn.worldofdypians.com/wod/${
+                      open
+                        ? chestIndex - 10 + "openskalepremium"
+                        : chestIndex - 10 + "skalepremium"
+                    }.png`
+              }
+              alt=""
+              style={{
+                position: "relative",
+                bottom: "5px",
+                filter: rewardTypes === "premium" && !isPremium && "blur(5px)",
+              }}
+            />
+          ) : (
+            <></>
+          )}
+          {rewardTypes === "premium" && !isPremium && (
+            <img
+              src={"https://cdn.worldofdypians.com/wod/premiumLock.png"}
+              className={`premium-lock ${shake && "shake-lock"}`}
+              alt=""
+            />
+          )}
+          <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">
+            {open ? "Claimed" : rewardTypes === "premium" ? "Prime" : "Claim "}
+          </div>
+        </div>
       )}
-      {rewardTypes === "premium" && !isPremium && (
-        <img
-          src={"https://cdn.worldofdypians.com/wod/premiumLock.png"}
-          className={`premium-lock ${shake && "shake-lock"}`}
-          alt=""
-        />
-      )}
-      <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">
-        {open ? "Claimed" : rewardTypes === "premium" ? "Prime" : "Claim "}
-      </div>
-    </div>
+    </>
   );
 };
 

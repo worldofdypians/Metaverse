@@ -10,13 +10,14 @@ import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import royaltyChestIdle from "./assets/royaltyChestIdle.webp";
+import royaltyChestIdleMoblie from "./assets/royaltyChestIdleMobile.webp";
 
 const rewardCategories = [
   {
     id: "Points",
     name: "POINTS",
     icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-    count: "5K-20K",
+    count: "20K",
     color: "from-blue-400 to-purple-500",
     rarity: "COMMON",
     tier: "TIER II",
@@ -25,7 +26,7 @@ const rewardCategories = [
     id: "Stars",
     name: "STARS",
     icon: "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp",
-    count: "50-350",
+    count: "350",
     color: "from-yellow-400 to-orange-500",
     rarity: "RARE",
     tier: "TIER I",
@@ -34,7 +35,7 @@ const rewardCategories = [
     id: "Money",
     name: "REWARDS",
     icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp",
-    count: "$51-$200",
+    count: "$200",
     color: "from-purple-500 to-pink-500",
     rarity: "EPIC",
     tier: "TIER III",
@@ -202,7 +203,8 @@ const Kickstarter = ({
     if (chainText) {
       const result = await axios
         .post(
-          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          // "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          "https://dypius-chests-testing.azurewebsites.net/api/CollectChest?",
           userData_bnb
         )
         .catch((e) => {
@@ -221,8 +223,6 @@ const Kickstarter = ({
         // if (chainText === "opbnb" || chainText === "bnb") {
         //   handleSecondTask(coinbase);
         // }
-        onClaimRewards(result.data);
-
         setTimeout(() => {
           setRewards({
             rewardType: result.data.rewards[0].rewardType,
@@ -239,7 +239,8 @@ const Kickstarter = ({
     } else {
       const result = await axios
         .post(
-          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          // "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          "https://dypius-chests-testing.azurewebsites.net/api/CollectChest?",
           userData
         )
         .catch((e) => {
@@ -255,7 +256,6 @@ const Kickstarter = ({
           }
         });
       if (result && result.status === 200) {
-        onClaimRewards(result.data);
         console.log(result.data);
         setTimeout(() => {
           setRewards({
@@ -294,7 +294,8 @@ const Kickstarter = ({
     if (chainText) {
       const result = await axios
         .post(
-          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          // "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          "https://dypius-chests-testing.azurewebsites.net/api/CollectChest?",
           userData_bnb
         )
         .catch((e) => {
@@ -304,7 +305,6 @@ const Kickstarter = ({
           window.alertify.error(e?.message);
         });
       if (result && result.status === 200) {
-        onClaimRewards(result.data);
         console.log(result.data);
         setTimeout(() => {
           setRewards({
@@ -323,7 +323,8 @@ const Kickstarter = ({
     } else {
       const result = await axios
         .post(
-          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          // "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
+          "https://dypius-chests-testing.azurewebsites.net/api/CollectChest?",
           userData
         )
         .catch((e) => {
@@ -336,7 +337,6 @@ const Kickstarter = ({
         // if (chainText === "opbnb" || chainText === "bnb") {
         //   handleSecondTask(coinbase);
         // }
-        onClaimRewards(result.data);
         console.log(result.data);
         setTimeout(() => {
           setRewards({
@@ -438,42 +438,6 @@ const Kickstarter = ({
     }
   };
 
-  const handleThirdTask = async (wallet) => {
-    const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/dappbay/task3/${wallet}`)
-      .catch((e) => {
-        console.error(e);
-      });
-    if (result2 && result2.status === 200) {
-      console.log(result2);
-    }
-  };
-
-  const handleClaim = async () => {
-    const video = videoRef2.current;
-
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      setChestOpened(true);
-      setStep(2);
-      setTimeout(() => {
-        const randomReward =
-          rewardCategories[Math.floor(Math.random() * rewardCategories.length)];
-        setActivatedReward(randomReward.id);
-      }, 3600);
-
-      if (video) {
-        video.play().catch((err) => console.error("Play failed:", err));
-        setTimeout(() => {
-          video.pause();
-          setStep(3);
-        }, 8000);
-      }
-    }, 3000);
-  };
-
   const handleOpenChest = async () => {
     setLoading(true);
     const video = videoRef2.current;
@@ -505,24 +469,18 @@ const Kickstarter = ({
               chestIndex - 1,
               "opbnb"
             );
-            handleThirdTask(coinbase);
-
             setLoading(false);
             setChestOpened(true);
             setStep(2);
-            setTimeout(() => {
-              const randomReward =
-                rewardCategories[
-                  Math.floor(Math.random() * rewardCategories.length)
-                ];
-              setActivatedReward(randomReward.id);
-            }, 3600);
+          
 
             if (video) {
               video.play().catch((err) => console.error("Play failed:", err));
               setTimeout(() => {
                 video.pause();
                 setStep(3);
+
+                onClaimRewards();
               }, 8000);
             }
           })
@@ -553,23 +511,17 @@ const Kickstarter = ({
             chestIndex - 1,
             "opbnb"
           );
-          handleThirdTask(coinbase);
           setLoading(false);
           setChestOpened(true);
           setStep(2);
-          setTimeout(() => {
-            const randomReward =
-              rewardCategories[
-                Math.floor(Math.random() * rewardCategories.length)
-              ];
-            setActivatedReward(randomReward.id);
-          }, 3600);
+       
 
           if (video) {
             video.play().catch((err) => console.error("Play failed:", err));
             setTimeout(() => {
               video.pause();
               setStep(3);
+              onClaimRewards();
             }, 8000);
           }
         }
@@ -616,24 +568,19 @@ const Kickstarter = ({
               chestIndex - 1,
               "bnb"
             );
-            handleThirdTask(coinbase);
+         
 
             setLoading(false);
             setChestOpened(true);
             setStep(2);
-            setTimeout(() => {
-              const randomReward =
-                rewardCategories[
-                  Math.floor(Math.random() * rewardCategories.length)
-                ];
-              setActivatedReward(randomReward.id);
-            }, 3600);
+           
 
             if (video) {
               video.play().catch((err) => console.error("Play failed:", err));
               setTimeout(() => {
                 video.pause();
                 setStep(3);
+                onClaimRewards();
               }, 8000);
             }
           })
@@ -713,23 +660,17 @@ const Kickstarter = ({
         const txReceipt = await txResponse.wait();
         if (txReceipt) {
           getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "bnb");
-          handleThirdTask(coinbase);
+     
           setLoading(false);
           setChestOpened(true);
           setStep(2);
-          setTimeout(() => {
-            const randomReward =
-              rewardCategories[
-                Math.floor(Math.random() * rewardCategories.length)
-              ];
-            setActivatedReward(randomReward.id);
-          }, 3600);
-
+        
           if (video) {
             video.play().catch((err) => console.error("Play failed:", err));
             setTimeout(() => {
               video.pause();
               setStep(3);
+              onClaimRewards();
             }, 8000);
           }
         }
@@ -895,7 +836,10 @@ const Kickstarter = ({
       setShowContent(true);
     }, time);
 
-    if (openedRoyaltyChest.length === 0) {
+    if (
+      openedRoyaltyChest.length === 0 ||
+      (openedRoyaltyChest && openedRoyaltyChest.isOpened === true)
+    ) {
       const timeout1 = setTimeout(() => {
         if (video) {
           video.play().catch((err) => console.error("Play failed:", err));
@@ -953,6 +897,7 @@ const Kickstarter = ({
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column justify-content-between align-items-center">
+        <img src={royaltyChestIdle} className="d-none" alt="" />
         <img
           src={xMark}
           className="kickstarter-close"
@@ -965,11 +910,21 @@ const Kickstarter = ({
         />
 
         {openedRoyaltyChest && openedRoyaltyChest.isOpened === true ? (
-          <img
-            src={royaltyChestIdle}
-            className="kickstarter-video visible"
-            alt=""
-          />
+          <>
+            {windowSize.width && windowSize.width > 700 ? (
+              <img
+                src={royaltyChestIdle}
+                className="kickstarter-video visible"
+                alt=""
+              />
+            ) : (
+              <img
+                src={royaltyChestIdleMoblie}
+                className="kickstarter-video visible"
+                alt=""
+              />
+            )}
+          </>
         ) : (
           <>
             {windowSize.width && windowSize.width > 700 ? (
@@ -2100,7 +2055,7 @@ const Kickstarter = ({
                       }}
                     />
 
-                    <div className="d-flex align-items-center gap-3">
+                    <div className="d-flex align-items-center justify-content-center gap-3">
                       <span>LOG IN</span>
                     </div>
                   </NavLink>
