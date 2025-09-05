@@ -1551,7 +1551,7 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-lg-5 mt-3">
+              <div className="col-12 col-lg-5 mt-3 px-0 px-lg-2">
                 <div
                   className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
                   onClick={openMyRewards}
@@ -1622,7 +1622,7 @@ const MyProfile = ({
                   />
                 </div>
               </div>
-              <div className="col-12 col-lg-4 mt-3">
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <div
                   className="ai-question-banner d-flex position-relative flex-column justify-content-between p-3 h-100"
                   onClick={onDailyQuestionClick}
@@ -1787,7 +1787,7 @@ const MyProfile = ({
                 </a>
               </div> */}
 
-              <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
                 <div
                   className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
                   style={{ height: "60px" }}
@@ -1844,7 +1844,7 @@ const MyProfile = ({
                   </button>
                 </div>
               </div>
-              <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
                 <NavLink to="/loyalty-program">
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
@@ -1918,7 +1918,7 @@ const MyProfile = ({
                   </div>
                 </div>
               </div> */}
-              <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
                 <NavLink
                   to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
                   onClick={onEventCardClick}
