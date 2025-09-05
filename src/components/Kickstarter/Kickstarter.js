@@ -10,13 +10,14 @@ import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import royaltyChestIdle from "./assets/royaltyChestIdle.webp";
+import royaltyChestIdleMoblie from "./assets/royaltyChestIdleMobile.webp";
 
 const rewardCategories = [
   {
     id: "Points",
     name: "POINTS",
     icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-    count: "5K-20K",
+    count: "20K",
     color: "from-blue-400 to-purple-500",
     rarity: "COMMON",
     tier: "TIER II",
@@ -25,7 +26,7 @@ const rewardCategories = [
     id: "Stars",
     name: "STARS",
     icon: "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp",
-    count: "50-350",
+    count: "350",
     color: "from-yellow-400 to-orange-500",
     rarity: "RARE",
     tier: "TIER I",
@@ -34,7 +35,7 @@ const rewardCategories = [
     id: "Money",
     name: "REWARDS",
     icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp",
-    count: "$51-$200",
+    count: "$200",
     color: "from-purple-500 to-pink-500",
     rarity: "EPIC",
     tier: "TIER III",
@@ -42,6 +43,7 @@ const rewardCategories = [
 ];
 
 const Kickstarter = ({
+  royalChestIndex,
   onClose,
   onAddClass,
   isConnected,
@@ -159,15 +161,11 @@ const Kickstarter = ({
   const [selectedChain, setSelectedChain] = useState("bnb");
   const [hoveredChain, setHoveredChain] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [activatedReward, setActivatedReward] = useState(null);
   const [disable, setDisable] = useState(true);
   const [socials, setSocials] = useState(chains[0].socials);
   const [count, setCount] = useState(0);
   const [ischestOpen, setIsChestOpen] = useState(false);
-  const [rewards, setRewards] = useState({
-    rewardType: null,
-    reward: null,
-  });
+  const [rewards, setRewards] = useState([]);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -178,7 +176,7 @@ const Kickstarter = ({
   // Attach listener
   window.addEventListener("keydown", handleEsc);
 
-  const chestIndex = 5;
+  const chestIndex = royalChestIndex + 1;
 
   const getUserRewardsByChest = async (
     userEmail,
@@ -221,18 +219,10 @@ const Kickstarter = ({
         // if (chainText === "opbnb" || chainText === "bnb") {
         //   handleSecondTask(coinbase);
         // }
-        onClaimRewards(result.data);
-
         setTimeout(() => {
-          setRewards({
-            rewardType: result.data.rewards[0].rewardType,
-            reward: result.data.rewards[0].reward,
-          });
+          setRewards(result.data.rewards);
         }, 3600);
-        console.log(
-          result.data.rewards[0].rewardType,
-          result.data.rewards[0].reward
-        );
+
         setIsChestOpen(true);
         setLoading(false);
       }
@@ -255,18 +245,11 @@ const Kickstarter = ({
           }
         });
       if (result && result.status === 200) {
-        onClaimRewards(result.data);
         console.log(result.data);
         setTimeout(() => {
-          setRewards({
-            rewardType: result.data.rewards[0].rewardType,
-            reward: result.data.rewards[0].reward,
-          });
+          setRewards(result.data.rewards);
         }, 3600);
-        console.log(
-          result.data.rewards[0].rewardType,
-          result.data.rewards[0].reward
-        );
+
         setIsChestOpen(true);
         setLoading(false);
       }
@@ -304,18 +287,11 @@ const Kickstarter = ({
           window.alertify.error(e?.message);
         });
       if (result && result.status === 200) {
-        onClaimRewards(result.data);
         console.log(result.data);
         setTimeout(() => {
-          setRewards({
-            rewardType: result.data.rewards[0].rewardType,
-            reward: result.data.rewards[0].reward,
-          });
+          setRewards(result.data.rewards);
         }, 3600);
-        console.log(
-          result.data.rewards[0].rewardType,
-          result.data.rewards[0].reward
-        );
+
         setIsChestOpen(true);
 
         setLoading(false);
@@ -336,13 +312,9 @@ const Kickstarter = ({
         // if (chainText === "opbnb" || chainText === "bnb") {
         //   handleSecondTask(coinbase);
         // }
-        onClaimRewards(result.data);
         console.log(result.data);
         setTimeout(() => {
-          setRewards({
-            rewardType: result.data.rewards[0].rewardType,
-            reward: result.data.rewards[0].reward,
-          });
+          setRewards(result.data.rewards);
         }, 3600);
 
         setIsChestOpen(true);
@@ -438,42 +410,6 @@ const Kickstarter = ({
     }
   };
 
-  const handleThirdTask = async (wallet) => {
-    const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/dappbay/task3/${wallet}`)
-      .catch((e) => {
-        console.error(e);
-      });
-    if (result2 && result2.status === 200) {
-      console.log(result2);
-    }
-  };
-
-  const handleClaim = async () => {
-    const video = videoRef2.current;
-
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      setChestOpened(true);
-      setStep(2);
-      setTimeout(() => {
-        const randomReward =
-          rewardCategories[Math.floor(Math.random() * rewardCategories.length)];
-        setActivatedReward(randomReward.id);
-      }, 3600);
-
-      if (video) {
-        video.play().catch((err) => console.error("Play failed:", err));
-        setTimeout(() => {
-          video.pause();
-          setStep(3);
-        }, 8000);
-      }
-    }, 3000);
-  };
-
   const handleOpenChest = async () => {
     setLoading(true);
     const video = videoRef2.current;
@@ -505,24 +441,17 @@ const Kickstarter = ({
               chestIndex - 1,
               "opbnb"
             );
-            handleThirdTask(coinbase);
-
             setLoading(false);
             setChestOpened(true);
             setStep(2);
-            setTimeout(() => {
-              const randomReward =
-                rewardCategories[
-                  Math.floor(Math.random() * rewardCategories.length)
-                ];
-              setActivatedReward(randomReward.id);
-            }, 3600);
 
             if (video) {
               video.play().catch((err) => console.error("Play failed:", err));
               setTimeout(() => {
                 video.pause();
                 setStep(3);
+
+                onClaimRewards();
               }, 8000);
             }
           })
@@ -553,23 +482,16 @@ const Kickstarter = ({
             chestIndex - 1,
             "opbnb"
           );
-          handleThirdTask(coinbase);
           setLoading(false);
           setChestOpened(true);
           setStep(2);
-          setTimeout(() => {
-            const randomReward =
-              rewardCategories[
-                Math.floor(Math.random() * rewardCategories.length)
-              ];
-            setActivatedReward(randomReward.id);
-          }, 3600);
 
           if (video) {
             video.play().catch((err) => console.error("Play failed:", err));
             setTimeout(() => {
               video.pause();
               setStep(3);
+              onClaimRewards();
             }, 8000);
           }
         }
@@ -616,24 +538,17 @@ const Kickstarter = ({
               chestIndex - 1,
               "bnb"
             );
-            handleThirdTask(coinbase);
 
             setLoading(false);
             setChestOpened(true);
             setStep(2);
-            setTimeout(() => {
-              const randomReward =
-                rewardCategories[
-                  Math.floor(Math.random() * rewardCategories.length)
-                ];
-              setActivatedReward(randomReward.id);
-            }, 3600);
 
             if (video) {
               video.play().catch((err) => console.error("Play failed:", err));
               setTimeout(() => {
                 video.pause();
                 setStep(3);
+                onClaimRewards();
               }, 8000);
             }
           })
@@ -713,23 +628,17 @@ const Kickstarter = ({
         const txReceipt = await txResponse.wait();
         if (txReceipt) {
           getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "bnb");
-          handleThirdTask(coinbase);
+
           setLoading(false);
           setChestOpened(true);
           setStep(2);
-          setTimeout(() => {
-            const randomReward =
-              rewardCategories[
-                Math.floor(Math.random() * rewardCategories.length)
-              ];
-            setActivatedReward(randomReward.id);
-          }, 3600);
 
           if (video) {
             video.play().catch((err) => console.error("Play failed:", err));
             setTimeout(() => {
               video.pause();
               setStep(3);
+              onClaimRewards();
             }, 8000);
           }
         }
@@ -895,7 +804,10 @@ const Kickstarter = ({
       setShowContent(true);
     }, time);
 
-    if (openedRoyaltyChest.length === 0) {
+    if (
+      openedRoyaltyChest.length === 0 ||
+      (openedRoyaltyChest && openedRoyaltyChest.isOpened === true)
+    ) {
       const timeout1 = setTimeout(() => {
         if (video) {
           video.play().catch((err) => console.error("Play failed:", err));
@@ -936,23 +848,23 @@ const Kickstarter = ({
       }
 
       setTimeout(() => {
-        const randomReward = rewardCategories.find((item) => {
-          return item.id === openedRoyaltyChest.rewards[0].rewardType;
-        });
-
-        setActivatedReward(randomReward.id);
-
-        setRewards({
-          rewardType: openedRoyaltyChest.rewards[0].rewardType,
-          reward: openedRoyaltyChest.rewards[0].reward,
-        });
+        setRewards(openedRoyaltyChest.rewards);
       }, time);
     }
   }, [openedRoyaltyChest]);
 
+  useEffect(() => {
+    if (chainId === 56) {
+      setSelectedChain("bnb");
+    } else if (chainId === 204) {
+      setSelectedChain("opbnb");
+    }
+  }, [chainId]);
+
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column justify-content-between align-items-center">
+        <img src={royaltyChestIdle} className="d-none" alt="" />
         <img
           src={xMark}
           className="kickstarter-close"
@@ -965,11 +877,21 @@ const Kickstarter = ({
         />
 
         {openedRoyaltyChest && openedRoyaltyChest.isOpened === true ? (
-          <img
-            src={royaltyChestIdle}
-            className="kickstarter-video visible"
-            alt=""
-          />
+          <>
+            {windowSize.width && windowSize.width > 700 ? (
+              <img
+                src={royaltyChestIdle}
+                className="kickstarter-video visible"
+                alt=""
+              />
+            ) : (
+              <img
+                src={royaltyChestIdleMoblie}
+                className="kickstarter-video visible"
+                alt=""
+              />
+            )}
+          </>
         ) : (
           <>
             {windowSize.width && windowSize.width > 700 ? (
@@ -1155,7 +1077,7 @@ const Kickstarter = ({
                 </motion.h1>
               </motion.div>
             </motion.div> */}
-            {rewards?.rewardType !== null && (
+            {rewards && rewards.length > 0 && (
               <motion.div
                 key={rewardCategories[0].id}
                 initial={{ opacity: 0, scale: 0, y: 30 }}
@@ -1194,8 +1116,25 @@ const Kickstarter = ({
                       ease: "easeInOut",
                     }}
                   >
-                    {getFormattedNumber(rewards?.reward, 0)}{" "}
-                    {rewards?.rewardType}
+                    {/* {getFormattedNumber(rewards?.reward, 0)}{" "}
+                    {rewards?.rewardType} */}
+                    {rewards &&
+                      rewards.length > 0 &&
+                      rewards.map((obj, index) => {
+                        return (
+                          <span key={index}>
+                            {obj.rewardType === "Money" && "$"}
+                            {getFormattedNumber(
+                              obj.reward,
+                              obj.rewardType === "Money" ? 2 : 0
+                            )}{" "}
+                            {obj.rewardType !== "Money" && obj.rewardType}
+                            {rewards.length > 1 &&
+                              index < rewards.length - 1 &&
+                              " + "}
+                          </span>
+                        );
+                      })}
                   </motion.span>
                 </div>
               </motion.div>
@@ -1784,19 +1723,31 @@ const Kickstarter = ({
                               style={{
                                 padding: "6px 12px",
                                 background:
-                                  rewards?.rewardType?.toLowerCase() ===
-                                  category.id.toLowerCase()
+                                  rewards.find((item) => {
+                                    return (
+                                      item.rewardType.toLowerCase() ===
+                                      category.id.toLowerCase()
+                                    );
+                                  }) !== undefined
                                     ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 50%, rgba(8, 16, 32, 0.8) 100%)"
                                     : "linear-gradient(135deg, rgba(8, 16, 32, 0.8) 0%, rgba(12, 20, 40, 0.6) 50%, rgba(6, 12, 28, 0.4) 100%)",
                                 border:
-                                  rewards?.rewardType?.toLowerCase() ===
-                                  category.id.toLowerCase()
+                                  rewards.find((item) => {
+                                    return (
+                                      item.rewardType.toLowerCase() ===
+                                      category.id.toLowerCase()
+                                    );
+                                  }) !== undefined
                                     ? "2px solid rgba(59, 130, 246, 0.6)"
                                     : "1px solid rgba(59, 130, 246, 0.25)",
                                 borderRadius: "10px",
                                 boxShadow:
-                                  rewards?.rewardType?.toLowerCase() ===
-                                  category.id.toLowerCase()
+                                  rewards.find((item) => {
+                                    return (
+                                      item.rewardType.toLowerCase() ===
+                                      category.id.toLowerCase()
+                                    );
+                                  }) !== undefined
                                     ? `0 0 20px ${
                                         category.color.includes("yellow")
                                           ? "#F59E0B"
@@ -1820,16 +1771,24 @@ const Kickstarter = ({
                                 }}
                                 animate={{
                                   opacity:
-                                    rewards?.rewardType?.toLowerCase() ===
-                                    category.id.toLowerCase()
+                                    rewards.find((item) => {
+                                      return (
+                                        item.rewardType.toLowerCase() ===
+                                        category.id.toLowerCase()
+                                      );
+                                    }) !== undefined
                                       ? [0.6, 1, 0.6]
                                       : 0.4,
                                 }}
                                 transition={{
                                   duration: 1.5,
                                   repeat:
-                                    rewards?.rewardType?.toLowerCase() ===
-                                    category.id.toLowerCase()
+                                    rewards.find((item) => {
+                                      return (
+                                        item.rewardType.toLowerCase() ===
+                                        category.id.toLowerCase()
+                                      );
+                                    }) !== undefined
                                       ? Infinity
                                       : 0,
                                   ease: "easeInOut",
@@ -1837,8 +1796,12 @@ const Kickstarter = ({
                               />
 
                               {/* Animated scan line for active rewards */}
-                              {rewards?.rewardType?.toLowerCase() ===
-                                category.id && (
+                              {rewards.find((item) => {
+                                return (
+                                  item.rewardType.toLowerCase() ===
+                                  category.id.toLowerCase()
+                                );
+                              }) !== undefined && (
                                 <motion.div
                                   className="position-absolute top-0 start-0 w-100 h-100"
                                   style={{
@@ -1910,8 +1873,12 @@ const Kickstarter = ({
                                         fontSize: "15px",
                                         fontWeight: "700",
                                         color:
-                                          rewards?.rewardType?.toLowerCase() ===
-                                          category.id
+                                          rewards.find((item) => {
+                                            return (
+                                              item.rewardType.toLowerCase() ===
+                                              category.id.toLowerCase()
+                                            );
+                                          }) !== undefined
                                             ? "rgba(219, 234, 254, 1)"
                                             : "rgba(168, 192, 255, 0.9)",
                                         textShadow: "0 1px 2px rgba(0,0,0,0.3)",
@@ -1919,13 +1886,21 @@ const Kickstarter = ({
                                       }}
                                       animate={{
                                         scale:
-                                          rewards?.rewardType?.toLowerCase() ===
-                                          category.id.toLowerCase()
+                                          rewards.find((item) => {
+                                            return (
+                                              item.rewardType.toLowerCase() ===
+                                              category.id.toLowerCase()
+                                            );
+                                          }) !== undefined
                                             ? [1, 1.1, 1]
                                             : 1,
                                         color:
-                                          rewards?.rewardType?.toLowerCase() ===
-                                          category.id.toLowerCase()
+                                          rewards.find((item) => {
+                                            return (
+                                              item.rewardType.toLowerCase() ===
+                                              category.id.toLowerCase()
+                                            );
+                                          }) !== undefined
                                             ? [
                                                 "rgba(219, 234, 254, 1)",
                                                 "rgba(96, 165, 250, 1)",
@@ -1936,8 +1911,12 @@ const Kickstarter = ({
                                       transition={{
                                         duration: 0.8,
                                         repeat:
-                                          rewards?.rewardType?.toLowerCase() ===
-                                          category.id.toLowerCase()
+                                          rewards.find((item) => {
+                                            return (
+                                              item.rewardType.toLowerCase() ===
+                                              category.id.toLowerCase()
+                                            );
+                                          }) !== undefined
                                             ? Infinity
                                             : 0,
                                         ease: "easeInOut",
@@ -2100,7 +2079,7 @@ const Kickstarter = ({
                       }}
                     />
 
-                    <div className="d-flex align-items-center gap-3">
+                    <div className="d-flex align-items-center justify-content-center gap-3">
                       <span>LOG IN</span>
                     </div>
                   </NavLink>

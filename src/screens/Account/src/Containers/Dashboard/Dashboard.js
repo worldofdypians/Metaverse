@@ -186,6 +186,7 @@ function Dashboard({
   openKickstarter,
   royaltyCount,
   onOpenRoyaltyChest,
+  setRoyalChestIndex,
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -5086,11 +5087,14 @@ function Dashboard({
 
         if (chestOrder.length > 0) {
           for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestId === 99) {
+              setRoyalChestIndex(item);
+              if (chestOrder[item].isOpened === true) {
+                onOpenRoyaltyChest(chestOrder[item]);
+              }
+            }
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                if (item === 4) {
-                  onOpenRoyaltyChest(chestOrder[item]);
-                }
                 openedChests.push(chestOrder[item]);
                 openedStandardChests.push(chestOrder[item]);
               }

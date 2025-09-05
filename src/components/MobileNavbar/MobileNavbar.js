@@ -960,7 +960,8 @@ const MobileNavbar = ({
                       </span>
                     </NavLink>
                     <NavLink
-                      to="/game-updates"
+                      to={"https://medium.com/@worldofdypians"}
+                      target="_blank"
                       end
                       className={({ isActive }) =>
                         isActive

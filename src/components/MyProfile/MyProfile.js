@@ -174,6 +174,7 @@ const MyProfile = ({
   userTaraxaStars,
   aiQuestionCompleted,
   onDailyQuestionClick,
+  openKickstarter,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -1715,24 +1716,39 @@ const MyProfile = ({
                   />
                 </div>
               </div>
-              <div className="col-12 col-lg-3 mt-3">
+              <div className="col-12 col-lg-3 mt-3 px-0 px-lg-2">
                 <div
-                  className="new-special-rewards-wrapper position-relative d-flex flex-column justify-content-between p-3 h-100"
-                  onClick={openSpecialRewards}
+                  className="royalty-chest-wrapper position-relative d-flex flex-column justify-content-between p-3"
+                  onClick={openKickstarter}
                 >
-                  <h6 className="special-rewards-title">Special Rewards</h6>
-                  <div className="d-flex flex-column">
-                    <h6 className="special-rewards-total mb-0">
-                      ${getFormattedNumber(specialRewards)}
-                    </h6>
-                    <span className="special-rewards-total-span">Rewards</span>
+                  <h6 className="royalty-chest-title z-1">Royalty Chest</h6>
+
+                  <div className="d-flex flex-column gap-2">
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/royalRewards.png"
+                      className="royal-rewards-img z-0"
+                      alt=""
+                    />
+                    {/* <span
+                      className="special-rewards-total"
+                      style={{
+                        color: "#f3de91ff",
+                        fontSize: "13px",
+                        textTransform: "uppercase",
+                        fontWeight: "600",
+                      }}
+                    >
+                      Royal Rewards
+                    </span> */}
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/wingStormArrow.svg"
+                      }
+                      width={20}
+                      height={20}
+                      alt=""
+                    />
                   </div>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/redArrow.svg"}
-                    width={20}
-                    height={20}
-                    alt=""
-                  />
                 </div>
               </div>
               {/* <div className="col-12 col-lg-3 mt-3">
@@ -1772,34 +1788,61 @@ const MyProfile = ({
               </div> */}
 
               <div className="col-12 col-lg-6 mt-3">
-                <a
-                  href="https://wod.space.id"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="wod-domain-name-wrapper h-auto d-flex align-items-center justify-content-between gap-2 p-2 pe-3"
+                <div
+                  className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
+                  style={{ height: "60px" }}
+                  onClick={openSpecialRewards}
                 >
                   <div className="d-flex align-items-center gap-2">
-                    <img
+                    {/* <img
                       src={
                         "https://cdn.worldofdypians.com/wod/domainNameIcon.png"
                       }
                       className="wod-domain-icon"
                       alt=""
-                    />
+                    /> */}
                     <div className="d-flex flex-column justify-content-between h-100 mb-0">
-                      <h6
-                        className="special-rewards-title mb-0"
-                        style={{ color: "#FFD9F1", fontSize: "15px" }}
-                      >
-                        .WOD Domain
-                      </h6>
-                      <span className="wod-domain-name-span">
-                        Claim Your Identity
-                      </span>
+                      <div className="d-flex flex-column">
+                        <span
+                          className="user-blue-rank-2"
+                          style={{ color: "#9e3c7a" }}
+                        >
+                          Special Rewards
+                        </span>
+                        <span
+                          className="user-rank-text-2"
+                          style={{ color: "#3B5896" }}
+                        >
+                          ${getFormattedNumber(specialRewards)} Rewards
+                        </span>
+                      </div>
                     </div>
                   </div>
-                  <button className="get-wodname-button px-3">Get</button>
-                </a>
+                  {/* <img
+                    src={"https://cdn.worldofdypians.com/wod/redArrow.svg"}
+                    width={20}
+                    height={20}
+                    alt=""
+                  /> */}
+                  {/* <div className="d-flex gap-2 align-items-center">
+                        <h6 className="special-rewards-total mb-0">
+                          ${getFormattedNumber(specialRewards)}
+                        </h6>
+                        <span className="special-rewards-total-span">
+                          Rewards
+                        </span>
+                      </div> */}
+
+                  <button
+                    onClick={openSpecialRewards}
+                    className="activate-btn2 px-3 py-1"
+                    style={{
+                      background: "#9E3C7A",
+                    }}
+                  >
+                    Apply
+                  </button>
+                </div>
               </div>
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink to="/loyalty-program">
