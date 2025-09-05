@@ -8556,10 +8556,10 @@ function App() {
       )}
 
       {fireAppcontent === true && <AppContent />}
-      {(kickstarter) &&
+      {(kickstarter || hashValue === "#royalty-chest") &&
         window.location.pathname === "/account" && (
           <Kickstarter
-          royalChestIndex={royalChestIndex}
+            royalChestIndex={royalChestIndex}
             publicClient={publicClient}
             onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
             walletClient={walletClient}
@@ -8567,9 +8567,12 @@ function App() {
             onClose={() => {
               setKickstarter(false);
               html.classList.remove("hidescroll");
+              window.location.hash = "";
             }}
             isOpen={
-              kickstarter 
+              kickstarter ||
+              (hashValue === "#royalty-chest" &&
+                window.location.pathname === "/account")
             }
             coinbase={coinbase}
             chainId={networkId}
