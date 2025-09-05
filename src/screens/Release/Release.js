@@ -7,7 +7,6 @@ import ReleaseHero from "./ReleaseHero/ReleaseHero";
 import ReleaseContent from "./ReleaseContent/ReleaseContent";
 import StakingBanner from "./StakingBanner/StakingBanner";
 import { ethers } from "ethers";
-import axios from "axios";
 
 const renderer2 = ({ hours, minutes }) => {
   return (
@@ -45,20 +44,8 @@ const Release = ({
   const [claimStatus, setclaimStatus] = useState("initial");
   const [allUserCommitments, setAllUserCommitments] = useState([]);
   const [selectedRound, setselectedRound] = useState();
-  const [checkStatus, setcheckStatus] = useState(true);
 
   const poolCap = 20000;
-
-  const checkBlockchainStatus = async () => {
-    try {
-      const response = await axios.get(
-        "https://api.worldofdypians.com/api/check-tx"
-      );
-      setcheckStatus(response.data.active);
-    } catch (error) {
-      console.error("Error checking status:", error);
-    }
-  };
 
   const getInfo = async () => {
     const vestingSc = new window.bscWeb3.eth.Contract(
@@ -361,7 +348,7 @@ const Release = ({
 
   useEffect(() => {
     document.title = "Claim WOD";
-    checkBlockchainStatus();
+
     window.scrollTo(0, 0);
   }, []);
 
@@ -375,7 +362,6 @@ const Release = ({
         />
         <StakingBanner />
         <ReleaseContent
-          checkStatus={checkStatus}
           isEOA={isEOA}
           isConnected={isConnected}
           chainId={chainId}

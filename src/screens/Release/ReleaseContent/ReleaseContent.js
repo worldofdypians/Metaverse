@@ -70,7 +70,6 @@ const renderer2 = ({ days, hours, minutes }) => {
   );
 };
 const ReleaseContent = ({
-  checkStatus,
   isConnected,
   chainId,
   coinbase,
@@ -227,23 +226,14 @@ const ReleaseContent = ({
                       )}
                     </span>
                   </div>
+                  {isConnected && coinbase && !isEOA && (
+                    <span className="text-danger">
+                      Smart contract wallets are not supported for this action.
+                    </span>
+                  )}
                 </div>
               </div>
             )}
-            {isConnected && coinbase && chainId === 56 && !isEOA && (
-              <span className="text-danger">
-                Smart contract wallets are not supported for this action.
-              </span>
-            )}
-            {isConnected &&
-              coinbase &&
-              chainId === 56 &&
-              checkStatus === true && (
-                <span className="text-danger">
-                  We're not able to process your claim right now. Please try
-                  again in 30 minutes.
-                </span>
-              )}
             {!isConnected && (
               <button className="connectbtn w-100 py-2" onClick={onConnect}>
                 Connect Wallet
@@ -257,15 +247,9 @@ const ReleaseContent = ({
                 Switch to BNB Chain
               </button>
             )}
-            {isConnected && chainId === 56 && checkStatus === true && (
-              <button className="fail-button w-100 py-2" disabled>
-                Error
-              </button>
-            )}
             {isConnected &&
               chainId === 56 &&
-              selectedRound?.id === "airdrop" &&
-              checkStatus === false && (
+              selectedRound?.id === "airdrop" && (
                 <button
                   className={` w-100 py-2 disabled-btn2`}
                   disabled={
@@ -293,12 +277,9 @@ const ReleaseContent = ({
                 </button>
               )}
 
-            {isConnected &&
-              chainId === 56 &&
-              selectedRound?.id === "ido" &&
-              checkStatus === false && (
-                <button
-                  className={` w-100 py-2
+            {isConnected && chainId === 56 && selectedRound?.id === "ido" && (
+              <button
+                className={` w-100 py-2
                 
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
@@ -313,30 +294,30 @@ const ReleaseContent = ({
                     ? "success-button"
                     : "connectbtn"
                 }`}
-                  disabled={
-                    canClaim === false ||
-                    timerFinished === false ||
-                    Number(wodBalance) === 0 ||
-                    !isEOA
-                      ? true
-                      : false
-                  }
-                  onClick={handleClaim}
-                >
-                  {claimLoading ? (
-                    <div
-                      className="spinner-border spinner-border-sm text-light"
-                      role="status"
-                    ></div>
-                  ) : claimStatus === "failed" ? (
-                    <>Failed</>
-                  ) : claimStatus === "success" ? (
-                    <>Success</>
-                  ) : (
-                    <>Claim</>
-                  )}
-                </button>
-              )}
+                disabled={
+                  canClaim === false ||
+                  timerFinished === false ||
+                  Number(wodBalance) === 0 ||
+                  !isEOA
+                    ? true
+                    : false
+                }
+                onClick={handleClaim}
+              >
+                {claimLoading ? (
+                  <div
+                    className="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  ></div>
+                ) : claimStatus === "failed" ? (
+                  <>Failed</>
+                ) : claimStatus === "success" ? (
+                  <>Success</>
+                ) : (
+                  <>Claim</>
+                )}
+              </button>
+            )}
           </div>
         </div>
       </div>

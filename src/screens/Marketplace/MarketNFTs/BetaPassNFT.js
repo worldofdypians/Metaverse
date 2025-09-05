@@ -96,7 +96,7 @@ const BetaPassNFT = ({
     },
   ];
 
-  const betaPasses = [
+const betaPasses = [
     {
       id: "bnb",
       mainTitle: "BNB Chain Beta Pass",
@@ -543,6 +543,7 @@ const BetaPassNFT = ({
       eventEndDate: "Apr. 04, 2025",
     },
   ];
+
 
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);

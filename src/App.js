@@ -607,6 +607,7 @@ function App() {
   const [isPremium, setIsPremium] = useState(false);
   const [premiumOryn, setPremiumOryn] = useState(false);
   const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
+  const [royalChestIndex, setRoyalChestIndex] = useState();
 
   const [domainPopup, setDomainPopup] = useState(false);
   const [kickstarterAddClass, setKickstarterAddClass] = useState(false);
@@ -1961,8 +1962,8 @@ function App() {
         return 0;
       });
 
-
-    const taraxaResult = await taraxaContract.methods.totalSupply()
+    const taraxaResult = await taraxaContract.methods
+      .totalSupply()
       .call()
       .catch((e) => {
         console.error(e);
@@ -6586,7 +6587,7 @@ function App() {
             }
           />
 
-           <Route
+          <Route
             exact
             path="/special-otc-4"
             element={
@@ -6827,6 +6828,9 @@ function App() {
             path="/account"
             element={
               <Dashboard
+                setRoyalChestIndex={(value) => {
+                  setRoyalChestIndex(value);
+                }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
@@ -6933,6 +6937,9 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+                setRoyalChestIndex={(value) => {
+                  setRoyalChestIndex(value);
+                }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
@@ -7524,6 +7531,9 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                setRoyalChestIndex={(value) => {
+                  setRoyalChestIndex(value);
+                }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
@@ -7999,7 +8009,7 @@ function App() {
             path="/game"
             element={<Game allStarData={allStarData} />}
           />
-          <Route exact path="/game-updates" element={<GameUpdates />} />
+          {/* <Route exact path="/game-updates" element={<GameUpdates />} /> */}
           <Route exact path="/about" element={<About />} />
 
           {/* <Route
@@ -8549,6 +8559,7 @@ function App() {
       {(kickstarter || hashValue === "#royalty-chest") &&
         window.location.pathname === "/account" && (
           <Kickstarter
+            royalChestIndex={royalChestIndex}
             publicClient={publicClient}
             onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
             walletClient={walletClient}
