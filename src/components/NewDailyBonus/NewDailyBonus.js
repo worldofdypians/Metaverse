@@ -419,6 +419,17 @@ const NewDailyBonus = ({
               if (innerChest.rewardType === "Points") {
                 resultPoints += Number(innerChest.reward);
               }
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultUsd += Number(innerChest.reward);
+              }
             });
           }
         }
