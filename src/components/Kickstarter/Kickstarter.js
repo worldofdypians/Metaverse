@@ -1124,10 +1124,11 @@ const Kickstarter = ({
                         return (
                           <span key={index}>
                             {obj.rewardType === "Money" && "$"}
-                            {getFormattedNumber(
-                              obj.reward,
-                              obj.rewardType === "Money" ? 2 : 0
-                            )}{" "}
+                            {obj.rewardType === "Stars" || obj.rewardType === "Money"
+                              ? obj.reward
+                              : getFormattedNumber(
+                                  obj.reward, 0
+                                )}{" "}
                             {obj.rewardType !== "Money" && obj.rewardType}
                             {rewards.length > 1 &&
                               index < rewards.length - 1 &&
