@@ -37,6 +37,7 @@ import {
 import Web3 from "web3";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
 import Countdown from "react-countdown";
+import { useBinancePay } from "../../hooks/useBinancePay";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -161,6 +162,21 @@ const NewEvents = ({
     // Check if the number has up to 2 decimal places
     return Number.isInteger(num) || num.toFixed(2) == num.toString();
   }
+
+  const { createOrder, merchantTradeNo, QRComponent, statusbinance, txHash } =
+    useBinancePay();
+
+  const handleBuy = (wallet) => {
+    createOrder({ wallet, bundleType: "Scorpion King" });
+  };
+
+  let buttonText = "Binance Pay";
+  if (statusbinance === "creating") buttonText = "Creating order...";
+  if (statusbinance === "waitingPayment") buttonText = "Waiting for payment...";
+  if (statusbinance === "validating") buttonText = "Validating bundle...";
+  if (statusbinance === "activating") buttonText = "Activating on-chain...";
+  if (statusbinance === "success") buttonText = "✅ Success!";
+  if (statusbinance === "failed") buttonText = "❌ Failed";
 
   let eventId = selectedEvent;
   const windowSize = useWindowSize();
@@ -4666,6 +4682,37 @@ const NewEvents = ({
                                                 "Activate"
                                               )}
                                             </button>
+                                            {window.WALLET_TYPE ===
+                                              "binance" && (
+                                              <div className="flex flex-col items-center">
+                                                <button
+                                                  onClick={() =>
+                                                    handleBuy(coinbase)
+                                                  }
+                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
+                                                  disabled={
+                                                    statusbinance !== "idle" &&
+                                                    statusbinance !==
+                                                      "failed" &&
+                                                    statusbinance !== "success"
+                                                  }
+                                                >
+                                                  {buttonText}
+                                                </button>
+
+                                                {merchantTradeNo && (
+                                                  <p>
+                                                    Tracking order:{" "}
+                                                    {merchantTradeNo}
+                                                  </p>
+                                                )}
+                                                {txHash && (
+                                                  <p>Tx Hash: {txHash}</p>
+                                                )}
+
+                                                <QRComponent />
+                                              </div>
+                                            )}
                                           </>
                                         )}
                                       </div>
