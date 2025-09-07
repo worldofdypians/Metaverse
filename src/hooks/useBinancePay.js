@@ -40,8 +40,8 @@ export function useBinancePay() {
 
   const dayName = days[adjustedDay - 1];
 
-  const returnUrl = `http://localhost:8080/${dayName}`;
-  const cancelUrl = `http://localhost:8080/${dayName}`;
+  const returnUrl = `https://www.worldofdypians.com/${dayName}`;
+  const cancelUrl = `https://www.worldofdypians.com/${dayName}`;
 
   async function createOrder({ walletAddress, bundleType }) {
     try {
@@ -53,7 +53,7 @@ export function useBinancePay() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            walletAddress: "0x4c914fed97e9d21843970b30ca9463f7898b1c5a",
+            walletAddress: walletAddress,
             orderAmount: BUNDLE_PRICES[bundleType],
             goodsName: bundleType,
             description: bundleType,

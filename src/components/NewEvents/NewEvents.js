@@ -166,8 +166,8 @@ const NewEvents = ({
   const { createOrder, merchantTradeNo, QRComponent, statusbinance, txHash } =
     useBinancePay();
 
-  const handleBuy = (wallet) => {
-    createOrder({ wallet, bundleType: "Scorpion King" });
+  const handleBuy = (walletAddress, bundleType) => {
+    createOrder({ walletAddress, bundleType: bundleType });
   };
 
   let buttonText = "Binance Pay";
@@ -4262,6 +4262,40 @@ const NewEvents = ({
                                                 "Activate"
                                               )}
                                             </button>
+                                            {window.WALLET_TYPE ===
+                                              "binance" && (
+                                              <div className="flex flex-col items-center">
+                                                <button
+                                                  onClick={() =>
+                                                    handleBuy(
+                                                      coinbase,
+                                                      activeEvent.title
+                                                    )
+                                                  }
+                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
+                                                  disabled={
+                                                    statusbinance !== "idle" &&
+                                                    statusbinance !==
+                                                      "failed" &&
+                                                    statusbinance !== "success"
+                                                  }
+                                                >
+                                                  {buttonText}
+                                                </button>
+
+                                                {merchantTradeNo && (
+                                                  <p>
+                                                    Tracking order:{" "}
+                                                    {merchantTradeNo}
+                                                  </p>
+                                                )}
+                                                {txHash && (
+                                                  <p>Tx Hash: {txHash}</p>
+                                                )}
+
+                                                <QRComponent />
+                                              </div>
+                                            )}
                                           </>
                                         )}
                                       </div>
@@ -4364,6 +4398,40 @@ const NewEvents = ({
                                                 "Activate"
                                               )}
                                             </button>
+                                            {window.WALLET_TYPE ===
+                                              "binance" && (
+                                              <div className="flex flex-col items-center">
+                                                <button
+                                                  onClick={() =>
+                                                    handleBuy(
+                                                      coinbase,
+                                                      activeEvent.title
+                                                    )
+                                                  }
+                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
+                                                  disabled={
+                                                    statusbinance !== "idle" &&
+                                                    statusbinance !==
+                                                      "failed" &&
+                                                    statusbinance !== "success"
+                                                  }
+                                                >
+                                                  {buttonText}
+                                                </button>
+
+                                                {merchantTradeNo && (
+                                                  <p>
+                                                    Tracking order:{" "}
+                                                    {merchantTradeNo}
+                                                  </p>
+                                                )}
+                                                {txHash && (
+                                                  <p>Tx Hash: {txHash}</p>
+                                                )}
+
+                                                <QRComponent />
+                                              </div>
+                                            )}
                                           </>
                                         )}
                                       </div>
@@ -4470,6 +4538,40 @@ const NewEvents = ({
                                                 "Activate"
                                               )}
                                             </button>
+                                            {window.WALLET_TYPE ===
+                                              "binance" && (
+                                              <div className="flex flex-col items-center">
+                                                <button
+                                                  onClick={() =>
+                                                    handleBuy(
+                                                      coinbase,
+                                                      activeEvent.title
+                                                    )
+                                                  }
+                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
+                                                  disabled={
+                                                    statusbinance !== "idle" &&
+                                                    statusbinance !==
+                                                      "failed" &&
+                                                    statusbinance !== "success"
+                                                  }
+                                                >
+                                                  {buttonText}
+                                                </button>
+
+                                                {merchantTradeNo && (
+                                                  <p>
+                                                    Tracking order:{" "}
+                                                    {merchantTradeNo}
+                                                  </p>
+                                                )}
+                                                {txHash && (
+                                                  <p>Tx Hash: {txHash}</p>
+                                                )}
+
+                                                <QRComponent />
+                                              </div>
+                                            )}
                                           </>
                                         )}
                                       </div>
@@ -4576,6 +4678,40 @@ const NewEvents = ({
                                                 "Activate"
                                               )}
                                             </button>
+                                            {window.WALLET_TYPE ===
+                                              "binance" && (
+                                              <div className="flex flex-col items-center">
+                                                <button
+                                                  onClick={() =>
+                                                    handleBuy(
+                                                      coinbase,
+                                                      activeEvent.title
+                                                    )
+                                                  }
+                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
+                                                  disabled={
+                                                    statusbinance !== "idle" &&
+                                                    statusbinance !==
+                                                      "failed" &&
+                                                    statusbinance !== "success"
+                                                  }
+                                                >
+                                                  {buttonText}
+                                                </button>
+
+                                                {merchantTradeNo && (
+                                                  <p>
+                                                    Tracking order:{" "}
+                                                    {merchantTradeNo}
+                                                  </p>
+                                                )}
+                                                {txHash && (
+                                                  <p>Tx Hash: {txHash}</p>
+                                                )}
+
+                                                <QRComponent />
+                                              </div>
+                                            )}
                                           </>
                                         )}
                                       </div>
@@ -4687,7 +4823,10 @@ const NewEvents = ({
                                               <div className="flex flex-col items-center">
                                                 <button
                                                   onClick={() =>
-                                                    handleBuy(coinbase)
+                                                    handleBuy(
+                                                      coinbase,
+                                                      activeEvent.title
+                                                    )
                                                   }
                                                   className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
                                                   disabled={
@@ -4819,6 +4958,40 @@ const NewEvents = ({
                                                 "Activate"
                                               )}
                                             </button>
+                                            {window.WALLET_TYPE ===
+                                              "binance" && (
+                                              <div className="flex flex-col items-center">
+                                                <button
+                                                  onClick={() =>
+                                                    handleBuy(
+                                                      coinbase,
+                                                      activeEvent.title
+                                                    )
+                                                  }
+                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
+                                                  disabled={
+                                                    statusbinance !== "idle" &&
+                                                    statusbinance !==
+                                                      "failed" &&
+                                                    statusbinance !== "success"
+                                                  }
+                                                >
+                                                  {buttonText}
+                                                </button>
+
+                                                {merchantTradeNo && (
+                                                  <p>
+                                                    Tracking order:{" "}
+                                                    {merchantTradeNo}
+                                                  </p>
+                                                )}
+                                                {txHash && (
+                                                  <p>Tx Hash: {txHash}</p>
+                                                )}
+
+                                                <QRComponent />
+                                              </div>
+                                            )}
                                           </>
                                         )}
                                       </div>

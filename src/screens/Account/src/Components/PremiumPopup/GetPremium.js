@@ -7,6 +7,7 @@ import { ethers } from "ethers";
 import "./_getpremium.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import ChainPopup from "../../../../../components/Header/ChainPopup";
+import { useBinancePayPremium } from "../../../../../hooks/useBinancePayPremium";
 
 const GetPremiumPopup = ({
   isEOA,
@@ -26,6 +27,13 @@ const GetPremiumPopup = ({
   publicClient,
   network_matchain,
 }) => {
+  const { statusPrime, txHash, launchPremiumSubscription, QRComponent } =
+    useBinancePayPremium();
+
+  const handlePurchasePremium = (walletAddress) => {
+    launchPremiumSubscription(walletAddress);
+  };
+
   const chainDropdowns = [
     {
       name: "Ethereum",
@@ -748,7 +756,7 @@ const GetPremiumPopup = ({
             token,
             discountPercentageMat
           )
-          : chainId === 841
+        : chainId === 841
         ? await window.getEstimatedTokenSubscriptionAmountTaraxa(
             token,
             discountPercentageTaraxa
@@ -821,7 +829,6 @@ const GetPremiumPopup = ({
     const matsubscribeAddress = window.config.subscription_mat_address;
     const taraxasubscribeAddress = window.config.subscription_taraxa_address;
 
-
     const coresubscribeAddress = window.config.subscription_core_address;
 
     window.web3 = new Web3(window.ethereum);
@@ -847,7 +854,7 @@ const GetPremiumPopup = ({
       window.config.nft_dypius_premium_mat_address
     );
 
-      let nftContract_taraxa = new window.web3.eth.Contract(
+    let nftContract_taraxa = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_MAT_ABI,
       window.config.nft_dypius_premium_taraxa_address
     );
@@ -892,7 +899,7 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-             const timer = setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
@@ -984,7 +991,7 @@ const GetPremiumPopup = ({
                 setloadspinner(false);
                 setapproveStatus("fail");
                 window.alertify.error(e?.shortMessage);
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
                   setapproveStatus("initial");
@@ -1642,7 +1649,6 @@ const GetPremiumPopup = ({
     const matWeb3 = new Web3(window.config.mat_endpoint);
     const taraxaWeb3 = new Web3(window.config.taraxa_endpoint);
 
-
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb2_address;
@@ -1765,7 +1771,7 @@ const GetPremiumPopup = ({
             token,
             discountPercentageMat
           )
-           : chainId === 841
+        : chainId === 841
         ? await window.getEstimatedTokenSubscriptionAmountTaraxa(
             token,
             discountPercentageTaraxa
@@ -1976,7 +1982,7 @@ const GetPremiumPopup = ({
             setapproveStatus("initial");
           }
         }
-      }  else if (chainId === 841) {
+      } else if (chainId === 841) {
         if (nftPremium_totalTaraxa > 0) {
           let contract = new window.web3.eth.Contract(
             window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
@@ -2658,9 +2664,7 @@ const GetPremiumPopup = ({
             }, 5000);
           }
         }
-
-       
-      }  else if (chainId === 2040 && nftPremium_totalVanar > 0) {
+      } else if (chainId === 2040 && nftPremium_totalVanar > 0) {
         const txResponse = await subscriptionContract
           .subscribeNFT(
             nftDiscountObjectVanar.nftAddress,
@@ -2962,7 +2966,6 @@ const GetPremiumPopup = ({
             return () => clearTimeout(timer);
           }
         }
-      
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -2987,13 +2990,13 @@ const GetPremiumPopup = ({
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
 
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -3011,13 +3014,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("successsubscribe");
 
                 onSuccessDeposit();
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               }
             }
           } else if (
@@ -3041,13 +3044,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("failsubscribe");
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -3064,13 +3067,13 @@ const GetPremiumPopup = ({
                 onSuccessDeposit();
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               }
             }
           } else {
@@ -3086,13 +3089,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("failsubscribe");
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               });
             if (result) {
               const receipt = await publicClient
@@ -3109,13 +3112,13 @@ const GetPremiumPopup = ({
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
 
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               }
             }
           }
@@ -3139,13 +3142,13 @@ const GetPremiumPopup = ({
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
 
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -3162,13 +3165,13 @@ const GetPremiumPopup = ({
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
                 onSuccessDeposit();
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               }
             }
           } else {
@@ -3184,13 +3187,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("failsubscribe");
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -3208,13 +3211,13 @@ const GetPremiumPopup = ({
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
 
-               const timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
-               return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
               }
             }
           }
@@ -3233,18 +3236,8 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_CFX"
             : chainId === 8453
             ? "SUBSCRIPTION_BASE"
-            : chainId === 1482601649
-            ? "SUBSCRIPTION_SKALE"
-            : chainId === 88
-            ? "SUBSCRIPTION_VICTION"
-            : chainId === 2040
-            ? "SUBSCRIPTION_VANAR"
             : chainId === 169
             ? "SUBSCRIPTION_MANTA"
-            : chainId === 1116
-            ? "SUBSCRIPTION_CORE"
-            : chainId === 1329
-            ? "SUBSCRIPTION_SEI"
             : "",
       });
 
@@ -3637,7 +3630,7 @@ const GetPremiumPopup = ({
         window.config.subscriptionviction_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    }  else if (chainId === 841 && selectedSubscriptionToken !== "") {
+    } else if (chainId === 841 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptiontaraxa_tokens[selectedSubscriptionToken]
           ?.decimals
@@ -4025,7 +4018,7 @@ const GetPremiumPopup = ({
                       />
                       <span className="subscription-chain mb-0">Vanar</span>
                     </div>
-                     <div className="d-flex align-items-center gap-2">
+                    <div className="d-flex align-items-center gap-2">
                       <img
                         src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
                         alt=""
@@ -4217,9 +4210,10 @@ const GetPremiumPopup = ({
                                       : chainId === 698
                                       ? window.config.subscriptionmat_tokens[t]
                                           ?.symbol
-                                          : chainId === 841
-                                      ? window.config.subscriptiontaraxa_tokens[t]
-                                          ?.symbol
+                                      : chainId === 841
+                                      ? window.config.subscriptiontaraxa_tokens[
+                                          t
+                                        ]?.symbol
                                       : chainId === 1116
                                       ? window.config.subscriptioncore_tokens[t]
                                           ?.symbol
@@ -4252,9 +4246,10 @@ const GetPremiumPopup = ({
                                       : chainId === 88
                                       ? window.config
                                           .subscriptionviction_tokens[t]?.symbol
-                                           : chainId === 841
-                                      ? window.config
-                                          .subscriptiontaraxa_tokens[t]?.symbol
+                                      : chainId === 841
+                                      ? window.config.subscriptiontaraxa_tokens[
+                                          t
+                                        ]?.symbol
                                       : chainId === 2040
                                       ? window.config.subscriptionvanar_tokens[
                                           t
@@ -4336,7 +4331,7 @@ const GetPremiumPopup = ({
                                     ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
                                         t
                                       ]?.symbol.toLowerCase()}IconPremium.svg`
-                                      : chainId === 841
+                                    : chainId === 841
                                     ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaraxa_tokens[
                                         t
                                       ]?.symbol.toLowerCase()}IconPremium.svg`
@@ -4389,7 +4384,7 @@ const GetPremiumPopup = ({
                                 : chainId === 698
                                 ? window.config.subscriptionmat_tokens[t]
                                     ?.symbol
-                                    : chainId === 841
+                                : chainId === 841
                                 ? window.config.subscriptiontaraxa_tokens[t]
                                     ?.symbol
                                 : chainId === 1329
@@ -5179,6 +5174,28 @@ const GetPremiumPopup = ({
                       ></div>
                     )}
                   </button>
+                  {window.WALLET_TYPE === "binance" && (
+                    <div>
+                      <button
+                        onClick={() => handlePurchasePremium(coinbase)}
+                        className="px-6 py-2 bg-blue-600 text-white rounded"
+                        disabled={statusPrime === "processing"}
+                      >
+                        {statusPrime === "idle" && "Buy Premium Subscription"}
+                        {statusPrime === "processing" && "Processing..."}
+                        {statusPrime === "success" && "Success ✅"}
+                        {statusPrime === "fail" && "Failed ❌"}
+                      </button>
+
+                      {/* {txHash && (
+                        <p className="mt-2 text-sm text-green-600">
+                          Activated! Tx Hash: {txHash}
+                        </p>
+                      )} */}
+
+                      <QRComponent />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
