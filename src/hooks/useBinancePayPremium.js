@@ -12,7 +12,7 @@ export function useBinancePayPremium() {
   const [showQr, setShowQr] = useState(false);
   const [txHash, setTxHash] = useState(null);
 
-  async function launchPremiumSubscription(walletAddress) {
+  async function launchPremiumSubscription(walletAddress, price) {
     try {
       setStatus("processing");
       setTxHash(null);
@@ -22,7 +22,7 @@ export function useBinancePayPremium() {
         "https://api.worldofdypians.com/api/binance/create-order",
         {
           walletAddress: walletAddress,
-          orderAmount: 1,
+          orderAmount: price,
           goodsName: "Premium Subscription",
           description: "Premium Subscription",
           returnUrl: "https://www.worldofdypians.com/account/prime",

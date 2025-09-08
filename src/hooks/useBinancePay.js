@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 
+function isMobileDevice() {
+  return /Mobi|Android/i.test(navigator.userAgent);
+}
+
 export function useBinancePay() {
   const [merchantTradeNo, setMerchantTradeNo] = useState(null);
   const [qrCode, setQrCode] = useState(null);
@@ -89,9 +93,9 @@ export function useBinancePay() {
     //   setQrCode(order.qrcodeLink);
     // } else
 
-    if (order.data.qrContent) {
-      // desktop → show QR to scan
-
+    if (isMobileDevice()) {
+      window.location.href = order.data.qrcodeLink;
+    } else {
       setQrCode(order.data.qrContent);
       setShowQr(true);
     }

@@ -30,8 +30,17 @@ const GetPremiumPopup = ({
   const { statusPrime, txHash, launchPremiumSubscription, QRComponent } =
     useBinancePayPremium();
 
-  const handlePurchasePremium = (walletAddress) => {
-    launchPremiumSubscription(walletAddress);
+  const handleUpdatePremiumUser = async (wallet) => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  const handlePurchasePremium = (walletAddress, price) => {
+    launchPremiumSubscription(walletAddress, price);
+    handleUpdatePremiumUser(walletAddress);
   };
 
   const chainDropdowns = [
@@ -654,14 +663,6 @@ const GetPremiumPopup = ({
       setnftPremium_totalTaiko(0);
     }
     // } else setdiscountPercentage(0);
-  };
-
-  const handleUpdatePremiumUser = async (wallet) => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
-      .catch((e) => {
-        console.error(e);
-      });
   };
 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
@@ -5177,7 +5178,7 @@ const GetPremiumPopup = ({
                   {window.WALLET_TYPE === "binance" && (
                     <div>
                       <button
-                        onClick={() => handlePurchasePremium(coinbase)}
+                        onClick={() => handlePurchasePremium(coinbase, price)}
                         className="px-6 py-2 bg-blue-600 text-white rounded"
                         disabled={statusPrime === "processing"}
                       >
