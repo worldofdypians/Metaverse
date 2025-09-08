@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import  { useRef, useState, useEffect } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
@@ -10,13 +10,13 @@ import EventSliderCard from "./components/EventSliderCard";
 import TimepieceChecklistModal from "../Timepiece/TimepieceChecklistModal";
 import Slider from "react-slick";
 
-const renderer = ({ days, hours, minutes }) => {
-  return (
-    <h6 className="latest-mint-number mb-0">
-      {hours} hours : {minutes} minutes
-    </h6>
-  );
-};
+// const renderer = ({ days, hours, minutes }) => {
+//   return (
+//     <h6 className="latest-mint-number mb-0">
+//       {hours} hours : {minutes} minutes
+//     </h6>
+//   );
+// };
 const renderer2 = ({ days, hours, minutes }) => {
   return (
     <h6 className="latest-mint-number mb-0">
@@ -44,10 +44,6 @@ const MarketMint = ({
   calculateCaws,
   timepieceMetadata,
   nftCreated,
-  myTeaBnbNfts,
-  myTeaOpbnbNfts,
-  myTeaSeiNfts,
-  myTeaBaseNfts,
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -255,7 +251,7 @@ const MarketMint = ({
   ];
 
   const windowSize = useWindowSize();
-  const params = useParams();
+  // const params = useParams();
   const location = useLocation();
   const [viewCollection, setViewCollection] = useState(false);
   const [nftCount, setNftCount] = useState(1);
@@ -267,7 +263,7 @@ const MarketMint = ({
   const [mouseOver, setMouseOver] = useState(false);
 
   const [latestMintId, setlatestMintId] = useState(0);
-  const [latestConfluxMintId, setlatestConfluxMintId] = useState(0);
+  // const [latestConfluxMintId, setlatestConfluxMintId] = useState(0);
 
   const [activeTab, setActiveTab] = useState("live");
   const [confluxSold, setconfluxSold] = useState(0);
@@ -294,7 +290,7 @@ const MarketMint = ({
     })
   );
   const [mintTitle, setMintTitle] = useState("timepiece");
-  const [sliderCut, setSliderCut] = useState();
+  const [sliderCut, ] = useState();
 
   const slider = useRef(null);
   const html = document.querySelector("html");
@@ -352,16 +348,16 @@ const MarketMint = ({
       window.OPBNB_NFT_ABI,
       window.config.nft_kucoin_address
     );
-
+    const taraxaContract = new window.taraxaWeb3.eth.Contract(
+      window.TARAXA_NFT_ABI,
+      window.config.nft_taraxa_address
+    );
     const vanarContract = new window.vanarWeb3.eth.Contract(
       window.VANAR_NFT_ABI,
       window.config.nft_vanar_address
     );
 
-    const taraxaContract = new window.taraxaWeb3.eth.Contract(
-      window.TARAXA_NFT_ABI,
-      window.config.nft_taraxa_address
-    );
+ 
     const teaseicontract = new window.seiWeb3.eth.Contract(
       window.SEI_NFT_ABI,
       window.config.nft_teasei_address
@@ -522,7 +518,7 @@ const MarketMint = ({
 
     setKucoinNftsSold(kucoinresult);
 
-    const taraxaresult = await taraxaContract.methods
+    const taraxaResult = await taraxaContract.methods
       .totalSupply()
       .call()
       .catch((e) => {
@@ -530,7 +526,8 @@ const MarketMint = ({
         return 0;
       });
 
-    setTaraxaNftsSold(taraxaresult);
+    setTaraxaNftsSold(taraxaResult);
+
   };
 
   const handleEthPool = async () => {
@@ -578,54 +575,6 @@ const MarketMint = ({
       handleSwitchChainBinanceWallet(204);
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleBNBPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x38")
-            .then(() => {
-              handleSwitchNetwork(56);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
-
-  const handleBasePool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x2105")
-            .then(() => {
-              handleSwitchNetwork(8453);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
     }
   };
 
@@ -1030,10 +979,10 @@ const MarketMint = ({
     setlatestMintId(result - 1);
   };
 
-  const getConfluxLatestMint = async () => {
-    const result = await window.conflux_nft.getConfluxLatestMint();
-    setlatestConfluxMintId(result - 1);
-  };
+  // const getConfluxLatestMint = async () => {
+  //   const result = await window.conflux_nft.getConfluxLatestMint();
+  //   setlatestConfluxMintId(result - 1);
+  // };
 
   async function updateViewCount(tokenId, nftAddress) {
     try {
@@ -2501,7 +2450,9 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-lg-6 mt-lg-5">
+
+                   <div className="col-12 col-lg-6 mt-lg-5">
+
                     <div className="past-taraxa-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
@@ -2519,6 +2470,7 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
+
                   {/* <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-vanar-mint p-4">
                       <div className="sold-out-tag px-3 py-1">

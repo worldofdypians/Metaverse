@@ -872,13 +872,12 @@ const AIQuestion = ({
               {/* {step === 1 && ( */}
               <div
                 className={
-                  (selectedOption === selectedAnswer &&
-                    selectedAnswer !== undefined &&
-                    step === 1) ||
-                  (questionRewards.find((item) => {
+                  // (selectedOption === selectedAnswer &&
+                  //   selectedAnswer !== undefined &&
+                  //   step === 1) ||
+                  questionRewards.find((item) => {
                     return item.rewardType === "Stars";
-                  }) !== undefined &&
-                    step === 1)
+                  }) !== undefined && step === 1
                     ? "ai-rewards-info-active"
                     : "ai-rewards-info"
                 }
@@ -940,13 +939,12 @@ const AIQuestion = ({
               </div>
               <div
                 className={
-                  (selectedOption === selectedAnswer &&
-                    selectedAnswer !== undefined &&
-                    step === 1) ||
-                  (questionRewards.find((item) => {
+                  // (selectedOption === selectedAnswer &&
+                  //   selectedAnswer !== undefined &&
+                  //   step === 1) ||
+                  questionRewards.find((item) => {
                     return item.rewardType === "Points";
-                  }) !== undefined &&
-                    step === 1)
+                  }) !== undefined && step === 1
                     ? "ai-rewards-info-active"
                     : "ai-rewards-info"
                 }
@@ -1005,13 +1003,12 @@ const AIQuestion = ({
               </div>
               <div
                 className={
-                  (selectedOption === selectedAnswer &&
-                    selectedAnswer !== undefined &&
-                    step === 1) ||
-                  (questionRewards.find((item) => {
+                  // (selectedOption === selectedAnswer &&
+                  //   selectedAnswer !== undefined &&
+                  //   step === 1) ||
+                  questionRewards.find((item) => {
                     return item.rewardType === "Money";
-                  }) !== undefined &&
-                    step === 1)
+                  }) !== undefined && step === 1
                     ? "ai-rewards-info-active"
                     : "ai-rewards-info"
                 }
@@ -1483,10 +1480,10 @@ const AIQuestion = ({
                                 key={index}
                               >
                                 {obj.rewardType === "Money" && "$"}
-                                {getFormattedNumber(
-                                  obj.reward,
-                                  obj.rewardType === "Money" ? 2 : 0
-                                )}{" "}
+                                {obj.rewardType === "Money" ||
+                                obj.rewardType === "Stars"
+                                  ? obj.reward
+                                  : getFormattedNumber(obj.reward, 0)}{" "}
                                 {obj.rewardType !== "Money" && obj.rewardType}
                                 {questionRewards.length > 1 &&
                                   index < questionRewards.length - 1 &&

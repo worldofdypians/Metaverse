@@ -144,6 +144,7 @@ const Tokenomics = () => {
             }
             target="_blank"
             className="explore-btn col-lg-4 py-2"
+            rel="noreferrer"
           >
             Read Whitepaper
           </NavLink>
@@ -231,6 +232,7 @@ const Tokenomics = () => {
                         href="https://bscscan.com/token/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
                         target="_blank"
                         className="wod-address"
+                        rel="noreferrer"
                       >
                         {windowSize.width > 991
                           ? "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"

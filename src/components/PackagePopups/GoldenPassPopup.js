@@ -44,11 +44,13 @@ const GoldenPassPopup = ({
   publicClient,
   walletClient,
   isConnected,
+  onSuccessDeposit,
+  goldenPassRemainingTime,
 }) => {
   const [goldenPassWodAmount, setGoldenPassWodAmount] = useState(0);
-  const [countdown, setCountdown] = useState(0);
-  const [hasBoughtGolden, setHasBoughtGolden] = useState(false);
-  const [timerFinished, settimerFinished] = useState(false);
+  // const [countdown, setCountdown] = useState(0);
+  // const [hasBoughtGolden, setHasBoughtGolden] = useState(false);
+  // const [timerFinished, settimerFinished] = useState(false);
 
   const [showApproval, setShowApproval] = useState(true);
   const [bundleState, setBundleState] = useState("initial");
@@ -77,22 +79,22 @@ const GoldenPassPopup = ({
     }
   };
 
-  const handleRefreshCountdown = async () => {
-    const goldenPassContract = new window.bscWeb3.eth.Contract(
-      GOLDEN_PASS_ABI,
-      golden_pass_address
-    );
+  // const handleRefreshCountdown = async () => {
+  //   const goldenPassContract = new window.bscWeb3.eth.Contract(
+  //     GOLDEN_PASS_ABI,
+  //     golden_pass_address
+  //   );
 
-    const purchaseTimestamp = await goldenPassContract.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtGolden(false);
-      return;
-    }
-    setCountdown(purchaseTimestamp);
-    setHasBoughtGolden(true);
-  };
+  //   const purchaseTimestamp = await goldenPassContract.methods
+  //     .getTimeOfExpireBuff(coinbase)
+  //     .call();
+  //   if (Number(purchaseTimestamp) === 0) {
+  //     setHasBoughtGolden(false);
+  //     return;
+  //   }
+  //   setCountdown(purchaseTimestamp);
+  //   setHasBoughtGolden(true);
+  // };
 
   const checkApproval = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
@@ -238,8 +240,9 @@ const GoldenPassPopup = ({
           setDepositState("success");
           setStatusColor("#00FECF");
 
-          handleRefreshCountdown();
-          checkApproval();
+          // handleRefreshCountdown();
+          // checkApproval();
+          onSuccessDeposit();
         })
         .catch((e) => {
           setStatusColor("#FE7A00");
@@ -254,7 +257,7 @@ const GoldenPassPopup = ({
           }, 3000);
           return () => clearTimeout(timer);
         });
-      handleRefreshCountdown();
+      // handleRefreshCountdown();
     } else if (window.WALLET_TYPE === "binance") {
       const goldensc = new ethers.Contract(
         golden_pass_address,
@@ -297,11 +300,12 @@ const GoldenPassPopup = ({
         setDepositState("success");
         setStatusColor("#00FECF");
 
-        handleRefreshCountdown();
-        checkApproval();
+        // handleRefreshCountdown();
+        // checkApproval();
+        onSuccessDeposit();
       }
 
-      handleRefreshCountdown();
+      // handleRefreshCountdown();
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
         const result = await walletClient
@@ -338,8 +342,9 @@ const GoldenPassPopup = ({
             setDepositState("success");
             setStatusColor("#00FECF");
 
-            handleRefreshCountdown();
-            checkApproval();
+            // handleRefreshCountdown();
+            // checkApproval();
+            onSuccessDeposit();
           }
         }
       }
@@ -366,7 +371,7 @@ const GoldenPassPopup = ({
   useEffect(() => {
     checkWalletAddr();
     if (coinbase && wallet && chainId === 56) {
-      handleRefreshCountdown();
+      // handleRefreshCountdown();
       checkApproval();
     }
   }, [wallet, chainId, coinbase]);
@@ -624,15 +629,12 @@ const GoldenPassPopup = ({
             </div>
           </div>
           <>
-            {hasBoughtGolden && timerFinished === false ? (
+            {goldenPassRemainingTime ? (
               <div className="d-flex flex-column gap-1">
                 <span className="days3">Active Until:</span>
                 <Countdown
                   renderer={renderer}
-                  date={Number(countdown) * 1000}
-                  onComplete={() => {
-                    settimerFinished(true);
-                  }}
+                  date={Number(goldenPassRemainingTime) * 1000}
                 />
               </div>
             ) : (

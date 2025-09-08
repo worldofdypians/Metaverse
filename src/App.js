@@ -609,6 +609,7 @@ function App() {
   const [isPremium, setIsPremium] = useState(false);
   const [premiumOryn, setPremiumOryn] = useState(false);
   const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
+  const [royalChestIndex, setRoyalChestIndex] = useState();
 
   const [domainPopup, setDomainPopup] = useState(false);
   const [kickstarterAddClass, setKickstarterAddClass] = useState(false);
@@ -1963,7 +1964,7 @@ function App() {
         return 0;
       });
 
-    const taraxaresult = await taraxaContract.methods
+    const taraxaResult = await taraxaContract.methods
       .totalSupply()
       .call()
       .catch((e) => {
@@ -1997,7 +1998,7 @@ function App() {
         Number(teaOPBNBResult) +
         Number(teaBaseResult) +
         Number(teaseiResult) +
-        Number(taraxaresult) +
+        Number(taraxaResult) +
         20002
     );
   };
@@ -6382,6 +6383,7 @@ function App() {
           !location.pathname.includes("trading-competition") &&
           !location.pathname.includes("bonus-otc") &&
           !location.pathname.includes("special-otc") &&
+          !location.pathname.includes("special-otc-4") &&
           !location.pathname.includes("pool") &&
           !location.pathname.includes("pool2") &&
           !location.pathname.includes("auth") &&
@@ -6747,6 +6749,27 @@ function App() {
 
           <Route
             exact
+            path="/special-otc-4"
+            element={
+              <Whitelist
+                isEOA={isEOA}
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="special-otc-4"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+          <Route
+            exact
             path="/bonus-otc"
             element={
               <Whitelist
@@ -6965,6 +6988,9 @@ function App() {
             path="/account"
             element={
               <Dashboard
+                setRoyalChestIndex={(value) => {
+                  setRoyalChestIndex(value);
+                }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
@@ -7073,6 +7099,9 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+                setRoyalChestIndex={(value) => {
+                  setRoyalChestIndex(value);
+                }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
@@ -7665,6 +7694,9 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                setRoyalChestIndex={(value) => {
+                  setRoyalChestIndex(value);
+                }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
@@ -7861,10 +7893,6 @@ function App() {
                 timepieceMetadata={timepieceMetadata}
                 nftCreated={totalTimepieceCreated}
                 totalCreated={totalTimepieceCreated}
-                myTeaBnbNfts={myTeaBnbNfts}
-                myTeaOpbnbNfts={myTeaOpbnbNfts}
-                myTeaSeiNfts={myTeaSeiNfts}
-                myTeaBaseNfts={myTeaBaseNfts}
               />
             }
           />
@@ -8180,7 +8208,7 @@ function App() {
             path="/game"
             element={<Game allStarData={allStarData} />}
           />
-          <Route exact path="/game-updates" element={<GameUpdates />} />
+          {/* <Route exact path="/game-updates" element={<GameUpdates />} /> */}
           <Route exact path="/about" element={<About />} />
 
           {/* <Route
@@ -8730,6 +8758,7 @@ function App() {
       {(kickstarter || hashValue === "#royalty-chest") &&
         window.location.pathname === "/account" && (
           <Kickstarter
+            royalChestIndex={royalChestIndex}
             publicClient={publicClient}
             onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
             walletClient={walletClient}

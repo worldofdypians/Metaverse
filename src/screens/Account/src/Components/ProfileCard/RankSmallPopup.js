@@ -59,7 +59,7 @@ const RankSmallPopup = ({
   userTaraxaScore,
   userTaraxaStars,
 }) => {
-  console.log(userTaraxaScore);
+  
   return (
     <div className="package-popup-wrapper">
       <div className="package-popup my-progress-popup p-4">

@@ -9,6 +9,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
     type === "pool" ||
       type === "pool2" ||
       type === "special-otc" ||
+      type === "special-otc-4" ||
       type === "pool-bonus" ||
       type === "bonus-otc" ||
       type === "pool-dynamic" ||
@@ -65,6 +66,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
         type === "pool2"
           ? "otc2"
           : type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -85,6 +87,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
           ? "5 Months"
           : type === "special-otc"
           ? "12 months"
+          : type === "special-otc-4"
+          ? "4 months"
           : type === "bonus-otc"
           ? "18 months"
           : "6 Months",
@@ -101,6 +105,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "pool" ||
       type === "pool2" ||
       type === "special-otc" ||
+      type === "special-otc-4" ||
       type === "bonus-otc" ||
       type === "pool-bonus" ||
       type === "pool-dynamic" ||
@@ -124,6 +129,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -142,6 +148,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -160,6 +167,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -173,6 +181,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -184,6 +193,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -195,6 +205,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -211,6 +222,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -224,6 +236,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -235,6 +248,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -246,6 +260,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -265,6 +280,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -276,6 +292,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -287,6 +304,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool" ||
             type === "pool2" ||
             type === "special-otc" ||
+            type === "special-otc-4" ||
             type === "bonus-otc" ||
             type === "pool-bonus" ||
             type === "pool-dynamic" ||
@@ -304,6 +322,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "pool" ||
         type === "pool2" ||
         type === "special-otc" ||
+        type === "special-otc-4" ||
         type === "bonus-otc" ||
         type === "pool-bonus" ||
         type === "pool-dynamic" ||
@@ -336,6 +355,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "pool" ||
                 type === "pool2" ||
                 type === "special-otc" ||
+                type === "special-otc-4" ||
                 type === "bonus-otc" ||
                 type === "pool-bonus" ||
                 type === "pool-dynamic" ||
@@ -349,6 +369,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 {(type === "pool" ||
                 type === "pool2" ||
                 type === "special-otc" ||
+                type === "special-otc-4" ||
                 type === "bonus-otc" ||
                 type === "pool-bonus" ||
                 type === "pool-dynamic" ||

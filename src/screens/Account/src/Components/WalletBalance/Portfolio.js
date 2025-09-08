@@ -1929,8 +1929,8 @@ const Portfolio = ({
                         TrustWallet
                       </h6>
                     </a>
-                    <a
-                      href="https://changenow.io/currencies/world-of-dypians"
+                     <a
+                      href="https://bingx.com/en/spot/WODUSDT"
                       target="_blank"
                       rel="noreferrer"
                       className="getwod-item"
@@ -1938,27 +1938,53 @@ const Portfolio = ({
                       <h6 className="bottomitems buy-wod-portfolio-text mb-0">
                         <img
                           src={
-                            "https://cdn.worldofdypians.com/wod/changeNow.webp"
+                            "https://cdn.worldofdypians.com/wod/bingx.svg"
                           }
                           className="buywodimg"
                         />
-                        ChangeNOW
+                        BingX
                       </h6>
                     </a>
                     <a
-                      href="https://blofin.com/spot/WOD-USDT"
+                      href="https://www.weex.com/spot/WOD-USDT"
                       target="_blank"
                       rel="noreferrer"
                       className="getwod-item"
                     >
                       <h6 className="bottomitems buy-wod-portfolio-text mb-0">
                         <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/blofinBuywod.png"
-                          }
+                          src={"https://cdn.worldofdypians.com/wod/phemex.png"}
                           className="buywodimg"
                         />
-                        BloFin
+                        WEEX
+                      </h6>
+                    </a>
+                    <a
+                      href="https://www.toobit.com/en-US/spot/WOD_USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={"https://cdn.worldofdypians.com/wod/toobit.svg"}
+                          className="buywodimg"
+                        />
+                        Toobit
+                      </h6>
+                    </a>
+                    <a
+                      href="https://www.kcex.com/exchange/WOD_USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={"https://cdn.worldofdypians.com/wod/kcex.png"}
+                          className="buywodimg"
+                        />
+                        KCEX
                       </h6>
                     </a>
                     <a
@@ -1991,20 +2017,7 @@ const Portfolio = ({
                         HiBt
                       </h6>
                     </a>
-                    <a
-                      href="https://www.kcex.com/exchange/WOD_USDT"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="getwod-item"
-                    >
-                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
-                        <img
-                          src={"https://cdn.worldofdypians.com/wod/kcex.png"}
-                          className="buywodimg"
-                        />
-                        KCEX
-                      </h6>
-                    </a>
+
                     <a
                       href="https://phemex.com/trade/WOD-USDT"
                       target="_blank"
@@ -2019,6 +2032,40 @@ const Portfolio = ({
                         Phemex
                       </h6>
                     </a>
+
+                    <a
+                      href="https://changenow.io/currencies/world-of-dypians"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/changeNow.webp"
+                          }
+                          className="buywodimg"
+                        />
+                        ChangeNOW
+                      </h6>
+                    </a>
+                    <a
+                      href="https://blofin.com/spot/WOD-USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/blofinBuywod.png"
+                          }
+                          className="buywodimg"
+                        />
+                        BloFin
+                      </h6>
+                    </a>
+                     
                   </div>
                 </div>
               )}

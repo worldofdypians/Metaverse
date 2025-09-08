@@ -185,6 +185,8 @@ window.config = {
   otc2_address: "0x8a3a80d4a3b1c6c534f0016c1d834d7d60b32bcf",
   otcbonus_address: "0xc828b41f27c6766fcc5c9f5b00321acd11f3e710",
   otcspecial_address: "0xd9d30dcf8dceaf4da5444cac87bea4ea965351e4",
+  otcspecial4_address: "0xd358c423ec0a57f2f471b91f933190c2a77071ba",
+
 
   otcpoolbonus_address: "0x3b04c32afc70cc29e1f2040bf91e9924bef537f8",
   otcpooldynamic_address: "0x0fff73ac0935a31c3940aa081c99902e27357f78", //40%

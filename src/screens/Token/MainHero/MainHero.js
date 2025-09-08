@@ -58,6 +58,37 @@ const MainHero = ({ scrollInto }) => {
       logo: "trustwallet.svg",
       link: "https://short.trustwallet.com/app-download",
     },
+    {
+      title: "BingX",
+      logo: "bingx-exchange.svg",
+      link: "https://bingx.com/en/spot/WODUSDT",
+    },
+    {
+      title: "WEEX",
+      logo: "weex-exchange.svg",
+      link: "https://www.weex.com/spot/WOD-USDT",
+    },
+    {
+      title: "Toobit",
+      logo: "toobit-exchange.svg",
+      link: "https://www.toobit.com/en-US/spot/WOD_USDT",
+    },
+
+    {
+      title: "KCEX",
+      logo: "kcex-exchange.png",
+      link: "https://www.kcex.com/exchange/WOD_USDT",
+    },
+    {
+      title: "HiBt",
+      logo: "hibt-exchange-white.png",
+      link: "https://hibt.com/trade/WOD-USDT",
+    },
+    {
+      title: "Phemex",
+      logo: "phemex-exchange.png",
+      link: "https://phemex.com/trade/WOD-USDT",
+    },
 
     {
       title: "ChangeNOW",
@@ -122,6 +153,7 @@ const MainHero = ({ scrollInto }) => {
                   href={item.link}
                   target="_blank"
                   className="investors-item py-2"
+                  rel="noreferrer"
                   key={index}
                 >
                   <img
@@ -131,7 +163,10 @@ const MainHero = ({ scrollInto }) => {
                         : `https://cdn.worldofdypians.com/wod/${item.logo}`
                     }
                     className={` exchange-grid-image ${
-                      index === 0 && "h-auto"
+                      (index === 0 ||
+                        item.title === "KCEX" ||
+                        item.title === "HiBt") &&
+                      "h-auto"
                     }`}
                     alt=""
                   />
