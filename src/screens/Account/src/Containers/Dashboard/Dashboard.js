@@ -809,6 +809,8 @@ function Dashboard({
   const [activePlayerStarWeekly, setActivePlayerStarWeekly] = useState([]);
   const [userDataStar, setUserDataStar] = useState({});
   const [userPreviousDataStar, setUserPreviousDataStar] = useState({});
+  const [userPreviousDataStar2, setUserPreviousDataStar2] = useState({});
+
   const [userDataStarWeekly, setUserDataStarWeekly] = useState({});
   const [prevDataStar, setPrevDataStar] = useState([]);
   const [prevDataStarWeekly, setPrevDataStarWeekly] = useState([]);
@@ -2973,18 +2975,41 @@ function Dashboard({
     if (version != 0) {
       const data = {
         StatisticName: "GlobalStarMonthlyLeaderboard",
-        StartPosition: 0,
         MaxResultsCount: 1,
         Version: version - 1,
         PlayerId: userId,
       };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer?Version=-1`,
-        data
-      );
-      setUserPreviousDataStar(...result.data.data.leaderboard);
+      const data2 = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        MaxResultsCount: 1,
+        Version: version - 2,
+        PlayerId: userId,
+      };
+      const result = await axios
+        .post(
+          `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
+          data
+        )
+        .catch((e) => {
+          console.error(e);
+        });
+      const result2 = await axios
+        .post(
+          `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
+          data2
+        )
+        .catch((e) => {
+          console.error(e);
+        });
+      if (result) {
+        setUserPreviousDataStar(...result.data.data.leaderboard);
+      }
+      if (result2) {
+        setUserPreviousDataStar2(...result2.data.data.leaderboard);
+      }
     } else {
       setUserPreviousDataStar([]);
+      setUserPreviousDataStar2([]);
     }
   };
 
@@ -7540,11 +7565,19 @@ function Dashboard({
                     : 0
                 }
                 userPreviousDataStar={
-                  !userPreviousDataStar?.statValue ||
-                  userPreviousDataStar?.statValue === 0
+                  !userPreviousDataStar?.StatValue ||
+                  userPreviousDataStar?.StatValue === 0
                     ? 0
-                    : userPreviousDataStar.position !== undefined
-                    ? userPreviousDataStar.position + 1
+                    : userPreviousDataStar.Position !== undefined
+                    ? userPreviousDataStar.Position + 1
+                    : 0
+                }
+                userPreviousDataStar2={
+                  !userPreviousDataStar2?.StatValue ||
+                  userPreviousDataStar2?.StatValue === 0
+                    ? 0
+                    : userPreviousDataStar2.Position !== undefined
+                    ? userPreviousDataStar2.Position + 1
                     : 0
                 }
               />
