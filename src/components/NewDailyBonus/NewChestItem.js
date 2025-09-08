@@ -39,6 +39,8 @@ const NewChestItem = ({
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+ 
+
   const premiumImages = [
     "blueCrystal",
     "purpleCrystal",

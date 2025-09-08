@@ -1,4 +1,4 @@
-import  { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
@@ -60,20 +60,20 @@ const MarketMint = ({
   //   mobileBg: "gateMobileBg.png",
   // };
   const allMints = [
-    // {
-    //   id: "taraxa",
-    //   cardTitle: "Taraxa Beta Pass",
-    //   title: "Taraxa Beta Pass",
-    //   background: "taraxa-mint-bg",
-    //   mobileBg: "taraxaMobileBg.png",
-    //   activeClass: "taraxa-active",
-    //   emptyClass: "conflux-empty",
-    //   nftcreated: nftCreated,
-    //   nft_address: window.config.nft_taraxa_address,
-    //   chainId: [841],
-    //   chainName: "Taraxa",
-    //   logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-    // },
+    {
+      id: "taraxa",
+      cardTitle: "Taraxa Beta Pass",
+      title: "Taraxa Beta Pass",
+      background: "taraxa-mint-bg",
+      mobileBg: "taraxaMobileBg.png",
+      activeClass: "taraxa-active",
+      emptyClass: "conflux-empty",
+      nftcreated: nftCreated,
+      nft_address: window.config.nft_taraxa_address,
+      chainId: [841],
+      chainName: "Taraxa",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    },
     {
       id: "kucoin",
       cardTitle: "KuCoin Beta Pass",
@@ -272,11 +272,11 @@ const MarketMint = ({
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(
     allMints.find((obj) => {
-      return obj.id === "timepiece";
+      return obj.id === "taraxa";
     })
   );
   const [mintTitle, setMintTitle] = useState("timepiece");
-  const [sliderCut, ] = useState();
+  const [sliderCut] = useState();
 
   const slider = useRef(null);
   const html = document.querySelector("html");
@@ -343,7 +343,6 @@ const MarketMint = ({
       window.config.nft_vanar_address
     );
 
- 
     const teaseicontract = new window.seiWeb3.eth.Contract(
       window.SEI_NFT_ABI,
       window.config.nft_teasei_address
@@ -513,7 +512,6 @@ const MarketMint = ({
       });
 
     setTaraxaNftsSold(taraxaResult);
-
   };
 
   const handleEthPool = async () => {
@@ -829,17 +827,17 @@ const MarketMint = ({
     //   class: "mint-teafi",
     //   id: "tea-fi",
     // },
-    // {
-    //   title: "Taraxa Pass",
-    //   eventId: "taraxa",
-    //   desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
-    //   img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
-    //   data: allMints.find((item) => {
-    //     return item.id === "taraxa";
-    //   }),
-    //   class: "mint-taraxa",
-    //   id: "taraxa",
-    // },
+    {
+      title: "Taraxa Pass",
+      eventId: "taraxa",
+      desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
+      img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
+      data: allMints.find((item) => {
+        return item.id === "taraxa";
+      }),
+      class: "mint-taraxa",
+      id: "taraxa",
+    },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -2303,8 +2301,7 @@ const MarketMint = ({
                     </div>
                   </div>
 
-                   <div className="col-12 col-lg-6 mt-lg-5">
-
+                  <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-taraxa-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
@@ -2315,7 +2312,9 @@ const MarketMint = ({
                           <h6 className="past-taraxa-mint-amount">
                             {getFormattedNumber(taraxaNftsSold, 0)}
                           </h6>
-                          <span className="past-taraxa-mint-desc">SOLD OUT</span>
+                          <span className="past-taraxa-mint-desc">
+                            SOLD OUT
+                          </span>
                         </div>
                       </div>
                     </div>

@@ -1905,6 +1905,22 @@ const Portfolio = ({
                         TrustWallet
                       </h6>
                     </a>
+                     <a
+                      href="https://bingx.com/en/spot/WODUSDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/bingx.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        BingX
+                      </h6>
+                    </a>
                     <a
                       href="https://www.weex.com/spot/WOD-USDT"
                       target="_blank"
@@ -2025,6 +2041,7 @@ const Portfolio = ({
                         BloFin
                       </h6>
                     </a>
+                     
                   </div>
                 </div>
               )}

@@ -75,7 +75,7 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
+const BoosterPopup = ({ userDataStar, userPreviousDataStar,userPreviousDataStar2 }) => {
   const nextSelectionDate = new Date("2025-12-13T14:00:00.000+02:00");
 
   const [isWinner, setIsWinner] = useState(false);
@@ -106,15 +106,15 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
   const utcHours = now.getUTCHours();
   const utcMinutes = now.getUTCMinutes();
   const isAfterCutoff = utcHours === 0 && utcMinutes >= 30;
-  const cutoffDate = 11;
+  const cutoffDate = 3;
 
   // Use current or previous month data based on toggle
   const displayRank = showPreviousMonth
     ? utcDate < cutoffDate || (isAfterCutoff && utcDate === 1)
-      ? 101 //userPreviousDataStar2
-      : 200 //userPreviousDataStar
+      ? userPreviousDataStar2
+      : userPreviousDataStar
     : utcDate < cutoffDate || (isAfterCutoff && utcDate === 1)
-    ? 200 //userPreviousDataStar
+    ? userPreviousDataStar
     : userDataStar;
   const displayIsWinner = showPreviousMonth ? previousIsWinner : isWinner;
   const displayRewardAmount = showPreviousMonth ? "40 WOD" : "40 WOD";
@@ -375,7 +375,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
                       Selection In Progress
                     </span>
                     <span className="booster-neutral-desc">
-                      Winners and the rewards will be announced within 10 days.
+                      Winners will be announced within the first two days and the rewards will be announced within 10 days.
                       Good luck!
                     </span>
                   </div>
@@ -391,10 +391,10 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar }) => {
                   />
                   <div className="d-flex flex-column">
                     <span className="booster-neutral-title">
-                      Ongoing Competition
+                      Ongoing Giveaway
                     </span>
                     <span className="booster-neutral-desc">
-                      The competition is in progress until the end of the month.
+                      The giveaway is in progress until the end of the month.
                     </span>
                   </div>
                 </div>

@@ -1789,15 +1789,13 @@ function App() {
       window.VANAR_NFT_ABI,
       window.config.nft_vanar_address
     );
-
-    const teaseicontract = new window.seiWeb3.eth.Contract(
-      window.SEI_NFT_ABI,
-      window.config.nft_teasei_address
-    );
-
     const taraxaContract = new window.taraxaWeb3.eth.Contract(
       window.TARAXA_NFT_ABI,
       window.config.nft_taraxa_address
+    );
+    const teaseicontract = new window.seiWeb3.eth.Contract(
+      window.SEI_NFT_ABI,
+      window.config.nft_teasei_address
     );
 
     const confluxresult = await confluxContract.methods
