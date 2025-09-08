@@ -348,7 +348,7 @@ const NewChestItem = ({
 
   const handleThirdTask = async (wallet) => {
     const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/dappbay/task3/${wallet}`)
+      .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
       .catch((e) => {
         console.error(e);
       });

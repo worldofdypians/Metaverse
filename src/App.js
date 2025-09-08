@@ -893,10 +893,24 @@ function App() {
     transport: http(`${chain?.chain?.rpcUrls?.default?.http[0]}`),
   });
 
+  const handleSecondTask = async (wallet) => {
+    if (wallet) {
+      const result = await axios
+        .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (result && result.status === 200) {
+        console.log(result);
+      }
+    }
+  };
+
   const handleFirstTask = async (wallet) => {
     if (wallet) {
       const result2 = await axios
-        .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+        .get(`https://api.worldofdypians.com/api/dappbay/task3/${wallet}`)
         .catch((e) => {
           console.error(e);
         });
@@ -3793,6 +3807,7 @@ function App() {
             getMyNFTS(coinbase, "5ya").then((NFTS) => {
               setmyBnb5yaNfts(NFTS);
             });
+            handleFirstTask(coinbase);
           })
           .catch((e) => {
             console.error(e);
@@ -6279,7 +6294,7 @@ function App() {
   useEffect(() => {
     if (coinbase) {
       fetchUserPools(coinbase);
-
+      handleSecondTask(coinbase);
       // getNotifications(coinbase);
     }
   }, [coinbase, nftCount]);
@@ -7015,7 +7030,6 @@ function App() {
                 myTeaSeiNfts={myTeaSeiNfts}
                 myTaraxaNfts={myTaraxaNfts}
                 mybnb5yaNfts={mybnb5yaNfts}
-
                 myTeaBaseNfts={myTeaBaseNfts}
                 syncStatus={syncStatus}
                 syncCount={syncCount}
