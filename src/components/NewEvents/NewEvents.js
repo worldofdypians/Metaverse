@@ -21,18 +21,25 @@ import { ethers } from "ethers";
 import {
   COLD_BITE_ABI,
   cold_bite_address,
+  cold_bite2_address,
   DRAGON_RUINS_ABI,
   dragon_ruins_address,
+  dragon_ruins2_address,
   FURY_BEAST_ABI,
   fury_beast_address,
+  fury_beast2_address,
   PUZZLE_MADNESS_ABI,
   puzzle_madness_address,
+  puzzle_madness2_address,
   SCORPION_KING_ABI,
   scorpion_king_address,
+  scorpion_king2_address,
   STONE_EYE_ABI,
   stone_eye_address,
+  stone_eye2_address,
   WING_STORM_ABI,
   wing_storm_address,
+  wing_storm2_address,
 } from "./abi";
 import Web3 from "web3";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
@@ -87,6 +94,8 @@ const NewEvents = ({
   publicClient,
   network_matchain,
 }) => {
+  const [binancePay, setbinancePay] = useState(false);
+
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
   const [activeEvent, setActiveEvent] = useState({});
@@ -291,31 +300,55 @@ const NewEvents = ({
       puzzle_madness_address
     );
 
+    const puzzleContract2 = new window.bscWeb3.eth.Contract(
+      PUZZLE_MADNESS_ABI,
+      puzzle_madness2_address
+    );
+
     const purchaseTimestamp = await puzzleContract.methods
       .getTimeOfExpireBuff(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    const purchaseTimestamp2 = await puzzleContract2.methods
+      .getTimeOfExpireBuff(wallet)
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (Number(purchaseTimestamp) === 0 && Number(purchaseTimestamp2) === 0) {
       setHasBoughtpuzzleMadness(false);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
         puzzleMadness: false,
       }));
       return;
-    } else if (Number(purchaseTimestamp) < now.getTime() / 1000) {
+    } else if (
+      Number(purchaseTimestamp2) < now.getTime() / 1000 &&
+      Number(purchaseTimestamp) < now.getTime() / 1000
+    ) {
       setHasBoughtpuzzleMadness(false);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
         puzzleMadness: false,
       }));
       return;
+    } else {
+      const activeTimestamp = [purchaseTimestamp, purchaseTimestamp2].find(
+        (ts) => Number(ts) > now.getTime() / 1000
+      );
+
+      setHasBoughtpuzzleMadness(true);
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        puzzleMadness: true,
+      }));
+      setpuzzleMadnessCountdown(Number(activeTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
+      setPuzzleMadnessTimer(Number(activeTimestamp) * 1000);
     }
-    setHasBoughtpuzzleMadness(true);
-    setBeastSiegeStatus((prevStatus) => ({
-      ...prevStatus,
-      puzzleMadness: true,
-    }));
-    setpuzzleMadnessCountdown(Number(purchaseTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
-    setPuzzleMadnessTimer(Number(purchaseTimestamp) * 1000);
   };
 
   const checkApprovalPuzzle = async () => {
@@ -341,20 +374,26 @@ const NewEvents = ({
             return 0;
           });
       } else {
-        await wod_token_abi.methods
+        const allowance1 = await wod_token_abi.methods
           .allowance(wallet, puzzleMadnessAddress)
           .call()
-          .then((data) => {
-            if (data === "0" || data < 150000000000000000000) {
-              setpuzzleMadnessShowApproval(true);
-            } else {
-              setpuzzleMadnessShowApproval(false);
-              setpuzzleMadnessBundleState("deposit");
-            }
-          })
           .catch((e) => {
             console.log(e);
           });
+
+        const allowance2 = await wod_token_abi.methods
+          .allowance(wallet, puzzle_madness2_address)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+
+        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+          setpuzzleMadnessShowApproval(true);
+        } else {
+          setpuzzleMadnessShowApproval(false);
+          setpuzzleMadnessBundleState("deposit");
+        }
       }
     }
   };
@@ -616,11 +655,26 @@ const NewEvents = ({
       DRAGON_RUINS_ABI,
       dragon_ruins_address
     );
+    const dragonRuinsContract2 = new window.bscWeb3.eth.Contract(
+      DRAGON_RUINS_ABI,
+      dragon_ruins2_address
+    );
 
     const purchaseTimestamp = await dragonRuinsContract.methods
       .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    const purchaseTimestamp2 = await dragonRuinsContract2.methods
+      .getTimeOfDeposit(wallet)
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (Number(purchaseTimestamp) === 0 && Number(purchaseTimestamp2) === 0) {
       setHasBoughtDragon(false);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
@@ -628,17 +682,38 @@ const NewEvents = ({
       }));
       return;
     }
+
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const purchaseDate2 = new Date(purchaseTimestamp2 * 1000); // Multiply by 1000 to convert to milliseconds
+
     const currentUTCDate = new Date();
 
     // Get the UTC components
     const purchaseYear = purchaseDate.getUTCFullYear();
     const purchaseMonth = purchaseDate.getUTCMonth();
     const purchaseDay = purchaseDate.getUTCDate();
+
+    const purchaseYear2 = purchaseDate2.getUTCFullYear();
+    const purchaseMonth2 = purchaseDate2.getUTCMonth();
+    const purchaseDay2 = purchaseDate2.getUTCDate();
+
     const utcDayIndex = new Date().getUTCDay();
 
     const adjustedPurchaseDay =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? utcDayIndex === 0
+          ? 7
+          : utcDayIndex
+        : utcHours === 0
+        ? utcDayIndex === 0
+          ? 6
+          : utcDayIndex - 1
+        : utcDayIndex === 0
+        ? 7
+        : utcDayIndex;
+
+    const adjustedPurchaseDay2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? utcDayIndex === 0
           ? 7
           : utcDayIndex
@@ -656,6 +731,13 @@ const NewEvents = ({
         : utcHours === 0
         ? purchaseDate.getUTCDate() - 1
         : purchaseDate.getUTCDate();
+
+    const adjustedPurchaseDate2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
+        ? purchaseDate2.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate2.getUTCDate() - 1
+        : purchaseDate2.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -687,10 +769,16 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
-    setHasBoughtDragon(isToday);
+
+    const isToday2 =
+      purchaseYear2 === currentYear &&
+      purchaseMonth2 === currentMonth &&
+      adjustedPurchaseDay2 === adjustedCurrentDay &&
+      adjustedPurchaseDate2 === adjustedCurrentDate;
+    setHasBoughtDragon(isToday || isToday2);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
-      dragon: isToday,
+      dragon: isToday || isToday2,
     }));
   };
 

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-import { QRCodeSVG } from "qrcode.react";
 
 function isMobileDevice() {
   return /Mobi|Android/i.test(navigator.userAgent);
@@ -11,6 +10,7 @@ export function useBinancePayPremium() {
   const [qrCode, setQrCode] = useState(null);
   const [showQr, setShowQr] = useState(false);
   const [txHash, setTxHash] = useState(null);
+  const [createdOrder, setCreatedOrder] = useState(null);
 
   async function launchPremiumSubscription(walletAddress, price) {
     try {
@@ -29,7 +29,7 @@ export function useBinancePayPremium() {
           cancelUrl: "https://www.worldofdypians.com/account/prime",
         }
       );
-
+      setCreatedOrder(order.data);
       const merchantTradeNo = order.merchantTradeNo;
 
       // 2. Handle QR vs deep link
@@ -82,19 +82,75 @@ export function useBinancePayPremium() {
   }
 
   //  Popup QR Component
-  function QRComponent() {
-    if (!qrCode || !showQr) return null;
+  function QRComponent({ onClose }) {
+    if (!qrCode) return null;
+
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-6 rounded-lg flex flex-col items-center relative">
+        <div className="bg-gray-900 text-white rounded-xl shadow-xl w-[450px] max-w-[95%] p-6 relative">
+          {/* Close Button */}
           <button
-            className="absolute top-2 right-2 text-gray-500 font-bold"
-            onClick={() => setShowQr(false)}
+            onClick={onClose}
+            className="absolute top-3 right-3 text-gray-400 hover:text-white text-xl"
           >
-            ✖
+            ✕
           </button>
-          <p className="mb-4">Scan this QR with Binance app:</p>
-          <QRCodeSVG value={qrCode} size={200} />
+
+          {/* Header */}
+          <div className="mb-4">
+            <p className="text-yellow-400 text-sm font-medium">
+              Please do not close this window until the payment is confirmed
+            </p>
+          </div>
+
+          {/* Payment Info */}
+          <div className="flex justify-between border-b border-gray-700 pb-4">
+            <div>
+              <p className="text-gray-400 text-sm">Payment Amount</p>
+              <h2 className="text-3xl font-bold">
+                {createdOrder.totalFee}{" "}
+                <span className="text-lg">{createdOrder.currency}</span>
+              </h2>
+              <p className="text-gray-400 text-sm">
+                ≈ ${createdOrder.totalFee}
+              </p>
+
+              <div className="mt-4">
+                <p className="text-gray-400 text-xs">Merchant Name</p>
+                <p className="font-medium">World of Dypians</p>
+                <p className="text-gray-400 text-xs mt-2">Details</p>
+                <p className="font-medium">Prime Subscription</p>
+              </div>
+            </div>
+
+            {/* QR Code */}
+            <div className="flex flex-col items-center">
+              <img src={qrCode} width={150} height={150} alt="QR Code" />
+              <p className="text-gray-400 text-xs mt-2">
+                Scan to pay with Binance App
+              </p>{" "}
+              <button
+                onClick={() => window.open(createdOrder.checkoutUrl, "_blank")}
+                className="bg-yellow-400 text-black px-6 py-2 rounded-md font-medium hover:bg-yellow-300 transition"
+              >
+                Continue on Browser
+              </button>
+            </div>
+          </div>
+
+          <div className="sidebar-separator2 my-2"></div>
+          <div className="flex flex-col items-center mt-6">
+            <p className="text-gray-500 text-xs mt-2 text-center">
+              First-time users must{" "}
+              <a
+                href="https://accounts.binance.com"
+                className="text-yellow-400 underline"
+              >
+                register a Binance Account
+              </a>{" "}
+              and complete identity verification
+            </p>
+          </div>
         </div>
       </div>
     );
