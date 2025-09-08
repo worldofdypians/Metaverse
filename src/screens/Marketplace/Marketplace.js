@@ -994,7 +994,7 @@ const Marketplace = ({
                 <div className="col-12 col-lg-4 mt-0 mt-lg-4">
                   <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
-                      {getFormattedNumber(1553075, 0)}
+                      {getFormattedNumber(1500531, 0)}
                     </h6>
                     <span className="stats-desc">Total NFT Holders</span>
                   </div>

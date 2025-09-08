@@ -175,6 +175,7 @@ const MyProfile = ({
   aiQuestionCompleted,
   onDailyQuestionClick,
   openKickstarter,
+  onOpenBooster,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -1729,17 +1730,7 @@ const MyProfile = ({
                       className="royal-rewards-img z-0"
                       alt=""
                     />
-                    {/* <span
-                      className="special-rewards-total"
-                      style={{
-                        color: "#f3de91ff",
-                        fontSize: "13px",
-                        textTransform: "uppercase",
-                        fontWeight: "600",
-                      }}
-                    >
-                      Royal Rewards
-                    </span> */}
+
                     <img
                       src={
                         "https://cdn.worldofdypians.com/wod/wingStormArrow.svg"
@@ -1751,43 +1742,64 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-              {/* <div className="col-12 col-lg-3 mt-3">
-                <a
-                  href="https://wod.space.id"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="wod-domain-name-wrapper d-flex align-items-center justify-content-between gap-2 p-3"
-                >
-                  <div className="d-flex flex-column justify-content-between h-100">
-                    <h6
-                      className="special-rewards-title"
-                      style={{ color: "#FFD9F1" }}
-                    >
-                      .WOD
-                    </h6>
-                    <span className="wod-domain-name-span">
-                      Claim Your Identity
-                    </span>
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/wodDomainArrow.svg"
-                      }
-                      width={20}
-                      height={20}
-                      alt=""
-                    />
-                  </div>
-                  <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/domainNameIcon.png"
-                    }
-                    className="wod-domain-icon"
-                    alt=""
-                  />
-                </a>
-              </div> */}
+              <div
+                className="col-12 col-lg-4 mt-3 px-0 px-lg-2"
+                onClick={onOpenBooster}
+              >
+                <div className="booster-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                  <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
+                    <div className="d-flex align-items-center gap-2">
+                      {/* <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                          }
+                          alt=""
+                          style={{ width: 44, height: 44 }}
+                        /> */}
+                      <div className="d-flex flex-column">
+                        <span className="user-blue-rank-2">Booster 1001</span>
+                        <span className="user-rank-text-2">September Rank</span>
+                      </div>
+                    </div>
 
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
+                    <button className="activate-btn px-3 py-1">View</button>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
+                <NavLink to="/loyalty-program">
+                  <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                    <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
+                      <div className="d-flex align-items-center gap-2">
+                        {/* <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                          }
+                          alt=""
+                          style={{ width: 44, height: 44 }}
+                        /> */}
+                        <div className="d-flex flex-column">
+                          <span className="user-blue-rank-2">
+                            Loyalty Program
+                          </span>
+                          <span className="user-rank-text-2">Season 4</span>
+                        </div>
+                      </div>
+
+                      <NavLink
+                        className="activate-btn2 px-3 py-1"
+                        to="/loyalty-program"
+                        style={{
+                          background: "#7E52D2",
+                        }}
+                      >
+                        View
+                      </NavLink>
+                    </div>
+                  </div>
+                </NavLink>
+              </div>
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <div
                   className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
                   style={{ height: "60px" }}
@@ -1843,39 +1855,6 @@ const MyProfile = ({
                     Apply
                   </button>
                 </div>
-              </div>
-              <div className="col-12 col-lg-6 mt-3 px-0 px-lg-2">
-                <NavLink to="/loyalty-program">
-                  <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
-                    <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
-                          }
-                          alt=""
-                          style={{ width: 44, height: 44 }}
-                        />
-                        <div className="d-flex flex-column">
-                          <span className="user-blue-rank">
-                            Loyalty Program
-                          </span>
-                          <span className="user-rank-text">Season five</span>
-                        </div>
-                      </div>
-
-                      <NavLink
-                        className="activate-btn2 px-3 py-1"
-                        to="/loyalty-program"
-                        style={{
-                          background: "#7E52D2",
-                        }}
-                      >
-                        View More
-                      </NavLink>
-                    </div>
-                  </div>
-                </NavLink>
               </div>
               {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
