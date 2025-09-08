@@ -1,4 +1,4 @@
-import  { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
@@ -286,11 +286,11 @@ const MarketMint = ({
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(
     allMints.find((obj) => {
-      return obj.id === "timepiece";
+      return obj.id === "bnbchain-5ya";
     })
   );
-  const [mintTitle, setMintTitle] = useState("timepiece");
-  const [sliderCut, ] = useState();
+  const [mintTitle, setMintTitle] = useState("bnbchain-5ya");
+  const [sliderCut] = useState();
 
   const slider = useRef(null);
   const html = document.querySelector("html");
@@ -357,7 +357,6 @@ const MarketMint = ({
       window.config.nft_vanar_address
     );
 
- 
     const teaseicontract = new window.seiWeb3.eth.Contract(
       window.SEI_NFT_ABI,
       window.config.nft_teasei_address
@@ -527,7 +526,6 @@ const MarketMint = ({
       });
 
     setTaraxaNftsSold(taraxaResult);
-
   };
 
   const handleEthPool = async () => {
@@ -1996,12 +1994,7 @@ const MarketMint = ({
                                   className={`py-2 ${
                                     mintloading === "error"
                                       ? "fail-button"
-                                      : (isConnected === true &&
-                                          !selectedMint.chainId.includes(
-                                            chainId
-                                          )) ||
-                                        (status !== "Connect your wallet." &&
-                                          status !== "") ||
+                                      : 
                                         nftCreated.length > 0 ||
                                         (!isEOA && isConnected)
                                       ? "outline-btn-disabled"
@@ -2021,12 +2014,7 @@ const MarketMint = ({
                                     mintloading === "error" ||
                                     (!isEOA && isConnected) ||
                                     mintloading === "success" ||
-                                    (isConnected === true &&
-                                      !selectedMint.chainId.includes(
-                                        chainId
-                                      )) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
+                                    
                                     nftCreated.length > 0
                                       ? true
                                       : false
@@ -2451,8 +2439,7 @@ const MarketMint = ({
                     </div>
                   </div>
 
-                   <div className="col-12 col-lg-6 mt-lg-5">
-
+                  <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-taraxa-mint p-4">
                       <div className="sold-out-tag px-3 py-1">
                         <span className="sold-out-span">Sold Out</span>
