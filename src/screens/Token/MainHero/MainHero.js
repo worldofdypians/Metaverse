@@ -59,6 +59,11 @@ const MainHero = ({ scrollInto }) => {
       link: "https://short.trustwallet.com/app-download",
     },
     {
+      title: "BingX",
+      logo: "bingx-exchange.svg",
+      link: "https://bingx.com/en/spot/WODUSDT",
+    },
+    {
       title: "WEEX",
       logo: "weex-exchange.svg",
       link: "https://www.weex.com/spot/WOD-USDT",
@@ -95,7 +100,6 @@ const MainHero = ({ scrollInto }) => {
       logo: "blofinExchange.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
-
   ];
 
   return (
@@ -159,7 +163,10 @@ const MainHero = ({ scrollInto }) => {
                         : `https://cdn.worldofdypians.com/wod/${item.logo}`
                     }
                     className={` exchange-grid-image ${
-                      index === 0 && "h-auto"
+                      (index === 0 ||
+                        item.title === "KCEX" ||
+                        item.title === "HiBt") &&
+                      "h-auto"
                     }`}
                     alt=""
                   />
