@@ -372,6 +372,10 @@ const KickstarterPartners = () => {
       name: "Toobit",
       icon: "toobit.svg",
     },
+    {
+      name: "BingX",
+      icon: "bingx.svg",
+    },
   ];
 
   return (

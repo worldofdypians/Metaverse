@@ -60,19 +60,33 @@ const MarketMint = ({
   //   mobileBg: "gateMobileBg.png",
   // };
   const allMints = [
+    // {
+    //   id: "taraxa",
+    //   cardTitle: "Taraxa Beta Pass",
+    //   title: "Taraxa Beta Pass",
+    //   background: "taraxa-mint-bg",
+    //   mobileBg: "taraxaMobileBg.png",
+    //   activeClass: "taraxa-active",
+    //   emptyClass: "conflux-empty",
+    //   nftcreated: nftCreated,
+    //   nft_address: window.config.nft_taraxa_address,
+    //   chainId: [841],
+    //   chainName: "Taraxa",
+    //   logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    // },
     {
-      id: "taraxa",
-      cardTitle: "Taraxa Beta Pass",
-      title: "Taraxa Beta Pass",
-      background: "taraxa-mint-bg",
-      mobileBg: "taraxaMobileBg.png",
-      activeClass: "taraxa-active",
+      id: "bnbchain-5ya",
+      cardTitle: "BNB Chain 5YA Beta Pass",
+      title: "BNB Chain 5YA Beta Pass",
+      background: "bnb5ya-mint-bg",
+      mobileBg: "5yaMintMobile.webp",
+      activeClass: "bnb5ya-active",
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
-      nft_address: window.config.nft_taraxa_address,
-      chainId: [841],
-      chainName: "Taraxa",
-      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+      nft_address: window.config.nft_bnb5ya_address,
+      chainId: [204],
+      chainName: "opBNB Chain",
+      logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
     },
     {
       id: "kucoin",
@@ -272,10 +286,10 @@ const MarketMint = ({
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(
     allMints.find((obj) => {
-      return obj.id === "taraxa";
+      return obj.id === "bnbchain-5ya";
     })
   );
-  const [mintTitle, setMintTitle] = useState("timepiece");
+  const [mintTitle, setMintTitle] = useState("bnbchain-5ya");
   const [sliderCut] = useState();
 
   const slider = useRef(null);
@@ -589,7 +603,8 @@ const MarketMint = ({
   useEffect(() => {
     if (
       location.pathname.includes("bnbchain") &&
-      !location.pathname.includes("opbnbchain")
+      !location.pathname.includes("opbnbchain") &&
+      !location.pathname.includes("bnbchain-5ya")
     ) {
       setSelectedMint(
         allMints.find((obj) => {
@@ -651,11 +666,14 @@ const MarketMint = ({
         })
       );
       setMintTitle("taraxa");
+    } else if (location.pathname.includes("bnbchain-5ya")) {
+      setSelectedMint(
+        allMints.find((obj) => {
+          return obj.id === "bnbchain-5ya";
+        })
+      );
+      setMintTitle("bnbchain-5ya");
     }
-    // else if (location.pathname.includes("vanar")) {
-    //   setSelectedMint(vanarData);
-    //   setMintTitle("vanar");
-    // }
     getTotalSupply();
   }, [location]);
 
@@ -663,7 +681,7 @@ const MarketMint = ({
     html.classList.remove("hidescroll");
   }, []);
 
-  let countToExpiresei = new Date("2025-08-26T14:00:00.000+02:00");
+  let countToExpiresei = new Date("2025-09-15T14:00:00.000+02:00");
   const dummyCards = [
     // {
     //   title: "Avalanche Pass",
@@ -827,16 +845,27 @@ const MarketMint = ({
     //   class: "mint-teafi",
     //   id: "tea-fi",
     // },
+    // {
+    //   title: "Taraxa Pass",
+    //   eventId: "taraxa",
+    //   desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
+    //   img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
+    //   data: allMints.find((item) => {
+    //     return item.id === "taraxa";
+    //   }),
+    //   class: "mint-taraxa",
+    //   id: "taraxa",
+    // },
     {
-      title: "Taraxa Pass",
-      eventId: "taraxa",
-      desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
-      img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
+      id: "bnbchain-5ya",
+      title: "BNB Chain 5YA Beta Pass",
+      eventId: "bnbchain-5ya",
+      desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
+      img: "https://cdn.worldofdypians.com/wod/5yaMintSlide.webp",
       data: allMints.find((item) => {
-        return item.id === "taraxa";
+        return item.id === "bnbchain-5ya";
       }),
-      class: "mint-taraxa",
-      id: "taraxa",
+      class: "mint-7",
     },
     {
       title: "CAWS Timepiece",
@@ -1122,13 +1151,29 @@ const MarketMint = ({
             setStatus("");
           }
         } else if (selectedMint.id === "taraxa") {
-          if (chainId !== 841) {
+          if (chainId !== 841 && nftCreated.length === 0) {
             setactiveButton(false);
             setStatus("Switch to Taraxa to continue minting.");
-          } else if (chainId === 841 && isEOA) {
+          } else if (chainId === 841 && isEOA && nftCreated.length === 0) {
             setactiveButton(true);
             setStatus("");
-          } else if (chainId === 841 && !isEOA) {
+          } else if (chainId === 841 && !isEOA && nftCreated.length === 0) {
+            setactiveButton(false);
+            setStatus(
+              "Smart contract wallets are not supported for this action."
+            );
+          } else if (isEOA && nftCreated.length > 0) {
+            setactiveButton(true);
+            setStatus("");
+          }
+        } else if (selectedMint.id === "bnbchain-5ya") {
+          if (chainId !== 204) {
+            setactiveButton(false);
+            setStatus("Switch to opBNB Chain to continue minting.");
+          } else if (chainId === 204 && isEOA) {
+            setactiveButton(true);
+            setStatus("");
+          } else if (chainId === 204 && !isEOA) {
             setactiveButton(false);
             setStatus(
               "Smart contract wallets are not supported for this action."
@@ -1145,7 +1190,7 @@ const MarketMint = ({
         }
       }
     }
-  }, [isConnected, chainId, coinbase, selectedMint, isEOA]);
+  }, [isConnected, chainId, coinbase, selectedMint, isEOA, nftCreated]);
 
   useEffect(() => {
     getTimepieceLatestMint();
@@ -1368,11 +1413,11 @@ const MarketMint = ({
                                 activeButton === false ||
                                 nftCreated.length === 0
                               }
-                              to={`/shop/nft/${nftCreated[0]}/${window.config.nft_taraxa_address}`}
+                              to={`/shop/nft/${nftCreated[0]}/${selectedMint.nft_address}`}
                               onClick={() => {
                                 updateViewCount(
                                   nftCreated[0],
-                                  window.config.nft_taraxa_address
+                                  selectedMint.nft_address
                                 );
                               }}
                             >
@@ -1841,17 +1886,115 @@ const MarketMint = ({
                             )}
                             <hr className="gray-divider" />
                             <div className="d-flex w-100 justify-content-center">
-                              {selectedMint.id !== "timepiece" && (
+                              {selectedMint.id !== "timepiece" &&
+                                selectedMint.id !== "bnbchain-5ya" && (
+                                  <button
+                                    className={`py-2 ${
+                                      mintloading === "error"
+                                        ? "fail-button"
+                                        : (isConnected === true &&
+                                            !selectedMint.chainId.includes(
+                                              chainId
+                                            )) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                          nftCreated.length > 0 ||
+                                          (!isEOA && isConnected)
+                                        ? "outline-btn-disabled"
+                                        : "stake-wod-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true &&
+                                      isEOA &&
+                                      selectedMint.chainId.includes(chainId)
+                                        ? handleMint()
+                                        : isConnected === true &&
+                                          !selectedMint.chainId.includes(
+                                            chainId
+                                          )
+                                        ? handleSeiPool()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      (!isEOA && isConnected) ||
+                                      mintloading === "success" ||
+                                      (isConnected === true &&
+                                        !selectedMint.chainId.includes(
+                                          chainId
+                                        )) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      nftCreated.length > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {isConnected === false && (
+                                      <img
+                                        src={
+                                          mouseOver === true
+                                            ? "https://cdn.worldofdypians.com/wod/wallet-black.svg"
+                                            : "https://cdn.worldofdypians.com/wod/wallet-white.svg"
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    selectedMint.chainId.includes(chainId) ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      selectedMint.chainId.includes(chainId) ? (
+                                      <>
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      selectedMint.chainId.includes(chainId) ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          selectedMint.chainId.includes(
+                                            chainId
+                                          )) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      !selectedMint.chainId.includes(
+                                        chainId
+                                      ) ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                )}
+                              {selectedMint.id === "bnbchain-5ya" && (
                                 <button
                                   className={`py-2 ${
                                     mintloading === "error"
                                       ? "fail-button"
-                                      : (isConnected === true &&
-                                          !selectedMint.chainId.includes(
-                                            chainId
-                                          )) ||
-                                        (status !== "Connect your wallet." &&
-                                          status !== "") ||
+                                      : 
                                         nftCreated.length > 0 ||
                                         (!isEOA && isConnected)
                                       ? "outline-btn-disabled"
@@ -1864,19 +2007,14 @@ const MarketMint = ({
                                       ? handleMint()
                                       : isConnected === true &&
                                         !selectedMint.chainId.includes(chainId)
-                                      ? handleSeiPool()
+                                      ? handleOpBnbPool()
                                       : showWalletConnect();
                                   }}
                                   disabled={
                                     mintloading === "error" ||
                                     (!isEOA && isConnected) ||
                                     mintloading === "success" ||
-                                    (isConnected === true &&
-                                      !selectedMint.chainId.includes(
-                                        chainId
-                                      )) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
+                                    
                                     nftCreated.length > 0
                                       ? true
                                       : false

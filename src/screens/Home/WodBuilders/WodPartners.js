@@ -373,6 +373,10 @@ const WodPartners = ({ full }) => {
       name: "Toobit",
       icon: "toobit.svg",
     },
+    {
+      name: "BingX",
+      icon: "bingx.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);

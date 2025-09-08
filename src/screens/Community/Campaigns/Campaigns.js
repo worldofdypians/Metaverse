@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./_campaigns.scss";
 import { NavLink } from "react-router-dom";
 import NewChallenges from "../../Game/NewChallenges";
-import TradingComp from "./TradingComp/TradingComp"; 
+import TradingComp from "./TradingComp/TradingComp";
 
 const Campaigns = ({ coinbase }) => {
   const [popupEvent, setPopupEvent] = useState(null);
@@ -14,15 +14,30 @@ const Campaigns = ({ coinbase }) => {
 
   const dummyBanner = [
     {
+      title: "Surge to Glory: Claim Your Share of $95,000",
+      status: "Live",
+      start_date: "Sep 08, 2025",
+      end_date: "Sep 15, 2025",
+      image: "https://cdn.worldofdypians.com/wod/vault-of-power.webp",
+      desc: `Fuel your summer surge in the World of Dypians with a powerful new challenge and a massive $95,000 in rewards up for grabs! Whether you’re a seasoned explorer or just entering the realm, the Power Surge Quest is your chance to rise through the ranks with strategic gameplay and smart on-chain actions. Open daily bonus chests, stake your strength, and power up your WOD!<br/>
+    <ul><li style="list-style-type: disc;">Open at least 10 Daily Bonus Chests</li>
+    <li style="list-style-type: disc;">Swap a minimum of $20 in WOD</li>
+    <li style="list-style-type: disc;">Mint 5YA Beta Pass NFT</li>
+    </ul>
+   `,
+      link: "https://dappbay.bnbchain.org/campaign/413",
+      target: "_blank",
+    },
+    {
       title: "Binance Alpha WOD Trading Competition",
       status: "Live",
       start_date: "Aug 31, 2025",
       end_date: "Sep 14, 2025",
-      image: 'https://cdn.worldofdypians.com/wod/newTradingComp.webp',
+      image: "https://cdn.worldofdypians.com/wod/newTradingComp.webp",
       desc: `To celebrate our campaign with Binance, we’re giving away $300,000 worth of rewards to eligible traders who complete the steps below:<br/>
-    <ul><li>Update your Binance App and create/backup a Binance Wallet (Keyless) or use Binance Alpha</li>
-    <li>Trade WOD during the promotion period using Binance Wallet (Keyless) or Binance Alpha</li>
-    <li>After the promotion, rankings will be calculated automatically and winners can claim rewards on the event page</li>
+    <ul><li style="list-style-type: disc;">Update your Binance App and create/backup a Binance Wallet (Keyless) or use Binance Alpha</li>
+    <li style="list-style-type: disc;">Trade WOD during the promotion period using Binance Wallet (Keyless) or Binance Alpha</li>
+    <li style="list-style-type: disc;">After the promotion, rankings will be calculated automatically and winners can claim rewards on the event page</li>
     </ul>
    `,
       link: "https://www.binance.com/en/support/announcement/detail/7a596428195643a883bb927f7040caba",
