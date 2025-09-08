@@ -121,7 +121,7 @@ function AuthBNB({
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      handleFirstTask(data.getPlayer.wallet.publicAddress);
+      // handleFirstTask(data.getPlayer.wallet.publicAddress);
       navigate("/account");
     }
   }, [data, playerId, isAuthenticated, isLogin]);
@@ -164,7 +164,7 @@ function AuthBNB({
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      handleFirstTask(data.getPlayer.wallet.publicAddress);
+      // handleFirstTask(data.getPlayer.wallet.publicAddress);
       navigate("/account");
     } else if (isAuthenticated && !playerId) {
       setplayerCreation(true);
@@ -216,7 +216,7 @@ function AuthBNB({
     ) {
       console.log(result3);
       setsuccessLink(true);
-    const timer =  setTimeout(() => {
+      const timer = setTimeout(() => {
         // window.location.reload();
         navigate("/account");
       }, 3000);
@@ -363,7 +363,7 @@ function AuthBNB({
                             }}
                             onSuccessLogin={() => {
                               handleManageLoginStates();
-                              handleFirstTask(coinbase);
+                              // handleFirstTask(coinbase);
                               onSuccessLogin();
                             }}
                             handleGoToSignup={() => {

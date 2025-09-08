@@ -152,11 +152,11 @@ const TradingComp = ({ coinbase, isConnected }) => {
     }
   }, [airdropPopup, tradingPopup, ranksPopup, compDetails, airdropDetails]);
 
-  useEffect(() => {
-    if (isConnected && coinbase) {
-      handleFirstTask(coinbase);
-    }
-  }, [isConnected, coinbase]);
+  // useEffect(() => {
+  //   if (isConnected && coinbase) {
+  //     handleFirstTask(coinbase);
+  //   }
+  // }, [isConnected, coinbase]);
 
   return (
     <>

@@ -98,6 +98,11 @@ const VideoWrapper = ({
       link: "https://short.trustwallet.com/app-download",
     },
     {
+      title: "BingX",
+      logo: "bingx.svg",
+      link: "https://bingx.com/en/spot/WODUSDT",
+    },
+    {
       title: "WEEX",
       logo: "weex.svg",
       link: "https://www.weex.com/spot/WOD-USDT",
