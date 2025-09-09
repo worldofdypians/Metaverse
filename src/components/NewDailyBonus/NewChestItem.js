@@ -2419,10 +2419,10 @@ const NewChestItem = ({
       ${chestId === 99 ? "premium-chest-item" : "new-chest-item"}
       d-flex align-items-center justify-content-center position-relative`}
           onClick={() => {
-            if (!open) {
+            // if (!open) {
               closeDaily();
               openKickstarter();
-            }
+            // }
           }}
           style={{
             pointerEvents: !disableBtn && !buyNftPopup ? "auto" : "none",
