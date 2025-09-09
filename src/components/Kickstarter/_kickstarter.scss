@@ -45,6 +45,9 @@
   @media screen and (max-height: 800px) {
     height: 32%;
   }
+  @media screen and (max-height: 720px) {
+    height: 35% !important;
+  }
   @media screen and (max-width: 1400px) {
     height: 32%;
   }
