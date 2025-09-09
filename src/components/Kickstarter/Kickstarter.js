@@ -166,6 +166,7 @@ const Kickstarter = ({
   const [count, setCount] = useState(0);
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [rewards, setRewards] = useState([]);
+  const [mute, setMute] = useState(false);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -784,9 +785,16 @@ const Kickstarter = ({
     };
   }, [isOpen]);
 
+  const hashValue = window.location.hash;
+
   useEffect(() => {
     if (count === 0) {
       setCount(1);
+    }
+
+    if (hashValue === "#royalty-chest") {
+      setMute(true);
+        html.classList.add("hidescroll");
     }
 
     var time;
@@ -899,6 +907,7 @@ const Kickstarter = ({
                 {/* VIDEO ONE (Intro) */}
                 <video
                   ref={videoRef1}
+                  muted={mute}
                   src={"https://cdn.worldofdypians.com/wod/firstPart.mp4"}
                   className={`kickstarter-video ${
                     step === 1 ? "visible" : "hidden"
@@ -923,6 +932,7 @@ const Kickstarter = ({
                 {/* VIDEO ONE (Intro) */}
                 <video
                   ref={videoRef1}
+                  muted={mute}
                   src={
                     "https://cdn.worldofdypians.com/wod//firstPartMobile.mp4"
                   }
@@ -1124,11 +1134,10 @@ const Kickstarter = ({
                         return (
                           <span key={index}>
                             {obj.rewardType === "Money" && "$"}
-                            {obj.rewardType === "Stars" || obj.rewardType === "Money"
+                            {obj.rewardType === "Stars" ||
+                            obj.rewardType === "Money"
                               ? obj.reward
-                              : getFormattedNumber(
-                                  obj.reward, 0
-                                )}{" "}
+                              : getFormattedNumber(obj.reward, 0)}{" "}
                             {obj.rewardType !== "Money" && obj.rewardType}
                             {rewards.length > 1 &&
                               index < rewards.length - 1 &&
