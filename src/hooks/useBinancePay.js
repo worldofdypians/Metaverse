@@ -45,11 +45,11 @@ export function useBinancePay() {
 
   const dayName = days[adjustedDay - 1];
 
-  const returnUrl = `http://localhost:8080/account/challenges/${dayName}`;
-  const cancelUrl = `http://localhost:8080/account/challenges/${dayName}`;
+  const returnUrl = `https://www.worldofdypians.com/account/challenges/${dayName}`;
+  const cancelUrl = `https://www.worldofdypians.com/account/challenges/${dayName}`;
 
-  const returnUrlGP = `http://localhost:8080/account#golden-pass`;
-  const cancelUrlGP = `http://localhost:8080/account#golden-pass`;
+  const returnUrlGP = `https://www.worldofdypians.com/account#golden-pass`;
+  const cancelUrlGP = `https://www.worldofdypians.com/account#golden-pass`;
 
   async function createOrder({ walletAddress, bundleType }) {
     try {

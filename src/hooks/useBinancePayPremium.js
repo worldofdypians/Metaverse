@@ -1,5 +1,4 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState, useRef, useEffect } from "react";
 
 function isMobileDevice() {
   return /Mobi|Android/i.test(navigator.userAgent);
@@ -11,79 +10,167 @@ export function useBinancePayPremium() {
   const [showQr, setShowQr] = useState(false);
   const [txHash, setTxHash] = useState(null);
   const [createdOrder, setCreatedOrder] = useState(null);
+  const [orderDetails, setOrderDetails] = useState("");
+  const pollInterval = useRef(null);
 
-  async function launchPremiumSubscription(walletAddress, price) {
+  // 1. Create order
+  async function createPremiumOrder(walletAddress, price) {
     try {
-      setStatus("processing");
-      setTxHash(null);
+      setStatus("creating");
+      setOrderDetails("Prime Subscription");
 
-      // 1. Create order
-      const { data: order } = await axios.post(
+      const res = await fetch(
         "https://api.worldofdypians.com/api/binance/create-order",
         {
-          walletAddress: walletAddress,
-          orderAmount: price,
-          goodsName: "Premium Subscription",
-          description: "Premium Subscription",
-          returnUrl: "https://www.worldofdypians.com/account/prime",
-          cancelUrl: "https://www.worldofdypians.com/account/prime",
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            walletAddress,
+            orderAmount: 1,
+            goodsName: "Prime Subscription",
+            description: "Prime Subscription",
+            returnUrl: "https://www.worldofdypians.com/account/prime",
+            cancelUrl: "https://www.worldofdypians.com/account/prime",
+          }),
         }
       );
+
+      const order = await res.json();
+
+      if (!order.merchantTradeNo) {
+        console.error("Order creation failed");
+      }
+
       setCreatedOrder(order.data);
-      const merchantTradeNo = order.merchantTradeNo;
 
-      // 2. Handle QR vs deep link
-      if (isMobileDevice()) {
-        window.location.href = order.data.qrcodeLink;
-      } else {
-        setQrCode(order.data.qrContent);
-        setShowQr(true);
-      }
+      setStatus("waitingPayment");
 
-      // 3. Poll for PAID
-      let paid = false;
-      while (!paid) {
-        const { data: statusRes } = await axios.get(
-          `https://api.worldofdypians.com/api/binance/order-status/${merchantTradeNo}`
+      launchBinancePay(order);
+      startPolling(order.merchantTradeNo, "Premium Subscription");
+    } catch (err) {
+      console.error("Create order failed:", err);
+      setStatus("failed");
+      localStorage.removeItem("binanceOrder");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
+  }
+
+  // 2. Handle QR vs deep link
+  function launchBinancePay(order) {
+    if (isMobileDevice()) {
+      window.location.href = order.data.qrcodeLink;
+    } else {
+      setQrCode(order.data.qrcodeLink);
+      setShowQr(true);
+    }
+  }
+
+  // 3. Poll order status
+  function startPolling(tradeNo, bundleType) {
+    if (pollInterval.current) clearInterval(pollInterval.current);
+
+    pollInterval.current = setInterval(async () => {
+      try {
+        const res = await fetch(
+          `https://api.worldofdypians.com/api/binance/order-status/${tradeNo}`
         );
-        if (statusRes.status === "PAID") {
-          paid = true;
-        } else {
-          await new Promise((r) => setTimeout(r, 2000));
-        }
-      }
+        const data = await res.json();
 
-      // 4. Validate
-      await axios.post(
+        if (data.status === "PAID") {
+          clearInterval(pollInterval.current);
+          await validateBundle(bundleType, tradeNo);
+        } else if (["CLOSED", "EXPIRED", "FAIL"].includes(data.status)) {
+          clearInterval(pollInterval.current);
+          setStatus("failed");
+          localStorage.removeItem("binanceOrder");
+          setTimeout(() => setStatus("idle"), 3000);
+        }
+      } catch (err) {
+        console.error("Polling error:", err);
+      }
+    }, 2000);
+  }
+
+  const stopPolling = () => {
+    if (pollInterval.current) {
+      clearInterval(pollInterval.current);
+      pollInterval.current = null;
+    }
+  };
+
+  // 4. Validate bundle
+  async function validateBundle(bundleType, tradeNo) {
+    try {
+      setStatus("validating");
+
+      const res = await fetch(
         "https://api.worldofdypians.com/api/binance/validate-bundle",
         {
-          bundleType: "Premium Subscription",
-          merchantTradeNo,
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ bundleType, merchantTradeNo: tradeNo }),
         }
       );
 
-      // 5. Activate
-      const { data: activate } = await axios.post(
+      const data = await res.json();
+
+      if (data.success) {
+        await activateBundle(bundleType, tradeNo);
+      } else {
+        setStatus("failed");
+        localStorage.removeItem("binanceOrder");
+        setTimeout(() => setStatus("idle"), 3000);
+      }
+    } catch (err) {
+      console.error("Validate failed:", err);
+      setStatus("failed");
+      localStorage.removeItem("binanceOrder");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
+  }
+
+  // 5. Activate bundle
+  async function activateBundle(bundleType, tradeNo) {
+    try {
+      setStatus("activating");
+
+      const res = await fetch(
         "https://api.worldofdypians.com/api/binance/activate-bundle",
         {
-          bundleType: "Premium Subscription",
-          merchantTradeNo,
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ bundleType, merchantTradeNo: tradeNo }),
         }
       );
 
-      setTxHash(activate.txHash);
-      setStatus("success");
-      setShowQr(false);
+      const data = await res.json();
+
+      if (data.success) {
+        setTxHash(data.txHash);
+        setStatus("success");
+
+        setTimeout(() => {
+          localStorage.removeItem("binanceOrder");
+          setShowQr(false);
+          setQrCode(null);
+          setStatus("idle");
+        }, 3000);
+      } else {
+        setStatus("failed");
+        localStorage.removeItem("binanceOrder");
+        setTimeout(() => setStatus("idle"), 3000);
+      }
     } catch (err) {
-      console.error(err);
-      setStatus("fail");
-      setShowQr(false);
+      console.error("Activate failed:", err);
+      setStatus("failed");
+      localStorage.removeItem("binanceOrder");
+      setTimeout(() => setStatus("idle"), 3000);
     }
   }
 
   //  Popup QR Component
   function QRComponent({ onClose }) {
-    if (!qrCode) return null;
+    if (!qrCode || !showQr) return null;
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -98,9 +185,33 @@ export function useBinancePayPremium() {
 
           {/* Header */}
           <div className="mb-4">
-            <p className="text-yellow-400 text-sm font-medium">
-              Please do not close this window until the payment is confirmed
-            </p>
+            {(statusPrime === "waiting" ||
+              statusPrime === "waitingPayment") && (
+              <p className="text-yellow-400 text-sm font-medium">
+                Please do not close this window until the payment is confirmed
+              </p>
+            )}
+            {statusPrime === "verified" ||
+              (statusPrime === "validating" && (
+                <p className="text-yellow-400 text-sm font-medium">
+                  Payment verified ✅. Now validating bundle…
+                </p>
+              ))}
+            {statusPrime === "activating" && (
+              <p className="text-yellow-400 text-sm font-medium">
+                Validation completed ✅. Now activating on-chain…
+              </p>
+            )}
+            {statusPrime === "success" && (
+              <p className="text-green-400 text-sm font-medium">
+                🎉 Success! Your {orderDetails} Bundle is active.
+              </p>
+            )}
+            {statusPrime === "fail" && (
+              <p className="text-red-400 text-sm font-medium">
+                ❌ Payment failed during on-chain activation.
+              </p>
+            )}
           </div>
 
           {/* Payment Info */}
@@ -130,12 +241,17 @@ export function useBinancePayPremium() {
                 Scan to pay with Binance App
               </p>{" "}
               <button
-                onClick={() =>
+                onClick={() => {
+                  localStorage.setItem(
+                    "binanceOrder",
+                    JSON.stringify(createdOrder)
+                  );
+                  localStorage.setItem("binanceOrderDetails", orderDetails);
                   window.open(
                     `https://pay.binance.com/en/checkout/confirm?prepayOrderId=${createdOrder.prepayId}`,
                     "_blank"
-                  )
-                }
+                  );
+                }}
                 className="bg-yellow-400 text-black px-6 py-2 rounded-md font-medium hover:bg-yellow-300 transition"
               >
                 Continue on Browser
@@ -145,7 +261,7 @@ export function useBinancePayPremium() {
 
           <div className="sidebar-separator2 my-2"></div>
           <div className="flex flex-col items-center mt-6">
-            <p className="text-gray-500 text-xs mt-2 text-center">
+            <p className="text-gray-300 text-xs mt-2 text-center">
               First-time users must{" "}
               <a
                 href="https://accounts.binance.com"
@@ -161,10 +277,46 @@ export function useBinancePayPremium() {
     );
   }
 
+  useEffect(() => {
+    return () => {
+      if (pollInterval.current) clearInterval(pollInterval.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const storedOrder = localStorage.getItem("binanceOrder");
+    const storedDetails = localStorage.getItem("binanceOrderDetails");
+
+    if (storedOrder && storedDetails && !showQr) {
+      try {
+        const parsedOrder = JSON.parse(storedOrder);
+        const parsedDetails = JSON.parse(storedDetails);
+
+        setCreatedOrder(parsedOrder);
+        setOrderDetails(parsedDetails);
+
+        setQrCode(parsedOrder.qrcodeLink);
+        setShowQr(true);
+
+        launchBinancePay(parsedOrder);
+        startPolling(parsedOrder.merchantTradeNo, parsedDetails);
+
+        // optional: cleanup polling when component unmounts
+        return () => {
+          stopPolling?.();
+        };
+      } catch (err) {
+        console.error("Failed to parse Binance order from storage", err);
+        localStorage.removeItem("binanceOrder");
+        localStorage.removeItem("binanceOrderDetails");
+      }
+    }
+  }, [showQr, launchBinancePay, startPolling, stopPolling]);
+
   return {
     statusPrime, // "idle" | "processing" | "success" | "fail"
     txHash, // transaction hash after activation
-    launchPremiumSubscription,
     QRComponent, // popup with QR code
+    createPremiumOrder,
   };
 }

@@ -6963,6 +6963,7 @@ function Dashboard({
             walletClient={walletClient}
             publicClient={publicClient}
             network_matchain={network_matchain}
+            binanceW3WProvider={binanceW3WProvider}
           />
         ) : (
           <></>

@@ -27,8 +27,17 @@ const GetPremiumPopup = ({
   publicClient,
   network_matchain,
 }) => {
-  const { statusPrime, txHash, launchPremiumSubscription, QRComponent } =
+  const { statusPrime, txHash, createPremiumOrder, QRComponent } =
     useBinancePayPremium();
+
+  let buttonText = "Binance Pay";
+  if (statusPrime === "creating") buttonText = "Creating order...";
+  if (statusPrime === "waitingPayment") buttonText = "Waiting for payment...";
+  if (statusPrime === "validating") buttonText = "Validating bundle...";
+  if (statusPrime === "activating") buttonText = "Activating on-chain...";
+  if (statusPrime === "success") buttonText = "✅ Success!";
+  if (statusPrime === "failed") buttonText = "❌ Failed";
+  if (statusPrime === "idle") buttonText = "Activate";
 
   const handleUpdatePremiumUser = async (wallet) => {
     await axios
@@ -39,8 +48,7 @@ const GetPremiumPopup = ({
   };
 
   const handlePurchasePremium = (walletAddress, price) => {
-    launchPremiumSubscription(walletAddress, price);
-    handleUpdatePremiumUser(walletAddress);
+    createPremiumOrder(walletAddress, price);
   };
 
   const chainDropdowns = [
@@ -3697,6 +3705,13 @@ const GetPremiumPopup = ({
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    if (statusPrime === "success" && coinbase) {
+      onSuccessDeposit();
+      handleUpdatePremiumUser(coinbase);
+    }
+  }, [statusPrime, coinbase]);
+
   return (
     <>
       <div className="custom-container mt-5 mt-lg-0">
@@ -5179,22 +5194,21 @@ const GetPremiumPopup = ({
                     <div>
                       <button
                         onClick={() => handlePurchasePremium(coinbase, price)}
-                        className="px-6 py-2 bg-blue-600 text-white rounded"
-                        disabled={statusPrime === "processing"}
+                        className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
+                        disabled={
+                          approveStatus === "fail" ||
+                          !coinbase ||
+                          !isApproved ||
+                          !isEOA
+                        }
                       >
-                        {statusPrime === "idle" && "Buy Premium Subscription"}
-                        {statusPrime === "processing" && "Processing..."}
-                        {statusPrime === "success" && "Success ✅"}
-                        {statusPrime === "fail" && "Failed ❌"}
+                        <img
+                          style={{ height: 18 }}
+                          src={"https://cdn.worldofdypians.com/wod/b-pay.svg"}
+                          alt=""
+                        />
+                        {buttonText}
                       </button>
-
-                      {/* {txHash && (
-                        <p className="mt-2 text-sm text-green-600">
-                          Activated! Tx Hash: {txHash}
-                        </p>
-                      )} */}
-
-                      <QRComponent />
                     </div>
                   )}
                 </div>
@@ -5238,7 +5252,7 @@ const GetPremiumPopup = ({
           </div>
         )}
       </div>
-
+      <QRComponent />
       {showChainDropdown && (
         <OutsideClickHandler
           onOutsideClick={() => {
