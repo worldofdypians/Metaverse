@@ -45,8 +45,11 @@ export function useBinancePay() {
 
   const dayName = days[adjustedDay - 1];
 
-  const returnUrl = `https://www.worldofdypians.com/${dayName}`;
-  const cancelUrl = `https://www.worldofdypians.com/${dayName}`;
+  const returnUrl = `http://localhost:8080/account/challenges/${dayName}`;
+  const cancelUrl = `http://localhost:8080/account/challenges/${dayName}`;
+
+  const returnUrlGP = `http://localhost:8080/account#golden-pass`;
+  const cancelUrlGP = `http://localhost:8080/account#golden-pass`;
 
   async function createOrder({ walletAddress, bundleType }) {
     try {
@@ -62,8 +65,8 @@ export function useBinancePay() {
             orderAmount: BUNDLE_PRICES[bundleType],
             goodsName: bundleType,
             description: bundleType,
-            returnUrl: returnUrl,
-            cancelUrl: cancelUrl,
+            returnUrl: bundleType === "Golden Pass" ? returnUrlGP : returnUrl,
+            cancelUrl: bundleType === "Golden Pass" ? cancelUrlGP : cancelUrl,
           }),
         }
       );
@@ -83,6 +86,10 @@ export function useBinancePay() {
     } catch (err) {
       console.error("Create order failed:", err);
       setStatus("failed");
+      localStorage.removeItem("binanceOrder");
+      setTimeout(() => {
+        setStatus("idle");
+      }, 3000);
     }
   }
 
@@ -119,12 +126,23 @@ export function useBinancePay() {
         } else if (["CLOSED", "EXPIRED", "FAIL"].includes(data.status)) {
           clearInterval(pollInterval.current);
           setStatus("failed");
+          localStorage.removeItem("binanceOrder");
+          setTimeout(() => {
+            setStatus("idle");
+          }, 3000);
         }
       } catch (err) {
         console.error("Polling error:", err);
       }
     }, 2000);
   }
+
+  const stopPolling = () => {
+    if (pollInterval.current) {
+      clearInterval(pollInterval.current);
+      pollInterval.current = null;
+    }
+  };
 
   async function validateBundle(bundleType, tradeNo) {
     try {
@@ -145,10 +163,18 @@ export function useBinancePay() {
         await activateBundle(bundleType, tradeNo);
       } else {
         setStatus("failed");
+        localStorage.removeItem("binanceOrder");
+        setTimeout(() => {
+          setStatus("idle");
+        }, 3000);
       }
     } catch (err) {
       console.error("Validate failed:", err);
       setStatus("failed");
+      localStorage.removeItem("binanceOrder");
+      setTimeout(() => {
+        setStatus("idle");
+      }, 3000);
     }
   }
 
@@ -170,12 +196,27 @@ export function useBinancePay() {
       if (data.success) {
         setTxHash(data.txHash);
         setStatus("success");
+
+        setTimeout(() => {
+          localStorage.removeItem("binanceOrder");
+          setShowQr(false);
+          setQrCode(null);
+          setStatus("idle");
+        }, 3000);
       } else {
         setStatus("failed");
+        localStorage.removeItem("binanceOrder");
+        setTimeout(() => {
+          setStatus("idle");
+        }, 3000);
       }
     } catch (err) {
       console.error("Activate failed:", err);
       setStatus("failed");
+      localStorage.removeItem("binanceOrder");
+      setTimeout(() => {
+        setStatus("idle");
+      }, 3000);
     }
   }
 
@@ -183,11 +224,18 @@ export function useBinancePay() {
     if (!qrCode || !showQr) return null;
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-100">
         <div className="bg-gray-900 text-white rounded-xl shadow-xl w-[450px] max-w-[95%] p-6 relative">
           {/* Close Button */}
           <button
-            onClick={() => setShowQr(false)}
+            onClick={() => {
+              setShowQr(false);
+              setStatus("failed");
+              localStorage.removeItem("binanceOrder");
+              setTimeout(() => {
+                setStatus("idle");
+              }, 3000);
+            }}
             className="absolute top-3 right-3 text-gray-400 hover:text-white text-xl"
           >
             ✕
@@ -195,9 +243,33 @@ export function useBinancePay() {
 
           {/* Header */}
           <div className="mb-4">
-            <p className="text-yellow-400 text-sm font-medium">
-              Please do not close this window until the payment is confirmed
-            </p>
+            {(statusbinance === "waiting" ||
+              statusbinance === "waitingPayment") && (
+              <p className="text-yellow-400 text-sm font-medium">
+                Please do not close this window until the payment is confirmed
+              </p>
+            )}
+            {statusbinance === "verified" ||
+              (statusbinance === "validating" && (
+                <p className="text-yellow-400 text-sm font-medium">
+                  Payment verified ✅. Now validating bundle…
+                </p>
+              ))}
+            {statusbinance === "activating" && (
+              <p className="text-yellow-400 text-sm font-medium">
+                Validation completed ✅. Now activating on-chain…
+              </p>
+            )}
+            {statusbinance === "success" && (
+              <p className="text-green-400 text-sm font-medium">
+                🎉 Success! Your {orderDetails} Bundle is active.
+              </p>
+            )}
+            {statusbinance === "fail" && (
+              <p className="text-red-400 text-sm font-medium">
+                ❌ Payment failed during on-chain activation.
+              </p>
+            )}
           </div>
 
           {/* Payment Info */}
@@ -221,23 +293,36 @@ export function useBinancePay() {
             </div>
 
             {/* QR Code */}
+            {/* {(statusbinance === "waiting" ||
+              statusbinance === "waitingPayment") && ( */}
             <div className="flex flex-col items-center">
               <img src={qrCode} width={150} height={150} alt="QR Code" />
               <p className="text-gray-400 text-xs mt-2">
                 Scan to pay with Binance App
               </p>
               <button
-                onClick={() => window.open(createdOrder.checkoutUrl, "_blank")}
+                onClick={() => {
+                  localStorage.setItem(
+                    "binanceOrder",
+                    JSON.stringify(createdOrder)
+                  );
+                  localStorage.setItem("binanceOrderDetails", orderDetails);
+                  window.open(
+                    `https://pay.binance.com/en/checkout/confirm?prepayOrderId=${createdOrder.prepayId}`,
+                    "_blank"
+                  );
+                }}
                 className="bg-yellow-400 text-black px-6 py-2 rounded-md font-medium hover:bg-yellow-300 transition"
               >
                 Continue on Browser
               </button>
             </div>
+            {/* )} */}
           </div>
 
           <div className="sidebar-separator2 my-2"></div>
           <div className="flex flex-col items-center mt-6">
-            <p className="text-gray-500 text-xs mt-2 text-center">
+            <p className="text-gray-300 text-xs mt-2 text-center">
               First-time users must{" "}
               <a
                 href="https://accounts.binance.com"
@@ -258,8 +343,45 @@ export function useBinancePay() {
       if (pollInterval.current) clearInterval(pollInterval.current);
     };
   }, []);
+  useEffect(() => {
+    const storedOrder = localStorage.getItem("binanceOrder");
+    const storedDetails = localStorage.getItem("binanceOrderDetails");
 
-  return { createOrder, merchantTradeNo, QRComponent, statusbinance, txHash };
+    if (storedOrder && storedDetails && !showQr) {
+      try {
+        const parsedOrder = JSON.parse(storedOrder);
+        const parsedDetails = JSON.parse(storedDetails);
+
+        setCreatedOrder(parsedOrder);
+        setOrderDetails(parsedDetails);
+        setMerchantTradeNo(parsedOrder.merchantTradeNo);
+
+        setQrCode(parsedOrder.qrcodeLink);
+        setShowQr(true);
+
+        launchBinancePay(parsedOrder);
+        startPolling(parsedOrder.merchantTradeNo, parsedDetails);
+
+        // optional: cleanup polling when component unmounts
+        return () => {
+          stopPolling?.();
+        };
+      } catch (err) {
+        console.error("Failed to parse Binance order from storage", err);
+        localStorage.removeItem("binanceOrder");
+        localStorage.removeItem("binanceOrderDetails");
+      }
+    }
+  }, [showQr, launchBinancePay, startPolling, stopPolling]);
+
+  return {
+    createOrder,
+    merchantTradeNo,
+    QRComponent,
+    statusbinance,
+    txHash,
+    qrCode,
+  };
 }
 
 const BUNDLE_PRICES = {

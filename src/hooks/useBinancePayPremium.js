@@ -130,7 +130,12 @@ export function useBinancePayPremium() {
                 Scan to pay with Binance App
               </p>{" "}
               <button
-                onClick={() => window.open(createdOrder.checkoutUrl, "_blank")}
+                onClick={() =>
+                  window.open(
+                    `https://pay.binance.com/en/checkout/confirm?prepayOrderId=${createdOrder.prepayId}`,
+                    "_blank"
+                  )
+                }
                 className="bg-yellow-400 text-black px-6 py-2 rounded-md font-medium hover:bg-yellow-300 transition"
               >
                 Continue on Browser

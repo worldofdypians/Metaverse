@@ -14,6 +14,7 @@ import {
   puzzleMadnessAddress,
   scorpionKingAddress,
   stoneEyeAddress,
+  usdt_token_abi,
   wingStormAddress,
   wod_token_abi,
 } from "../../screens/Account/src/web3";
@@ -114,6 +115,11 @@ const NewEvents = ({
   const [dragonBundleState, setDragonBundleState] = useState("initial");
   const [dragonDepositState, setDragonDepositState] = useState("initial");
   const [dragonShowApproval, setDragonShowApproval] = useState(true);
+
+  const [dragonBundleState2, setDragonBundleState2] = useState("initial");
+  const [dragonDepositState2, setDragonDepositState2] = useState("initial");
+  const [dragonShowApproval2, setDragonShowApproval2] = useState(true);
+
   const [hasBoughtDragon, setHasBoughtDragon] = useState(false);
 
   //PUZZLE MADNESS
@@ -124,6 +130,14 @@ const NewEvents = ({
     useState("initial");
   const [puzzleMadnessShowApproval, setpuzzleMadnessShowApproval] =
     useState(true);
+
+  const [puzzleMadnessBundleState2, setpuzzleMadnessBundleState2] =
+    useState("initial");
+  const [puzzleMadnessDepositState2, setpuzzleMadnessDepositState2] =
+    useState("initial");
+  const [puzzleMadnessShowApproval2, setpuzzleMadnessShowApproval2] =
+    useState(true);
+
   const [hasBoughtpuzzleMadness, setHasBoughtpuzzleMadness] = useState(false);
   const [puzzleMadnessCountdown, setpuzzleMadnessCountdown] = useState(0);
   const [isFinishedPuzzle, setisFinishedPuzzle] = useState(false);
@@ -133,31 +147,57 @@ const NewEvents = ({
   const [bearBundleState, setBearBundleState] = useState("initial");
   const [bearDepositState, setBearDepositState] = useState("initial");
   const [bearShowApproval, setBearShowApproval] = useState(true);
+
+  const [bearBundleState2, setBearBundleState2] = useState("initial");
+  const [bearDepositState2, setBearDepositState2] = useState("initial");
+  const [bearShowApproval2, setBearShowApproval2] = useState(true);
+
   const [hasBoughtBear, setHasBoughtBear] = useState(false);
   //FURY BEAST
   const [furyBeastWodAmount, setFuryBeastWodAmount] = useState(0);
   const [beastBundleState, setBeastBundleState] = useState("initial");
   const [beastDepositState, setBeastDepositState] = useState("initial");
   const [beastShowApproval, setBeastShowApproval] = useState(true);
+
+  const [beastBundleState2, setBeastBundleState2] = useState("initial");
+  const [beastDepositState2, setBeastDepositState2] = useState("initial");
+  const [beastShowApproval2, setBeastShowApproval2] = useState(true);
+
   const [hasBoughtBeast, setHasBoughtBeast] = useState(false);
   //WING STORM
   const [wingStormWodAmount, setWingStormWodAmount] = useState(0);
   const [eagleBundleState, setEagleBundleState] = useState("initial");
   const [eagleDepositState, setEagleDepositState] = useState("initial");
   const [eagleShowApproval, setEagleShowApproval] = useState(true);
+
+  const [eagleBundleState2, setEagleBundleState2] = useState("initial");
+  const [eagleDepositState2, setEagleDepositState2] = useState("initial");
+  const [eagleShowApproval2, setEagleShowApproval2] = useState(true);
+
   const [hasBoughtEagle, setHasBoughtEagle] = useState(false);
   //SCORPION KING
   const [scorpionKingWodAmount, setScorpionKingWodAmount] = useState(0);
   const [scorpionBundleState, setScorpionBundleState] = useState("initial");
   const [scorpionDepositState, setScorpionDepositState] = useState("initial");
   const [scorpionShowApproval, setScorpionShowApproval] = useState(true);
+
+  const [scorpionBundleState2, setScorpionBundleState2] = useState("initial");
+  const [scorpionDepositState2, setScorpionDepositState2] = useState("initial");
+  const [scorpionShowApproval2, setScorpionShowApproval2] = useState(true);
+
   const [hasBoughtScorpion, setHasBoughtScorpion] = useState(false);
   //STONE EYE
   const [stoneEyeWodAmount, setStoneEyeWodAmount] = useState(0);
   const [cyclopsBundleState, setCyclopsBundleState] = useState("initial");
   const [cyclopsDepositState, setCyclopsDepositState] = useState("initial");
   const [cyclopsShowApproval, setCyclopsShowApproval] = useState(true);
+
+  const [cyclopsBundleState2, setCyclopsBundleState2] = useState("initial");
+  const [cyclopsDepositState2, setCyclopsDepositState2] = useState("initial");
+  const [cyclopsShowApproval2, setCyclopsShowApproval2] = useState(true);
+
   const [hasBoughtCyclops, setHasBoughtCyclops] = useState(false);
+
   const [hasLand, setHasLand] = useState(false);
   const [page, setPage] = useState(1);
   const sliderRef = useRef();
@@ -172,20 +212,21 @@ const NewEvents = ({
     return Number.isInteger(num) || num.toFixed(2) == num.toString();
   }
 
-  const { createOrder, merchantTradeNo, QRComponent, statusbinance, txHash } =
-    useBinancePay();
+  const { createOrder, QRComponent, statusbinance } = useBinancePay();
 
   const handleBuy = (walletAddress, bundleType) => {
     createOrder({ walletAddress, bundleType: bundleType });
   };
 
-  let buttonText = "Binance Pay";
+  let buttonText = "Activate";
   if (statusbinance === "creating") buttonText = "Creating order...";
   if (statusbinance === "waitingPayment") buttonText = "Waiting for payment...";
   if (statusbinance === "validating") buttonText = "Validating bundle...";
   if (statusbinance === "activating") buttonText = "Activating on-chain...";
   if (statusbinance === "success") buttonText = "✅ Success!";
   if (statusbinance === "failed") buttonText = "❌ Failed";
+  if (statusbinance === "idle") buttonText = "Activate";
+
 
   let eventId = selectedEvent;
   const windowSize = useWindowSize();
@@ -277,20 +318,24 @@ const NewEvents = ({
 
   //PUZZLE MADNESS
   const getBundlePrizesPuzzle = async () => {
-    const puzzleContract = new window.bscWeb3.eth.Contract(
-      PUZZLE_MADNESS_ABI,
-      puzzle_madness_address
-    );
+    if (binancePay === true) {
+      setpuzzleMadnessWodAmount(4);
+    } else {
+      const puzzleContract = new window.bscWeb3.eth.Contract(
+        PUZZLE_MADNESS_ABI,
+        puzzle_madness_address
+      );
 
-    const result_puzzle = await puzzleContract.methods
-      .getEstimatedBundleWODAmount()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
+      const result_puzzle = await puzzleContract.methods
+        .getEstimatedBundleWODAmount()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
 
-    if (result_puzzle) {
-      setpuzzleMadnessWodAmount(result_puzzle / 1e18);
+      if (result_puzzle) {
+        setpuzzleMadnessWodAmount(result_puzzle / 1e18);
+      }
     }
   };
 
@@ -310,6 +355,7 @@ const NewEvents = ({
       .call()
       .catch((e) => {
         console.error(e);
+        return 0;
       });
 
     const purchaseTimestamp2 = await puzzleContract2.methods
@@ -317,7 +363,10 @@ const NewEvents = ({
       .call()
       .catch((e) => {
         console.error(e);
+        return 0;
       });
+
+    const now = Date.now() / 1000; // always recalc current time in seconds
 
     if (Number(purchaseTimestamp) === 0 && Number(purchaseTimestamp2) === 0) {
       setHasBoughtpuzzleMadness(false);
@@ -326,27 +375,28 @@ const NewEvents = ({
         puzzleMadness: false,
       }));
       return;
-    } else if (
-      Number(purchaseTimestamp2) < now.getTime() / 1000 &&
-      Number(purchaseTimestamp) < now.getTime() / 1000
-    ) {
+    }
+
+    if (Number(purchaseTimestamp2) < now && Number(purchaseTimestamp) < now) {
       setHasBoughtpuzzleMadness(false);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
         puzzleMadness: false,
       }));
       return;
-    } else {
-      const activeTimestamp = [purchaseTimestamp, purchaseTimestamp2].find(
-        (ts) => Number(ts) > now.getTime() / 1000
-      );
+    }
 
+    const activeTimestamp = [purchaseTimestamp, purchaseTimestamp2].find(
+      (ts) => Number(ts) > now
+    );
+
+    if (activeTimestamp) {
       setHasBoughtpuzzleMadness(true);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
         puzzleMadness: true,
       }));
-      setpuzzleMadnessCountdown(Number(activeTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
+      setpuzzleMadnessCountdown(Number(activeTimestamp) * 1000); // ms
       setPuzzleMadnessTimer(Number(activeTimestamp) * 1000);
     }
   };
@@ -381,7 +431,7 @@ const NewEvents = ({
             console.log(e);
           });
 
-        const allowance2 = await wod_token_abi.methods
+        const allowance2 = await usdt_token_abi.methods
           .allowance(wallet, puzzle_madness2_address)
           .call()
           .catch((e) => {
@@ -390,7 +440,15 @@ const NewEvents = ({
 
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setpuzzleMadnessShowApproval(true);
-        } else {
+        }
+        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
+          setpuzzleMadnessShowApproval2(true);
+        }
+        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
+          setpuzzleMadnessShowApproval2(false);
+          setpuzzleMadnessBundleState2("deposit");
+        }
+        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setpuzzleMadnessShowApproval(false);
           setpuzzleMadnessBundleState("deposit");
         }
@@ -398,7 +456,7 @@ const NewEvents = ({
     }
   };
 
-  const handleApprovalPuzzle = async () => {
+  const handleApprovalPuzzle = async (status) => {
     setpuzzleMadnessBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
@@ -426,30 +484,54 @@ const NewEvents = ({
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
-        window.config.wod_token_address,
+        status === false
+          ? window.config.wod_token_address
+          : window.config.usdt_token_address,
         window.TOKEN_ABI,
         binanceW3WProvider.getSigner()
       );
 
       const txResponse = await tokenSc
-        .approve(puzzleMadnessAddress, "500000000000000000000000000")
+        .approve(
+          status === false ? puzzleMadnessAddress : puzzle_madness2_address,
+          "500000000000000000000000000"
+        )
         .catch((e) => {
-          setStatusColor("#FE7A00");
-          setStatus(e?.message);
-          setpuzzleMadnessBundleState("fail");
-          const timer = setTimeout(() => {
-            setStatusColor("#00FECF");
-            setStatus("");
-            setpuzzleMadnessBundleState("initial");
-          }, 3000);
-          return () => clearTimeout(timer);
+          if (status === false) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setpuzzleMadnessBundleState("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setpuzzleMadnessBundleState("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          } else if (status === true) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setpuzzleMadnessBundleState2("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setpuzzleMadnessBundleState2("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          }
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
-        setStatus("Succesfully approved!");
-        setpuzzleMadnessBundleState("deposit");
-        setStatusColor("#00FECF");
-        setpuzzleMadnessShowApproval(false);
+        if (status === false) {
+          setStatus("Succesfully approved!");
+          setpuzzleMadnessBundleState("deposit");
+          setStatusColor("#00FECF");
+          setpuzzleMadnessShowApproval(false);
+        } else if (status === true) {
+          setStatus("Succesfully approved!");
+          setpuzzleMadnessBundleState2("deposit");
+          setStatusColor("#00FECF");
+          setpuzzleMadnessShowApproval2(false);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -633,20 +715,24 @@ const NewEvents = ({
   //DRAGON RUINS
 
   const getBundlePrizesDragon = async () => {
-    const dragonRuinsContract = new window.bscWeb3.eth.Contract(
-      DRAGON_RUINS_ABI,
-      dragon_ruins_address
-    );
+    if (binancePay === true) {
+      setDragonRuinsWodAmount(2);
+    } else {
+      const dragonRuinsContract = new window.bscWeb3.eth.Contract(
+        DRAGON_RUINS_ABI,
+        dragon_ruins_address
+      );
 
-    const result_dragon_ruins = await dragonRuinsContract.methods
-      .getEstimatedBundleWODAmount()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
+      const result_dragon_ruins = await dragonRuinsContract.methods
+        .getEstimatedBundleWODAmount()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
 
-    if (result_dragon_ruins) {
-      setDragonRuinsWodAmount(result_dragon_ruins / 1e18);
+      if (result_dragon_ruins) {
+        setDragonRuinsWodAmount(result_dragon_ruins / 1e18);
+      }
     }
   };
 
@@ -691,11 +777,9 @@ const NewEvents = ({
     // Get the UTC components
     const purchaseYear = purchaseDate.getUTCFullYear();
     const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
 
     const purchaseYear2 = purchaseDate2.getUTCFullYear();
     const purchaseMonth2 = purchaseDate2.getUTCMonth();
-    const purchaseDay2 = purchaseDate2.getUTCDate();
 
     const utcDayIndex = new Date().getUTCDay();
 
@@ -741,7 +825,6 @@ const NewEvents = ({
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
 
     const adjustedCurrentDay =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
@@ -805,25 +888,39 @@ const NewEvents = ({
             return 0;
           });
       } else {
-        await wod_token_abi.methods
+        const allowance1 = await wod_token_abi.methods
           .allowance(wallet, dragonRuinsAddress)
           .call()
-          .then((data) => {
-            if (data === "0" || data < 150000000000000000000) {
-              setDragonShowApproval(true);
-            } else {
-              setDragonShowApproval(false);
-              setDragonBundleState("deposit");
-            }
-          })
           .catch((e) => {
             console.log(e);
           });
+
+        const allowance2 = await usdt_token_abi.methods
+          .allowance(wallet, dragon_ruins2_address)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+
+        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+          setDragonShowApproval(true);
+        }
+        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
+          setDragonShowApproval2(true);
+        }
+        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
+          setDragonShowApproval2(false);
+          setDragonBundleState2("deposit");
+        }
+        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
+          setDragonShowApproval(false);
+          setDragonBundleState("deposit");
+        }
       }
     }
   };
 
-  const handleApprovalDragon = async () => {
+  const handleApprovalDragon = async (status) => {
     setDragonBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
@@ -851,30 +948,54 @@ const NewEvents = ({
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
-        window.config.wod_token_address,
+        status === false
+          ? window.config.wod_token_address
+          : window.config.usdt_token_address,
         window.TOKEN_ABI,
         binanceW3WProvider.getSigner()
       );
 
       const txResponse = await tokenSc
-        .approve(dragonRuinsAddress, "500000000000000000000000000")
+        .approve(
+          status === false ? dragonRuinsAddress : dragon_ruins2_address,
+          "500000000000000000000000000"
+        )
         .catch((e) => {
-          setStatusColor("#FE7A00");
-          setStatus(e?.message);
-          setDragonBundleState("fail");
-          const timer = setTimeout(() => {
-            setStatusColor("#00FECF");
-            setStatus("");
-            setDragonBundleState("initial");
-          }, 3000);
-          return () => clearTimeout(timer);
+          if (status === false) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setDragonBundleState("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setDragonBundleState("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          } else if (status === true) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setDragonBundleState2("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setDragonBundleState2("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          }
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
-        setStatus("Succesfully approved!");
-        setDragonBundleState("deposit");
-        setStatusColor("#00FECF");
-        setDragonShowApproval(false);
+        if (status === false) {
+          setStatus("Succesfully approved!");
+          setDragonBundleState("deposit");
+          setStatusColor("#00FECF");
+          setDragonShowApproval(false);
+        } else if (status === true) {
+          setStatus("Succesfully approved!");
+          setDragonBundleState2("deposit");
+          setStatusColor("#00FECF");
+          setDragonShowApproval2(false);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -1057,20 +1178,24 @@ const NewEvents = ({
   //COLD BITE
 
   const getBundlePrizesBear = async () => {
-    const coldBiteContract = new window.bscWeb3.eth.Contract(
-      COLD_BITE_ABI,
-      cold_bite_address
-    );
+    if (binancePay === true) {
+      setColdBiteWodAmount(2.5);
+    } else {
+      const coldBiteContract = new window.bscWeb3.eth.Contract(
+        COLD_BITE_ABI,
+        cold_bite_address
+      );
 
-    const result_cold_bite = await coldBiteContract.methods
-      .getEstimatedBundleWODAmount()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
+      const result_cold_bite = await coldBiteContract.methods
+        .getEstimatedBundleWODAmount()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
 
-    if (result_cold_bite) {
-      setColdBiteWodAmount(result_cold_bite / 1e18);
+      if (result_cold_bite) {
+        setColdBiteWodAmount(result_cold_bite / 1e18);
+      }
     }
   };
 
@@ -1080,10 +1205,26 @@ const NewEvents = ({
       cold_bite_address
     );
 
+    const coldBiteContract2 = new window.bscWeb3.eth.Contract(
+      COLD_BITE_ABI,
+      cold_bite2_address
+    );
+
     const purchaseTimestamp = await coldBiteContract.methods
       .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    const purchaseTimestamp2 = await coldBiteContract2.methods
+      .getTimeOfDeposit(wallet)
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (Number(purchaseTimestamp) === 0 && Number(purchaseTimestamp2) === 0) {
       setHasBoughtBear(false); // User hasn't bought it
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
@@ -1092,16 +1233,31 @@ const NewEvents = ({
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const purchaseDate2 = new Date(purchaseTimestamp2 * 1000);
     const currentUTCDate = new Date();
 
     // Get the UTC components
     const purchaseYear = purchaseDate.getUTCFullYear();
     const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
+    const purchaseYear2 = purchaseDate2.getUTCFullYear();
+    const purchaseMonth2 = purchaseDate2.getUTCMonth();
     const utcDayIndex = new Date().getUTCDay();
 
     const adjustedPurchaseDay =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? utcDayIndex === 0
+          ? 7
+          : utcDayIndex
+        : utcHours === 0
+        ? utcDayIndex === 0
+          ? 6
+          : utcDayIndex - 1
+        : utcDayIndex === 0
+        ? 7
+        : utcDayIndex;
+
+    const adjustedPurchaseDay2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? utcDayIndex === 0
           ? 7
           : utcDayIndex
@@ -1119,10 +1275,15 @@ const NewEvents = ({
         : utcHours === 0
         ? purchaseDate.getUTCDate() - 1
         : purchaseDate.getUTCDate();
+    const adjustedPurchaseDate2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
+        ? purchaseDate2.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate2.getUTCDate() - 1
+        : purchaseDate2.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
 
     const adjustedCurrentDay =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
@@ -1150,10 +1311,15 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
-    setHasBoughtBear(isToday);
+    const isToday2 =
+      purchaseYear2 === currentYear &&
+      purchaseMonth2 === currentMonth &&
+      adjustedPurchaseDay2 === adjustedCurrentDay &&
+      adjustedPurchaseDate2 === adjustedCurrentDate;
+    setHasBoughtBear(isToday || isToday2);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
-      bear: isToday,
+      bear: isToday || isToday2,
     }));
   };
 
@@ -1180,25 +1346,39 @@ const NewEvents = ({
             return 0;
           });
       } else {
-        await wod_token_abi.methods
+        const allowance1 = await wod_token_abi.methods
           .allowance(wallet, coldBiteAddress)
           .call()
-          .then((data) => {
-            if (data === "0" || data < 150000000000000000000) {
-              setBearShowApproval(true);
-            } else {
-              setBearShowApproval(false);
-              setBearBundleState("deposit");
-            }
-          })
           .catch((e) => {
             console.log(e);
           });
+
+        const allowance2 = await usdt_token_abi.methods
+          .allowance(wallet, cold_bite2_address)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+
+        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+          setBearShowApproval(true);
+        }
+        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
+          setBearShowApproval2(true);
+        }
+        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
+          setBearShowApproval2(false);
+          setBearBundleState2("deposit");
+        }
+        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
+          setBearShowApproval(false);
+          setBearBundleState("deposit");
+        }
       }
     }
   };
 
-  const handleApprovalBear = async () => {
+  const handleApprovalBear = async (status) => {
     setBearBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
@@ -1226,30 +1406,54 @@ const NewEvents = ({
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
-        window.config.wod_token_address,
+        status === false
+          ? window.config.wod_token_address
+          : window.config.usdt_token_address,
         window.TOKEN_ABI,
         binanceW3WProvider.getSigner()
       );
 
       const txResponse = await tokenSc
-        .approve(coldBiteAddress, "500000000000000000000000000")
+        .approve(
+          status === false ? coldBiteAddress : cold_bite2_address,
+          "500000000000000000000000000"
+        )
         .catch((e) => {
-          setStatusColor("#FE7A00");
-          setStatus(e?.message);
-          setBearBundleState("fail");
-          const timer = setTimeout(() => {
-            setStatusColor("#00FECF");
-            setStatus("");
-            setBearBundleState("initial");
-          }, 3000);
-          return () => clearTimeout(timer);
+          if (status === false) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBearBundleState("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBearBundleState("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          } else if (status === true) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBearBundleState2("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBearBundleState2("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          }
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
-        setStatus("Succesfully approved!");
-        setBearBundleState("deposit");
-        setStatusColor("#00FECF");
-        setBearShowApproval(false);
+        if (status === false) {
+          setStatus("Succesfully approved!");
+          setBearBundleState("deposit");
+          setStatusColor("#00FECF");
+          setBearShowApproval(false);
+        } else if (status === true) {
+          setStatus("Succesfully approved!");
+          setBearBundleState2("deposit");
+          setStatusColor("#00FECF");
+          setBearShowApproval2(false);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -1430,20 +1634,24 @@ const NewEvents = ({
 
   //FURY BEAST
   const getBundlePrizesBeast = async () => {
-    const furyBeastContract = new window.bscWeb3.eth.Contract(
-      FURY_BEAST_ABI,
-      fury_beast_address
-    );
+    if (binancePay === true) {
+      setFuryBeastWodAmount(2.5);
+    } else {
+      const furyBeastContract = new window.bscWeb3.eth.Contract(
+        FURY_BEAST_ABI,
+        fury_beast_address
+      );
 
-    const result_fury_beast = await furyBeastContract.methods
-      .getEstimatedBundleWODAmount()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
+      const result_fury_beast = await furyBeastContract.methods
+        .getEstimatedBundleWODAmount()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
 
-    if (result_fury_beast) {
-      setFuryBeastWodAmount(result_fury_beast / 1e18);
+      if (result_fury_beast) {
+        setFuryBeastWodAmount(result_fury_beast / 1e18);
+      }
     }
   };
 
@@ -1453,10 +1661,26 @@ const NewEvents = ({
       fury_beast_address
     );
 
+    const furyBeastContract2 = new window.bscWeb3.eth.Contract(
+      FURY_BEAST_ABI,
+      fury_beast2_address
+    );
+
     const purchaseTimestamp = await furyBeastContract.methods
       .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    const purchaseTimestamp2 = await furyBeastContract2.methods
+      .getTimeOfDeposit(wallet)
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (Number(purchaseTimestamp) === 0 && Number(purchaseTimestamp2) === 0) {
       setHasBoughtBeast(false); // User hasn't bought it
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
@@ -1465,15 +1689,30 @@ const NewEvents = ({
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const purchaseDate2 = new Date(purchaseTimestamp2 * 1000);
     const currentUTCDate = new Date();
     const utcDayIndex = new Date().getUTCDay();
 
     // Get the UTC components
     const purchaseYear = purchaseDate.getUTCFullYear();
     const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
+    const purchaseYear2 = purchaseDate2.getUTCFullYear();
+    const purchaseMonth2 = purchaseDate2.getUTCMonth();
+
     const adjustedPurchaseDay =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? utcDayIndex === 0
+          ? 7
+          : utcDayIndex
+        : utcHours === 0
+        ? utcDayIndex === 0
+          ? 6
+          : utcDayIndex - 1
+        : utcDayIndex === 0
+        ? 7
+        : utcDayIndex;
+    const adjustedPurchaseDay2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? utcDayIndex === 0
           ? 7
           : utcDayIndex
@@ -1491,10 +1730,15 @@ const NewEvents = ({
         : utcHours === 0
         ? purchaseDate.getUTCDate() - 1
         : purchaseDate.getUTCDate();
-
+    const adjustedPurchaseDate2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
+        ? purchaseDate2.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate2.getUTCDate() - 1
+        : purchaseDate2.getUTCDate();
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
+
     const adjustedCurrentDay =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
         ? utcDayIndex === 0
@@ -1521,10 +1765,15 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
-    setHasBoughtBeast(isToday);
+    const isToday2 =
+      purchaseYear2 === currentYear &&
+      purchaseMonth2 === currentMonth &&
+      adjustedPurchaseDay2 === adjustedCurrentDay &&
+      adjustedPurchaseDate2 === adjustedCurrentDate;
+    setHasBoughtBeast(isToday || isToday2);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
-      beast: isToday,
+      beast: isToday || isToday2,
     }));
   };
 
@@ -1552,26 +1801,39 @@ const NewEvents = ({
             return 0;
           });
       } else {
-        await wod_token_abi.methods
+        const allowance1 = await wod_token_abi.methods
           .allowance(wallet, furyBeastAddress)
           .call()
-          .then((data) => {
-            if (data === "0" || data < 150000000000000000000) {
-              setBeastShowApproval(true);
-              setBeastBundleState("initial");
-            } else {
-              setBeastShowApproval(false);
-              setBeastBundleState("deposit");
-            }
-          })
           .catch((e) => {
             console.log(e);
           });
+
+        const allowance2 = await usdt_token_abi.methods
+          .allowance(wallet, fury_beast2_address)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+
+        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+          setBeastShowApproval(true);
+        }
+        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
+          setBeastShowApproval2(true);
+        }
+        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
+          setBeastShowApproval2(false);
+          setBeastBundleState2("deposit");
+        }
+        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
+          setBeastShowApproval(false);
+          setBeastBundleState("deposit");
+        }
       }
     }
   };
 
-  const handleApprovalBeast = async () => {
+  const handleApprovalBeast = async (status) => {
     setBeastBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
@@ -1599,36 +1861,66 @@ const NewEvents = ({
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
-        window.config.wod_token_address,
+        status === false
+          ? window.config.wod_token_address
+          : window.config.usdt_token_address,
         window.TOKEN_ABI,
         binanceW3WProvider.getSigner()
       );
 
       const txResponse = await tokenSc
-        .approve(furyBeastAddress, "500000000000000000000000000")
+        .approve(
+          status === false ? furyBeastAddress : fury_beast2_address,
+          "500000000000000000000000000"
+        )
         .catch((e) => {
-          setStatusColor("#FE7A00");
-          setStatus(e?.message);
-          setBeastBundleState("fail");
+          if (status === false) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBeastBundleState("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBeastBundleState("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          } else if (status === true) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBeastBundleState2("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setBeastBundleState2("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          }
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        if (status === false) {
+          setStatus("Succesfully approved!");
+          setBeastBundleState("deposit");
+          setStatusColor("#00FECF");
+          setBeastShowApproval(false);
           const timer = setTimeout(() => {
             setStatusColor("#00FECF");
             setStatus("");
             setBeastBundleState("initial");
           }, 3000);
           return () => clearTimeout(timer);
-        });
-      const txReceipt = await txResponse.wait();
-      if (txReceipt) {
-        setStatus("Succesfully approved!");
-        setBeastBundleState("deposit");
-        setStatusColor("#00FECF");
-        setBeastShowApproval(false);
-        const timer = setTimeout(() => {
+        } else if (status === true) {
+          setStatus("Succesfully approved!");
+          setBeastBundleState2("deposit");
           setStatusColor("#00FECF");
-          setStatus("");
-          setBeastBundleState("initial");
-        }, 3000);
-        return () => clearTimeout(timer);
+          setBeastShowApproval2(false);
+          const timer = setTimeout(() => {
+            setStatusColor("#00FECF");
+            setStatus("");
+            setBeastBundleState2("initial");
+          }, 3000);
+          return () => clearTimeout(timer);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -1810,20 +2102,24 @@ const NewEvents = ({
   //WING STORM
 
   const getBundlePrizesEagle = async () => {
-    const wingStormContract = new window.bscWeb3.eth.Contract(
-      WING_STORM_ABI,
-      wing_storm_address
-    );
+    if (binancePay === true) {
+      setWingStormWodAmount(3);
+    } else {
+      const wingStormContract = new window.bscWeb3.eth.Contract(
+        WING_STORM_ABI,
+        wing_storm_address
+      );
 
-    const result_wing_storm = await wingStormContract.methods
-      .getEstimatedBundleWODAmount()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
+      const result_wing_storm = await wingStormContract.methods
+        .getEstimatedBundleWODAmount()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
 
-    if (result_wing_storm) {
-      setWingStormWodAmount(result_wing_storm / 1e18);
+      if (result_wing_storm) {
+        setWingStormWodAmount(result_wing_storm / 1e18);
+      }
     }
   };
 
@@ -1833,10 +2129,25 @@ const NewEvents = ({
       wing_storm_address
     );
 
+    const wingStormContract2 = new window.bscWeb3.eth.Contract(
+      WING_STORM_ABI,
+      wing_storm2_address
+    );
     const purchaseTimestamp = await wingStormContract.methods
       .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    const purchaseTimestamp2 = await wingStormContract2.methods
+      .getTimeOfDeposit(wallet)
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (Number(purchaseTimestamp) === 0 && Number(purchaseTimestamp2) === 0) {
       setHasBoughtEagle(false); // User hasn't bought it
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
@@ -1845,16 +2156,31 @@ const NewEvents = ({
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const purchaseDate2 = new Date(purchaseTimestamp2 * 1000);
     const currentUTCDate = new Date();
 
     // Get the UTC components
     const purchaseYear = purchaseDate.getUTCFullYear();
     const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
+    const purchaseYear2 = purchaseDate2.getUTCFullYear();
+    const purchaseMonth2 = purchaseDate2.getUTCMonth();
     const utcDayIndex = new Date().getUTCDay();
 
     const adjustedPurchaseDay =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? utcDayIndex === 0
+          ? 7
+          : utcDayIndex
+        : utcHours === 0
+        ? utcDayIndex === 0
+          ? 6
+          : utcDayIndex - 1
+        : utcDayIndex === 0
+        ? 7
+        : utcDayIndex;
+
+    const adjustedPurchaseDay2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? utcDayIndex === 0
           ? 7
           : utcDayIndex
@@ -1872,6 +2198,13 @@ const NewEvents = ({
         : utcHours === 0
         ? purchaseDate.getUTCDate() - 1
         : purchaseDate.getUTCDate();
+
+    const adjustedPurchaseDate2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
+        ? purchaseDate2.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate2.getUTCDate() - 1
+        : purchaseDate2.getUTCDate();
 
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
@@ -1902,10 +2235,17 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
-    setHasBoughtEagle(isToday);
+
+    const isToday2 =
+      purchaseYear2 === currentYear &&
+      purchaseMonth2 === currentMonth &&
+      adjustedPurchaseDay2 === adjustedCurrentDay &&
+      adjustedPurchaseDate2 === adjustedCurrentDate;
+
+    setHasBoughtEagle(isToday || isToday2);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
-      eagle: isToday,
+      eagle: isToday || isToday2,
     }));
   };
 
@@ -1932,25 +2272,39 @@ const NewEvents = ({
             return 0;
           });
       } else {
-        await wod_token_abi.methods
+        const allowance1 = await wod_token_abi.methods
           .allowance(wallet, wingStormAddress)
           .call()
-          .then((data) => {
-            if (data === "0" || data < 150000000000000000000) {
-              setEagleShowApproval(true);
-            } else {
-              setEagleShowApproval(false);
-              setEagleBundleState("deposit");
-            }
-          })
           .catch((e) => {
             console.log(e);
           });
+
+        const allowance2 = await usdt_token_abi.methods
+          .allowance(wallet, wing_storm2_address)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+
+        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+          setEagleShowApproval(true);
+        }
+        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
+          setEagleShowApproval2(true);
+        }
+        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
+          setEagleShowApproval2(false);
+          setEagleBundleState2("deposit");
+        }
+        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
+          setEagleShowApproval(false);
+          setEagleBundleState("deposit");
+        }
       }
     }
   };
 
-  const handleApprovalEagle = async () => {
+  const handleApprovalEagle = async (status) => {
     setEagleBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
@@ -1978,30 +2332,54 @@ const NewEvents = ({
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
-        window.config.wod_token_address,
+        status === false
+          ? window.config.wod_token_address
+          : window.config.usdt_token_address,
         window.TOKEN_ABI,
         binanceW3WProvider.getSigner()
       );
 
       const txResponse = await tokenSc
-        .approve(wingStormAddress, "500000000000000000000000000")
+        .approve(
+          status === false ? wingStormAddress : wing_storm2_address,
+          "500000000000000000000000000"
+        )
         .catch((e) => {
-          setStatusColor("#FE7A00");
-          setStatus(e?.message);
-          setEagleBundleState("fail");
-          const timer = setTimeout(() => {
-            setStatusColor("#00FECF");
-            setStatus("");
-            setEagleBundleState("initial");
-          }, 3000);
-          return () => clearTimeout(timer);
+          if (status === false) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setEagleBundleState("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setEagleBundleState("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          } else if (status === true) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setEagleBundleState2("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setEagleBundleState2("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          }
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
-        setStatus("Succesfully approved!");
-        setEagleBundleState("deposit");
-        setStatusColor("#00FECF");
-        setEagleShowApproval(false);
+        if (status === false) {
+          setStatus("Succesfully approved!");
+          setEagleBundleState("deposit");
+          setStatusColor("#00FECF");
+          setEagleShowApproval(false);
+        } else if (status === true) {
+          setStatus("Succesfully approved!");
+          setEagleBundleState2("deposit");
+          setStatusColor("#00FECF");
+          setEagleShowApproval2(false);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -2183,20 +2561,24 @@ const NewEvents = ({
   //SCORPION KING
 
   const getBundlePrizesScorpion = async () => {
-    const scorpionKingContract = new window.bscWeb3.eth.Contract(
-      SCORPION_KING_ABI,
-      scorpion_king_address
-    );
+    if (binancePay === true) {
+      setScorpionKingWodAmount(3.5);
+    } else {
+      const scorpionKingContract = new window.bscWeb3.eth.Contract(
+        SCORPION_KING_ABI,
+        scorpion_king_address
+      );
 
-    const result_scorpion_king = await scorpionKingContract.methods
-      .getEstimatedBundleWODAmount()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
+      const result_scorpion_king = await scorpionKingContract.methods
+        .getEstimatedBundleWODAmount()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
 
-    if (result_scorpion_king) {
-      setScorpionKingWodAmount(result_scorpion_king / 1e18);
+      if (result_scorpion_king) {
+        setScorpionKingWodAmount(result_scorpion_king / 1e18);
+      }
     }
   };
 
@@ -2205,11 +2587,24 @@ const NewEvents = ({
       SCORPION_KING_ABI,
       scorpion_king_address
     );
-
+    const scorpionKingContract2 = new window.bscWeb3.eth.Contract(
+      SCORPION_KING_ABI,
+      scorpion_king2_address
+    );
     const purchaseTimestamp = await scorpionKingContract.methods
       .getTimeOfDeposit(coinbase)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+    const purchaseTimestamp2 = await scorpionKingContract2.methods
+      .getTimeOfDeposit(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (Number(purchaseTimestamp) === 0 && Number(purchaseTimestamp2) === 0) {
       setHasBoughtScorpion(false); // User hasn't bought it
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
@@ -2218,16 +2613,31 @@ const NewEvents = ({
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const purchaseDate2 = new Date(purchaseTimestamp2 * 1000);
     const currentUTCDate = new Date();
 
     // Get the UTC components
     const purchaseYear = purchaseDate.getUTCFullYear();
     const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
+    const purchaseYear2 = purchaseDate2.getUTCFullYear();
+    const purchaseMonth2 = purchaseDate2.getUTCMonth();
     const utcDayIndex = new Date().getUTCDay();
 
     const adjustedPurchaseDay =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? utcDayIndex === 0
+          ? 7
+          : utcDayIndex
+        : utcHours === 0
+        ? utcDayIndex === 0
+          ? 6
+          : utcDayIndex - 1
+        : utcDayIndex === 0
+        ? 7
+        : utcDayIndex;
+
+    const adjustedPurchaseDay2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? utcDayIndex === 0
           ? 7
           : utcDayIndex
@@ -2246,9 +2656,15 @@ const NewEvents = ({
         ? purchaseDate.getUTCDate() - 1
         : purchaseDate.getUTCDate();
 
+    const adjustedPurchaseDate2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
+        ? purchaseDate2.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate2.getUTCDate() - 1
+        : purchaseDate2.getUTCDate();
+
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
 
     const adjustedCurrentDay =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
@@ -2277,10 +2693,17 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
-    setHasBoughtScorpion(isToday);
+
+    const isToday2 =
+      purchaseYear2 === currentYear &&
+      purchaseMonth2 === currentMonth &&
+      adjustedPurchaseDay2 === adjustedCurrentDay &&
+      adjustedPurchaseDate2 === adjustedCurrentDate;
+
+    setHasBoughtScorpion(isToday || isToday2);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
-      scorpion: isToday,
+      scorpion: isToday || isToday2,
     }));
   };
 
@@ -2307,25 +2730,39 @@ const NewEvents = ({
             return 0;
           });
       } else {
-        await wod_token_abi.methods
+        const allowance1 = await wod_token_abi.methods
           .allowance(wallet, scorpionKingAddress)
           .call()
-          .then((data) => {
-            if (data === "0" || data < 150000000000000000000) {
-              setScorpionShowApproval(true);
-            } else {
-              setScorpionShowApproval(false);
-              setScorpionBundleState("deposit");
-            }
-          })
           .catch((e) => {
             console.log(e);
           });
+
+        const allowance2 = await usdt_token_abi.methods
+          .allowance(wallet, scorpion_king2_address)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+
+        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+          setScorpionShowApproval(true);
+        }
+        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
+          setScorpionShowApproval2(true);
+        }
+        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
+          setScorpionShowApproval2(false);
+          setScorpionBundleState2("deposit");
+        }
+        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
+          setScorpionShowApproval(false);
+          setScorpionBundleState("deposit");
+        }
       }
     }
   };
 
-  const handleApprovalScorpion = async () => {
+  const handleApprovalScorpion = async (status) => {
     setScorpionBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
@@ -2353,30 +2790,54 @@ const NewEvents = ({
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
-        window.config.wod_token_address,
+        status === false
+          ? window.config.wod_token_address
+          : window.config.usdt_token_address,
         window.TOKEN_ABI,
         binanceW3WProvider.getSigner()
       );
 
       const txResponse = await tokenSc
-        .approve(scorpionKingAddress, "500000000000000000000000000")
+        .approve(
+          status === false ? scorpionKingAddress : scorpion_king2_address,
+          "500000000000000000000000000"
+        )
         .catch((e) => {
-          setStatusColor("#FE7A00");
-          setStatus(e?.message);
-          setScorpionBundleState("fail");
-          const timer = setTimeout(() => {
-            setStatusColor("#00FECF");
-            setStatus("");
-            setScorpionBundleState("initial");
-          }, 3000);
-          return () => clearTimeout(timer);
+          if (status === false) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setScorpionBundleState("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setScorpionBundleState("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          } else if (status === true) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setScorpionBundleState2("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setScorpionBundleState2("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          }
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
-        setStatus("Succesfully approved!");
-        setScorpionBundleState("deposit");
-        setStatusColor("#00FECF");
-        setScorpionShowApproval(false);
+        if (status === false) {
+          setStatus("Succesfully approved!");
+          setScorpionBundleState("deposit");
+          setStatusColor("#00FECF");
+          setScorpionShowApproval(false);
+        } else if (status === true) {
+          setStatus("Succesfully approved!");
+          setScorpionBundleState2("deposit");
+          setStatusColor("#00FECF");
+          setScorpionShowApproval2(false);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -2559,20 +3020,24 @@ const NewEvents = ({
   //STONE EYE
 
   const getBundlePrizesCyclops = async () => {
-    const stoneEyeContract = new window.bscWeb3.eth.Contract(
-      STONE_EYE_ABI,
-      stone_eye_address
-    );
+    if (binancePay === true) {
+      setStoneEyeWodAmount(3);
+    } else {
+      const stoneEyeContract = new window.bscWeb3.eth.Contract(
+        STONE_EYE_ABI,
+        stone_eye_address
+      );
 
-    const result_stone_eye = await stoneEyeContract.methods
-      .getEstimatedBundleWODAmount()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
+      const result_stone_eye = await stoneEyeContract.methods
+        .getEstimatedBundleWODAmount()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
 
-    if (result_stone_eye) {
-      setStoneEyeWodAmount(result_stone_eye / 1e18);
+      if (result_stone_eye) {
+        setStoneEyeWodAmount(result_stone_eye / 1e18);
+      }
     }
   };
 
@@ -2582,10 +3047,26 @@ const NewEvents = ({
       stone_eye_address
     );
 
+    const stoneEyeContract2 = new window.bscWeb3.eth.Contract(
+      STONE_EYE_ABI,
+      stone_eye2_address
+    );
+
     const purchaseTimestamp = await stoneEyeContract.methods
       .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    const purchaseTimestamp2 = await stoneEyeContract2.methods
+      .getTimeOfDeposit(wallet)
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (Number(purchaseTimestamp) === 0 && Number(purchaseTimestamp2) === 0) {
       setHasBoughtCyclops(false); // User hasn't bought it
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
@@ -2594,16 +3075,31 @@ const NewEvents = ({
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const purchaseDate2 = new Date(purchaseTimestamp2 * 1000);
     const currentUTCDate = new Date();
 
     // Get the UTC components
     const purchaseYear = purchaseDate.getUTCFullYear();
     const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
+    const purchaseYear2 = purchaseDate2.getUTCFullYear();
+    const purchaseMonth2 = purchaseDate2.getUTCMonth();
     const utcDayIndex = new Date().getUTCDay();
 
     const adjustedPurchaseDay =
       purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+        ? utcDayIndex === 0
+          ? 7
+          : utcDayIndex
+        : utcHours === 0
+        ? utcDayIndex === 0
+          ? 6
+          : utcDayIndex - 1
+        : utcDayIndex === 0
+        ? 7
+        : utcDayIndex;
+
+    const adjustedPurchaseDay2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
         ? utcDayIndex === 0
           ? 7
           : utcDayIndex
@@ -2622,9 +3118,15 @@ const NewEvents = ({
         ? purchaseDate.getUTCDate() - 1
         : purchaseDate.getUTCDate();
 
+    const adjustedPurchaseDate2 =
+      purchaseDate2.getUTCHours() === 0 && purchaseDate2.getUTCMinutes() >= 30
+        ? purchaseDate2.getUTCDate()
+        : utcHours === 0
+        ? purchaseDate2.getUTCDate() - 1
+        : purchaseDate2.getUTCDate();
+
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
 
     const adjustedCurrentDay =
       currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
@@ -2652,10 +3154,17 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       adjustedPurchaseDay === adjustedCurrentDay &&
       adjustedPurchaseDate === adjustedCurrentDate;
-    setHasBoughtCyclops(isToday);
+
+    const isToday2 =
+      purchaseYear2 === currentYear &&
+      purchaseMonth2 === currentMonth &&
+      adjustedPurchaseDay2 === adjustedCurrentDay &&
+      adjustedPurchaseDate2 === adjustedCurrentDate;
+
+    setHasBoughtCyclops(isToday || isToday2);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
-      cyclops: isToday,
+      cyclops: isToday || isToday2,
     }));
   };
 
@@ -2682,25 +3191,39 @@ const NewEvents = ({
             return 0;
           });
       } else {
-        await wod_token_abi.methods
+        const allowance1 = await wod_token_abi.methods
           .allowance(wallet, stoneEyeAddress)
           .call()
-          .then((data) => {
-            if (data === "0" || data < 150000000000000000000) {
-              setCyclopsShowApproval(true);
-            } else {
-              setCyclopsShowApproval(false);
-              setCyclopsBundleState("deposit");
-            }
-          })
           .catch((e) => {
             console.log(e);
           });
+
+        const allowance2 = await usdt_token_abi.methods
+          .allowance(wallet, stone_eye2_address)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+
+        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+          setCyclopsShowApproval(true);
+        }
+        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
+          setCyclopsShowApproval2(true);
+        }
+        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
+          setCyclopsShowApproval2(false);
+          setCyclopsBundleState2("deposit");
+        }
+        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
+          setCyclopsShowApproval(false);
+          setCyclopsBundleState("deposit");
+        }
       }
     }
   };
 
-  const handleApprovalCyclops = async () => {
+  const handleApprovalCyclops = async (status) => {
     setCyclopsBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
@@ -2728,30 +3251,54 @@ const NewEvents = ({
         });
     } else if (window.WALLET_TYPE === "binance") {
       const tokenSc = new ethers.Contract(
-        window.config.wod_token_address,
+        status === false
+          ? window.config.wod_token_address
+          : window.config.usdt_token_address,
         window.TOKEN_ABI,
         binanceW3WProvider.getSigner()
       );
 
       const txResponse = await tokenSc
-        .approve(stoneEyeAddress, "500000000000000000000000000")
+        .approve(
+          status === false ? stoneEyeAddress : stone_eye2_address,
+          "500000000000000000000000000"
+        )
         .catch((e) => {
-          setStatusColor("#FE7A00");
-          setStatus(e?.message);
-          setCyclopsBundleState("fail");
-          const timer = setTimeout(() => {
-            setStatusColor("#00FECF");
-            setStatus("");
-            setCyclopsBundleState("initial");
-          }, 3000);
-          return () => clearTimeout(timer);
+          if (status === false) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setCyclopsBundleState("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setCyclopsBundleState("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          } else if (status === true) {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setCyclopsBundleState2("fail");
+            const timer = setTimeout(() => {
+              setStatusColor("#00FECF");
+              setStatus("");
+              setCyclopsBundleState2("initial");
+            }, 3000);
+            return () => clearTimeout(timer);
+          }
         });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
-        setStatus("Succesfully approved!");
-        setCyclopsBundleState("deposit");
-        setStatusColor("#00FECF");
-        setCyclopsShowApproval(false);
+        if (status === false) {
+          setStatus("Succesfully approved!");
+          setCyclopsBundleState("deposit");
+          setStatusColor("#00FECF");
+          setCyclopsShowApproval(false);
+        } else if (status === true) {
+          setStatus("Succesfully approved!");
+          setCyclopsBundleState2("deposit");
+          setStatusColor("#00FECF");
+          setCyclopsShowApproval2(false);
+        }
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -2976,11 +3523,21 @@ const NewEvents = ({
     getBundlePrizesEagle();
     getBundlePrizesScorpion();
     getBundlePrizesCyclops();
-  }, []);
+  }, [binancePay]);
+
+  useEffect(() => {
+    const storedOrder = localStorage.getItem("binanceOrder");
+    if (storedOrder && statusbinance !== "idle") {
+      setbinancePay(true);
+    }
+  }, [statusbinance]);
 
   useEffect(() => {
     checkWalletAddr();
-    if (email && wallet && coinbase && chainId === 56) {
+    if (
+      (email && wallet && coinbase && chainId === 56) ||
+      statusbinance === "success"
+    ) {
       handleRefreshCountdownDragon();
       checkApprovalDragon();
       handleRefreshCountdownPuzzle();
@@ -3031,7 +3588,116 @@ const NewEvents = ({
       setScorpionShowApproval(false);
       setScorpionBundleState("initial");
     }
-  }, [wallet, coinbase, chainId, email, isEOA]);
+  }, [wallet, coinbase, chainId, email, isEOA, statusbinance]);
+
+  // useEffect(() => {
+  //   checkWalletAddr();
+
+  //   if (
+  //     (email && wallet && coinbase && chainId === 56) ||
+  //     statusbinance === "success"
+  //   ) {
+  //     const days = [
+  //       "dragon-ruins",
+  //       "cold-bite",
+  //       "fury-beast",
+  //       "wing-storm",
+  //       "maze-day",
+  //       "scorpion-king",
+  //       "stone-eye",
+  //     ];
+
+  //     const now = new Date();
+  //     const utcDayIndex = now.getUTCDay();
+  //     const utcHours = now.getUTCHours();
+  //     const utcMinutes = now.getUTCMinutes();
+
+  //     const isAfterCutoff = utcHours === 0 && utcMinutes >= 30;
+
+  //     let adjustedDay = isAfterCutoff
+  //       ? utcDayIndex === 0
+  //         ? 7
+  //         : utcDayIndex
+  //       : utcHours === 0
+  //       ? utcDayIndex === 0
+  //         ? 6
+  //         : utcDayIndex - 1
+  //       : utcDayIndex === 0
+  //       ? 7
+  //       : utcDayIndex;
+
+  //     const dayName = days[adjustedDay - 1];
+
+  //     const dayHandlers = {
+  //       "dragon-ruins": () => {
+  //         handleRefreshCountdownDragon();
+  //         checkApprovalDragon();
+  //       },
+  //       "cold-bite": () => {
+  //         handleRefreshCountdownBear();
+  //         checkApprovalBear();
+  //       },
+  //       "fury-beast": () => {
+  //         handleRefreshCountdownBeast();
+  //         checkApprovalBeast();
+  //       },
+  //       "wing-storm": () => {
+  //         handleRefreshCountdownEagle();
+  //         checkApprovalEagle();
+  //       },
+  //       "maze-day": () => {
+  //         handleRefreshCountdownPuzzle();
+  //         checkApprovalPuzzle();
+  //       },
+  //       "scorpion-king": () => {
+  //         handleRefreshCountdownScorpion();
+  //         checkApprovalScorpion();
+  //       },
+  //       "stone-eye": () => {
+  //         handleRefreshCountdownCyclops();
+  //         checkApprovalCyclops();
+  //       },
+  //     };
+
+  //     if (dayHandlers[dayName]) {
+  //       dayHandlers[dayName]();
+  //     }
+  //   } else {
+  //     setHasBoughtBear(false);
+  //     setHasBoughtBeast(false);
+  //     setHasBoughtCyclops(false);
+  //     setHasBoughtDragon(false);
+  //     setHasBoughtpuzzleMadness(false);
+  //     setHasBoughtEagle(false);
+  //     setHasBoughtScorpion(false);
+
+  //     setBeastSiegeStatus((prevStatus) => ({
+  //       ...prevStatus,
+  //       dragon: false,
+  //       bear: false,
+  //       beast: false,
+  //       eagle: false,
+  //       scorpion: false,
+  //       cyclops: false,
+  //       puzzleMadness: false,
+  //     }));
+
+  //     setDragonShowApproval(false);
+  //     setDragonBundleState("initial");
+  //     setpuzzleMadnessShowApproval(false);
+  //     setpuzzleMadnessBundleState("initial");
+  //     setBeastShowApproval(false);
+  //     setBeastBundleState("initial");
+  //     setBearShowApproval(false);
+  //     setBearBundleState("initial");
+  //     setCyclopsShowApproval(false);
+  //     setCyclopsBundleState("initial");
+  //     setEagleShowApproval(false);
+  //     setEagleBundleState("initial");
+  //     setScorpionShowApproval(false);
+  //     setScorpionBundleState("initial");
+  //   }
+  // }, [wallet, coinbase, chainId, email, isEOA, statusbinance]);
 
   const eventinfos = [
     {
@@ -4048,7 +4714,9 @@ const NewEvents = ({
                                             {getFormattedNumber(
                                               dragonRuinsWodAmount
                                             )}{" "}
-                                            WOD
+                                            {binancePay === false
+                                              ? "WOD"
+                                              : "USDT"}
                                           </span>
                                           <span className="beast-siege-usd-price">
                                             ($
@@ -4085,7 +4753,9 @@ const NewEvents = ({
                                             {getFormattedNumber(
                                               coldBiteWodAmount
                                             )}{" "}
-                                            WOD
+                                            {binancePay === false
+                                              ? "WOD"
+                                              : "USDT"}
                                           </span>
                                           <span className="beast-siege-usd-price">
                                             ($
@@ -4122,7 +4792,9 @@ const NewEvents = ({
                                             {getFormattedNumber(
                                               furyBeastWodAmount
                                             )}{" "}
-                                            WOD
+                                            {binancePay === false
+                                              ? "WOD"
+                                              : "USDT"}
                                           </span>
                                           <span className="beast-siege-usd-price">
                                             ($
@@ -4159,7 +4831,9 @@ const NewEvents = ({
                                             {getFormattedNumber(
                                               wingStormWodAmount
                                             )}{" "}
-                                            WOD
+                                            {binancePay === false
+                                              ? "WOD"
+                                              : "USDT"}
                                           </span>
                                           <span className="beast-siege-usd-price">
                                             ($
@@ -4196,7 +4870,9 @@ const NewEvents = ({
                                             {getFormattedNumber(
                                               scorpionKingWodAmount
                                             )}{" "}
-                                            WOD
+                                            {binancePay === false
+                                              ? "WOD"
+                                              : "USDT"}
                                           </span>
                                           <span className="beast-siege-usd-price">
                                             ($
@@ -4233,7 +4909,9 @@ const NewEvents = ({
                                             {getFormattedNumber(
                                               stoneEyeWodAmount
                                             )}{" "}
-                                            WOD
+                                            {binancePay === false
+                                              ? "WOD"
+                                              : "USDT"}
                                           </span>
                                           <span className="beast-siege-usd-price">
                                             ($
@@ -4273,119 +4951,185 @@ const NewEvents = ({
                                             Log In
                                           </NavLink>
                                         )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                dragonBundleState ===
-                                                  "deposit" ||
-                                                dragonBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false ||
-                                                !isEOA
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                dragonBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                dragonShowApproval === false
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : "beast-siege-btn dragon-button"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalDragon()
-                                              }
-                                            >
-                                              {dragonBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light dragon-button"
-                                                  role="status"
-                                                  style={{ color: "#2b353e" }}
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                isEOA &&
-                                                dragonDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                dragonShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : dragonShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "beast-siege-btn dragon-button"
-                                                  : "beast-siege-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositDragon()
-                                              }
-                                            >
-                                              {dragonDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light dragon-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Activate"
-                                              )}
-                                            </button>
-                                            {window.WALLET_TYPE ===
-                                              "binance" && (
-                                              <div className="flex flex-col items-center">
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === false && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  dragonBundleState ===
+                                                    "deposit" ||
+                                                  dragonBundleState ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  dragonBundleState ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  dragonShowApproval === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "beast-siege-btn dragon-button"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalDragon(false)
+                                                }
+                                              >
+                                                {dragonBundleState ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light dragon-button"
+                                                    role="status"
+                                                    style={{ color: "#2b353e" }}
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
+                                                )}
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  dragonDepositState !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  dragonShowApproval === true &&
+                                                  checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : dragonShowApproval ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "beast-siege-btn dragon-button"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleDepositDragon()
+                                                }
+                                              >
+                                                {dragonDepositState ===
+                                                "loading-deposit" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light dragon-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Activate"
+                                                )}
+                                              </button>
+                                              {window.WALLET_TYPE ===
+                                                "binance" && (
                                                 <button
                                                   onClick={() =>
-                                                    handleBuy(
-                                                      coinbase,
-                                                      activeEvent.title
-                                                    )
+                                                    setbinancePay(true)
                                                   }
-                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
-                                                  disabled={
-                                                    statusbinance !== "idle" &&
-                                                    statusbinance !==
-                                                      "failed" &&
-                                                    statusbinance !== "success"
-                                                  }
+                                                  className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
                                                 >
-                                                  {buttonText}
+                                                  <img
+                                                    style={{ height: 18 }}
+                                                    src={
+                                                      "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                    }
+                                                    alt=""
+                                                  />
+                                                  Binance Pay
                                                 </button>
-
-                                                {merchantTradeNo && (
-                                                  <p>
-                                                    Tracking order:{" "}
-                                                    {merchantTradeNo}
-                                                  </p>
+                                              )}
+                                            </>
+                                          )}
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === true && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  dragonBundleState2 ===
+                                                    "deposit" ||
+                                                  dragonBundleState2 ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  dragonBundleState2 ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  dragonShowApproval2 === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : " bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalDragon(true)
+                                                }
+                                              >
+                                                {dragonBundleState2 ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light dragon-button"
+                                                    role="status"
+                                                    style={{ color: "#2b353e" }}
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
                                                 )}
-                                                {txHash && (
-                                                  <p>Tx Hash: {txHash}</p>
-                                                )}
-
-                                                <QRComponent />
-                                              </div>
-                                            )}
-                                          </>
-                                        )}
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  dragonDepositState2 !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : statusbinance !==
+                                                        "idle" &&
+                                                      statusbinance !==
+                                                        "failed" &&
+                                                      statusbinance !==
+                                                        "success"
+                                                    ? true
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  dragonShowApproval2 ===
+                                                    true && checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : dragonShowApproval2 ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? " bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  // handleDepositDragon()
+                                                  handleBuy(
+                                                    coinbase,
+                                                    activeEvent.title
+                                                  )
+                                                }
+                                              >
+                                                {buttonText}
+                                              </button>
+                                            </>
+                                          )}
                                       </div>
                                     )}
                                   </>
@@ -4414,100 +5158,104 @@ const NewEvents = ({
                                             Log In
                                           </NavLink>
                                         )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                bearBundleState === "deposit" ||
-                                                bearBundleState === "loading" ||
-                                                checkWallet === false ||
-                                                !isEOA
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                bearBundleState === "deposit" ||
-                                                checkWallet === false ||
-                                                bearShowApproval === false
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : "beast-siege-btn bear-button"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalBear()
-                                              }
-                                            >
-                                              {bearBundleState === "loading" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light bear-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                isEOA &&
-                                                bearDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                bearShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : bearShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "beast-siege-btn bear-button"
-                                                  : "beast-siege-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositBear()
-                                              }
-                                            >
-                                              {bearDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light bear-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Activate"
-                                              )}
-                                            </button>
-                                            {window.WALLET_TYPE ===
-                                              "binance" && (
-                                              <div className="flex flex-col items-center">
-                                                <button
-                                                  onClick={() =>
-                                                    handleBuy(
-                                                      coinbase,
-                                                      activeEvent.title
-                                                    )
-                                                  }
-                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
-                                                  disabled={
-                                                    statusbinance !== "idle" &&
-                                                    statusbinance !==
-                                                      "failed" &&
-                                                    statusbinance !== "success"
-                                                  }
-                                                >
-                                                  {buttonText}
-                                                </button>
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === false && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  bearBundleState ===
+                                                    "deposit" ||
+                                                  bearBundleState ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  bearBundleState ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  bearShowApproval === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "beast-siege-btn bear-button"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalBear(false)
+                                                }
+                                              >
+                                                {bearBundleState ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light bear-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
+                                                )}
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  bearDepositState !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  bearShowApproval === true &&
+                                                  checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : bearShowApproval ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "beast-siege-btn bear-button"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleDepositBear()
+                                                }
+                                              >
+                                                {bearDepositState ===
+                                                "loading-deposit" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light bear-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Activate"
+                                                )}
+                                              </button>
+                                              {window.WALLET_TYPE ===
+                                                "binance" && (
+                                                <div className="flex flex-col items-center">
+                                                  <button
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
+                                                    className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
+                                                  >
+                                                    <img
+                                                      style={{ height: 18 }}
+                                                      src={
+                                                        "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                      }
+                                                      alt=""
+                                                    />
+                                                    Binance Pay
+                                                  </button>
 
-                                                {merchantTradeNo && (
+                                                  {/* {merchantTradeNo && (
                                                   <p>
                                                     Tracking order:{" "}
                                                     {merchantTradeNo}
@@ -4517,11 +5265,89 @@ const NewEvents = ({
                                                   <p>Tx Hash: {txHash}</p>
                                                 )}
 
-                                                <QRComponent />
-                                              </div>
-                                            )}
-                                          </>
-                                        )}
+                                                <QRComponent /> */}
+                                                </div>
+                                              )}
+                                            </>
+                                          )}
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === true && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  bearBundleState2 ===
+                                                    "deposit" ||
+                                                  bearBundleState2 ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  bearBundleState2 ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  bearShowApproval2 === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : " bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalBear(true)
+                                                }
+                                              >
+                                                {bearBundleState2 ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light bear-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
+                                                )}
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  bearDepositState2 !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : statusbinance !==
+                                                        "idle" &&
+                                                      statusbinance !==
+                                                        "failed" &&
+                                                      statusbinance !==
+                                                        "success"
+                                                    ? true
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  bearShowApproval2 === true &&
+                                                  checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : bearShowApproval2 ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? " bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleBuy(
+                                                    coinbase,
+                                                    activeEvent.title
+                                                  )
+                                                }
+                                              >
+                                                {buttonText}
+                                              </button>
+                                            </>
+                                          )}
                                       </div>
                                     )}
                                   </>
@@ -4550,118 +5376,185 @@ const NewEvents = ({
                                             Log In
                                           </NavLink>
                                         )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                beastBundleState ===
-                                                  "deposit" ||
-                                                beastBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false ||
-                                                !isEOA
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                beastBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                beastShowApproval === false
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : "beast-siege-btn beast-button"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalBeast()
-                                              }
-                                            >
-                                              {beastBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light beast-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                isEOA &&
-                                                beastDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                beastShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : beastShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "beast-siege-btn beast-button"
-                                                  : "beast-siege-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositBeast()
-                                              }
-                                            >
-                                              {beastDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light beast-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Activate"
-                                              )}
-                                            </button>
-                                            {window.WALLET_TYPE ===
-                                              "binance" && (
-                                              <div className="flex flex-col items-center">
-                                                <button
-                                                  onClick={() =>
-                                                    handleBuy(
-                                                      coinbase,
-                                                      activeEvent.title
-                                                    )
-                                                  }
-                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
-                                                  disabled={
-                                                    statusbinance !== "idle" &&
-                                                    statusbinance !==
-                                                      "failed" &&
-                                                    statusbinance !== "success"
-                                                  }
-                                                >
-                                                  {buttonText}
-                                                </button>
-
-                                                {merchantTradeNo && (
-                                                  <p>
-                                                    Tracking order:{" "}
-                                                    {merchantTradeNo}
-                                                  </p>
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === false && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  beastBundleState ===
+                                                    "deposit" ||
+                                                  beastBundleState ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  beastBundleState ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  beastShowApproval === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "beast-siege-btn beast-button"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalBeast(false)
+                                                }
+                                              >
+                                                {beastBundleState ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light beast-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
                                                 )}
-                                                {txHash && (
-                                                  <p>Tx Hash: {txHash}</p>
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  beastDepositState !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  beastShowApproval === true &&
+                                                  checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : beastShowApproval ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "beast-siege-btn beast-button"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleDepositBeast()
+                                                }
+                                              >
+                                                {beastDepositState ===
+                                                "loading-deposit" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light beast-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Activate"
                                                 )}
+                                              </button>
+                                              {window.WALLET_TYPE ===
+                                                "binance" && (
+                                                <div className="flex flex-col items-center">
+                                                  <button
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
+                                                    className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
+                                                  >
+                                                    <img
+                                                      style={{ height: 18 }}
+                                                      src={
+                                                        "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                      }
+                                                      alt=""
+                                                    />
+                                                    Binance Pay
+                                                  </button>
+                                                </div>
+                                              )}
+                                            </>
+                                          )}
 
-                                                <QRComponent />
-                                              </div>
-                                            )}
-                                          </>
-                                        )}
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === true && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  beastBundleState2 ===
+                                                    "deposit" ||
+                                                  beastBundleState2 ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  beastBundleState2 ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  beastShowApproval2 === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : " bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalBeast(true)
+                                                }
+                                              >
+                                                {beastBundleState2 ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light beast-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
+                                                )}
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  beastDepositState2 !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : statusbinance !==
+                                                        "idle" &&
+                                                      statusbinance !==
+                                                        "failed" &&
+                                                      statusbinance !==
+                                                        "success"
+                                                    ? true
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  beastShowApproval2 === true &&
+                                                  checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : beastShowApproval2 ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleBuy(
+                                                    coinbase,
+                                                    activeEvent.title
+                                                  )
+                                                }
+                                              >
+                                                {buttonText}
+                                              </button>
+                                            </>
+                                          )}
                                       </div>
                                     )}
                                   </>
@@ -4690,118 +5583,178 @@ const NewEvents = ({
                                             Log In
                                           </NavLink>
                                         )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                eagleBundleState ===
-                                                  "deposit" ||
-                                                eagleBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false ||
-                                                !isEOA
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                eagleBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                eagleShowApproval === false
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : "beast-siege-btn eagle-button"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalEagle()
-                                              }
-                                            >
-                                              {eagleBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light eagle-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                isEOA &&
-                                                eagleDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                eagleShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : eagleShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "beast-siege-btn eagle-button"
-                                                  : "beast-siege-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositEagle()
-                                              }
-                                            >
-                                              {eagleDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light eagle-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Activate"
-                                              )}
-                                            </button>
-                                            {window.WALLET_TYPE ===
-                                              "binance" && (
-                                              <div className="flex flex-col items-center">
-                                                <button
-                                                  onClick={() =>
-                                                    handleBuy(
-                                                      coinbase,
-                                                      activeEvent.title
-                                                    )
-                                                  }
-                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
-                                                  disabled={
-                                                    statusbinance !== "idle" &&
-                                                    statusbinance !==
-                                                      "failed" &&
-                                                    statusbinance !== "success"
-                                                  }
-                                                >
-                                                  {buttonText}
-                                                </button>
-
-                                                {merchantTradeNo && (
-                                                  <p>
-                                                    Tracking order:{" "}
-                                                    {merchantTradeNo}
-                                                  </p>
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === false && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  eagleBundleState ===
+                                                    "deposit" ||
+                                                  eagleBundleState ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  eagleBundleState ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  eagleShowApproval === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "beast-siege-btn eagle-button"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalEagle(false)
+                                                }
+                                              >
+                                                {eagleBundleState ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light eagle-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
                                                 )}
-                                                {txHash && (
-                                                  <p>Tx Hash: {txHash}</p>
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  eagleDepositState !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  eagleShowApproval === true &&
+                                                  checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : eagleShowApproval ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "beast-siege-btn eagle-button"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleDepositEagle()
+                                                }
+                                              >
+                                                {eagleDepositState ===
+                                                "loading-deposit" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light eagle-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Activate"
                                                 )}
+                                              </button>
+                                              {window.WALLET_TYPE ===
+                                                "binance" && (
+                                                <div className="flex flex-col items-center">
+                                                  <button
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
+                                                    className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
+                                                  >
+                                                    Binance Pay
+                                                  </button>
+                                                </div>
+                                              )}
+                                            </>
+                                          )}
 
-                                                <QRComponent />
-                                              </div>
-                                            )}
-                                          </>
-                                        )}
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === true && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  eagleBundleState2 ===
+                                                    "deposit" ||
+                                                  eagleBundleState2 ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  eagleBundleState2 ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  eagleShowApproval2 === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalEagle(true)
+                                                }
+                                              >
+                                                {eagleBundleState2 ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light eagle-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
+                                                )}
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  eagleDepositState2 !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : statusbinance !==
+                                                        "idle" &&
+                                                      statusbinance !==
+                                                        "failed" &&
+                                                      statusbinance !==
+                                                        "success"
+                                                    ? true
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  eagleShowApproval2 === true &&
+                                                  checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : eagleShowApproval2 ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleBuy(
+                                                    coinbase,
+                                                    activeEvent.title
+                                                  )
+                                                }
+                                              >
+                                                {buttonText}
+                                              </button>
+                                            </>
+                                          )}
                                       </div>
                                     )}
                                   </>
@@ -4830,118 +5783,185 @@ const NewEvents = ({
                                             Log In
                                           </NavLink>
                                         )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                scorpionBundleState ===
-                                                  "deposit" ||
-                                                scorpionBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false ||
-                                                !isEOA
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                scorpionBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                scorpionShowApproval === false
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : "beast-siege-btn scorpion-button"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalScorpion()
-                                              }
-                                            >
-                                              {scorpionBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light scorpion-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                isEOA &&
-                                                scorpionDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                scorpionShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : scorpionShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "beast-siege-btn scorpion-button"
-                                                  : "beast-siege-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositScorpion()
-                                              }
-                                            >
-                                              {scorpionDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light scorpion-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Activate"
-                                              )}
-                                            </button>
-                                            {window.WALLET_TYPE ===
-                                              "binance" && (
-                                              <div className="flex flex-col items-center">
-                                                <button
-                                                  onClick={() =>
-                                                    handleBuy(
-                                                      coinbase,
-                                                      activeEvent.title
-                                                    )
-                                                  }
-                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
-                                                  disabled={
-                                                    statusbinance !== "idle" &&
-                                                    statusbinance !==
-                                                      "failed" &&
-                                                    statusbinance !== "success"
-                                                  }
-                                                >
-                                                  {buttonText}
-                                                </button>
-
-                                                {merchantTradeNo && (
-                                                  <p>
-                                                    Tracking order:{" "}
-                                                    {merchantTradeNo}
-                                                  </p>
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === false && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  scorpionBundleState ===
+                                                    "deposit" ||
+                                                  scorpionBundleState ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  scorpionBundleState ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  scorpionShowApproval === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "beast-siege-btn scorpion-button"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalScorpion(false)
+                                                }
+                                              >
+                                                {scorpionBundleState ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light scorpion-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
                                                 )}
-                                                {txHash && (
-                                                  <p>Tx Hash: {txHash}</p>
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  scorpionDepositState !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  scorpionShowApproval ===
+                                                    true && checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : scorpionShowApproval ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "beast-siege-btn scorpion-button"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleDepositScorpion()
+                                                }
+                                              >
+                                                {scorpionDepositState ===
+                                                "loading-deposit" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light scorpion-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Activate"
                                                 )}
-
-                                                <QRComponent />
-                                              </div>
-                                            )}
-                                          </>
-                                        )}
+                                              </button>
+                                              {window.WALLET_TYPE ===
+                                                "binance" && (
+                                                <div className="flex flex-col items-center">
+                                                  <button
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
+                                                    className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
+                                                  >
+                                                    <img
+                                                      style={{ height: 18 }}
+                                                      src={
+                                                        "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                      }
+                                                      alt=""
+                                                    />
+                                                    Binance Pay
+                                                  </button>
+                                                </div>
+                                              )}
+                                            </>
+                                          )}
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === true && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  scorpionBundleState2 ===
+                                                    "deposit" ||
+                                                  scorpionBundleState2 ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  scorpionBundleState2 ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  scorpionShowApproval2 ===
+                                                    false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalScorpion(true)
+                                                }
+                                              >
+                                                {scorpionBundleState2 ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light scorpion-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
+                                                )}
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  scorpionDepositState2 !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : statusbinance !==
+                                                        "idle" &&
+                                                      statusbinance !==
+                                                        "failed" &&
+                                                      statusbinance !==
+                                                        "success"
+                                                    ? true
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  scorpionShowApproval2 ===
+                                                    true && checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : scorpionShowApproval2 ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleBuy(
+                                                    coinbase,
+                                                    activeEvent.title
+                                                  )
+                                                }
+                                              >
+                                                {buttonText}
+                                              </button>
+                                            </>
+                                          )}
                                       </div>
                                     )}
                                   </>
@@ -4970,118 +5990,185 @@ const NewEvents = ({
                                             Log In
                                           </NavLink>
                                         )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                cyclopsBundleState ===
-                                                  "deposit" ||
-                                                cyclopsBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false ||
-                                                !isEOA
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                cyclopsBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                cyclopsShowApproval === false
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : "beast-siege-btn cyclops-button"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalCyclops()
-                                              }
-                                            >
-                                              {cyclopsBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light cyclops-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                isEOA &&
-                                                cyclopsDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                cyclopsShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "beast-siege-btn-inactive d-none"
-                                                  : cyclopsShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "beast-siege-btn cyclops-button"
-                                                  : "beast-siege-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositCyclops()
-                                              }
-                                            >
-                                              {cyclopsDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  className="spinner-border spinner-border-sm text-light cyclops-button"
-                                                  role="status"
-                                                >
-                                                  <span className="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Activate"
-                                              )}
-                                            </button>
-                                            {window.WALLET_TYPE ===
-                                              "binance" && (
-                                              <div className="flex flex-col items-center">
-                                                <button
-                                                  onClick={() =>
-                                                    handleBuy(
-                                                      coinbase,
-                                                      activeEvent.title
-                                                    )
-                                                  }
-                                                  className="bg-yellow-500 text-black px-4 py-2 rounded-lg"
-                                                  disabled={
-                                                    statusbinance !== "idle" &&
-                                                    statusbinance !==
-                                                      "failed" &&
-                                                    statusbinance !== "success"
-                                                  }
-                                                >
-                                                  {buttonText}
-                                                </button>
-
-                                                {merchantTradeNo && (
-                                                  <p>
-                                                    Tracking order:{" "}
-                                                    {merchantTradeNo}
-                                                  </p>
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === false && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  cyclopsBundleState ===
+                                                    "deposit" ||
+                                                  cyclopsBundleState ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  cyclopsBundleState ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  cyclopsShowApproval === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "beast-siege-btn cyclops-button"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalCyclops(false)
+                                                }
+                                              >
+                                                {cyclopsBundleState ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light cyclops-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
                                                 )}
-                                                {txHash && (
-                                                  <p>Tx Hash: {txHash}</p>
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  cyclopsDepositState !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  cyclopsShowApproval ===
+                                                    true && checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : cyclopsShowApproval ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "beast-siege-btn cyclops-button"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleDepositCyclops()
+                                                }
+                                              >
+                                                {cyclopsDepositState ===
+                                                "loading-deposit" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light cyclops-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Activate"
                                                 )}
+                                              </button>
+                                              {window.WALLET_TYPE ===
+                                                "binance" && (
+                                                <div className="flex flex-col items-center">
+                                                  <button
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
+                                                    className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
+                                                  >
+                                                    <img
+                                                      style={{ height: 18 }}
+                                                      src={
+                                                        "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                      }
+                                                      alt=""
+                                                    />
+                                                    Binance Pay
+                                                  </button>
+                                                </div>
+                                              )}
+                                            </>
+                                          )}
 
-                                                <QRComponent />
-                                              </div>
-                                            )}
-                                          </>
-                                        )}
+                                        {isConnected &&
+                                          email &&
+                                          binancePay === true && (
+                                            <>
+                                              <button
+                                                disabled={
+                                                  cyclopsBundleState2 ===
+                                                    "deposit" ||
+                                                  cyclopsBundleState2 ===
+                                                    "loading" ||
+                                                  checkWallet === false ||
+                                                  !isEOA
+                                                    ? true
+                                                    : false
+                                                }
+                                                className={` ${
+                                                  cyclopsBundleState2 ===
+                                                    "deposit" ||
+                                                  checkWallet === false ||
+                                                  cyclopsShowApproval2 === false
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleApprovalCyclops(true)
+                                                }
+                                              >
+                                                {cyclopsBundleState2 ===
+                                                "loading" ? (
+                                                  <div
+                                                    className="spinner-border spinner-border-sm text-light cyclops-button"
+                                                    role="status"
+                                                  >
+                                                    <span className="visually-hidden">
+                                                      Loading...
+                                                    </span>
+                                                  </div>
+                                                ) : (
+                                                  "Approve"
+                                                )}
+                                              </button>
+                                              <button
+                                                disabled={
+                                                  checkWallet === true &&
+                                                  isEOA &&
+                                                  cyclopsDepositState2 !==
+                                                    "loading-deposit"
+                                                    ? false
+                                                    : statusbinance !==
+                                                        "idle" &&
+                                                      statusbinance !==
+                                                        "failed" &&
+                                                      statusbinance !==
+                                                        "success"
+                                                    ? true
+                                                    : true
+                                                }
+                                                className={` ${
+                                                  cyclopsShowApproval2 ===
+                                                    true && checkWallet === true
+                                                    ? "beast-siege-btn-inactive d-none"
+                                                    : cyclopsShowApproval2 ===
+                                                        false &&
+                                                      checkWallet === true
+                                                    ? "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all  py-2 px-4"
+                                                    : "beast-siege-btn-inactive"
+                                                }  py-2 px-4`}
+                                                onClick={() =>
+                                                  handleBuy(
+                                                    coinbase,
+                                                    activeEvent.title
+                                                  )
+                                                }
+                                              >
+                                                {buttonText}
+                                              </button>
+                                            </>
+                                          )}
                                       </div>
                                     )}
                                   </>
@@ -5443,7 +6530,9 @@ const NewEvents = ({
                                                 {getFormattedNumber(
                                                   puzzleMadnessWodAmount
                                                 )}{" "}
-                                                WOD
+                                                {binancePay === false
+                                                  ? "WOD"
+                                                  : "USDT"}
                                               </span>
                                               <span className="beast-siege-usd-price">
                                                 ($
@@ -5578,85 +6667,181 @@ const NewEvents = ({
                                               Log In
                                             </NavLink>
                                           )}
-                                          {isConnected && email && (
-                                            <>
-                                              <button
-                                                disabled={
-                                                  puzzleMadnessBundleState ===
-                                                    "deposit" ||
-                                                  puzzleMadnessBundleState ===
-                                                    "loading" ||
-                                                  checkWallet === false ||
-                                                  !isEOA
-                                                    ? true
-                                                    : false
-                                                }
-                                                className={` ${
-                                                  puzzleMadnessBundleState ===
-                                                    "deposit" ||
-                                                  checkWallet === false ||
-                                                  puzzleMadnessShowApproval ===
-                                                    false
-                                                    ? "beast-siege-btn-inactive d-none"
-                                                    : "beast-siege-btn"
-                                                }  py-2 px-4`}
-                                                onClick={() =>
-                                                  handleApprovalPuzzle()
-                                                }
-                                              >
-                                                {puzzleMadnessBundleState ===
-                                                "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                          {isConnected &&
+                                            email &&
+                                            binancePay === false && (
+                                              <>
+                                                <button
+                                                  disabled={
+                                                    puzzleMadnessBundleState ===
+                                                      "deposit" ||
+                                                    puzzleMadnessBundleState ===
+                                                      "loading" ||
+                                                    checkWallet === false ||
+                                                    !isEOA
+                                                      ? true
+                                                      : false
+                                                  }
+                                                  className={` ${
+                                                    puzzleMadnessBundleState ===
+                                                      "deposit" ||
+                                                    checkWallet === false ||
+                                                    puzzleMadnessShowApproval ===
+                                                      false
+                                                      ? "beast-siege-btn-inactive d-none"
+                                                      : "beast-siege-btn"
+                                                  }  py-2 px-4`}
+                                                  onClick={() =>
+                                                    handleApprovalPuzzle(false)
+                                                  }
+                                                >
+                                                  {puzzleMadnessBundleState ===
+                                                  "loading" ? (
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
+                                                  ) : (
+                                                    "Approve"
+                                                  )}
+                                                </button>
+                                                <button
+                                                  disabled={
+                                                    checkWallet === true &&
+                                                    isEOA &&
+                                                    puzzleMadnessDepositState !==
+                                                      "loading-deposit"
+                                                      ? false
+                                                      : true
+                                                  }
+                                                  className={` ${
+                                                    puzzleMadnessShowApproval ===
+                                                      true &&
+                                                    checkWallet === true
+                                                      ? "beast-siege-btn-inactive d-none"
+                                                      : puzzleMadnessShowApproval ===
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "beast-siege-btn"
+                                                      : "beast-siege-btn-inactive"
+                                                  }  py-2 px-4`}
+                                                  onClick={() =>
+                                                    handleDepositPuzzle()
+                                                  }
+                                                >
+                                                  {puzzleMadnessDepositState ===
+                                                  "loading-deposit" ? (
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
+                                                  ) : (
+                                                    "Activate"
+                                                  )}
+                                                </button>
+                                                {window.WALLET_TYPE ===
+                                                  "binance" && (
+                                                  <div className="flex flex-col items-center">
+                                                    <button
+                                                      onClick={() =>
+                                                        setbinancePay(true)
+                                                      }
+                                                      className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
+                                                    >
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      Binance Pay
+                                                    </button>
                                                   </div>
-                                                ) : (
-                                                  "Approve"
                                                 )}
-                                              </button>
-                                              <button
-                                                disabled={
-                                                  checkWallet === true &&
-                                                  isEOA &&
-                                                  puzzleMadnessDepositState !==
-                                                    "loading-deposit"
-                                                    ? false
-                                                    : true
-                                                }
-                                                className={` ${
-                                                  puzzleMadnessShowApproval ===
-                                                    true && checkWallet === true
-                                                    ? "beast-siege-btn-inactive d-none"
-                                                    : puzzleMadnessShowApproval ===
-                                                        false &&
-                                                      checkWallet === true
-                                                    ? "beast-siege-btn"
-                                                    : "beast-siege-btn-inactive"
-                                                }  py-2 px-4`}
-                                                onClick={() =>
-                                                  handleDepositPuzzle()
-                                                }
-                                              >
-                                                {puzzleMadnessDepositState ===
-                                                "loading-deposit" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
-                                                  </div>
-                                                ) : (
-                                                  "Activate"
-                                                )}
-                                              </button>
-                                            </>
-                                          )}
+                                              </>
+                                            )}
+                                          {isConnected &&
+                                            email &&
+                                            binancePay === true && (
+                                              <>
+                                                <button
+                                                  disabled={
+                                                    puzzleMadnessBundleState2 ===
+                                                      "deposit" ||
+                                                    puzzleMadnessBundleState ===
+                                                      "loading" ||
+                                                    checkWallet === false ||
+                                                    !isEOA
+                                                      ? true
+                                                      : false
+                                                  }
+                                                  className={` ${
+                                                    puzzleMadnessBundleState2 ===
+                                                      "deposit" ||
+                                                    checkWallet === false ||
+                                                    puzzleMadnessShowApproval2 ===
+                                                      false
+                                                      ? "beast-siege-btn-inactive d-none"
+                                                      : "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all"
+                                                  }  py-2 px-4`}
+                                                  onClick={() =>
+                                                    handleApprovalPuzzle(true)
+                                                  }
+                                                >
+                                                  {puzzleMadnessBundleState2 ===
+                                                  "loading" ? (
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
+                                                  ) : (
+                                                    "Approve"
+                                                  )}
+                                                </button>
+                                                <button
+                                                  disabled={
+                                                    checkWallet === true &&
+                                                    isEOA &&
+                                                    puzzleMadnessDepositState2 !==
+                                                      "loading-deposit"
+                                                      ? false
+                                                      : true
+                                                  }
+                                                  className={` ${
+                                                    puzzleMadnessShowApproval2 ===
+                                                      true &&
+                                                    checkWallet === true
+                                                      ? "beast-siege-btn-inactive d-none"
+                                                      : puzzleMadnessShowApproval2 ===
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all"
+                                                      : "beast-siege-btn-inactive"
+                                                  }  py-2 px-4`}
+                                                  onClick={() =>
+                                                    handleBuy(
+                                                      coinbase,
+                                                      activeEvent.title
+                                                    )
+                                                  }
+                                                >
+                                                  {buttonText}
+                                                </button>
+                                              </>
+                                            )}
                                         </div>
                                       </>
                                     ) : (
@@ -6016,7 +7201,7 @@ const NewEvents = ({
           />
         </OutsideClickHandler>
       )}
-
+      <QRComponent />
       {/*   
 
      

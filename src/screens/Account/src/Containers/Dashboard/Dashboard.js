@@ -26,6 +26,7 @@ import styled from "styled-components";
 import ReCaptchaV2 from "react-google-recaptcha";
 import GoldenPassPopup from "../../../../../components/PackagePopups/GoldenPassPopup";
 import {
+  golden_pass2_address,
   GOLDEN_PASS_ABI,
   golden_pass_address,
 } from "../../../../../components/NewEvents/abi";
@@ -4542,7 +4543,20 @@ function Dashboard({
         golden_pass_address
       );
 
+      const goldenPassContract2 = new window.bscWeb3.eth.Contract(
+        GOLDEN_PASS_ABI,
+        golden_pass2_address
+      );
+
       const purchaseTimestamp = await goldenPassContract.methods
+        .getTimeOfExpireBuff(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const purchaseTimestamp2 = await goldenPassContract2.methods
         .getTimeOfExpireBuff(wallet)
         .call()
         .catch((e) => {
@@ -4554,6 +4568,9 @@ function Dashboard({
 
       if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
         handleSetAvailableTime(purchaseTimestamp);
+      }
+      if (today.getTime() <= Number(purchaseTimestamp2) * 1000) {
+        handleSetAvailableTime(purchaseTimestamp2);
       }
     }
   };
@@ -7590,6 +7607,12 @@ function Dashboard({
           hashValue === "#golden-pass") && (
           <GoldenPassPopup
             onClosePopup={() => {
+              setgoldenPassPopup(false);
+              handleClosePopup();
+              window.location.hash = "";
+            }}
+            onConnectWallet={() => {
+              handleConnect();
               setgoldenPassPopup(false);
               handleClosePopup();
               window.location.hash = "";

@@ -6186,16 +6186,22 @@ function App() {
   // };
   const fetchBscBalance = async () => {
     if (coinbase && networkId === 56 && window.ethereum) {
-      const balance = await window.ethereum.request({
-        method: "eth_getBalance",
-        params: [coinbase, "latest"],
-      });
+      const balance = await window.ethereum
+        .request({
+          method: "eth_getBalance",
+          params: [coinbase, "latest"],
+        })
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      if (balance) {
+        const bscWeb3 = new Web3(window.config.bsc_endpoint);
+        const stringBalance = bscWeb3.utils.hexToNumberString(balance);
 
-      const bscWeb3 = new Web3(window.config.bsc_endpoint);
-      const stringBalance = bscWeb3.utils.hexToNumberString(balance);
-
-      const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
-      setBscAmount(amount.slice(0, 7));
+        const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
+        setBscAmount(amount.slice(0, 7));
+      }
     }
   };
 
