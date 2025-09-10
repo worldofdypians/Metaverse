@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   LoginWrapper,
@@ -10,25 +10,37 @@ import {
 } from "../../Components";
 import classes from "./ForgotPassword.module.css";
 import LoginCardBNB from "../../Components/LoginCard/LoginCardBNB";
+import ReCaptchaV2 from "react-google-recaptcha";
 
 const ForgotPasswordBNB = ({ onSuccess }) => {
   const [email, setEmail] = useState("");
   const [isEmailSentSucces, setEmailSentSucces] = useState(false);
   const [error, setError] = useState("");
+  const [captchaValue, setCaptchaValue] = useState(null);
+
   const history = useNavigate();
+  const recaptchaRef = useRef(null);
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+  };
 
   const handleEmail = async () => {
-    try {
-      const { data } = await axios.post(
-        "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/SendRecoveryEmail",
-        { email: email }
-      );
-      if (data.success) {
-        setEmailSentSucces(true);
-      }
-    } catch (error) {
-      if (error?.response?.data?.code === 400) {
-        setError("Make sure you put the correct email address!");
+    if (!captchaValue) {
+      window.alertify.error("Please verify the reCAPTCHA");
+    } else {
+      try {
+        const { data } = await axios.post(
+          "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/SendRecoveryEmail",
+          { email: email }
+        );
+        if (data.success) {
+          setEmailSentSucces(true);
+        }
+      } catch (error) {
+        if (error?.response?.data?.code === 400) {
+          setError("Make sure you put the correct email address!");
+        }
       }
     }
   };
@@ -42,7 +54,7 @@ const ForgotPasswordBNB = ({ onSuccess }) => {
     return (
       <div style={{ margin: "auto" }}>
         <div className={classes.containerbnb}>
-        <h6 className={classes.create_acc_bnb}>
+          <h6 className={classes.create_acc_bnb}>
             We sent you a link at your email.
           </h6>
           <span className={classes.createplayertxt2} style={{ margin: "auto" }}>
@@ -87,6 +99,14 @@ const ForgotPasswordBNB = ({ onSuccess }) => {
               onPress={handleEmail}
               title={"Send Email"}
               type={"primary2"}
+              disabled={!email || !captchaValue}
+            />
+            <ReCaptchaV2
+              sitekey="6LfFVMQrAAAAAGauKrn5cyQZRaXHMMlHMUz9IOnu"
+              style={{ display: "inline-block" }}
+              theme="dark"
+              ref={recaptchaRef}
+              onChange={handleCaptchaChange}
             />
             <h1
               onClick={() => {
