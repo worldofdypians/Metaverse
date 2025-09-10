@@ -935,7 +935,9 @@
   .mx-2 {
     margin-inline: calc(var(--spacing) * 2);
   }
-
+ .m-0\.5 {
+    margin: calc(var(--spacing) * .6);
+  }
   .mx-3\.5 {
     margin-inline: calc(var(--spacing) * 3.5);
   }
@@ -2100,7 +2102,9 @@
   .border-green-300\/50 {
     border-color: color-mix(in srgb, oklch(.871 .15 154.449) 50%, transparent);
   }
-
+  .border-gray-500 {
+    border-color: var(--color-gray-500);
+  }
   @supports (color: color-mix(in lab, red, red)) {
     .border-green-300\/50 {
       border-color: color-mix(in oklab, var(--color-green-300) 50%, transparent);

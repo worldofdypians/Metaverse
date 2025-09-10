@@ -232,6 +232,7 @@ export function useBinancePay() {
               setShowQr(false);
               setStatus("failed");
               localStorage.removeItem("binanceOrder");
+              stopPolling();
               setTimeout(() => {
                 setStatus("idle");
               }, 3000);

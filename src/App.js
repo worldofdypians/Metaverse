@@ -1612,7 +1612,7 @@ function App() {
 
   const checkIfEOA = async (address) => {
     if (window.ethereum) {
-      if (address) {
+      if (address && window.WALLET_TYPE !== "binance") {
         let web3 = new Web3(window.ethereum);
         const code = await web3.eth.getCode(address).catch((e) => {
           console.error(e);

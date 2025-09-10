@@ -565,6 +565,28 @@
     font-size: 16px;
   }
 }
+
+.binance-beast-siege-btn {
+  border-radius: 12px;
+  background: linear-gradient(to right, oklch(0.852 0.199 91.936) 0%, oklch(0.75 0.183 55.934) 100%);
+  color: #000;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+  width: fit-content;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
+  @media screen and (max-width: 786px) {
+    font-size: 16px;
+  }
+}
+
 .beast-siege-info-wrapper {
   border-radius: 12px;
   height: 380px;
