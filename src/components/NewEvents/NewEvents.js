@@ -318,25 +318,25 @@ const NewEvents = ({
 
   //PUZZLE MADNESS
   const getBundlePrizesPuzzle = async () => {
-    if (binancePay === true) {
-      setpuzzleMadnessWodAmount(4);
-    } else {
-      const puzzleContract = new window.bscWeb3.eth.Contract(
-        PUZZLE_MADNESS_ABI,
-        puzzle_madness_address
-      );
+    // if (binancePay === true) {
+    //   setpuzzleMadnessWodAmount(4);
+    // } else {
+    const puzzleContract = new window.bscWeb3.eth.Contract(
+      PUZZLE_MADNESS_ABI,
+      puzzle_madness_address
+    );
 
-      const result_puzzle = await puzzleContract.methods
-        .getEstimatedBundleWODAmount()
-        .call()
-        .catch((e) => {
-          console.error(e);
-        });
+    const result_puzzle = await puzzleContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
 
-      if (result_puzzle) {
-        setpuzzleMadnessWodAmount(result_puzzle / 1e18);
-      }
+    if (result_puzzle) {
+      setpuzzleMadnessWodAmount(result_puzzle / 1e18);
     }
+    // }
   };
 
   const handleRefreshCountdownPuzzle = async () => {
@@ -5103,7 +5103,7 @@ const NewEvents = ({
                                         {adjustedDay === 1 ? (
                                           <div className="space-y-2">
                                             <span className="challenge-popup-desc text-white">
-                                              Available payment methods:
+                                              Payment methods:
                                             </span>
                                             <div className="space-y-2 col-lg-5">
                                               <motion.div
@@ -5123,17 +5123,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      !binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {!binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                 
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -5167,7 +5157,7 @@ const NewEvents = ({
                                                     WOD
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       !binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -5198,17 +5188,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                  
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -5242,7 +5222,7 @@ const NewEvents = ({
                                                     USDT
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -5299,7 +5279,7 @@ const NewEvents = ({
                                         {adjustedDay === 2 ? (
                                           <div className="space-y-2">
                                             <span className="challenge-popup-desc text-white">
-                                              Available payment methods:
+                                              Payment methods:
                                             </span>
                                             <div className="space-y-2 col-lg-5">
                                               <motion.div
@@ -5319,17 +5299,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      !binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {!binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                  
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -5363,7 +5333,7 @@ const NewEvents = ({
                                                     WOD
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       !binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -5394,17 +5364,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                  
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -5438,7 +5398,7 @@ const NewEvents = ({
                                                     USDT
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -5495,7 +5455,7 @@ const NewEvents = ({
                                         {adjustedDay === 3 ? (
                                           <div className="space-y-2">
                                             <span className="challenge-popup-desc text-white">
-                                              Available payment methods:
+                                              Payment methods:
                                             </span>
                                             <div className="space-y-2 col-lg-5">
                                               <motion.div
@@ -5515,17 +5475,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      !binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {!binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                 
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -5559,7 +5509,7 @@ const NewEvents = ({
                                                     WOD
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       !binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -5590,17 +5540,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                 
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -5634,7 +5574,7 @@ const NewEvents = ({
                                                     USDT
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -5692,7 +5632,7 @@ const NewEvents = ({
                                           <div className="d-flex flex-column gap-2">
                                             <div className="space-y-2">
                                               <span className="challenge-popup-desc text-white">
-                                                Available payment methods:
+                                                Payment methods:
                                               </span>
                                               <div className="space-y-2 col-lg-5">
                                                 <motion.div
@@ -5713,17 +5653,7 @@ const NewEvents = ({
                                                   }
                                                 >
                                                   <div className="flex items-center space-x-3">
-                                                    <div
-                                                      className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                        !binancePay
-                                                          ? "border-yellow-400 bg-yellow-400"
-                                                          : "border-gray-500"
-                                                      }`}
-                                                    >
-                                                      {!binancePay && (
-                                                        <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                      )}
-                                                    </div>
+                                                    
                                                     <img
                                                       style={{ height: 18 }}
                                                       src={
@@ -5757,7 +5687,7 @@ const NewEvents = ({
                                                       WOD
                                                     </p>
                                                     <p
-                                                      className={`text-xs m-0 ${
+                                                      className={`text-end text-xs m-0 ${
                                                         !binancePay
                                                           ? "text-yellow-200"
                                                           : "text-gray-400"
@@ -5788,17 +5718,7 @@ const NewEvents = ({
                                                   }
                                                 >
                                                   <div className="flex items-center space-x-3">
-                                                    <div
-                                                      className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                        binancePay
-                                                          ? "border-yellow-400 bg-yellow-400"
-                                                          : "border-gray-500"
-                                                      }`}
-                                                    >
-                                                      {binancePay && (
-                                                        <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                      )}
-                                                    </div>
+                                                    
                                                     <img
                                                       style={{ height: 18 }}
                                                       src={
@@ -5832,7 +5752,7 @@ const NewEvents = ({
                                                       USDT
                                                     </p>
                                                     <p
-                                                      className={`text-xs m-0 ${
+                                                      className={`text-end text-xs m-0 ${
                                                         binancePay
                                                           ? "text-yellow-200"
                                                           : "text-gray-400"
@@ -5890,7 +5810,7 @@ const NewEvents = ({
                                         {adjustedDay === 6 ? (
                                           <div className="space-y-2">
                                             <span className="challenge-popup-desc text-white">
-                                              Available payment methods:
+                                              Payment methods:
                                             </span>
                                             <div className="space-y-2 col-lg-5">
                                               <motion.div
@@ -5910,17 +5830,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      !binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {!binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                 
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -5954,7 +5864,7 @@ const NewEvents = ({
                                                     WOD
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       !binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -5985,17 +5895,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                  
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -6029,7 +5929,7 @@ const NewEvents = ({
                                                     USDT
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -6086,7 +5986,7 @@ const NewEvents = ({
                                         {adjustedDay === 7 ? (
                                           <div className="space-y-2">
                                             <span className="challenge-popup-desc text-white">
-                                              Available payment methods:
+                                              Payment methods:
                                             </span>
                                             <div className="space-y-2 col-lg-5">
                                               <motion.div
@@ -6106,17 +6006,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      !binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {!binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                 
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -6150,7 +6040,7 @@ const NewEvents = ({
                                                     WOD
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       !binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -6181,17 +6071,7 @@ const NewEvents = ({
                                                 }
                                               >
                                                 <div className="flex items-center space-x-3">
-                                                  <div
-                                                    className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                                                      binancePay
-                                                        ? "border-yellow-400 bg-yellow-400"
-                                                        : "border-gray-500"
-                                                    }`}
-                                                  >
-                                                    {binancePay && (
-                                                      <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-                                                    )}
-                                                  </div>
+                                                  
                                                   <img
                                                     style={{ height: 18 }}
                                                     src={
@@ -6225,7 +6105,7 @@ const NewEvents = ({
                                                     USDT
                                                   </p>
                                                   <p
-                                                    className={`text-xs m-0 ${
+                                                    className={`text-end text-xs m-0 ${
                                                       binancePay
                                                         ? "text-yellow-200"
                                                         : "text-gray-400"
@@ -7522,7 +7402,7 @@ const NewEvents = ({
                             </div>
                             <div className="col-12 col-xxl-6">
                               <div
-                                className={`beast-siege-info-wrapper ${activeEvent.class}-info  p-3 w-100 h-auto`}
+                                className={`beast-siege-info-wrapper ${activeEvent.class}-info  p-3 w-100 h-100`}
                               >
                                 <div className="d-flex flex-column gap-3">
                                   <div className="d-flex flex-column gap-2">
@@ -7570,37 +7450,38 @@ const NewEvents = ({
                                           </span>
                                         </div>
                                       ))}
-                                      {activeEvent?.binanceTip && (
-                                        <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-full overflow-hidden">
-                                          {/* Background image */}
+                                      {activeEvent?.binanceTip &&
+                                        binancePay === true &&
+                                        window.WALLET_TYPE !== "binance" && (
+                                          <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-full overflow-hidden">
+                                            {/* Background image */}
 
-                                          {/* Glow effect */}
-                                          <div
-                                            className={`absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-600 opacitytw-0 group-hover:opacitytw-10 transition-opacity duration-500 rounded-2xl`}
-                                          ></div>
+                                            {/* Glow effect */}
+                                            <div
+                                              className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                                            ></div>
 
-                                          <div className="relative">
-                                            {activeEvent?.binanceTip?.map(
-                                              (tip2, index) => (
-                                                <div
-                                                  className="d-flex align-items-center gap-2"
-                                                  key={index}
-                                                >
-                                                  <div className="yellow-dot"></div>
-                                                  <span className="challenge-popup-desc text-white">
-                                                    {tip2}
+                                            <div className="relative">
+                                              <div className="d-flex flex-column gap-2">
+                                                <div className="flex items-center space-x-3">
+                                                  <img
+                                                    src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                                    alt=""
+                                                    className="w-5 h-5 text-yellow-400"
+                                                  />
+                                                  <span className="font-medium text-yellow-400">
+                                                    Binance Pay Setup
                                                   </span>
                                                 </div>
-                                              )
-                                            )}
+                                                <span className="challenge-popup-desc text-white">
+                                                  Import your game wallet into
+                                                  Binance Wallet app or connect
+                                                  your existing Binance Wallet.
+                                                </span>
+                                              </div>
+                                            </div>
                                           </div>
-
-                                          {/* Animated border - simplified without custom keyframes */}
-                                          <div
-                                            className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-600 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
-                                          ></div>
-                                        </div>
-                                      )}
+                                        )}
                                     </div>
                                   </div>
                                 </div>
@@ -7888,125 +7769,142 @@ const NewEvents = ({
                                         ) : (
                                           <div className="d-flex flex-column gap-1">
                                             <div className="space-y-2 col-lg-5">
-      <span className="challenge-popup-desc text-white">
-        Available payment methods:
-      </span>
-      <div className="space-y-2">
-        <motion.div
-          // whileTap={{ scale: 0.98 }}
-          className={` ${
-            (puzzleMadnessBundleState2 === "loading" || statusbinance !== "idle") &&
-            "pe-none"
-          } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-            !binancePay
-              ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-              : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-          }`}
-          onClick={() => setbinancePay(false)}
-        >
-          <div className="flex items-center space-x-3">
-            <div
-              className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                !binancePay
-                  ? "border-yellow-400 bg-yellow-400"
-                  : "border-gray-500"
-              }`}
-            >
-              {!binancePay && (
-                <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-              )}
-            </div>
-            <img
-              style={{ height: 18 }}
-              src={"https://cdn.worldofdypians.com/wod/walletIcon.svg"}
-              alt=""
-            />
-            <div>
-              <p
-                className={`text-sm font-medium m-0 ${
-                  !binancePay ? "text-white" : "text-gray-200"
-                }`}
-              >
-                EVM Wallet
-              </p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p
-              className={`font-semibold m-0 text-lg m-0 m-0 ${
-                !binancePay ? "text-white" : "text-gray-200"
-              }`}
-            >
-              {getFormattedNumber(puzzleMadnessWodAmount)} WOD
-            </p>
-            <p
-              className={`text-xs m-0 ${
-                !binancePay ? "text-yellow-200" : "text-gray-400"
-              }`}
-            >
-              ${getFormattedNumber(activeEvent.usdPrice)}
-            </p>
-          </div>
-        </motion.div>
-        <motion.div
-          // whileTap={{ scale: 0.98 }}
-          className={`${
-            (puzzleMadnessBundleState === "loading" ||
-              puzzleMadnessDepositState === "loading-deposit") &&
-            "pe-none"
-          } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-            binancePay
-              ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-              : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-          }`}
-          onClick={() => setbinancePay(true)}
-        >
-          <div className="flex items-center space-x-3">
-            <div
-              className={`w-4 h-4 rounded-full bordertw-2 transition-all ${
-                binancePay
-                  ? "border-yellow-400 bg-yellow-400"
-                  : "border-gray-500"
-              }`}
-            >
-              {binancePay && (
-                <div className="w-2 h-2 bg-white rounded-full m-0.5" />
-              )}
-            </div>
-            <img
-              style={{ height: 18 }}
-              src={"https://cdn.worldofdypians.com/wod/b-pay.svg"}
-              alt=""
-            />
-            <div>
-              <p
-                className={`text-sm font-medium m-0 ${
-                  binancePay ? "text-white" : "text-gray-200"
-                }`}
-              >
-                Binance Pay
-              </p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p
-              className={`font-semibold m-0 text-lg m-0 ${
-                binancePay ? "text-white" : "text-gray-200"
-              }`}
-            >
-              {getFormattedNumber(activeEvent.usdPrice)} USDT
-            </p>
-            <p
-              className={`text-xs m-0 ${
-                binancePay ? "text-yellow-200" : "text-gray-400"
-              }`}
-            >
-              ${getFormattedNumber(activeEvent.usdPrice)}
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    </div>
+                                              <span className="challenge-popup-desc text-white">
+                                                Payment methods:
+                                              </span>
+                                              <div className="space-y-2">
+                                                <motion.div
+                                                  // whileTap={{ scale: 0.98 }}
+                                                  className={` ${
+                                                    (puzzleMadnessBundleState2 ===
+                                                      "loading" ||
+                                                      statusbinance !==
+                                                        "idle") &&
+                                                    "pe-none"
+                                                  } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                                    !binancePay
+                                                      ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
+                                                      : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
+                                                  }`}
+                                                  onClick={() =>
+                                                    setbinancePay(false)
+                                                  }
+                                                >
+                                                  <div className="flex items-center space-x-3">
+                                                  
+                                                    <img
+                                                      style={{ height: 18 }}
+                                                      src={
+                                                        "https://cdn.worldofdypians.com/wod/walletIcon.svg"
+                                                      }
+                                                      alt=""
+                                                    />
+                                                    <div>
+                                                      <p
+                                                        className={`text-sm font-medium m-0 ${
+                                                          !binancePay
+                                                            ? "text-white"
+                                                            : "text-gray-200"
+                                                        }`}
+                                                      >
+                                                        EVM Wallet
+                                                      </p>
+                                                    </div>
+                                                  </div>
+                                                  <div className="text-right">
+                                                    <p
+                                                      className={`font-semibold m-0 text-lg m-0 m-0 ${
+                                                        !binancePay
+                                                          ? "text-white"
+                                                          : "text-gray-200"
+                                                      }`}
+                                                    >
+                                                      {getFormattedNumber(
+                                                        puzzleMadnessWodAmount
+                                                      )}{" "}
+                                                      WOD
+                                                    </p>
+                                                    <p
+                                                      className={`text-end text-xs m-0 ${
+                                                        !binancePay
+                                                          ? "text-yellow-200"
+                                                          : "text-gray-400"
+                                                      }`}
+                                                    >
+                                                      $
+                                                      {getFormattedNumber(
+                                                        activeEvent.usdPrice
+                                                      )}
+                                                    </p>
+                                                  </div>
+                                                </motion.div>
+                                                <motion.div
+                                                  // whileTap={{ scale: 0.98 }}
+                                                  className={`${
+                                                    (puzzleMadnessBundleState ===
+                                                      "loading" ||
+                                                      puzzleMadnessDepositState ===
+                                                        "loading-deposit") &&
+                                                    "pe-none"
+                                                  } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                                    binancePay
+                                                      ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
+                                                      : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
+                                                  }`}
+                                                  onClick={() =>
+                                                    setbinancePay(true)
+                                                  }
+                                                >
+                                                  <div className="flex items-center space-x-3">
+                                                   
+                                                    <img
+                                                      style={{ height: 18 }}
+                                                      src={
+                                                        "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                      }
+                                                      alt=""
+                                                    />
+                                                    <div>
+                                                      <p
+                                                        className={`text-sm font-medium m-0 ${
+                                                          binancePay
+                                                            ? "text-white"
+                                                            : "text-gray-200"
+                                                        }`}
+                                                      >
+                                                        Binance Pay
+                                                      </p>
+                                                    </div>
+                                                  </div>
+                                                  <div className="text-right">
+                                                    <p
+                                                      className={`font-semibold m-0 text-lg m-0 ${
+                                                        binancePay
+                                                          ? "text-white"
+                                                          : "text-gray-200"
+                                                      }`}
+                                                    >
+                                                      {getFormattedNumber(
+                                                        activeEvent.usdPrice
+                                                      )}{" "}
+                                                      USDT
+                                                    </p>
+                                                    <p
+                                                      className={`text-end text-xs m-0 ${
+                                                        binancePay
+                                                          ? "text-yellow-200"
+                                                          : "text-gray-400"
+                                                      }`}
+                                                    >
+                                                      $
+                                                      {getFormattedNumber(
+                                                        activeEvent.usdPrice
+                                                      )}
+                                                    </p>
+                                                  </div>
+                                                </motion.div>
+                                              </div>
+                                            </div>
                                           </div>
                                         )}
 
@@ -8114,7 +8012,6 @@ const NewEvents = ({
                                           </div>
                                         )} */}
                                         <div className="d-flex align-items-center gap-2">
-                                         
                                           {!email && isConnected && (
                                             <NavLink
                                               className="beast-siege-btn"
@@ -8124,7 +8021,7 @@ const NewEvents = ({
                                               Log In
                                             </NavLink>
                                           )}
-                                           {!isConnected && (
+                                          {!isConnected && (
                                             <button
                                               className="beast-siege-btn"
                                               onClick={onConnectWallet}
@@ -8241,7 +8138,7 @@ const NewEvents = ({
                                             binancePay === true && (
                                               <>
                                                 <button
-                                                  disabled={ 
+                                                  disabled={
                                                     puzzleMadnessBundleState2 ===
                                                       "deposit" ||
                                                     puzzleMadnessBundleState ===
@@ -8368,37 +8265,31 @@ const NewEvents = ({
                                               </div>
                                             )
                                           )}
-                                          {activeEvent?.binanceTip && (
-                                            <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-full overflow-hidden">
-                                              {/* Background image */}
-
-                                              {/* Glow effect */}
-                                              <div
-                                                className={`absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-600 opacitytw-0 group-hover:opacitytw-10 transition-opacity duration-500 rounded-2xl`}
-                                              ></div>
-
+                                          {activeEvent?.binanceTip &&
+                                            binancePay === true &&
+                                            window.WALLET_TYPE !==
+                                              "binance" && (
                                               <div className="relative">
-                                                {activeEvent?.binanceTip?.map(
-                                                  (tip2, index) => (
-                                                    <div
-                                                      className="d-flex align-items-center gap-2"
-                                                      key={index}
-                                                    >
-                                                      <div className="yellow-dot"></div>
-                                                      <span className="challenge-popup-desc text-white">
-                                                        {tip2}
-                                                      </span>
-                                                    </div>
-                                                  )
-                                                )}
+                                                <div className="d-flex flex-column gap-2">
+                                                <div className="flex items-center space-x-3">
+                                                  <img
+                                                    src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                                    alt=""
+                                                    className="w-5 h-5 text-yellow-400"
+                                                  />
+                                                  <span className="font-medium text-yellow-400">
+                                                    Binance Pay Setup
+                                                  </span>
+                                                </div>
+                                                  <span className="challenge-popup-desc text-white">
+                                                    Import your game wallet into
+                                                    Binance Wallet app or
+                                                    connect your existing
+                                                    Binance Wallet.
+                                                  </span>
+                                                </div>
                                               </div>
-
-                                              {/* Animated border - simplified without custom keyframes */}
-                                              <div
-                                                className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-600 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
-                                              ></div>
-                                            </div>
-                                          )}
+                                            )}
                                         </div>
                                       </div>
                                     </div>
