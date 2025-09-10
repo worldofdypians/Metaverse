@@ -277,9 +277,9 @@ function AuthBNB({
             <div className="col-12 col-md-12 col-lg-4 mt-0 px-0 px-lg-2">
               <div className="d-flex flex-column gap-5 gap-lg-2 gap-md-2">
                 <LoginCardBNB
-                  containerStyles={{
-                    height: 500,
-                  }}
+                  // containerStyles={{
+                  //   height: 500,
+                  // }}
                   cardStyles={{
                     height:
                       linkWallet === true || value === 0
