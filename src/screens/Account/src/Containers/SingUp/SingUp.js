@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Auth } from "aws-amplify";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./SignUp.module.css";
+import ReCaptchaV2 from "react-google-recaptcha";
 
 function SingUp() {
   const {
@@ -18,9 +19,14 @@ function SingUp() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const [captchaValue, setCaptchaValue] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [verifyCode, setVerifyCode] = useState("");
+  const recaptchaRef = useRef(null);
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+  };
 
   const login = () => {
     LoginGlobal(username, password);
@@ -37,21 +43,25 @@ function SingUp() {
   }
 
   const signup = () => {
-    Auth.signUp({
-      username,
-      password,
-    })
-      .then((user) => {
-        login();
+    if (!captchaValue) {
+      window.alertify.error("Please verify the reCAPTCHA");
+    } else {
+      Auth.signUp({
+        username,
+        password,
       })
-      .catch((err) => {
-        setLoginValues((prev) => {
-          return {
-            ...prev,
-            loginError: err?.message,
-          };
+        .then((user) => {
+          login();
+        })
+        .catch((err) => {
+          setLoginValues((prev) => {
+            return {
+              ...prev,
+              loginError: err?.message,
+            };
+          });
         });
-      });
+    }
   };
 
   useEffect(() => {
@@ -105,7 +115,6 @@ function SingUp() {
         value={username}
         onChange={setUserName}
         inputType="email"
-
       />
       <Input
         inputType="password"
@@ -120,10 +129,17 @@ function SingUp() {
         onChange={setConfirmPassword}
       />
       <Button
-        disabled={disabled}
+        disabled={disabled || !captchaValue}
         style={{ margin: "auto" }}
         onPress={signup}
         title={"Create account"}
+      />
+      <ReCaptchaV2
+        sitekey="6LfFVMQrAAAAAGauKrn5cyQZRaXHMMlHMUz9IOnu"
+        style={{ display: "inline-block" }}
+        theme="dark"
+        ref={recaptchaRef}
+        onChange={handleCaptchaChange}
       />
     </div>
   );

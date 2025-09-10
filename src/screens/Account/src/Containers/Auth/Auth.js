@@ -78,15 +78,15 @@ function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
   return (
     <div
       className="d-flex flex-column gap-1 align-items-center"
-      style={{ margin: "6rem 0rem" }}
+      style={{ margin: "8rem 0rem" }}
     >
       <LoginWrapper>
         <LoginCard
           containerStyles={{
-            height: 500,
+            height: 550,
           }}
           cardStyles={{
-            height: 470,
+            height: 'auto',
           }}
         >
           <StyledTabs
