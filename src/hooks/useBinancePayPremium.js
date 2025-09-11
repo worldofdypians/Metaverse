@@ -26,7 +26,7 @@ export function useBinancePayPremium() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             walletAddress,
-            orderAmount: 1,
+            orderAmount: 100,
             goodsName: "Prime Subscription",
             description: "Prime Subscription",
             returnUrl: "https://www.worldofdypians.com/account/prime",
@@ -177,7 +177,15 @@ export function useBinancePayPremium() {
         <div className="bg-gray-900 text-white rounded-xl shadow-xl w-[450px] max-w-[95%] p-6 relative">
           {/* Close Button */}
           <button
-            onClick={onClose}
+            onClick={() => {
+              setShowQr(false);
+              setStatus("failed");
+              localStorage.removeItem("binanceOrder");
+              stopPolling();
+              setTimeout(() => {
+                setStatus("idle");
+              }, 3000);
+            }}
             className="absolute top-3 right-3 text-gray-400 hover:text-white text-xl"
           >
             ✕
@@ -219,13 +227,8 @@ export function useBinancePayPremium() {
             <div>
               <p className="text-gray-400 text-sm">Payment Amount</p>
               <h2 className="text-3xl font-bold">
-                {createdOrder.totalFee}{" "}
-                <span className="text-lg">{createdOrder.currency}</span>
+                ${createdOrder.totalFee}{" "}
               </h2>
-              <p className="text-gray-400 text-sm">
-                ≈ ${createdOrder.totalFee}
-              </p>
-
               <div className="mt-4">
                 <p className="text-gray-400 text-xs">Merchant Name</p>
                 <p className="font-medium">World of Dypians</p>

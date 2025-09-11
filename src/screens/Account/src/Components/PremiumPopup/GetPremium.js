@@ -8,6 +8,7 @@ import "./_getpremium.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import ChainPopup from "../../../../../components/Header/ChainPopup";
 import { useBinancePayPremium } from "../../../../../hooks/useBinancePayPremium";
+import { motion } from "motion/react";
 
 const GetPremiumPopup = ({
   isEOA,
@@ -170,7 +171,13 @@ const GetPremiumPopup = ({
       title: "Priority Support",
       image: "https://cdn.worldofdypians.com/wod/prioritySupportBg.webp",
     },
+    {
+      title: "Lifetime Plan",
+      image: "https://cdn.worldofdypians.com/wod/lifetimePlanBg.webp",
+    },
   ];
+
+  const [binancePay, setbinancePay] = useState(false);
 
   const [dropdownIcon, setdropdownIcon] = useState("");
   const [dropdownTitle, setdropdownTitle] = useState("");
@@ -781,7 +788,7 @@ const GetPremiumPopup = ({
       tokenDecimals
     );
 
-    if (coinbase && window.WALLET_TYPE === "binance") {
+    if (coinbase && window.WALLET_TYPE === "binance" && binanceW3WProvider) {
       let token_Sc = new ethers.Contract(
         token,
         window.ERC20_ABI,
@@ -3716,7 +3723,7 @@ const GetPremiumPopup = ({
     <>
       <div className="custom-container mt-5 mt-lg-0">
         {isPremium ? (
-          <div className="px-0 pt-5 pt-lg-2 position-relative">
+          <div className="px-0 pt-5 position-relative">
             <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
               <div className="d-flex flex-column w-100 justify-content-center gap-2 align-items-center bgwrapper p-3">
                 <h6 className="mb-0 already-premium-title">PRIME ENABLED</h6>
@@ -3749,7 +3756,7 @@ const GetPremiumPopup = ({
             </div>
           </div>
         ) : (
-          <div className="px-0 pt-5 pt-lg-2 position-relative">
+          <div className="px-0 pt-5 position-relative">
             <div className="" style={{ background: "#8E97CD" }}></div>
             {discountPercentage > 0 ||
             discountPercentageViction > 0 ||
@@ -4051,1204 +4058,1615 @@ const GetPremiumPopup = ({
                 </div>
               </div>
             )}
-            <div className="d-flex flex-column">
-              <div className="mt-3 p-3 benefits-title-wrapper justify-content-center">
-                <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
+            <div className="d-flex gap-2 flex-column flex-xl-row">
+              <div className="d-flex flex-column w-100">
+                <div className="mt-3 p-3 benefits-title-wrapper justify-content-center">
+                  <h6 className="premium-benefits-popup-title mb-0">
+                    Benefits
+                  </h6>
+                </div>
+                <div className="sidebar-separator2 m-0"></div>
+                <div className="premium-benefits-wrapper-std d-flex gap-3 justify-content-between p-3">
+                  {allBenefits.map((item, index) => {
+                    return (
+                      <div key={index} className="benefit-item">
+                        <div className="d-flex flex-column gap-3">
+                          <img src={item.image} alt="" className="benefitimg" />
+                          <span className="benefittitle p-3">{item.title}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="sidebar-separator2 m-0"></div>
-              <div className="premium-benefits-wrapper d-flex gap-3 justify-content-between p-3">
-                {allBenefits.map((item, index) => {
-                  return (
-                    <div key={index} className="benefit-item">
-                      <div className="d-flex flex-column gap-3">
-                        <img src={item.image} alt="" className="benefitimg" />
-                        <span className="benefittitle p-3">{item.title}</span>
+              <div className="mt-3 p-3 benefits-title-wrapper w-100 d-flex flex-column justify-content-between">
+                <div className="d-flex flex-column w-100">
+                  <div className="pb-3 benefits-title-wrapper justify-content-center">
+                    <h6 className="premium-benefits-popup-title mb-0">
+                      SUBSCRIBE
+                    </h6>
+                  </div>
+                  <div className="sidebar-separator2 m-0"></div>
+
+                  <div className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column w-100 gap-4">
+                    <div className="d-flex flex-column prime-subs-container w-100">
+                      <div className="prime-subs-firsthalf p-3">
+                        <div className="d-flex align-items-center gap-3 w-100 justify-content-between">
+                          <div className="d-flex flex-column">
+                            <h3 className="prime-subs-txt">
+                              Prime Subscription
+                            </h3>
+                            <span className="prime-subs-desc">
+                              Lifetime Plan
+                            </span>
+                          </div>
+                          <h3 className="plan-cost2 mb-0">$100</h3>
+                        </div>
+                      </div>
+                      <div className="prime-subs-secondhalf p-3">
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="text-white w-100">
+                            Payment Method
+                          </span>
+                          <div className="d-flex gap-2 align-items-center w-100">
+                            <motion.div
+                              // whileTap={{ scale: 0.98 }}
+                              className={` flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                !binancePay
+                                  ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                  : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                              }`}
+                              onClick={() => setbinancePay(false)}
+                            >
+                              <div className="flex items-center space-x-3">
+                                <img
+                                  style={{ height: 18 }}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                  }
+                                  alt=""
+                                />
+                                <div>
+                                  <p
+                                    className={`text-sm font-medium m-0 ${
+                                      !binancePay
+                                        ? "text-white"
+                                        : "text-gray-200"
+                                    }`}
+                                  >
+                                    Wallet
+                                  </p>
+                                </div>
+                              </div>
+                            </motion.div>
+                            <motion.div
+                              // whileTap={{ scale: 0.98 }}
+                              className={` w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                binancePay
+                                  ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                  : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                              }`}
+                              onClick={() => setbinancePay(true)}
+                            >
+                              <div className="flex items-center space-x-3">
+                                <img
+                                  style={{ height: 18 }}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                  }
+                                  alt=""
+                                />
+                                <div>
+                                  <p
+                                    className={`text-sm font-medium m-0 ${
+                                      binancePay
+                                        ? "text-white"
+                                        : "text-gray-200"
+                                    }`}
+                                  >
+                                    Binance Pay
+                                  </p>
+                                </div>
+                              </div>
+                            </motion.div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-            {/* <hr className="form-divider my-4" /> */}
-            <div className="d-flex align-items-lg-end align-items-start flex-column flex-lg-row justify-content-between mt-3">
-              <h6 className="become-premium-new-title mb-0">
-                Become Prime User
-              </h6>
-              <span className="my-premium-balance">
-                My Balance:{" "}
-                {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
-                {dropdownIcon?.toUpperCase()}
-              </span>
-            </div>
-            <div
-              className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column flex-lg-row w-100 gap-4 gap-lg-0"
-              style={{ overflowX: "clip" }}
-            >
-              <div className="d-flex flex-column flex-lg-row align-items-lg-end gap-lg-4">
-                <div className="d-flex flex-column gap-lg-3">
-                  <span className="token-amount-placeholder">Select chain</span>
-                  <div className="dropdown position relative">
+                    {binancePay === false && (
+                      <div className="border-0 prime-subs-container w-100 p-3">
+                        <div className="d-flex align-items-center gap-2">
+                          <div className="d-flex flex-column gap-lg-3">
+                            <span className="token-amount-placeholder2">
+                              Select chain
+                            </span>
+                            <div className=" position relative">
+                              <button
+                                className={`btn launchpad-dropdown dropdown-toggle d-flex justify-content-between align-items-center`}
+                                type="button"
+                                // data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                onClick={() => {
+                                  setshowChainDropdown(true);
+                                }}
+                              >
+                                <div
+                                  className="d-flex align-items-center gap-2 pe-3"
+                                  style={{ color: "#fff" }}
+                                >
+                                  <img
+                                    src={`https://cdn.worldofdypians.com/wod/${chainDropdown.symbol}IconPremium.svg`}
+                                    alt=""
+                                    style={{ width: 18, height: 18 }}
+                                  />
+                                  {chainDropdown.name}
+                                </div>
+                                {/* <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
+                                  }
+                                  alt=""
+                                /> */}
+                              </button>
+                            </div>
+                          </div>
+                          <div className="d-flex flex-column gap-lg-3">
+                            <span className="token-amount-placeholder2">
+                              Subscription Price
+                            </span>
+                            <div className="launchpad-dropdown dropdown-toggle d-flex align-items-center ps-0 gap-3">
+                              <div className="d-flex align-items-center gap-2">
+                                <div className="dropdown position relative">
+                                  <button
+                                    className={`btn launchpad-dropdown d-flex gap-1 justify-content-between dropdown-toggle-game align-items-center  w-100`}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ color: "#fff" }}
+                                    >
+                                      {dropdownIcon !== "" && (
+                                        <img
+                                          src={`https://cdn.worldofdypians.com/wod/${dropdownIcon.toLowerCase()}IconPremium.svg`}
+                                          alt=""
+                                          style={{ width: 20, height: 20 }}
+                                        />
+                                      )}
+                                      {/* {dropdownTitle} */}
+                                    </div>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
+                                      }
+                                      alt=""
+                                    />
+                                  </button>
+                                  <ul className="dropdown-menu w-100">
+                                    {Object.keys(
+                                      chainId === 1
+                                        ? window.config.subscriptioneth_tokens
+                                        : chainId === 56
+                                        ? window.config.subscriptionbnb_tokens
+                                        : chainId === 1030
+                                        ? window.config.subscriptioncfx_tokens
+                                        : chainId === 43114
+                                        ? window.config.subscription_tokens
+                                        : chainId === 8453
+                                        ? window.config.subscriptionbase_tokens
+                                        : chainId === 1482601649
+                                        ? window.config.subscriptionskale_tokens
+                                        : chainId === 88
+                                        ? window.config
+                                            .subscriptionviction_tokens
+                                        : chainId === 2040
+                                        ? window.config.subscriptionvanar_tokens
+                                        : chainId === 169
+                                        ? window.config.subscriptionmanta_tokens
+                                        : chainId === 167000
+                                        ? window.config.subscriptiontaiko_tokens
+                                        : chainId === 698
+                                        ? window.config.subscriptionmat_tokens
+                                        : chainId === 1116
+                                        ? window.config.subscriptioncore_tokens
+                                        : chainId === 841
+                                        ? window.config
+                                            .subscriptiontaraxa_tokens
+                                        : chainId === 1329
+                                        ? window.config.subscriptionsei_tokens
+                                        : window.config.subscriptioneth_tokens
+                                    ).map((t, i) => (
+                                      <li
+                                        key={i}
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={() => {
+                                          window.cached_contracts =
+                                            Object.create(null);
+                                          setTimeout(() => {
+                                            setdropdownIcon(
+                                              chainId === 1
+                                                ? window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 56
+                                                ? window.config
+                                                    .subscriptionbnb_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 43114
+                                                ? window.config
+                                                    .subscription_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 8453
+                                                ? window.config
+                                                    .subscriptionbase_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1030
+                                                ? window.config
+                                                    .subscriptioncfx_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1482601649
+                                                ? window.config
+                                                    .subscriptionskale_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 88
+                                                ? window.config
+                                                    .subscriptionviction_tokens[
+                                                    t
+                                                  ]?.symbol
+                                                : chainId === 2040
+                                                ? window.config
+                                                    .subscriptionvanar_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 169
+                                                ? window.config
+                                                    .subscriptionmanta_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 167000
+                                                ? window.config
+                                                    .subscriptiontaiko_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 698
+                                                ? window.config
+                                                    .subscriptionmat_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 841
+                                                ? window.config
+                                                    .subscriptiontaraxa_tokens[
+                                                    t
+                                                  ]?.symbol
+                                                : chainId === 1116
+                                                ? window.config
+                                                    .subscriptioncore_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1329
+                                                ? window.config
+                                                    .subscriptionsei_tokens[t]
+                                                    ?.symbol
+                                                : window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                            );
+                                            setdropdownTitle(
+                                              chainId === 1
+                                                ? window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 56
+                                                ? window.config
+                                                    .subscriptionbnb_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 43114
+                                                ? window.config
+                                                    .subscription_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 8453
+                                                ? window.config
+                                                    .subscriptionbase_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1030
+                                                ? window.config
+                                                    .subscriptioncfx_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1482601649
+                                                ? window.config
+                                                    .subscriptionskale_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 88
+                                                ? window.config
+                                                    .subscriptionviction_tokens[
+                                                    t
+                                                  ]?.symbol
+                                                : chainId === 841
+                                                ? window.config
+                                                    .subscriptiontaraxa_tokens[
+                                                    t
+                                                  ]?.symbol
+                                                : chainId === 2040
+                                                ? window.config
+                                                    .subscriptionvanar_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 169
+                                                ? window.config
+                                                    .subscriptionmanta_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 167000
+                                                ? window.config
+                                                    .subscriptiontaiko_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 698
+                                                ? window.config
+                                                    .subscriptionmat_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1329
+                                                ? window.config
+                                                    .subscriptionsei_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1116
+                                                ? window.config
+                                                    .subscriptionsei_tokens[t]
+                                                    ?.symbol
+                                                : window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                            );
+
+                                            // console.log(t);
+                                            handleSubscriptionTokenChange(t);
+                                            handleCheckIfAlreadyApproved(t);
+                                          }, 200);
+                                        }}
+                                      >
+                                        <img
+                                          src={
+                                            chainId === 1
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 56
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbnb_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 43114
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscription_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 1030
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncfx_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 8453
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbase_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 1482601649
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionskale_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 1116
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncore_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 88
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionviction_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 2040
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 169
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 167000
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaiko_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 698
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 841
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaraxa_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 1329
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionsei_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: 20,
+                                            height: 20,
+                                          }}
+                                        />
+                                        {chainId === 1
+                                          ? window.config
+                                              .subscriptioneth_tokens[t]?.symbol
+                                          : chainId === 56
+                                          ? window.config
+                                              .subscriptionbnb_tokens[t]?.symbol
+                                          : chainId === 43114
+                                          ? window.config.subscription_tokens[t]
+                                              ?.symbol
+                                          : chainId === 1030
+                                          ? window.config
+                                              .subscriptioncfx_tokens[t]?.symbol
+                                          : chainId === 8453
+                                          ? window.config
+                                              .subscriptionbase_tokens[t]
+                                              ?.symbol
+                                          : chainId === 1482601649
+                                          ? window.config
+                                              .subscriptionskale_tokens[t]
+                                              ?.symbol
+                                          : chainId === 1116
+                                          ? window.config
+                                              .subscriptioncore_tokens[t]
+                                              ?.symbol
+                                          : chainId === 88
+                                          ? window.config
+                                              .subscriptionviction_tokens[t]
+                                              ?.symbol
+                                          : chainId === 2040
+                                          ? window.config
+                                              .subscriptionvanar_tokens[t]
+                                              ?.symbol
+                                          : chainId === 169
+                                          ? window.config
+                                              .subscriptionmanta_tokens[t]
+                                              ?.symbol
+                                          : chainId === 167000
+                                          ? window.config
+                                              .subscriptiontaiko_tokens[t]
+                                              ?.symbol
+                                          : chainId === 698
+                                          ? window.config
+                                              .subscriptionmat_tokens[t]?.symbol
+                                          : chainId === 841
+                                          ? window.config
+                                              .subscriptiontaraxa_tokens[t]
+                                              ?.symbol
+                                          : chainId === 1329
+                                          ? window.config
+                                              .subscriptionsei_tokens[t]?.symbol
+                                          : window.config
+                                              .subscriptioneth_tokens[t]
+                                              ?.symbol}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+
+                                <span className="subscription-price-token mb-0 text-uppercase">
+                                  {formattedPrice !== ""
+                                    ? formattedPrice.slice(0, 7)
+                                    : getFormattedNumber(100, 4)}{" "}
+                                  {dropdownTitle}
+                                </span>
+                              </div>
+                              <span className="subscription-price-usd-game mb-0">
+                                {" "}
+                                $
+                                {100 -
+                                  Number(
+                                    discountPercentage != 0
+                                      ? discountPercentage
+                                      : discountPercentageViction != 0
+                                      ? discountPercentageViction
+                                      : discountPercentageVanar != 0
+                                      ? discountPercentageVanar
+                                      : discountPercentageTaiko != 0
+                                      ? discountPercentageTaiko
+                                      : discountPercentageMat != 0
+                                      ? discountPercentageMat
+                                      : discountPercentageTaraxa != 0
+                                      ? discountPercentageTaraxa
+                                      : discountPercentage
+                                  )}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {isConnected && discountPercentage > 0 && chainId === 56 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {window.WALLET_TYPE === "binance" ? (
+                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_total > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentage > 0 || nftPremium_total > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageViction > 0 &&
+                  chainId === 88 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {window.WALLET_TYPE === "binance" ? (
+                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalViction > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageViction > 0 ||
+                              nftPremium_totalViction > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaraxa > 0 &&
+                  chainId === 841 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {window.WALLET_TYPE === "binance" ? (
+                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" || !coinbase || isApproved
+                              ? "stake-wod-btn-inactive px-4"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" || !coinbase || isApproved
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalTaraxa > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          } `}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageTaraxa > 0 ||
+                              nftPremium_totalTaraxa > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageVanar > 0 &&
+                  chainId === 2040 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {window.WALLET_TYPE === "binance" ? (
+                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : "explore-btn px-3 py-2"
+                          } `}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalVanar > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageVanar > 0 ||
+                              nftPremium_totalVanar > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaiko > 0 &&
+                  chainId === 167000 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {window.WALLET_TYPE === "binance" ? (
+                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : "explore-btn px-3 py-2"
+                          } `}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalTaiko > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageTaiko > 0 ||
+                              nftPremium_totalTaiko > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageMat > 0 &&
+                  chainId === 698 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {window.WALLET_TYPE === "binance" ? (
+                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalMat > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          } `}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageMat > 0 ||
+                              nftPremium_totalMat > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    )}
+                  </div>
+                ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
                     <button
-                      className={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
                       onClick={() => {
-                        setshowChainDropdown(true);
+                        switchNetwork("0x38", 56);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
                       }}
                     >
-                      <div
-                        className="d-flex align-items-center gap-2 pe-3"
-                        style={{ color: "#fff" }}
-                      >
-                        <img
-                          src={`https://cdn.worldofdypians.com/wod/${chainDropdown.symbol}IconPremium.svg`}
-                          alt=""
-                          style={{ width: 18, height: 18 }}
-                        />
-                        {chainDropdown.name}
-                      </div>
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
-                        }
-                        alt=""
-                      />
+                      Switch to BNB Chain
                     </button>
                   </div>
-                </div>
-                <div className="d-flex flex-column gap-lg-3">
-                  <span className="token-amount-placeholder">
-                    Subscription Price
-                  </span>
-                  <div className="launchpad-dropdown dropdown-toggle d-flex align-items-center ps-0 gap-3">
-                    <div className="d-flex align-items-center gap-2">
-                      <div className="dropdown position relative">
-                        <button
-                          className={`btn launchpad-dropdown d-flex gap-1 justify-content-between dropdown-toggle-game align-items-center  w-100`}
-                          type="button"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <div
-                            className="d-flex align-items-center gap-2"
-                            style={{ color: "#fff" }}
-                          >
-                            {dropdownIcon !== "" && (
-                              <img
-                                src={`https://cdn.worldofdypians.com/wod/${dropdownIcon.toLowerCase()}IconPremium.svg`}
-                                alt=""
-                                style={{ width: 20, height: 20 }}
-                              />
-                            )}
-                            {/* {dropdownTitle} */}
+                ) : isConnected &&
+                  discountPercentageViction > 0 &&
+                  chainId !== 88 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x58", 88);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Viction
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaraxa > 0 &&
+                  chainId !== 841 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x349", 841);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Taraxa
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageVanar > 0 &&
+                  chainId !== 2040 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x7f8", 2040);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Vanar
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaiko > 0 &&
+                  chainId !== 167000 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x28c58", 167000);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Taiko
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageMat > 0 &&
+                  chainId !== 698 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x2ba", 698);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Matchain
+                    </button>
+                  </div>
+                ) : (
+                  <div className="d-flex align-items-center gap-3 justify-content-center w-100">
+                    <>
+                      {window.WALLET_TYPE !== "binance" &&
+                        binancePay === true && (
+                          <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
+                            {/* Background image */}
+
+                            {/* Glow effect */}
+                            <div
+                              className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                            ></div>
+
+                            <div className="relative">
+                              <div className="d-flex flex-column gap-2">
+                                <div className="flex items-center space-x-3">
+                                  <img
+                                    src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                    alt=""
+                                    className="w-5 h-5 text-yellow-400"
+                                  />
+                                  <span className="font-medium text-yellow-400">
+                                    Binance Pay Setup
+                                  </span>
+                                </div>
+                                <span className="challenge-popup-desc text-white">
+                                  Import your game wallet into Binance Wallet
+                                  app or connect your existing Binance Wallet.
+                                </span>
+                              </div>
+                            </div>
+                            <div
+                              className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                            ></div>
                           </div>
+                        )}
+                    </>
+                    {binancePay === true &&
+                      window.WALLET_TYPE === "binance" && (
+                        <button
+                          className={`btn ${"explore-btn px-3 py-2"}`}
+                          disabled={
+                            statusPrime !== "idle" &&
+                            statusPrime !== "failed" &&
+                            statusPrime !== "success"
+                          }
+                          onClick={() => {
+                            handlePurchasePremium(coinbase, price);
+                          }}
+                        >
+                          {buttonText}
+                        </button>
+                      )}
+
+                    {binancePay === false && (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" ||
+                            !isEOA ||
+                            !coinbase ||
+                            isApproved
+                              ? "stake-wod-btn-inactive px-4"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !isEOA ||
+                            !coinbase ||
+                            isApproved
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>Approve token</>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            !isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={() => {
+                            handleSubscribe();
+                          }}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>Buy</>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>
+                          )}
+                        </button>
+                      </>
+                    )}
+
+                    {/* {window.WALLET_TYPE === "binance" && (
+                      <div>
+                        <button
+                          onClick={() => handlePurchasePremium(coinbase, price)}
+                          className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            !isApproved ||
+                            !isEOA
+                          }
+                        >
                           <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
-                            }
+                            style={{ height: 18 }}
+                            src={"https://cdn.worldofdypians.com/wod/b-pay.svg"}
                             alt=""
                           />
+                          {buttonText}
                         </button>
-                        <ul className="dropdown-menu w-100">
-                          {Object.keys(
-                            chainId === 1
-                              ? window.config.subscriptioneth_tokens
-                              : chainId === 56
-                              ? window.config.subscriptionbnb_tokens
-                              : chainId === 1030
-                              ? window.config.subscriptioncfx_tokens
-                              : chainId === 43114
-                              ? window.config.subscription_tokens
-                              : chainId === 8453
-                              ? window.config.subscriptionbase_tokens
-                              : chainId === 1482601649
-                              ? window.config.subscriptionskale_tokens
-                              : chainId === 88
-                              ? window.config.subscriptionviction_tokens
-                              : chainId === 2040
-                              ? window.config.subscriptionvanar_tokens
-                              : chainId === 169
-                              ? window.config.subscriptionmanta_tokens
-                              : chainId === 167000
-                              ? window.config.subscriptiontaiko_tokens
-                              : chainId === 698
-                              ? window.config.subscriptionmat_tokens
-                              : chainId === 1116
-                              ? window.config.subscriptioncore_tokens
-                              : chainId === 841
-                              ? window.config.subscriptiontaraxa_tokens
-                              : chainId === 1329
-                              ? window.config.subscriptionsei_tokens
-                              : window.config.subscriptioneth_tokens
-                          ).map((t, i) => (
-                            <li
-                              key={i}
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={() => {
-                                window.cached_contracts = Object.create(null);
-                                setTimeout(() => {
-                                  setdropdownIcon(
-                                    chainId === 1
-                                      ? window.config.subscriptioneth_tokens[t]
-                                          ?.symbol
-                                      : chainId === 56
-                                      ? window.config.subscriptionbnb_tokens[t]
-                                          ?.symbol
-                                      : chainId === 43114
-                                      ? window.config.subscription_tokens[t]
-                                          ?.symbol
-                                      : chainId === 8453
-                                      ? window.config.subscriptionbase_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1030
-                                      ? window.config.subscriptioncfx_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1482601649
-                                      ? window.config.subscriptionskale_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 88
-                                      ? window.config
-                                          .subscriptionviction_tokens[t]?.symbol
-                                      : chainId === 2040
-                                      ? window.config.subscriptionvanar_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 169
-                                      ? window.config.subscriptionmanta_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 167000
-                                      ? window.config.subscriptiontaiko_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 698
-                                      ? window.config.subscriptionmat_tokens[t]
-                                          ?.symbol
-                                      : chainId === 841
-                                      ? window.config.subscriptiontaraxa_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 1116
-                                      ? window.config.subscriptioncore_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1329
-                                      ? window.config.subscriptionsei_tokens[t]
-                                          ?.symbol
-                                      : window.config.subscriptioneth_tokens[t]
-                                          ?.symbol
-                                  );
-                                  setdropdownTitle(
-                                    chainId === 1
-                                      ? window.config.subscriptioneth_tokens[t]
-                                          ?.symbol
-                                      : chainId === 56
-                                      ? window.config.subscriptionbnb_tokens[t]
-                                          ?.symbol
-                                      : chainId === 43114
-                                      ? window.config.subscription_tokens[t]
-                                          ?.symbol
-                                      : chainId === 8453
-                                      ? window.config.subscriptionbase_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1030
-                                      ? window.config.subscriptioncfx_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1482601649
-                                      ? window.config.subscriptionskale_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 88
-                                      ? window.config
-                                          .subscriptionviction_tokens[t]?.symbol
-                                      : chainId === 841
-                                      ? window.config.subscriptiontaraxa_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 2040
-                                      ? window.config.subscriptionvanar_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 169
-                                      ? window.config.subscriptionmanta_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 167000
-                                      ? window.config.subscriptiontaiko_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 698
-                                      ? window.config.subscriptionmat_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1329
-                                      ? window.config.subscriptionsei_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1116
-                                      ? window.config.subscriptionsei_tokens[t]
-                                          ?.symbol
-                                      : window.config.subscriptioneth_tokens[t]
-                                          ?.symbol
-                                  );
-
-                                  // console.log(t);
-                                  handleSubscriptionTokenChange(t);
-                                  handleCheckIfAlreadyApproved(t);
-                                }, 200);
-                              }}
-                            >
-                              <img
-                                src={
-                                  chainId === 1
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 56
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbnb_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 43114
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscription_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 1030
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncfx_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 8453
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbase_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 1482601649
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionskale_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 1116
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncore_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 88
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionviction_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 2040
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 169
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 167000
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaiko_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 698
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 841
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaraxa_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 1329
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionsei_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                }
-                                alt=""
-                                style={{
-                                  width: 20,
-                                  height: 20,
-                                }}
-                              />
-                              {chainId === 1
-                                ? window.config.subscriptioneth_tokens[t]
-                                    ?.symbol
-                                : chainId === 56
-                                ? window.config.subscriptionbnb_tokens[t]
-                                    ?.symbol
-                                : chainId === 43114
-                                ? window.config.subscription_tokens[t]?.symbol
-                                : chainId === 1030
-                                ? window.config.subscriptioncfx_tokens[t]
-                                    ?.symbol
-                                : chainId === 8453
-                                ? window.config.subscriptionbase_tokens[t]
-                                    ?.symbol
-                                : chainId === 1482601649
-                                ? window.config.subscriptionskale_tokens[t]
-                                    ?.symbol
-                                : chainId === 1116
-                                ? window.config.subscriptioncore_tokens[t]
-                                    ?.symbol
-                                : chainId === 88
-                                ? window.config.subscriptionviction_tokens[t]
-                                    ?.symbol
-                                : chainId === 2040
-                                ? window.config.subscriptionvanar_tokens[t]
-                                    ?.symbol
-                                : chainId === 169
-                                ? window.config.subscriptionmanta_tokens[t]
-                                    ?.symbol
-                                : chainId === 167000
-                                ? window.config.subscriptiontaiko_tokens[t]
-                                    ?.symbol
-                                : chainId === 698
-                                ? window.config.subscriptionmat_tokens[t]
-                                    ?.symbol
-                                : chainId === 841
-                                ? window.config.subscriptiontaraxa_tokens[t]
-                                    ?.symbol
-                                : chainId === 1329
-                                ? window.config.subscriptionsei_tokens[t]
-                                    ?.symbol
-                                : window.config.subscriptioneth_tokens[t]
-                                    ?.symbol}
-                            </li>
-                          ))}
-                        </ul>
                       </div>
-
-                      <span className="subscription-price-token mb-0 text-uppercase">
-                        {formattedPrice !== ""
-                          ? formattedPrice.slice(0, 7)
-                          : getFormattedNumber(100, 4)}{" "}
-                        {dropdownTitle}
-                      </span>
-                    </div>
-                    <span className="subscription-price-usd-game mb-0">
-                      {" "}
-                      $
-                      {100 -
-                        Number(
-                          discountPercentage != 0
-                            ? discountPercentage
-                            : discountPercentageViction != 0
-                            ? discountPercentageViction
-                            : discountPercentageVanar != 0
-                            ? discountPercentageVanar
-                            : discountPercentageTaiko != 0
-                            ? discountPercentageTaiko
-                            : discountPercentageMat != 0
-                            ? discountPercentageMat
-                            : discountPercentageTaraxa != 0
-                            ? discountPercentageTaraxa
-                            : discountPercentage
-                        )}
-                    </span>
+                    )} */}
                   </div>
-                </div>
-              </div>
-              {isConnected && discountPercentage > 0 && chainId === 56 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_total > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
+                )}
 
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentage > 0 || nftPremium_total > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageViction > 0 &&
-                chainId === 88 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalViction > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageViction > 0 ||
-                        nftPremium_totalViction > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageTaraxa > 0 &&
-                chainId === 841 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalTaraxa > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false ? "disabled-btn" : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageTaraxa > 0 ||
-                        nftPremium_totalTaraxa > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageVanar > 0 &&
-                chainId === 2040 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalVanar > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageVanar > 0 ||
-                        nftPremium_totalVanar > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageTaiko > 0 &&
-                chainId === 167000 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalTaiko > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageTaiko > 0 ||
-                        nftPremium_totalTaiko > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageMat > 0 &&
-                chainId === 698 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalMat > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageMat > 0 || nftPremium_totalMat > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x38", 56);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to BNB Chain
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageViction > 0 &&
-                chainId !== 88 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x58", 88);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to Viction
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageTaraxa > 0 &&
-                chainId !== 841 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x349", 841);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to Taraxa
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageVanar > 0 &&
-                chainId !== 2040 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x7f8", 2040);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to Vanar
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageTaiko > 0 &&
-                chainId !== 167000 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x28c58", 167000);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to Taiko
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageMat > 0 &&
-                chainId !== 698 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x2ba", 698);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to Matchain
-                  </button>
-                </div>
-              ) : (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !isEOA ||
-                      !coinbase ||
-                      isApproved
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !isEOA ||
-                      !coinbase ||
-                      isApproved
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>Approve token</>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      !isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>Buy</>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div
-                        className="spinner-border "
-                        role="status"
-                        style={{
-                          height: "1rem",
-                          width: "1rem",
-                        }}
-                      ></div>
-                    )}
-                  </button>
-                  {window.WALLET_TYPE === "binance" && (
-                    <div>
-                      <button
-                        onClick={() => handlePurchasePremium(coinbase, price)}
-                        className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
-                        disabled={
-                          approveStatus === "fail" ||
-                          !coinbase ||
-                          !isApproved ||
-                          !isEOA
-                        }
+                {chainId === 1482601649 && isConnected && (
+                  <div className="gotoNebula-wrapper p-3 mb-3">
+                    <div className="d-flex w-100 justify-content-between gap-2">
+                      <span className="nebula-wrapper-text">
+                        Bridge your USDC to Nebula now!
+                      </span>
+                      <a
+                        className="nebula-bridgebtn"
+                        href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        <img
-                          style={{ height: 18 }}
-                          src={"https://cdn.worldofdypians.com/wod/b-pay.svg"}
-                          alt=""
-                        />
-                        {buttonText}
-                      </button>
+                        Nebula Bridge
+                      </a>
                     </div>
+                  </div>
+                )}
+                <div
+                  className={`d-flex align-items-center ${
+                    !coinbase
+                      ? "justify-content-between"
+                      : "justify-content-end"
+                  }`}
+                >
+                  {!coinbase && (
+                    <span style={{ color: "rgb(227, 6 ,19)" }}>
+                      Please connect your wallet first
+                    </span>
+                  )}
+
+                  {isConnected && coinbase && !isEOA && (
+                    <span className="text-danger">
+                      Smart contract wallets are not supported for this action.
+                    </span>
                   )}
                 </div>
-              )}
-            </div>
-
-            {chainId === 1482601649 && isConnected && (
-              <div className="gotoNebula-wrapper p-3 mb-3">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="nebula-wrapper-text">
-                    Bridge your USDC to Nebula now!
-                  </span>
-                  <a
-                    className="nebula-bridgebtn"
-                    href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Nebula Bridge
-                  </a>
-                </div>
               </div>
-            )}
-            <div
-              className={`d-flex align-items-center ${
-                !coinbase ? "justify-content-between" : "justify-content-end"
-              }`}
-            >
-              {!coinbase && (
-                <span style={{ color: "rgb(227, 6 ,19)" }}>
-                  Please connect your wallet first
-                </span>
-              )}
-
-              {isConnected && coinbase && !isEOA && (
-                <span className="text-danger">
-                  Smart contract wallets are not supported for this action.
-                </span>
-              )}
             </div>
+
+            {/* <hr className="form-divider my-4" /> */}
           </div>
         )}
       </div>

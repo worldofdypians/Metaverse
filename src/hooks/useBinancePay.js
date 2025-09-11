@@ -278,13 +278,8 @@ export function useBinancePay() {
             <div>
               <p className="text-gray-400 text-sm">Payment Amount</p>
               <h2 className="text-3xl font-bold">
-                {createdOrder.totalFee}{" "}
-                <span className="text-lg">{createdOrder.currency}</span>
+                ${createdOrder.totalFee}{" "}
               </h2>
-              <p className="text-gray-400 text-sm">
-                ≈ ${createdOrder.totalFee}
-              </p>
-
               <div className="mt-4">
                 <p className="text-gray-400 text-xs">Merchant Name</p>
                 <p className="font-medium">World of Dypians</p>

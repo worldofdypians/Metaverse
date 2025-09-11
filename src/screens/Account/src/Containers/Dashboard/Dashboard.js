@@ -7609,7 +7609,7 @@ function Dashboard({
           <GoldenPassPopup
             onClosePopup={() => {
               setgoldenPassPopup(false);
-              handleClosePopup();
+              // handleClosePopup();
               window.location.hash = "";
             }}
             onConnectWallet={() => {
@@ -7631,6 +7631,7 @@ function Dashboard({
               handleRefreshCountdown700(coinbase);
             }}
             goldenPassRemainingTime={goldenPassRemainingTime}
+            email={email}
           />
         )}
 

@@ -2460,7 +2460,7 @@ function App() {
       //
       // setIsConnected(isActive);
     } catch (e) {
-      window.alertify.error(String(e) || "Cannot connect wallet!");
+      window.alertify.error(e?.message || "Cannot connect wallet!");
       console.log(e);
       return;
     }

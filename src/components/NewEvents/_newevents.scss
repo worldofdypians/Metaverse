@@ -587,6 +587,32 @@
   }
 }
 
+.payment-method-wrapper {
+  border-radius: 8px;
+// border: 0.2px solid #749094;
+background: rgba(0, 0, 0, 0.30);
+backdrop-filter: blur(20px);
+}
+
+.payment-method-wrapper-scorpion {
+border-radius: 8px;
+// border: 0.2px solid #749094;
+background: rgba(0, 0, 0, 0.60);
+backdrop-filter: blur(20px);
+}
+
+.payment-method-first {
+  border-radius: 4px;
+// border: 0.2px solid #749094;
+background: rgba(0, 0, 0, 0.10);
+}
+
+.payment-method-first-scorpion {
+  border-radius: 4px;
+// border: 0.2px solid #749094;
+background: rgba(0, 0, 0, 0.20);
+}
+
 .beast-siege-info-wrapper {
   border-radius: 12px;
   height: 380px;

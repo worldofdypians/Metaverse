@@ -11,6 +11,8 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import Countdown from "react-countdown";
 import { golden_pass2_address } from "../NewEvents/abi";
 import { useBinancePay } from "../../hooks/useBinancePay";
+import { motion } from "motion/react";
+import { NavLink } from "react-router-dom";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -50,6 +52,7 @@ const GoldenPassPopup = ({
   onSuccessDeposit,
   goldenPassRemainingTime,
   onConnectWallet,
+  email,
 }) => {
   const [goldenPassWodAmount, setGoldenPassWodAmount] = useState(0);
   // const [countdown, setCountdown] = useState(0);
@@ -85,25 +88,25 @@ const GoldenPassPopup = ({
   };
 
   const getBundlePrizes = async () => {
-    if (binancePay === true) {
-      setGoldenPassWodAmount(50);
-    } else {
-      const goldenPassContract = new window.bscWeb3.eth.Contract(
-        GOLDEN_PASS_ABI,
-        golden_pass_address
-      );
+    // if (binancePay === true) {
+    //   setGoldenPassWodAmount(50);
+    // } else {
+    const goldenPassContract = new window.bscWeb3.eth.Contract(
+      GOLDEN_PASS_ABI,
+      golden_pass_address
+    );
 
-      const result_golden_pass = await goldenPassContract.methods
-        .getEstimatedBundleWODAmount()
-        .call()
-        .catch((e) => {
-          console.error(e);
-        });
+    const result_golden_pass = await goldenPassContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
 
-      if (result_golden_pass) {
-        setGoldenPassWodAmount(result_golden_pass / 1e18);
-      }
+    if (result_golden_pass) {
+      setGoldenPassWodAmount(result_golden_pass / 1e18);
     }
+    // }
   };
 
   // const handleRefreshCountdown = async () => {
@@ -145,6 +148,48 @@ const GoldenPassPopup = ({
             console.error(e);
             return 0;
           });
+      } else if (window.WALLET_TYPE === "binance") {
+        const allowance1 = await wod_token_abi.methods
+          .allowance(wallet, goldenPassAddress)
+          .call()
+          .catch((e) => {
+            console.log(e);
+          });
+
+        const tokenSc = new ethers.Contract(
+          window.config.usdt_token_address,
+          window.TOKEN_ABI,
+          binanceW3WProvider.getSigner()
+        );
+
+        const allowance2 = await tokenSc
+          .allowance(wallet, golden_pass2_address)
+          .catch((e) => {
+            console.log(e);
+          });
+        const stringBalance =
+          window.bscWeb3.utils.hexToNumberString(allowance2);
+
+        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+          setShowApproval(true);
+        }
+        if (
+          allowance2 === "0" ||
+          Number(stringBalance) < 150000000000000000000
+        ) {
+          setShowApproval2(true);
+        }
+        if (
+          allowance2 !== "0" &&
+          Number(stringBalance) >= 150000000000000000000
+        ) {
+          setShowApproval2(false);
+          setBundleState2("deposit");
+        }
+        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
+          setShowApproval(false);
+          setBundleState("deposit");
+        }
       } else {
         const allowance1 = await wod_token_abi.methods
           .allowance(wallet, goldenPassAddress)
@@ -179,7 +224,12 @@ const GoldenPassPopup = ({
   };
 
   const handleApproval = async (status) => {
-    setBundleState("loading");
+    if (status === false) {
+      setBundleState("loading");
+    } else if (status === true) {
+      setBundleState2("loading");
+    }
+
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
@@ -190,6 +240,7 @@ const GoldenPassPopup = ({
           setStatus("Succesfully approved!");
           setBundleState("deposit");
           setStatusColor("#00FECF");
+          setShowApproval(false);
         })
         .catch((e) => {
           setStatusColor("#FE7A00");
@@ -232,8 +283,10 @@ const GoldenPassPopup = ({
         setStatusColor("#00FECF");
         if (status === false) {
           setBundleState("deposit");
+          setShowApproval(false);
         } else if (status === true) {
           setBundleState2("deposit");
+          setShowApproval2(false);
         }
       }
     } else if (window.WALLET_TYPE === "matchId") {
@@ -408,14 +461,48 @@ const GoldenPassPopup = ({
 
   const checkWalletAddr = () => {
     if (coinbase && wallet) {
-      if (coinbase?.toLowerCase() !== wallet?.toLowerCase() || chainId !== 56) {
+      if (binancePay === true && window.WALLET_TYPE !== "binance") {
         setCheckWallet(false);
+        setStatus(
+          "Please connect with Binance wallet in order to activate the event."
+        );
+        setStatusColor("#FE7A00");
       } else if (
+        coinbase?.toLowerCase() === wallet?.toLowerCase() &&
+        chainId !== 56
+      ) {
+        setCheckWallet(false);
+        setStatus(
+          "Please make sure you're on BNB Chain in order to activate the event."
+        );
+        setStatusColor("#FE7A00");
+      } else if (
+        coinbase?.toLowerCase() !== wallet?.toLowerCase() &&
+        chainId === 56
+      ) {
+        setCheckWallet(false);
+        setStatus(
+          "Please make sure you're using the wallet address associated to your game profile."
+        );
+        setStatusColor("#FE7A00");
+      } else if (!isEOA && isConnected && coinbase) {
+        setStatus("Smart contract wallets are not supported for this action.");
+        setStatusColor("#FE7A00");
+      } else if (
+        isEOA &&
+        isConnected &&
+        coinbase &&
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
         chainId === 56
       ) {
         setCheckWallet(true);
+        setStatus("");
+        setStatusColor("#00FECF");
       }
+    } else if (wallet) {
+      setCheckWallet(false);
+      setStatus("Please connect your wallet in order to activate the event");
+      setStatusColor("#FE7A00");
     } else setCheckWallet(false);
   };
 
@@ -429,25 +516,13 @@ const GoldenPassPopup = ({
       // handleRefreshCountdown();
       checkApproval();
     }
-  }, [wallet, chainId, coinbase]);
+  }, [wallet, chainId, coinbase, binancePay, isEOA]);
 
   useEffect(() => {
     if (statusbinance === "success") {
-      setTimeout(() => {
-        onSuccessDeposit();
-      }, 3000);
+      onSuccessDeposit();
     }
   }, [statusbinance]);
-
-  useEffect(() => {
-    if (!isEOA && isConnected && coinbase) {
-      setStatus("Smart contract wallets are not supported for this action.");
-      setStatusColor("#FE7A00");
-    } else if (isEOA && isConnected && coinbase) {
-      setStatus("");
-      setStatusColor("#00FECF");
-    }
-  }, [isEOA, isConnected, coinbase]);
 
   useEffect(() => {
     const storedOrder = localStorage.getItem("binanceOrder");
@@ -455,7 +530,17 @@ const GoldenPassPopup = ({
       setbinancePay(true);
     }
   }, [statusbinance]);
-
+  console.log(
+    checkWallet,
+    bundleState,
+    showApproval,
+    showApproval2,
+    isEOA,
+    status
+  );
+  console.log(
+    bundleState === "deposit" || checkWallet === false || showApproval === false
+  );
   return (
     <>
       <div className="package-popup-wrapper">
@@ -475,6 +560,35 @@ const GoldenPassPopup = ({
               alt=""
               style={{ width: "100%" }}
             />
+            {binancePay === true && window.WALLET_TYPE !== "binance" && (
+              <div className="absolute bottom-0 bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                {/* Background image */}
+
+                {/* Glow effect */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                ></div>
+
+                <div className="relative">
+                  <div className="d-flex flex-column gap-2">
+                    <div className="flex items-center space-x-3">
+                      <img
+                        src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                        alt=""
+                        className="w-5 h-5 text-yellow-400"
+                      />
+                      <span className="font-medium text-yellow-400">
+                        Binance Pay Setup
+                      </span>
+                    </div>
+                    <span className="challenge-popup-desc text-white">
+                      Import your game wallet into Binance Wallet app or connect
+                      your existing Binance Wallet.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="package-popup-content-2 p-1">
@@ -678,28 +792,197 @@ const GoldenPassPopup = ({
               </table>
             </div>
           </div>
-          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-            <div className="event-price-wrapper p-3 d-flex align-items-center gap-3">
-              <span className="event-price-span">Event Price</span>
-              <div className="d-flex align-items-center gap-3">
-                <div className="d-flex align-items-center gap-1">
-                  <img
+          <div className="new-event-wrapper gap-3 p-3 d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between position-relative">
+            <div className="event-price-wrapper p-3 d-flex  gap-3">
+              <div className="d-flex flex-column justify-content-between">
+                <span className="event-price-span">Event Price</span>
+                <div className="d-flex flex-column">
+                  <div className="d-flex align-items-center gap-1">
+                    {/* <img
                     src={"https://cdn.worldofdypians.com/wod/wodToken.png"}
                     height={30}
                     width={30}
                     alt=""
-                  />
-                  <h6 className="event-price-coin mb-0">
-                    {getFormattedNumber(goldenPassWodAmount)}{" "}
-                    {binancePay === false ? "WOD" : "USDT"}
-                  </h6>
+                  /> */}
+                    <h6 className="event-price-coin mb-0">
+                      {getFormattedNumber(
+                        binancePay === false ? goldenPassWodAmount : 50
+                      )}{" "}
+                      {binancePay === false ? "WOD" : "USDT"}
+                    </h6>
+                  </div>
+                  <span className="event-price-usd">
+                    ($
+                    {getFormattedNumber(50)})
+                  </span>
                 </div>
-                <span className="event-price-usd">
-                  ($
-                  {getFormattedNumber(50)})
-                </span>
+              </div>
+              <div className="d-flex flex-column gap-2">
+                <span className="event-price-span">Method</span>
+                <div className="d-flex gap-2 align-items-center w-100">
+                  <motion.div
+                    // whileTap={{ scale: 0.98 }}
+                    className={` ${
+                      (bundleState2 === "loading" ||
+                        statusbinance !== "idle") &&
+                      "pe-none"
+                    } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                      !binancePay
+                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                    }`}
+                    onClick={() => setbinancePay(false)}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <img
+                        style={{ height: 18 }}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                        }
+                        alt=""
+                      />
+                      <div>
+                        <p
+                          className={`text-sm font-medium m-0 ${
+                            !binancePay ? "text-white" : "text-gray-200"
+                          }`}
+                        >
+                          Wallet
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                  <motion.div
+                    // whileTap={{ scale: 0.98 }}
+                    className={`${
+                      (bundleState === "loading" ||
+                        depositState === "loading-deposit") &&
+                      "pe-none"
+                    } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                      binancePay
+                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                    }`}
+                    onClick={() => setbinancePay(true)}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <img
+                        style={{ height: 18 }}
+                        src={"https://cdn.worldofdypians.com/wod/b-pay.svg"}
+                        alt=""
+                      />
+                      <div>
+                        <p
+                          className={`text-sm font-medium m-0 ${
+                            binancePay ? "text-white" : "text-gray-200"
+                          }`}
+                        >
+                          Binance Pay
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
               </div>
             </div>
+            {/* <div className="w-100 flex-column flex-lg-row flex-md-row d-flex align-items-center gap-2">
+              <span className="challenge-popup-desc text-white whitespace-nowrap">
+                Payment methods:
+              </span>
+              <div className="d-flex w-100 flex-column flex-lg-row flex-md-row gap-3 align-items-center">
+                <motion.div
+                  // whileTap={{ scale: 0.98 }}
+                  className={` ${
+                    (bundleState2 === "loading" || statusbinance !== "idle") &&
+                    "pe-none"
+                  } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                    !binancePay
+                      ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
+                      : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
+                  }`}
+                  onClick={() => setbinancePay(false)}
+                >
+                  <div className="flex items-center space-x-3">
+                    <img
+                      style={{ height: 18 }}
+                      src={"https://cdn.worldofdypians.com/wod/walletRound.svg"}
+                      alt=""
+                    />
+                    <div>
+                      <p
+                        className={`text-sm font-medium m-0 ${
+                          !binancePay ? "text-white" : "text-gray-200"
+                        }`}
+                      >
+                        Wallet
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p
+                      className={`font-semibold m-0 text-lg m-0 m-0 ${
+                        !binancePay ? "text-white" : "text-gray-200"
+                      }`}
+                    >
+                      {getFormattedNumber(goldenPassWodAmount)} WOD
+                    </p>
+                    <p
+                      className={`text-end text-xs m-0 ${
+                        !binancePay ? "text-yellow-200" : "text-gray-400"
+                      }`}
+                    >
+                      ${getFormattedNumber(50, 0)}
+                    </p>
+                  </div>
+                </motion.div>
+                <motion.div
+                  // whileTap={{ scale: 0.98 }}
+                  className={`${
+                    (bundleState === "loading" ||
+                      depositState === "loading-deposit") &&
+                    "pe-none"
+                  } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                    binancePay
+                      ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
+                      : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
+                  }`}
+                  onClick={() => setbinancePay(true)}
+                >
+                  <div className="flex items-center space-x-3">
+                    <img
+                      style={{ height: 18 }}
+                      src={"https://cdn.worldofdypians.com/wod/b-pay.svg"}
+                      alt=""
+                    />
+                    <div>
+                      <p
+                        className={`text-sm font-medium m-0 ${
+                          binancePay ? "text-white" : "text-gray-200"
+                        }`}
+                      >
+                        Binance Pay
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p
+                      className={`font-semibold m-0 text-lg m-0 ${
+                        binancePay ? "text-white" : "text-gray-200"
+                      }`}
+                    >
+                      {getFormattedNumber(50)} USDT
+                    </p>
+                    <p
+                      className={`text-end text-xs m-0 ${
+                        binancePay ? "text-yellow-200" : "text-gray-400"
+                      }`}
+                    >
+                      ${getFormattedNumber(50, 0)}
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            </div> */}
             <>
               {goldenPassRemainingTime ? (
                 <div className="d-flex flex-column gap-1">
@@ -709,8 +992,114 @@ const GoldenPassPopup = ({
                     date={Number(goldenPassRemainingTime) * 1000}
                   />
                 </div>
-              ) : isConnected && coinbase && binancePay === false ? (
-                <div className="d-flex align-items-center gap-2">
+              ) : // : isConnected && coinbase && binancePay === false ? (
+              //   <div className="d-flex align-items-center gap-2">
+              //     <button
+              //       disabled={
+              //         bundleState === "deposit" ||
+              //         bundleState === "loading" ||
+              //         checkWallet === false ||
+              //         !isEOA
+              //           ? true
+              //           : false
+              //       }
+              //       className={` ${
+              //         bundleState === "deposit" || checkWallet === false
+              //           ? "stake-wod-btn-inactive d-none"
+              //           : "stake-wod-btn"
+              //       }  py-2 px-4`}
+              //       onClick={() => handleApproval(false)}
+              //     >
+              //       {bundleState === "loading" ? (
+              //         <div
+              //           className="spinner-border spinner-border-sm text-light"
+              //           role="status"
+              //         >
+              //           <span className="visually-hidden">Loading...</span>
+              //         </div>
+              //       ) : (
+              //         "Approve"
+              //       )}
+              //     </button>
+              //     <button
+              //       disabled={
+              //         bundleState === "deposit" ||
+              //         depositState === "loading-deposit" ||
+              //         checkWallet === true ||
+              //         isEOA
+              //           ? false
+              //           : true
+              //       }
+              //       className={` ${
+              //         bundleState === "deposit" || checkWallet === false
+              //           ? "stake-wod-btn"
+              //           : "stake-wod-btn-inactive d-none"
+              //       }  py-2 px-4`}
+              //       onClick={() => handleDeposit()}
+              //     >
+              //       {depositState === "loading-deposit" ? (
+              //         <div
+              //           className="spinner-border spinner-border-sm text-light"
+              //           role="status"
+              //         >
+              //           <span className="visually-hidden">Loading...</span>
+              //         </div>
+              //       ) : (
+              //         "Buy"
+              //       )}
+              //     </button>
+              //   </div>
+              // ) : isConnected && coinbase && binancePay === true ? (
+              //   <div className="d-flex align-items-center gap-2">
+              //     <button
+              //       disabled={
+              //         bundleState2 === "deposit" ||
+              //         bundleState2 === "loading" ||
+              //         checkWallet === false ||
+              //         !isEOA
+              //           ? true
+              //           : false
+              //       }
+              //       className={` ${
+              //         bundleState2 === "deposit" || checkWallet === false
+              //           ? "stake-wod-btn-inactive d-none"
+              //           : "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all"
+              //       }  py-2 px-4`}
+              //       onClick={() => handleApproval(true)}
+              //     >
+              //       {bundleState2 === "loading" ? (
+              //         <div
+              //           className="spinner-border spinner-border-sm text-light"
+              //           role="status"
+              //         >
+              //           <span className="visually-hidden">Loading...</span>
+              //         </div>
+              //       ) : (
+              //         "Approve"
+              //       )}
+              //     </button>
+              //     <button
+              //       disabled={
+              //         bundleState2 === "deposit" ||
+              //         depositState === "loading-deposit" ||
+              //         checkWallet === true ||
+              //         isEOA
+              //           ? false
+              //           : true
+              //       }
+              //       className={` ${
+              //         bundleState2 === "deposit" || checkWallet === false
+              //           ? "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all"
+              //           : "stake-wod-btn-inactive d-none"
+              //       }  py-2 px-4`}
+              //       onClick={() => handleBuy(coinbase, "Golden Pass")}
+              //     >
+              //       {buttonText}
+              //     </button>
+              //   </div>
+              // )
+              isConnected && email && binancePay === false ? (
+                <>
                   <button
                     disabled={
                       bundleState === "deposit" ||
@@ -721,18 +1110,23 @@ const GoldenPassPopup = ({
                         : false
                     }
                     className={` ${
-                      bundleState === "deposit" || checkWallet === false
+                      bundleState === "deposit" ||
+                      checkWallet === false ||
+                      showApproval === false
                         ? "stake-wod-btn-inactive d-none"
                         : "stake-wod-btn"
                     }  py-2 px-4`}
                     onClick={() => handleApproval(false)}
                   >
                     {bundleState === "loading" ? (
-                      <div
-                        className="spinner-border spinner-border-sm text-light"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
+                      <div className="d-flex align-items-center gap-2">
+                        Approving
+                        <div
+                          className="spinner-border spinner-border-sm text-light beast-button"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
                       </div>
                     ) : (
                       "Approve"
@@ -742,67 +1136,63 @@ const GoldenPassPopup = ({
                     disabled={
                       bundleState === "deposit" ||
                       depositState === "loading-deposit" ||
-                      checkWallet === true ||
-                      isEOA
+                      checkWallet === true
                         ? false
                         : true
                     }
                     className={` ${
-                      bundleState === "deposit" || checkWallet === false
+                      showApproval === true && checkWallet === true
+                        ? "stake-wod-btn-inactive d-none"
+                        : showApproval === false && checkWallet === true
                         ? "stake-wod-btn"
-                        : "stake-wod-btn-inactive d-none"
+                        : "stake-wod-btn-inactive"
                     }  py-2 px-4`}
                     onClick={() => handleDeposit()}
                   >
                     {depositState === "loading-deposit" ? (
-                      <div
-                        className="spinner-border spinner-border-sm text-light"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
+                      <div className="d-flex align-items-center gap-2">
+                        Activating
+                        <div
+                          className="spinner-border spinner-border-sm text-light beast-button"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
                       </div>
                     ) : (
-                      "Buy"
+                      "Activate"
                     )}
                   </button>
-                  {window.WALLET_TYPE === "binance" && (
-                    <button
-                      onClick={() => setbinancePay(true)}
-                      className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
-                    >
-                      <img
-                        style={{ height: 18 }}
-                        src={"https://cdn.worldofdypians.com/wod/b-pay.svg"}
-                        alt=""
-                      />
-                      Binance Pay
-                    </button>
-                  )}
-                </div>
-              ) : isConnected && coinbase && binancePay === true ? (
-                <div className="d-flex align-items-center gap-2">
+                </>
+              ) : isConnected && email && binancePay === true ? (
+                <>
                   <button
                     disabled={
                       bundleState2 === "deposit" ||
-                      bundleState2 === "loading" ||
+                      bundleState === "loading" ||
                       checkWallet === false ||
                       !isEOA
                         ? true
                         : false
                     }
                     className={` ${
-                      bundleState2 === "deposit" || checkWallet === false
+                      bundleState2 === "deposit" ||
+                      checkWallet === false ||
+                      showApproval2 === false
                         ? "stake-wod-btn-inactive d-none"
-                        : "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all"
+                        : "binance-beast-siege-btn"
                     }  py-2 px-4`}
                     onClick={() => handleApproval(true)}
                   >
                     {bundleState2 === "loading" ? (
-                      <div
-                        className="spinner-border spinner-border-sm text-light"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
+                      <div className="d-flex align-items-center gap-2">
+                        Approving
+                        <div
+                          className="spinner-border spinner-border-sm text-light beast-button"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
                       </div>
                     ) : (
                       "Approve"
@@ -810,28 +1200,37 @@ const GoldenPassPopup = ({
                   </button>
                   <button
                     disabled={
-                      bundleState2 === "deposit" ||
-                      depositState === "loading-deposit" ||
-                      checkWallet === true ||
-                      isEOA
+                      checkWallet === true &&
+                      isEOA &&
+                      bundleState2 !== "loading-deposit"
                         ? false
                         : true
                     }
                     className={` ${
-                      bundleState2 === "deposit" || checkWallet === false
-                        ? "bg-gradient-to-r from-yellow-400 to-orange-400 font-semibold hover:from-yellow-400 hover:to-orange-500 text-black font-semibold rounded-lg transition-all"
-                        : "stake-wod-btn-inactive d-none"
+                      showApproval2 === true && checkWallet === true
+                        ? "stake-wod-btn-inactive d-none"
+                        : showApproval2 === false && checkWallet === true
+                        ? "binance-beast-siege-btn"
+                        : "stake-wod-btn-inactive"
                     }  py-2 px-4`}
                     onClick={() => handleBuy(coinbase, "Golden Pass")}
                   >
                     {buttonText}
                   </button>
-                </div>
-              ) : (
+                </>
+              ) : !isConnected ? (
                 <button className="stake-wod-btn" onClick={onConnectWallet}>
                   Connect Wallet
                 </button>
-              )}
+              ) : !email ? (
+                <NavLink
+                  to="/auth"
+                  className="stake-wod-btn"
+                  onClick={onClosePopup}
+                >
+                  Log in
+                </NavLink>
+              ) : null}
             </>
           </div>
           <span

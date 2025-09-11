@@ -1147,6 +1147,10 @@
     height: 100%;
   }
 
+    .h-fit {
+    height: fit-content;
+  }
+
   .h-0 {
     height: calc(var(--spacing) * 0);
   }
@@ -1497,6 +1501,10 @@
 
   .min-w-10 {
     min-width: calc(var(--spacing) * 10);
+  }
+
+  .min-w-122 {
+    min-width: 122px;
   }
 
   .min-w-\[8rem\] {
@@ -5434,6 +5442,18 @@
     @supports (color: color-mix(in lab, red, red)) {
       .hover\:border-orange-400\/50:hover {
         border-color: color-mix(in oklab, var(--color-orange-400) 50%, transparent);
+      }
+    }
+  }
+
+    @media (hover: hover) {
+    .hover\:border-cyan-400\/50:hover {
+     border-color: color-mix(in srgb, oklch(.789 .154 211.53) 50%, transparent);
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:border-cyan-400\/50:hover {
+        border-color: color-mix(in oklab, var(--color-cyan-400) 50%, transparent);
       }
     }
   }

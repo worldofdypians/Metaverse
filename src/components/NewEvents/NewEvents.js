@@ -3883,7 +3883,7 @@ const NewEvents = ({
     getBundlePrizesEagle();
     getBundlePrizesScorpion();
     getBundlePrizesCyclops();
-  }, [binancePay]);
+  }, []);
 
   useEffect(() => {
     const storedOrder = localStorage.getItem("binanceOrder");
@@ -4596,6 +4596,29 @@ const NewEvents = ({
     }
   }, [showPopup]);
 
+  useEffect(() => {
+    if (binancePay === true && window.WALLET_TYPE === "binance") {
+      setDragonShowApproval2(false);
+      setDragonBundleState2("deposit");
+      setpuzzleMadnessShowApproval2(false);
+      setpuzzleMadnessBundleState2("deposit");
+      setBeastShowApproval2(false);
+      setBeastBundleState2("deposit");
+
+      setBearShowApproval2(false);
+      setBearBundleState2("deposit");
+
+      setEagleShowApproval2(false);
+      setEagleBundleState2("deposit");
+
+      setScorpionShowApproval2(false);
+      setScorpionBundleState2("deposit");
+
+      setCyclopsShowApproval2(false);
+      setCyclopsBundleState2("deposit");
+    }
+  }, [binancePay, window.WALLET_TYPE]);
+
   return (
     <>
       <div
@@ -5101,140 +5124,117 @@ const NewEvents = ({
                                     ) : (
                                       <div className="d-flex flex-column gap-2">
                                         {adjustedDay === 1 ? (
-                                          <div className="space-y-2">
-                                            <span className="challenge-popup-desc text-white">
-                                              Payment methods:
-                                            </span>
-                                            <div className="space-y-2 col-lg-5">
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={` ${
-                                                  (dragonBundleState2 ===
-                                                    "loading" ||
-                                                    statusbinance !== "idle") &&
-                                                  "pe-none"
-                                                } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  !binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(false)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                 
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/walletIcon.svg"
-                                                    }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        !binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      EVM Wallet
-                                                    </p>
+                                          <div className="payment-method-wrapper p-2 bordertw border-white/20 w-fit">
+                                            <div className="d-flex flex-column gap-2 justify-content-between">
+                                              <div className="payment-method-first bordertw border-white/20 p-2">
+                                                <div className="d-flex align-items-center gap-2 justify-content-between">
+                                                  <span className="event-price-span">
+                                                    Event Price
+                                                  </span>
+                                                  <div className="d-flex flex-column align-items-end">
+                                                    <h6 className="event-price-coin mb-0">
+                                                      {getFormattedNumber(
+                                                        binancePay === false
+                                                          ? dragonRuinsWodAmount
+                                                          : activeEvent.usdPrice
+                                                      )}{" "}
+                                                      {binancePay === false
+                                                        ? "WOD"
+                                                        : "USDT"}
+                                                    </h6>
+                                                    <span className="event-price-usd">
+                                                      ($
+                                                      {getFormattedNumber(
+                                                        activeEvent.usdPrice
+                                                      )}
+                                                      )
+                                                    </span>
                                                   </div>
                                                 </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 m-0 ${
+                                              </div>
+                                              <div className="d-flex flex-column gap-2">
+                                                <span className="event-price-span">
+                                                  Method
+                                                </span>
+                                                <div className="d-flex gap-2 align-items-center w-100">
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={` ${
+                                                      (dragonBundleState2 ===
+                                                        "loading" ||
+                                                        statusbinance !==
+                                                          "idle") &&
+                                                      "pe-none"
+                                                    } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       !binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
-                                                  >
-                                                    {getFormattedNumber(
-                                                      dragonRuinsWodAmount
-                                                    )}{" "}
-                                                    WOD
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
-                                                      !binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
-                                                    }`}
-                                                  >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
-                                                </div>
-                                              </motion.div>
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={`${
-                                                  (dragonBundleState ===
-                                                    "loading" ||
-                                                    dragonDepositState ===
-                                                      "loading-deposit") &&
-                                                  "pe-none"
-                                                } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(true)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                  
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                    onClick={() =>
+                                                      setbinancePay(false)
                                                     }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      Binance Pay
-                                                    </p>
-                                                  </div>
-                                                </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 ${
-                                                      binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
-                                                    }`}
                                                   >
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}{" "}
-                                                    USDT
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            !binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Wallet
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={`${
+                                                      (dragonBundleState ===
+                                                        "loading" ||
+                                                        dragonDepositState ===
+                                                          "loading-deposit") &&
+                                                      "pe-none"
+                                                    } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
                                                   >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Binance Pay
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
                                                 </div>
-                                              </motion.div>
+                                              </div>
                                             </div>
                                           </div>
                                         ) : (
@@ -5277,140 +5277,117 @@ const NewEvents = ({
                                     ) : (
                                       <div className="d-flex flex-column gap-2">
                                         {adjustedDay === 2 ? (
-                                          <div className="space-y-2">
-                                            <span className="challenge-popup-desc text-white">
-                                              Payment methods:
-                                            </span>
-                                            <div className="space-y-2 col-lg-5">
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={` ${
-                                                  (bearBundleState2 ===
-                                                    "loading" ||
-                                                    statusbinance !== "idle") &&
-                                                  "pe-none"
-                                                } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  !binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(false)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                  
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/walletIcon.svg"
-                                                    }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        !binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      EVM Wallet
-                                                    </p>
+                                          <div className="payment-method-wrapper p-2 bordertw border-white/20 w-fit">
+                                            <div className="d-flex flex-column gap-2 justify-content-between">
+                                              <div className="payment-method-first bordertw border-white/20 p-2">
+                                                <div className="d-flex align-items-center gap-2 justify-content-between">
+                                                  <span className="event-price-span">
+                                                    Event Price
+                                                  </span>
+                                                  <div className="d-flex flex-column align-items-end">
+                                                    <h6 className="event-price-coin mb-0">
+                                                      {getFormattedNumber(
+                                                        binancePay === false
+                                                          ? coldBiteWodAmount
+                                                          : activeEvent.usdPrice
+                                                      )}{" "}
+                                                      {binancePay === false
+                                                        ? "WOD"
+                                                        : "USDT"}
+                                                    </h6>
+                                                    <span className="event-price-usd">
+                                                      ($
+                                                      {getFormattedNumber(
+                                                        activeEvent.usdPrice
+                                                      )}
+                                                      )
+                                                    </span>
                                                   </div>
                                                 </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 m-0 ${
+                                              </div>
+                                              <div className="d-flex flex-column gap-2">
+                                                <span className="event-price-span">
+                                                  Method
+                                                </span>
+                                                <div className="d-flex gap-2 align-items-center w-100">
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={` ${
+                                                      (bearBundleState2 ===
+                                                        "loading" ||
+                                                        statusbinance !==
+                                                          "idle") &&
+                                                      "pe-none"
+                                                    } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       !binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
-                                                  >
-                                                    {getFormattedNumber(
-                                                      coldBiteWodAmount
-                                                    )}{" "}
-                                                    WOD
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
-                                                      !binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
-                                                    }`}
-                                                  >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
-                                                </div>
-                                              </motion.div>
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={`${
-                                                  (bearBundleState ===
-                                                    "loading" ||
-                                                    bearDepositState ===
-                                                      "loading-deposit") &&
-                                                  "pe-none"
-                                                } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(true)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                  
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                    onClick={() =>
+                                                      setbinancePay(false)
                                                     }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      Binance Pay
-                                                    </p>
-                                                  </div>
-                                                </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 ${
-                                                      binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
-                                                    }`}
                                                   >
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}{" "}
-                                                    USDT
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            !binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Wallet
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={`${
+                                                      (bearBundleState ===
+                                                        "loading" ||
+                                                        bearDepositState ===
+                                                          "loading-deposit") &&
+                                                      "pe-none"
+                                                    } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
                                                   >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Binance Pay
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
                                                 </div>
-                                              </motion.div>
+                                              </div>
                                             </div>
                                           </div>
                                         ) : (
@@ -5453,140 +5430,117 @@ const NewEvents = ({
                                     ) : (
                                       <div className="d-flex flex-column gap-2">
                                         {adjustedDay === 3 ? (
-                                          <div className="space-y-2">
-                                            <span className="challenge-popup-desc text-white">
-                                              Payment methods:
-                                            </span>
-                                            <div className="space-y-2 col-lg-5">
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={` ${
-                                                  (beastBundleState2 ===
-                                                    "loading" ||
-                                                    statusbinance !== "idle") &&
-                                                  "pe-none"
-                                                } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  !binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(false)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                 
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/walletIcon.svg"
-                                                    }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        !binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      EVM Wallet
-                                                    </p>
+                                          <div className="payment-method-wrapper p-2 bordertw border-white/20 w-fit">
+                                            <div className="d-flex flex-column gap-2 justify-content-between">
+                                              <div className="payment-method-first bordertw border-white/20 p-2">
+                                                <div className="d-flex align-items-center gap-2 justify-content-between">
+                                                  <span className="event-price-span">
+                                                    Event Price
+                                                  </span>
+                                                  <div className="d-flex flex-column align-items-end">
+                                                    <h6 className="event-price-coin mb-0">
+                                                      {getFormattedNumber(
+                                                        binancePay === false
+                                                          ? furyBeastWodAmount
+                                                          : activeEvent.usdPrice
+                                                      )}{" "}
+                                                      {binancePay === false
+                                                        ? "WOD"
+                                                        : "USDT"}
+                                                    </h6>
+                                                    <span className="event-price-usd">
+                                                      ($
+                                                      {getFormattedNumber(
+                                                        activeEvent.usdPrice
+                                                      )}
+                                                      )
+                                                    </span>
                                                   </div>
                                                 </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 m-0 ${
+                                              </div>
+                                              <div className="d-flex flex-column gap-2">
+                                                <span className="event-price-span">
+                                                  Method
+                                                </span>
+                                                <div className="d-flex gap-2 align-items-center w-100">
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={` ${
+                                                      (beastBundleState2 ===
+                                                        "loading" ||
+                                                        statusbinance !==
+                                                          "idle") &&
+                                                      "pe-none"
+                                                    } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       !binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
-                                                  >
-                                                    {getFormattedNumber(
-                                                      furyBeastWodAmount
-                                                    )}{" "}
-                                                    WOD
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
-                                                      !binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
-                                                    }`}
-                                                  >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
-                                                </div>
-                                              </motion.div>
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={`${
-                                                  (beastBundleState ===
-                                                    "loading" ||
-                                                    beastDepositState ===
-                                                      "loading-deposit") &&
-                                                  "pe-none"
-                                                } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(true)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                 
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                    onClick={() =>
+                                                      setbinancePay(false)
                                                     }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      Binance Pay
-                                                    </p>
-                                                  </div>
-                                                </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 ${
-                                                      binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
-                                                    }`}
                                                   >
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}{" "}
-                                                    USDT
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            !binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Wallet
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={`${
+                                                      (beastBundleState ===
+                                                        "loading" ||
+                                                        beastDepositState ===
+                                                          "loading-deposit") &&
+                                                      "pe-none"
+                                                    } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
                                                   >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Binance Pay
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
                                                 </div>
-                                              </motion.div>
+                                              </div>
                                             </div>
                                           </div>
                                         ) : (
@@ -5630,7 +5584,7 @@ const NewEvents = ({
                                       <div className="d-flex flex-column gap-2">
                                         {adjustedDay === 4 ? (
                                           <div className="d-flex flex-column gap-2">
-                                            <div className="space-y-2">
+                                            {/* <div className="space-y-2">
                                               <span className="challenge-popup-desc text-white">
                                                 Payment methods:
                                               </span>
@@ -5645,8 +5599,8 @@ const NewEvents = ({
                                                     "pe-none"
                                                   } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                     !binancePay
-                                                      ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                      : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
+                                                      ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                      : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                   }`}
                                                   onClick={() =>
                                                     setbinancePay(false)
@@ -5657,7 +5611,7 @@ const NewEvents = ({
                                                     <img
                                                       style={{ height: 18 }}
                                                       src={
-                                                        "https://cdn.worldofdypians.com/wod/walletIcon.svg"
+                                                        "https://cdn.worldofdypians.com/wod/walletRound.svg"
                                                       }
                                                       alt=""
                                                     />
@@ -5669,7 +5623,7 @@ const NewEvents = ({
                                                             : "text-gray-200"
                                                         }`}
                                                       >
-                                                        EVM Wallet
+                                                        Wallet
                                                       </p>
                                                     </div>
                                                   </div>
@@ -5710,8 +5664,8 @@ const NewEvents = ({
                                                     "pe-none"
                                                   } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                     binancePay
-                                                      ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                      : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
+                                                      ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                      : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                   }`}
                                                   onClick={() =>
                                                     setbinancePay(true)
@@ -5766,6 +5720,119 @@ const NewEvents = ({
                                                   </div>
                                                 </motion.div>
                                               </div>
+                                            </div> */}
+                                            <div className="payment-method-wrapper p-2 bordertw border-white/20 w-fit">
+                                              <div className="d-flex flex-column gap-2 justify-content-between">
+                                                <div className="payment-method-first bordertw border-white/20 p-2">
+                                                  <div className="d-flex align-items-center gap-2 justify-content-between">
+                                                    <span className="event-price-span">
+                                                      Event Price
+                                                    </span>
+                                                    <div className="d-flex flex-column align-items-end">
+                                                      <h6 className="event-price-coin mb-0">
+                                                        {getFormattedNumber(
+                                                          binancePay === false
+                                                            ? wingStormWodAmount
+                                                            : activeEvent.usdPrice
+                                                        )}{" "}
+                                                        {binancePay === false
+                                                          ? "WOD"
+                                                          : "USDT"}
+                                                      </h6>
+                                                      <span className="event-price-usd">
+                                                        ($
+                                                        {getFormattedNumber(
+                                                          activeEvent.usdPrice
+                                                        )}
+                                                        )
+                                                      </span>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div className="d-flex flex-column gap-2">
+                                                  <span className="event-price-span">
+                                                    Method
+                                                  </span>
+                                                  <div className="d-flex gap-2 align-items-center w-100">
+                                                    <motion.div
+                                                      // whileTap={{ scale: 0.98 }}
+                                                      className={` ${
+                                                        (eagleBundleState2 ===
+                                                          "loading" ||
+                                                          statusbinance !==
+                                                            "idle") &&
+                                                        "pe-none"
+                                                      } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                                        !binancePay
+                                                          ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                          : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                                                      }`}
+                                                      onClick={() =>
+                                                        setbinancePay(false)
+                                                      }
+                                                    >
+                                                      <div className="flex items-center space-x-3">
+                                                        <img
+                                                          style={{ height: 18 }}
+                                                          src={
+                                                            "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                                          }
+                                                          alt=""
+                                                        />
+                                                        <div>
+                                                          <p
+                                                            className={`text-sm font-medium m-0 ${
+                                                              !binancePay
+                                                                ? "text-white"
+                                                                : "text-gray-200"
+                                                            }`}
+                                                          >
+                                                            Wallet
+                                                          </p>
+                                                        </div>
+                                                      </div>
+                                                    </motion.div>
+                                                    <motion.div
+                                                      // whileTap={{ scale: 0.98 }}
+                                                      className={`${
+                                                        (eagleBundleState ===
+                                                          "loading" ||
+                                                          eagleDepositState ===
+                                                            "loading-deposit") &&
+                                                        "pe-none"
+                                                      } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                                        binancePay
+                                                          ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                          : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                                                      }`}
+                                                      onClick={() =>
+                                                        setbinancePay(true)
+                                                      }
+                                                    >
+                                                      <div className="flex items-center space-x-3">
+                                                        <img
+                                                          style={{ height: 18 }}
+                                                          src={
+                                                            "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                          }
+                                                          alt=""
+                                                        />
+                                                        <div>
+                                                          <p
+                                                            className={`text-sm font-medium m-0 ${
+                                                              binancePay
+                                                                ? "text-white"
+                                                                : "text-gray-200"
+                                                            }`}
+                                                          >
+                                                            Binance Pay
+                                                          </p>
+                                                        </div>
+                                                      </div>
+                                                    </motion.div>
+                                                  </div>
+                                                </div>
+                                              </div>
                                             </div>
                                           </div>
                                         ) : (
@@ -5808,140 +5875,117 @@ const NewEvents = ({
                                     ) : (
                                       <div className="d-flex flex-column gap-2">
                                         {adjustedDay === 6 ? (
-                                          <div className="space-y-2">
-                                            <span className="challenge-popup-desc text-white">
-                                              Payment methods:
-                                            </span>
-                                            <div className="space-y-2 col-lg-5">
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={` ${
-                                                  (scorpionBundleState2 ===
-                                                    "loading" ||
-                                                    statusbinance !== "idle") &&
-                                                  "pe-none"
-                                                } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  !binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(false)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                 
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/walletIcon.svg"
-                                                    }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        !binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      EVM Wallet
-                                                    </p>
+                                          <div className="payment-method-wrapper-scorpion p-2 bordertw border-white/20 w-fit">
+                                            <div className="d-flex flex-column gap-2 justify-content-between">
+                                              <div className="payment-method-first-scorpion bordertw border-white/20 p-2">
+                                                <div className="d-flex align-items-center gap-2 justify-content-between">
+                                                  <span className="event-price-span">
+                                                    Event Price
+                                                  </span>
+                                                  <div className="d-flex flex-column align-items-end">
+                                                    <h6 className="event-price-coin mb-0">
+                                                      {getFormattedNumber(
+                                                        binancePay === false
+                                                          ? scorpionKingWodAmount
+                                                          : activeEvent.usdPrice
+                                                      )}{" "}
+                                                      {binancePay === false
+                                                        ? "WOD"
+                                                        : "USDT"}
+                                                    </h6>
+                                                    <span className="event-price-usd">
+                                                      ($
+                                                      {getFormattedNumber(
+                                                        activeEvent.usdPrice
+                                                      )}
+                                                      )
+                                                    </span>
                                                   </div>
                                                 </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 m-0 ${
+                                              </div>
+                                              <div className="d-flex flex-column gap-2">
+                                                <span className="event-price-span">
+                                                  Method
+                                                </span>
+                                                <div className="d-flex gap-2 align-items-center w-100">
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={` ${
+                                                      (scorpionBundleState2 ===
+                                                        "loading" ||
+                                                        statusbinance !==
+                                                          "idle") &&
+                                                      "pe-none"
+                                                    } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       !binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
-                                                  >
-                                                    {getFormattedNumber(
-                                                      scorpionKingWodAmount
-                                                    )}{" "}
-                                                    WOD
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
-                                                      !binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
-                                                    }`}
-                                                  >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
-                                                </div>
-                                              </motion.div>
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={`${
-                                                  (scorpionBundleState ===
-                                                    "loading" ||
-                                                    scorpionDepositState ===
-                                                      "loading-deposit") &&
-                                                  "pe-none"
-                                                } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(true)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                  
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                    onClick={() =>
+                                                      setbinancePay(false)
                                                     }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      Binance Pay
-                                                    </p>
-                                                  </div>
-                                                </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 ${
-                                                      binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
-                                                    }`}
                                                   >
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}{" "}
-                                                    USDT
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            !binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Wallet
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={`${
+                                                      (scorpionBundleState ===
+                                                        "loading" ||
+                                                        scorpionDepositState ===
+                                                          "loading-deposit") &&
+                                                      "pe-none"
+                                                    } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
                                                   >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Binance Pay
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
                                                 </div>
-                                              </motion.div>
+                                              </div>
                                             </div>
                                           </div>
                                         ) : (
@@ -5984,140 +6028,117 @@ const NewEvents = ({
                                     ) : (
                                       <div className="d-flex flex-column gap-2">
                                         {adjustedDay === 7 ? (
-                                          <div className="space-y-2">
-                                            <span className="challenge-popup-desc text-white">
-                                              Payment methods:
-                                            </span>
-                                            <div className="space-y-2 col-lg-5">
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={` ${
-                                                  (cyclopsBundleState2 ===
-                                                    "loading" ||
-                                                    statusbinance !== "idle") &&
-                                                  "pe-none"
-                                                } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  !binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(false)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                 
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/walletIcon.svg"
-                                                    }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        !binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      EVM Wallet
-                                                    </p>
+                                          <div className="payment-method-wrapper p-2 bordertw border-white/20 w-fit">
+                                            <div className="d-flex flex-column gap-2 justify-content-between">
+                                              <div className="payment-method-first bordertw border-white/20 p-2">
+                                                <div className="d-flex align-items-center gap-2 justify-content-between">
+                                                  <span className="event-price-span">
+                                                    Event Price
+                                                  </span>
+                                                  <div className="d-flex flex-column align-items-end">
+                                                    <h6 className="event-price-coin mb-0">
+                                                      {getFormattedNumber(
+                                                        binancePay === false
+                                                          ? stoneEyeWodAmount
+                                                          : activeEvent.usdPrice
+                                                      )}{" "}
+                                                      {binancePay === false
+                                                        ? "WOD"
+                                                        : "USDT"}
+                                                    </h6>
+                                                    <span className="event-price-usd">
+                                                      ($
+                                                      {getFormattedNumber(
+                                                        activeEvent.usdPrice
+                                                      )}
+                                                      )
+                                                    </span>
                                                   </div>
                                                 </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 m-0 ${
+                                              </div>
+                                              <div className="d-flex flex-column gap-2">
+                                                <span className="event-price-span">
+                                                  Method
+                                                </span>
+                                                <div className="d-flex gap-2 align-items-center w-100">
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={` ${
+                                                      (cyclopsBundleState2 ===
+                                                        "loading" ||
+                                                        statusbinance !==
+                                                          "idle") &&
+                                                      "pe-none"
+                                                    } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       !binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
-                                                  >
-                                                    {getFormattedNumber(
-                                                      stoneEyeWodAmount
-                                                    )}{" "}
-                                                    WOD
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
-                                                      !binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
-                                                    }`}
-                                                  >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
-                                                </div>
-                                              </motion.div>
-                                              <motion.div
-                                                // whileTap={{ scale: 0.98 }}
-                                                className={`${
-                                                  (cyclopsBundleState ===
-                                                    "loading" ||
-                                                    cyclopsDepositState ===
-                                                      "loading-deposit") &&
-                                                  "pe-none"
-                                                } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                  binancePay
-                                                    ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                    : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                }`}
-                                                onClick={() =>
-                                                  setbinancePay(true)
-                                                }
-                                              >
-                                                <div className="flex items-center space-x-3">
-                                                  
-                                                  <img
-                                                    style={{ height: 18 }}
-                                                    src={
-                                                      "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                    onClick={() =>
+                                                      setbinancePay(false)
                                                     }
-                                                    alt=""
-                                                  />
-                                                  <div>
-                                                    <p
-                                                      className={`text-sm font-medium m-0 ${
-                                                        binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
-                                                    >
-                                                      Binance Pay
-                                                    </p>
-                                                  </div>
-                                                </div>
-                                                <div className="text-right">
-                                                  <p
-                                                    className={`font-semibold m-0 text-lg m-0 ${
-                                                      binancePay
-                                                        ? "text-white"
-                                                        : "text-gray-200"
-                                                    }`}
                                                   >
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}{" "}
-                                                    USDT
-                                                  </p>
-                                                  <p
-                                                    className={`text-end text-xs m-0 ${
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            !binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Wallet
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={`${
+                                                      (cyclopsBundleState ===
+                                                        "loading" ||
+                                                        cyclopsDepositState ===
+                                                          "loading-deposit") &&
+                                                      "pe-none"
+                                                    } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                       binancePay
-                                                        ? "text-yellow-200"
-                                                        : "text-gray-400"
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                     }`}
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
                                                   >
-                                                    $
-                                                    {getFormattedNumber(
-                                                      activeEvent.usdPrice
-                                                    )}
-                                                  </p>
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Binance Pay
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </motion.div>
                                                 </div>
-                                              </motion.div>
+                                              </div>
                                             </div>
                                           </div>
                                         ) : (
@@ -6149,7 +6170,7 @@ const NewEvents = ({
                                       <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                        {!isConnected && (
+                                        {!isConnected && email && (
                                           <button
                                             className="beast-siege-btn"
                                             onClick={onConnectWallet}
@@ -6158,7 +6179,7 @@ const NewEvents = ({
                                             Connect Wallet
                                           </button>
                                         )}
-                                        {!email && isConnected && (
+                                        {!email && (
                                           <NavLink
                                             className="beast-siege-btn"
                                             to={"/auth"}
@@ -6196,14 +6217,16 @@ const NewEvents = ({
                                               >
                                                 {dragonBundleState ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light dragon-button"
-                                                    role="status"
-                                                    style={{ color: "#2b353e" }}
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -6234,13 +6257,16 @@ const NewEvents = ({
                                               >
                                                 {dragonDepositState ===
                                                 "loading-deposit" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light dragon-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Activating
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Activate"
@@ -6295,14 +6321,16 @@ const NewEvents = ({
                                               >
                                                 {dragonBundleState2 ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light dragon-button"
-                                                    role="status"
-                                                    style={{ color: "#2b353e" }}
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -6356,7 +6384,7 @@ const NewEvents = ({
                                       <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                        {!isConnected && (
+                                        {!isConnected && email && (
                                           <button
                                             className="beast-siege-btn"
                                             onClick={onConnectWallet}
@@ -6365,7 +6393,7 @@ const NewEvents = ({
                                             Connect Wallet
                                           </button>
                                         )}
-                                        {!email && isConnected && (
+                                        {!email && (
                                           <NavLink
                                             className="beast-siege-btn"
                                             to={"/auth"}
@@ -6403,13 +6431,16 @@ const NewEvents = ({
                                               >
                                                 {bearBundleState ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light bear-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -6440,13 +6471,16 @@ const NewEvents = ({
                                               >
                                                 {bearDepositState ===
                                                 "loading-deposit" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light bear-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Activating
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Activate"
@@ -6505,13 +6539,16 @@ const NewEvents = ({
                                               >
                                                 {bearBundleState2 ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light bear-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -6564,16 +6601,7 @@ const NewEvents = ({
                                       <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                        {!email && isConnected && (
-                                          <NavLink
-                                            className="beast-siege-btn"
-                                            to={"/auth"}
-                                          >
-                                            {" "}
-                                            Log In
-                                          </NavLink>
-                                        )}
-                                        {!isConnected && (
+                                        {!isConnected && email && (
                                           <button
                                             className="beast-siege-btn"
                                             onClick={onConnectWallet}
@@ -6581,6 +6609,15 @@ const NewEvents = ({
                                             {" "}
                                             Connect Wallet
                                           </button>
+                                        )}
+                                        {!email && (
+                                          <NavLink
+                                            className="beast-siege-btn"
+                                            to={"/auth"}
+                                          >
+                                            {" "}
+                                            Log In
+                                          </NavLink>
                                         )}
                                         {isConnected &&
                                           email &&
@@ -6651,13 +6688,16 @@ const NewEvents = ({
                                               >
                                                 {beastDepositState ===
                                                 "loading-deposit" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light beast-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Activating
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Activate"
@@ -6777,7 +6817,7 @@ const NewEvents = ({
                                       <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                        {!isConnected && (
+                                        {!isConnected && email && (
                                           <button
                                             className="beast-siege-btn"
                                             onClick={onConnectWallet}
@@ -6786,7 +6826,7 @@ const NewEvents = ({
                                             Connect Wallet
                                           </button>
                                         )}
-                                        {!email && isConnected && (
+                                        {!email && (
                                           <NavLink
                                             className="beast-siege-btn"
                                             to={"/auth"}
@@ -6824,13 +6864,16 @@ const NewEvents = ({
                                               >
                                                 {eagleBundleState ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light eagle-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -6861,13 +6904,16 @@ const NewEvents = ({
                                               >
                                                 {eagleDepositState ===
                                                 "loading-deposit" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light eagle-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Activating
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Activate"
@@ -6918,13 +6964,16 @@ const NewEvents = ({
                                               >
                                                 {eagleBundleState2 ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light eagle-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -6977,7 +7026,7 @@ const NewEvents = ({
                                       <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                        {!isConnected && (
+                                        {!isConnected && email && (
                                           <button
                                             className="beast-siege-btn"
                                             onClick={onConnectWallet}
@@ -6986,7 +7035,7 @@ const NewEvents = ({
                                             Connect Wallet
                                           </button>
                                         )}
-                                        {!email && isConnected && (
+                                        {!email && (
                                           <NavLink
                                             className="beast-siege-btn"
                                             to={"/auth"}
@@ -7024,13 +7073,16 @@ const NewEvents = ({
                                               >
                                                 {scorpionBundleState ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light scorpion-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -7061,13 +7113,16 @@ const NewEvents = ({
                                               >
                                                 {scorpionDepositState ===
                                                 "loading-deposit" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light scorpion-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Activating
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Activate"
@@ -7125,13 +7180,16 @@ const NewEvents = ({
                                               >
                                                 {scorpionBundleState2 ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light scorpion-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -7184,7 +7242,7 @@ const NewEvents = ({
                                       <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                        {!isConnected && (
+                                        {!isConnected && email && (
                                           <button
                                             className="beast-siege-btn"
                                             onClick={onConnectWallet}
@@ -7193,7 +7251,7 @@ const NewEvents = ({
                                             Connect Wallet
                                           </button>
                                         )}
-                                        {!email && isConnected && (
+                                        {!email && (
                                           <NavLink
                                             className="beast-siege-btn"
                                             to={"/auth"}
@@ -7231,13 +7289,16 @@ const NewEvents = ({
                                               >
                                                 {cyclopsBundleState ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light cyclops-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -7268,13 +7329,16 @@ const NewEvents = ({
                                               >
                                                 {cyclopsDepositState ===
                                                 "loading-deposit" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light cyclops-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Activating
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Activate"
@@ -7332,13 +7396,16 @@ const NewEvents = ({
                                               >
                                                 {cyclopsBundleState2 ===
                                                 "loading" ? (
-                                                  <div
-                                                    className="spinner-border spinner-border-sm text-light cyclops-button"
-                                                    role="status"
-                                                  >
-                                                    <span className="visually-hidden">
-                                                      Loading...
-                                                    </span>
+                                                  <div className="d-flex align-items-center gap-2">
+                                                    Approving
+                                                    <div
+                                                      className="spinner-border spinner-border-sm text-light beast-button"
+                                                      role="status"
+                                                    >
+                                                      <span className="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
                                                   </div>
                                                 ) : (
                                                   "Approve"
@@ -7453,7 +7520,7 @@ const NewEvents = ({
                                       {activeEvent?.binanceTip &&
                                         binancePay === true &&
                                         window.WALLET_TYPE !== "binance" && (
-                                          <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-full overflow-hidden">
+                                          <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
                                             {/* Background image */}
 
                                             {/* Glow effect */}
@@ -7480,6 +7547,9 @@ const NewEvents = ({
                                                 </span>
                                               </div>
                                             </div>
+                                            <div
+                                              className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                                            ></div>
                                           </div>
                                         )}
                                     </div>
@@ -7768,141 +7838,117 @@ const NewEvents = ({
                                           </div>
                                         ) : (
                                           <div className="d-flex flex-column gap-1">
-                                            <div className="space-y-2 col-lg-5">
-                                              <span className="challenge-popup-desc text-white">
-                                                Payment methods:
-                                              </span>
-                                              <div className="space-y-2">
-                                                <motion.div
-                                                  // whileTap={{ scale: 0.98 }}
-                                                  className={` ${
-                                                    (puzzleMadnessBundleState2 ===
-                                                      "loading" ||
-                                                      statusbinance !==
-                                                        "idle") &&
-                                                    "pe-none"
-                                                  } flex w-100 items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                    !binancePay
-                                                      ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                      : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                  }`}
-                                                  onClick={() =>
-                                                    setbinancePay(false)
-                                                  }
-                                                >
-                                                  <div className="flex items-center space-x-3">
-                                                  
-                                                    <img
-                                                      style={{ height: 18 }}
-                                                      src={
-                                                        "https://cdn.worldofdypians.com/wod/walletIcon.svg"
-                                                      }
-                                                      alt=""
-                                                    />
-                                                    <div>
-                                                      <p
-                                                        className={`text-sm font-medium m-0 ${
-                                                          !binancePay
-                                                            ? "text-white"
-                                                            : "text-gray-200"
-                                                        }`}
-                                                      >
-                                                        EVM Wallet
-                                                      </p>
+                                            <div className="payment-method-wrapper p-2 bordertw border-white/20 w-fit">
+                                              <div className="d-flex flex-column gap-2 justify-content-between">
+                                                <div className="payment-method-first bordertw border-white/20 p-2">
+                                                  <div className="d-flex align-items-center gap-2 justify-content-between">
+                                                    <span className="event-price-span">
+                                                      Event Price
+                                                    </span>
+                                                    <div className="d-flex flex-column align-items-end">
+                                                      <h6 className="event-price-coin mb-0">
+                                                        {getFormattedNumber(
+                                                          binancePay === false
+                                                            ? puzzleMadnessWodAmount
+                                                            : activeEvent.usdPrice
+                                                        )}{" "}
+                                                        {binancePay === false
+                                                          ? "WOD"
+                                                          : "USDT"}
+                                                      </h6>
+                                                      <span className="event-price-usd">
+                                                        ($
+                                                        {getFormattedNumber(
+                                                          activeEvent.usdPrice
+                                                        )}
+                                                        )
+                                                      </span>
                                                     </div>
                                                   </div>
-                                                  <div className="text-right">
-                                                    <p
-                                                      className={`font-semibold m-0 text-lg m-0 m-0 ${
+                                                </div>
+                                                <div className="d-flex flex-column gap-2">
+                                                  <span className="event-price-span">
+                                                    Method
+                                                  </span>
+                                                  <div className="d-flex gap-2 align-items-center w-100">
+                                                    <motion.div
+                                                      // whileTap={{ scale: 0.98 }}
+                                                      className={` ${
+                                                        (puzzleMadnessBundleState2 ===
+                                                          "loading" ||
+                                                          statusbinance !==
+                                                            "idle") &&
+                                                        "pe-none"
+                                                      } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                         !binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
+                                                          ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                          : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                       }`}
-                                                    >
-                                                      {getFormattedNumber(
-                                                        puzzleMadnessWodAmount
-                                                      )}{" "}
-                                                      WOD
-                                                    </p>
-                                                    <p
-                                                      className={`text-end text-xs m-0 ${
-                                                        !binancePay
-                                                          ? "text-yellow-200"
-                                                          : "text-gray-400"
-                                                      }`}
-                                                    >
-                                                      $
-                                                      {getFormattedNumber(
-                                                        activeEvent.usdPrice
-                                                      )}
-                                                    </p>
-                                                  </div>
-                                                </motion.div>
-                                                <motion.div
-                                                  // whileTap={{ scale: 0.98 }}
-                                                  className={`${
-                                                    (puzzleMadnessBundleState ===
-                                                      "loading" ||
-                                                      puzzleMadnessDepositState ===
-                                                        "loading-deposit") &&
-                                                    "pe-none"
-                                                  } w-100 flex items-center justify-between gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                    binancePay
-                                                      ? "bg-gradient-to-r from-orange-500/20 to-yellow-500/20 bordertw border-orange-400/30"
-                                                      : "bg-slate-800/50 bordertw border-white/20 hover:border-orange-400/50"
-                                                  }`}
-                                                  onClick={() =>
-                                                    setbinancePay(true)
-                                                  }
-                                                >
-                                                  <div className="flex items-center space-x-3">
-                                                   
-                                                    <img
-                                                      style={{ height: 18 }}
-                                                      src={
-                                                        "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                      onClick={() =>
+                                                        setbinancePay(false)
                                                       }
-                                                      alt=""
-                                                    />
-                                                    <div>
-                                                      <p
-                                                        className={`text-sm font-medium m-0 ${
-                                                          binancePay
-                                                            ? "text-white"
-                                                            : "text-gray-200"
-                                                        }`}
-                                                      >
-                                                        Binance Pay
-                                                      </p>
-                                                    </div>
-                                                  </div>
-                                                  <div className="text-right">
-                                                    <p
-                                                      className={`font-semibold m-0 text-lg m-0 ${
-                                                        binancePay
-                                                          ? "text-white"
-                                                          : "text-gray-200"
-                                                      }`}
                                                     >
-                                                      {getFormattedNumber(
-                                                        activeEvent.usdPrice
-                                                      )}{" "}
-                                                      USDT
-                                                    </p>
-                                                    <p
-                                                      className={`text-end text-xs m-0 ${
+                                                      <div className="flex items-center space-x-3">
+                                                        <img
+                                                          style={{ height: 18 }}
+                                                          src={
+                                                            "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                                          }
+                                                          alt=""
+                                                        />
+                                                        <div>
+                                                          <p
+                                                            className={`text-sm font-medium m-0 ${
+                                                              !binancePay
+                                                                ? "text-white"
+                                                                : "text-gray-200"
+                                                            }`}
+                                                          >
+                                                            Wallet
+                                                          </p>
+                                                        </div>
+                                                      </div>
+                                                    </motion.div>
+                                                    <motion.div
+                                                      // whileTap={{ scale: 0.98 }}
+                                                      className={`${
+                                                        (puzzleMadnessBundleState ===
+                                                          "loading" ||
+                                                          puzzleMadnessDepositState ===
+                                                            "loading-deposit") &&
+                                                        "pe-none"
+                                                      } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
                                                         binancePay
-                                                          ? "text-yellow-200"
-                                                          : "text-gray-400"
+                                                          ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                          : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
                                                       }`}
+                                                      onClick={() =>
+                                                        setbinancePay(true)
+                                                      }
                                                     >
-                                                      $
-                                                      {getFormattedNumber(
-                                                        activeEvent.usdPrice
-                                                      )}
-                                                    </p>
+                                                      <div className="flex items-center space-x-3">
+                                                        <img
+                                                          style={{ height: 18 }}
+                                                          src={
+                                                            "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                          }
+                                                          alt=""
+                                                        />
+                                                        <div>
+                                                          <p
+                                                            className={`text-sm font-medium m-0 ${
+                                                              binancePay
+                                                                ? "text-white"
+                                                                : "text-gray-200"
+                                                            }`}
+                                                          >
+                                                            Binance Pay
+                                                          </p>
+                                                        </div>
+                                                      </div>
+                                                    </motion.div>
                                                   </div>
-                                                </motion.div>
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
@@ -8061,13 +8107,16 @@ const NewEvents = ({
                                                 >
                                                   {puzzleMadnessBundleState ===
                                                   "loading" ? (
-                                                    <div
-                                                      className="spinner-border spinner-border-sm text-light"
-                                                      role="status"
-                                                    >
-                                                      <span className="visually-hidden">
-                                                        Loading...
-                                                      </span>
+                                                    <div className="d-flex align-items-center gap-2">
+                                                      Approving
+                                                      <div
+                                                        className="spinner-border spinner-border-sm text-light beast-button"
+                                                        role="status"
+                                                      >
+                                                        <span className="visually-hidden">
+                                                          Loading...
+                                                        </span>
+                                                      </div>
                                                     </div>
                                                   ) : (
                                                     "Approve"
@@ -8099,13 +8148,16 @@ const NewEvents = ({
                                                 >
                                                   {puzzleMadnessDepositState ===
                                                   "loading-deposit" ? (
-                                                    <div
-                                                      className="spinner-border spinner-border-sm text-light"
-                                                      role="status"
-                                                    >
-                                                      <span className="visually-hidden">
-                                                        Loading...
-                                                      </span>
+                                                    <div className="d-flex align-items-center gap-2">
+                                                      Activating
+                                                      <div
+                                                        className="spinner-border spinner-border-sm text-light beast-button"
+                                                        role="status"
+                                                      >
+                                                        <span className="visually-hidden">
+                                                          Loading...
+                                                        </span>
+                                                      </div>
                                                     </div>
                                                   ) : (
                                                     "Activate"
@@ -8163,13 +8215,16 @@ const NewEvents = ({
                                                 >
                                                   {puzzleMadnessBundleState2 ===
                                                   "loading" ? (
-                                                    <div
-                                                      className="spinner-border spinner-border-sm text-light"
-                                                      role="status"
-                                                    >
-                                                      <span className="visually-hidden">
-                                                        Loading...
-                                                      </span>
+                                                    <div className="d-flex align-items-center gap-2">
+                                                      Approving
+                                                      <div
+                                                        className="spinner-border spinner-border-sm text-light beast-button"
+                                                        role="status"
+                                                      >
+                                                        <span className="visually-hidden">
+                                                          Loading...
+                                                        </span>
+                                                      </div>
                                                     </div>
                                                   ) : (
                                                     "Approve"
@@ -8211,6 +8266,17 @@ const NewEvents = ({
                                     ) : (
                                       <></>
                                     )}
+                                  </div>
+                                  <div className="col-12 mt-2">
+                                    <span
+                                      className="statusText"
+                                      style={{
+                                        color: statusColor,
+                                        width: "fit-content",
+                                      }}
+                                    >
+                                      {status}
+                                    </span>
                                   </div>
                                 </div>
                                 <div className="col-12 col-xxl-6">
@@ -8269,24 +8335,33 @@ const NewEvents = ({
                                             binancePay === true &&
                                             window.WALLET_TYPE !==
                                               "binance" && (
-                                              <div className="relative">
-                                                <div className="d-flex flex-column gap-2">
-                                                <div className="flex items-center space-x-3">
-                                                  <img
-                                                    src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
-                                                    alt=""
-                                                    className="w-5 h-5 text-yellow-400"
-                                                  />
-                                                  <span className="font-medium text-yellow-400">
-                                                    Binance Pay Setup
-                                                  </span>
-                                                </div>
-                                                  <span className="challenge-popup-desc text-white">
-                                                    Import your game wallet into
-                                                    Binance Wallet app or
-                                                    connect your existing
-                                                    Binance Wallet.
-                                                  </span>
+                                              <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                                                {/* Background image */}
+
+                                                {/* Glow effect */}
+                                                <div
+                                                  className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                                                ></div>
+
+                                                <div className="relative">
+                                                  <div className="d-flex flex-column gap-2">
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                                        alt=""
+                                                        className="w-5 h-5 text-yellow-400"
+                                                      />
+                                                      <span className="font-medium text-yellow-400">
+                                                        Binance Pay Setup
+                                                      </span>
+                                                    </div>
+                                                    <span className="challenge-popup-desc text-white">
+                                                      Import your game wallet
+                                                      into Binance Wallet app or
+                                                      connect your existing
+                                                      Binance Wallet.
+                                                    </span>
+                                                  </div>
                                                 </div>
                                               </div>
                                             )}
