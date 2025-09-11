@@ -100,6 +100,11 @@ const MainHero = ({ scrollInto }) => {
       logo: "blofinExchange.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
+    {
+      title: "Uphold",
+      logo: "upholdFull.svg",
+      link: "https://uphold.com/en-gb/prices/crypto/wod",
+    },
   ];
 
   return (

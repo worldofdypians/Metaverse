@@ -498,6 +498,10 @@ const NewBuilders = () => {
       name: "BingX",
       icon: "bingx.svg",
     },
+    {
+      name: "Uphold",
+      icon: "uphold.svg",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>

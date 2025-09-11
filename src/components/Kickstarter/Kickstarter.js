@@ -166,6 +166,7 @@ const Kickstarter = ({
   const [count, setCount] = useState(0);
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [rewards, setRewards] = useState([]);
+  const [mute, setMute] = useState(false);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -784,9 +785,16 @@ const Kickstarter = ({
     };
   }, [isOpen]);
 
+  const hashValue = window.location.hash;
+
   useEffect(() => {
     if (count === 0) {
       setCount(1);
+    }
+
+    if (hashValue === "#royalty-chest") {
+      setMute(true);
+        html.classList.add("hidescroll");
     }
 
     var time;
@@ -899,6 +907,7 @@ const Kickstarter = ({
                 {/* VIDEO ONE (Intro) */}
                 <video
                   ref={videoRef1}
+                  muted={mute}
                   src={"https://cdn.worldofdypians.com/wod/firstPart.mp4"}
                   className={`kickstarter-video ${
                     step === 1 ? "visible" : "hidden"
@@ -923,6 +932,7 @@ const Kickstarter = ({
                 {/* VIDEO ONE (Intro) */}
                 <video
                   ref={videoRef1}
+                  muted={mute}
                   src={
                     "https://cdn.worldofdypians.com/wod//firstPartMobile.mp4"
                   }
@@ -1124,11 +1134,10 @@ const Kickstarter = ({
                         return (
                           <span key={index}>
                             {obj.rewardType === "Money" && "$"}
-                            {obj.rewardType === "Stars" || obj.rewardType === "Money"
+                            {obj.rewardType === "Stars" ||
+                            obj.rewardType === "Money"
                               ? obj.reward
-                              : getFormattedNumber(
-                                  obj.reward, 0
-                                )}{" "}
+                              : getFormattedNumber(obj.reward, 0)}{" "}
                             {obj.rewardType !== "Money" && obj.rewardType}
                             {rewards.length > 1 &&
                               index < rewards.length - 1 &&
@@ -2021,7 +2030,7 @@ const Kickstarter = ({
                       onClose();
                       onAddClass(false);
                     }}
-                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
+                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
                     style={{
                       padding: "14px 48px",
                       fontSize: "16px",
@@ -2095,7 +2104,7 @@ const Kickstarter = ({
                   <button
                     disabled={disable}
                     onClick={onConnectWallet}
-                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
+                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
                     style={{
                       padding: "14px 48px",
                       fontSize: "16px",
@@ -2173,7 +2182,7 @@ const Kickstarter = ({
                     <button
                       disabled={disable}
                       onClick={() => switchNetwork("0x38", 56)}
-                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
+                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
                       style={{
                         padding: "14px 48px",
                         fontSize: "16px",
@@ -2250,7 +2259,7 @@ const Kickstarter = ({
                     <button
                       onClick={handleOpenChest}
                       disabled={loading || chestOpened || disable}
-                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden kick-claim-btn d-flex justify-content-center align-items-center"
+                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center kick-claim-btn d-flex justify-content-center align-items-center"
                       style={{
                         padding: "14px 48px",
                         fontSize: "16px",
