@@ -145,7 +145,7 @@ const VideoWrapper = ({
     {
       title: "Uphold",
       logo: "uphold.svg",
-      link: "https://uphold.com/en-gb/prices/crypto/wod",
+      link: "https://uphold.com/en-us/prices/crypto/wod",
     },
   ];
 

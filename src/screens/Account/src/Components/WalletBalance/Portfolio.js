@@ -2066,7 +2066,7 @@ const Portfolio = ({
                       </h6>
                     </a>
                     <a
-                      href="https://uphold.com/en-gb/prices/crypto/wod"
+                      href="https://uphold.com/en-us/prices/crypto/wod"
                       target="_blank"
                       rel="noreferrer"
                       className="getwod-item"

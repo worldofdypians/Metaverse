@@ -63,11 +63,12 @@ const MainHero = ({ scrollInto }) => {
       logo: "bingx-exchange.svg",
       link: "https://bingx.com/en/spot/WODUSDT",
     },
-    {
-      title: "WEEX",
-      logo: "weex-exchange.svg",
-      link: "https://www.weex.com/spot/WOD-USDT",
+      {
+      title: "Uphold",
+      logo: "upholdFull.svg",
+      link: "https://uphold.com/en-us/prices/crypto/wod",
     },
+  
     {
       title: "Toobit",
       logo: "toobit-exchange.svg",
@@ -100,11 +101,12 @@ const MainHero = ({ scrollInto }) => {
       logo: "blofinExchange.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
-    {
-      title: "Uphold",
-      logo: "upholdFull.svg",
-      link: "https://uphold.com/en-gb/prices/crypto/wod",
+      {
+      title: "WEEX",
+      logo: "weex-exchange.svg",
+      link: "https://www.weex.com/spot/WOD-USDT",
     },
+  
   ];
 
   return (
