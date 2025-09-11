@@ -377,6 +377,10 @@ const WodPartners = ({ full }) => {
       name: "BingX",
       icon: "bingx.svg",
     },
+       {
+      name: "Uphold",
+      icon: "uphold.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);

@@ -2065,6 +2065,22 @@ const Portfolio = ({
                         BloFin
                       </h6>
                     </a>
+                    <a
+                      href="https://uphold.com/en-gb/prices/crypto/wod"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/uphold.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        Uphold
+                      </h6>
+                    </a>
                      
                   </div>
                 </div>

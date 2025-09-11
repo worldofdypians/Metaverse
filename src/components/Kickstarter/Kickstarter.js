@@ -2030,7 +2030,7 @@ const Kickstarter = ({
                       onClose();
                       onAddClass(false);
                     }}
-                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
+                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
                     style={{
                       padding: "14px 48px",
                       fontSize: "16px",
@@ -2104,7 +2104,7 @@ const Kickstarter = ({
                   <button
                     disabled={disable}
                     onClick={onConnectWallet}
-                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
+                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
                     style={{
                       padding: "14px 48px",
                       fontSize: "16px",
@@ -2182,7 +2182,7 @@ const Kickstarter = ({
                     <button
                       disabled={disable}
                       onClick={() => switchNetwork("0x38", 56)}
-                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden"
+                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
                       style={{
                         padding: "14px 48px",
                         fontSize: "16px",
@@ -2259,7 +2259,7 @@ const Kickstarter = ({
                     <button
                       onClick={handleOpenChest}
                       disabled={loading || chestOpened || disable}
-                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden kick-claim-btn d-flex justify-content-center align-items-center"
+                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center kick-claim-btn d-flex justify-content-center align-items-center"
                       style={{
                         padding: "14px 48px",
                         fontSize: "16px",
