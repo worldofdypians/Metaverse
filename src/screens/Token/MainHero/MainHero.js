@@ -103,7 +103,7 @@ const MainHero = ({ scrollInto }) => {
     {
       title: "Uphold",
       logo: "upholdFull.svg",
-      link: "https://uphold.com/en-gb/prices/crypto/wod",
+      link: "https://uphold.com/en-us/prices/crypto/wod",
     },
   ];
 
