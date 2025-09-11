@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import Countdown from "react-countdown";
 import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
 import useWindowSize from "../../hooks/useWindowSize";
+import axios from "axios";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -203,6 +204,24 @@ const MyProfile = ({
     : utcDayIndex;
 
   const html = document.querySelector("html");
+
+  const [twitter, setTwitter] = useState([]);
+
+  const checkTwitter = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/website-account/${address}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    checkTwitter()
+  }, [])
+  
 
   useEffect(() => {
     if (rankDropdown === true) {
@@ -1800,10 +1819,11 @@ const MyProfile = ({
                 </NavLink>
               </div>
               <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
-                <div
+                <a
+                  href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
                   className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
                   style={{ height: "60px" }}
-                  onClick={openSpecialRewards}
+                  // onClick={openSpecialRewards}
                 >
                   <div className="d-flex align-items-center gap-2">
                     {/* <img
@@ -1819,13 +1839,14 @@ const MyProfile = ({
                           className="user-blue-rank-2"
                           style={{ color: "#9e3c7a" }}
                         >
-                          Special Rewards
+                          Twitter Rewards
                         </span>
                         <span
                           className="user-rank-text-2"
                           style={{ color: "#3B5896" }}
                         >
-                          ${getFormattedNumber(specialRewards)} Rewards
+                          {/* ${getFormattedNumber(specialRewards)} Rewards */}
+                          Connect Your Account
                         </span>
                       </div>
                     </div>
@@ -1846,15 +1867,15 @@ const MyProfile = ({
                       </div> */}
 
                   <button
-                    onClick={openSpecialRewards}
+                    // onClick={openSpecialRewards}
                     className="activate-btn2 px-3 py-1"
                     style={{
                       background: "#9E3C7A",
                     }}
                   >
-                    Apply
+                    Connect
                   </button>
-                </div>
+                </a>
               </div>
               {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
