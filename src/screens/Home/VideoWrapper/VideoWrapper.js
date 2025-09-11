@@ -142,6 +142,11 @@ const VideoWrapper = ({
       logo: "blofinBuywod.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
+    {
+      title: "Uphold",
+      logo: "uphold.svg",
+      link: "https://uphold.com/en-gb/prices/crypto/wod",
+    },
   ];
 
   const dummyBetaPassData2 = [
