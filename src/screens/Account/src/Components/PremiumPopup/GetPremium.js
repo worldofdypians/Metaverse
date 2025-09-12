@@ -4088,7 +4088,7 @@ const GetPremiumPopup = ({
                   </div>
                   <div className="sidebar-separator2 m-0"></div>
 
-                  <div className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column w-100 gap-4">
+                  <div className="premium-benefits-wrapper d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column w-100 gap-4">
                     <div className="d-flex flex-column prime-subs-container w-100">
                       <div className="prime-subs-firsthalf p-3">
                         <div className="d-flex align-items-center gap-3 w-100 justify-content-between">
@@ -4120,7 +4120,7 @@ const GetPremiumPopup = ({
                             >
                               <div className="flex items-center space-x-3">
                                 <img
-                                  style={{ height: 18 }}
+                                  style={{ height: 20 }}
                                   src={
                                     "https://cdn.worldofdypians.com/wod/walletRound.svg"
                                   }
@@ -4128,7 +4128,7 @@ const GetPremiumPopup = ({
                                 />
                                 <div>
                                   <p
-                                    className={`text-sm font-medium m-0 ${
+                                    className={`text-base font-medium m-0 ${
                                       !binancePay
                                         ? "text-white"
                                         : "text-gray-200"
@@ -4150,7 +4150,7 @@ const GetPremiumPopup = ({
                             >
                               <div className="flex items-center space-x-3">
                                 <img
-                                  style={{ height: 18 }}
+                                  style={{ height: 20 }}
                                   src={
                                     "https://cdn.worldofdypians.com/wod/b-pay.svg"
                                   }
@@ -4158,7 +4158,7 @@ const GetPremiumPopup = ({
                                 />
                                 <div>
                                   <p
-                                    className={`text-sm font-medium m-0 ${
+                                    className={`text-base font-medium m-0 ${
                                       binancePay
                                         ? "text-white"
                                         : "text-gray-200"
@@ -4579,46 +4579,14 @@ const GetPremiumPopup = ({
                 </div>
                 {isConnected && discountPercentage > 0 && chainId === 56 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
-                    {window.WALLET_TYPE === "binance" ? (
-                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
-                        {/* Background image */}
-
-                        {/* Glow effect */}
-                        <div
-                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
-                        ></div>
-
-                        <div className="relative">
-                          <div className="d-flex flex-column gap-2">
-                            <div className="flex items-center space-x-3">
-                              <img
-                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
-                                alt=""
-                                className="w-5 h-5 text-yellow-400"
-                              />
-                              <span className="font-medium text-yellow-400">
-                                Binance Pay Setup
-                              </span>
-                            </div>
-                            <span className="challenge-popup-desc text-white">
-                              Import your game wallet into Binance Wallet app or
-                              connect your existing Binance Wallet.
-                            </span>
-                          </div>
-                        </div>
-                        <div
-                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
-                        ></div>
-                      </div>
-                    ) : (
+                    {binancePay === false ? (
                       <>
                         <button
                           className={`btn ${
-                            approveStatus === "fail" ||
-                            !coinbase ||
-                            isApproved ||
-                            !isEOA
+                            approveStatus === "fail" || !coinbase || !isEOA
                               ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
                               : "explore-btn px-3 py-2"
                           }`}
                           disabled={
@@ -4701,14 +4669,24 @@ const GetPremiumPopup = ({
                           )}
                         </button>
                       </>
-                    )}
-                  </div>
-                ) : isConnected &&
-                  discountPercentageViction > 0 &&
-                  chainId === 88 ? (
-                  <div className="d-flex align-items-center gap-3 justify-content-center">
-                    {window.WALLET_TYPE === "binance" ? (
-                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
                         {/* Background image */}
 
                         {/* Glow effect */}
@@ -4738,15 +4716,20 @@ const GetPremiumPopup = ({
                           className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
                         ></div>
                       </div>
-                    ) : (
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageViction > 0 &&
+                  chainId === 88 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
                       <>
                         <button
                           className={`btn ${
-                            approveStatus === "fail" ||
-                            !coinbase ||
-                            isApproved ||
-                            !isEOA
+                            approveStatus === "fail" || !coinbase || !isEOA
                               ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
                               : "explore-btn px-3 py-2"
                           }`}
                           disabled={
@@ -4830,14 +4813,24 @@ const GetPremiumPopup = ({
                           )}
                         </button>
                       </>
-                    )}
-                  </div>
-                ) : isConnected &&
-                  discountPercentageTaraxa > 0 &&
-                  chainId === 841 ? (
-                  <div className="d-flex align-items-center gap-3 justify-content-center">
-                    {window.WALLET_TYPE === "binance" ? (
-                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
                         {/* Background image */}
 
                         {/* Glow effect */}
@@ -4867,12 +4860,20 @@ const GetPremiumPopup = ({
                           className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
                         ></div>
                       </div>
-                    ) : (
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaraxa > 0 &&
+                  chainId === 841 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
                       <>
                         <button
                           className={`btn ${
-                            approveStatus === "fail" || !coinbase || isApproved
+                            approveStatus === "fail" || !coinbase
                               ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
                               : "explore-btn px-3 py-2"
                           }`}
                           disabled={
@@ -4953,14 +4954,24 @@ const GetPremiumPopup = ({
                           )}
                         </button>
                       </>
-                    )}
-                  </div>
-                ) : isConnected &&
-                  discountPercentageVanar > 0 &&
-                  chainId === 2040 ? (
-                  <div className="d-flex align-items-center gap-3 justify-content-center">
-                    {window.WALLET_TYPE === "binance" ? (
-                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
                         {/* Background image */}
 
                         {/* Glow effect */}
@@ -4990,15 +5001,20 @@ const GetPremiumPopup = ({
                           className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
                         ></div>
                       </div>
-                    ) : (
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageVanar > 0 &&
+                  chainId === 2040 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
                       <>
                         <button
                           className={`btn ${
-                            approveStatus === "fail" ||
-                            !coinbase ||
-                            isApproved ||
-                            !isEOA
+                            approveStatus === "fail" || !coinbase || !isEOA
                               ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
                               : "explore-btn px-3 py-2"
                           } `}
                           disabled={
@@ -5082,14 +5098,24 @@ const GetPremiumPopup = ({
                           )}
                         </button>
                       </>
-                    )}
-                  </div>
-                ) : isConnected &&
-                  discountPercentageTaiko > 0 &&
-                  chainId === 167000 ? (
-                  <div className="d-flex align-items-center gap-3 justify-content-center">
-                    {window.WALLET_TYPE === "binance" ? (
-                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
                         {/* Background image */}
 
                         {/* Glow effect */}
@@ -5119,15 +5145,20 @@ const GetPremiumPopup = ({
                           className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
                         ></div>
                       </div>
-                    ) : (
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaiko > 0 &&
+                  chainId === 167000 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
                       <>
                         <button
                           className={`btn ${
-                            approveStatus === "fail" ||
-                            !coinbase ||
-                            isApproved ||
-                            !isEOA
+                            approveStatus === "fail" || !coinbase || !isEOA
                               ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
                               : "explore-btn px-3 py-2"
                           } `}
                           disabled={
@@ -5211,14 +5242,24 @@ const GetPremiumPopup = ({
                           )}
                         </button>
                       </>
-                    )}
-                  </div>
-                ) : isConnected &&
-                  discountPercentageMat > 0 &&
-                  chainId === 698 ? (
-                  <div className="d-flex align-items-center gap-3 justify-content-center">
-                    {window.WALLET_TYPE === "binance" ? (
-                      <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
                         {/* Background image */}
 
                         {/* Glow effect */}
@@ -5248,15 +5289,20 @@ const GetPremiumPopup = ({
                           className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
                         ></div>
                       </div>
-                    ) : (
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageMat > 0 &&
+                  chainId === 698 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
                       <>
                         <button
                           className={`btn ${
-                            approveStatus === "fail" ||
-                            !coinbase ||
-                            isApproved ||
-                            !isEOA
+                            approveStatus === "fail" || !coinbase || !isEOA
                               ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
                               : "explore-btn px-3 py-2"
                           }`}
                           disabled={
@@ -5340,7 +5386,54 @@ const GetPremiumPopup = ({
                           )}
                         </button>
                       </>
-                    )}
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : null}
                   </div>
                 ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
                   <div
@@ -5518,11 +5611,10 @@ const GetPremiumPopup = ({
                       <>
                         <button
                           className={`btn ${
-                            approveStatus === "fail" ||
-                            !isEOA ||
-                            !coinbase ||
-                            isApproved
+                            approveStatus === "fail" || !isEOA || !coinbase
                               ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
                               : "explore-btn px-3 py-2"
                           }`}
                           disabled={

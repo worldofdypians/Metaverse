@@ -239,7 +239,13 @@ export function useBinancePayPremium() {
 
             {/* QR Code */}
             <div className="flex flex-col items-center">
-              <img src={qrCode} width={150} height={150} alt="QR Code" />
+              <img
+                src={qrCode}
+                width={150}
+                height={150}
+                alt="QR Code"
+                
+              />
               <p className="text-gray-400 text-xs mt-2">
                 Scan to pay with Binance App
               </p>{" "}

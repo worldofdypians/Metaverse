@@ -6950,6 +6950,9 @@ function Dashboard({
             coinbase={coinbase}
             isPremium={isPremium}
             handleSwitchNetwork={handleSwitchNetwork}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            binanceWallet={binanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
             onSuccessDeposit={() => {
               onSuccessDeposit();
               setTimeout(() => {

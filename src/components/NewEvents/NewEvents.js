@@ -56,6 +56,14 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
+const rendererPuzzle = ({ hours, minutes }) => {
+  return (
+    <span className="beast-siege-wod-price" style={{ color: "#FFD37E" }}>
+      {String(hours).padStart(2, "0")}h:{String(minutes).padStart(2, "0")}m
+    </span>
+  );
+};
+
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -424,44 +432,30 @@ const NewEvents = ({
             return 0;
           });
       } else if (window.WALLET_TYPE === "binance") {
-        const allowance1 = await wod_token_abi.methods
-          .allowance(wallet, puzzleMadnessAddress)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         const tokenSc = new ethers.Contract(
-          window.config.usdt_token_address,
+          window.config.wod_token_address,
           window.TOKEN_ABI,
           binanceW3WProvider.getSigner()
         );
 
         const allowance2 = await tokenSc
-          .allowance(wallet, puzzle_madness2_address)
+          .allowance(wallet, puzzle_madness_address)
           .catch((e) => {
             console.log(e);
           });
         const stringBalance =
           window.bscWeb3.utils.hexToNumberString(allowance2);
 
-        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+        if (
+          stringBalance === "0" ||
+          Number(stringBalance) < 150000000000000000000
+        ) {
           setpuzzleMadnessShowApproval(true);
         }
         if (
-          allowance2 === "0" ||
-          Number(stringBalance) < 150000000000000000000
-        ) {
-          setpuzzleMadnessShowApproval2(true);
-        }
-        if (
-          allowance2 !== "0" &&
+          stringBalance !== "0" &&
           Number(stringBalance) >= 150000000000000000000
         ) {
-          setpuzzleMadnessShowApproval2(false);
-          setpuzzleMadnessBundleState2("deposit");
-        }
-        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setpuzzleMadnessShowApproval(false);
           setpuzzleMadnessBundleState("deposit");
         }
@@ -473,23 +467,10 @@ const NewEvents = ({
             console.log(e);
           });
 
-        const allowance2 = await usdt_token_abi.methods
-          .allowance(wallet, puzzle_madness2_address)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setpuzzleMadnessShowApproval(true);
         }
-        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
-          setpuzzleMadnessShowApproval2(true);
-        }
-        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
-          setpuzzleMadnessShowApproval2(false);
-          setpuzzleMadnessBundleState2("deposit");
-        }
+
         if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setpuzzleMadnessShowApproval(false);
           setpuzzleMadnessBundleState("deposit");
@@ -938,44 +919,30 @@ const NewEvents = ({
             return 0;
           });
       } else if (window.WALLET_TYPE === "binance") {
-        const allowance1 = await wod_token_abi.methods
-          .allowance(wallet, dragonRuinsAddress)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         const tokenSc = new ethers.Contract(
-          window.config.usdt_token_address,
+          window.config.wod_token_address,
           window.TOKEN_ABI,
           binanceW3WProvider.getSigner()
         );
 
-        const allowance2 = await tokenSc
-          .allowance(wallet, dragon_ruins2_address)
+        const allowance1 = await tokenSc
+          .allowance(wallet, dragonRuinsAddress)
           .catch((e) => {
             console.log(e);
           });
         const stringBalance =
-          window.bscWeb3.utils.hexToNumberString(allowance2);
-
-        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
-          setDragonShowApproval(true);
-        }
+          window.bscWeb3.utils.hexToNumberString(allowance1);
         if (
-          allowance2 === "0" ||
+          stringBalance === "0" ||
           Number(stringBalance) < 150000000000000000000
         ) {
-          setDragonShowApproval2(true);
+          setDragonShowApproval(true);
         }
+
         if (
-          allowance2 !== "0" &&
+          stringBalance !== "0" &&
           Number(stringBalance) >= 150000000000000000000
         ) {
-          setDragonShowApproval2(false);
-          setDragonBundleState2("deposit");
-        }
-        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setDragonShowApproval(false);
           setDragonBundleState("deposit");
         }
@@ -987,23 +954,10 @@ const NewEvents = ({
             console.log(e);
           });
 
-        const allowance2 = await usdt_token_abi.methods
-          .allowance(wallet, dragon_ruins2_address)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setDragonShowApproval(true);
         }
-        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
-          setDragonShowApproval2(true);
-        }
-        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
-          setDragonShowApproval2(false);
-          setDragonBundleState2("deposit");
-        }
+
         if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setDragonShowApproval(false);
           setDragonBundleState("deposit");
@@ -1445,44 +1399,30 @@ const NewEvents = ({
             return 0;
           });
       } else if (window.WALLET_TYPE === "binance") {
-        const allowance1 = await wod_token_abi.methods
-          .allowance(wallet, coldBiteAddress)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         const tokenSc = new ethers.Contract(
-          window.config.usdt_token_address,
+          window.config.wod_token_address,
           window.TOKEN_ABI,
           binanceW3WProvider.getSigner()
         );
 
         const allowance2 = await tokenSc
-          .allowance(wallet, cold_bite2_address)
+          .allowance(wallet, cold_bite_address)
           .catch((e) => {
             console.log(e);
           });
         const stringBalance =
           window.bscWeb3.utils.hexToNumberString(allowance2);
 
-        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+        if (
+          stringBalance === "0" ||
+          Number(stringBalance) < 150000000000000000000
+        ) {
           setBearShowApproval(true);
         }
         if (
-          allowance2 === "0" ||
-          Number(stringBalance) < 150000000000000000000
-        ) {
-          setBearShowApproval2(true);
-        }
-        if (
-          allowance2 !== "0" &&
+          stringBalance !== "0" &&
           Number(stringBalance) >= 150000000000000000000
         ) {
-          setBearShowApproval2(false);
-          setBearBundleState2("deposit");
-        }
-        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setBearShowApproval(false);
           setBearBundleState("deposit");
         }
@@ -1494,23 +1434,10 @@ const NewEvents = ({
             console.log(e);
           });
 
-        const allowance2 = await usdt_token_abi.methods
-          .allowance(wallet, cold_bite2_address)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setBearShowApproval(true);
         }
-        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
-          setBearShowApproval2(true);
-        }
-        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
-          setBearShowApproval2(false);
-          setBearBundleState2("deposit");
-        }
+
         if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setBearShowApproval(false);
           setBearBundleState("deposit");
@@ -1950,44 +1877,30 @@ const NewEvents = ({
             return 0;
           });
       } else if (window.WALLET_TYPE === "binance") {
-        const allowance1 = await wod_token_abi.methods
-          .allowance(wallet, furyBeastAddress)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         const tokenSc = new ethers.Contract(
-          window.config.usdt_token_address,
+          window.config.wod_token_address,
           window.TOKEN_ABI,
           binanceW3WProvider.getSigner()
         );
 
         const allowance2 = await tokenSc
-          .allowance(wallet, fury_beast2_address)
+          .allowance(wallet, fury_beast_address)
           .catch((e) => {
             console.log(e);
           });
         const stringBalance =
           window.bscWeb3.utils.hexToNumberString(allowance2);
 
-        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+        if (
+          stringBalance === "0" ||
+          Number(stringBalance) < 150000000000000000000
+        ) {
           setBeastShowApproval(true);
         }
         if (
-          allowance2 === "0" ||
-          Number(stringBalance) < 150000000000000000000
-        ) {
-          setBeastShowApproval2(true);
-        }
-        if (
-          allowance2 !== "0" &&
+          stringBalance !== "0" &&
           Number(stringBalance) >= 150000000000000000000
         ) {
-          setBeastShowApproval2(false);
-          setBeastBundleState2("deposit");
-        }
-        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setBeastShowApproval(false);
           setBeastBundleState("deposit");
         }
@@ -1999,23 +1912,10 @@ const NewEvents = ({
             console.log(e);
           });
 
-        const allowance2 = await usdt_token_abi.methods
-          .allowance(wallet, fury_beast2_address)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setBeastShowApproval(true);
         }
-        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
-          setBeastShowApproval2(true);
-        }
-        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
-          setBeastShowApproval2(false);
-          setBeastBundleState2("deposit");
-        }
+
         if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setBeastShowApproval(false);
           setBeastBundleState("deposit");
@@ -2474,44 +2374,30 @@ const NewEvents = ({
             return 0;
           });
       } else if (window.WALLET_TYPE === "binance") {
-        const allowance1 = await wod_token_abi.methods
-          .allowance(wallet, wingStormAddress)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         const tokenSc = new ethers.Contract(
-          window.config.usdt_token_address,
+          window.config.wod_token_address,
           window.TOKEN_ABI,
           binanceW3WProvider.getSigner()
         );
 
         const allowance2 = await tokenSc
-          .allowance(wallet, wing_storm2_address)
+          .allowance(wallet, wing_storm_address)
           .catch((e) => {
             console.log(e);
           });
         const stringBalance =
           window.bscWeb3.utils.hexToNumberString(allowance2);
 
-        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+        if (
+          stringBalance === "0" ||
+          Number(stringBalance) < 150000000000000000000
+        ) {
           setEagleShowApproval(true);
         }
         if (
-          allowance2 === "0" ||
-          Number(stringBalance) < 150000000000000000000
-        ) {
-          setEagleShowApproval2(true);
-        }
-        if (
-          allowance2 !== "0" &&
+          stringBalance !== "0" &&
           Number(stringBalance) >= 150000000000000000000
         ) {
-          setEagleShowApproval2(false);
-          setEagleBundleState2("deposit");
-        }
-        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setEagleShowApproval(false);
           setEagleBundleState("deposit");
         }
@@ -2523,23 +2409,10 @@ const NewEvents = ({
             console.log(e);
           });
 
-        const allowance2 = await usdt_token_abi.methods
-          .allowance(wallet, wing_storm2_address)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setEagleShowApproval(true);
         }
-        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
-          setEagleShowApproval2(true);
-        }
-        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
-          setEagleShowApproval2(false);
-          setEagleBundleState2("deposit");
-        }
+
         if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setEagleShowApproval(false);
           setEagleBundleState("deposit");
@@ -2982,44 +2855,30 @@ const NewEvents = ({
             return 0;
           });
       } else if (window.WALLET_TYPE === "binance") {
-        const allowance1 = await wod_token_abi.methods
-          .allowance(wallet, scorpionKingAddress)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         const tokenSc = new ethers.Contract(
-          window.config.usdt_token_address,
+          window.config.wod_token_address,
           window.TOKEN_ABI,
           binanceW3WProvider.getSigner()
         );
 
         const allowance2 = await tokenSc
-          .allowance(wallet, scorpion_king2_address)
+          .allowance(wallet, scorpion_king_address)
           .catch((e) => {
             console.log(e);
           });
         const stringBalance =
           window.bscWeb3.utils.hexToNumberString(allowance2);
 
-        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+        if (
+          stringBalance === "0" ||
+          Number(stringBalance) < 150000000000000000000
+        ) {
           setScorpionShowApproval(true);
         }
         if (
-          allowance2 === "0" ||
-          Number(stringBalance) < 150000000000000000000
-        ) {
-          setScorpionShowApproval2(true);
-        }
-        if (
-          allowance2 !== "0" &&
+          stringBalance !== "0" &&
           Number(stringBalance) >= 150000000000000000000
         ) {
-          setScorpionShowApproval2(false);
-          setScorpionBundleState2("deposit");
-        }
-        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setScorpionShowApproval(false);
           setScorpionBundleState("deposit");
         }
@@ -3031,23 +2890,10 @@ const NewEvents = ({
             console.log(e);
           });
 
-        const allowance2 = await usdt_token_abi.methods
-          .allowance(wallet, scorpion_king2_address)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setScorpionShowApproval(true);
         }
-        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
-          setScorpionShowApproval2(true);
-        }
-        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
-          setScorpionShowApproval2(false);
-          setScorpionBundleState2("deposit");
-        }
+
         if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setScorpionShowApproval(false);
           setScorpionBundleState("deposit");
@@ -3493,44 +3339,30 @@ const NewEvents = ({
             return 0;
           });
       } else if (window.WALLET_TYPE === "binance") {
-        const allowance1 = await wod_token_abi.methods
-          .allowance(wallet, stoneEyeAddress)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         const tokenSc = new ethers.Contract(
-          window.config.usdt_token_address,
+          window.config.wod_token_address,
           window.TOKEN_ABI,
           binanceW3WProvider.getSigner()
         );
 
         const allowance2 = await tokenSc
-          .allowance(wallet, stone_eye2_address)
+          .allowance(wallet, stone_eye_address)
           .catch((e) => {
             console.log(e);
           });
         const stringBalance =
           window.bscWeb3.utils.hexToNumberString(allowance2);
 
-        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+        if (
+          stringBalance === "0" ||
+          Number(stringBalance) < 150000000000000000000
+        ) {
           setCyclopsShowApproval(true);
         }
         if (
-          allowance2 === "0" ||
-          Number(stringBalance) < 150000000000000000000
-        ) {
-          setCyclopsShowApproval2(true);
-        }
-        if (
-          allowance2 !== "0" &&
+          stringBalance !== "0" &&
           Number(stringBalance) >= 150000000000000000000
         ) {
-          setCyclopsShowApproval2(false);
-          setCyclopsBundleState2("deposit");
-        }
-        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setCyclopsShowApproval(false);
           setCyclopsBundleState("deposit");
         }
@@ -3542,23 +3374,10 @@ const NewEvents = ({
             console.log(e);
           });
 
-        const allowance2 = await usdt_token_abi.methods
-          .allowance(wallet, stone_eye2_address)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setCyclopsShowApproval(true);
         }
-        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
-          setCyclopsShowApproval2(true);
-        }
-        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
-          setCyclopsShowApproval2(false);
-          setCyclopsBundleState2("deposit");
-        }
+
         if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setCyclopsShowApproval(false);
           setCyclopsBundleState("deposit");
@@ -3839,12 +3658,20 @@ const NewEvents = ({
         );
       } else if (
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
-        chainId !== 56
+        chainId !== 56 &&
+        binancePay === false
       ) {
         setCheckWallet(false);
         setStatus(
           "Please make sure you're on BNB Chain in order to activate the event."
         );
+      } else if (
+        coinbase?.toLowerCase() === wallet?.toLowerCase() &&
+        chainId !== 56 &&
+        binancePay === true
+      ) {
+        setCheckWallet(true);
+        setStatus("");
       } else if (
         coinbase?.toLowerCase() !== wallet?.toLowerCase() &&
         chainId === 56
@@ -6296,7 +6123,7 @@ const NewEvents = ({
                                           email &&
                                           binancePay === true && (
                                             <>
-                                              <button
+                                              {/* <button
                                                 disabled={
                                                   dragonBundleState2 ===
                                                     "deposit" ||
@@ -6335,7 +6162,7 @@ const NewEvents = ({
                                                 ) : (
                                                   "Approve"
                                                 )}
-                                              </button>
+                                              </button> */}
                                               <button
                                                 disabled={
                                                   checkWallet === true &&
@@ -6354,11 +6181,8 @@ const NewEvents = ({
                                                 }
                                                 className={` ${
                                                   dragonShowApproval2 ===
-                                                    true && checkWallet === true
-                                                    ? "beast-siege-btn-inactive d-none"
-                                                    : dragonShowApproval2 ===
-                                                        false &&
-                                                      checkWallet === true
+                                                    false &&
+                                                  checkWallet === true
                                                     ? " binance-beast-siege-btn"
                                                     : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
@@ -6514,7 +6338,7 @@ const NewEvents = ({
                                           email &&
                                           binancePay === true && (
                                             <>
-                                              <button
+                                              {/* <button
                                                 disabled={
                                                   bearBundleState2 ===
                                                     "deposit" ||
@@ -6553,7 +6377,7 @@ const NewEvents = ({
                                                 ) : (
                                                   "Approve"
                                                 )}
-                                              </button>
+                                              </button> */}
                                               <button
                                                 disabled={
                                                   checkWallet === true &&
@@ -6571,12 +6395,12 @@ const NewEvents = ({
                                                     : true
                                                 }
                                                 className={` ${
-                                                  bearShowApproval2 === true &&
+                                                  // bearShowApproval2 === true &&
+                                                  // checkWallet === true
+                                                  //   ? "beast-siege-btn-inactive d-none"
+                                                  //   :
+                                                  bearShowApproval2 === false &&
                                                   checkWallet === true
-                                                    ? "beast-siege-btn-inactive d-none"
-                                                    : bearShowApproval2 ===
-                                                        false &&
-                                                      checkWallet === true
                                                     ? " binance-beast-siege-btn"
                                                     : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
@@ -6730,7 +6554,7 @@ const NewEvents = ({
                                           email &&
                                           binancePay === true && (
                                             <>
-                                              <button
+                                              {/* <button
                                                 disabled={
                                                   beastBundleState2 ===
                                                     "deposit" ||
@@ -6769,7 +6593,7 @@ const NewEvents = ({
                                                 ) : (
                                                   "Approve"
                                                 )}
-                                              </button>
+                                              </button> */}
                                               <button
                                                 disabled={
                                                   checkWallet === true &&
@@ -6787,12 +6611,13 @@ const NewEvents = ({
                                                     : true
                                                 }
                                                 className={` ${
-                                                  beastShowApproval2 === true &&
+                                                  // beastShowApproval2 === true &&
+                                                  // checkWallet === true
+                                                  //   ? "beast-siege-btn-inactive d-none"
+                                                  //   :
+                                                  beastShowApproval2 ===
+                                                    false &&
                                                   checkWallet === true
-                                                    ? "beast-siege-btn-inactive d-none"
-                                                    : beastShowApproval2 ===
-                                                        false &&
-                                                      checkWallet === true
                                                     ? "binance-beast-siege-btn"
                                                     : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
@@ -6939,7 +6764,7 @@ const NewEvents = ({
                                           email &&
                                           binancePay === true && (
                                             <>
-                                              <button
+                                              {/* <button
                                                 disabled={
                                                   eagleBundleState2 ===
                                                     "deposit" ||
@@ -6978,7 +6803,7 @@ const NewEvents = ({
                                                 ) : (
                                                   "Approve"
                                                 )}
-                                              </button>
+                                              </button> */}
                                               <button
                                                 disabled={
                                                   checkWallet === true &&
@@ -6996,12 +6821,13 @@ const NewEvents = ({
                                                     : true
                                                 }
                                                 className={` ${
-                                                  eagleShowApproval2 === true &&
+                                                  // eagleShowApproval2 === true &&
+                                                  // checkWallet === true
+                                                  //   ? "beast-siege-btn-inactive d-none"
+                                                  //   :
+                                                  eagleShowApproval2 ===
+                                                    false &&
                                                   checkWallet === true
-                                                    ? "beast-siege-btn-inactive d-none"
-                                                    : eagleShowApproval2 ===
-                                                        false &&
-                                                      checkWallet === true
                                                     ? "binance-beast-siege-btn"
                                                     : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
@@ -7154,7 +6980,7 @@ const NewEvents = ({
                                           email &&
                                           binancePay === true && (
                                             <>
-                                              <button
+                                              {/* <button
                                                 disabled={
                                                   scorpionBundleState2 ===
                                                     "deposit" ||
@@ -7194,7 +7020,7 @@ const NewEvents = ({
                                                 ) : (
                                                   "Approve"
                                                 )}
-                                              </button>
+                                              </button> */}
                                               <button
                                                 disabled={
                                                   checkWallet === true &&
@@ -7212,12 +7038,13 @@ const NewEvents = ({
                                                     : true
                                                 }
                                                 className={` ${
+                                                  // scorpionShowApproval2 ===
+                                                  //   true && checkWallet === true
+                                                  //   ? "beast-siege-btn-inactive d-none"
+                                                  //   :
                                                   scorpionShowApproval2 ===
-                                                    true && checkWallet === true
-                                                    ? "beast-siege-btn-inactive d-none"
-                                                    : scorpionShowApproval2 ===
-                                                        false &&
-                                                      checkWallet === true
+                                                    false &&
+                                                  checkWallet === true
                                                     ? "binance-beast-siege-btn"
                                                     : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
@@ -7371,7 +7198,7 @@ const NewEvents = ({
                                           email &&
                                           binancePay === true && (
                                             <>
-                                              <button
+                                              {/* <button
                                                 disabled={
                                                   cyclopsBundleState2 ===
                                                     "deposit" ||
@@ -7410,7 +7237,7 @@ const NewEvents = ({
                                                 ) : (
                                                   "Approve"
                                                 )}
-                                              </button>
+                                              </button> */}
                                               <button
                                                 disabled={
                                                   checkWallet === true &&
@@ -7428,12 +7255,13 @@ const NewEvents = ({
                                                     : true
                                                 }
                                                 className={` ${
+                                                  // cyclopsShowApproval2 ===
+                                                  //   true && checkWallet === true
+                                                  //   ? "beast-siege-btn-inactive d-none"
+                                                  //   :
                                                   cyclopsShowApproval2 ===
-                                                    true && checkWallet === true
-                                                    ? "beast-siege-btn-inactive d-none"
-                                                    : cyclopsShowApproval2 ===
-                                                        false &&
-                                                      checkWallet === true
+                                                    false &&
+                                                  checkWallet === true
                                                     ? "binance-beast-siege-btn"
                                                     : "beast-siege-btn-inactive"
                                                 }  py-2 px-4`}
@@ -7799,264 +7627,150 @@ const NewEvents = ({
                                     ) : activeEvent.title ===
                                       "Puzzle Madness" ? (
                                       <>
-                                        {hasBoughtpuzzleMadness &&
-                                        isFinishedPuzzle === false ? (
-                                          // <div className="d-flex flex-column gap-1">
-                                          //   <span className="event-price-span">
-                                          //     Active Until:
-                                          //   </span>
-                                          //   <Countdown
-                                          //     renderer={renderer}
-                                          //     date={puzzleMadnessCountdown}
-                                          //     onComplete={() => {
-                                          //       setisFinishedPuzzle(true);
-                                          //     }}
-                                          //   />
-                                          // </div>
-                                          <div
-                                            className="d-flex flex-column align-items-center gap-2"
-                                            style={{ width: "fit-content" }}
-                                          >
-                                            <div className="new-events-circle-2">
-                                              <Countdown
-                                                renderer={renderer}
-                                                date={puzzleMadnessCountdown}
-                                                onComplete={() => {
-                                                  setisFinishedPuzzle(true);
-                                                  setBeastSiegeStatus(
-                                                    (prevStatus) => ({
-                                                      ...prevStatus,
-                                                      puzzleMadness: false,
-                                                    })
-                                                  );
-                                                }}
-                                              />
-                                            </div>
-                                            <span className="beast-siege-event-price">
-                                              Time Remaining
-                                            </span>
-                                          </div>
-                                        ) : (
-                                          <div className="d-flex flex-column gap-1">
-                                            <div className="payment-method-wrapper p-2 bordertw border-white/20 w-fit">
-                                              <div className="d-flex flex-column gap-2 justify-content-between">
-                                                <div className="payment-method-first bordertw border-white/20 p-2">
-                                                  <div className="d-flex align-items-center gap-2 justify-content-between">
-                                                    <span className="event-price-span">
-                                                      Event Price
+                                        <div
+                                          className="d-flex flex-column gap-1"
+                                          style={{ width: "fit-content" }}
+                                        >
+                                          {hasBoughtpuzzleMadness &&
+                                            isFinishedPuzzle === false && (
+                                              <div className="d-flex puzzle-madness-timer p-2 justify-content-between align-items-center gap-2">
+                                                <span className="event-price-span">
+                                                  Time Remaining
+                                                </span>
+                                                <div className="">
+                                                  <Countdown
+                                                    renderer={rendererPuzzle}
+                                                    date={
+                                                      puzzleMadnessCountdown
+                                                    }
+                                                    onComplete={() => {
+                                                      setisFinishedPuzzle(true);
+                                                      setBeastSiegeStatus(
+                                                        (prevStatus) => ({
+                                                          ...prevStatus,
+                                                          puzzleMadness: false,
+                                                        })
+                                                      );
+                                                    }}
+                                                  />
+                                                </div>
+                                              </div>
+                                            )}
+                                          <div className="payment-method-wrapper p-2 bordertw border-white/20 w-fit">
+                                            <div className="d-flex flex-column gap-2 justify-content-between">
+                                              <div className="payment-method-first bordertw border-white/20 p-2">
+                                                <div className="d-flex align-items-center gap-2 justify-content-between">
+                                                  <span className="event-price-span">
+                                                    Event Price
+                                                  </span>
+                                                  <div className="d-flex flex-column align-items-end">
+                                                    <h6 className="event-price-coin mb-0">
+                                                      {getFormattedNumber(
+                                                        binancePay === false
+                                                          ? puzzleMadnessWodAmount
+                                                          : activeEvent.usdPrice
+                                                      )}{" "}
+                                                      {binancePay === false
+                                                        ? "WOD"
+                                                        : "USDT"}
+                                                    </h6>
+                                                    <span className="event-price-usd">
+                                                      ($
+                                                      {getFormattedNumber(
+                                                        activeEvent.usdPrice
+                                                      )}
+                                                      )
                                                     </span>
-                                                    <div className="d-flex flex-column align-items-end">
-                                                      <h6 className="event-price-coin mb-0">
-                                                        {getFormattedNumber(
-                                                          binancePay === false
-                                                            ? puzzleMadnessWodAmount
-                                                            : activeEvent.usdPrice
-                                                        )}{" "}
-                                                        {binancePay === false
-                                                          ? "WOD"
-                                                          : "USDT"}
-                                                      </h6>
-                                                      <span className="event-price-usd">
-                                                        ($
-                                                        {getFormattedNumber(
-                                                          activeEvent.usdPrice
-                                                        )}
-                                                        )
-                                                      </span>
-                                                    </div>
                                                   </div>
                                                 </div>
-                                                <div className="d-flex flex-column gap-2">
-                                                  <span className="event-price-span">
-                                                    Method
-                                                  </span>
-                                                  <div className="d-flex gap-2 align-items-center w-100">
-                                                    <motion.div
-                                                      // whileTap={{ scale: 0.98 }}
-                                                      className={` ${
-                                                        (puzzleMadnessBundleState2 ===
-                                                          "loading" ||
-                                                          statusbinance !==
-                                                            "idle") &&
-                                                        "pe-none"
-                                                      } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                        !binancePay
-                                                          ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
-                                                          : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
-                                                      }`}
-                                                      onClick={() =>
-                                                        setbinancePay(false)
-                                                      }
-                                                    >
-                                                      <div className="flex items-center space-x-3">
-                                                        <img
-                                                          style={{ height: 18 }}
-                                                          src={
-                                                            "https://cdn.worldofdypians.com/wod/walletRound.svg"
-                                                          }
-                                                          alt=""
-                                                        />
-                                                        <div>
-                                                          <p
-                                                            className={`text-sm font-medium m-0 ${
-                                                              !binancePay
-                                                                ? "text-white"
-                                                                : "text-gray-200"
-                                                            }`}
-                                                          >
-                                                            Wallet
-                                                          </p>
-                                                        </div>
+                                              </div>
+                                              <div className="d-flex flex-column gap-2">
+                                                <span className="event-price-span">
+                                                  Method
+                                                </span>
+                                                <div className="d-flex gap-2 align-items-center w-100">
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={` ${
+                                                      (puzzleMadnessBundleState2 ===
+                                                        "loading" ||
+                                                        statusbinance !==
+                                                          "idle") &&
+                                                      "pe-none"
+                                                    } flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                                      !binancePay
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                                                    }`}
+                                                    onClick={() =>
+                                                      setbinancePay(false)
+                                                    }
+                                                  >
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            !binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Wallet
+                                                        </p>
                                                       </div>
-                                                    </motion.div>
-                                                    <motion.div
-                                                      // whileTap={{ scale: 0.98 }}
-                                                      className={`${
-                                                        (puzzleMadnessBundleState ===
-                                                          "loading" ||
-                                                          puzzleMadnessDepositState ===
-                                                            "loading-deposit") &&
-                                                        "pe-none"
-                                                      } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
-                                                        binancePay
-                                                          ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
-                                                          : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
-                                                      }`}
-                                                      onClick={() =>
-                                                        setbinancePay(true)
-                                                      }
-                                                    >
-                                                      <div className="flex items-center space-x-3">
-                                                        <img
-                                                          style={{ height: 18 }}
-                                                          src={
-                                                            "https://cdn.worldofdypians.com/wod/b-pay.svg"
-                                                          }
-                                                          alt=""
-                                                        />
-                                                        <div>
-                                                          <p
-                                                            className={`text-sm font-medium m-0 ${
-                                                              binancePay
-                                                                ? "text-white"
-                                                                : "text-gray-200"
-                                                            }`}
-                                                          >
-                                                            Binance Pay
-                                                          </p>
-                                                        </div>
+                                                    </div>
+                                                  </motion.div>
+                                                  <motion.div
+                                                    // whileTap={{ scale: 0.98 }}
+                                                    className={`${
+                                                      (puzzleMadnessBundleState ===
+                                                        "loading" ||
+                                                        puzzleMadnessDepositState ===
+                                                          "loading-deposit") &&
+                                                      "pe-none"
+                                                    } w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                                      binancePay
+                                                        ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                                        : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                                                    }`}
+                                                    onClick={() =>
+                                                      setbinancePay(true)
+                                                    }
+                                                  >
+                                                    <div className="flex items-center space-x-3">
+                                                      <img
+                                                        style={{ height: 18 }}
+                                                        src={
+                                                          "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                                        }
+                                                        alt=""
+                                                      />
+                                                      <div>
+                                                        <p
+                                                          className={`text-sm font-medium m-0 ${
+                                                            binancePay
+                                                              ? "text-white"
+                                                              : "text-gray-200"
+                                                          }`}
+                                                        >
+                                                          Binance Pay
+                                                        </p>
                                                       </div>
-                                                    </motion.div>
-                                                  </div>
+                                                    </div>
+                                                  </motion.div>
                                                 </div>
                                               </div>
                                             </div>
                                           </div>
-                                        )}
+                                        </div>
 
-                                        {/* {hasBoughtpuzzleMadness &&
-                                        isFinishedPuzzle === false ? (
-                                          <div style={{ height: "38px" }}></div>
-                                        ) : (
-                                          <div className="d-flex align-items-center gap-2">
-                                            {!isConnected && (
-                                              <button
-                                                className="beast-siege-btn"
-                                                onClick={onConnectWallet}
-                                              >
-                                                {" "}
-                                                Connect Wallet
-                                              </button>
-                                            )}
-                                            {!email && isConnected && (
-                                              <NavLink
-                                                className="beast-siege-btn"
-                                                to={"/auth"}
-                                              >
-                                                {" "}
-                                                Log In
-                                              </NavLink>
-                                            )}
-                                            {isConnected && email && (
-                                              <>
-                                                <button
-                                                  disabled={
-                                                    puzzleMadnessBundleState ===
-                                                      "deposit" ||
-                                                    puzzleMadnessBundleState ===
-                                                      "loading" ||
-                                                    checkWallet === false
-                                                      ? true
-                                                      : false
-                                                  }
-                                                  className={` ${
-                                                    puzzleMadnessBundleState ===
-                                                      "deposit" ||
-                                                    checkWallet === false ||
-                                                    puzzleMadnessShowApproval ===
-                                                      false
-                                                      ? "beast-siege-btn-inactive d-none"
-                                                      : "beast-siege-btn"
-                                                  }  py-2 px-4`}
-                                                  onClick={() =>
-                                                    handleApprovalPuzzle()
-                                                  }
-                                                >
-                                                  {puzzleMadnessBundleState ===
-                                                  "loading" ? (
-                                                    <div
-                                                      className="spinner-border spinner-border-sm text-light"
-                                                      role="status"
-                                                    >
-                                                      <span className="visually-hidden">
-                                                        Loading...
-                                                      </span>
-                                                    </div>
-                                                  ) : (
-                                                    "Approve"
-                                                  )}
-                                                </button>
-                                                <button
-                                                  disabled={
-                                                    checkWallet === true &&
-                                                    puzzleMadnessDepositState !==
-                                                      "loading-deposit"
-                                                      ? false
-                                                      : true
-                                                  }
-                                                  className={` ${
-                                                    puzzleMadnessShowApproval ===
-                                                      true &&
-                                                    checkWallet === true
-                                                      ? "beast-siege-btn-inactive d-none"
-                                                      : puzzleMadnessShowApproval ===
-                                                          false &&
-                                                        checkWallet === true
-                                                      ? "beast-siege-btn"
-                                                      : "beast-siege-btn-inactive"
-                                                  }  py-2 px-4`}
-                                                  onClick={() =>
-                                                    handleDepositPuzzle()
-                                                  }
-                                                >
-                                                  {puzzleMadnessDepositState ===
-                                                  "loading-deposit" ? (
-                                                    <div
-                                                      className="spinner-border spinner-border-sm text-light"
-                                                      role="status"
-                                                    >
-                                                      <span className="visually-hidden">
-                                                        Loading...
-                                                      </span>
-                                                    </div>
-                                                  ) : (
-                                                    "Activate"
-                                                  )}
-                                                </button>
-                                              </>
-                                            )}
-                                          </div>
-                                        )} */}
                                         <div className="d-flex align-items-center gap-2">
                                           {!email && isConnected && (
                                             <NavLink
@@ -8191,47 +7905,6 @@ const NewEvents = ({
                                               <>
                                                 <button
                                                   disabled={
-                                                    puzzleMadnessBundleState2 ===
-                                                      "deposit" ||
-                                                    puzzleMadnessBundleState ===
-                                                      "loading" ||
-                                                    checkWallet === false ||
-                                                    !isEOA
-                                                      ? true
-                                                      : false
-                                                  }
-                                                  className={` ${
-                                                    puzzleMadnessBundleState2 ===
-                                                      "deposit" ||
-                                                    checkWallet === false ||
-                                                    puzzleMadnessShowApproval2 ===
-                                                      false
-                                                      ? "beast-siege-btn-inactive d-none"
-                                                      : "binance-beast-siege-btn"
-                                                  }  py-2 px-4`}
-                                                  onClick={() =>
-                                                    handleApprovalPuzzle(true)
-                                                  }
-                                                >
-                                                  {puzzleMadnessBundleState2 ===
-                                                  "loading" ? (
-                                                    <div className="d-flex align-items-center gap-2">
-                                                      Approving
-                                                      <div
-                                                        className="spinner-border spinner-border-sm text-light beast-button"
-                                                        role="status"
-                                                      >
-                                                        <span className="visually-hidden">
-                                                          Loading...
-                                                        </span>
-                                                      </div>
-                                                    </div>
-                                                  ) : (
-                                                    "Approve"
-                                                  )}
-                                                </button>
-                                                <button
-                                                  disabled={
                                                     checkWallet === true &&
                                                     isEOA &&
                                                     puzzleMadnessDepositState2 !==
@@ -8240,13 +7913,7 @@ const NewEvents = ({
                                                       : true
                                                   }
                                                   className={` ${
-                                                    puzzleMadnessShowApproval2 ===
-                                                      true &&
                                                     checkWallet === true
-                                                      ? "beast-siege-btn-inactive d-none"
-                                                      : puzzleMadnessShowApproval2 ===
-                                                          false &&
-                                                        checkWallet === true
                                                       ? "binance-beast-siege-btn"
                                                       : "beast-siege-btn-inactive"
                                                   }  py-2 px-4`}

@@ -63,7 +63,7 @@ const GoldenPassPopup = ({
   const [showApproval, setShowApproval] = useState(true);
   const [bundleState, setBundleState] = useState("initial");
 
-  const [showApproval2, setShowApproval2] = useState(true);
+  const [showApproval2, setShowApproval2] = useState(false);
   const [bundleState2, setBundleState2] = useState("initial");
 
   const [depositState, setDepositState] = useState("initial");
@@ -149,44 +149,30 @@ const GoldenPassPopup = ({
             return 0;
           });
       } else if (window.WALLET_TYPE === "binance") {
-        const allowance1 = await wod_token_abi.methods
-          .allowance(wallet, goldenPassAddress)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
-
         const tokenSc = new ethers.Contract(
-          window.config.usdt_token_address,
+          window.config.wod_token_address,
           window.TOKEN_ABI,
           binanceW3WProvider.getSigner()
         );
 
         const allowance2 = await tokenSc
-          .allowance(wallet, golden_pass2_address)
+          .allowance(wallet, golden_pass_address)
           .catch((e) => {
             console.log(e);
           });
         const stringBalance =
           window.bscWeb3.utils.hexToNumberString(allowance2);
 
-        if (allowance1 === "0" || allowance1 < 150000000000000000000) {
+        if (
+          stringBalance === "0" ||
+          Number(stringBalance) < 150000000000000000000
+        ) {
           setShowApproval(true);
         }
         if (
-          allowance2 === "0" ||
-          Number(stringBalance) < 150000000000000000000
-        ) {
-          setShowApproval2(true);
-        }
-        if (
-          allowance2 !== "0" &&
+          stringBalance !== "0" &&
           Number(stringBalance) >= 150000000000000000000
         ) {
-          setShowApproval2(false);
-          setBundleState2("deposit");
-        }
-        if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setShowApproval(false);
           setBundleState("deposit");
         }
@@ -198,23 +184,23 @@ const GoldenPassPopup = ({
             console.log(e);
           });
 
-        const allowance2 = await usdt_token_abi.methods
-          .allowance(wallet, golden_pass2_address)
-          .call()
-          .catch((e) => {
-            console.log(e);
-          });
+        // const allowance2 = await usdt_token_abi.methods
+        //   .allowance(wallet, golden_pass2_address)
+        //   .call()
+        //   .catch((e) => {
+        //     console.log(e);
+        //   });
 
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setShowApproval(true);
         }
-        if (allowance2 === "0" || allowance2 < 150000000000000000000) {
-          setShowApproval2(true);
-        }
-        if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
-          setShowApproval2(false);
-          setBundleState2("deposit");
-        }
+        // if (allowance2 === "0" || allowance2 < 150000000000000000000) {
+        //   setShowApproval2(true);
+        // }
+        // if (allowance2 !== "0" && allowance2 >= 150000000000000000000) {
+        //   setShowApproval2(false);
+        //   setBundleState2("deposit");
+        // }
         if (allowance1 !== "0" && allowance1 >= 150000000000000000000) {
           setShowApproval(false);
           setBundleState("deposit");
@@ -469,13 +455,22 @@ const GoldenPassPopup = ({
         setStatusColor("#FE7A00");
       } else if (
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
-        chainId !== 56
+        chainId !== 56 &&
+        binancePay === false
       ) {
         setCheckWallet(false);
         setStatus(
           "Please make sure you're on BNB Chain in order to activate the event."
         );
         setStatusColor("#FE7A00");
+      } else if (
+        coinbase?.toLowerCase() === wallet?.toLowerCase() &&
+        chainId !== 56 &&
+        binancePay === true
+      ) {
+        setCheckWallet(true);
+        setStatus("");
+        setStatusColor("#00FECF");
       } else if (
         coinbase?.toLowerCase() !== wallet?.toLowerCase() &&
         chainId === 56
@@ -511,6 +506,15 @@ const GoldenPassPopup = ({
   }, []);
 
   useEffect(() => {
+    if (binancePay === true && window.WALLET_TYPE === "binance") {
+      {
+        setShowApproval2(false);
+        setBundleState2("deposit");
+      }
+    }
+  }, [binancePay, window.WALLET_TYPE]);
+
+  useEffect(() => {
     checkWalletAddr();
     if (coinbase && wallet && chainId === 56) {
       // handleRefreshCountdown();
@@ -530,17 +534,7 @@ const GoldenPassPopup = ({
       setbinancePay(true);
     }
   }, [statusbinance]);
-  console.log(
-    checkWallet,
-    bundleState,
-    showApproval,
-    showApproval2,
-    isEOA,
-    status
-  );
-  console.log(
-    bundleState === "deposit" || checkWallet === false || showApproval === false
-  );
+
   return (
     <>
       <div className="package-popup-wrapper">
@@ -1166,7 +1160,7 @@ const GoldenPassPopup = ({
                 </>
               ) : isConnected && email && binancePay === true ? (
                 <>
-                  <button
+                  {/* <button
                     disabled={
                       bundleState2 === "deposit" ||
                       bundleState === "loading" ||
@@ -1197,7 +1191,7 @@ const GoldenPassPopup = ({
                     ) : (
                       "Approve"
                     )}
-                  </button>
+                  </button> */}
                   <button
                     disabled={
                       checkWallet === true &&
@@ -1207,12 +1201,13 @@ const GoldenPassPopup = ({
                         : true
                     }
                     className={` ${
-                      showApproval2 === true && checkWallet === true
-                        ? "stake-wod-btn-inactive d-none"
-                        : showApproval2 === false && checkWallet === true
+                      // showApproval2 === true && checkWallet === true
+                      //   ? "stake-wod-btn-inactive d-none"
+                      //   :
+                      showApproval2 === false && checkWallet === true
                         ? "binance-beast-siege-btn"
                         : "stake-wod-btn-inactive"
-                    }  py-2 px-4`}
+                    }  py-3 px-4 text-uppercase`}
                     onClick={() => handleBuy(coinbase, "Golden Pass")}
                   >
                     {buttonText}
