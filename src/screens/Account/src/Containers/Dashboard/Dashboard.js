@@ -187,6 +187,8 @@ function Dashboard({
   royaltyCount,
   onOpenRoyaltyChest,
   setRoyalChestIndex,
+   onOpenRoyaltyChestTaiko,
+  setRoyalChestIndexTaiko,
   mybnb5yaNfts,
 }) {
   const { email } = useAuth();
@@ -5393,6 +5395,12 @@ function Dashboard({
         if (chestOrder.length > 0) {
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].chestId === 99) {
+              setRoyalChestIndexTaiko(item);
+              if (chestOrder[item].isOpened === true) {
+                onOpenRoyaltyChestTaiko(chestOrder[item]);
+              }
+            }
               if (chestOrder[item].isOpened === true) {
                 {
                   openedChests.push(chestOrder[item]);

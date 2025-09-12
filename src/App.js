@@ -611,6 +611,9 @@ function App() {
   const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
   const [royalChestIndex, setRoyalChestIndex] = useState();
 
+    const [openedRoyaltyChestTaiko, setOpenedRoyaltyChestTaiko] = useState([]);
+  const [royalChestIndexTaiko, setRoyalChestIndexTaiko] = useState();
+
   const [domainPopup, setDomainPopup] = useState(false);
   const [kickstarterAddClass, setKickstarterAddClass] = useState(false);
   const [showSync, setshowSync] = useState(false);
@@ -7004,9 +7007,15 @@ function App() {
                 setRoyalChestIndex={(value) => {
                   setRoyalChestIndex(value);
                 }}
+                 setRoyalChestIndexTaiko={(value) => {
+                  setRoyalChestIndexTaiko(value);
+                }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
+                }}
+                onOpenRoyaltyChestTaiko={(value) => {
+                  setOpenedRoyaltyChestTaiko(value);
                 }}
                 isEOA={isEOA}
                 wodBalance={wodBalance}
@@ -7114,9 +7123,15 @@ function App() {
                 setRoyalChestIndex={(value) => {
                   setRoyalChestIndex(value);
                 }}
+                 setRoyalChestIndexTaiko={(value) => {
+                  setRoyalChestIndexTaiko(value);
+                }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
+                }}
+                onOpenRoyaltyChestTaiko={(value) => {
+                  setOpenedRoyaltyChestTaiko(value);
                 }}
                 openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
@@ -7709,9 +7724,15 @@ function App() {
                 setRoyalChestIndex={(value) => {
                   setRoyalChestIndex(value);
                 }}
+                 setRoyalChestIndexTaiko={(value) => {
+                  setRoyalChestIndexTaiko(value);
+                }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
+                }}
+                onOpenRoyaltyChestTaiko={(value) => {
+                  setOpenedRoyaltyChestTaiko(value);
                 }}
                 openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
@@ -8771,6 +8792,8 @@ function App() {
         window.location.pathname === "/account" && (
           <Kickstarter
             royalChestIndex={royalChestIndex}
+            royalChestIndexTaiko={royalChestIndexTaiko}
+
             publicClient={publicClient}
             onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
             walletClient={walletClient}
@@ -8798,6 +8821,8 @@ function App() {
               setKickstarterAddClass(value);
             }}
             openedRoyaltyChest={openedRoyaltyChest}
+            openedRoyaltyChestTaiko={openedRoyaltyChestTaiko}
+
           />
         )}
     </>

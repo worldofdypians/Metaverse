@@ -59,9 +59,15 @@ const Kickstarter = ({
   publicClient,
   onClaimRewards,
   openedRoyaltyChest,
+  royalChestIndexTaiko,
+  openedRoyaltyChestTaiko,
 }) => {
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
+
+  const videoRef1Taiko = useRef(null);
+  const videoRef2Taiko = useRef(null);
+
   const windowSize = useWindowSize();
 
   const glassyContainerStyle = {
@@ -90,7 +96,7 @@ const Kickstarter = ({
       // switchNetwork("0x38", 56)
       socials: [
         {
-          Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+          Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
           label: "Twitter",
           color: "#1DA1F2",
           link: "https://x.com/BNBChain",
@@ -108,7 +114,7 @@ const Kickstarter = ({
           link: "https://discord.com/invite/bnbchain",
         },
         {
-          Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+          Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
           label: "Website",
           color: "#059669",
           link: "https://www.bnbchain.org/en",
@@ -128,7 +134,7 @@ const Kickstarter = ({
       chainId: 204,
       socials: [
         {
-          Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+          Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
           label: "Twitter",
           color: "#1DA1F2",
           link: "https://x.com/BNBChain",
@@ -146,10 +152,48 @@ const Kickstarter = ({
           link: "https://discord.com/invite/bnbchain",
         },
         {
-          Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+          Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
           label: "Website",
           color: "#059669",
           link: "https://opbnb.bnbchain.org/en",
+        },
+      ],
+    },
+    {
+      id: "taiko",
+      name: "Taiko",
+      symbol: "TAIKO",
+      logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
+      desc: "Taiko is a fully decentralized, Ethereum-equivalent ZK-Rollup (Type 1 ZK-EVM). The goal is to scale Ethereum while upholding the root principles of security and decentralization. ",
+      color: "from-blue-400 to-purple-600",
+      gradientFrom: "#F59E0B",
+      gradientTo: "#1a1024ff",
+      hex: "0x28c58",
+      chainId: 167000,
+      socials: [
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+          label: "Twitter",
+          color: "#1DA1F2",
+          link: "https://x.com/taikoxyz",
+        },
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+          label: "Telegram",
+          color: "#0088CC",
+          link: "https://t.me/TaikoEcosystem",
+        },
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+          label: "Discord",
+          color: "#5865F2",
+          link: "https://discord.com/invite/taikoxyz",
+        },
+        {
+          Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+          label: "Website",
+          color: "#059669",
+          link: "https://taiko.xyz/",
         },
       ],
     },
@@ -339,9 +383,22 @@ const Kickstarter = ({
         });
 
       console.log(txResult);
-
+      const video =
+        chainText === "taiko" ? videoRef2Taiko.current : videoRef2.current;
       if (txResult) {
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
+        setLoading(false);
+        setChestOpened(true);
+        setStep(2);
+
+        if (video) {
+          video.play().catch((err) => console.error("Play failed:", err));
+          setTimeout(() => {
+            video.pause();
+            setStep(3);
+            onClaimRewards();
+          }, 8000);
+        }
       } else {
         if (count < 10) {
           const timer = setTimeout(
@@ -364,9 +421,23 @@ const Kickstarter = ({
           console.error(e);
         });
       console.log(txResult_binance);
+      const video =
+        chainText === "taiko" ? videoRef2Taiko.current : videoRef2.current;
 
       if (txResult_binance) {
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
+        setLoading(false);
+        setChestOpened(true);
+        setStep(2);
+
+        if (video) {
+          video.play().catch((err) => console.error("Play failed:", err));
+          setTimeout(() => {
+            video.pause();
+            setStep(3);
+            onClaimRewards();
+          }, 8000);
+        }
       } else {
         if (count < 10) {
           const timer = setTimeout(
@@ -390,9 +461,23 @@ const Kickstarter = ({
           console.error(e);
         });
       console.log(txResult_matchain, txHash);
+      const video =
+        chainText === "taiko" ? videoRef2Taiko.current : videoRef2.current;
 
       if (txResult_matchain) {
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
+        setLoading(false);
+        setChestOpened(true);
+        setStep(2);
+
+        if (video) {
+          video.play().catch((err) => console.error("Play failed:", err));
+          setTimeout(() => {
+            video.pause();
+            setStep(3);
+            onClaimRewards();
+          }, 8000);
+        }
       } else {
         if (count < 10) {
           const timer = setTimeout(
@@ -425,6 +510,11 @@ const Kickstarter = ({
     const daily_bonus_contract_bnb = new window.web3.eth.Contract(
       window.DAILY_BONUS_BNB_ABI,
       window.config.daily_bonus_bnb_address
+    );
+
+    const daily_bonus_contract_taiko = new window.web3.eth.Contract(
+      window.DAILY_BONUS_TAIKO_ABI,
+      window.config.daily_bonus_taiko_address
     );
 
     // console.log(daily_bonus_contract);
@@ -644,6 +734,48 @@ const Kickstarter = ({
           }
         }
       }
+    } else if (chainId === 167000) {
+      const web3 = new Web3(window.ethereum);
+      const gasPrice = await window.taikoWeb3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+      // const increasedGwei = parseInt(currentGwei) + 0.01;
+      // console.log("increasedGwei", increasedGwei);
+
+      const transactionParameters = {
+        gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+      };
+
+      await daily_bonus_contract_taiko.methods
+        .openChest()
+        .estimateGas({ from: address })
+        .then((gas) => {
+          transactionParameters.gas = web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      console.log(transactionParameters);
+
+      await daily_bonus_contract_taiko.methods
+        .openChest()
+        .send({
+          from: address,
+          ...transactionParameters,
+        })
+        .then((data) => {
+          handleCheckIfTxExists(
+            email,
+            data.transactionHash,
+            chestIndex - 1,
+            "taiko"
+          );
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+          setLoading(false);
+        });
     }
   };
 
@@ -660,69 +792,6 @@ const Kickstarter = ({
   });
 
   const selectedChainData = chains.find((c) => c.id === selectedChain);
-
-  // const chains = [
-  //   {
-  //     id: "bnb",
-  //     name: "BNB Chain",
-  //     activeImage: "bnbIcon.svg",
-  //     hoverImage: "bnbWhite.svg",
-  //     inactiveImage: "bnbInactive.svg",
-  //     tag: "0x38",
-  //     chainId: 56,
-  //   },
-  //   {
-  //     id: "opbnb",
-  //     name: "opBNB",
-  //     activeImage: "opbnbChain.png",
-  //     hoverImage: "bnbWhite.svg",
-  //     inactiveImage: "bnbInactive.svg",
-  //     tag: "0xcc",
-  //     chainId: 204,
-  //   },
-  //   // {
-  //   //   id: "core",
-  //   //   name: "CORE",
-  //   //   activeImage : "core.svg",
-  //   //   hoverImage: "coreWhite.svg",
-  //   //   inactiveImage: "coreInactive.svg"
-  //   // },
-  //   // {
-  //   //   id: "taiko",
-  //   //   name: "Taiko",
-  //   //   activeImage : "taiko.svg",
-  //   //   hoverImage: "taikoWhite.svg",
-  //   //   inactiveImage: "taikoInactive.svg"
-  //   // },
-  //   // {
-  //   //   id: "sei",
-  //   //   name: "SEI",
-  //   //   activeImage : "seiLogo.svg",
-  //   //   hoverImage: "seiWhite.svg",
-  //   //   inactiveImage: "seiInactive.svg"
-  //   // },
-  //   // {
-  //   //   id: "base",
-  //   //   name: "Base",
-  //   //   activeImage : "base.svg",
-  //   //   hoverImage: "baseWhite.svg",
-  //   //   inactiveImage: "baseInactive.svg"
-  //   // },
-  //   // {
-  //   //   id: "manta",
-  //   //   name: "Manta",
-  //   //   activeImage : "manta.png",
-  //   //   hoverImage: "mantaWhite.png",
-  //   //   inactiveImage: "mantaInactive.png"
-  //   // },
-  //   // {
-  //   //   id: "vanar",
-  //   //   name: "Vanar",
-  //   //   activeImage : "vanar.svg",
-  //   //   hoverImage: "vanarWhite.svg",
-  //   //   inactiveImage: "vanarInactive.svg"
-  //   // },
-  // ];
 
   const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
@@ -794,7 +863,7 @@ const Kickstarter = ({
 
     if (hashValue === "#royalty-chest") {
       setMute(true);
-        html.classList.add("hidescroll");
+      html.classList.add("hidescroll");
     }
 
     var time;
@@ -807,14 +876,16 @@ const Kickstarter = ({
 
     // window.scrollTo(0, 0);
     const video = videoRef1.current;
+    const videoTaiko = videoRef1Taiko.current;
 
     setTimeout(() => {
       setShowContent(true);
     }, time);
 
     if (
-      openedRoyaltyChest.length === 0 ||
-      (openedRoyaltyChest && openedRoyaltyChest.isOpened === true)
+      (openedRoyaltyChest.length === 0 ||
+        (openedRoyaltyChest && openedRoyaltyChest.isOpened === false)) &&
+      (selectedChain === "opbnb" || selectedChain === "bnb")
     ) {
       const timeout1 = setTimeout(() => {
         if (video) {
@@ -831,8 +902,29 @@ const Kickstarter = ({
       }, 1500);
 
       return () => clearTimeout(timeout1);
+    } else if (
+      (openedRoyaltyChestTaiko.length === 0 ||
+        (openedRoyaltyChestTaiko &&
+          openedRoyaltyChestTaiko.isOpened === false)) &&
+      selectedChain === "taiko"
+    ) {
+      const timeout1 = setTimeout(() => {
+        if (videoTaiko) {
+          videoTaiko.play().catch((err) => console.error("Play failed:", err));
+
+          const pauseTimeout = setTimeout(() => {
+            videoTaiko.pause();
+            setDisable(false);
+            onAddClass(true);
+          }, 6200);
+
+          return () => clearTimeout(pauseTimeout);
+        }
+      }, 1500);
+
+      return () => clearTimeout(timeout1);
     }
-  }, [count]);
+  }, [count, openedRoyaltyChest, openedRoyaltyChestTaiko]);
 
   useEffect(() => {
     if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
@@ -859,13 +951,42 @@ const Kickstarter = ({
         setRewards(openedRoyaltyChest.rewards);
       }, time);
     }
-  }, [openedRoyaltyChest]);
+    if (openedRoyaltyChestTaiko && openedRoyaltyChestTaiko.isOpened === true) {
+      var time;
+
+      if (
+        openedRoyaltyChestTaiko &&
+        openedRoyaltyChestTaiko.isOpened === true
+      ) {
+        time = 0;
+      } else {
+        time = 3600;
+      }
+
+      setChestOpened(true);
+      setStep(3);
+      const video = videoRef2Taiko.current;
+      if (video) {
+        video.play().catch((err) => console.error("Play failed:", err));
+        setTimeout(() => {
+          video.pause();
+          setStep(3);
+        }, 8000);
+      }
+
+      setTimeout(() => {
+        setRewards(openedRoyaltyChest.rewards);
+      }, time);
+    }
+  }, [openedRoyaltyChest, openedRoyaltyChestTaiko]);
 
   useEffect(() => {
     if (chainId === 56) {
       setSelectedChain("bnb");
     } else if (chainId === 204) {
       setSelectedChain("opbnb");
+    } else if (chainId === 167000) {
+      setSelectedChain("taiko");
     }
   }, [chainId]);
 
@@ -884,7 +1005,9 @@ const Kickstarter = ({
           }}
         />
 
-        {openedRoyaltyChest && openedRoyaltyChest.isOpened === true ? (
+        {openedRoyaltyChest &&
+        openedRoyaltyChest.isOpened === true &&
+        (selectedChain === "opbnb" || selectedChain === "bnb") ? (
           <>
             {windowSize.width && windowSize.width > 700 ? (
               <img
@@ -900,7 +1023,25 @@ const Kickstarter = ({
               />
             )}
           </>
-        ) : (
+        ) : openedRoyaltyChestTaiko &&
+          openedRoyaltyChestTaiko.isOpened === true &&
+          selectedChain === "taiko" ? (
+          <>
+            {windowSize.width && windowSize.width > 700 ? (
+              <img
+                src={royaltyChestIdle}
+                className="kickstarter-video visible"
+                alt=""
+              />
+            ) : (
+              <img
+                src={royaltyChestIdleMoblie}
+                className="kickstarter-video visible"
+                alt=""
+              />
+            )}
+          </>
+        ) : (selectedChain === "opbnb" || selectedChain === "bnb") ? (
           <>
             {windowSize.width && windowSize.width > 700 ? (
               <>
@@ -960,133 +1101,69 @@ const Kickstarter = ({
               <></>
             )}
           </>
+        ) : (
+          <>
+            {windowSize.width && windowSize.width > 700 ? (
+              <>
+                {/* VIDEO ONE (Intro) */}
+                <video
+                  ref={videoRef1Taiko}
+                  muted={mute}
+                  src={"https://cdn.worldofdypians.com/wod/firstPart.mp4"}
+                  className={`kickstarter-video ${
+                    step === 1 ? "visible" : "hidden"
+                  }`}
+                  playsInline
+                  preload="auto"
+                />
+
+                {/* VIDEO TWO (Reward animation) */}
+                <video
+                  ref={videoRef2Taiko}
+                  src={"https://cdn.worldofdypians.com/wod/secondPart.mp4"}
+                  className={`kickstarter-video ${
+                    step === 2 || step === 3 ? "visible" : "hidden"
+                  }`}
+                  playsInline
+                  preload="auto"
+                />
+              </>
+            ) : windowSize.width && windowSize.width <= 700 ? (
+              <>
+                {/* VIDEO ONE (Intro) */}
+                <video
+                  ref={videoRef1Taiko}
+                  muted={mute}
+                  src={
+                    "https://cdn.worldofdypians.com/wod//firstPartMobile.mp4"
+                  }
+                  className={`kickstarter-video ${
+                    step === 1 ? "visible" : "hidden"
+                  }`}
+                  playsInline
+                  preload="auto"
+                />
+
+                {/* VIDEO TWO (Reward animation) */}
+                <video
+                  ref={videoRef2Taiko}
+                  src={
+                    "https://cdn.worldofdypians.com/wod/secondPartMobile.mp4"
+                  }
+                  className={`kickstarter-video ${
+                    step === 2 || step === 3 ? "visible" : "hidden"
+                  }`}
+                  playsInline
+                  preload="auto"
+                />
+              </>
+            ) : (
+              <></>
+            )}
+          </>
         )}
         {showContent && (
           <>
-            {/* <div className="d-flex flex-column gap-1 switch-chain-position switch-info-container p-3">
-       
-            {chains.map((item, index) => (
-              <div
-                key={index}
-                className={`${
-                  activeChain === item.id
-                    ? "kickstarter-chain-item-active"
-                    : "kickstarter-chain-item"
-                } align-items-center p-2 d-flex flex-column gap-1`}
-                onMouseEnter={() => handleMouseEnter(item.id)}
-                onMouseLeave={handleMouseLeave}
-                onClick={() => {
-                  setActiveChain(item.id);
-                  switchNetwork(item.tag, item.chainId);
-                }}
-              >
-                <img
-                  src={`https://cdn.worldofdypians.com/wod/${
-                    activeChain === item.id
-                      ? item.activeImage
-                      : hoverState === item.id
-                      ? item.hoverImage
-                      : item.inactiveImage
-                  }`}
-                  width={30}
-                  height={30}
-                  alt=""
-                />
-                <span
-                  className="kickstarter-chain-span"
-                  style={{
-                    color:
-                      hoverState === item.id
-                        ? "#fff"
-                        : activeChain === item.id
-                        ? "gold"
-                        : "#828FBB",
-                  }}
-                >
-                  {item.name}
-                </span>
-              </div>
-            ))}
-          </div> */}
-            {/* <h6
-            className={`kickstarter-title mb-0 mt-4 fade-in ${
-              step === 3 && "opacity-0"
-            }`}
-          >
-            Unlock Container
-          </h6> */}
-
-            {/* <div className="position-absolute top-0 start-0 w-100 h-100">
-            {Array.from({ length: chestOpened ? 80 : 40 }).map((_, i) => (
-              <motion.div
-                key={`particle-${i}`}
-                className="position-absolute rounded-circle"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  width: chestOpened ? "8px" : "4px",
-                  height: chestOpened ? "8px" : "4px",
-                  background: chestOpened
-                    ? "linear-gradient(45deg, #FDE047, #FB923C, #EF4444)"
-                    : "linear-gradient(45deg, #FBBF24, #F97316)",
-                  opacity: 0.8,
-                  filter: chestOpened ? "blur(0.5px)" : "none",
-                }}
-                animate={{
-                  scale: chestOpened ? [0, 3, 0] : [0, 1.5, 0],
-                  opacity: [0, 1, 0],
-                  y: [0, chestOpened ? -300 : -180],
-                  x: [0, (Math.random() - 0.5) * 200],
-                }}
-                transition={{
-                  duration: chestOpened ? 2.5 : 5 + Math.random() * 3,
-                  repeat: Infinity,
-                  delay: Math.random() * 5,
-                  ease: "easeOut",
-                }}
-              />
-            ))}
-          </div> */}
-
-            {/* <motion.div
-              initial={{ opacity: 0, y: -30 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`position-absolute start-50 translate-middle-x d-none ${
-                step === 3 ? "d-none" : "d-lg-flex"
-              }`}
-              style={{ top: "20px", zIndex: 30 }}
-            >
-              <motion.div
-                className="px-4 py-3"
-                style={glassyContainerStyle}
-                whileHover={{ scale: 1.02 }}
-              >
-                <motion.h1
-                  className="text-center mb-0"
-                  style={{
-                    color: "rgba(219, 234, 254, 0.95)",
-                    fontSize: "1.5rem",
-                    fontWeight: "600",
-                    letterSpacing: "0.1em",
-                    textShadow: "0 0 20px rgba(56, 189, 248, 0.5)",
-                  }}
-                  animate={{
-                    textShadow: [
-                      "0 0 20px rgba(56, 189, 248, 0.5)",
-                      "0 0 40px rgba(56, 189, 248, 0.8)",
-                      "0 0 20px rgba(56, 189, 248, 0.5)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  UNLOCK CONTAINER
-                </motion.h1>
-              </motion.div>
-            </motion.div> */}
             {rewards && rewards.length > 0 && (
               <motion.div
                 key={rewardCategories[0].id}
@@ -1182,7 +1259,7 @@ const Kickstarter = ({
                     ease: "easeInOut",
                   }}
                 >
-                  Chain
+                  Chains
                 </motion.div>
 
                 <div className="d-flex flex-column align-items-center">
@@ -1199,7 +1276,7 @@ const Kickstarter = ({
                         }}
                       >
                         <button
-                          disabled={disable}
+                          // disabled={disable}
                           onClick={() => {
                             setSelectedChain(chain.id);
                             setSocials(chain.socials);
@@ -1594,6 +1671,8 @@ const Kickstarter = ({
                           "BNB Chain delivers high-speed, low-cost transactions for Web3, DeFi, NFTs, and gaming applications. Built for developers who want Ethereum compatibility with superior performance and minimal fees."}
                         {selectedChain === "opbnb" &&
                           "An optimized layer-2 solution that delivers lower fees and higher throughput to unlock the full potential of the BNB Chain"}
+                        {selectedChain === "taiko" &&
+                          "Taiko is a fully decentralized, Ethereum-equivalent ZK-Rollup (Type 1 ZK-EVM). The goal is to scale Ethereum while upholding the root principles of security and decentralization."}
                       </motion.div>
                       <div className="d-flex flex-column h-100 justify-content-end justify-content-lg-between gap-3 gap-lg-0 d-flex d-lg-none">
                         <div
@@ -2172,8 +2251,7 @@ const Kickstarter = ({
               {isConnected &&
                 coinbase &&
                 email &&
-                chainId !== 56 &&
-                chainId !== 204 && (
+                chainId !== selectedChainData.chainId && (
                   <motion.div
                     initial={{ opacity: 0, y: 100 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -2250,7 +2328,7 @@ const Kickstarter = ({
               {isConnected &&
                 coinbase &&
                 email &&
-                (chainId === 56 || chainId === 204) && (
+                chainId === selectedChainData.chainId && (
                   <motion.div
                     initial={{ opacity: 0, y: 100 }}
                     animate={{ opacity: 1, y: 0 }}
