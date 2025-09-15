@@ -611,7 +611,7 @@ function App() {
   const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
   const [royalChestIndex, setRoyalChestIndex] = useState();
 
-    const [openedRoyaltyChestTaiko, setOpenedRoyaltyChestTaiko] = useState([]);
+  const [openedRoyaltyChestTaiko, setOpenedRoyaltyChestTaiko] = useState([]);
   const [royalChestIndexTaiko, setRoyalChestIndexTaiko] = useState();
 
   const [domainPopup, setDomainPopup] = useState(false);
@@ -1764,6 +1764,11 @@ function App() {
       window.config.nft_kucoin_address
     );
 
+    const bnb_5yaContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_bnb5ya_address
+    );
+
     const victionContract = new window.victionWeb3.eth.Contract(
       window.VICTION_NFT_ABI,
       window.config.nft_viction_address.toLowerCase()
@@ -1923,6 +1928,14 @@ function App() {
         return 0;
       });
 
+    const bnb_5ya_result = await bnb_5yaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     const multiversresult = await multiversContract.methods
       .totalSupply()
       .call()
@@ -2014,6 +2027,7 @@ function App() {
         Number(teaBaseResult) +
         Number(teaseiResult) +
         Number(taraxaResult) +
+        Number(bnb_5ya_result) +
         20002
     );
   };
@@ -7013,7 +7027,7 @@ function App() {
                 setRoyalChestIndex={(value) => {
                   setRoyalChestIndex(value);
                 }}
-                 setRoyalChestIndexTaiko={(value) => {
+                setRoyalChestIndexTaiko={(value) => {
                   setRoyalChestIndexTaiko(value);
                 }}
                 royaltyCount={royaltyCount}
@@ -7129,7 +7143,7 @@ function App() {
                 setRoyalChestIndex={(value) => {
                   setRoyalChestIndex(value);
                 }}
-                 setRoyalChestIndexTaiko={(value) => {
+                setRoyalChestIndexTaiko={(value) => {
                   setRoyalChestIndexTaiko(value);
                 }}
                 royaltyCount={royaltyCount}
@@ -7730,7 +7744,7 @@ function App() {
                 setRoyalChestIndex={(value) => {
                   setRoyalChestIndex(value);
                 }}
-                 setRoyalChestIndexTaiko={(value) => {
+                setRoyalChestIndexTaiko={(value) => {
                   setRoyalChestIndexTaiko(value);
                 }}
                 royaltyCount={royaltyCount}
@@ -8017,7 +8031,7 @@ function App() {
               />
             }
 
-          /> */}
+          /> 
 
           <Route
             exact
@@ -8050,7 +8064,7 @@ function App() {
                 totalCreated={totalTimepieceCreated}
               />
             }
-          />
+          />*/}
 
           {/* <Route
             exact
@@ -8799,7 +8813,6 @@ function App() {
           <Kickstarter
             royalChestIndex={royalChestIndex}
             royalChestIndexTaiko={royalChestIndexTaiko}
-
             publicClient={publicClient}
             onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
             walletClient={walletClient}
@@ -8828,7 +8841,6 @@ function App() {
             }}
             openedRoyaltyChest={openedRoyaltyChest}
             openedRoyaltyChestTaiko={openedRoyaltyChestTaiko}
-
           />
         )}
     </>
