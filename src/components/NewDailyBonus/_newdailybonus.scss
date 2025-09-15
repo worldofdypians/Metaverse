@@ -481,6 +481,44 @@
     height: 65px;
   }
 }
+ 
+
+
+
+@keyframes pulseShadowTaiko {
+  0% {
+    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgb(210, 208, 210));
+  }
+  100% {
+    filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0.6));
+  }
+}
+
+
+@keyframes pulseShadow {
+  0% {
+    filter: drop-shadow(0 0 0px rgba(255, 208, 0, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgb(255, 230, 0));
+  }
+  100% {
+    filter: drop-shadow(0 0 0px rgba(255, 238, 0, 0.6));
+  }
+}
+
+.premium-chest-item-img-taiko {
+  width: 80px;
+  height: 80px;
+  animation: pulseShadowTaiko 2s infinite ease-in-out;
+  @media screen and (max-height: 800px) {
+    width: 65px;
+    height: 65px;
+  }
+}
 .premium-chest-item-img {
   width: 80px;
   height: 80px;
@@ -490,55 +528,9 @@
     height: 65px;
   }
 }
+ 
 
-
-@keyframes pulseShadow {
-  0% {
-    filter: drop-shadow(0 0 0px rgba(255, 208, 0, 0.6));
-  }
-  50% {
-    filter: drop-shadow(0 0 10px rgb(255, 230, 0));
-  }
-  100% {
-    filter: drop-shadow(0 0 0px rgba(255, 238, 0, 0.6));
-  }
-}
-
-.premium-chest-item-img {
-  width: 80px;
-  height: 80px;
-  animation: pulseShadow 2s infinite ease-in-out;
-  @media screen and (max-height: 800px) {
-    width: 65px;
-    height: 65px;
-  }
-}
-
-
-@keyframes pulseShadow {
-  0% {
-    filter: drop-shadow(0 0 0px rgba(255, 208, 0, 0.6));
-  }
-  50% {
-    filter: drop-shadow(0 0 10px rgb(255, 230, 0));
-  }
-  100% {
-    filter: drop-shadow(0 0 0px rgba(255, 238, 0, 0.6));
-  }
-}
-
-
-@keyframes pulseShadow {
-  0% {
-    filter: drop-shadow(0 0 0px rgba(255, 208, 0, 0.6));
-  }
-  50% {
-    filter: drop-shadow(0 0 10px rgb(255, 230, 0));
-  }
-  100% {
-    filter: drop-shadow(0 0 0px rgba(255, 238, 0, 0.6));
-  }
-}
+ 
 
 .new-chest-item-img-skale {
   width: 80px;
@@ -666,6 +658,23 @@
   }
 }
 
+.new-chest-item-open-premium-taiko {
+  background-image: url("https://cdn.worldofdypians.com/wod/chestShine.png") !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 2px solid #820049;
+  background-position: center;
+  background-blend-mode: luminosity;
+  background-color: #820049;
+  
+  .new-claim-chest-btn {
+    border: 2px solid #820049;
+    background: linear-gradient(92deg, #c621be 0%, #a90c92 33.5%, #a923ab 68%, #820049 100%);
+    color: #020d0c;
+  }
+}
+
+
 .chest-test-wrapper {
   overflow-y: auto;
   // height: 97%;
@@ -688,6 +697,17 @@
         background: linear-gradient(92deg, #21b8c6 0%, #0c9ca9 33.5%, #239fab 68%, #007782 100%)
   }
 }
+
+.new-chest-item-open-premium-taiko:hover {
+  border: 2px solid #820049 !important;
+  filter: drop-shadow(0 0 6px #820049) !important;
+
+  .new-claim-chest-btn {
+    border: 2px solid #820049 !important;
+    background: linear-gradient(92deg, #c621be 0%, #a90c92 33.5%, #a923ab 68%, #820049 100%);
+  }
+}
+
 
 .chest-item-active {
   filter: drop-shadow(0 0 6px #00b9cd) !important;
