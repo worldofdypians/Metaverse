@@ -74,20 +74,20 @@ const MarketMint = ({
     //   chainName: "Taraxa",
     //   logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
     // },
-    {
-      id: "bnbchain-5ya",
-      cardTitle: "BNB Chain 5YA Beta Pass",
-      title: "BNB Chain 5YA Beta Pass",
-      background: "bnb5ya-mint-bg",
-      mobileBg: "5yaMintMobile.webp",
-      activeClass: "bnb5ya-active",
-      emptyClass: "conflux-empty",
-      nftcreated: nftCreated,
-      nft_address: window.config.nft_bnb5ya_address,
-      chainId: [204],
-      chainName: "opBNB Chain",
-      logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
-    },
+    // {
+    //   id: "bnbchain-5ya",
+    //   cardTitle: "BNB Chain 5YA Beta Pass",
+    //   title: "BNB Chain 5YA Beta Pass",
+    //   background: "bnb5ya-mint-bg",
+    //   mobileBg: "5yaMintMobile.webp",
+    //   activeClass: "bnb5ya-active",
+    //   emptyClass: "conflux-empty",
+    //   nftcreated: nftCreated,
+    //   nft_address: window.config.nft_bnb5ya_address,
+    //   chainId: [204],
+    //   chainName: "opBNB Chain",
+    //   logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
+    // },
     {
       id: "kucoin",
       cardTitle: "KuCoin Beta Pass",
@@ -281,15 +281,16 @@ const MarketMint = ({
   const [kucoinNftsSold, setKucoinNftsSold] = useState(0);
   const [vanarNftsSold, setVanarNftsSold] = useState(0);
   const [taraxaNftsSold, setTaraxaNftsSold] = useState(0);
+  const [bnb5yaNftsSold, setbnb5yaNftsSold] = useState(0);
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(
     allMints.find((obj) => {
-      return obj.id === "bnbchain-5ya";
+      return obj.id === "timepiece";
     })
   );
-  const [mintTitle, setMintTitle] = useState("bnbchain-5ya");
+  const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut] = useState();
 
   const slider = useRef(null);
@@ -347,6 +348,11 @@ const MarketMint = ({
     const kucoinnftContract = new window.opBnbWeb3.eth.Contract(
       window.OPBNB_NFT_ABI,
       window.config.nft_kucoin_address
+    );
+
+    const bnb_5yaContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_bnb5ya_address
     );
     const taraxaContract = new window.taraxaWeb3.eth.Contract(
       window.TARAXA_NFT_ABI,
@@ -526,6 +532,15 @@ const MarketMint = ({
       });
 
     setTaraxaNftsSold(taraxaResult);
+
+    const bnb_5ya_result = await bnb_5yaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+    setbnb5yaNftsSold(bnb_5ya_result);
   };
 
   const handleEthPool = async () => {
@@ -856,17 +871,17 @@ const MarketMint = ({
     //   class: "mint-taraxa",
     //   id: "taraxa",
     // },
-    {
-      id: "bnbchain-5ya",
-      title: "BNB Chain 5YA Beta Pass",
-      eventId: "bnbchain-5ya",
-      desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
-      img: "https://cdn.worldofdypians.com/wod/5yaMintSlide.webp",
-      data: allMints.find((item) => {
-        return item.id === "bnbchain-5ya";
-      }),
-      class: "mint-7",
-    },
+    // {
+    //   id: "bnbchain-5ya",
+    //   title: "BNB Chain 5YA Beta Pass",
+    //   eventId: "bnbchain-5ya",
+    //   desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
+    //   img: "https://cdn.worldofdypians.com/wod/5yaMintSlide.webp",
+    //   data: allMints.find((item) => {
+    //     return item.id === "bnbchain-5ya";
+    //   }),
+    //   class: "mint-7",
+    // },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -1994,8 +2009,7 @@ const MarketMint = ({
                                   className={`py-2 ${
                                     mintloading === "error"
                                       ? "fail-button"
-                                      : 
-                                        nftCreated.length > 0 ||
+                                      : nftCreated.length > 0 ||
                                         (!isEOA && isConnected)
                                       ? "outline-btn-disabled"
                                       : "stake-wod-btn"
@@ -2014,7 +2028,6 @@ const MarketMint = ({
                                     mintloading === "error" ||
                                     (!isEOA && isConnected) ||
                                     mintloading === "success" ||
-                                    
                                     nftCreated.length > 0
                                       ? true
                                       : false
@@ -2451,6 +2464,27 @@ const MarketMint = ({
                             {getFormattedNumber(taraxaNftsSold, 0)}
                           </h6>
                           <span className="past-taraxa-mint-desc">
+                            SOLD OUT
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-bnb5ya-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">
+                          BNB Chain 5YA Beta Pass
+                        </h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-bnb5ya-mint-amount">
+                            {getFormattedNumber(bnb5yaNftsSold, 0)}
+                          </h6>
+                          <span className="past-bnb5ya-mint-desc">
                             SOLD OUT
                           </span>
                         </div>

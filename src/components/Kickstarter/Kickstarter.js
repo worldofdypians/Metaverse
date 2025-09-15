@@ -226,7 +226,6 @@ const Kickstarter = ({
   const chestIndex = royalChestIndex + 1;
   const chestIndexTaiko = royalChestIndexTaiko + 1;
 
-
   const getUserRewardsByChest = async (
     userEmail,
     txHash,
@@ -1297,128 +1296,267 @@ const Kickstarter = ({
                 </motion.div>
 
                 <div className="d-flex flex-column align-items-center">
-                  <div className="d-flex gap-2 mb-2 bnb-chains-wrapper p-2">
-                    {chains.slice(0, 2).map((chain, index) => (
-                      <motion.div
-                        key={chain.id}
-                        initial={{ opacity: 0, scale: 0, rotate: -90 }}
-                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                        transition={{
-                          delay: index * 0.08,
-                          type: "spring",
-                          stiffness: 150,
+                  <div className="d-flex align-items-center gap-2 mb-2 bnb-chains-wrapper p-2">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0, rotate: -90 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      transition={{
+                        delay: 0,
+                        type: "spring",
+                        stiffness: 150,
+                      }}
+                    >
+                      <button
+                        // disabled={disable}
+                        onClick={() => {
+                          setSelectedChain(chains[0].id);
+                          setSocials(chains[0].socials);
+                          switchNetwork(chains[0].hex, chains[0].chainId);
                         }}
+                        onMouseEnter={() => setHoveredChain(chains[0].id)}
+                        onMouseLeave={() => setHoveredChain(null)}
+                        className="btn p-2 position-relative overflow-hidden border-0 rounded"
+                        style={{
+                          // width: "32px",
+                          height: "32px",
+                          background:
+                            selectedChain === chains[0].id
+                              ? "linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(14, 25, 48, 0.8) 100%)"
+                              : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
+                          backdropFilter: "blur(10px)",
+                          WebkitBackdropFilter: "blur(10px)",
+                          border:
+                            selectedChain === chains[0].id
+                              ? "1px solid rgba(59, 130, 246, 0.4)"
+                              : "1px solid rgba(59, 130, 246, 0.2)",
+                          // transform:
+                          //   selectedChain === chains[0].id
+                          //     ? "scale(1.1)"
+                          //     : "scale(1)",
+                          transition: "all 0.3s ease",
+                        }}
+                        aria-label={`Select ${chains[0].name}`}
                       >
-                        <button
-                          // disabled={disable}
-                          onClick={() => {
-                            setSelectedChain(chain.id);
-                            setSocials(chain.socials);
-                            switchNetwork(chain.hex, chain.chainId);
+                        <motion.div
+                          className="position-absolute top-0 start-0 w-100 h-100"
+                          style={getChainGradient(chains[0])}
+                          animate={{
+                            opacity:
+                              selectedChain === chains[0].id
+                                ? 0.3
+                                : hoveredChain === chains[0].id
+                                ? 0.2
+                                : 0.1,
+                            scale:
+                              selectedChain === chains[0].id ? [1, 1.1, 1] : 1,
                           }}
-                          onMouseEnter={() => setHoveredChain(chain.id)}
-                          onMouseLeave={() => setHoveredChain(null)}
-                          className="btn p-2 position-relative overflow-hidden border-0 rounded"
-                          style={{
-                            // width: "32px",
-                            height: "32px",
-                            background:
-                              selectedChain === chain.id
-                                ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 100%)"
-                                : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
-                            backdropFilter: "blur(10px)",
-                            WebkitBackdropFilter: "blur(10px)",
-                            border:
-                              selectedChain === chain.id
-                                ? "1px solid rgba(59, 130, 246, 0.4)"
-                                : "1px solid rgba(59, 130, 246, 0.2)",
-                            transform:
-                              selectedChain === chain.id
-                                ? "scale(1.1)"
-                                : "scale(1)",
-                            transition: "all 0.3s ease",
+                          transition={{
+                            duration: selectedChain === chains[0].id ? 2 : 0.3,
+                            repeat:
+                              selectedChain === chains[0].id ? Infinity : 0,
                           }}
-                          aria-label={`Select ${chain.name}`}
-                        >
-                          <motion.div
-                            className="position-absolute top-0 start-0 w-100 h-100"
-                            style={getChainGradient(chain)}
+                        />
+
+                        <div className="d-flex align-items-center gap-1">
+                          <motion.span
+                            className="position-relative d-flex align-items-center gap-1"
+                            style={{ fontSize: "14px", zIndex: 10 }}
                             animate={{
-                              opacity:
-                                selectedChain === chain.id
-                                  ? 0.3
-                                  : hoveredChain === chain.id
-                                  ? 0.2
-                                  : 0.1,
                               scale:
-                                selectedChain === chain.id ? [1, 1.1, 1] : 1,
+                                selectedChain === chains[0].id
+                                  ? [1, 1.2, 1]
+                                  : 1,
+                              rotate:
+                                hoveredChain === chains[0].id
+                                  ? [0, 5, -5, 0]
+                                  : 0,
                             }}
                             transition={{
-                              duration: selectedChain === chain.id ? 2 : 0.3,
-                              repeat: selectedChain === chain.id ? Infinity : 0,
+                              duration:
+                                selectedChain === chains[0].id ? 1 : 0.5,
+                              repeat:
+                                selectedChain === chains[0].id ? Infinity : 0,
                             }}
-                          />
+                          >
+                            <img
+                              src={chains[0].logo}
+                              width={16}
+                              height={16}
+                              alt=""
+                            />
+                          </motion.span>
+                          <motion.div
+                            style={{
+                              color: "#fff",
+                              fontSize: "0.9rem",
+                              letterSpacing: "0.025em",
+                              zIndex: 1,
+                            }}
+                          >
+                            {chains[0]?.name}
+                          </motion.div>
+                        </div>
 
-                          <div className="d-flex align-items-center gap-1">
-                            <motion.span
-                              className="position-relative d-flex align-items-center gap-1"
-                              style={{ fontSize: "14px", zIndex: 10 }}
-                              animate={{
-                                scale:
-                                  selectedChain === chain.id ? [1, 1.2, 1] : 1,
-                                rotate:
-                                  hoveredChain === chain.id ? [0, 5, -5, 0] : 0,
-                              }}
-                              transition={{
-                                duration: selectedChain === chain.id ? 1 : 0.5,
-                                repeat:
-                                  selectedChain === chain.id ? Infinity : 0,
-                              }}
-                            >
-                              <img
-                                src={chain.logo}
-                                width={16}
-                                height={16}
-                                alt=""
-                              />
-                            </motion.span>
+                        {selectedChain === chains[0].id && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
+                            style={{
+                              width: "12px",
+                              height: "12px",
+                              background:
+                                "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
+                              marginTop: "-2px",
+                              marginRight: "-2px",
+                            }}
+                          >
                             <motion.div
-                              style={{
-                                color: "#fff",
-                                fontSize: "0.9rem",
-                                letterSpacing: "0.025em",
-                                zIndex: 1,
-                              }}
-                            >
-                              {chain?.name}
-                            </motion.div>
-                          </div>
+                              className="rounded-circle bg-white"
+                              style={{ width: "4px", height: "4px" }}
+                              animate={{ scale: [1, 1.3, 1] }}
+                              transition={{ duration: 1, repeat: Infinity }}
+                            />
+                          </motion.div>
+                        )}
+                      </button>
+                    </motion.div>{" "}
+                    <div
+                      style={{
+                        width: "2px",
+                        height: "40px",
+                        background:
+                          "linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.4) 25%, rgba(147, 197, 253, 0.8) 50%, rgba(59, 130, 246, 0.4) 75%, transparent 100%)",
+                        alignSelf: "center",
+                        borderRadius: "2px",
+                        boxShadow: "0 0 8px rgba(59, 130, 246, 0.4)",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0, rotate: -90 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      transition={{
+                        delay: 1 * 0.08,
+                        type: "spring",
+                        stiffness: 150,
+                      }}
+                    >
+                      <button
+                        // disabled={disable}
+                        onClick={() => {
+                          setSelectedChain(chains[1].id);
+                          setSocials(chains[1].socials);
+                          switchNetwork(chains[1].hex, chains[1].chainId);
+                        }}
+                        onMouseEnter={() => setHoveredChain(chains[1].id)}
+                        onMouseLeave={() => setHoveredChain(null)}
+                        className="btn p-2 position-relative overflow-hidden border-0 rounded"
+                        style={{
+                          // width: "32px",
+                          height: "32px",
+                          background:
+                            selectedChain === chains[1].id
+                              ? "linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(14, 25, 48, 0.8) 100%)"
+                              : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
+                          backdropFilter: "blur(10px)",
+                          WebkitBackdropFilter: "blur(10px)",
+                          border:
+                            selectedChain === chains[1].id
+                              ? "1px solid rgba(59, 130, 246, 0.4)"
+                              : "1px solid rgba(59, 130, 246, 0.2)",
+                          // transform:
+                          //   selectedChain === chains[1].id
+                          //     ? "scale(1.1)"
+                          //     : "scale(1)",
+                          transition: "all 0.3s ease",
+                        }}
+                        aria-label={`Select ${chains[1].name}`}
+                      >
+                        <motion.div
+                          className="position-absolute top-0 start-0 w-100 h-100"
+                          style={getChainGradient(chains[1])}
+                          animate={{
+                            opacity:
+                              selectedChain === chains[1].id
+                                ? 0.3
+                                : hoveredChain === chains[1].id
+                                ? 0.2
+                                : 0.1,
+                            scale:
+                              selectedChain === chains[1].id ? [1, 1.1, 1] : 1,
+                          }}
+                          transition={{
+                            duration: selectedChain === chains[1].id ? 2 : 0.3,
+                            repeat:
+                              selectedChain === chains[1].id ? Infinity : 0,
+                          }}
+                        />
 
-                          {selectedChain === chain.id && (
+                        <div className="d-flex align-items-center gap-1">
+                          <motion.span
+                            className="position-relative d-flex align-items-center gap-1"
+                            style={{ fontSize: "14px", zIndex: 10 }}
+                            animate={{
+                              scale:
+                                selectedChain === chains[1].id
+                                  ? [1, 1.2, 1]
+                                  : 1,
+                              rotate:
+                                hoveredChain === chains[1].id
+                                  ? [0, 5, -5, 0]
+                                  : 0,
+                            }}
+                            transition={{
+                              duration:
+                                selectedChain === chains[1].id ? 1 : 0.5,
+                              repeat:
+                                selectedChain === chains[1].id ? Infinity : 0,
+                            }}
+                          >
+                            <img
+                              src={chains[1].logo}
+                              width={16}
+                              height={16}
+                              alt=""
+                            />
+                          </motion.span>
+                          <motion.div
+                            style={{
+                              color: "#fff",
+                              fontSize: "0.9rem",
+                              letterSpacing: "0.025em",
+                              zIndex: 1,
+                            }}
+                          >
+                            {chains[1]?.name}
+                          </motion.div>
+                        </div>
+
+                        {selectedChain === chains[1].id && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
+                            style={{
+                              width: "12px",
+                              height: "12px",
+                              background:
+                                "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
+                              marginTop: "-2px",
+                              marginRight: "-2px",
+                            }}
+                          >
                             <motion.div
-                              initial={{ opacity: 0, scale: 0 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
-                              style={{
-                                width: "12px",
-                                height: "12px",
-                                background:
-                                  "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
-                                marginTop: "-2px",
-                                marginRight: "-2px",
-                              }}
-                            >
-                              <motion.div
-                                className="rounded-circle bg-white"
-                                style={{ width: "4px", height: "4px" }}
-                                animate={{ scale: [1, 1.3, 1] }}
-                                transition={{ duration: 1, repeat: Infinity }}
-                              />
-                            </motion.div>
-                          )}
-                        </button>
-                      </motion.div>
-                    ))}
+                              className="rounded-circle bg-white"
+                              style={{ width: "4px", height: "4px" }}
+                              animate={{ scale: [1, 1.3, 1] }}
+                              transition={{ duration: 1, repeat: Infinity }}
+                            />
+                          </motion.div>
+                        )}
+                      </button>
+                    </motion.div>
                   </div>
                   <div className="d-flex flex-column gap-1 w-100">
                     {chains.slice(2, chains.length).map((chain, index) => (
@@ -1448,7 +1586,7 @@ const Kickstarter = ({
                             height: "32px",
                             background:
                               selectedChain === chain.id
-                                ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 100%)"
+                                ? "linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(236, 72, 153, 0.145) 50%, rgba(14, 25, 48, 0.8) 100%)"
                                 : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
                             backdropFilter: "blur(10px)",
                             WebkitBackdropFilter: "blur(10px)",
@@ -1456,10 +1594,10 @@ const Kickstarter = ({
                               selectedChain === chain.id
                                 ? "1px solid rgba(59, 130, 246, 0.4)"
                                 : "1px solid rgba(59, 130, 246, 0.2)",
-                            transform:
-                              selectedChain === chain.id
-                                ? "scale(1.1)"
-                                : "scale(1)",
+                            // transform:
+                            //   selectedChain === chain.id
+                            //     ? "scale(1.1)"
+                            //     : "scale(1)",
                             transition: "all 0.3s ease",
                           }}
                           aria-label={`Select ${chain.name}`}
@@ -1545,7 +1683,7 @@ const Kickstarter = ({
                     ))}
                   </div>
 
-                  <AnimatePresence mode="wait">
+                  {/* <AnimatePresence mode="wait">
                     <motion.div
                       key={selectedChain}
                       initial={{ opacity: 0, y: 8 }}
@@ -1575,7 +1713,7 @@ const Kickstarter = ({
                         {selectedChainData?.name}
                       </motion.div>
                     </motion.div>
-                  </AnimatePresence>
+                  </AnimatePresence> */}
                 </div>
               </motion.div>
             </motion.div>
