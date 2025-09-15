@@ -39,8 +39,6 @@ const NewChestItem = ({
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
- 
-
   const premiumImages = [
     "blueCrystal",
     "purpleCrystal",
@@ -2402,7 +2400,7 @@ const NewChestItem = ({
 
   return (
     <>
-      {chestId === 99 && chain === "bnb" ? (
+      {chestId === 99 && (chain === "bnb" || chain === "taiko") ? (
         <div
           className={` ${
             open && chestId === 99
@@ -2420,8 +2418,8 @@ const NewChestItem = ({
       d-flex align-items-center justify-content-center position-relative`}
           onClick={() => {
             // if (!open) {
-              closeDaily();
-              openKickstarter();
+            closeDaily();
+            openKickstarter();
             // }
           }}
           style={{

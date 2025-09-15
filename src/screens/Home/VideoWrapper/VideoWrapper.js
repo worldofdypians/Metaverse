@@ -151,11 +151,11 @@ const VideoWrapper = ({
 
   const dummyBetaPassData2 = [
     {
-      link: "https://www.binance.com/en/support/announcement/detail/7a596428195643a883bb927f7040caba",
-      title: "",
-      desc: "",
-      // desc: "Earn rewards by staking WOD tokens",
-      class: "tradingClass",
+      link: "/staking",
+      title: "EARN",
+      // desc: "",
+      desc: "Earn rewards by staking WOD tokens",
+      class: "earnClass",
     },
     {
       link: "/token",
