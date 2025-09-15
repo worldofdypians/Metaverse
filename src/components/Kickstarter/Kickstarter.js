@@ -11,6 +11,8 @@ import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import royaltyChestIdle from "./assets/royaltyChestIdle.webp";
 import royaltyChestIdleMoblie from "./assets/royaltyChestIdleMobile.webp";
+import royaltyChestIdleTaiko from "./assets/royaltyChestIdleTaiko.webp";
+import royaltyChestIdleMoblieTaiko from "./assets/royaltyChestIdleTaikoMobile.webp";
 
 const rewardCategories = [
   {
@@ -1058,13 +1060,13 @@ const Kickstarter = ({
           <>
             {windowSize.width && windowSize.width > 700 ? (
               <img
-                src={royaltyChestIdle}
+                src={royaltyChestIdleTaiko}
                 className="kickstarter-video visible"
                 alt=""
               />
             ) : (
               <img
-                src={royaltyChestIdleMoblie}
+                src={royaltyChestIdleMoblieTaiko}
                 className="kickstarter-video visible"
                 alt=""
               />
@@ -1138,7 +1140,7 @@ const Kickstarter = ({
                 <video
                   ref={videoRef1Taiko}
                   muted={mute}
-                  src={"https://cdn.worldofdypians.com/wod/firstPart.mp4"}
+                  src={"https://cdn.worldofdypians.com/wod/firstPartTaiko.mp4"}
                   className={`kickstarter-video ${
                     step === 1 ? "visible" : "hidden"
                   }`}
@@ -1149,7 +1151,7 @@ const Kickstarter = ({
                 {/* VIDEO TWO (Reward animation) */}
                 <video
                   ref={videoRef2Taiko}
-                  src={"https://cdn.worldofdypians.com/wod/secondPart.mp4"}
+                  src={"https://cdn.worldofdypians.com/wod/secondPartTaiko.mp4"}
                   className={`kickstarter-video ${
                     step === 2 || step === 3 ? "visible" : "hidden"
                   }`}
@@ -1164,7 +1166,7 @@ const Kickstarter = ({
                   ref={videoRef1Taiko}
                   muted={mute}
                   src={
-                    "https://cdn.worldofdypians.com/wod//firstPartMobile.mp4"
+                    "https://cdn.worldofdypians.com/wod//firstPartTaikoMobile.mp4"
                   }
                   className={`kickstarter-video ${
                     step === 1 ? "visible" : "hidden"
@@ -1177,7 +1179,7 @@ const Kickstarter = ({
                 <video
                   ref={videoRef2Taiko}
                   src={
-                    "https://cdn.worldofdypians.com/wod/secondPartMobile.mp4"
+                    "https://cdn.worldofdypians.com/wod/secondPartTaikoMobile.mp4"
                   }
                   className={`kickstarter-video ${
                     step === 2 || step === 3 ? "visible" : "hidden"
@@ -1382,6 +1384,8 @@ const Kickstarter = ({
                                 color: "#fff",
                                 fontSize: "0.9rem",
                                 letterSpacing: "0.025em",
+                                zIndex: 1
+
                               }}
                             >
                               {chain?.name}
@@ -1505,6 +1509,7 @@ const Kickstarter = ({
                                 color: "#fff",
                                 fontSize: "0.9rem",
                                 letterSpacing: "0.025em",
+                                zIndex: 1
                               }}
                             >
                               {chain?.name}
