@@ -188,6 +188,8 @@ function Dashboard({
   royaltyCount,
   onOpenRoyaltyChest,
   setRoyalChestIndex,
+  onOpenRoyaltyChestTaiko,
+  setRoyalChestIndexTaiko,
   mybnb5yaNfts,
 }) {
   const { email } = useAuth();
@@ -3678,11 +3680,14 @@ function Dashboard({
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
-    if (count !== 0 || royaltyCount !== 0) {
+    if (
+      count !== 0 ||
+      (royaltyCount !== 0 && (chainId === 56 || chainId === 204))
+    ) {
       // fetchDailyRecords();
       getAllChests(email);
     }
-  }, [count, royaltyCount]);
+  }, [count, royaltyCount, chainId]);
 
   useEffect(() => {
     if (corecount !== 0) {
@@ -3722,11 +3727,11 @@ function Dashboard({
   }, [basecount]);
 
   useEffect(() => {
-    if (taikocount !== 0) {
+    if (taikocount !== 0 || (royaltyCount !== 0 && chainId === 167000)) {
       // fetchDailyRecordsTaiko();
       getAllTaikoChests(email);
     }
-  }, [taikocount]);
+  }, [taikocount, royaltyCount, chainId]);
   useEffect(() => {
     if (vanarcount !== 0) {
       // fetchDailyRecordsVanar();
@@ -5410,6 +5415,12 @@ function Dashboard({
         if (chestOrder.length > 0) {
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].chestId === 99) {
+                setRoyalChestIndexTaiko(item);
+                if (chestOrder[item].isOpened === true) {
+                  onOpenRoyaltyChestTaiko(chestOrder[item]);
+                }
+              }
               if (chestOrder[item].isOpened === true) {
                 {
                   openedChests.push(chestOrder[item]);
