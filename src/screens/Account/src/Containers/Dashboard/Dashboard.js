@@ -3679,11 +3679,14 @@ function Dashboard({
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
-    if (count !== 0 || royaltyCount !== 0) {
+    if (
+      count !== 0 ||
+      (royaltyCount !== 0 && (chainId === 56 || chainId === 204))
+    ) {
       // fetchDailyRecords();
       getAllChests(email);
     }
-  }, [count, royaltyCount]);
+  }, [count, royaltyCount, chainId]);
 
   useEffect(() => {
     if (corecount !== 0) {
@@ -3723,11 +3726,11 @@ function Dashboard({
   }, [basecount]);
 
   useEffect(() => {
-    if (taikocount !== 0 || royaltyCount !== 0) {
+    if (taikocount !== 0 || (royaltyCount !== 0 && chainId === 167000)) {
       // fetchDailyRecordsTaiko();
       getAllTaikoChests(email);
     }
-  }, [taikocount, royaltyCount]);
+  }, [taikocount, royaltyCount, chainId]);
   useEffect(() => {
     if (vanarcount !== 0) {
       // fetchDailyRecordsVanar();

@@ -642,6 +642,7 @@ const GlobalLeaderboard = ({
       {screen === "dash" &&
         allStarData &&
         leaderboardBtn === "monthly" &&
+        allStarData.player_data &&
         allStarData.player_data.displayName &&
         [allStarData.player_data].map((item, index) => {
           return (
@@ -691,6 +692,7 @@ const GlobalLeaderboard = ({
       {screen === "dash" &&
         allStarData &&
         leaderboardBtn === "weekly" &&
+        allStarData.player_data_weekly &&
         allStarData.player_data_weekly.displayName &&
         [allStarData.player_data_weekly].map((item, index) => {
           return (

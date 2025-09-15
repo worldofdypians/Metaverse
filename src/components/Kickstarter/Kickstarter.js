@@ -224,6 +224,8 @@ const Kickstarter = ({
   window.addEventListener("keydown", handleEsc);
 
   const chestIndex = royalChestIndex + 1;
+  const chestIndexTaiko = royalChestIndexTaiko + 1;
+
 
   const getUserRewardsByChest = async (
     userEmail,
@@ -370,6 +372,7 @@ const Kickstarter = ({
     }
   };
 
+  let countRoyal = 1;
   const handleCheckIfTxExists = async (
     email,
     txHash,
@@ -402,12 +405,12 @@ const Kickstarter = ({
           }, 8000);
         }
       } else {
-        if (count < 10) {
+        if (countRoyal < 10) {
           const timer = setTimeout(
             () => {
               handleCheckIfTxExists(txHash);
             },
-            count === 9 ? 5000 : 2000
+            countRoyal === 9 ? 5000 : 2000
           );
           return () => clearTimeout(timer);
         } else {
@@ -415,7 +418,7 @@ const Kickstarter = ({
           setLoading(false);
         }
       }
-      count = count + 1;
+      countRoyal = countRoyal + 1;
     } else if (window.WALLET_TYPE === "binance") {
       const txResult_binance = await binanceW3WProvider
         .getTransaction(txHash)
@@ -441,12 +444,12 @@ const Kickstarter = ({
           }, 8000);
         }
       } else {
-        if (count < 10) {
+        if (countRoyal < 10) {
           const timer = setTimeout(
             () => {
               handleCheckIfTxExists(txHash);
             },
-            count === 9 ? 5000 : 2000
+            countRoyal === 9 ? 5000 : 2000
           );
           return () => clearTimeout(timer);
         } else {
@@ -454,7 +457,7 @@ const Kickstarter = ({
           setLoading(false);
         }
       }
-      count = count + 1;
+      countRoyal = countRoyal + 1;
     } else if (window.WALLET_TYPE === "matchId") {
       console.log(txHash);
       const txResult_matchain = await publicClient
@@ -481,12 +484,12 @@ const Kickstarter = ({
           }, 8000);
         }
       } else {
-        if (count < 10) {
+        if (countRoyal < 10) {
           const timer = setTimeout(
             () => {
               handleCheckIfTxExists(txHash);
             },
-            count === 9 ? 5000 : 2000
+            countRoyal === 9 ? 5000 : 2000
           );
           return () => clearTimeout(timer);
         } else {
@@ -494,7 +497,7 @@ const Kickstarter = ({
           setLoading(false);
         }
       }
-      count = count + 1;
+      countRoyal = countRoyal + 1;
     }
   };
 
@@ -769,7 +772,7 @@ const Kickstarter = ({
           handleCheckIfTxExists(
             email,
             data.transactionHash,
-            chestIndex - 1,
+            chestIndexTaiko - 1,
             "taiko"
           );
         })
@@ -1384,8 +1387,7 @@ const Kickstarter = ({
                                 color: "#fff",
                                 fontSize: "0.9rem",
                                 letterSpacing: "0.025em",
-                                zIndex: 1
-
+                                zIndex: 1,
                               }}
                             >
                               {chain?.name}
@@ -1481,7 +1483,7 @@ const Kickstarter = ({
                             }}
                           />
 
-                           <div className="d-flex align-items-center gap-1">
+                          <div className="d-flex align-items-center gap-1">
                             <motion.span
                               className="position-relative d-flex align-items-center gap-1"
                               style={{ fontSize: "14px", zIndex: 10 }}
@@ -1509,13 +1511,12 @@ const Kickstarter = ({
                                 color: "#fff",
                                 fontSize: "0.9rem",
                                 letterSpacing: "0.025em",
-                                zIndex: 1
+                                zIndex: 1,
                               }}
                             >
                               {chain?.name}
                             </motion.div>
                           </div>
-
 
                           {selectedChain === chain.id && (
                             <motion.div
