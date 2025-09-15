@@ -1612,7 +1612,7 @@ function App() {
 
   const checkIfEOA = async (address) => {
     if (window.ethereum) {
-      if (address) {
+      if (address && window.WALLET_TYPE !== "binance") {
         let web3 = new Web3(window.ethereum);
         const code = await web3.eth.getCode(address).catch((e) => {
           console.error(e);
@@ -2460,7 +2460,7 @@ function App() {
       //
       // setIsConnected(isActive);
     } catch (e) {
-      window.alertify.error(String(e) || "Cannot connect wallet!");
+      window.alertify.error(e?.message || "Cannot connect wallet!");
       console.log(e);
       return;
     }
@@ -6186,16 +6186,22 @@ function App() {
   // };
   const fetchBscBalance = async () => {
     if (coinbase && networkId === 56 && window.ethereum) {
-      const balance = await window.ethereum.request({
-        method: "eth_getBalance",
-        params: [coinbase, "latest"],
-      });
+      const balance = await window.ethereum
+        .request({
+          method: "eth_getBalance",
+          params: [coinbase, "latest"],
+        })
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      if (balance) {
+        const bscWeb3 = new Web3(window.config.bsc_endpoint);
+        const stringBalance = bscWeb3.utils.hexToNumberString(balance);
 
-      const bscWeb3 = new Web3(window.config.bsc_endpoint);
-      const stringBalance = bscWeb3.utils.hexToNumberString(balance);
-
-      const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
-      setBscAmount(amount.slice(0, 7));
+        const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
+        setBscAmount(amount.slice(0, 7));
+      }
     }
   };
 

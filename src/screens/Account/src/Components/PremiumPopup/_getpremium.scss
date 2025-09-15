@@ -40,6 +40,54 @@ font-weight: 500;
 line-height: normal;
 }
 
+.prime-subs-firsthalf {
+    border-radius: 10px;
+border: 0.5px solid #4C517D;
+background: #141731;
+backdrop-filter: blur(10px);
+}
+
+.prime-subs-container {
+    border-radius: 10px;
+border: 0.5px solid #4C517D;
+background: #222647;
+backdrop-filter: blur(10px);
+}
+
+.prime-subs-txt {
+    color: #EEEDFF;
+font-family: Montserrat;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 14px; /* 100% */
+}
+
+
+.prime-subs-desc {
+color: #6A6F99;
+font-family: Poppins;
+font-size: 12px;
+font-style: normal;
+font-weight: 300;
+line-height: 14px;
+}
+
+.plan-cost2 {
+    color: #FFF;
+font-family: Poppins;
+font-size: 28px;
+font-style: normal;
+font-weight: 500;
+line-height: 32px;
+}
+
+.qrcode {
+    margin: 0px;
+    min-width: 0px;
+    max-width: 100%;
+}
+
 .already-premium-title{
     color: #F3BF09;
     text-align: center;

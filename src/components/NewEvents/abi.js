@@ -10,6 +10,19 @@ export const golden_pass_address = "0xCD30c0C1bca73537c2A2809863B90D8c0431Defb";
 export const puzzle_madness_address =
   "0x5e55203cd881716498771b2D163375B10F0F0449";
 
+export const dragon_ruins2_address =
+  "0xE969D8f1E8b9f41A6b473C150df6C6af86a6332a";
+export const cold_bite2_address = "0xe243d88F2A3b2f975d52bCd4Aa225E2152D5c361";
+export const fury_beast2_address = "0x267f3f546939Da36A793527C4F351623F6D79452";
+export const wing_storm2_address = "0x927E4197354CEdFC11c29EE06a67Cfad0b5AEa1F";
+export const scorpion_king2_address =
+  "0x3F4D9adfD84B15B955D33Fc625dBe8Fc8E402Aa3";
+export const stone_eye2_address = "0x0687e6251f9E286Adc6Bc6d2dfE4870bbCa3C997";
+export const golden_pass2_address =
+  "0xD1a796a2b0dFB42Ae3b78AB63EF31C5255bFcc4a";
+export const puzzle_madness2_address =
+  "0x99cbFa88Bc5AE3bF84F49Ecd72aC24B3A2A58CE7";
+
 export const DRAGON_RUINS_ABI = [
   {
     anonymous: false,
