@@ -202,7 +202,7 @@ const Kickstarter = ({
   const [showContent, setShowContent] = useState(false);
   const [step, setStep] = useState(1);
   const [chestOpened, setChestOpened] = useState(false);
-  const [selectedChain, setSelectedChain] = useState("bnb");
+  const [selectedChain, setSelectedChain] = useState("");
   const [hoveredChain, setHoveredChain] = useState(null);
   const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
@@ -865,71 +865,34 @@ const Kickstarter = ({
       setMute(true);
       html.classList.add("hidescroll");
     }
+  }, [count]);
 
+  useEffect(() => {
+    const video = videoRef1.current;
+    const videoTaiko = videoRef1Taiko.current;
     var time;
-
-    if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
+    if (
+      openedRoyaltyChest &&
+      openedRoyaltyChest.isOpened === true &&
+      (selectedChain === "opbnb" || selectedChain === "bnb")
+    ) {
+      time = 0;
+    } else if (
+      openedRoyaltyChestTaiko &&
+      openedRoyaltyChestTaiko.isOpened === true &&
+      selectedChain === "taiko"
+    ) {
       time = 0;
     } else {
       time = 4000;
     }
 
-    // window.scrollTo(0, 0);
-    const video = videoRef1.current;
-    const videoTaiko = videoRef1Taiko.current;
-
-    setTimeout(() => {
-      setShowContent(true);
-    }, time);
-
     if (
-      (openedRoyaltyChest.length === 0 ||
-        (openedRoyaltyChest && openedRoyaltyChest.isOpened === false)) &&
-      (selectedChain === "opbnb" || selectedChain === "bnb")
+      openedRoyaltyChest &&
+      openedRoyaltyChest.isOpened === true &&
+      (selectedChain === "opbnb" || selectedChain === "bnb") &&
+      isOpen
     ) {
-      const timeout1 = setTimeout(() => {
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
-
-          const pauseTimeout = setTimeout(() => {
-            video.pause();
-            setDisable(false);
-            onAddClass(true);
-          }, 6200);
-
-          return () => clearTimeout(pauseTimeout);
-        }
-      }, 1500);
-
-      return () => clearTimeout(timeout1);
-    } else if (
-      (openedRoyaltyChestTaiko.length === 0 ||
-        (openedRoyaltyChestTaiko &&
-          openedRoyaltyChestTaiko.isOpened === false)) &&
-      selectedChain === "taiko"
-    ) {
-      const timeout1 = setTimeout(() => {
-        if (videoTaiko) {
-          videoTaiko.play().catch((err) => console.error("Play failed:", err));
-
-          const pauseTimeout = setTimeout(() => {
-            videoTaiko.pause();
-            setDisable(false);
-            onAddClass(true);
-          }, 6200);
-
-          return () => clearTimeout(pauseTimeout);
-        }
-      }, 1500);
-
-      return () => clearTimeout(timeout1);
-    }
-  }, [count, openedRoyaltyChest, openedRoyaltyChestTaiko]);
-
-  useEffect(() => {
-    if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
-      var time;
-
       if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
         time = 0;
       } else {
@@ -950,8 +913,15 @@ const Kickstarter = ({
       setTimeout(() => {
         setRewards(openedRoyaltyChest.rewards);
       }, time);
-    }
-    if (openedRoyaltyChestTaiko && openedRoyaltyChestTaiko.isOpened === true) {
+      setTimeout(() => {
+        setShowContent(true);
+      }, time);
+    } else if (
+      openedRoyaltyChestTaiko &&
+      openedRoyaltyChestTaiko.isOpened === true &&
+      selectedChain === "taiko" &&
+      isOpen
+    ) {
       var time;
 
       if (
@@ -977,8 +947,67 @@ const Kickstarter = ({
       setTimeout(() => {
         setRewards(openedRoyaltyChest.rewards);
       }, time);
+      setTimeout(() => {
+        setShowContent(true);
+      }, time);
+    } else if (
+      (openedRoyaltyChestTaiko.length === 0 ||
+        (openedRoyaltyChestTaiko &&
+          openedRoyaltyChestTaiko.isOpened === false)) &&
+      selectedChain === "taiko" &&
+      isOpen
+    ) {
+      setStep(1);
+      setRewards([]);
+      setChestOpened(false);
+      setTimeout(() => {
+        setShowContent(true);
+      }, time);
+      const timeout1 = setTimeout(() => {
+        if (videoTaiko) {
+          videoTaiko.play().catch((err) => console.error("Play failed:", err));
+
+          const pauseTimeout = setTimeout(() => {
+            videoTaiko.pause();
+            setDisable(false);
+            onAddClass(true);
+          }, 6200);
+
+          return () => clearTimeout(pauseTimeout);
+        }
+      }, 1500);
+
+      return () => clearTimeout(timeout1);
+    } else if (
+      (openedRoyaltyChest.length === 0 ||
+        (openedRoyaltyChest && openedRoyaltyChest.isOpened === false)) &&
+      (selectedChain === "opbnb" || selectedChain === "bnb") &&
+      isOpen
+    ) {
+      setStep(1);
+      setRewards([]);
+      setChestOpened(false);
+
+      setTimeout(() => {
+        setShowContent(true);
+      }, time);
+      const timeout1 = setTimeout(() => {
+        if (video) {
+          video.play().catch((err) => console.error("Play failed:", err));
+
+          const pauseTimeout = setTimeout(() => {
+            video.pause();
+            setDisable(false);
+            onAddClass(true);
+          }, 6200);
+
+          return () => clearTimeout(pauseTimeout);
+        }
+      }, 1500);
+
+      return () => clearTimeout(timeout1);
     }
-  }, [openedRoyaltyChest, openedRoyaltyChestTaiko]);
+  }, [openedRoyaltyChest, openedRoyaltyChestTaiko, selectedChain, isOpen]);
 
   useEffect(() => {
     if (chainId === 56) {
@@ -987,7 +1016,7 @@ const Kickstarter = ({
       setSelectedChain("opbnb");
     } else if (chainId === 167000) {
       setSelectedChain("taiko");
-    }
+    } else setSelectedChain("bnb");
   }, [chainId]);
 
   return (
