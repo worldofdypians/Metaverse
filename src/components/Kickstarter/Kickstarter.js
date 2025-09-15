@@ -1263,7 +1263,7 @@ const Kickstarter = ({
                 </motion.div>
 
                 <div className="d-flex flex-column align-items-center">
-                  <div className="d-flex gap-2 mb-2">
+                  <div className="d-flex gap-2 mb-2 bnb-chains-wrapper p-2">
                     {chains.slice(0, 2).map((chain, index) => (
                       <motion.div
                         key={chain.id}
@@ -1385,7 +1385,7 @@ const Kickstarter = ({
                       </motion.div>
                     ))}
                   </div>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="d-flex flex-column gap-1 w-100">
                     {chains.slice(2, chains.length).map((chain, index) => (
                       <motion.div
                         key={chain.id}
