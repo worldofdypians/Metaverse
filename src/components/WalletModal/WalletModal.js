@@ -136,6 +136,26 @@ const WalletModal = ({
                   </button>
                 )}
               </div>
+              <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl p-2 bordertw border-cyan-400/30">
+                <div className="flex items-center space-x-3 mb-3">
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                    alt=""
+                    className="w-5 h-5 text-yellow-400"
+                  />
+                  <span className="text-white">New Feature</span>
+                </div>
+                <p className="text-gray-300 text-sm mb-0">
+                  World of Dypians now supports <b>Binance Pay</b> for bundle
+                  and prime purchases.
+                </p>
+                <p className="text-gray-300 text-sm mb-0">
+                  To use it, <b>import</b> your game wallet into the Binance
+                  Wallet app
+                  <b> or connect </b>your Binance Wallet and sync it with your
+                  game account.
+                </p>
+              </div>
               <span className="my-profile-email mt-4">More Wallets</span>
               <div className="top-wallets-wrapper px-0">
                 {(!isMobile ||

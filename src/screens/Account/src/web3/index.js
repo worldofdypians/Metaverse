@@ -70,6 +70,11 @@ export const wod_token_abi = new cawsContractWeb3.eth.Contract(
   wod_token_address
 );
 
+export const usdt_token_abi = new cawsContractWeb3.eth.Contract(
+  TOKEN_ABI,
+  window.config.usdt_token_address
+);
+
 export const token_abi_old = new cawsContractWeb3.eth.Contract(
   TOKEN_ABI,
   erc20Address

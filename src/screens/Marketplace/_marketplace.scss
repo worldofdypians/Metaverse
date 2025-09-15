@@ -1930,7 +1930,7 @@
 
 .golden-pass-popup {
   width: 40% !important;
-  height: 80% !important;
+  height: 85% !important;
   @media screen and (max-width: 1400px) {
     width: 50% !important;
   }
@@ -4663,6 +4663,15 @@
   background: #18193c;
   overflow-x: auto;
 }
+
+.premium-benefits-wrapper-std {
+  border-radius: 0px 0px 10px 10px;
+  background: #18193c;
+ display: grid !important;
+ grid-template-columns: repeat(4, 1fr);
+ overflow-x: auto;
+}
+
 
 .premium-benefits-title {
   color: #f7f7fc;
