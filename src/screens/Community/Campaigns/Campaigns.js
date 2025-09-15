@@ -30,7 +30,7 @@ const Campaigns = ({ coinbase }) => {
     },
     {
       title: "Binance Alpha WOD Trading Competition",
-      status: "Live",
+      status: "Expired",
       start_date: "Aug 31, 2025",
       end_date: "Sep 14, 2025",
       image: "https://cdn.worldofdypians.com/wod/newTradingComp.webp",
@@ -98,6 +98,21 @@ const Campaigns = ({ coinbase }) => {
   ];
 
   const dummyData = [
+        {
+      title: "Binance Alpha WOD Trading Competition",
+      status: "Expired",
+      start_date: "Aug 31, 2025",
+      end_date: "Sep 14, 2025",
+      image: "https://cdn.worldofdypians.com/wod/newTradingComp.webp",
+      desc: `To celebrate our campaign with Binance, we’re giving away $300,000 worth of rewards to eligible traders who complete the steps below:<br/>
+    <ul><li style="list-style-type: disc;">Update your Binance App and create/backup a Binance Wallet (Keyless) or use Binance Alpha</li>
+    <li style="list-style-type: disc;">Trade WOD during the promotion period using Binance Wallet (Keyless) or Binance Alpha</li>
+    <li style="list-style-type: disc;">After the promotion, rankings will be calculated automatically and winners can claim rewards on the event page</li>
+    </ul>
+   `,
+      link: "https://www.binance.com/en/support/announcement/detail/7a596428195643a883bb927f7040caba",
+      target: "_blank",
+    },
     {
       title: "$150,000 Rewards with OKX Wallet",
       status: "Expired",
@@ -314,9 +329,9 @@ const Campaigns = ({ coinbase }) => {
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-2 px-lg-0">
       <div className="custom-container  my-5 py-0 py-lg-5">
         {dummyBanner
-          // .filter((item) => {
-          //   return item.status === "Live";
-          // })
+          .filter((item) => {
+            return item.status === "Live";
+          })
           .map((item, index) => {
             return (
               <div className="row mb-5 pb-5" key={index}>
