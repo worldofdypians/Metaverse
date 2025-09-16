@@ -15,7 +15,7 @@ const Campaigns = ({ coinbase }) => {
   const dummyBanner = [
     {
       title: "Surge to Glory: Claim Your Share of $95,000",
-      status: "Live",
+      status: "Expired",
       start_date: "Sep 08, 2025",
       end_date: "Sep 15, 2025",
       image: "https://cdn.worldofdypians.com/wod/vault-of-power.webp",
@@ -328,10 +328,10 @@ const Campaigns = ({ coinbase }) => {
   return (
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-2 px-lg-0">
       <div className="custom-container  my-5 py-0 py-lg-5">
-        {dummyBanner
-          .filter((item) => {
-            return item.status === "Live";
-          })
+        {dummyBanner.slice(0,1)
+          // .filter((item) => {
+          //   return item.status === "Live";
+          // })
           .map((item, index) => {
             return (
               <div className="row mb-5 pb-5" key={index}>

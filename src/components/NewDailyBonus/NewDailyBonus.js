@@ -704,6 +704,9 @@ const NewDailyBonus = ({
               if (innerChest.rewardType === "Points") {
                 resultTaikoPoints += Number(innerChest.reward);
               }
+               if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
+              }
             });
           }
         }

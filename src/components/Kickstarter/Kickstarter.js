@@ -949,7 +949,7 @@ const Kickstarter = ({
       }
 
       setTimeout(() => {
-        setRewards(openedRoyaltyChest.rewards);
+        setRewards(openedRoyaltyChestTaiko.rewards);
       }, time);
       setTimeout(() => {
         setShowContent(true);
@@ -1016,11 +1016,17 @@ const Kickstarter = ({
   useEffect(() => {
     if (chainId === 56) {
       setSelectedChain("bnb");
+      setSocials(chains[0].socials);
     } else if (chainId === 204) {
       setSelectedChain("opbnb");
+      setSocials(chains[1].socials);
     } else if (chainId === 167000) {
       setSelectedChain("taiko");
-    } else setSelectedChain("bnb");
+      setSocials(chains[2].socials);
+    } else {
+      setSelectedChain("bnb");
+      setSocials(chains[0].socials);
+    }
   }, [chainId]);
 
   return (
