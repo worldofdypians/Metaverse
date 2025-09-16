@@ -11,7 +11,7 @@
   opacity: 0;
   transition: all 0.25s;
   transform: translateY(10px);
-
+  user-select: none;
   @media screen and (max-width: 640px) {
     font-size: 12px;
   }
@@ -131,9 +131,9 @@
   }
 }
 
-
 @keyframes pulseAnswer {
-  0%, 100% {
+  0%,
+  100% {
     filter: brightness(1.4);
   }
   50% {
@@ -141,10 +141,9 @@
   }
 }
 
-.drumroll-background{
-  animation: pulseAnswer .75s infinite;
+.drumroll-background {
+  animation: pulseAnswer 0.75s infinite;
 }
-
 
 .ai-answer-option-wrapper {
   background-color: #010d22;
@@ -858,7 +857,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  background-image: url('./assets/closeBorder2.png');
+  background-image: url("./assets/closeBorder2.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   // background: #121235;
