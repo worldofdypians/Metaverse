@@ -158,7 +158,10 @@ const NewChestItem = ({
           userData_bnb
         )
         .catch((e) => {
-          if (e.response.status === 400) {
+          if (
+            e.response.status === 400 ||
+            (e.response.status === 500 && e.response.data.description === "")
+          ) {
             const timer = setTimeout(() => {
               getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
             }, 2000);
@@ -195,7 +198,10 @@ const NewChestItem = ({
           userData
         )
         .catch((e) => {
-          if (e.response.status === 400) {
+          if (
+            e.response.status === 400 ||
+            (e.response.status === 500 && e.response.data.description === "")
+          ) {
             const timer = setTimeout(() => {
               getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
             }, 2000);
