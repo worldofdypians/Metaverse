@@ -1428,9 +1428,9 @@ function App() {
           }
 
           if (vanarEvent && vanarEvent[0]) {
-            if (vanarEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (vanarEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               vanarEvent[0].reward.earn.total /
@@ -5620,7 +5620,7 @@ function App() {
     {
       title: "Vanar",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in VANRY Rewards",
       location: [-0.06784377896887378, 0.0839531421661377],
       myEarnings: 0.0,
@@ -5640,7 +5640,7 @@ function App() {
         chain: "Vanar Network",
         linkState: "vanar",
         rewards: "VANRY",
-        status: "Live",
+        status: "Expired",
         id: "event2",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in VANRY Rewards",

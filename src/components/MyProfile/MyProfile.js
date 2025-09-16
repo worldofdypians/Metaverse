@@ -1245,9 +1245,9 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 6
+                        {userActiveEvents === 5
                           ? "Completed"
-                          : userActiveEvents + "/6"}
+                          : userActiveEvents + "/5"}
                       </span>
                     </div>
 
@@ -1782,7 +1782,7 @@ const MyProfile = ({
                           <span className="user-blue-rank-2">
                             Loyalty Program
                           </span>
-                          <span className="user-rank-text-2">Season 4</span>
+                          <span className="user-rank-text-2">Season 5</span>
                         </div>
                       </div>
 
