@@ -6731,7 +6731,7 @@ function Dashboard({
                   // Number(seiEarnUsd) +
                   Number(taikoEarnUsd) +
                   Number(taraxaEarnUsd) +
-                  // Number(vanarEarnUsd) +
+                  Number(vanarEarnUsd) +
                   Number(teaEarnUsd) +
                   aiQuestionRewards.length >
                 0
