@@ -672,7 +672,7 @@ function App() {
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-08-18T14:00:00.000+02:00");
 
-  let vanarLastDay = new Date("2025-09-16T14:00:00.000+02:00");
+  let vanarLastDay = new Date("2026-01-14T14:00:00.000+02:00");
 
   const placeholderplayerData = [
     {
@@ -1428,9 +1428,9 @@ function App() {
           }
 
           if (vanarEvent && vanarEvent[0]) {
-            // if (vanarEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (vanarEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               vanarEvent[0].reward.earn.total /
@@ -4827,6 +4827,42 @@ function App() {
       },
     },
     {
+      title: "Vanar",
+      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in VANRY Rewards",
+      location: [-0.06784377896887378, 0.0839531421661377],
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "May 19, 2025",
+      type: "Treasure Hunt",
+      rewardType: "VANRY",
+      rewardAmount: "$20,000",
+      infoType: "Treasure Hunt",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+      image: "vanarArea.webp",
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
+      popupInfo: {
+        title: "Vanar",
+        chain: "Vanar Network",
+        linkState: "vanar",
+        rewards: "VANRY",
+        status: "Expired",
+        id: "event2",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in VANRY Rewards",
+        eventDuration: vanarLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "May 19, 2025",
+      },
+    },
+    {
       title: "Matchain",
       logo: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
       eventStatus: "Expired",
@@ -5617,15 +5653,16 @@ function App() {
         learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
+
     {
       title: "Vanar",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      eventStatus: "Expired",
+      eventStatus: "Live",
       totalRewards: "$20,000 in VANRY Rewards",
       location: [-0.06784377896887378, 0.0839531421661377],
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "May 19, 2025",
+      eventDate: "Sep 17, 2025",
       type: "Treasure Hunt",
       rewardType: "VANRY",
       rewardAmount: "$20,000",
@@ -5640,7 +5677,7 @@ function App() {
         chain: "Vanar Network",
         linkState: "vanar",
         rewards: "VANRY",
-        status: "Expired",
+        status: "Live",
         id: "event2",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in VANRY Rewards",

@@ -147,6 +147,31 @@ const VideoWrapper = ({
       logo: "uphold.svg",
       link: "https://uphold.com/en-us/prices/crypto/wod",
     },
+     {
+      title: "Uniswap",
+      logo: "uniswapBuyWod.png",
+      link: "https://app.uniswap.org/explore/tokens/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+      {
+      title: "BVOX",
+      logo: "bvoxBuyWod.png",
+      link: "https://www.bvox.com/exchange/WOD/USDT",
+    },
+    {
+      title: "Bitkan",
+      logo: "bitkanBuyWod.png",
+      link: "https://bitkan.com/trade/WOD-USDT",
+    },
+    {
+      title: "Tothemoon",
+      logo: "tothemoonBuyWod.png",
+      link: "https://tothemoon.com/trading/WOD_USDT",
+    },
+    {
+      title: "OpenOcean",
+      logo: "openoceanBuyWod.png",
+      link: "https://app.openocean.finance/swap/bsc/BNB/WOD_0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
   ];
 
   const dummyBetaPassData2 = [
