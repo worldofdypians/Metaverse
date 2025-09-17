@@ -2411,6 +2411,7 @@ const Kickstarter = ({
                 </div>
               </div>
             </motion.div>
+           {!disable && 
             <div className="kickstarter-button-position">
               {!email && coinbase && (
                 <motion.div
@@ -2770,6 +2771,7 @@ const Kickstarter = ({
                   </motion.div>
                 )}
             </div>
+           }
           </>
         )}
       </div>
