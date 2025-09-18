@@ -5774,7 +5774,6 @@ function App() {
   };
 
   const refreshSubscription = async (addr) => {
-    
     if (addr) {
       const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
         window.DAILY_BONUS_ABI,
@@ -6848,7 +6847,7 @@ function App() {
             }
           />
 
-            <Route
+          <Route
             exact
             path="/cliff-otc"
             element={
@@ -8859,7 +8858,7 @@ function App() {
 
       {fireAppcontent === true && <AppContent />}
       {(kickstarter || hashValue === "#royalty-chest") &&
-        window.location.pathname === "/account" && (
+        window.location.pathname.includes('/account') && (
           <Kickstarter
             royalChestIndex={royalChestIndex}
             royalChestIndexTaiko={royalChestIndexTaiko}
@@ -8875,7 +8874,7 @@ function App() {
             isOpen={
               kickstarter ||
               (hashValue === "#royalty-chest" &&
-                window.location.pathname === "/account")
+                window.location.pathname.includes('/account'))
             }
             coinbase={coinbase}
             chainId={networkId}
