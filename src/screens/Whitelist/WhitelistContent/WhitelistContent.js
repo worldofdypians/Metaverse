@@ -1,66 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./_whitelistcontent.scss";
-import { TextField } from "@mui/material";
-import styled from "styled-components";
-import { shortAddress } from "../../Caws/functions/shortAddress";
+
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 
 import Countdown from "react-countdown";
-
-const StyledTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "#fff",
-    fontFamily: "Montserrat",
-    fontSize: "14px",
-  },
-  "& .MuiInputLabel-root": {
-    color: "#fff",
-    fontFamily: "Montserrat",
-    fontSize: "14px",
-    zIndex: "2",
-  },
-  "& .MuiFormHelperText-root": {
-    fontFamily: "Montserrat",
-    fontSize: "14px",
-  },
-  "& .MuiSelect-select": {
-    color: "#fff",
-    fontFamily: "Montserrat",
-    fontSize: "14px",
-    zIndex: "1",
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "#AAA5EB",
-    fontFamily: "Montserrat",
-    fontSize: "14px",
-    color: "#fff",
-    background: "#272450",
-    borderRadius: "8px",
-  },
-  "& .MuiOutlinedInput-input": {
-    zIndex: "1",
-    color: "#fff",
-    fontFamily: "Montserrat",
-    fontSize: "14px",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "#AAA5EB",
-      fontFamily: "Montserrat",
-      fontSize: "14px",
-      background: "#272450",
-      borderRadius: "8px",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#AAA5EB",
-      fontFamily: "Montserrat",
-      fontSize: "14px",
-      color: "#fff",
-      background: "#272450",
-      borderRadius: "8px",
-    },
-  },
-});
 
 const Completionist = () => (
   <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
@@ -107,6 +50,7 @@ const WhitelistContent = ({
   const [timerFinishedOTCSpecial, settimerFinishedOTCSpecial] = useState(false);
   const [timerFinishedOTCSpecial4, settimerFinishedOTCSpecial4] =
     useState(false);
+  const [timerFinishedOTCCliff, settimerFinishedOTCCliff] = useState(false);
 
   const [timerFinishedOTCPoolBonus, settimerFinishedOTCPoolBonus] =
     useState(false);
@@ -160,6 +104,13 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCSpecial4(true);
+        }
+      } else if (selectedRound.id == "cliff-otc") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedOTCCliff(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedOTCCliff(true);
         }
       } else if (selectedRound.id == "pool-bonus") {
         if (today.getTime() > cliffTime) {
@@ -401,6 +352,17 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedOTCSpecial4(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "cliff-otc" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTCCliff(true);
                           onTimerFinished(true);
                         }}
                       />
@@ -708,6 +670,50 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedOTCSpecial4 === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "cliff-otc" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTCCliff === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedOTCCliff === false ||
                     Number(wodBalance) === 0 ||
                     !isEOA
                       ? true

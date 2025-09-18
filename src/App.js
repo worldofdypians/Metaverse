@@ -6848,6 +6848,27 @@ function App() {
             }
           />
 
+            <Route
+            exact
+            path="/cliff-otc"
+            element={
+              <Whitelist
+                isEOA={isEOA}
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="cliff-otc"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
           <Route
             exact
             path="/bonus-otc"
