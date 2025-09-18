@@ -129,7 +129,6 @@ function Dashboard({
   handleOpenDomains,
   // dogePrice,
   handleSwitchChain,
-  onSubscribeSuccess,
   isPremium,
   // dyptokenDatabnb,
   baseEarnUSD,
@@ -3632,7 +3631,6 @@ function Dashboard({
 
   useEffect(() => {
     if (logoutCount > 0) {
-      onSubscribeSuccess();
       setclaimedChests(0);
       setclaimedPremiumChests(0);
       setclaimedCorePremiumChests(0);

@@ -445,7 +445,7 @@ const NewChestItem = ({
                 chestIndex - 1,
                 "opbnb"
               );
-              handleThirdTask(coinbase);
+              // handleThirdTask(coinbase);
             })
             .catch((e) => {
               window.alertify.error(e?.message);
@@ -473,7 +473,7 @@ const NewChestItem = ({
                 chestIndex - 1,
                 "opbnb"
               );
-              handleThirdTask(coinbase);
+              // handleThirdTask(coinbase);
             })
             .catch((e) => {
               console.error(e);
@@ -517,7 +517,7 @@ const NewChestItem = ({
               chestIndex - 1,
               "opbnb"
             );
-            handleThirdTask(coinbase);
+            // handleThirdTask(coinbase);
           }
         } else if (rewardTypes === "standard") {
           const txResponse = await daily_bonus_contract_opbnb_binance
@@ -543,7 +543,7 @@ const NewChestItem = ({
               chestIndex - 1,
               "opbnb"
             );
-            handleThirdTask(coinbase);
+            // handleThirdTask(coinbase);
           }
         }
       }
@@ -2003,7 +2003,7 @@ const NewChestItem = ({
                 chestIndex - 1,
                 "bnb"
               );
-              handleThirdTask(coinbase);
+              // handleThirdTask(coinbase);
             })
             .catch((e) => {
               window.alertify.error(e?.message);
@@ -2056,7 +2056,7 @@ const NewChestItem = ({
                 chestIndex - 1,
                 "bnb"
               );
-              handleThirdTask(coinbase);
+              // handleThirdTask(coinbase);
             })
             .catch((e) => {
               console.error(e);
@@ -2208,7 +2208,7 @@ const NewChestItem = ({
               chestIndex - 1,
               "bnb"
             );
-            handleThirdTask(coinbase);
+            // handleThirdTask(coinbase);
           }
         } else if (rewardTypes === "standard") {
           const gasPrice = await binanceW3WProvider.getGasPrice();
@@ -2259,7 +2259,7 @@ const NewChestItem = ({
               chestIndex - 1,
               "bnb"
             );
-            handleThirdTask(coinbase);
+            // handleThirdTask(coinbase);
           }
         }
       }
