@@ -825,7 +825,6 @@ const MyRewardsPopupNew = ({
                       Number(kucoinEarnUsd) +
                       Number(midleEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(vanarEarnUsd) +
                       Number(mantaEarnUsd),
                     2
                   )
@@ -847,6 +846,7 @@ const MyRewardsPopupNew = ({
                       Number(bnbEarnUsd) +
                       Number(teaEarnUsd) +
                       Number(coreEarnUsd) +
+                      Number(vanarEarnUsd) +
                       // Number(dailyDataAmountCore) +
                       // Number(weeklyDataAmountCore) +
                       // Number(monthlyDataAmountCore) +
@@ -1147,8 +1147,7 @@ const MyRewardsPopupNew = ({
                       Number(baseEarnUSD) +
                       Number(kucoinEarnUsd) +
                       Number(mantaEarnUsd) +
-                      Number(seiEarnUsd) +
-                      Number(vanarEarnUsd),
+                      Number(seiEarnUsd),
                     2
                   )
                 : getFormattedNumber(
@@ -1156,7 +1155,8 @@ const MyRewardsPopupNew = ({
                       Number(taraxaEarnUsd) +
                       Number(teaEarnUsd) +
                       Number(bnbEarnUsd) +
-                      Number(coreEarnUsd),
+                      Number(coreEarnUsd) +
+                      Number(vanarEarnUsd),
                     2
                   )}
             </span>
@@ -1826,6 +1826,19 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(teaEarnUsd, 2)}
                   </span>
                 </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Vanar
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(vanarEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
               {/* </div> */}
             </div>
@@ -1968,20 +1981,6 @@ const MyRewardsPopupNew = ({
               </div>
 
               <div className="d-flex flex-column gap-2">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Vanar
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(vanarEarnUsd, 2)}
-                  </span>
-                </div>
-
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img

@@ -106,7 +106,31 @@ const MainHero = ({ scrollInto }) => {
       logo: "weex-exchange.svg",
       link: "https://www.weex.com/spot/WOD-USDT",
     },
-  
+    {
+      title: "Uniswap",
+      logo: "uniswap-exchange.png",
+      link: "https://app.uniswap.org/explore/tokens/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+  {
+      title: "BVOX",
+      logo: "bvox-exchange.png",
+      link: "https://www.bvox.com/exchange/WOD/USDT",
+    },
+    {
+      title: "Bitkan",
+      logo: "bitkan-exchange.png",
+      link: "https://bitkan.com/trade/WOD-USDT",
+    },
+    {
+      title: "Tothemoon",
+      logo: "tothemoon-exchange.png",
+      link: "https://tothemoon.com/trading/WOD_USDT",
+    },
+    {
+      title: "OpenOcean",
+      logo: "openocean-exchange.png",
+      link: "https://app.openocean.finance/swap/bsc/BNB/WOD_0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
   ];
 
   return (

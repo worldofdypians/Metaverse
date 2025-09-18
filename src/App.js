@@ -672,7 +672,7 @@ function App() {
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-08-18T14:00:00.000+02:00");
 
-  let vanarLastDay = new Date("2025-09-16T14:00:00.000+02:00");
+  let vanarLastDay = new Date("2026-01-14T14:00:00.000+02:00");
 
   const placeholderplayerData = [
     {
@@ -1428,9 +1428,9 @@ function App() {
           }
 
           if (vanarEvent && vanarEvent[0]) {
-            // if (vanarEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (vanarEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               vanarEvent[0].reward.earn.total /
@@ -3822,7 +3822,7 @@ function App() {
             getMyNFTS(coinbase, "5ya").then((NFTS) => {
               setmyBnb5yaNfts(NFTS);
             });
-            handleFirstTask(coinbase);
+            // handleFirstTask(coinbase);
           })
           .catch((e) => {
             console.error(e);
@@ -4827,6 +4827,42 @@ function App() {
       },
     },
     {
+      title: "Vanar",
+      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in VANRY Rewards",
+      location: [-0.06784377896887378, 0.0839531421661377],
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "May 19, 2025",
+      type: "Treasure Hunt",
+      rewardType: "VANRY",
+      rewardAmount: "$20,000",
+      infoType: "Treasure Hunt",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+      image: "vanarArea.webp",
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
+      popupInfo: {
+        title: "Vanar",
+        chain: "Vanar Network",
+        linkState: "vanar",
+        rewards: "VANRY",
+        status: "Expired",
+        id: "event2",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in VANRY Rewards",
+        eventDuration: vanarLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "May 19, 2025",
+      },
+    },
+    {
       title: "Matchain",
       logo: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
       eventStatus: "Expired",
@@ -5617,15 +5653,16 @@ function App() {
         learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
+
     {
       title: "Vanar",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      eventStatus: "Expired",
+      eventStatus: "Live",
       totalRewards: "$20,000 in VANRY Rewards",
       location: [-0.06784377896887378, 0.0839531421661377],
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "May 19, 2025",
+      eventDate: "Sep 17, 2025",
       type: "Treasure Hunt",
       rewardType: "VANRY",
       rewardAmount: "$20,000",
@@ -5640,7 +5677,7 @@ function App() {
         chain: "Vanar Network",
         linkState: "vanar",
         rewards: "VANRY",
-        status: "Expired",
+        status: "Live",
         id: "event2",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in VANRY Rewards",
@@ -5737,133 +5774,140 @@ function App() {
   };
 
   const refreshSubscription = async (addr) => {
-    const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
-      window.DAILY_BONUS_ABI,
-      window.config.daily_bonus_address
-    );
-
-    const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
-      window.DAILY_BONUS_BNB_ABI,
-      window.config.daily_bonus_bnb_address
-    );
-
-    const daily_bonus_contract_skale = new window.skaleWeb3.eth.Contract(
-      window.DAILY_BONUS_SKALE_ABI,
-      window.config.daily_bonus_skale_address
-    );
-
-    const daily_bonus_contract_core = new window.coreWeb3.eth.Contract(
-      window.DAILY_BONUS_CORE_ABI,
-      window.config.daily_bonus_core_address
-    );
-
-    const daily_bonus_contract_viction = new window.victionWeb3.eth.Contract(
-      window.DAILY_BONUS_VICTION_ABI,
-      window.config.daily_bonus_viction_address
-    );
-
-    // const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
-    //   window.DAILY_BONUS_MANTA_ABI,
-    //   window.config.daily_bonus_manta_address
-    // );
-
-    const daily_bonus_contract_taiko = new window.taikoWeb3.eth.Contract(
-      window.DAILY_BONUS_TAIKO_ABI,
-      window.config.daily_bonus_taiko_address
-    );
-
-    const daily_bonus_contract_base = new window.baseWeb3.eth.Contract(
-      window.DAILY_BONUS_BASE_ABI,
-      window.config.daily_bonus_base_address
-    );
-
-    const daily_bonus_contract_mat = new window.matWeb3.eth.Contract(
-      window.DAILY_BONUS_MAT_ABI,
-      window.config.daily_bonus_mat_address
-    );
-
+    
     if (addr) {
-      const isPremium_bnb = await daily_bonus_contract_bnb.methods
-        .isPremiumUser(addr)
-        .call()
-        .catch((e) => {
-          console.error(e);
-          return false;
-        });
-      if (isPremium_bnb === true) {
-        setIsPremium(true);
-      } else {
-        const isPremium_opbnb = await daily_bonus_contract.methods
+      const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
+        window.DAILY_BONUS_ABI,
+        window.config.daily_bonus_address
+      );
+
+      const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
+        window.DAILY_BONUS_BNB_ABI,
+        window.config.daily_bonus_bnb_address
+      );
+
+      const daily_bonus_contract_skale = new window.skaleWeb3.eth.Contract(
+        window.DAILY_BONUS_SKALE_ABI,
+        window.config.daily_bonus_skale_address
+      );
+
+      const daily_bonus_contract_core = new window.coreWeb3.eth.Contract(
+        window.DAILY_BONUS_CORE_ABI,
+        window.config.daily_bonus_core_address
+      );
+
+      const daily_bonus_contract_viction = new window.victionWeb3.eth.Contract(
+        window.DAILY_BONUS_VICTION_ABI,
+        window.config.daily_bonus_viction_address
+      );
+
+      // const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
+      //   window.DAILY_BONUS_MANTA_ABI,
+      //   window.config.daily_bonus_manta_address
+      // );
+
+      const daily_bonus_contract_taiko = new window.taikoWeb3.eth.Contract(
+        window.DAILY_BONUS_TAIKO_ABI,
+        window.config.daily_bonus_taiko_address
+      );
+
+      const daily_bonus_contract_base = new window.baseWeb3.eth.Contract(
+        window.DAILY_BONUS_BASE_ABI,
+        window.config.daily_bonus_base_address
+      );
+
+      const daily_bonus_contract_mat = new window.matWeb3.eth.Contract(
+        window.DAILY_BONUS_MAT_ABI,
+        window.config.daily_bonus_mat_address
+      );
+
+      if (addr) {
+        const isPremium_bnb = await daily_bonus_contract_bnb.methods
           .isPremiumUser(addr)
           .call()
           .catch((e) => {
             console.error(e);
             return false;
           });
-        if (isPremium_opbnb === true) {
+        if (isPremium_bnb === true) {
           setIsPremium(true);
         } else {
-          const isPremium_core = await daily_bonus_contract_core.methods
+          const isPremium_opbnb = await daily_bonus_contract.methods
             .isPremiumUser(addr)
             .call()
             .catch((e) => {
               console.error(e);
               return false;
             });
-          if (isPremium_core === true) {
+          if (isPremium_opbnb === true) {
             setIsPremium(true);
           } else {
-            const isPremium_viction = await daily_bonus_contract_viction.methods
+            const isPremium_core = await daily_bonus_contract_core.methods
               .isPremiumUser(addr)
               .call()
               .catch((e) => {
                 console.error(e);
                 return false;
               });
-            if (isPremium_viction === true) {
+            if (isPremium_core === true) {
               setIsPremium(true);
             } else {
-              const isPremium_skale = await daily_bonus_contract_skale.methods
-                .isPremiumUser(addr)
-                .call()
-                .catch((e) => {
-                  console.error(e);
-                  return false;
-                });
-              if (isPremium_skale === true) {
-                setIsPremium(true);
-              } else {
-                const isPremium_taiko = await daily_bonus_contract_taiko.methods
+              const isPremium_viction =
+                await daily_bonus_contract_viction.methods
                   .isPremiumUser(addr)
                   .call()
                   .catch((e) => {
                     console.error(e);
                     return false;
                   });
-                if (isPremium_taiko === true) {
+              if (isPremium_viction === true) {
+                setIsPremium(true);
+              } else {
+                const isPremium_skale = await daily_bonus_contract_skale.methods
+                  .isPremiumUser(addr)
+                  .call()
+                  .catch((e) => {
+                    console.error(e);
+                    return false;
+                  });
+                if (isPremium_skale === true) {
                   setIsPremium(true);
                 } else {
-                  const isPremium_base = await daily_bonus_contract_base.methods
-                    .isPremiumUser(addr)
-                    .call()
-                    .catch((e) => {
-                      console.error(e);
-                      return false;
-                    });
-                  if (isPremium_base === true) {
-                    setIsPremium(true);
-                  } else {
-                    const isPremium_mat = await daily_bonus_contract_mat.methods
+                  const isPremium_taiko =
+                    await daily_bonus_contract_taiko.methods
                       .isPremiumUser(addr)
                       .call()
                       .catch((e) => {
                         console.error(e);
                         return false;
                       });
-                    if (isPremium_mat === true) {
+                  if (isPremium_taiko === true) {
+                    setIsPremium(true);
+                  } else {
+                    const isPremium_base =
+                      await daily_bonus_contract_base.methods
+                        .isPremiumUser(addr)
+                        .call()
+                        .catch((e) => {
+                          console.error(e);
+                          return false;
+                        });
+                    if (isPremium_base === true) {
                       setIsPremium(true);
                     } else {
-                      setIsPremium(false);
+                      const isPremium_mat =
+                        await daily_bonus_contract_mat.methods
+                          .isPremiumUser(addr)
+                          .call()
+                          .catch((e) => {
+                            console.error(e);
+                            return false;
+                          });
+                      if (isPremium_mat === true) {
+                        setIsPremium(true);
+                      } else {
+                        setIsPremium(false);
+                      }
                     }
                   }
                 }
@@ -5871,9 +5915,9 @@ function App() {
             }
           }
         }
+      } else {
+        setIsPremium(false);
       }
-    } else {
-      setIsPremium(false);
     }
   };
 
@@ -6315,7 +6359,7 @@ function App() {
   useEffect(() => {
     if (coinbase) {
       fetchUserPools(coinbase);
-      handleSecondTask(coinbase);
+      // handleSecondTask(coinbase);
       // getNotifications(coinbase);
     }
   }, [coinbase, nftCount]);
@@ -7098,11 +7142,6 @@ function App() {
                 handleOpenDomains={() => setDomainPopup(true)}
                 domainName={domainName}
                 dogePrice={dogePrice}
-                onSubscribeSuccess={(account) => {
-                  // refetchPlayer();
-                  // setCount55(count55 + 1);
-                  refreshSubscription(account);
-                }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
                 handleConnectionMatchId={handleConnectionMatchId}
@@ -7218,11 +7257,6 @@ function App() {
                 handleOpenDomains={() => setDomainPopup(true)}
                 domainName={domainName}
                 dogePrice={dogePrice}
-                onSubscribeSuccess={(account) => {
-                  // refetchPlayer();
-                  // setCount55(count55 + 1);
-                  refreshSubscription(account);
-                }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
                 handleConnectBinance={handleConnectBinance}
@@ -7819,11 +7853,6 @@ function App() {
                 handleOpenDomains={() => setDomainPopup(true)}
                 domainName={domainName}
                 dogePrice={dogePrice}
-                onSubscribeSuccess={(account) => {
-                  // refetchPlayer();
-                  // setCount55(count55 + 1);
-                  refreshSubscription(account);
-                }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
                 handleConnectBinance={handleConnectBinance}

@@ -2081,6 +2081,88 @@ const Portfolio = ({
                         Uphold
                       </h6>
                     </a>
+                     <a
+                      href="https://app.uniswap.org/explore/tokens/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/uniswapBuyWod.png"
+                          }
+                          className="buywodimg"
+                        />
+                        Uniswap
+                      </h6>
+                    </a>
+                    <a
+                      href="https://www.bvox.com/exchange/WOD/USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/bvoxBuyWod.png"
+                          }
+                          className="buywodimg"
+                        />
+                        BVOX
+                      </h6>
+                    </a>
+                    <a
+                      href="https://bitkan.com/trade/WOD-USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/bitkanBuyWod.png"
+                          }
+                          className="buywodimg"
+                        />
+                        Bitkan
+                      </h6>
+                    </a>
+
+                     <a
+                      href="https://tothemoon.com/trading/WOD_USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/tothemoonBuyWod.png"
+                          }
+                          className="buywodimg"
+                        />
+                        Tothemoon
+                      </h6>
+                    </a>
+
+                     <a
+                      href="https://app.openocean.finance/swap/bsc/BNB/WOD_0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/openoceanBuyWod.png"
+                          }
+                          className="buywodimg"
+                        />
+                        OpenOcean
+                      </h6>
+                    </a>
                      
                   </div>
                 </div>
