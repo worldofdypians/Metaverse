@@ -3721,7 +3721,7 @@ const NewEvents = ({
 
   useEffect(() => {
     if (
-      (email && wallet && coinbase && chainId === 56) ||
+      (email && wallet && coinbase) ||
       statusbinance === "success"
     ) {
       handleRefreshCountdownDragon();
@@ -3774,7 +3774,7 @@ const NewEvents = ({
       setScorpionShowApproval(false);
       setScorpionBundleState("initial");
     }
-  }, [wallet, coinbase, chainId, email, isEOA, statusbinance]);
+  }, [wallet, coinbase, email, isEOA, statusbinance]);
 
   useEffect(() => {
     checkWalletAddr();
