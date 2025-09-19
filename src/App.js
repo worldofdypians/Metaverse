@@ -4423,26 +4423,14 @@ function App() {
       myCAWStakes();
       myLandStakes();
       getmyCawsWodStakes();
-      // myNft2();
-      // myLandNft();
     }
+  }, [isConnected, networkId, coinbase, count]);
+
+  useEffect(() => {
     if (isConnected === true && coinbase) {
-      // myNft();
-      // myCAWNft();
       fetchAllMyNfts();
     }
-
-    // if (isConnected === true && coinbase && networkId === 56) {
-    //   myNftBNB();
-    //   myLandNftBNB();
-    // } else if (isConnected === true && coinbase && networkId === 43114) {
-    //   myNft2Avax();
-    //   myLandNftAVAX();
-    // } else if (isConnected === true && coinbase && networkId === 8453) {
-    //   myNftsBase();
-    //   myLandNftsBase();
-    // }
-  }, [isConnected, networkId, coinbase, count]);
+  }, [isConnected, coinbase]);
 
   // useEffect(() => {
   //   if (
@@ -6361,7 +6349,7 @@ function App() {
       // handleSecondTask(coinbase);
       // getNotifications(coinbase);
     }
-  }, [coinbase, nftCount]);
+  }, [coinbase]);
 
   useEffect(() => {
     if (
@@ -8858,7 +8846,7 @@ function App() {
 
       {fireAppcontent === true && <AppContent />}
       {(kickstarter || hashValue === "#royalty-chest") &&
-        window.location.pathname.includes('/account') && (
+        window.location.pathname.includes("/account") && (
           <Kickstarter
             royalChestIndex={royalChestIndex}
             royalChestIndexTaiko={royalChestIndexTaiko}
@@ -8874,7 +8862,7 @@ function App() {
             isOpen={
               kickstarter ||
               (hashValue === "#royalty-chest" &&
-                window.location.pathname.includes('/account'))
+                window.location.pathname.includes("/account"))
             }
             coinbase={coinbase}
             chainId={networkId}

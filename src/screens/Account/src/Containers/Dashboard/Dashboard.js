@@ -6420,7 +6420,7 @@ function Dashboard({
   }, [userWallet, email]);
 
   useEffect(() => {
-    if ((coinbase && isConnected) || userWallet !== undefined) {
+    if ((coinbase && isConnected === true) || userWallet !== undefined) {
       fetchAllMyNfts();
 
       // getmyWodStakes();
