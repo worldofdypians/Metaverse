@@ -721,6 +721,7 @@ const EarnContent = ({
                           >
                             <StakeWodDetails2
                             isEOA={isEOA}
+                            other_info={true}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -757,6 +758,7 @@ const EarnContent = ({
                           >
                             <StakeWodDetails2
                             isEOA={isEOA}
+                            other_info={true}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
