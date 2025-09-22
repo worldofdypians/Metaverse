@@ -1680,7 +1680,7 @@ const StakeWodDetails2 = ({
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
                 }  ${
-                  (expired === true || chainId !== "56" || !isEOA) &&
+                  (chainId !== "56" || !isEOA) &&
                   "blurrypool"
                 } `}
               >
@@ -1781,7 +1781,7 @@ const StakeWodDetails2 = ({
                         className={`btn w-100 outline-btn-stake ${
                           reInvestStatus === "invest" ||
                           pendingDivs <= 0 ||
-                          !isEOA
+                          !isEOA|| expired === true 
                             ? "disabled-btn"
                             : reInvestStatus === "failed"
                             ? "fail-button"
