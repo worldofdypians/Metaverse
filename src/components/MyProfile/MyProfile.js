@@ -214,7 +214,11 @@ const MyProfile = ({
 
   const [twitter, setTwitter] = useState([]);
 
+
+
   const checkTwitter = async () => {
+  console.log(address, "address");
+    
     await axios
       .get(`https://api.worldofdypians.com/api/website-account/${address}`)
       .then((res) => {
