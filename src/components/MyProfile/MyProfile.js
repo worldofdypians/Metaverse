@@ -5,7 +5,7 @@ import Clipboard from "react-clipboard.js";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Countdown from "react-countdown";
 import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -205,22 +205,41 @@ const MyProfile = ({
 
   const html = document.querySelector("html");
 
+  
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  // Will be "true", "false", or null if it doesn't exist
+  const twitterLinkedParam = queryParams.get("twitterLinked");
+
   const [twitter, setTwitter] = useState([]);
 
   const checkTwitter = async () => {
     await axios
       .get(`https://api.worldofdypians.com/api/website-account/${address}`)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data, "twitterData");
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err, "twitterError");
       });
   };
+  
+
+  const checkTwitterLike = async (tweetId) => {
+    await axios.get(`https://api.worldofdypians.com/twitter/check-like/${address}/${tweetId}`).then((res) => {
+      console.log(res.data);
+      
+    }).catch((err) => {
+      console.log(err);
+      
+    })
+  }
+
 
   useEffect(() => {
     checkTwitter()
-  }, [])
+  }, [twitterLinkedParam])
   
 
   useEffect(() => {
