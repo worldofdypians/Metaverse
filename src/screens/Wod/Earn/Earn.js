@@ -80,15 +80,20 @@ const Earn = ({
     if (poolFilter === "All") {
       const allPools = [...tokenPools, ...nftPools];
       if (isExpired === false) {
-        let poolsActive = allPools.filter((item) => {
-          return item.expired === "No";
-        });
+        let poolsActive = allPools
+          .filter((item) => {
+            return item.expired === "No";
+          })
+          .sort((a, b) => Number(b.apy_percent) - Number(a.apy_percent));
         setStakingPools(poolsActive);
       } else if (isExpired === true) {
         let nftPoolsExpired = nftPools.filter((item) => {
           return item.expired === "Yes";
         });
-        setStakingPools(nftPoolsExpired);
+        let tokenPoolsExpired = tokenPools.filter((item) => {
+          return item.expired === "Yes";
+        });
+        setStakingPools([...tokenPoolsExpired, ...nftPoolsExpired]);
       }
     } else if (poolFilter === "WOD") {
       if (isExpired === false) {
@@ -144,7 +149,7 @@ const Earn = ({
         <div className="d-flex flex-column gap-3">
           <EarnHero />
           <EarnContent
-          isEOA={isEOA}
+            isEOA={isEOA}
             onSelectFilter={(value, expirevalue) => {
               setSelectedFilter(value);
               handleSetPools(value, expirevalue);
