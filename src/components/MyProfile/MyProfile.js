@@ -239,7 +239,7 @@ const MyProfile = ({
 
   useEffect(() => {
     checkTwitter()
-  }, [twitterLinkedParam])
+  }, [twitterLinkedParam, address])
   
 
   useEffect(() => {
