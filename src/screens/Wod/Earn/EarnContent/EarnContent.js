@@ -291,6 +291,42 @@ const EarnContent = ({
           </div>
         </div>
       </div>
+      {userPools &&
+        userPools.length > 0 &&
+        userPools.find((item) => {
+          return (
+            item.contract_address.toLowerCase() ===
+              "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C".toLowerCase() ||
+            item.contract_address.toLowerCase() ===
+              "0x0675B497f52a0426874151c1e3267801fAA15C18".toLowerCase()
+          );
+        }) !== undefined && (
+          <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+            <div
+              className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+            ></div>
+
+            <div className="relative custom-container mx-auto">
+              <div className="d-flex flex-column">
+                <div className="flex items-center space-x-3">
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                    alt=""
+                    className="w-5 h-5 text-yellow-400"
+                  />
+                  <span className="font-semibold text-yellow-400">
+                    Update on Your Staking Pools
+                  </span>
+                </div>
+                <span className="challenge-popup-desc text-white">
+                  Your pools are now in the Past section and the rewards
+                  continue until 27 Nov 2025. New pools are live, check them
+                  out!
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
       <div className="custom-container  mt-5 tokenomicsTablewrapper">
         <div className="d-flex flex-column gap-2 w-100 px-2 px-lg-0">
           {/* <span className="earn-filter-title mt-0 mt-lg-4">{selectedFilter}</span> */}
@@ -729,7 +765,7 @@ const EarnContent = ({
                           >
                             <StakeWodDetails2
                               isEOA={isEOA}
-                              other_info={true}
+                              // other_info={true}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -850,7 +886,7 @@ const EarnContent = ({
                           >
                             <StakeWodDetails2
                               isEOA={isEOA}
-                              other_info={true}
+                              // other_info={true}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}

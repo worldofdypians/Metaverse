@@ -3,7 +3,6 @@ import "./top-pools.css";
 // import greenArrow from "../assets/greenarrow.svg";
 // import staked from "../assets/staked.svg";
 
-
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 
 const TopPoolsCard = ({
@@ -25,15 +24,16 @@ const TopPoolsCard = ({
   expired,
   network,
   isPremium,
-  isHover,availableQuota
+  isHover,
+  availableQuota,
 }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   const handleDetails = () => {
     // if (details === false) {
-      onShowDetailsClick();
+    onShowDetailsClick();
     // } else if (details === true) {
-      // onHideDetailsClick();
+    // onHideDetailsClick();
     // }
   };
 
@@ -49,9 +49,7 @@ const TopPoolsCard = ({
         } cursor-pointer position-relative ${details && "pools-card-open"}  ${
           isHover && "pools-card-hover"
         } 
-         ${
-          isStaked && !isHover && "pools-card-staked"
-        }`}
+         ${isStaked && !isHover && "pools-card-staked"}`}
         onClick={() => handleDetails()}
         style={{ display: display }}
         onMouseEnter={() => {
@@ -73,18 +71,28 @@ const TopPoolsCard = ({
         {/* {tvl === '--' && (
           <img src={comingSoon} className="comingsoon" alt="top pick" />
         )} */}
-        {isNewPool && <img src={"https://cdn.worldofdypians.com/wod/newPool.png"} className="new-pool" alt="new pool" />}
+        {isNewPool && (
+          <img
+            src={"https://cdn.worldofdypians.com/wod/newPool4.png"}
+            className="new-pool"
+            alt="new pool"
+          />
+        )}
         {tag && (
           <img
             src={
-              tag === "stake" ? `https://cdn.worldofdypians.com/wod/stakeTag.svg` : tag === "nft" ? "https://cdn.worldofdypians.com/wod/cawsLabel.png" : `https://cdn.worldofdypians.com/wod/stakeTag.svg`
+              tag === "stake"
+                ? `https://cdn.worldofdypians.com/wod/stakeTag.svg`
+                : tag === "nft"
+                ? "https://cdn.worldofdypians.com/wod/cawsLabel.png"
+                : `https://cdn.worldofdypians.com/wod/stakeTag.svg`
             }
             alt="pool-tag"
             className="dashboard-pool-tag d-none d-lg-flex"
           />
         )}
 
-        <div className="purplediv-stake" style={{ top: "12px" }}></div>
+        <div className="orangediv-stake" style={{ top: "12px" }}></div>
         <div className="d-flex flex-column gap-0">
           <div className="d-flex m-0 justify-content between gap-2 align-items-center justify-content-between title-apr-wrapper">
             <div className="d-flex align-items-center gap-2">
@@ -92,7 +100,7 @@ const TopPoolsCard = ({
                 tokenLogo.map((obj, index) => {
                   return (
                     <img
-                    key={index}
+                      key={index}
                       src={`https://cdn.worldofdypians.com/wod/${obj}.png`}
                       alt=""
                       className="pool-coins"
@@ -106,7 +114,16 @@ const TopPoolsCard = ({
               </h6> */}
               <div className="d-flex align-items-baseline gap-1">
                 <h6 className="apr-amount m-0 ">{apr}</h6>
-                <h6 className="apr-title m-0 ">APR</h6>
+                <h6 className="apr-title m-0 d-flex gap-2 align-items-center">
+                  APR
+                  {apr === "30%" && (
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/fireEmoji.png"}
+                      alt=""
+                      className="w-4"
+                    />
+                  )}{" "}
+                </h6>
               </div>
             </div>
             {/* <div className="d-flex align-items-baseline gap-1">
@@ -141,7 +158,9 @@ const TopPoolsCard = ({
             >
               <h6 className="tvl-text m-0">Available Quota</h6>
 
-              <h6 className="locktime-amount m-0">{getFormattedNumber(availableQuota) }</h6>
+              <h6 className="locktime-amount m-0">
+                {getFormattedNumber(availableQuota)}
+              </h6>
             </div>
           </div>
           {/* {tvl != "--" && (

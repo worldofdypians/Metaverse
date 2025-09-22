@@ -1135,6 +1135,18 @@ function App() {
       let resultWodToken2 = [...resultWodToken, ...dummyArray].map((item) => {
         return {
           ...item,
+          expired:
+            item.id === "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C" ||
+            item.id === "0x0675B497f52a0426874151c1e3267801fAA15C18"
+              ? "Yes"
+              : item.expired,
+          new_pool:
+            item.id === "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C" ||
+            item.id === "0x0675B497f52a0426874151c1e3267801fAA15C18" ||
+            item.id === "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C" ||
+            item.id === "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e"
+              ? "No"
+              : item.new_pool,
           type: "token",
           chain: "bnb",
           tokenURL: ["wodToken"],
@@ -1179,6 +1191,7 @@ function App() {
       localStorage.setItem("tvl", Number(tvl) + Number(resultWodTokenTVL));
       setnftTvl(Number(tvl) + Number(resultWodTokenTVL));
       setnftPools([...resultCaws2, ...resultLand2, ...resultCawsLand2]);
+      console.log(resultWodToken2);
       settokenPools(resultWodToken2);
     }
   };
