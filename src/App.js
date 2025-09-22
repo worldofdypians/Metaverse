@@ -1018,6 +1018,20 @@ function App() {
           console.error(e);
         });
 
+      const totaldesposited_wod6 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod6._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const totaldesposited_wod7 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod7._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
       const totaldesposited_wod4_formatted = new window.BigNumber(
         totaldesposited_wod4
       )
@@ -1026,6 +1040,18 @@ function App() {
 
       const totaldesposited_wod5_formatted = new window.BigNumber(
         totaldesposited_wod5
+      )
+        .div(1e18)
+        .toFixed(6);
+
+      const totaldesposited_wod6_formatted = new window.BigNumber(
+        totaldesposited_wod6
+      )
+        .div(1e18)
+        .toFixed(6);
+
+      const totaldesposited_wod7_formatted = new window.BigNumber(
+        totaldesposited_wod7
       )
         .div(1e18)
         .toFixed(6);
@@ -1056,8 +1082,18 @@ function App() {
           poolCap: 5000000,
           totaldeposited: totaldesposited_wod5_formatted,
         },
+        {
+          id: "0xC5432cbf613aaE8626bC4301f29e6eE8e3d2a1b3",
+          poolCap: 10000000,
+          totaldeposited: totaldesposited_wod6_formatted,
+        },
+        {
+          id: "0x6A4057d68C10f450e306F191728ffa926E6c30F0",
+          poolCap: 10000000,
+          totaldeposited: totaldesposited_wod7_formatted,
+        },
       ];
-
+  
       let resultWodToken = bnb_result.data.stakingInfoWODBnb;
       let resultWodTokenTVL = bnb_result.data.totalTVL;
 
@@ -1068,6 +1104,18 @@ function App() {
       let resultWodToken2 = resultWodToken.map((item) => {
         return {
           ...item,
+          // expired:
+          //   item.id === "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C" ||
+          //   item.id === "0x0675B497f52a0426874151c1e3267801fAA15C18"
+          //     ? "Yes"
+          //     : item.expired,
+          // new_pool:
+          //   item.id === "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C" ||
+          //   item.id === "0x0675B497f52a0426874151c1e3267801fAA15C18" ||
+          //   item.id === "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C" ||
+          //   item.id === "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e"
+          //     ? "No"
+          //     : item.new_pool,
           type: "token",
           chain: "bnb",
           tokenURL: ["wodToken"],
@@ -1112,6 +1160,7 @@ function App() {
       localStorage.setItem("tvl", Number(tvl) + Number(resultWodTokenTVL));
       setnftTvl(Number(tvl) + Number(resultWodTokenTVL));
       setnftPools([...resultCaws2, ...resultLand2, ...resultCawsLand2]);
+      
       settokenPools(resultWodToken2);
     }
   };

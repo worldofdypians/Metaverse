@@ -609,12 +609,12 @@ const StakeWodDetails2 = ({
         if (txReceipt) {
           setdepositLoading(false);
           setdepositStatus("success");
-          refreshBalance();
           getApprovedAmount();
           onSuccessfulStake();
           setTimeout(() => {
             setdepositStatus("initial");
             setdepositAmount("");
+            refreshBalance();
           }, 5000);
         }
       }
@@ -1055,7 +1055,7 @@ const StakeWodDetails2 = ({
             staking._address
           )
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             return data;
           });
 
@@ -1302,7 +1302,7 @@ const StakeWodDetails2 = ({
           staking._address
         )
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           return data;
         });
 

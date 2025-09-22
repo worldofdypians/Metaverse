@@ -432,6 +432,9 @@ window.config = {
   constant_staking_wod3_address: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
   constant_staking_wod4_address: "0x0675B497f52a0426874151c1e3267801fAA15C18",
   constant_staking_wod5_address: "0x5d35E4fC8624453A539eB261728aF5CDAbF4F652",
+  constant_staking_wod6_address: "0xC5432cbf613aaE8626bC4301f29e6eE8e3d2a1b3",
+  constant_staking_wod7_address: "0x6A4057d68C10f450e306F191728ffa926E6c30F0",
+
 
   reward_token_wod_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
   reward_token_wod_test_address: "0x810C42A71358dc1e0Ecc32815DadD90c586AfD1c",
@@ -478,6 +481,9 @@ window.CONSTANT_STAKING_WOD2_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD3_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD4_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD5_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD6_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD7_ABI = window.CONSTANT_STAKING_WOD_ABI;
+
 
 async function getMaxFee() {
   let maxPriorityFeePerGas = new BigNumber(10000000000).toFixed(0) * 1;
@@ -673,6 +679,14 @@ window.constant_staking_wod4 = new CONSTANT_STAKING_WOD(
 
 window.constant_staking_wod5 = new CONSTANT_STAKING_WOD(
   "CONSTANT_STAKING_WOD5"
+);
+
+window.constant_staking_wod6 = new CONSTANT_STAKING_WOD(
+  "CONSTANT_STAKING_WOD6"
+);
+
+window.constant_staking_wod7 = new CONSTANT_STAKING_WOD(
+  "CONSTANT_STAKING_WOD7"
 );
 
 /**
@@ -36871,7 +36885,9 @@ Object.keys(window.config)
       k.startsWith("constant_staking_wod2") ||
       k.startsWith("constant_staking_wod3") ||
       k.startsWith("constant_staking_wod4") ||
-      k.startsWith("constant_staking_wod5")
+      k.startsWith("constant_staking_wod5")||
+      k.startsWith("constant_staking_wod6")||
+      k.startsWith("constant_staking_wod7")
   )
   .forEach((k) => {
     window[k.replace("_address", "_ABI").toUpperCase()] = k.startsWith("token_")
@@ -36893,6 +36909,10 @@ Object.keys(window.config)
       : k.startsWith("constant_staking_wod4")
       ? window.CONSTANT_STAKING_WOD_ABI
       : k.startsWith("constant_staking_wod5")
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod6")
+      ? window.CONSTANT_STAKING_WOD_ABI:
+       k.startsWith("constant_staking_wod7")
       ? window.CONSTANT_STAKING_WOD_ABI
       : window.TOKEN_ABI;
   });
