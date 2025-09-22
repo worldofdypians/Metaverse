@@ -1018,6 +1018,20 @@ function App() {
           console.error(e);
         });
 
+      const totaldesposited_wod6 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod6._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const totaldesposited_wod7 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod7._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
       const totaldesposited_wod4_formatted = new window.BigNumber(
         totaldesposited_wod4
       )
@@ -1026,6 +1040,18 @@ function App() {
 
       const totaldesposited_wod5_formatted = new window.BigNumber(
         totaldesposited_wod5
+      )
+        .div(1e18)
+        .toFixed(6);
+
+      const totaldesposited_wod6_formatted = new window.BigNumber(
+        totaldesposited_wod6
+      )
+        .div(1e18)
+        .toFixed(6);
+
+      const totaldesposited_wod7_formatted = new window.BigNumber(
+        totaldesposited_wod7
       )
         .div(1e18)
         .toFixed(6);
@@ -1056,8 +1082,49 @@ function App() {
           poolCap: 5000000,
           totaldeposited: totaldesposited_wod5_formatted,
         },
+        {
+          id: "0x5d35E4fC8624453A539eB261728aF5CDAbF4F652",
+          poolCap: 10000000,
+          totaldeposited: totaldesposited_wod6_formatted,
+        },
+        {
+          id: "0x5d35E4fC8624453A539eB261728aF5CDAbF4F652",
+          poolCap: 10000000,
+          totaldeposited: totaldesposited_wod7_formatted,
+        },
       ];
-
+      let dummyArray = [
+        {
+          id: "0xC5432cbf613aaE8626bC4301f29e6eE8e3d2a1b3",
+          apy_percent: 20,
+          tvl_usd: 685178.893681093,
+          link_logo: "https://www.dypius.com/logo192.png",
+          link_pair: "",
+          pool_name: "WOD Constant Staking BNB",
+          pair_name: "WOD",
+          return_types: "WOD",
+          lock_time: "90 days",
+          expired: "No",
+          new_pool: "Yes",
+          apy_performancefee: 20,
+          performancefee: 0,
+        },
+        {
+          id: "0x6A4057d68C10f450e306F191728ffa926E6c30F0",
+          apy_percent: 30,
+          tvl_usd: 315483.585606082,
+          link_logo: "https://www.dypius.com/logo192.png",
+          link_pair: "",
+          pool_name: "WOD Constant Staking BNB",
+          pair_name: "WOD",
+          return_types: "WOD",
+          lock_time: "120 days",
+          expired: "No",
+          new_pool: "Yes",
+          apy_performancefee: 30,
+          performancefee: 0,
+        },
+      ];
       let resultWodToken = bnb_result.data.stakingInfoWODBnb;
       let resultWodTokenTVL = bnb_result.data.totalTVL;
 
@@ -1065,7 +1132,7 @@ function App() {
       let resultLand = eth_result.data.stakingInfoLAND;
       let resultCawsLand = eth_result.data.stakinginfoCAWSLAND;
 
-      let resultWodToken2 = resultWodToken.map((item) => {
+      let resultWodToken2 = [...resultWodToken, ...dummyArray].map((item) => {
         return {
           ...item,
           type: "token",
