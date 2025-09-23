@@ -71,6 +71,16 @@
  border-bottom: none;
 }
 
+.pools-card-hover-bnb {
+  /* border: 2px solid #00b7cc; */
+  background-image: url("https://cdn.worldofdypians.com/wod/bnbExclusivePoolBg.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+ 
+  border: 2px solid #FFD700;
+ border-bottom: none;
+}
 
 .pools-card-staked {
   /* border: 2px solid #00b7cc; */
@@ -83,8 +93,25 @@
  border-bottom: none;
 }
 
+.pools-card-stakedbnb {
+  /* border: 2px solid #00b7cc; */
+  background-image: url("https://cdn.worldofdypians.com/wod/bnbExclusivePoolBg.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+ 
+  /* border: 2px solid #00b7cc; */
+ border-bottom: none;
+}
+
 .accHeaderBorder {
   border: 2px solid #00b7cc;
+  border-top: none;
+  transition: all 0.25s;
+}
+
+.accHeaderBorderBnb {
+  border: 2px solid #FFD700;
   border-top: none;
   transition: all 0.25s;
 }
@@ -107,6 +134,15 @@
 
 }
 
+.pools-card-open-bnb {
+    background-image: url("https://cdn.worldofdypians.com/wod/bnbExclusivePoolBg.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 2px solid #FFD700;
+ border-bottom: none;
+}
+
 .test-accordion {
   --bs-accordion-inner-border-radius: 0px !important;
   --bs-accordion-border-radius: 0px !important;
@@ -119,6 +155,11 @@
   margin: auto;
   top: -32px;
   width: 110px;
+}
+
+.exclusive-tag {
+      width: 65px !important;
+    top: -4px !important;
 }
 
 .cawstoppick {

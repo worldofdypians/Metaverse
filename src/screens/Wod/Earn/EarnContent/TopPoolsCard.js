@@ -46,10 +46,21 @@ const TopPoolsCard = ({
             : network === "0"
             ? "blurryCard"
             : "poolscardwrapper"
-        } cursor-pointer position-relative ${details && "pools-card-open"}  ${
-          isHover && "pools-card-hover"
+        } cursor-pointer position-relative ${
+          details && tag === "exclusive"
+            ? "pools-card-open-bnb"
+            : details && !tag
+            ? "pools-card-open"
+            : ""
+        }  ${
+          isHover && tag === "exclusive"
+            ? "pools-card-hover-bnb"
+            : isHover && !tag
+            ? "pools-card-hover"
+            : ""
         } 
-         ${isStaked && !isHover && "pools-card-staked"}`}
+         ${isStaked && !isHover && tag !== "exclusive" && "pools-card-staked"}
+         ${isStaked && !isHover && tag === "exclusive" && "pools-card-stakedbnb"}`}
         onClick={() => handleDetails()}
         style={{ display: display }}
         onMouseEnter={() => {
@@ -85,10 +96,14 @@ const TopPoolsCard = ({
                 ? `https://cdn.worldofdypians.com/wod/stakeTag.svg`
                 : tag === "nft"
                 ? "https://cdn.worldofdypians.com/wod/cawsLabel.png"
+                : tag === "exclusive"
+                ? "https://cdn.worldofdypians.com/wod/exclusiveTag.png"
                 : `https://cdn.worldofdypians.com/wod/stakeTag.svg`
             }
             alt="pool-tag"
-            className="dashboard-pool-tag d-none d-lg-flex"
+            className={`dashboard-pool-tag d-none d-lg-flex ${
+              tag === "exclusive" && "exclusive-tag"
+            } `}
           />
         )}
 
@@ -151,6 +166,7 @@ const TopPoolsCard = ({
                 <h6 className="tvl-amount m-0 "> {tvl}</h6>
               </div>
             )}
+
             <div
               className={`d-flex flex-column ${
                 cardType !== "Vault" && "align-items-end"
@@ -163,6 +179,15 @@ const TopPoolsCard = ({
               </h6>
             </div>
           </div>
+          {tag === "exclusive" && (
+            <div className="d-flex align-items-center justify-content-center">
+              <img
+                src={"https://cdn.worldofdypians.com/tools/toppick.svg"}
+                alt=""
+                className="position-absolute bottom-0"
+              />
+            </div>
+          )}
           {/* {tvl != "--" && (
             <div
               className={

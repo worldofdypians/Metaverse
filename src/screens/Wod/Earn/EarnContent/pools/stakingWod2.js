@@ -65,6 +65,7 @@ const StakeWodDetails2 = ({
   network_matchain,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
+  bnbUSDPrice,
 }) => {
   let { reward_token_wod, BigNumber } = window;
   let token_symbol = "WOD";
@@ -1042,7 +1043,14 @@ const StakeWodDetails2 = ({
     const millisecondsInADay = 1000 * 60 * 60 * 24;
     const daysUntilExpiration = Math.floor(timeDifference / millisecondsInADay);
 
-    return ((depositAmount * apr) / 100 / 365) * daysUntilExpiration;
+    if (staking._address === "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600") {
+      return (
+        (((depositAmount * apr) / 100 / 180) * daysUntilExpiration * 0.12) /
+        bnbUSDPrice
+      );
+    } else {
+      return ((depositAmount * apr) / 100 / 365) * daysUntilExpiration;
+    }
   };
 
   const getApprovedAmount = async () => {
@@ -1569,9 +1577,12 @@ const StakeWodDetails2 = ({
                         >
                           {getFormattedNumber(
                             getApproxReturn(depositAmount),
-                            2
+                            3
                           )}{" "}
-                          WOD
+                          {staking._address ===
+                          "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                            ? "WBNB"
+                            : "WOD"}
                         </span>
                       </span>
                     </div>
@@ -1679,10 +1690,7 @@ const StakeWodDetails2 = ({
               <div
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-                }  ${
-                  (chainId !== "56" || !isEOA) &&
-                  "blurrypool"
-                } `}
+                }  ${(chainId !== "56" || !isEOA) && "blurrypool"} `}
               >
                 <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
                   <h6
@@ -1699,9 +1707,10 @@ const StakeWodDetails2 = ({
                       placement="top"
                       title={
                         <div className="tooltip-text">
-                          {
-                            "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The reinvest function does not reset the lock-in period."
-                          }
+                          {staking._address ===
+                          "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                            ? "Rewards earned by your deposit to the staking smart contract are displayed in real-time. This is based off of wod price of $0.12."
+                            : "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The reinvest function does not reset the lock-in period."}
                         </div>
                       }
                     >
@@ -1721,8 +1730,22 @@ const StakeWodDetails2 = ({
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />{" "} */}
-                      {getFormattedNumber(pendingDivs, pendingDivs > 0 ? 6 : 2)}{" "}
-                      WOD
+                      {getFormattedNumber(
+                        staking._address ===
+                          "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                          ? (pendingDivs * 0.12) / bnbUSDPrice
+                          : pendingDivs,
+                        pendingDivs > 0
+                          ? staking._address ===
+                            "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                            ? 8
+                            : 6
+                          : 2
+                      )}{" "}
+                      {staking._address ===
+                      "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                        ? "WBNB"
+                        : "WOD"}
                     </h6>
                     <div className="d-flex w-100 align-items-center gap-2">
                       <button
@@ -1776,45 +1799,51 @@ const StakeWodDetails2 = ({
                           <>Claim</>
                         )}
                       </button>
-                      <button
-                        disabled={pendingDivs > 0 && isEOA ? false : true}
-                        className={`btn w-100 outline-btn-stake ${
-                          reInvestStatus === "invest" ||
-                          pendingDivs <= 0 ||
-                          !isEOA|| expired === true 
-                            ? "disabled-btn"
-                            : reInvestStatus === "failed"
-                            ? "fail-button"
-                            : reInvestStatus === "success"
-                            ? "success-button"
-                            : null
-                        } d-flex justify-content-center align-items-center gap-2`}
-                        style={{ height: "fit-content" }}
-                        onClick={handleReinvest}
-                      >
-                        {reInvestLoading ? (
-                          <div
-                            className="spinner-border spinner-border-sm text-light"
-                            role="status"
-                          >
-                            <span className="visually-hidden">Loading...</span>
-                          </div>
-                        ) : reInvestStatus === "failed" ? (
-                          <>
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/failMark.svg"
-                              }
-                              alt=""
-                            />
-                            Failed
-                          </>
-                        ) : reInvestStatus === "success" ? (
-                          <>Success</>
-                        ) : (
-                          <>Reinvest</>
-                        )}
-                      </button>
+                      {staking._address !==
+                        "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600" && (
+                        <button
+                          disabled={pendingDivs > 0 && isEOA ? false : true}
+                          className={`btn w-100 outline-btn-stake ${
+                            reInvestStatus === "invest" ||
+                            pendingDivs <= 0 ||
+                            !isEOA ||
+                            expired === true
+                              ? "disabled-btn"
+                              : reInvestStatus === "failed"
+                              ? "fail-button"
+                              : reInvestStatus === "success"
+                              ? "success-button"
+                              : null
+                          } d-flex justify-content-center align-items-center gap-2`}
+                          style={{ height: "fit-content" }}
+                          onClick={handleReinvest}
+                        >
+                          {reInvestLoading ? (
+                            <div
+                              className="spinner-border spinner-border-sm text-light"
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
+                          ) : reInvestStatus === "failed" ? (
+                            <>
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/failMark.svg"
+                                }
+                                alt=""
+                              />
+                              Failed
+                            </>
+                          ) : reInvestStatus === "success" ? (
+                            <>Success</>
+                          ) : (
+                            <>Reinvest</>
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
                   {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}

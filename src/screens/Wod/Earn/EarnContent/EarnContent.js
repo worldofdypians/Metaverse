@@ -36,6 +36,7 @@ const EarnContent = ({
   network_matchain,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
+  bnbUSDPrice,
 }) => {
   const [sorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -426,7 +427,7 @@ const EarnContent = ({
                         }}
                       >
                         <TopPoolsCard
-                          key={index}
+                          tag={index === 0 && "exclusive"}
                           chain={chainId}
                           top_pick={false}
                           tokenName={item.pair_name}
@@ -497,12 +498,20 @@ const EarnContent = ({
                     >
                       <div
                         className={`${
-                          isHover === index ||
-                          selectedPool.find((obj) => {
+                          (isHover === index && index === 0) ||
+                          (selectedPool.find((obj) => {
                             return (
                               obj.id.toLowerCase() === item.id.toLowerCase()
                             );
-                          }) !== undefined
+                          }) !== undefined &&
+                            index === 0)
+                            ? "accHeaderBorderBnb"
+                            : isHover === index ||
+                              selectedPool.find((obj) => {
+                                return (
+                                  obj.id.toLowerCase() === item.id.toLowerCase()
+                                );
+                              }) !== undefined
                             ? "accHeaderBorder"
                             : "accHeaderBorder2"
                         } px-0 py-0 text-white position-relative`}
@@ -710,6 +719,7 @@ const EarnContent = ({
                               handleSwitchChainBinanceWallet={
                                 handleSwitchChainBinanceWallet
                               }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
@@ -750,6 +760,7 @@ const EarnContent = ({
                               handleSwitchChainBinanceWallet={
                                 handleSwitchChainBinanceWallet
                               }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
@@ -791,6 +802,7 @@ const EarnContent = ({
                               handleSwitchChainBinanceWallet={
                                 handleSwitchChainBinanceWallet
                               }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
@@ -831,6 +843,48 @@ const EarnContent = ({
                               handleSwitchChainBinanceWallet={
                                 handleSwitchChainBinanceWallet
                               }
+                              bnbUSDPrice={bnbUSDPrice}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id ===
+                          "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              isEOA={isEOA}
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod8}
+                              apr={item.apy_percent}
+                              expiration_time={"23 March 2026"}
+                              poolCap={item.poolCap}
+                              start_date={"23 Sep 2025"}
+                              fee={item.performancefee}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+                              publicClient={publicClient}
+                              walletClient={walletClient}
+                              network_matchain={network_matchain}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
@@ -871,6 +925,7 @@ const EarnContent = ({
                               handleSwitchChainBinanceWallet={
                                 handleSwitchChainBinanceWallet
                               }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
@@ -912,6 +967,7 @@ const EarnContent = ({
                               handleSwitchChainBinanceWallet={
                                 handleSwitchChainBinanceWallet
                               }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
@@ -952,6 +1008,7 @@ const EarnContent = ({
                               handleSwitchChainBinanceWallet={
                                 handleSwitchChainBinanceWallet
                               }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}

@@ -1032,6 +1032,13 @@ function App() {
           console.error(e);
         });
 
+      const totaldesposited_wod8 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod8._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+      
       const totaldesposited_wod4_formatted = new window.BigNumber(
         totaldesposited_wod4
       )
@@ -1052,6 +1059,11 @@ function App() {
 
       const totaldesposited_wod7_formatted = new window.BigNumber(
         totaldesposited_wod7
+      )
+        .div(1e18)
+        .toFixed(6);
+      const totaldesposited_wod8_formatted = new window.BigNumber(
+        totaldesposited_wod8
       )
         .div(1e18)
         .toFixed(6);
@@ -1092,8 +1104,13 @@ function App() {
           poolCap: 10000000,
           totaldeposited: totaldesposited_wod7_formatted,
         },
+        {
+          id: "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600",
+          poolCap: 6500000,
+          totaldeposited: totaldesposited_wod8_formatted,
+        },
       ];
-  
+
       let resultWodToken = bnb_result.data.stakingInfoWODBnb;
       let resultWodTokenTVL = bnb_result.data.totalTVL;
 
@@ -1160,7 +1177,7 @@ function App() {
       localStorage.setItem("tvl", Number(tvl) + Number(resultWodTokenTVL));
       setnftTvl(Number(tvl) + Number(resultWodTokenTVL));
       setnftPools([...resultCaws2, ...resultLand2, ...resultCawsLand2]);
-      
+
       settokenPools(resultWodToken2);
     }
   };
@@ -2278,7 +2295,7 @@ function App() {
 
   const getTokenDatabnb = async () => {
     await axios
-      .get("https://api.worldofdypians.com/api/price/dogecoin")
+      .get("https://api.worldofdypians.com/api/price/wbnb")
       .then((obj) => {
         if (obj.data) {
           setBnbUSDPrice(obj.data.price);
@@ -8279,6 +8296,7 @@ function App() {
                 network_matchain={chain}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                bnbUSDPrice={bnbUSDPrice}
               />
             }
           />
