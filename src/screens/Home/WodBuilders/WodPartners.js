@@ -401,6 +401,14 @@ const WodPartners = ({ full }) => {
       name: "OpenOcean",
       icon: "openoceanBuyWod.png",
     },
+    {
+      name: "Bitexen",
+      icon: "bitexen.png",
+    },
+      {
+      name: "Biconomy",
+      icon: "biconomy.png",
+    },
   ];
 
   const [slice, setSlice] = useState(14);

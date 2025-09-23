@@ -410,7 +410,7 @@ const NewEvents = ({
   };
 
   const checkApprovalPuzzle = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
       if (window.WALLET_TYPE === "matchId") {
         await publicClient
           .readContract({
@@ -897,7 +897,7 @@ const NewEvents = ({
   };
 
   const checkApprovalDragon = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
       if (window.WALLET_TYPE === "matchId") {
         await publicClient
           .readContract({
@@ -1377,7 +1377,7 @@ const NewEvents = ({
   };
 
   const checkApprovalBear = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
       if (window.WALLET_TYPE === "matchId") {
         await publicClient
           .readContract({
@@ -1433,6 +1433,7 @@ const NewEvents = ({
           .catch((e) => {
             console.log(e);
           });
+          
 
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setBearShowApproval(true);
@@ -1854,7 +1855,7 @@ const NewEvents = ({
   };
 
   const checkApprovalBeast = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
       if (window.WALLET_TYPE === "matchId") {
         await publicClient
           .readContract({
@@ -2352,7 +2353,7 @@ const NewEvents = ({
   };
 
   const checkApprovalEagle = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
       if (window.WALLET_TYPE === "matchId") {
         await publicClient
           .readContract({
@@ -2833,7 +2834,7 @@ const NewEvents = ({
   };
 
   const checkApprovalScorpion = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
       if (window.WALLET_TYPE === "matchId") {
         await publicClient
           .readContract({
@@ -3317,7 +3318,7 @@ const NewEvents = ({
   };
 
   const checkApprovalCyclops = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
       if (window.WALLET_TYPE === "matchId") {
         await publicClient
           .readContract({
@@ -3721,7 +3722,7 @@ const NewEvents = ({
 
   useEffect(() => {
     if (
-      (email && wallet && coinbase) ||
+      (email !== undefined && wallet !== undefined && coinbase !== undefined) ||
       statusbinance === "success"
     ) {
       handleRefreshCountdownDragon();

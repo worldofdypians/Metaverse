@@ -147,12 +147,12 @@ const VideoWrapper = ({
       logo: "uphold.svg",
       link: "https://uphold.com/en-us/prices/crypto/wod",
     },
-     {
+    {
       title: "Uniswap",
       logo: "uniswapBuyWod.png",
       link: "https://app.uniswap.org/explore/tokens/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
     },
-      {
+    {
       title: "BVOX",
       logo: "bvoxBuyWod.png",
       link: "https://www.bvox.com/exchange/WOD/USDT",
@@ -171,6 +171,16 @@ const VideoWrapper = ({
       title: "OpenOcean",
       logo: "openoceanBuyWod.png",
       link: "https://app.openocean.finance/swap/bsc/BNB/WOD_0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+    {
+      title: "Bitexen",
+      logo: "bitexen.png",
+      link: "https://global.bitexen.com/instant/trade/USDT_WOD",
+    },
+    {
+      title: "Biconomy",
+      logo: "biconomy.png",
+      link: "https://www.biconomy.com/exchange/WOD_USDT",
     },
   ];
 

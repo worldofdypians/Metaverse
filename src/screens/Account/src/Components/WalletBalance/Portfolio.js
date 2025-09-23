@@ -2163,7 +2163,38 @@ const Portfolio = ({
                         OpenOcean
                       </h6>
                     </a>
-                     
+                    <a
+                      href="https://global.bitexen.com/instant/trade/USDT_WOD"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/bitexen.png"
+                          }
+                          className="buywodimg"
+                        />
+                        Bitexen
+                      </h6>
+                    </a>
+                       <a
+                      href="https://www.biconomy.com/exchange/WOD_USDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/biconomy.png"
+                          }
+                          className="buywodimg"
+                        />
+                        Biconomy
+                      </h6>
+                    </a>
                   </div>
                 </div>
               )}

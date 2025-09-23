@@ -399,6 +399,14 @@ const KickstarterPartners = () => {
       name: "OpenOcean",
       icon: "openoceanBuyWod.png",
     },
+    {
+      name: "Bitexen",
+      icon: "bitexen.png",
+    },
+     {
+      name: "Biconomy",
+      icon: "biconomy.png",
+    },
   ];
 
   return (
