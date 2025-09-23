@@ -581,70 +581,89 @@ const Roadmap = () => {
       image: "quarterThreeImage",
 
       content: [
-        {
-          title: "Launch of Crypto Museum",
-          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
-          completed: false,
-        },
-        {
-          title: "Introduction of Character NFT Generation",
-          desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
-          completed: false,
-        },
+        // {
+        //   title: "Introduction of Character NFT Generation",
+        //   desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
+        //   completed: false,
+        // },
 
-        {
-          title: "Loot Box Introduction",
-          desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
-          completed: false,
-        },
+        // {
+        //   title: "Loot Box Introduction",
+        //   desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
+        //   completed: false,
+        // },
         {
           title: "New Game UI Development",
           desc: "Develop a new user interface to improve navigation and accessibility within the game.",
-          completed: false,
+          completed: true,
         },
         {
           title: "New Staking Pools",
           desc: "Introduce new staking pools to enable players to earn rewards by participating in the game’s ecosystem.",
-          completed: false,
-        },
-        {
-          title: "Full Release of the Multiplayer PvE",
-          desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
-          completed: false,
-        },
-        {
-          title: "Introduction of Game Quests",
-          desc: "Add a variety of engaging partner quests to challenge players, offering rewards and enhancing gameplay depth.",
-          completed: false,
+          completed: true,
         },
 
-        {
-          title: "Introduction of Character Customization",
-          desc: "Allow players to personalize their main avatar/character with facial and body features.",
-          completed: false,
-        },
+        // {
+        //   title: "Introduction of Game Quests",
+        //   desc: "Add a variety of engaging partner quests to challenge players, offering rewards and enhancing gameplay depth.",
+        //   completed: false,
+        // },
 
-        {
-          title: "Introduction of Shop v1",
-          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
-          completed: false,
-        },
+        // {
+        //   title: "Introduction of Character Customization",
+        //   desc: "Allow players to personalize their main avatar/character with facial and body features.",
+        //   completed: false,
+        // },
 
         {
           title: "Daily Engagement System",
           desc: "Launch a new daily engagement product designed to keep players active and rewarded through innovative tasks and experiences.",
-          completed: false,
+          completed: true,
         },
         {
-          title: "Intelligent Economy Integration",
-          desc: "Combine AI-powered features with DeFi mechanics to create an adaptive and engaging in-game economy.",
-          completed: false,
+          title: "New Chain Expansion",
+          desc: "Integrate additional blockchains into the game to broaden the reach and appeal.",
+          completed: true,
         },
-
+        {
+          title: "Expanded Wallet Support",
+          desc: "Integration of new wallets to provide players with more options and seamless access when interacting within the ecosystem.",
+          completed: true,
+        },
+        {
+          title: "Question of the Day",
+          desc: "Daily educational feature on the BNB Chain ecosystem, designed to inform and engage players with interactive learning.",
+          completed: true,
+        },
+        {
+          title: "Keep Building Program",
+          desc: "An initiative to support every builder and creator on the BNB Chain, fostering growth and innovation across the ecosystem.",
+          completed: true,
+        },
+        {
+          title: "Royalty Chest",
+          desc: "A special product offering unique opportunities and exposure for projects, rewarding collaboration and ecosystem participation.",
+          completed: true,
+        },
+        {
+          title: "Booster1001",
+          desc: "A performance-enhancing system designed to reward and amplify player achievements, creating new layers of progression and excitement.",
+          completed: true,
+        },
+        {
+          title: "Binance Pay Integration",
+          desc: "Seamless integration enabling in-game purchases and product access directly through Binance Pay.",
+          completed: true,
+        },
+        {
+          title: "Expanding WOD Markets",
+          desc: "Strategic expansion of existing markets through new exchange listings and ecosystem growth, increasing liquidity and accessibility for WOD.",
+          completed: true,
+        },
         {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
-          completed: false,
+          completed: true,
         },
       ],
     },
@@ -653,11 +672,12 @@ const Roadmap = () => {
       image: "quarterFourImage",
 
       content: [
-        {
-          title: "Full Release of the Multiplayer PvP",
-          desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
-          completed: false,
-        },
+        // {
+        //   title: "Full Release of the Multiplayer PvP",
+        //   desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
+        //   completed: false,
+        // },
+      
         {
           title: "Adopt CAWS Functionality",
           desc: "Allow players to adopt a CAWS (cat) in-game, feed it, grow it, and use it within the game world.",
@@ -666,6 +686,11 @@ const Roadmap = () => {
         {
           title: "NFT Customization",
           desc: "Enable players to customize their NFTs, such as weapons and equipment, by adding elements or items to them.",
+          completed: false,
+        },
+        {
+          title: "Full Release of the Multiplayer PvE",
+          desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
           completed: false,
         },
         {
@@ -678,9 +703,19 @@ const Roadmap = () => {
           desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
           completed: false,
         },
+        // {
+        //   title: "New Land NFTs Batch",
+        //   desc: "Release a fresh batch of exclusive Land NFTs, offering players new opportunities to own, customize, and expand their in-game territories, fostering creativity and strategic gameplay.",
+        //   completed: false,
+        // },
         {
-          title: "New Land NFTs Batch",
-          desc: "Release a fresh batch of exclusive Land NFTs, offering players new opportunities to own, customize, and expand their in-game territories, fostering creativity and strategic gameplay.",
+          title: "Intelligent Economy Integration",
+          desc: "Combine AI-powered features with DeFi mechanics to create an adaptive and engaging in-game economy.",
+          completed: false,
+        }, 
+         {
+          title: "Launch of Crypto Museum",
+          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
           completed: false,
         },
         {
@@ -699,15 +734,20 @@ const Roadmap = () => {
           completed: false,
         },
         {
-          title: "Introduction of Shop v2",
-          desc: "Improve and expand the in-game shop with new features and offerings.",
+          title: "Introduction of Shop v1",
+          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
           completed: false,
         },
-        {
-          title: "Launchpool Launch",
-          desc: "Create a Launchpool system where players can contribute resources to community-driven projects and unlock exclusive benefits.",
-          completed: false,
-        },
+        // {
+        //   title: "Introduction of Shop v2",
+        //   desc: "Improve and expand the in-game shop with new features and offerings.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "Launchpool Launch",
+        //   desc: "Create a Launchpool system where players can contribute resources to community-driven projects and unlock exclusive benefits.",
+        //   completed: false,
+        // },
         {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
