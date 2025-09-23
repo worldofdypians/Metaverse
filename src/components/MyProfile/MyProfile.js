@@ -10,6 +10,7 @@ import Countdown from "react-countdown";
 import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
 import useWindowSize from "../../hooks/useWindowSize";
 import axios from "axios";
+import TwitterRewards from "./TwitterRewards";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -205,46 +206,66 @@ const MyProfile = ({
 
   const html = document.querySelector("html");
 
-  
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
   // Will be "true", "false", or null if it doesn't exist
   const twitterLinkedParam = queryParams.get("twitterLinked");
 
-  const [twitter, setTwitter] = useState([]);
-
-
+  const [twitter, setTwitter] = useState(null);
+  const [twitterTasks, setTwitterTasks] = useState([]);
+  const [popup, setPopup] = useState(false);
 
   const checkTwitter = async () => {
-  console.log(address, "address");
-    
     await axios
       .get(`https://api.worldofdypians.com/api/website-account/${address}`)
       .then((res) => {
         console.log(res.data, "twitterData");
+
+        const grouped = Object.values(
+          res?.data.twitterTasks.reduce((acc, item) => {
+            if (!acc[item.tweetId]) {
+              acc[item.tweetId] = {
+                tweetId: item.tweetId,
+                assignedAt: item.assignedAt,
+                tasks: [],
+              };
+            }
+            acc[item.tweetId].tasks.push({
+              task: item.task,
+              completed: item.completed,
+              verified: item.verified,
+              _id: item._id,
+            });
+            return acc;
+          }, {})
+        );
+
+        setTwitter(res?.data);
+        setTwitterTasks(grouped);
+        console.log(grouped, "grouped");
       })
       .catch((err) => {
         console.log(err, "twitterError");
       });
   };
-  
 
   const checkTwitterLike = async (tweetId) => {
-    await axios.get(`https://api.worldofdypians.com/twitter/check-like/${address}/${tweetId}`).then((res) => {
-      console.log(res.data);
-      
-    }).catch((err) => {
-      console.log(err);
-      
-    })
-  }
-
+    await axios
+      .get(
+        `https://api.worldofdypians.com/twitter/check-like/${address}/${tweetId}`
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
-    checkTwitter()
-  }, [twitterLinkedParam, address])
-  
+    checkTwitter();
+  }, [twitterLinkedParam, address]);
 
   useEffect(() => {
     if (rankDropdown === true) {
@@ -1841,65 +1862,81 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
-                <a
-                  href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
-                  className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
-                  style={{ height: "60px" }}
-                  // onClick={openSpecialRewards}
-                >
-                  <div className="d-flex align-items-center gap-2">
-                    {/* <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/domainNameIcon.png"
-                      }
-                      className="wod-domain-icon"
-                      alt=""
-                    /> */}
-                    <div className="d-flex flex-column justify-content-between h-100 mb-0">
-                      <div className="d-flex flex-column">
-                        <span
-                          className="user-blue-rank-2"
-                          style={{ color: "#9e3c7a" }}
-                        >
-                          Twitter Rewards
-                        </span>
-                        <span
-                          className="user-rank-text-2"
-                          style={{ color: "#3B5896" }}
-                        >
-                          {/* ${getFormattedNumber(specialRewards)} Rewards */}
-                          Connect Your Account
-                        </span>
+              {twitter ? (
+                <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
+                  <div
+                    className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
+                    style={{ height: "60px" }}
+                    onClick={() => setPopup(true)}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="d-flex flex-column justify-content-between h-100 mb-0">
+                        <div className="d-flex flex-column">
+                          <span
+                            className="user-blue-rank-2"
+                            style={{ color: "#9e3c7a" }}
+                          >
+                            X Rewards
+                          </span>
+                          <span
+                            className="user-rank-text-2"
+                            style={{ color: "#3B5896" }}
+                          >
+                            {/* ${getFormattedNumber(specialRewards)} Rewards */}
+                            @{twitter.twitterUsername}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {/* <img
-                    src={"https://cdn.worldofdypians.com/wod/redArrow.svg"}
-                    width={20}
-                    height={20}
-                    alt=""
-                  /> */}
-                  {/* <div className="d-flex gap-2 align-items-center">
-                        <h6 className="special-rewards-total mb-0">
-                          ${getFormattedNumber(specialRewards)}
-                        </h6>
-                        <span className="special-rewards-total-span">
-                          Rewards
-                        </span>
-                      </div> */}
 
-                  <button
-                    // onClick={openSpecialRewards}
-                    className="activate-btn2 px-3 py-1"
-                    style={{
-                      background: "#9E3C7A",
-                    }}
+                    <button
+                      className="activate-btn2 px-3 py-1"
+                      style={{
+                        background: "#9E3C7A",
+                      }}
+                    >
+                      View
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
+                  <a
+                    href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
+                    className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
+                    style={{ height: "60px" }}
                   >
-                    Connect
-                  </button>
-                </a>
-              </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="d-flex flex-column justify-content-between h-100 mb-0">
+                        <div className="d-flex flex-column">
+                          <span
+                            className="user-blue-rank-2"
+                            style={{ color: "#9e3c7a" }}
+                          >
+                            X Rewards
+                          </span>
+                          <span
+                            className="user-rank-text-2"
+                            style={{ color: "#3B5896" }}
+                          >
+                            {/* ${getFormattedNumber(specialRewards)} Rewards */}
+                            Connect Your Account
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      className="activate-btn2 px-3 py-1"
+                      style={{
+                        background: "#9E3C7A",
+                      }}
+                    >
+                      Connect
+                    </button>
+                  </a>
+                </div>
+              )}
               {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
@@ -2277,6 +2314,15 @@ const MyProfile = ({
         } */}
         </div>
       </div>
+      {popup && (
+        <OutsideClickHandler onOutsideClick={() => setPopup(false)}>
+          <TwitterRewards
+            tasks={twitterTasks}
+            onClose={() => setPopup(false)}
+            address={address}
+          />
+        </OutsideClickHandler>
+      )}
     </>
   );
 };
