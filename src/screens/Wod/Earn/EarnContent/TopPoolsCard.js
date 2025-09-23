@@ -47,20 +47,26 @@ const TopPoolsCard = ({
             ? "blurryCard"
             : "poolscardwrapper"
         } cursor-pointer position-relative ${
-          details && tag === "exclusive"
+          details && tag === "exclusive" && !expired
             ? "pools-card-open-bnb"
             : details && !tag
             ? "pools-card-open"
             : ""
         }  ${
-          isHover && tag === "exclusive"
+          isHover && tag === "exclusive" && !expired
             ? "pools-card-hover-bnb"
             : isHover && !tag
             ? "pools-card-hover"
             : ""
         } 
          ${isStaked && !isHover && tag !== "exclusive" && "pools-card-staked"}
-         ${isStaked && !isHover && tag === "exclusive" && "pools-card-stakedbnb"}`}
+         ${
+           isStaked &&
+           !isHover &&
+           tag === "exclusive" &&
+           !expired &&
+           "pools-card-stakedbnb"
+         }`}
         onClick={() => handleDetails()}
         style={{ display: display }}
         onMouseEnter={() => {
@@ -89,20 +95,20 @@ const TopPoolsCard = ({
             alt="new pool"
           />
         )}
-        {tag && (
+        {tag && !expired && (
           <img
             src={
               tag === "stake"
                 ? `https://cdn.worldofdypians.com/wod/stakeTag.svg`
                 : tag === "nft"
                 ? "https://cdn.worldofdypians.com/wod/cawsLabel.png"
-                : tag === "exclusive"
+                : tag === "exclusive" && !expired
                 ? "https://cdn.worldofdypians.com/wod/exclusiveTag.png"
                 : `https://cdn.worldofdypians.com/wod/stakeTag.svg`
             }
             alt="pool-tag"
             className={`dashboard-pool-tag d-none d-lg-flex ${
-              tag === "exclusive" && "exclusive-tag"
+              tag === "exclusive" && !expired && "exclusive-tag"
             } `}
           />
         )}
@@ -179,7 +185,7 @@ const TopPoolsCard = ({
               </h6>
             </div>
           </div>
-          {tag === "exclusive" && (
+          {tag === "exclusive" && !expired && (
             <div className="d-flex align-items-center justify-content-center">
               <img
                 src={"https://cdn.worldofdypians.com/tools/toppick.svg"}
