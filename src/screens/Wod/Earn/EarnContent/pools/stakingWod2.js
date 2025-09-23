@@ -1709,7 +1709,7 @@ const StakeWodDetails2 = ({
                         <div className="tooltip-text">
                           {staking._address ===
                           "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
-                            ? "Rewards earned by your deposit to the staking smart contract are displayed in real-time. This is based off of wod price of $0.12."
+                            ? "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The rewards are calculated with 1 WOD = $0.12 for the whole duration of the staking pool."
                             : "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The reinvest function does not reset the lock-in period."}
                         </div>
                       }
