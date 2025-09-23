@@ -522,6 +522,14 @@ const NewBuilders = () => {
       name: "OpenOcean",
       icon: "openoceanBuyWod.png",
     },
+    {
+      name: "Bitexen",
+      icon: "bitexen.png",
+    },
+      {
+      name: "Biconomy",
+      icon: "biconomy.png",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>

@@ -63,12 +63,12 @@ const MainHero = ({ scrollInto }) => {
       logo: "bingx-exchange.svg",
       link: "https://bingx.com/en/spot/WODUSDT",
     },
-      {
+    {
       title: "Uphold",
       logo: "upholdFull.svg",
       link: "https://uphold.com/en-us/prices/crypto/wod",
     },
-  
+
     {
       title: "Toobit",
       logo: "toobit-exchange.svg",
@@ -101,7 +101,7 @@ const MainHero = ({ scrollInto }) => {
       logo: "blofinExchange.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
-      {
+    {
       title: "WEEX",
       logo: "weex-exchange.svg",
       link: "https://www.weex.com/spot/WOD-USDT",
@@ -111,7 +111,7 @@ const MainHero = ({ scrollInto }) => {
       logo: "uniswap-exchange.png",
       link: "https://app.uniswap.org/explore/tokens/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
     },
-  {
+    {
       title: "BVOX",
       logo: "bvox-exchange.png",
       link: "https://www.bvox.com/exchange/WOD/USDT",
@@ -130,6 +130,16 @@ const MainHero = ({ scrollInto }) => {
       title: "OpenOcean",
       logo: "openocean-exchange.png",
       link: "https://app.openocean.finance/swap/bsc/BNB/WOD_0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+    {
+      title: "Bitexen",
+      logo: "bitexen-exchange.png",
+      link: "https://global.bitexen.com/instant/trade/USDT_WOD",
+    },
+    {
+      title: "Biconomy",
+      logo: "biconomy-exchange.png",
+      link: "https://www.biconomy.com/exchange/WOD_USDT",
     },
   ];
 
