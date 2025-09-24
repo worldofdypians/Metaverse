@@ -530,6 +530,10 @@ const NewBuilders = () => {
       name: "Biconomy",
       icon: "biconomy.png",
     },
+     {
+      name: "BTCC",
+      icon: "btcc.svg",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>

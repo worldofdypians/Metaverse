@@ -616,7 +616,11 @@ const NewEvents = ({
       );
       await puzzleContract.methods
         .deposit()
-        .send({ from: coinbase })
+        .send({
+          from: coinbase,
+          maxPriorityFeePerGas: null,
+          maxFeePerGas: null,
+        })
         .then(() => {
           setStatus("Bundle successfully purchased!");
           setpuzzleMadnessDepositState("success");
@@ -1103,7 +1107,11 @@ const NewEvents = ({
       );
       await dragonRuinsContract.methods
         .deposit()
-        .send({ from: coinbase })
+        .send({
+          from: coinbase,
+          maxPriorityFeePerGas: null,
+          maxFeePerGas: null,
+        })
         .then(() => {
           setStatus("Bundle successfully purchased!");
           setDragonDepositState("success");
@@ -1584,7 +1592,11 @@ const NewEvents = ({
       );
       await coldBiteContract.methods
         .deposit()
-        .send({ from: coinbase })
+        .send({
+          from: coinbase,
+          maxPriorityFeePerGas: null,
+          maxFeePerGas: null,
+        })
         .then(() => {
           setStatus("Bundle successfully purchased!");
           setBearDepositState("success");
@@ -2074,9 +2086,14 @@ const NewEvents = ({
         FURY_BEAST_ABI,
         fury_beast_address
       );
+
       await furyBeastContract.methods
         .deposit()
-        .send({ from: coinbase })
+        .send({
+          from: coinbase,
+          maxPriorityFeePerGas: null,
+          maxFeePerGas: null,
+        })
         .then(() => {
           setStatus("Bundle successfully purchased!");
           setBeastDepositState("success");
@@ -2559,7 +2576,11 @@ const NewEvents = ({
       );
       await wingStormContract.methods
         .deposit()
-        .send({ from: coinbase })
+        .send({
+          from: coinbase,
+          maxPriorityFeePerGas: null,
+          maxFeePerGas: null,
+        })
         .then(() => {
           setStatus("Bundle successfully purchased!");
           setEagleDepositState("success");
@@ -3041,7 +3062,11 @@ const NewEvents = ({
 
       await scorpionKingContract.methods
         .deposit()
-        .send({ from: coinbase })
+        .send({
+          from: coinbase,
+          maxPriorityFeePerGas: null,
+          maxFeePerGas: null,
+        })
         .then(() => {
           setStatus("Bundle successfully purchased!");
           setScorpionDepositState("success");
@@ -3525,7 +3550,11 @@ const NewEvents = ({
 
       await stoneEyeContract.methods
         .deposit()
-        .send({ from: coinbase })
+        .send({
+          from: coinbase,
+          maxPriorityFeePerGas: null,
+          maxFeePerGas: null,
+        })
         .then(() => {
           setStatus("Bundle successfully purchased!");
           setCyclopsDepositState("success");

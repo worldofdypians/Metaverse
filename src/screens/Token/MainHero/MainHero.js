@@ -141,6 +141,11 @@ const MainHero = ({ scrollInto }) => {
       logo: "biconomy-exchange.png",
       link: "https://www.biconomy.com/exchange/WOD_USDT",
     },
+    {
+      title: "BTCC",
+      logo: "btcc-exchange.svg",
+      link: "https://www.btcc.com/en-US/spot/WODUSDT",
+    },
   ];
 
   return (

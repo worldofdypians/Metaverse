@@ -2195,6 +2195,22 @@ const Portfolio = ({
                         Biconomy
                       </h6>
                     </a>
+                    <a
+                      href="https://www.btcc.com/en-US/spot/WODUSDT"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="getwod-item"
+                    >
+                      <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/btcc.svg"
+                          }
+                          className="buywodimg"
+                        />
+                        BTCC
+                      </h6>
+                    </a>
                   </div>
                 </div>
               )}

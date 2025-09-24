@@ -409,6 +409,10 @@ const WodPartners = ({ full }) => {
       name: "Biconomy",
       icon: "biconomy.png",
     },
+     {
+      name: "BTCC",
+      icon: "btcc.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
