@@ -437,6 +437,8 @@ const NewChestItem = ({
             .openPremiumChest()
             .send({
               from: address,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
             })
             .then((data) => {
               getUserRewardsByChest(
@@ -465,6 +467,8 @@ const NewChestItem = ({
             .openChest()
             .send({
               from: address,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
             })
             .then((data) => {
               getUserRewardsByChest(
@@ -549,34 +553,36 @@ const NewChestItem = ({
       }
     } else if (chainId === 1116) {
       if (rewardTypes === "premium" && isPremium) {
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.coreWeb3.eth.getGasPrice().catch((e) => {
-          console.error(e);
-        });
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        const increasedGwei = parseInt(currentGwei) + 1.3;
-        console.log("increasedGwei", increasedGwei);
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.coreWeb3.eth.getGasPrice().catch((e) => {
+        //   console.error(e);
+        // });
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 1.3;
+        // console.log("increasedGwei", increasedGwei);
         let transactionHash = null;
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-        };
-        await daily_bonus_contract_core.methods
-          .openPremiumChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        // };
+        // await daily_bonus_contract_core.methods
+        //   .openPremiumChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_core.methods
           .openPremiumChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
+            // ...transactionParameters,
           })
           .once("transactionHash", (hash) => {
             transactionHash = hash;
@@ -654,35 +660,37 @@ const NewChestItem = ({
         //   console.error(e);
         // });
       } else if (rewardTypes === "standard") {
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.coreWeb3.eth.getGasPrice().catch((e) => {
-          console.error(e);
-        });
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        const increasedGwei = parseInt(currentGwei) + 2;
-        console.log("increasedGwei", increasedGwei);
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.coreWeb3.eth.getGasPrice().catch((e) => {
+        //   console.error(e);
+        // });
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 2;
+        // console.log("increasedGwei", increasedGwei);
         let transactionHash = null;
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_core.methods
-          .openChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_core.methods
+        //   .openChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_core.methods
           .openChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
+            // ...transactionParameters,
           })
           .once("transactionHash", (hash) => {
             transactionHash = hash;
@@ -768,6 +776,8 @@ const NewChestItem = ({
           .openPremiumChest()
           .send({
             from: address,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
           })
           .once("transactionHash", (hash) => {
             transactionHash = hash;
@@ -839,6 +849,8 @@ const NewChestItem = ({
           .openChest()
           .send({
             from: address,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
           })
           .once("transactionHash", (hash) => {
             transactionHash = hash;
@@ -910,6 +922,8 @@ const NewChestItem = ({
           .openPremiumChest()
           .send({
             from: address,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
           })
           .once("transactionHash", (hash) => {
             transactionHash = hash;
@@ -981,6 +995,8 @@ const NewChestItem = ({
           .openChest()
           .send({
             from: address,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
           })
           .once("transactionHash", (hash) => {
             transactionHash = hash;
@@ -1048,33 +1064,35 @@ const NewChestItem = ({
     } else if (chainId === 169) {
       if (window.WALLET_TYPE !== "binance") {
         if (rewardTypes === "premium" && isPremium) {
-          const web3 = new Web3(window.ethereum);
-          const gasPrice = await window.mantaWeb3.eth.getGasPrice();
-          console.log("gasPrice", gasPrice);
-          const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+          // const web3 = new Web3(window.ethereum);
+          // const gasPrice = await window.mantaWeb3.eth.getGasPrice();
+          // console.log("gasPrice", gasPrice);
+          // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
           // const increasedGwei = parseInt(currentGwei) + 0.01;
           // console.log("increasedGwei", increasedGwei);
 
-          const transactionParameters = {
-            gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-          };
+          // const transactionParameters = {
+          //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+          // };
 
-          await daily_bonus_contract_manta.methods
-            .openPremiumChest()
-            .estimateGas({ from: address })
-            .then((gas) => {
-              transactionParameters.gas = web3.utils.toHex(gas);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          console.log(transactionParameters);
+          // await daily_bonus_contract_manta.methods
+          //   .openPremiumChest()
+          //   .estimateGas({ from: address })
+          //   .then((gas) => {
+          //     transactionParameters.gas = web3.utils.toHex(gas);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          // console.log(transactionParameters);
 
           await daily_bonus_contract_manta.methods
             .openPremiumChest()
             .send({
               from: address,
-              ...transactionParameters,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
+              // ...transactionParameters,
             })
             .then((data) => {
               handleCheckIfTxExists(
@@ -1097,33 +1115,35 @@ const NewChestItem = ({
               return () => clearTimeout(timer);
             });
         } else if (rewardTypes === "standard") {
-          const web3 = new Web3(window.ethereum);
-          const gasPrice = await window.mantaWeb3.eth.getGasPrice();
-          console.log("gasPrice", gasPrice);
-          const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+          // const web3 = new Web3(window.ethereum);
+          // const gasPrice = await window.mantaWeb3.eth.getGasPrice();
+          // console.log("gasPrice", gasPrice);
+          // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
           // const increasedGwei = parseInt(currentGwei) + 0.01;
           // console.log("increasedGwei", increasedGwei);
 
-          const transactionParameters = {
-            gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-          };
+          // const transactionParameters = {
+          //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+          // };
 
-          await daily_bonus_contract_manta.methods
-            .openChest()
-            .estimateGas({ from: address })
-            .then((gas) => {
-              transactionParameters.gas = web3.utils.toHex(gas);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          console.log(transactionParameters);
+          // await daily_bonus_contract_manta.methods
+          //   .openChest()
+          //   .estimateGas({ from: address })
+          //   .then((gas) => {
+          //     transactionParameters.gas = web3.utils.toHex(gas);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          // console.log(transactionParameters);
 
           await daily_bonus_contract_manta.methods
             .openChest()
             .send({
               from: address,
-              ...transactionParameters,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
+              // ...transactionParameters,
             })
             .then((data) => {
               handleCheckIfTxExists(
@@ -1261,33 +1281,35 @@ const NewChestItem = ({
     } else if (chainId === 8453) {
       if (window.WALLET_TYPE !== "binance") {
         if (rewardTypes === "premium" && isPremium) {
-          const web3 = new Web3(window.ethereum);
-          const gasPrice = await window.baseWeb3.eth.getGasPrice();
-          console.log("gasPrice", gasPrice);
-          const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+          // const web3 = new Web3(window.ethereum);
+          // const gasPrice = await window.baseWeb3.eth.getGasPrice();
+          // console.log("gasPrice", gasPrice);
+          // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
           // const increasedGwei = parseInt(currentGwei) + 0.01;
           // console.log("increasedGwei", increasedGwei);
 
-          const transactionParameters = {
-            gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-          };
+          // const transactionParameters = {
+          //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+          // };
 
-          await daily_bonus_contract_base.methods
-            .openPremiumChest()
-            .estimateGas({ from: address })
-            .then((gas) => {
-              transactionParameters.gas = web3.utils.toHex(gas);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          console.log(transactionParameters);
+          // await daily_bonus_contract_base.methods
+          //   .openPremiumChest()
+          //   .estimateGas({ from: address })
+          //   .then((gas) => {
+          //     transactionParameters.gas = web3.utils.toHex(gas);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          // console.log(transactionParameters);
 
           await daily_bonus_contract_base.methods
             .openPremiumChest()
             .send({
               from: address,
-              ...transactionParameters,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
+              // ...transactionParameters,
             })
             .then((data) => {
               handleCheckIfTxExists(
@@ -1310,33 +1332,35 @@ const NewChestItem = ({
               return () => clearTimeout(timer);
             });
         } else if (rewardTypes === "standard") {
-          const web3 = new Web3(window.ethereum);
-          const gasPrice = await window.baseWeb3.eth.getGasPrice();
-          console.log("gasPrice", gasPrice);
-          const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+          // const web3 = new Web3(window.ethereum);
+          // const gasPrice = await window.baseWeb3.eth.getGasPrice();
+          // console.log("gasPrice", gasPrice);
+          // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
           // const increasedGwei = parseInt(currentGwei) + 0.01;
           // console.log("increasedGwei", increasedGwei);
 
-          const transactionParameters = {
-            gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-          };
+          // const transactionParameters = {
+          //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+          // };
 
-          await daily_bonus_contract_base.methods
-            .openChest()
-            .estimateGas({ from: address })
-            .then((gas) => {
-              transactionParameters.gas = web3.utils.toHex(gas);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          console.log(transactionParameters);
+          // await daily_bonus_contract_base.methods
+          //   .openChest()
+          //   .estimateGas({ from: address })
+          //   .then((gas) => {
+          //     transactionParameters.gas = web3.utils.toHex(gas);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          // console.log(transactionParameters);
 
           await daily_bonus_contract_base.methods
             .openChest()
             .send({
               from: address,
-              ...transactionParameters,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
+              // ...transactionParameters,
             })
             .then((data) => {
               handleCheckIfTxExists(
@@ -1473,33 +1497,38 @@ const NewChestItem = ({
       }
     } else if (chainId === 167000) {
       if (rewardTypes === "premium" && isPremium) {
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.taikoWeb3.eth.getGasPrice();
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.taikoWeb3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 0.01;
         // console.log("increasedGwei", increasedGwei);
 
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_taiko.methods
-          .openPremiumChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_taiko.methods
+        //   .openPremiumChest()
+        //   .estimateGas({
+        //     from: address,
+        //     maxPriorityFeePerGas: null,
+        //     maxFeePerGas: null,
+        //   })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_taiko.methods
           .openPremiumChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1522,33 +1551,35 @@ const NewChestItem = ({
             return () => clearTimeout(timer);
           });
       } else if (rewardTypes === "standard") {
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.taikoWeb3.eth.getGasPrice();
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.taikoWeb3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 0.01;
         // console.log("increasedGwei", increasedGwei);
 
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_taiko.methods
-          .openChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_taiko.methods
+        //   .openChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_taiko.methods
           .openChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
+            // ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1573,33 +1604,35 @@ const NewChestItem = ({
       }
     } else if (chainId === 841) {
       if (rewardTypes === "premium" && isPremium) {
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.taraxaWeb3.eth.getGasPrice();
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.taraxaWeb3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 0.01;
         // console.log("increasedGwei", increasedGwei);
 
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_taraxa.methods
-          .openPremiumChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_taraxa.methods
+        //   .openPremiumChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_taraxa.methods
           .openPremiumChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
+            // ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1621,33 +1654,35 @@ const NewChestItem = ({
             console.error(e);
           });
       } else if (rewardTypes === "standard") {
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.taraxaWeb3.eth.getGasPrice();
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.taraxaWeb3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 0.01;
         // console.log("increasedGwei", increasedGwei);
 
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_taraxa.methods
-          .openChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_taraxa.methods
+        //   .openChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_taraxa.methods
           .openChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
+            // ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1671,33 +1706,35 @@ const NewChestItem = ({
       }
     } else if (chainId === 1329) {
       if (rewardTypes === "premium" && isPremium) {
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.seiWeb3.eth.getGasPrice();
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.seiWeb3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 0.01;
         // console.log("increasedGwei", increasedGwei);
 
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_sei.methods
-          .openPremiumChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_sei.methods
+        //   .openPremiumChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_sei.methods
           .openPremiumChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
+            // ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1720,33 +1757,35 @@ const NewChestItem = ({
             return () => clearTimeout(timer);
           });
       } else if (rewardTypes === "standard") {
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.seiWeb3.eth.getGasPrice();
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.seiWeb3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 0.01;
         // console.log("increasedGwei", increasedGwei);
 
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_sei.methods
-          .openChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_sei.methods
+        //   .openChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_sei.methods
           .openChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
+            // ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1854,33 +1893,35 @@ const NewChestItem = ({
         }
       } else {
         if (rewardTypes === "premium" && isPremium) {
-          const web3 = new Web3(window.ethereum);
-          const gasPrice = await window.matWeb3.eth.getGasPrice();
-          console.log("gasPrice", gasPrice);
-          const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+          // const web3 = new Web3(window.ethereum);
+          // const gasPrice = await window.matWeb3.eth.getGasPrice();
+          // console.log("gasPrice", gasPrice);
+          // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
           // const increasedGwei = parseInt(currentGwei) + 0.01;
           // console.log("increasedGwei", increasedGwei);
 
-          const transactionParameters = {
-            gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-          };
+          // const transactionParameters = {
+          //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+          // };
 
-          await daily_bonus_contract_mat.methods
-            .openPremiumChest()
-            .estimateGas({ from: address })
-            .then((gas) => {
-              transactionParameters.gas = web3.utils.toHex(gas);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          console.log(transactionParameters);
+          // await daily_bonus_contract_mat.methods
+          //   .openPremiumChest()
+          //   .estimateGas({ from: address })
+          //   .then((gas) => {
+          //     transactionParameters.gas = web3.utils.toHex(gas);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          // console.log(transactionParameters);
 
           await daily_bonus_contract_mat.methods
             .openPremiumChest()
             .send({
               from: address,
-              ...transactionParameters,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
+              // ...transactionParameters,
             })
             .then((data) => {
               handleCheckIfTxExists(
@@ -1903,33 +1944,35 @@ const NewChestItem = ({
               return () => clearTimeout(timer);
             });
         } else if (rewardTypes === "standard") {
-          const web3 = new Web3(window.ethereum);
-          const gasPrice = await window.matWeb3.eth.getGasPrice();
-          console.log("gasPrice", gasPrice);
-          const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+          // const web3 = new Web3(window.ethereum);
+          // const gasPrice = await window.matWeb3.eth.getGasPrice();
+          // console.log("gasPrice", gasPrice);
+          // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
           // const increasedGwei = parseInt(currentGwei) + 0.01;
           // console.log("increasedGwei", increasedGwei);
 
-          const transactionParameters = {
-            gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-          };
+          // const transactionParameters = {
+          //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+          // };
 
-          await daily_bonus_contract_mat.methods
-            .openChest()
-            .estimateGas({ from: address })
-            .then((gas) => {
-              transactionParameters.gas = web3.utils.toHex(gas);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          console.log(transactionParameters);
+          // await daily_bonus_contract_mat.methods
+          //   .openChest()
+          //   .estimateGas({ from: address })
+          //   .then((gas) => {
+          //     transactionParameters.gas = web3.utils.toHex(gas);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          // console.log(transactionParameters);
 
           await daily_bonus_contract_mat.methods
             .openChest()
             .send({
               from: address,
-              ...transactionParameters,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
+              // ...transactionParameters,
             })
             .then((data) => {
               handleCheckIfTxExists(
@@ -1959,33 +2002,35 @@ const NewChestItem = ({
         window.WALLET_TYPE !== "matchId"
       ) {
         if (rewardTypes === "premium" && isPremium) {
-          const web3 = new Web3(window.ethereum);
-          const gasPrice = await web3.eth.getGasPrice();
-          console.log("gasPrice", gasPrice);
-          const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-          const increasedGwei = parseInt(currentGwei) + 1;
-          console.log("increasedGwei", increasedGwei);
+          // const web3 = new Web3(window.ethereum);
+          // const gasPrice = await web3.eth.getGasPrice();
+          // console.log("gasPrice", gasPrice);
+          // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+          // const increasedGwei = parseInt(currentGwei) + 1;
+          // console.log("increasedGwei", increasedGwei);
 
-          const transactionParameters = {
-            gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-          };
+          // const transactionParameters = {
+          //   gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+          // };
 
-          await daily_bonus_contract_bnb.methods
-            .openPremiumChest()
-            .estimateGas({ from: address })
-            .then((gas) => {
-              transactionParameters.gas = web3.utils.toHex(gas);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          console.log(transactionParameters);
+          // await daily_bonus_contract_bnb.methods
+          //   .openPremiumChest()
+          //   .estimateGas({ from: address })
+          //   .then((gas) => {
+          //     transactionParameters.gas = web3.utils.toHex(gas);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          // console.log(transactionParameters);
 
           await daily_bonus_contract_bnb.methods
             .openPremiumChest()
             .send({
               from: address,
-              ...transactionParameters,
+              // ...transactionParameters,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
             })
             // .then(() => {
             //
@@ -2021,33 +2066,34 @@ const NewChestItem = ({
         } else if (rewardTypes === "standard") {
           // console.log("standard");
 
-          const web3 = new Web3(window.ethereum);
-          const gasPrice = await web3.eth.getGasPrice();
-          console.log("gasPrice", gasPrice);
-          const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-          const increasedGwei = parseInt(currentGwei) + 1;
-          console.log("increasedGwei", increasedGwei);
+          // const web3 = new Web3(window.ethereum);
+          // const gasPrice = await web3.eth.getGasPrice();
+          // console.log("gasPrice", gasPrice);
+          // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+          // const increasedGwei = parseInt(currentGwei) + 1;
+          // console.log("increasedGwei", increasedGwei);
 
-          const transactionParameters = {
-            gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-          };
+          // const transactionParameters = {
+          //   gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+          // };
 
-          await daily_bonus_contract_bnb.methods
-            .openChest()
-            .estimateGas({ from: address })
-            .then((gas) => {
-              transactionParameters.gas = web3.utils.toHex(gas);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          console.log(transactionParameters);
+          // await daily_bonus_contract_bnb.methods
+          //   .openChest()
+          //   .estimateGas({ from: address })
+          //   .then((gas) => {
+          //     transactionParameters.gas = web3.utils.toHex(gas);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          // console.log(transactionParameters);
 
           await daily_bonus_contract_bnb.methods
             .openChest()
             .send({
               from: address,
-              ...transactionParameters,
+              maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
             })
             .then((data) => {
               getUserRewardsByChest(
@@ -2265,33 +2311,35 @@ const NewChestItem = ({
       }
     } else if (chainId === 1482601649) {
       if (rewardTypes === "premium" && isPremium) {
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.skaleWeb3.eth.getGasPrice();
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        const increasedGwei = parseInt(currentGwei) + 0.0001;
-        console.log("increasedGwei", increasedGwei);
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.skaleWeb3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.0001;
+        // console.log("increasedGwei", increasedGwei);
 
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_skale.methods
-          .openPremiumChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_skale.methods
+        //   .openPremiumChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_skale.methods
           .openPremiumChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
+            // ...transactionParameters,
           })
 
           .then((data) => {
@@ -2317,33 +2365,35 @@ const NewChestItem = ({
           });
       } else if (rewardTypes === "standard") {
         // console.log("standard");
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await window.skaleWeb3.eth.getGasPrice();
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        const increasedGwei = parseInt(currentGwei) + 0.0001;
-        console.log("increasedGwei", increasedGwei);
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.skaleWeb3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.0001;
+        // console.log("increasedGwei", increasedGwei);
 
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_skale.methods
-          .openChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_skale.methods
+        //   .openChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_skale.methods
           .openChest()
           .send({
             from: address,
-            ...transactionParameters,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
+            // ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(

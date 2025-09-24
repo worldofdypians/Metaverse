@@ -182,6 +182,11 @@ const VideoWrapper = ({
       logo: "biconomy.png",
       link: "https://www.biconomy.com/exchange/WOD_USDT",
     },
+    {
+      title: "BTCC",
+      logo: "btcc.svg",
+      link: "https://www.btcc.com/en-US/spot/WODUSDT",
+    },
   ];
 
   const dummyBetaPassData2 = [

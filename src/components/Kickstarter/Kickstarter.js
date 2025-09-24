@@ -528,6 +528,8 @@ const Kickstarter = ({
           .openChest()
           .send({
             from: address,
+             maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
           })
           .then((data) => {
             getUserRewardsByChest(
@@ -598,33 +600,35 @@ const Kickstarter = ({
       ) {
         // console.log("standard");
 
-        const web3 = new Web3(window.ethereum);
-        const gasPrice = await web3.eth.getGasPrice();
-        console.log("gasPrice", gasPrice);
-        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        const increasedGwei = parseInt(currentGwei) + 1;
-        console.log("increasedGwei", increasedGwei);
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await web3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 1;
+        // console.log("increasedGwei", increasedGwei);
 
-        const transactionParameters = {
-          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-        };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
+        // };
 
-        await daily_bonus_contract_bnb.methods
-          .openChest()
-          .estimateGas({ from: address })
-          .then((gas) => {
-            transactionParameters.gas = web3.utils.toHex(gas);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(transactionParameters);
+        // await daily_bonus_contract_bnb.methods
+        //   .openChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
         await daily_bonus_contract_bnb.methods
           .openChest()
           .send({
             from: address,
-            ...transactionParameters,
+             maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
+            // ...transactionParameters,
           })
           .then((data) => {
             getUserRewardsByChest(
@@ -739,33 +743,35 @@ const Kickstarter = ({
         }
       }
     } else if (chainId === 167000) {
-      const web3 = new Web3(window.ethereum);
-      const gasPrice = await window.taikoWeb3.eth.getGasPrice();
-      console.log("gasPrice", gasPrice);
-      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+      // const web3 = new Web3(window.ethereum);
+      // const gasPrice = await window.taikoWeb3.eth.getGasPrice();
+      // console.log("gasPrice", gasPrice);
+      // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
       // const increasedGwei = parseInt(currentGwei) + 0.01;
       // console.log("increasedGwei", increasedGwei);
 
-      const transactionParameters = {
-        gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-      };
+      // const transactionParameters = {
+      //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+      // };
 
-      await daily_bonus_contract_taiko.methods
-        .openChest()
-        .estimateGas({ from: address })
-        .then((gas) => {
-          transactionParameters.gas = web3.utils.toHex(gas);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      console.log(transactionParameters);
+      // await daily_bonus_contract_taiko.methods
+      //   .openChest()
+      //   .estimateGas({ from: address })
+      //   .then((gas) => {
+      //     transactionParameters.gas = web3.utils.toHex(gas);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+      // console.log(transactionParameters);
 
       await daily_bonus_contract_taiko.methods
         .openChest()
         .send({
           from: address,
-          ...transactionParameters,
+           maxPriorityFeePerGas: null,
+              maxFeePerGas: null,
+          // ...transactionParameters,
         })
         .then((data) => {
           handleCheckIfTxExists(
@@ -874,21 +880,23 @@ const Kickstarter = ({
   useEffect(() => {
     const video = videoRef1.current;
     const videoTaiko = videoRef1Taiko.current;
+    var timeTaiko;
     var time;
+
     if (
       openedRoyaltyChest &&
       openedRoyaltyChest.isOpened === true &&
       (selectedChain === "opbnb" || selectedChain === "bnb")
     ) {
-      time = 0;
+      timeTaiko = 0;
     } else if (
       openedRoyaltyChestTaiko &&
       openedRoyaltyChestTaiko.isOpened === true &&
       selectedChain === "taiko"
     ) {
-      time = 0;
+      timeTaiko = 0;
     } else {
-      time = 4000;
+      timeTaiko = 4000;
     }
 
     if (
@@ -926,15 +934,15 @@ const Kickstarter = ({
       selectedChain === "taiko" &&
       isOpen
     ) {
-      var time;
+      // var timeTaiko;
 
       if (
         openedRoyaltyChestTaiko &&
         openedRoyaltyChestTaiko.isOpened === true
       ) {
-        time = 0;
+        timeTaiko = 0;
       } else {
-        time = 3600;
+        timeTaiko = 3600;
       }
 
       setChestOpened(true);
@@ -950,10 +958,10 @@ const Kickstarter = ({
 
       setTimeout(() => {
         setRewards(openedRoyaltyChestTaiko.rewards);
-      }, time);
+      }, timeTaiko);
       setTimeout(() => {
         setShowContent(true);
-      }, time);
+      }, timeTaiko);
     } else if (
       (openedRoyaltyChestTaiko.length === 0 ||
         (openedRoyaltyChestTaiko &&
@@ -966,7 +974,7 @@ const Kickstarter = ({
       setChestOpened(false);
       setTimeout(() => {
         setShowContent(true);
-      }, time);
+      }, timeTaiko);
       const timeout1 = setTimeout(() => {
         if (videoTaiko) {
           videoTaiko.play().catch((err) => console.error("Play failed:", err));
