@@ -963,6 +963,22 @@ const MyProfile = ({
                   </div>
                 </NavLink>
                 <div
+                  className="d-flex wallet-address-wrapper2 p-2 w-100 h-100"
+                  onClick={openMyRewards}
+                >
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <div className="d-flex gap-1 align-items-center">
+                      <span className="user-data-item-left">My Rewards</span>
+                    </div>
+                    <span className="user-data-item-right">
+                      $
+                      {getFormattedNumber(
+                        liveRewards + Number(treasureRewardMoney)
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <div
                   className="wallet-address-wrapper2 p-2 w-100"
                   onClick={onGoldenpassClick}
                 >
@@ -985,9 +1001,10 @@ const MyProfile = ({
 
                     <div className="d-flex">
                       {!isgoldenPassActive ? (
-                        <button className="activate-btn2 px-3 py-1">
-                          Activate
-                        </button>
+                        // <button className="activate-btn2 px-3 py-1">
+                        //   Activate
+                        // </button>
+                        <></>
                       ) : (
                         <Countdown
                           date={Number(isgoldenPassActive) * 1000}
@@ -1554,51 +1571,32 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-5 mt-3 px-0 px-lg-2">
                 <div
-                  className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
-                  onClick={openMyRewards}
+                  className="red-battle-wrapper position-relative d-flex flex-column justify-content-between gap-2 p-3"
+                  // onClick={openMyRewards}
                 >
+                  <div className="radial-gradient-darklord h-100 w-50 position-absolute -right-4 top-0" />
                   <img
-                    src={
-                      "https://cdn.worldofdypians.com/wod/myRewardsMiner.png"
-                    }
-                    className="miner-img"
+                    src={"https://cdn.worldofdypians.com/wod/darklord.webp"}
+                    className="darklord-img"
                     alt=""
                   />
-                  <div className="d-flex flex-column position-absolute extraRewardsGolden">
-                    {/* <h6
-                      className="special-rewards-total-span"
-                      style={{
-                        color: "#F3BF09",
-                        width: "fit-content",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {isgoldenPassActive ? (
-                        <Countdown
-                          date={isgoldenPassActive}
-                          renderer={renderer3}
-                        />
-                      ) : (
-                        "Extra Rewards"
-                      )}
-                    </h6> */}
-                  </div>
+
                   <div className="d-flex align-items-center gap-2">
                     <h6
-                      className="special-rewards-title"
+                      className="special-rewards-title capitalize"
                       style={{ color: "#FFF", width: "fit-content" }}
                     >
-                      My
+                      Red
                     </h6>
                     <h6
-                      className="special-rewards-title"
-                      style={{ color: "#35F3FF", width: "fit-content" }}
+                      className="special-rewards-title capitalize"
+                      style={{ color: "#FF6553", width: "fit-content" }}
                     >
-                      Rewards
+                      Battle
                     </h6>
                   </div>
 
-                  <div className="d-flex flex-column">
+                  {/* <div className="d-flex flex-column">
                     <h6
                       className="special-rewards-total mb-0"
                       style={{ color: isPremium ? "#F3BF09" : "#FFE8D2" }}
@@ -1614,13 +1612,18 @@ const MyProfile = ({
                     >
                       Rewards
                     </span>
+                  </div> */}
+                  <div className="py-2 px-3 rounded bg-white/10 w-fit">
+                    <span className="font-unzialish text-white">
+                      Coming Soon
+                    </span>
                   </div>
-                  <img
+                  {/* <img
                     src={"https://cdn.worldofdypians.com/wod/cyanArrow.svg"}
                     width={20}
                     height={20}
                     alt=""
-                  />
+                  /> */}
                 </div>
               </div>
               <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">

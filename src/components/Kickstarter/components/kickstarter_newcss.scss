@@ -2511,6 +2511,17 @@
     background-color: #0000;
   }
 
+
+    .bg-white\/10 {
+    background-color: rgba(255, 255, 255, 0.10);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-white\/10 {
+      background-color: color-mix(in oklab, var(--color-white) 10%, transparent);
+    }
+  }
+
   .bg-white\/90 {
     background-color: #ffffffe6;
   }
@@ -4563,6 +4574,10 @@
 
   .uppercase {
     text-transform: uppercase;
+  }
+
+  .capitalize {
+    text-transform: capitalize;
   }
 
   .tabular-nums {

@@ -660,7 +660,27 @@
   }
 }
 
-.my-rewards-wrapper-new:hover {
+.red-battle-wrapper {
+border-radius: 10px;
+background: linear-gradient(90deg, #370006 0%, #D7000D 160.28%);
+  background-size: cover;
+  height: 145px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.25s ease;
+
+  @media screen and (max-width: 786px) {
+    height: 155px;
+  }
+}
+
+.radial-gradient-darklord {
+  background: radial-gradient(30.98% 30.98% at 50% 50%, #F00 0%, rgba(255, 0, 0, 0.00) 100%);
+// filter: blur(7px);
+}
+
+.my-rewards-wrapper-new:hover,.red-battle-wrapper:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
 
@@ -680,6 +700,20 @@
   right: 20px;
   bottom: 0;
   width: 28%;
+
+  @media screen and (max-width: 991px) {
+    width: auto;
+    bottom: 0;
+    right: 0;
+    height: inherit;
+  }
+}
+
+.darklord-img {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  width: 33%;
 
   @media screen and (max-width: 991px) {
     width: auto;

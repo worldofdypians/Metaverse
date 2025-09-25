@@ -27,6 +27,12 @@
   font-family: "Oxanium";
   src: url("./fonts/Oxanium.ttf");
 }
+
+@font-face {
+  font-family: "UnZialish";
+  src: url("./fonts/UnZialish.ttf");
+}
+
 .custom-container {
   max-width: 1600px;
   width: 100%;
@@ -44,6 +50,10 @@
 }
 .font-montserrat {
   font-family: "Montserrat" !important;
+}
+
+.font-unzialish {
+  font-family: "UnZialish" !important;
 }
 
 html {
