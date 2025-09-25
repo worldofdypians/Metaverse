@@ -2981,12 +2981,12 @@ function Dashboard({
         Version: version - 1,
         PlayerId: userId,
       };
-      const data2 = {
-        StatisticName: "GlobalStarMonthlyLeaderboard",
-        MaxResultsCount: 1,
-        Version: version - 2,
-        PlayerId: userId,
-      };
+      // const data2 = {
+      //   StatisticName: "GlobalStarMonthlyLeaderboard",
+      //   MaxResultsCount: 1,
+      //   Version: version - 2,
+      //   PlayerId: userId,
+      // };
       const result = await axios
         .post(
           `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
@@ -2995,20 +2995,20 @@ function Dashboard({
         .catch((e) => {
           console.error(e);
         });
-      const result2 = await axios
-        .post(
-          `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
-          data2
-        )
-        .catch((e) => {
-          console.error(e);
-        });
+      // const result2 = await axios
+      //   .post(
+      //     `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
+      //     data2
+      //   )
+      //   .catch((e) => {
+      //     console.error(e);
+      //   });
       if (result) {
         setUserPreviousDataStar(...result.data.data.leaderboard);
       }
-      if (result2) {
-        setUserPreviousDataStar2(...result2.data.data.leaderboard);
-      }
+      // if (result2) {
+      //   setUserPreviousDataStar2(...result2.data.data.leaderboard);
+      // }
     } else {
       setUserPreviousDataStar([]);
       setUserPreviousDataStar2([]);
