@@ -28,7 +28,7 @@ const renderer = ({ days, hours, minutes }) => {
       <h6 className="timer-text2 mb-0">
         {days}d:{hours}h:{minutes}m
       </h6>
-      <h6 className="timer-text2 mb-0">Next in</h6>
+      {/* <h6 className="timer-text2 mb-0">Next in</h6> */}
     </div>
   );
 };
@@ -93,7 +93,6 @@ const rendererdb = ({ hours, minutes, seconds }) => {
 };
 
 const MyProfile = ({
-  greatCollectionData,
   explorerHuntData,
   canBuy,
   email,
@@ -101,7 +100,7 @@ const MyProfile = ({
   username,
   address,
   coinbase,
-  totalScore,
+
   onGoldenpassClick,
   openChainsLeaderboard,
   openGlobalLeaderboard,
@@ -113,18 +112,17 @@ const MyProfile = ({
   userRankName,
   isConnected,
   onConnectWallet,
-  onDomainClick,
-  domainName,
+
   liveRewards,
   specialRewards,
   syncStatus,
   onSyncClick,
   isgoldenPassActive,
-  dragonRuinsCountdown,
+
   allClaimedChests,
   treasureRewardMoney,
   userDailyBundles,
-  puzzleMadnessCountdown,
+
   userActiveEvents,
   userDataStar,
   primeStars,
@@ -163,7 +161,7 @@ const MyProfile = ({
   userTaikoStars,
   userMatStars,
   userSeiStars,
-  wodBalance,
+
   onShowRankPopup,
   onCloseRankPopup,
   userRankVanar,
@@ -176,6 +174,8 @@ const MyProfile = ({
   onDailyQuestionClick,
   openKickstarter,
   onOpenBooster,
+  battleCompleted,
+  openBattlePopup,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -948,11 +948,12 @@ const MyProfile = ({
                       />
                       <div className="d-flex flex-column">
                         <span className="user-data-item-left">
-                          {!isPremium ? "Upgrade" : "Prime"}
+                          {/* {!isPremium ? "Upgrade" : "Prime"} */}
+                          Prime
                         </span>
-                        <span className="user-data-item-left">
+                        {/* <span className="user-data-item-left">
                           {!isPremium ? "Status" : "Enabled"}
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                     <div className="d-flex">
@@ -986,13 +987,15 @@ const MyProfile = ({
                     <div className="d-flex gap-1 align-items-center">
                       <img
                         src={
-                          "https://cdn.worldofdypians.com/wod/goldenPassBadge.png"
+                          "https://cdn.worldofdypians.com/wod/golden-pass-badge2.png"
                         }
                         alt=""
                         style={{ width: 24, height: 24 }}
                       />
                       <div className="d-flex flex-column">
-                        <span className="user-data-item-left">Golden Pass</span>
+                        <span className="user-data-item-left">
+                          {!isgoldenPassActive && "Golden Pass"}
+                        </span>
                         <span className="user-data-item-left">
                           {/* {!isgoldenPassActive ? `` : "Activated"} */}
                         </span>
@@ -1572,9 +1575,9 @@ const MyProfile = ({
               <div className="col-12 col-lg-5 mt-3 px-0 px-lg-2">
                 <div
                   className="red-battle-wrapper position-relative d-flex flex-column justify-content-between gap-2 p-3"
-                  // onClick={openMyRewards}
+                  onClick={openBattlePopup}
                 >
-                  <div className="radial-gradient-darklord h-100 w-50 position-absolute -right-4 top-0" />
+                  <div className="radial-gradient-darklord h-100 w-50 position-absolute -right-8 top-0" />
                   <img
                     src={"https://cdn.worldofdypians.com/wod/darklord.webp"}
                     className="darklord-img"
@@ -1583,47 +1586,84 @@ const MyProfile = ({
 
                   <div className="d-flex align-items-center gap-2">
                     <h6
-                      className="special-rewards-title capitalize"
+                      className="special-rewards-title capitalize font-unzialish"
                       style={{ color: "#FFF", width: "fit-content" }}
                     >
-                      Red
+                      Arena of Rage
                     </h6>
-                    <h6
-                      className="special-rewards-title capitalize"
+                    {/* <h6
+                      className="special-rewards-title capitalize font-unzialish"
                       style={{ color: "#FF6553", width: "fit-content" }}
                     >
                       Battle
-                    </h6>
+                    </h6> */}
                   </div>
+                  <div className={`d-flex flex-column infotips-holder`}>
+                    <div className="d-flex align-items-center gap-1">
+                      <div className="yellow-dot"></div>
+                      <span
+                        className="beast-siege-timer"
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: 400,
+                          color: "#fff",
+                        }}
+                      >
+                        Stars
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center gap-1">
+                      <div className="yellow-dot"></div>
+                      <span
+                        className="beast-siege-timer"
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: 400,
+                          color: "#fff",
+                        }}
+                      >
+                        Points
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center gap-1">
+                      <div className="yellow-dot"></div>
+                      <span
+                        className="beast-siege-timer"
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: 400,
+                          color: "#fff",
+                        }}
+                      >
+                        Rewards
+                      </span>
+                    </div>
+                  </div>
+                  {battleCompleted ? (
+                    <>
+                      <div className="ready-circle-2-position d-flex flex-column gap-1 align-items-center justify-content-center">
+                        <div className="ready-circle-battle d-flex flex-column gap-1">
+                          <Countdown renderer={renderer4} date={midnight} />
+                        </div>
+                        <span className="new-time-remaining">
+                          Time Remaining
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="ready-circle d-flex">
+                        <span className="beast-siege-timer">Ready</span>
+                      </div>
+                    </>
+                  )}
 
-                  {/* <div className="d-flex flex-column">
-                    <h6
-                      className="special-rewards-total mb-0"
-                      style={{ color: isPremium ? "#F3BF09" : "#FFE8D2" }}
-                    >
-                      $
-                      {getFormattedNumber(
-                        liveRewards + Number(treasureRewardMoney)
-                      )}
-                    </h6>
-                    <span
-                      className="special-rewards-total-span"
-                      style={{ color: "#FFE8D2" }}
-                    >
-                      Rewards
-                    </span>
-                  </div> */}
-                  <div className="py-2 px-3 rounded bg-white/10 w-fit">
-                    <span className="font-unzialish text-white">
-                      Coming Soon
-                    </span>
-                  </div>
-                  {/* <img
-                    src={"https://cdn.worldofdypians.com/wod/cyanArrow.svg"}
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/goldArrow.svg"}
                     width={20}
                     height={20}
                     alt=""
-                  /> */}
+                  />
                 </div>
               </div>
               <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
@@ -1643,9 +1683,6 @@ const MyProfile = ({
                   </h6>
 
                   <div className="d-flex">
-                    {/* {aiQuestionCompleted && (
-                      <Countdown date={Number(midnight)} renderer={renderer} />
-                    )} */}
                     {/* {!aiQuestionCompleted && ( */}
                     <div className={`d-flex flex-column infotips-holder`}>
                       <div className="d-flex align-items-center gap-1">
@@ -1891,10 +1928,7 @@ const MyProfile = ({
                           Activate
                         </button>
                       ) : (
-                        <Countdown
-                          date={Number(isgoldenPassActive) * 1000}
-                          renderer={renderer}
-                        />
+                         <></>
                       )}
                     </div>
                   </div>
@@ -2223,8 +2257,7 @@ const MyProfile = ({
                        </div>
                      </div>
                      <hr className="sidebar-separator my-2" />
-                     <div className="d-flex align-items-center justify-content-between">
-                       <Countdown renderer={renderer} date={item.eventDate} />
+                     <div className="d-flex align-items-center justify-content-between"> 
                      
                      </div>
                    </div>

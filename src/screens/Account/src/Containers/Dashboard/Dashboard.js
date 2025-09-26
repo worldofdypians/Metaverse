@@ -58,6 +58,7 @@ import MatchainDailyBonus from "../../../../../components/NewDailyBonus/Matchain
 import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
 import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
+import BattlePopup from "../../../../../components/BattlePopup/BattlePopup";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -491,6 +492,7 @@ function Dashboard({
   const [loading, setLoading] = useState(false);
   const [showDailyQuestion, setShowDailyQuestion] = useState(false);
   const [booster, setBooster] = useState(false);
+  const [battlePopup, setbattlePopup] = useState(false);
 
   const [tooltip, setTooltip] = useState(false);
 
@@ -6620,17 +6622,17 @@ function Dashboard({
           <>
             <MyProfile
               onOpenBooster={() => setBooster(true)}
+              openBattlePopup={() => {
+                setbattlePopup(true);
+              }}
+              battleCompleted={false}
               openKickstarter={openKickstarter}
-              wodBalance={wodBalance}
               aiQuestionCompleted={aiQuestionCompleted}
-              greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
               userDataStarWeekly={userDataStarWeekly}
               primeStars={primeStars}
               isgoldenPassActive={goldenPassRemainingTime}
-              dragonRuinsCountdown={countdown}
-              puzzleMadnessCountdown={countdown3500}
               userActiveEvents={userActiveEvents}
               beastSiegeStatus={beastSiegeStatus}
               puzzleMadnessTimer={puzzleMadnessTimer}
@@ -6708,10 +6710,6 @@ function Dashboard({
               onConnectWallet={() => {
                 // setshowWalletModal(true);
                 handleConnect();
-              }}
-              domainName={domainName}
-              onDomainClick={() => {
-                handleOpenDomains();
               }}
               liveRewards={
                 Number(userSocialRewardsCached) +
@@ -7742,6 +7740,33 @@ function Dashboard({
               />
             </div>
           </OutsideClickHandler>
+        )}
+
+        {(battlePopup || hashValue === "#arena-of-rage") && (
+          <div className={`package-popup-wrapper2 `}>
+          <BattlePopup
+            publicClient={publicClient}
+            walletClient={walletClient}
+            binanceW3WProvider={binanceW3WProvider}
+            onClose={() => {
+              setbattlePopup(false);
+              html.classList.remove("hidescroll");
+              window.location.hash = "";
+            }}
+            isOpen={battlePopup || hashValue === "#arena-of-rage"}
+            coinbase={coinbase}
+            chainId={chainId}
+            handleSwitchNetwork={handleSwitchNetwork}
+            isConnected={isConnected}
+            email={email}
+            address={userWallet}
+            onConnectWallet={() => {
+              setbattlePopup(false);
+              handleConnect();
+            }}
+            openedRoyaltyChest={[]}
+          />
+          </div>
         )}
 
         {(showDailyQuestion || hashValue === "#daily-question") && (
