@@ -268,12 +268,12 @@ const MyProfile = ({
   }, [twitterLinkedParam, address]);
 
   useEffect(() => {
-    if (rankDropdown === true) {
+    if (rankDropdown === true || popup) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [rankDropdown]);
+  }, [rankDropdown, popup]);
 
   const dailyEvents = [
     {
@@ -2320,6 +2320,7 @@ const MyProfile = ({
             tasks={twitterTasks}
             onClose={() => setPopup(false)}
             address={address}
+            checkTwitter={checkTwitter}
           />
         </OutsideClickHandler>
       )}
