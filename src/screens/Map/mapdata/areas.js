@@ -438,7 +438,7 @@ const chainAreas = [
         [-0.06885765325506008, 0.08509039878845216],
       ],
     ],
-    banner: "bnbBanner.png",
+    banner: "trustwalletBanner.webp",
     events: [
       
       // {

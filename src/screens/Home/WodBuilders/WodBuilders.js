@@ -18,7 +18,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "Trust Wallet",
       icon: "trustwalletBuyWod",
-      banner: "matchainBanner.webp",
+      banner: "trustwalletBanner.webp",
       link: "https://x.com/matchain_io/status/1862149131692577027",
       backer: true,
     },
