@@ -3,6 +3,7 @@ import { GOLDEN_PASS_ABI, golden_pass_address } from "../NewEvents/abi";
 import {
   goldenPassAddress,
   usdt_token_abi,
+  wod_token,
   wod_token_abi,
 } from "../../screens/Account/src/web3";
 import Web3 from "web3";
@@ -177,7 +178,7 @@ const GoldenPassPopup = ({
           setBundleState("deposit");
         }
       } else {
-        const allowance1 = await wod_token_abi.methods
+        const allowance1 = await wod_token.methods
           .allowance(wallet, goldenPassAddress)
           .call()
           .catch((e) => {

@@ -39,6 +39,8 @@ export const web3 = new Web3();
 web3.setProvider(window.ethereum);
 
 export const cawsContractWeb3 = new Web3();
+export const bscWeb3 = window.bscWeb3;
+
 export const caws_Contract = new Web3(
   "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
 );
@@ -65,6 +67,12 @@ export const token_abi = new cawsContractWeb3.eth.Contract(
   TOKEN_ABI,
   token_address
 );
+
+export const wod_token = new bscWeb3.eth.Contract(
+  TOKEN_ABI,
+  wod_token_address
+);
+
 export const wod_token_abi = new cawsContractWeb3.eth.Contract(
   TOKEN_ABI,
   wod_token_address

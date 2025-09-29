@@ -15,8 +15,8 @@ import {
   puzzleMadnessAddress,
   scorpionKingAddress,
   stoneEyeAddress,
-  usdt_token_abi,
   wingStormAddress,
+  wod_token,
   wod_token_abi,
 } from "../../screens/Account/src/web3";
 import { ethers } from "ethers";
@@ -460,7 +460,7 @@ const NewEvents = ({
           setpuzzleMadnessBundleState("deposit");
         }
       } else {
-        const allowance1 = await wod_token_abi.methods
+        const allowance1 = await wod_token.methods
           .allowance(wallet, puzzleMadnessAddress)
           .call()
           .catch((e) => {
@@ -951,7 +951,7 @@ const NewEvents = ({
           setDragonBundleState("deposit");
         }
       } else {
-        const allowance1 = await wod_token_abi.methods
+        const allowance1 = await wod_token.methods
           .allowance(wallet, dragonRuinsAddress)
           .call()
           .catch((e) => {
@@ -1435,13 +1435,12 @@ const NewEvents = ({
           setBearBundleState("deposit");
         }
       } else {
-        const allowance1 = await wod_token_abi.methods
+        const allowance1 = await wod_token.methods
           .allowance(wallet, coldBiteAddress)
           .call()
           .catch((e) => {
             console.log(e);
           });
-          
 
         if (allowance1 === "0" || allowance1 < 150000000000000000000) {
           setBearShowApproval(true);
@@ -1918,7 +1917,7 @@ const NewEvents = ({
           setBeastBundleState("deposit");
         }
       } else {
-        const allowance1 = await wod_token_abi.methods
+        const allowance1 = await wod_token.methods
           .allowance(wallet, furyBeastAddress)
           .call()
           .catch((e) => {
@@ -2420,7 +2419,7 @@ const NewEvents = ({
           setEagleBundleState("deposit");
         }
       } else {
-        const allowance1 = await wod_token_abi.methods
+        const allowance1 = await wod_token.methods
           .allowance(wallet, wingStormAddress)
           .call()
           .catch((e) => {
@@ -2905,7 +2904,7 @@ const NewEvents = ({
           setScorpionBundleState("deposit");
         }
       } else {
-        const allowance1 = await wod_token_abi.methods
+        const allowance1 = await wod_token.methods
           .allowance(wallet, scorpionKingAddress)
           .call()
           .catch((e) => {
@@ -3393,7 +3392,7 @@ const NewEvents = ({
           setCyclopsBundleState("deposit");
         }
       } else {
-        const allowance1 = await wod_token_abi.methods
+        const allowance1 = await wod_token.methods
           .allowance(wallet, stoneEyeAddress)
           .call()
           .catch((e) => {

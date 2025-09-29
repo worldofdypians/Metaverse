@@ -423,6 +423,70 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
+    {
+    title: "Trust Wallet Area",
+    marker: markers.trustwalletMarker,
+    activeMarker: activeMarkers.trustwalletMarker,
+    icon: "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg",
+    location: [-0.06912771797944854, 0.0847846269607544],
+     
+    area: [
+      [
+        [-0.06902395009360253, 0.08444666862487794],
+        [-0.06931362845611903, 0.08451640605926514],
+        [-0.06913123837621961, 0.08517622947692871],
+        [-0.06885765325506008, 0.08509039878845216],
+      ],
+    ],
+    banner: "trustwalletBanner.webp",
+    events: [
+      
+      // {
+      //   title: "Treasure Hunt",
+      //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      //   link: "/account/challenges/treasure-hunt",
+      // },
+    ],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/TrustWallet",
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+      },
+      {
+        link: "https://t.me/trustwallet",
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+      },
+      {
+        link: "https://discord.gg/trustwallet",
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+      },
+      {
+        link: "https://trustwallet.com/",
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+      },
+    ],
+    city: "Dypians",
+    size: "500x500",
+    rewards: "Available",
+    desc: "Trust Wallet is a secure multi-chain self-custody wallet and your gateway to 10+ million digital assets, NFTs, and thousands of Web3 dApps.",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Explore an immersive environment ",
+      "Experience real-time interactions",
+      "Get ranked in dedicated leaderboards",
+    ],
+
+    area: [
+      [
+        [-0.06702838799312999, 0.08624374866485597],
+        [-0.0668513623189673, 0.08691966533660889],
+        [-0.067521914111659, 0.08707523345947267],
+        [-0.0676774821262475, 0.08641004562377931],
+      ],
+    ],
+  },
   {
     title: "SKALE Area",
     marker: markers.skaleMarker,
