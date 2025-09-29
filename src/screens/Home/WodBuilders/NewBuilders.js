@@ -18,7 +18,7 @@ const NewBuilders = () => {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
       banner: "trustwalletBanner.webp",
-      link: "https://x.com/VictionEco/status/1789987120083562640",
+      link: "",
       backer: true,
     },
     {
