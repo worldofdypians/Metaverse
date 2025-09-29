@@ -16,10 +16,10 @@ const WodBuilders = ({ page }) => {
       backer: true,
     },
     {
-      name: "Matchain",
-      icon: "matchainIcon",
-      banner: "matchainBanner.webp",
-      link: "https://x.com/matchain_io/status/1862149131692577027",
+      name: "Trust Wallet",
+      icon: "trustwalletBuyWod",
+      banner: "trustwalletBanner.webp",
+      link: "",
       backer: true,
     },
     {
@@ -205,6 +205,13 @@ const WodBuilders = ({ page }) => {
       banner: "taraxaBuilderBanner.webp",
       link: "https://x.com/taraxa_project/status/1954940839177920863/",
       backer: false,
+    },
+      {
+      name: "Matchain",
+      icon: "matchainIcon",
+      banner: "matchainBanner.webp",
+      link: "https://x.com/matchain_io/status/1862149131692577027",
+      backer: true,
     },
     {
       name: "Binance Wallet",
@@ -444,7 +451,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="d-flex align-items-center gap-2 view-more-partners position-relative"
-                onClick={() => (slice === 2 ? setSlice(28) : setSlice(2))}
+                onClick={() => (slice === 2 ? setSlice(29) : setSlice(2))}
                 style={{ bottom: "0" }}
               >
                 <span className="view-all-partners ">
@@ -466,7 +473,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="d-flex align-items-center gap-2 view-more-partners position-relative"
-                onClick={() => (slice === 8 ? setSlice(28) : setSlice(8))}
+                onClick={() => (slice === 8 ? setSlice(29) : setSlice(8))}
                 style={{ bottom: "0" }}
               >
                 <span className="view-all-partners ">
