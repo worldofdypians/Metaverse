@@ -4,21 +4,22 @@ import axios from "axios";
 import "./_twitterrewards.scss";
 import CompletedTwitterItem from "./CompletedTwitterItem";
 
-const TwitterRewards = ({ tasks, onClose, address, checkTwitter, username }) => {
+const TwitterRewards = ({
+  tasks,
+  onClose,
+  address,
+  checkTwitter,
+  username,
+}) => {
+  const completed = tasks.filter((item) =>
+    item.tasks.every((t) => t.completed && t.verified)
+  );
 
-const completed = tasks.filter(item =>
-  item.tasks.every(t => t.completed && t.verified)
-);
+  const available = tasks.filter(
+    (item) => !item.tasks.every((t) => t.completed && t.verified)
+  );
 
-const available = tasks.filter(item =>
-  !item.tasks.every(t => t.completed && t.verified)
-);
-
-
-
-
-
-  const [tab, setTab] = useState("available")
+  const [tab, setTab] = useState("available");
 
   return (
     <div className="popup-wrapper popup-active twitter-popup p-3">
@@ -38,7 +39,7 @@ const available = tasks.filter(item =>
       </div>
       <div className="row mt-3 gap-2 gap-lg-0">
         <div className="col-12 col-lg-6">
-          <div className="twitter-tab-container-1 h-100 d-flex relative bg-gradient-to-br from-[#1a1640] to-[#0f0d28]   rounded-xl p-3  transition-all duration-200">
+          <div className="twitter-tab-container-1 h-100 d-flex align-items-center  gap-2 gap-lg-0 justify-content-between  relative bg-gradient-to-br from-[#1a1640] to-[#0f0d28]   rounded-xl p-3  transition-all duration-200">
             <div className="d-flex align-items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,17 +74,18 @@ const available = tasks.filter(item =>
               </svg>
               <div className="d-flex flex-column">
                 <h6 className="text-white font-medium mb-1">
-                  Twitter Connected
+                  X Account Connected
                 </h6>
-                <span className="text-[#1E90FF] font-medium">
-                  @{username}
-                </span>
+                <span className="text-[#1E90FF] font-medium">@{username}</span>
               </div>
             </div>
+            <button className="unlink-twitter-button px-3 py-2">
+              Disconnect
+            </button>
           </div>
         </div>
         <div className="col-12 col-lg-6">
-          <div className="twitter-tab-container-1 relative bg-gradient-to-br from-[#1a1640] to-[#0f0d28]   rounded-xl p-3  transition-all duration-200">
+          <div className="twitter-tab-container-1 d-flex align-items-center justify-content-between relative bg-gradient-to-br from-[#1a1640] to-[#0f0d28]   rounded-xl p-3  transition-all duration-200">
             <div className="d-flex align-items-center gap-2">
               <img
                 src="https://cdn.worldofdypians.com/wod/lbStar.png"
@@ -99,36 +101,82 @@ const available = tasks.filter(item =>
                 </div>
               </div>
             </div>
+            <h6 className="twitter-todays-date text-white mb-0">{new Date().toLocaleDateString("en-GB")}</h6>
           </div>
         </div>
       </div>
       <div className="twitter-tab-container-1 mt-3 relative bg-gradient-to-br from-[#1a1640] to-[#0f0d28]   rounded-xl p-3  transition-all duration-200">
         <div className="twitter-task-tab-container w-100 position-relative d-flex align-items-center">
-          <div className={`task-tab-bg w-50 p-2 ${tab === "completed" && "tab-move" }`}></div>
-          <div className="twitter-task-tab w-50 p-2 d-flex justify-content-center align-items-center" onClick={() => setTab("available")}>
-            <span className={`twitter-task-tab-title ${tab === "available" && "text-white"}`}>Available ({available.length})</span>
+          <div
+            className={`task-tab-bg w-50 p-2 ${
+              tab === "completed" && "tab-move"
+            }`}
+          ></div>
+          <div
+            className="twitter-task-tab w-50 p-2 d-flex justify-content-center align-items-center"
+            onClick={() => setTab("available")}
+          >
+            <span
+              className={`twitter-task-tab-title ${
+                tab === "available" && "text-white"
+              }`}
+            >
+              Available ({available.length})
+            </span>
           </div>
-          <div className="twitter-task-tab w-50 p-2 d-flex justify-content-center align-items-center" onClick={() => setTab("completed")}>
-            <span className={`twitter-task-tab-title ${tab === "completed" && "text-white"}`}>Completed ({completed.length})</span>
+          <div
+            className="twitter-task-tab w-50 p-2 d-flex justify-content-center align-items-center"
+            onClick={() => setTab("completed")}
+          >
+            <span
+              className={`twitter-task-tab-title ${
+                tab === "completed" && "text-white"
+              }`}
+            >
+              Completed ({completed.length})
+            </span>
           </div>
         </div>
       </div>
       <div className="mt-3 d-flex flex-column gap-2 twitter-tasks-container">
-      {tab === "available" ? 
-      <>
-        {available.map((item, index) => (
-          <TwitterItem item={item} index={index} address={address} checkTwitter={checkTwitter} />
-        ))}
-        
-      </>  
-      :
-       <>
-        {completed.map((item, index) => (
-          <CompletedTwitterItem item={item} index={index}  />
-        ))}
-        
-       </>
-}
+        {tab === "available" ? (
+          <>
+            {available.length > 0 ? (
+              <>
+                {available.map((item, index) => (
+                  <TwitterItem
+                    item={item}
+                    index={index}
+                    address={address}
+                    checkTwitter={checkTwitter}
+                  />
+                ))}
+              </>
+            ) : (
+              <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
+                <h6 className="twitter-empty-message mb-0">
+                  You have finished all available tasks. Stay tuned for more
+                </h6>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {completed.length > 0 ? (
+              <>
+                {completed.map((item, index) => (
+                  <CompletedTwitterItem item={item} index={index} />
+                ))}
+              </>
+            ) : (
+              <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
+                <h6 className="twitter-empty-message mb-0">
+                  You have not completed any tasks yet.
+                </h6>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

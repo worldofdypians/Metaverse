@@ -1,6 +1,6 @@
 import React from "react";
 
-const CompletedTwitterItem = ({ item, index, checkTask }) => {
+const CompletedTwitterItem = ({ item, index }) => {
   return (
     <a
       href={`https://x.com/worldofdypians/status/${item.tweetId}`}

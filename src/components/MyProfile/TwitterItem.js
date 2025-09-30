@@ -120,7 +120,7 @@ const [taskChecked, setTaskChecked] = useState(false);
         <div className="d-flex align-items-center gap-2">
           <div
             className={`twitter-action-btn ${
-              item.tasks[0].verified && item.tasks[0].completed
+              item?.tasks[0]?.verified && item?.tasks[0]?.completed
                 ? "twitter-action-btn-disabled"
                 : ""
             } d-flex align-items-center gap-2 p-1`}
@@ -142,14 +142,14 @@ const [taskChecked, setTaskChecked] = useState(false);
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class={`lucide lucide-heart ${item.tasks[0].verified && item.tasks[0].completed ? "text-[#1E90FF]" : "icon-color"}`}
+                  class={`lucide lucide-heart ${item?.tasks[0]?.verified && item?.tasks[0]?.completed ? "text-[#1E90FF]" : "icon-color"}`}
                   aria-hidden="true"
                 >
                   <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
                 </svg>
 
                 <span className="twitter-action-text">Like</span>
-                {item.tasks[0].verified && item.tasks[0].completed && (
+                {item?.tasks[0]?.verified && item?.tasks[0]?.completed && (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
