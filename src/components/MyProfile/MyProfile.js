@@ -11,6 +11,7 @@ import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/Ran
 import useWindowSize from "../../hooks/useWindowSize";
 import axios from "axios";
 import TwitterRewards from "./TwitterRewards";
+import ConnectTwitterPopup from "./ConnectTwitterPopup";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -215,6 +216,7 @@ const MyProfile = ({
   const [twitter, setTwitter] = useState(null);
   const [twitterTasks, setTwitterTasks] = useState([]);
   const [popup, setPopup] = useState(false);
+  const [connectPopup, setConnectPopup] = useState(false);
 
   const checkTwitter = async () => {
     await axios
@@ -268,12 +270,12 @@ const MyProfile = ({
   }, [twitterLinkedParam, address]);
 
   useEffect(() => {
-    if (rankDropdown === true || popup) {
+    if (rankDropdown === true || popup || connectPopup) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [rankDropdown, popup]);
+  }, [rankDropdown, popup, connectPopup]);
 
   const dailyEvents = [
     {
@@ -1901,10 +1903,10 @@ const MyProfile = ({
                 </div>
               ) : (
                 <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
-                  <a
-                    href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
+                  <div
                     className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
                     style={{ height: "60px" }}
+                    onClick={() => setConnectPopup(true)}
                   >
                     <div className="d-flex align-items-center gap-2">
                       <div className="d-flex flex-column justify-content-between h-100 mb-0">
@@ -1934,7 +1936,7 @@ const MyProfile = ({
                     >
                       Connect
                     </button>
-                  </a>
+                  </div>
                 </div>
               )}
               {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
@@ -2321,7 +2323,13 @@ const MyProfile = ({
             onClose={() => setPopup(false)}
             address={address}
             checkTwitter={checkTwitter}
+            username={twitter.twitterUsername}
           />
+        </OutsideClickHandler>
+      )}
+      {connectPopup && (
+        <OutsideClickHandler onOutsideClick={() => setConnectPopup(false)}>
+          <ConnectTwitterPopup onClose={() => setConnectPopup(false)} address={address} />
         </OutsideClickHandler>
       )}
     </>

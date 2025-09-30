@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import TwitterItem from "./TwitterItem";
 import axios from "axios";
 import "./_twitterrewards.scss";
+import CompletedTwitterItem from "./CompletedTwitterItem";
 
-const TwitterRewards = ({ tasks, onClose, address, checkTwitter }) => {
+const TwitterRewards = ({ tasks, onClose, address, checkTwitter, username }) => {
 
 const completed = tasks.filter(item =>
   item.tasks.every(t => t.completed && t.verified)
@@ -14,25 +15,7 @@ const available = tasks.filter(item =>
 );
 
 
-console.log(completed, available);
 
-
-
-  const checkTask = async (tweetId, taskType) => {
-    axios
-      .post(`https://api.worldofdypians.com/twitter/verify-task`, {
-        walletAddress: address,
-        tweetId: tweetId,
-        taskType: taskType,
-      })
-      .then((res) => {
-        console.log(res.data);
-        checkTwitter()
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
 
   const [tab, setTab] = useState("available")
@@ -53,7 +36,7 @@ console.log(completed, available);
           Complete social media tasks to earn stars and boost your reputation
         </span>
       </div>
-      <div className="row mt-3">
+      <div className="row mt-3 gap-2 gap-lg-0">
         <div className="col-12 col-lg-6">
           <div className="twitter-tab-container-1 h-100 d-flex relative bg-gradient-to-br from-[#1a1640] to-[#0f0d28]   rounded-xl p-3  transition-all duration-200">
             <div className="d-flex align-items-center gap-2">
@@ -93,7 +76,7 @@ console.log(completed, available);
                   Twitter Connected
                 </h6>
                 <span className="text-[#1E90FF] font-medium">
-                  @user_dypians
+                  @{username}
                 </span>
               </div>
             </div>
@@ -131,10 +114,21 @@ console.log(completed, available);
         </div>
       </div>
       <div className="mt-3 d-flex flex-column gap-2 twitter-tasks-container">
-        {tasks.map((item, index) => (
-          <TwitterItem item={item} index={index} checkTask={checkTask} />
+      {tab === "available" ? 
+      <>
+        {available.map((item, index) => (
+          <TwitterItem item={item} index={index} address={address} checkTwitter={checkTwitter} />
         ))}
         
+      </>  
+      :
+       <>
+        {completed.map((item, index) => (
+          <CompletedTwitterItem item={item} index={index}  />
+        ))}
+        
+       </>
+}
       </div>
     </div>
   );

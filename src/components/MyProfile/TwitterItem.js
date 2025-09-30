@@ -1,11 +1,51 @@
+import axios from "axios";
 import React, { useState } from "react";
 
-const TwitterItem = ({ item, index, checkTask }) => {
+const TwitterItem = ({ item, index, address, checkTwitter }) => {
   const [loading, setLoading] = useState({
     like: false,
     comment: false,
     retweet: false,
   });
+
+
+
+const [failed, setFailed] = useState(null);
+const [success, setSuccess] = useState(null);
+const [taskChecked, setTaskChecked] = useState(false);
+
+
+  const checkTask = async (tweetId, taskType) => {
+    axios
+      .post(`https://api.worldofdypians.com/twitter/verify-task`, {
+        walletAddress: address,
+        tweetId: tweetId,
+        taskType: taskType,
+      })
+      .then((res) => {
+        if(res.data.verified){
+          setTaskChecked(true);
+          setSuccess(true);
+          setTimeout(() => {
+            setTaskChecked(false);
+            setSuccess(null);
+          }, 2000);
+        } else if(!res.data.verified){
+          setTaskChecked(true);
+          setFailed(true);
+          setTimeout(() => {
+            setTaskChecked(false);
+            setFailed(null);
+          }, 2000);
+        }
+        checkTwitter()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
 
   const handleCheckTask = (type) => {
     if (type === "like") {
@@ -39,9 +79,28 @@ const TwitterItem = ({ item, index, checkTask }) => {
     <a
       href={`https://x.com/worldofdypians/status/${item.tweetId}`}
       target="_blank"
-      className="twitter-task-item d-flex flex-column gap-3 w-100  p-2"
+      className="twitter-task-item d-flex flex-column gap-3 w-100  p-2 position-relative"
       key={index}
     >
+     {success &&
+     <div className={`star-amount-container-2 ${taskChecked && "task-opacity"} task-completed-tag d-flex align-items-center gap-2 p-1`}>
+            <img
+              src="https://cdn.worldofdypians.com/wod/lbStar.png"
+              width={16}
+              height={16}
+              alt=""
+            />
+            <span className="star-amount-twitter">+15</span>
+          </div>
+     }
+
+     {failed &&
+          <div className={`task-completed-tag ${taskChecked && "task-opacity"}`}>
+            <div className="task-failed-tag">
+              <img src={`https://cdn.worldofdypians.com/wod/popupXmark.svg`} width={16} height={16} alt="" />
+            </div>
+          </div>
+     }
       <div className="d-flex align-items-center gap-2">
         <img
           src="https://cdn.worldofdypians.com/wod/wodToken.svg"
@@ -57,7 +116,7 @@ const TwitterItem = ({ item, index, checkTask }) => {
           </span>
         </div>
       </div>
-      <div className="d-flex align-items-center gap-3">
+      <div className="d-flex align-items-start align-items-lg-center flex-column flex-lg-row gap-3">
         <div className="d-flex align-items-center gap-2">
           <div
             className={`twitter-action-btn ${
