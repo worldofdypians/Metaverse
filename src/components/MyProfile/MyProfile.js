@@ -183,6 +183,11 @@ const MyProfile = ({
   let now = new Date().getTime();
   let now2 = new Date();
 
+  const currentMonth = now2.toLocaleString("default", {
+    month: "long",
+    year: undefined,
+  });
+
   const midnight = new Date(now).setUTCHours(24, 30, 0, 0);
   const chestPercentage = (totalClaimedChests / 220) * 100;
   const utcDayIndex = new Date().getUTCDay();
@@ -1758,7 +1763,9 @@ const MyProfile = ({
                         /> */}
                       <div className="d-flex flex-column">
                         <span className="user-blue-rank-2">Booster 1001</span>
-                        <span className="user-rank-text-2">September Rank</span>
+                        <span className="user-rank-text-2">
+                          {currentMonth} Rank
+                        </span>
                       </div>
                     </div>
 
