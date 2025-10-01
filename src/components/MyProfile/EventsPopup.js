@@ -129,6 +129,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                     ? "https://cdn.worldofdypians.com/wod/kucoinThumb.png"
                     : dummyEvent.popupInfo.linkState === "vanar"
                     ? "https://cdn.worldofdypians.com/wod/vanarThumb.webp"
+                    : dummyEvent.popupInfo.linkState === "trust"
+                    ? "https://cdn.worldofdypians.com/wod/trustwalletThumb.webp"
                     : "https://cdn.worldofdypians.com/wod/eventPopupImage.png"
                 }
                 alt=""
@@ -320,15 +322,24 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   daily and venture into the CoinGecko area to uncover hidden
                   treasures.
                 </p>
-              ) : dummyEvent.popupInfo.id === "event5" ? (
+              ) : dummyEvent.popupInfo.id === "event5" ||
+                dummyEvent.popupInfo.id === "event200" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to own at
-                  least one of the Beta Pass NFTs (CoinGecko, Conflux, Gate, or
-                  Base). By actively participating in the game on a daily basis
-                  and exploring the downtown area, players have the opportunity
-                  to secure daily rewards in DYP. Remember to log in to the game
-                  daily and venture into the downtown area to uncover hidden
-                  treasures.
+                  least one of the Beta Pass NFTs{" "}
+                  {dummyEvent.popupInfo.id === "event200" &&
+                    "(opBNB Beta Pass or BNB Chain Beta Pass)"}
+                  . By actively participating in the game on a daily basis and
+                  exploring the{" "}
+                  {dummyEvent.popupInfo.id === "event200"
+                    ? "Trust Wallet"
+                    : "downtown"}{" "}
+                  area, players have the opportunity to secure daily rewards.
+                  Remember to log in to the game daily and venture into the{" "}
+                  {dummyEvent.popupInfo.id === "event200"
+                    ? "Trust Wallet"
+                    : "downtown"}{" "}
+                  area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event6" ? (
                 <p className="popup-event-desc">
@@ -590,6 +601,15 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
             opportunities by integrating a wide variety of yield tools into a
             unified ecosystem.
           </p>
+        ) : dummyEvent.popupInfo.id === "event200" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            Trust Wallet is a secure multi-chain self-custody wallet and your
+            gateway to 10+ million digital assets, NFTs, and thousands of Web3
+            dApps.
+          </p>
         ) : dummyEvent.popupInfo.id === "event20" ? (
           <p
             className="popup-event-desc"
@@ -842,6 +862,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://twitter.com/dypius"
                 : dummyEvent.popupInfo.id === "event3"
                 ? "https://twitter.com/coingecko"
+                : dummyEvent.popupInfo.id === "event200"
+                ? "https://x.com/TrustWallet"
                 : dummyEvent.popupInfo.id === "event4"
                 ? "https://x.com/TeaFi_Official"
                 : dummyEvent.popupInfo.id === "event6"
@@ -898,7 +920,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
               height={16}
               src={"https://cdn.worldofdypians.com/wod/greenTwitter.svg"}
             />{" "}
-            Twitter
+            X
           </a>
 
           <a
@@ -914,6 +936,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://t.me/TeaFi_Official"
                 : dummyEvent.popupInfo.id === "event8"
                 ? "https://t.me/CoinMarketCapAnnouncements"
+                : dummyEvent.popupInfo.id === "event200"
+                ? "https://t.me/trustwallet"
                 : dummyEvent.popupInfo.id === "event6"
                 ? "https://t.me/gateio_en"
                 : dummyEvent.popupInfo.id === "event7"
@@ -985,6 +1009,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://www.coingecko.com/"
                 : dummyEvent.popupInfo.id === "event4"
                 ? "https://tea-fi.com/"
+                : dummyEvent.popupInfo.id === "event200"
+                ? "https://trustwallet.com/"
                 : dummyEvent.popupInfo.id === "event6"
                 ? "https://www.gate.io/"
                 : dummyEvent.popupInfo.id === "event7"

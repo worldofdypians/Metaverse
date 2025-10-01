@@ -673,6 +673,7 @@ function App() {
   let seiLastDay = new Date("2025-08-18T14:00:00.000+02:00");
 
   let vanarLastDay = new Date("2026-01-14T14:00:00.000+02:00");
+  let trustwalletLastDay = new Date("2026-01-29T14:00:00.000+02:00");
 
   const placeholderplayerData = [
     {
@@ -784,6 +785,11 @@ function App() {
   const [bnbEarnToken, setBnbEarnToken] = useState(0);
   const [bnbEarnUsd, setBnbEarnUsd] = useState(0);
   const [bnbPoints, setBnbPoints] = useState(0);
+
+  const [trustEarnToken, setTrustEarnToken] = useState(0);
+  const [trustEarnUsd, setTrustEarnUsd] = useState(0);
+  const [trustPoints, setTrustPoints] = useState(0);
+
   const [teaEarnToken, setTeaEarnToken] = useState(0);
   const [teaEarnUsd, setTeaEarnUsd] = useState(0);
   const [teaPoints, setTeaPoints] = useState(0);
@@ -852,6 +858,8 @@ function App() {
   const [multiversEarnToken, setmultiversEarnToken] = useState(0);
   const [multiversPoints, setmultiversPoints] = useState(0);
   const [bnbPrice, setBnbPrice] = useState(0);
+  const [trustPrice, setTrustPrice] = useState(0);
+
   const [cfxPrice, setCfxPrice] = useState(0);
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
   const [seiEarnToken, setSeiEarnToken] = useState(0);
@@ -1038,7 +1046,7 @@ function App() {
         .catch((e) => {
           console.error(e);
         });
-      
+
       const totaldesposited_wod4_formatted = new window.BigNumber(
         totaldesposited_wod4
       )
@@ -1226,7 +1234,11 @@ function App() {
             return obj.betapassId === "skale";
           });
           const bnbEvent = responseData.events.filter((obj) => {
-            return obj.id === "bnbChainEvent10";
+            return obj.id === "bnbChainEvent31";
+          });
+
+          const trustwalletEvent = responseData.events.filter((obj) => {
+            return obj.name === "Trust Wallet Treasure Hunt";
           });
 
           const coreEvent = responseData.events.filter((obj) => {
@@ -1309,7 +1321,7 @@ function App() {
           });
 
           const teafiEvent = responseData.events.filter((obj) => {
-            return obj.id === "tea-fi";
+            return obj.betapassId === "teafi";
           });
 
           const kucoinEvent = responseData.events.filter((obj) => {
@@ -1339,6 +1351,21 @@ function App() {
             setBnbPoints(pointsBnb);
             setBnbEarnUsd(userEarnedusd);
             setBnbEarnToken(userEarnedusd / bnbPrice);
+          }
+
+          if (trustwalletEvent && trustwalletEvent[0]) {
+            if (trustwalletEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
+
+            const userEarnedusd =
+              trustwalletEvent[0].reward.earn.total /
+              trustwalletEvent[0].reward.earn.multiplier;
+            const pointstrust = trustwalletEvent[0].reward.earn.totalPoints;
+
+            setTrustPoints(pointstrust);
+            setTrustEarnUsd(userEarnedusd);
+            setTrustEarnToken(userEarnedusd / trustPrice);
           }
 
           if (teafiEvent && teafiEvent[0]) {
@@ -2273,6 +2300,19 @@ function App() {
       .then((obj) => {
         if (obj.data) {
           setDogePrice(obj.data.price);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const fetchTWTPrice = async () => {
+    await axios
+      .get("https://api.worldofdypians.com/api/price/trust-wallet-token")
+      .then((obj) => {
+        if (obj.data) {
+          setTrustPrice(obj.data.price);
         }
       })
       .catch((e) => {
@@ -4813,6 +4853,7 @@ function App() {
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
       eventStatus: "Live",
       totalRewards: "$30,000 in BNB Rewards",
+      rewardAmount: "$30,000",
       myEarnings: 0.0,
       location: [-0.06735561726792588, 0.08666753768920898],
       eventType: "Explore & Mine",
@@ -4824,6 +4865,8 @@ function App() {
       image: "bnbBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
+      rewardType: "BNB",
+
       marker: markers.treasureMarker,
       popupInfo: {
         title: "BNB Chain",
@@ -4841,6 +4884,45 @@ function App() {
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Aug 13, 2025",
+      },
+    },
+    {
+      title: "Trust Wallet",
+      logo: "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg",
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TWT Rewards",
+      rewardAmount: "$20,000",
+      myEarnings: 0.0,
+      location: [-0.06912771797944854, 0.0847846269607544],
+      eventType: "Explore & Mine",
+      eventDate: "Oct 01, 2025",
+      backgroundImage:
+        "https://cdn.worldofdypians.com/wod/trustwalletEventBg.webp",
+      userEarnUsd: trustEarnUsd,
+      userEarnCrypto: trustEarnToken,
+      userEarnPoints: trustPoints,
+      image: "trustwalletBanner.webp",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      rewardType: "TWT",
+
+      marker: markers.treasureMarker,
+      popupInfo: {
+        title: "Trust Wallet",
+        chain: "BNB Chain",
+        linkState: "trust",
+        rewards: "TWT",
+        status: "Live",
+        id: "event200",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TWT Rewards",
+        eventDuration: trustwalletLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Oct 01, 2025",
       },
     },
     {
@@ -6447,6 +6529,7 @@ function App() {
     fetchDogeCoinPrice();
     fetchWodPrice();
     fetchKucoinCoinPrice();
+    fetchTWTPrice();
   }, []);
 
   useEffect(() => {
@@ -7196,6 +7279,7 @@ function App() {
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 multiversEarnUsd={multiversEarnUsd}
+                trustEarnUsd={trustEarnUsd}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
@@ -7307,6 +7391,7 @@ function App() {
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 multiversEarnUsd={multiversEarnUsd}
+                trustEarnUsd={trustEarnUsd}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
@@ -7903,6 +7988,7 @@ function App() {
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 multiversEarnUsd={multiversEarnUsd}
+                trustEarnUsd={trustEarnUsd}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}

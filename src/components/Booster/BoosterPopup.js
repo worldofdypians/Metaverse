@@ -368,7 +368,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar,userPreviousDataStar2
                   <img
                     src="https://cdn.worldofdypians.com/wod/ongoingClock.svg"
                     alt=""
-                    className="w-3 h-3 mr-1"
+                    className="w-7 h-7 mr-1"
                   />
                   <div className="d-flex flex-column">
                     <span className="booster-neutral-title">
