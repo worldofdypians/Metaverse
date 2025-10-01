@@ -1250,9 +1250,9 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 6
+                        {userActiveEvents === 7
                           ? "Completed"
-                          : userActiveEvents + "/6"}
+                          : userActiveEvents + "/7"}
                       </span>
                     </div>
 

@@ -423,13 +423,13 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
-    {
+  {
     title: "Trust Wallet Area",
     marker: markers.trustwalletMarker,
     activeMarker: activeMarkers.trustwalletMarker,
     icon: "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg",
     location: [-0.06912771797944854, 0.0847846269607544],
-     
+
     area: [
       [
         [-0.06902395009360253, 0.08444666862487794],
@@ -440,7 +440,6 @@ const chainAreas = [
     ],
     banner: "trustwalletBanner.webp",
     events: [
-      
       // {
       //   title: "Treasure Hunt",
       //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
@@ -871,14 +870,14 @@ const chainAreas = [
     activeMarker: activeMarkers.chainlinkMarker,
 
     icon: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg",
-    location: [-0.06912771797944854, 0.0847846269607544],
+    location: [-0.06907222982081583, 0.08404433727264406],
     banner: "chainlinkBanner.png",
     area: [
       [
-        [-0.06902395009360253, 0.08444666862487794],
-        [-0.06931362845611903, 0.08451640605926514],
-        [-0.06913123837621961, 0.08517622947692871],
-        [-0.06885765325506008, 0.08509039878845216],
+        [-0.06875572938599118, 0.08403360843658449],
+        [-0.0687879158709824, 0.08386194705963136],
+        [-0.06936727259713496, 0.0840282440185547],
+        [-0.0693082640420238, 0.0842052698135376],
       ],
     ],
     events: [],

@@ -58,6 +58,7 @@ const MyRewardsPopupNew = ({
   chainlinkEarnUsd,
   teaEarnUsd,
   aiQuestionRewards,
+  trustEarnUsd,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -847,7 +848,7 @@ const MyRewardsPopupNew = ({
                       Number(teaEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(vanarEarnUsd) +
-                      // Number(dailyDataAmountCore) +
+                      Number(trustEarnUsd) +
                       // Number(weeklyDataAmountCore) +
                       // Number(monthlyDataAmountCore) +
                       // Number(dailyDataAmountSkale) +
@@ -1156,6 +1157,7 @@ const MyRewardsPopupNew = ({
                       Number(teaEarnUsd) +
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
+                      Number(trustEarnUsd) +
                       Number(vanarEarnUsd),
                     2
                   )}
@@ -1767,6 +1769,21 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(taraxaEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Trust Wallet
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(trustEarnUsd, 2)}
                   </span>
                 </div>
               </div>
