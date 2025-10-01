@@ -328,11 +328,18 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   To participate in the event, players are required to own at
                   least one of the Beta Pass NFTs{" "}
                   {dummyEvent.popupInfo.id === "event200" &&
-                    '(opBNB Beta Pass or BNB Chain Beta Pass)'}
+                    "(opBNB Beta Pass or BNB Chain Beta Pass)"}
                   . By actively participating in the game on a daily basis and
-                  exploring the downtown area, players have the opportunity to
-                  secure daily rewards. Remember to log in to the game daily and
-                  venture into the downtown area to uncover hidden treasures.
+                  exploring the{" "}
+                  {dummyEvent.popupInfo.id === "event200"
+                    ? "Trust Wallet"
+                    : "downtown"}{" "}
+                  area, players have the opportunity to secure daily rewards.
+                  Remember to log in to the game daily and venture into the{" "}
+                  {dummyEvent.popupInfo.id === "event200"
+                    ? "Trust Wallet"
+                    : "downtown"}{" "}
+                  area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event6" ? (
                 <p className="popup-event-desc">
@@ -913,7 +920,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
               height={16}
               src={"https://cdn.worldofdypians.com/wod/greenTwitter.svg"}
             />{" "}
-            Twitter
+            X
           </a>
 
           <a

@@ -673,7 +673,7 @@ function App() {
   let seiLastDay = new Date("2025-08-18T14:00:00.000+02:00");
 
   let vanarLastDay = new Date("2026-01-14T14:00:00.000+02:00");
-  let trustwalletLastDay = new Date("2026-01-26T14:00:00.000+02:00");
+  let trustwalletLastDay = new Date("2026-01-29T14:00:00.000+02:00");
 
   const placeholderplayerData = [
     {
