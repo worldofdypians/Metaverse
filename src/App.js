@@ -2309,7 +2309,7 @@ function App() {
 
   const fetchTWTPrice = async () => {
     await axios
-      .get("https://api.worldofdypians.com/api/price/twt")
+      .get("https://api.worldofdypians.com/api/price/trust-wallet-token")
       .then((obj) => {
         if (obj.data) {
           setTrustPrice(obj.data.price);
