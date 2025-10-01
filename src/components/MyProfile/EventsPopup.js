@@ -326,11 +326,13 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 dummyEvent.popupInfo.id === "event200" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to own at
-                  least one of the Beta Pass NFTs. By actively participating in
-                  the game on a daily basis and exploring the downtown area,
-                  players have the opportunity to secure daily rewards. Remember
-                  to log in to the game daily and venture into the downtown area
-                  to uncover hidden treasures.
+                  least one of the Beta Pass NFTs{" "}
+                  {dummyEvent.popupInfo.id === "event200" &&
+                    '(opBNB Beta Pass or BNB Chain Beta Pass)'}
+                  . By actively participating in the game on a daily basis and
+                  exploring the downtown area, players have the opportunity to
+                  secure daily rewards. Remember to log in to the game daily and
+                  venture into the downtown area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event6" ? (
                 <p className="popup-event-desc">

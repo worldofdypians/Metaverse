@@ -675,7 +675,6 @@ function App() {
   let vanarLastDay = new Date("2026-01-14T14:00:00.000+02:00");
   let trustwalletLastDay = new Date("2026-01-26T14:00:00.000+02:00");
 
-
   const placeholderplayerData = [
     {
       position: "0",
@@ -1047,7 +1046,7 @@ function App() {
         .catch((e) => {
           console.error(e);
         });
-      
+
       const totaldesposited_wod4_formatted = new window.BigNumber(
         totaldesposited_wod4
       )
@@ -1239,7 +1238,7 @@ function App() {
           });
 
           const trustwalletEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "all" && obj.name === "Trust Wallet Treasure Hunt";
+            return obj.name === "Trust Wallet Treasure Hunt";
           });
 
           const coreEvent = responseData.events.filter((obj) => {
@@ -1368,7 +1367,6 @@ function App() {
             setTrustEarnUsd(userEarnedusd);
             setTrustEarnToken(userEarnedusd / trustPrice);
           }
-
 
           if (teafiEvent && teafiEvent[0]) {
             if (teafiEvent[0].reward.earn.totalPoints > 0) {
@@ -2302,6 +2300,19 @@ function App() {
       .then((obj) => {
         if (obj.data) {
           setDogePrice(obj.data.price);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const fetchTWTPrice = async () => {
+    await axios
+      .get("https://api.worldofdypians.com/api/price/twt")
+      .then((obj) => {
+        if (obj.data) {
+          setTrustPrice(obj.data.price);
         }
       })
       .catch((e) => {
@@ -4885,7 +4896,8 @@ function App() {
       location: [-0.06912771797944854, 0.0847846269607544],
       eventType: "Explore & Mine",
       eventDate: "Oct 01, 2025",
-      backgroundImage: "https://cdn.worldofdypians.com/wod/trustwalletEventBg.webp",
+      backgroundImage:
+        "https://cdn.worldofdypians.com/wod/trustwalletEventBg.webp",
       userEarnUsd: trustEarnUsd,
       userEarnCrypto: trustEarnToken,
       userEarnPoints: trustPoints,
@@ -6517,6 +6529,7 @@ function App() {
     fetchDogeCoinPrice();
     fetchWodPrice();
     fetchKucoinCoinPrice();
+    fetchTWTPrice();
   }, []);
 
   useEffect(() => {
@@ -7267,7 +7280,6 @@ function App() {
                 mantaEarnUsd={mantaEarnUsd}
                 multiversEarnUsd={multiversEarnUsd}
                 trustEarnUsd={trustEarnUsd}
-
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
