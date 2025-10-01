@@ -19,7 +19,7 @@ const WodBuilders = ({ page }) => {
       name: "Trust Wallet",
       icon: "trustwalletBuyWod",
       banner: "trustwalletBanner.webp",
-      link: "",
+      link: "https://x.com/TrustWallet/status/1972662705426165966",
       backer: true,
     },
     {

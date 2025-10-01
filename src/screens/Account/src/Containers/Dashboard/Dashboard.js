@@ -190,6 +190,7 @@ function Dashboard({
   onOpenRoyaltyChestTaiko,
   setRoyalChestIndexTaiko,
   mybnb5yaNfts,
+  trustEarnUsd
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -6723,7 +6724,7 @@ function Dashboard({
                   Number(cawsPremiumRewards) +
                   Number(landPremiumRewards) +
                   Number(coreEarnUsd) +
-                  // Number(kucoinEarnUsd) +
+                  Number(trustEarnUsd) +
                   Number(bnbEarnUsd) +
                   // Number(mantaEarnUsd) +
                   // Number(seiEarnUsd) +
@@ -6893,65 +6894,6 @@ function Dashboard({
               network_matchain={network_matchain}
             />
           </>
-        ) : location.pathname === "/account/my-rewards" ? (
-          <MyRewardsPopupNew
-            address={userWallet}
-            userRank2={userRank2}
-            email={email}
-            userDataStar={dataAmountStar}
-            userDataStarWeekly={dataAmountStarWeekly}
-            allChests={allChests}
-            allSkaleChests={allSkaleChests}
-            allCoreChests={allCoreChests}
-            allVictionChests={allVictionChests}
-            allMantaChests={allMantaChests}
-            allBaseChests={allBaseChests}
-            allTaikoChests={allTaikoChests}
-            allVanarChests={allVanarChests}
-            allMatChests={allMatChests}
-            allSeiChests={allSeiChests}
-            allTaraxaChests={allTaraxaChests}
-            userSocialRewards={userSocialRewards}
-            bnbEarnUsd={bnbEarnUsd}
-            skaleEarnUsd={skaleEarnUsd}
-            multiversEarnUsd={multiversEarnUsd}
-            seiEarnUsd={seiEarnUsd}
-            vanarEarnUsd={vanarEarnUsd}
-            teaEarnUsd={teaEarnUsd}
-            victionEarnUsd={victionEarnUsd}
-            mantaEarnUsd={mantaEarnUsd}
-            taikoEarnUsd={taikoEarnUsd}
-            taraxaEarnUsd={taraxaEarnUsd}
-            matEarnUsd={matEarnUsd}
-            chainlinkEarnUsd={chainlinkEarnUsd}
-            immutableEarnUsd={immutableEarnUsd}
-            coreEarnUsd={coreEarnUsd}
-            userRankRewards={userRankRewards}
-            cawsPremiumRewards={cawsPremiumRewards}
-            landPremiumRewards={landPremiumRewards}
-            genesisRank2={genesisRank2}
-            cookieEarnUsd={cookieEarnUsd}
-            baseEarnUSD={baseEarnUSD}
-            kucoinEarnUsd={kucoinEarnUsd}
-            easy2StakeEarnUsd={easy2StakeEarnUsd}
-            midleEarnUsd={midleEarnUsd}
-            coingeckoEarnUsd={coingeckoEarnUsd}
-            aiQuestionRewards={
-              aiQuestionRewards.length > 0
-                ? aiQuestionRewards.find((item) => {
-                    return (
-                      item.rewardType === "Money" && item.status === "Claimed"
-                    );
-                  }) !== undefined
-                  ? aiQuestionRewards.find((item) => {
-                      return (
-                        item.rewardType === "Money" && item.status === "Claimed"
-                      );
-                    }).reward
-                  : 0
-                : 0
-            }
-          />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
             isEOA={isEOA}
@@ -7719,6 +7661,7 @@ function Dashboard({
                 cookieEarnUsd={cookieEarnUsd}
                 baseEarnUSD={baseEarnUSD}
                 kucoinEarnUsd={kucoinEarnUsd}
+                trustEarnUsd={trustEarnUsd}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
                 coingeckoEarnUsd={coingeckoEarnUsd}
