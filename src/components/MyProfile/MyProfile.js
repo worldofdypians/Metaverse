@@ -2324,12 +2324,23 @@ const MyProfile = ({
             address={address}
             checkTwitter={checkTwitter}
             username={twitter.twitterUsername}
+            isConnected={isConnected}
+            coinbase={coinbase}
+            email={email}
+            onConnectWallet={onConnectWallet}
           />
         </OutsideClickHandler>
       )}
       {connectPopup && (
         <OutsideClickHandler onOutsideClick={() => setConnectPopup(false)}>
-          <ConnectTwitterPopup onClose={() => setConnectPopup(false)} address={address} />
+          <ConnectTwitterPopup
+            onClose={() => setConnectPopup(false)}
+            address={address}
+            isConnected={isConnected}
+            coinbase={coinbase}
+            email={email}
+            onConnectWallet={onConnectWallet}
+          />
         </OutsideClickHandler>
       )}
     </>

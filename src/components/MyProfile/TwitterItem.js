@@ -8,12 +8,9 @@ const TwitterItem = ({ item, index, address, checkTwitter }) => {
     retweet: false,
   });
 
-
-
-const [failed, setFailed] = useState(null);
-const [success, setSuccess] = useState(null);
-const [taskChecked, setTaskChecked] = useState(false);
-
+  const [failed, setFailed] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [taskChecked, setTaskChecked] = useState(false);
 
   const checkTask = async (tweetId, taskType) => {
     axios
@@ -23,14 +20,14 @@ const [taskChecked, setTaskChecked] = useState(false);
         taskType: taskType,
       })
       .then((res) => {
-        if(res.data.verified){
+        if (res.data.verified) {
           setTaskChecked(true);
           setSuccess(true);
           setTimeout(() => {
             setTaskChecked(false);
             setSuccess(null);
           }, 2000);
-        } else if(!res.data.verified){
+        } else if (!res.data.verified) {
           setTaskChecked(true);
           setFailed(true);
           setTimeout(() => {
@@ -38,14 +35,12 @@ const [taskChecked, setTaskChecked] = useState(false);
             setFailed(null);
           }, 2000);
         }
-        checkTwitter()
+        checkTwitter();
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-
 
   const handleCheckTask = (type) => {
     if (type === "like") {
@@ -82,25 +77,27 @@ const [taskChecked, setTaskChecked] = useState(false);
       className="twitter-task-item d-flex flex-column gap-3 w-100  p-2 position-relative"
       key={index}
     >
-     {success &&
-     <div className={`star-amount-container-2 ${taskChecked && "task-opacity"} task-completed-tag d-flex align-items-center gap-2 p-1`}>
-            <img
-              src="https://cdn.worldofdypians.com/wod/lbStar.png"
-              width={16}
-              height={16}
-              alt=""
-            />
-            <span className="star-amount-twitter">+15</span>
-          </div>
-     }
+      {success && (
+        <div
+          className={`star-amount-container-2 ${
+            taskChecked && "task-opacity"
+          } task-completed-tag d-flex align-items-center gap-2 p-1`}
+        >
+          <img
+            src="https://cdn.worldofdypians.com/wod/lbStar.png"
+            width={16}
+            height={16}
+            alt=""
+          />
+          <span className="star-amount-twitter">+15</span>
+        </div>
+      )}
 
-     {failed &&
-          <div className={`task-completed-tag ${taskChecked && "task-opacity"}`}>
-            <div className="task-failed-tag">
-              <img src={`https://cdn.worldofdypians.com/wod/popupXmark.svg`} width={16} height={16} alt="" />
-            </div>
-          </div>
-     }
+      {failed && (
+        <div className="twitter-task-failed p-1 d-flex align-items-center justify-content-center">
+          <span>Task is not completed</span>
+        </div>
+      )}
       <div className="d-flex align-items-center gap-2">
         <img
           src="https://cdn.worldofdypians.com/wod/wodToken.svg"
@@ -142,7 +139,11 @@ const [taskChecked, setTaskChecked] = useState(false);
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class={`lucide lucide-heart ${item?.tasks[0]?.verified && item?.tasks[0]?.completed ? "text-[#1E90FF]" : "icon-color"}`}
+                  class={`lucide lucide-heart ${
+                    item?.tasks[0]?.verified && item?.tasks[0]?.completed
+                      ? "text-[#1E90FF]"
+                      : "icon-color"
+                  }`}
                   aria-hidden="true"
                 >
                   <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
@@ -176,7 +177,13 @@ const [taskChecked, setTaskChecked] = useState(false);
               </div>
             )}
           </div>
-          <div className="star-amount-container d-flex align-items-center gap-2 p-1">
+          <div
+            className={`star-amount-container ${
+              item?.tasks[0]?.verified && item?.tasks[0]?.completed
+                ? "stars-completed"
+                : ""
+            } d-flex align-items-center gap-2 p-1`}
+          >
             <img
               src="https://cdn.worldofdypians.com/wod/lbStar.png"
               width={16}
@@ -186,7 +193,7 @@ const [taskChecked, setTaskChecked] = useState(false);
             <span className="star-amount-twitter">15</span>
           </div>
         </div>
-         <div className="d-flex align-items-center gap-2">
+        <div className="d-flex align-items-center gap-2">
           <div
             className={`twitter-action-btn ${
               item.tasks[1].verified && item.tasks[1].completed
@@ -211,7 +218,11 @@ const [taskChecked, setTaskChecked] = useState(false);
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class={`lucide lucide-repeat ${item.tasks[1].verified && item.tasks[1].completed ? "text-[#1E90FF]" : "icon-color"}`}
+                  class={`lucide lucide-repeat ${
+                    item.tasks[1].verified && item.tasks[1].completed
+                      ? "text-[#1E90FF]"
+                      : "icon-color"
+                  }`}
                   aria-hidden="true"
                 >
                   <path d="m17 2 4 4-4 4"></path>
@@ -247,7 +258,13 @@ const [taskChecked, setTaskChecked] = useState(false);
               </div>
             )}
           </div>
-          <div className="star-amount-container d-flex align-items-center gap-2 p-1">
+          <div
+            className={`star-amount-container ${
+              item?.tasks[1]?.verified && item?.tasks[1]?.completed
+                ? "stars-completed"
+                : ""
+            } d-flex align-items-center gap-2 p-1`}
+          >
             <img
               src="https://cdn.worldofdypians.com/wod/lbStar.png"
               width={16}
@@ -282,7 +299,11 @@ const [taskChecked, setTaskChecked] = useState(false);
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class={`lucide lucide-message-circle ${item.tasks[2].verified && item.tasks[2].completed ? "text-[#1E90FF]" : "icon-color"}`}
+                  class={`lucide lucide-message-circle ${
+                    item.tasks[2].verified && item.tasks[2].completed
+                      ? "text-[#1E90FF]"
+                      : "icon-color"
+                  }`}
                   aria-hidden="true"
                 >
                   <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path>
@@ -315,7 +336,13 @@ const [taskChecked, setTaskChecked] = useState(false);
               </div>
             )}
           </div>
-          <div className="star-amount-container d-flex align-items-center gap-2 p-1">
+          <div
+            className={`star-amount-container ${
+              item?.tasks[2]?.verified && item?.tasks[2]?.completed
+                ? "stars-completed"
+                : ""
+            } d-flex align-items-center gap-2 p-1`}
+          >
             <img
               src="https://cdn.worldofdypians.com/wod/lbStar.png"
               width={16}
@@ -325,7 +352,7 @@ const [taskChecked, setTaskChecked] = useState(false);
             <span className="star-amount-twitter">35</span>
           </div>
         </div>
-       
+
         {/* <div className="d-flex flex-column gap-2 align-items-center">
           <a
             href={`https://x.com/worldofdypians/status/${item.tweetId}`}

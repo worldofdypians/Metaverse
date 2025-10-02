@@ -3,6 +3,7 @@ import TwitterItem from "./TwitterItem";
 import axios from "axios";
 import "./_twitterrewards.scss";
 import CompletedTwitterItem from "./CompletedTwitterItem";
+import { NavLink } from "react-router-dom";
 
 const TwitterRewards = ({
   tasks,
@@ -10,6 +11,10 @@ const TwitterRewards = ({
   address,
   checkTwitter,
   username,
+  isConnected,
+  coinbase,
+  email,
+  onConnectWallet,
 }) => {
   const completed = tasks.filter((item) =>
     item.tasks.every((t) => t.completed && t.verified)
@@ -23,7 +28,9 @@ const TwitterRewards = ({
 
   return (
     <div className="popup-wrapper popup-active twitter-popup p-3">
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-between align-items-center">
+        <h6 className="mb-0 twitter-popup-title">Social Tasks</h6>
+
         <img
           src="https://cdn.worldofdypians.com/wod/popupXmark.svg"
           style={{ cursor: "pointer" }}
@@ -32,7 +39,6 @@ const TwitterRewards = ({
         />
       </div>
       <div className="d-flex flex-column align-items-center gap-3 mt-2">
-        <h6 className="mb-0 twitter-popup-title">Social Tasks</h6>
         <span className="twitter-popup-desc">
           Complete social media tasks to earn stars and boost your reputation
         </span>
@@ -101,7 +107,9 @@ const TwitterRewards = ({
                 </div>
               </div>
             </div>
-            <h6 className="twitter-todays-date text-white mb-0">{new Date().toLocaleDateString("en-GB")}</h6>
+            <h6 className="twitter-todays-date text-white mb-0">
+              {new Date().toLocaleDateString("en-GB")}
+            </h6>
           </div>
         </div>
       </div>
@@ -139,41 +147,60 @@ const TwitterRewards = ({
         </div>
       </div>
       <div className="mt-3 d-flex flex-column gap-2 twitter-tasks-container">
-        {tab === "available" ? (
-          <>
-            {available.length > 0 ? (
-              <>
-                {available.map((item, index) => (
-                  <TwitterItem
-                    item={item}
-                    index={index}
-                    address={address}
-                    checkTwitter={checkTwitter}
-                  />
-                ))}
-              </>
-            ) : (
-              <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
-                <h6 className="twitter-empty-message mb-0">
-                  You have finished all available tasks. Stay tuned for more
-                </h6>
-              </div>
-            )}
-          </>
+        {!isConnected && coinbase && !email ? (
+          <NavLink
+            to={`/auth`}
+            onClick={onClose}
+            className="connect-twitter-btn d-flex align-items-center justify-content-center p-2 gap-2 mt-5"
+          >
+            Log In
+          </NavLink>
+        ) : !isConnected && !coinbase ? (
+          <button
+            onClick={onConnectWallet}
+            className="connect-twitter-btn d-flex align-items-center justify-content-center p-2 gap-2 mt-5"
+          >
+            Connect Wallet
+          </button>
         ) : (
           <>
-            {completed.length > 0 ? (
+            {tab === "available" ? (
               <>
-                {completed.map((item, index) => (
-                  <CompletedTwitterItem item={item} index={index} />
-                ))}
+                {available.length > 0 ? (
+                  <>
+                    {available.map((item, index) => (
+                      <TwitterItem
+                        item={item}
+                        index={index}
+                        address={address}
+                        checkTwitter={checkTwitter}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
+                    <h6 className="twitter-empty-message mb-0">
+                      You have finished all available tasks. Stay tuned for more
+                    </h6>
+                  </div>
+                )}
               </>
             ) : (
-              <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
-                <h6 className="twitter-empty-message mb-0">
-                  You have not completed any tasks yet.
-                </h6>
-              </div>
+              <>
+                {completed.length > 0 ? (
+                  <>
+                    {completed.map((item, index) => (
+                      <CompletedTwitterItem item={item} index={index} />
+                    ))}
+                  </>
+                ) : (
+                  <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
+                    <h6 className="twitter-empty-message mb-0">
+                      You have not completed any tasks yet.
+                    </h6>
+                  </div>
+                )}
+              </>
             )}
           </>
         )}

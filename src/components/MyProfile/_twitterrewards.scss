@@ -44,7 +44,7 @@
   font-size: 12pt;
   line-height: 24px;
   text-align: center;
-  color: #ffffff;
+  color: #ffffff !important;
   white-space: pre;
   transition: all 0.25s;
 }
@@ -104,11 +104,11 @@
 }
 
 .twitter-tasks-container {
-  max-height: 375px;
+  max-height: 410px;
   overflow-y: scroll;
 
   @media screen and (max-width: 786px) {
-    max-height: 250px;
+    max-height: 285px;
   }
 }
 
@@ -157,7 +157,6 @@
 
 .tab-move {
   transform: translateX(100%);
-  background: green;
 }
 
 .twitter-action-btn {
@@ -235,6 +234,33 @@
   border: 1px solid #ffd700;
   min-height: 30px;
 }
+
+.stars-completed{
+  background: rgba(23, 133, 242, 0.6) !important;
+  border: 1px solid #1785f2 !important;
+  span{
+    color: #fff !important;
+  }
+}
+
+.twitter-task-failed{
+  border-radius: 6px;
+  border: 1px solid rgb(255, 0, 0);
+  background: rgba(255, 0, 0, 0.25);
+      width: fit-content;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+
+  span{
+    color: #fff !important;
+    font-size: 12px;
+    @media screen and (max-width: 786px) {
+      font-size: 10px;
+    }
+  }
+}
+
 .star-amount-container-2 {
   background: #4b703a;
   border-radius: 8px;

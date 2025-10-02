@@ -1,7 +1,8 @@
 import React from "react";
 import "./_twitterrewards.scss";
+import { NavLink } from "react-router-dom";
 
-const ConnectTwitterPopup = ({ onClose, address }) => {
+const ConnectTwitterPopup = ({ onClose, address, coinbase, isConnected, email, onConnectWallet }) => {
   return (
     <div className="popup-wrapper popup-active connect-twitter-popup p-3 d-flex flex-column align-items-center">
       <svg
@@ -41,13 +42,32 @@ const ConnectTwitterPopup = ({ onClose, address }) => {
           </clipPath>
         </defs>
       </svg>
-      <h6 className="twitter-popup-title mt-3">Connect X Account</h6>
+      <h6 className="twitter-popup-title mt-3">Connect Account</h6>
       <span className="twitter-popup-desc text-center mt-3">
-        Link your X account to start earning rewards through social engagement
+        Link your X account to start earning stars through social engagement
         tasks.
       </span>
-      <a 
-                    href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
+     {isConnected && coinbase && !email ?
+     
+     <NavLink
+        to={`/auth`}
+        onClick={onClose}
+      className="connect-twitter-btn d-flex align-items-center justify-content-center p-2 gap-2 mt-5">
+  
+        Log In
+      </NavLink>
+      : !isConnected && !coinbase ? 
+
+       <button
+        onClick={onConnectWallet}
+      
+      className="connect-twitter-btn d-flex align-items-center justify-content-center p-2 gap-2 mt-5">
+      
+        Connect Wallet
+      </button>
+      :
+       <a 
+        href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
       
       className="connect-twitter-btn d-flex align-items-center justify-content-center p-2 gap-2 mt-5">
         <svg
@@ -64,6 +84,7 @@ const ConnectTwitterPopup = ({ onClose, address }) => {
         </svg>
         Connect Your Account
       </a>
+    }
     </div>
   );
 };
