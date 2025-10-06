@@ -476,15 +476,6 @@ const chainAreas = [
       "Experience real-time interactions",
       "Get ranked in dedicated leaderboards",
     ],
-
-    area: [
-      [
-        [-0.06702838799312999, 0.08624374866485597],
-        [-0.0668513623189673, 0.08691966533660889],
-        [-0.067521914111659, 0.08707523345947267],
-        [-0.0676774821262475, 0.08641004562377931],
-      ],
-    ],
   },
   {
     title: "SKALE Area",

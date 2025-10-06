@@ -502,15 +502,15 @@ const NewBuilders = () => {
       name: "Uphold",
       icon: "uphold.svg",
     },
-     {
+    {
       name: "Uniswap",
       icon: "uniswapBuyWod.png",
     },
-     {
+    {
       name: "BVOX",
       icon: "bvoxBuyWod.png",
     },
-     {
+    {
       name: "Bitkan",
       icon: "bitkanBuyWod.png",
     },
@@ -518,7 +518,7 @@ const NewBuilders = () => {
       name: "Tothemoon",
       icon: "tothemoonBuyWod.png",
     },
-     {
+    {
       name: "OpenOcean",
       icon: "openoceanBuyWod.png",
     },
@@ -526,13 +526,17 @@ const NewBuilders = () => {
       name: "Bitexen",
       icon: "bitexen.png",
     },
-      {
+    {
       name: "Biconomy",
       icon: "biconomy.png",
     },
-     {
+    {
       name: "BTCC",
       icon: "btcc.svg",
+    },
+    {
+      name: "SwissBorg",
+      icon: "swissborg.svg",
     },
   ];
   return (

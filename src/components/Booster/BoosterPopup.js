@@ -75,7 +75,11 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const BoosterPopup = ({ userDataStar, userPreviousDataStar,userPreviousDataStar2 }) => {
+const BoosterPopup = ({
+  userDataStar,
+  userPreviousDataStar,
+  userPreviousDataStar2,
+}) => {
   const nextSelectionDate = new Date("2025-12-13T14:00:00.000+02:00");
 
   const [isWinner, setIsWinner] = useState(false);
@@ -100,7 +104,7 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar,userPreviousDataStar2
     year: undefined,
   });
 
-  let previousIsWinner = Math.random() > 0.85;
+  let previousIsWinner = isWinner;
   const now = new Date();
   const utcDate = new Date().getUTCDate();
   const utcHours = now.getUTCHours();
@@ -317,16 +321,10 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar,userPreviousDataStar2
               </span>
               <div
                 className={`d-flex px-3 justify-content-center align-items-center ${
-                  !showPreviousMonth
-                    ? " boost-rank"
-                    : "boost-rank-gray"
+                  !showPreviousMonth ? " boost-rank" : "boost-rank-gray"
                 }`}
               >
-                <span
-                  className={`${
-                    "booster-list-title" 
-                  }`}
-                >
+                <span className={`${"booster-list-title"}`}>
                   {displayRank === 0 ? "No rank" : "#" + displayRank}
                 </span>
               </div>
@@ -375,8 +373,8 @@ const BoosterPopup = ({ userDataStar, userPreviousDataStar,userPreviousDataStar2
                       Selection In Progress
                     </span>
                     <span className="booster-neutral-desc">
-                      Winners will be announced within the first two days and the rewards will be announced within 10 days.
-                      Good luck!
+                      Winners will be announced within the first two days and
+                      the rewards will be announced within 10 days. Good luck!
                     </span>
                   </div>
                 </div>

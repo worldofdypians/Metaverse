@@ -146,6 +146,11 @@ const MainHero = ({ scrollInto }) => {
       logo: "btcc-exchange.svg",
       link: "https://www.btcc.com/en-US/spot/WODUSDT",
     },
+    {
+      title: "SwissBorg",
+      logo: "swissborg-exchange.svg",
+      link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
+    },
   ];
 
   return (

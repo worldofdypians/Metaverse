@@ -187,6 +187,11 @@ const VideoWrapper = ({
       logo: "btcc.svg",
       link: "https://www.btcc.com/en-US/spot/WODUSDT",
     },
+    {
+      title: "SwissBorg",
+      link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
+      logo: "swissborg.svg",
+    },
   ];
 
   const dummyBetaPassData2 = [
