@@ -412,6 +412,10 @@ const KickstarterPartners = () => {
       name: "BTCC",
       icon: "btcc.svg",
     },
+    {
+      name: "SwissBorg",
+      icon: "swissborg.svg",
+    },
   ];
 
   return (
