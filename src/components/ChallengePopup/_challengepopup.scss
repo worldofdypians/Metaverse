@@ -27,6 +27,31 @@
   }
 }
 
+
+
+
+.chain-popup-wrapper {
+  border-radius: 10px;
+  border: 1px solid #525469;
+  background: rgba(8, 11, 42, 1);
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  top: -10000px;
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  margin: auto;
+  z-index: 1000;
+  border-radius: 16px;
+  pointer-events: auto !important;
+  transition: all 1s ease-in-out;
+  width: fit-content
+}
+
+
+
+
 .popup-active {
     box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
     top: 0% !important;
@@ -89,6 +114,13 @@
 .yellow-dot {
   min-width: 8px;
   min-height: 8px;
+  border-radius: 50%;
+  background: #FFC808;
+}
+
+.yellow-dot-small {
+  min-width: 4px;
+  min-height: 4px;
   border-radius: 50%;
   background: #FFC808;
 }

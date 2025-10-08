@@ -430,6 +430,19 @@
   }
 }
 
+.market-mint-5ya {
+  background-image: url("https://cdn.worldofdypians.com/wod/5yaMarketMint.webp");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px !important;
+
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
+}
+
+
 .market-mint-skale {
   background-image: url("https://cdn.worldofdypians.com/wod/skaleMintHero.webp");
   background-size: 100% 100%;
@@ -527,6 +540,17 @@
 
 .market-mint-teafi {
   background-image: url("https://cdn.worldofdypians.com/wod/teafiMarketMint.webp");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px !important;
+
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
+}
+.market-mint-taraxa {
+  background-image: url("https://cdn.worldofdypians.com/wod/taraxaMarketMint.png");
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -700,6 +724,34 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
+
+
+.taraxa-mint-bg {
+  background-image: url("https://cdn.worldofdypians.com/wod/taraxaMintBg.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
+.bnb5ya-mint-bg {
+  background-image: url("https://cdn.worldofdypians.com/wod/5yaMintBg.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
 .doge-mint-bg2 {
   background-image: url("https://cdn.worldofdypians.com/wod/dogeBackground.webp");
   background-size: cover;
@@ -1082,7 +1134,7 @@
 
   @media screen and (max-width: 434px) {
     display: flex;
-    white-space: nowrap;
+    // white-space: nowrap;
     font-size: 12px;
   }
 }
@@ -1527,6 +1579,19 @@
 
 .kucoin-active {
   background-image: url("https://cdn.worldofdypians.com/wod/kucoinNft.png");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.taraxa-active {
+  background-image: url("https://cdn.worldofdypians.com/wod/taraxaNft.png");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+.bnb5ya-active {
+  background-image: url("https://cdn.worldofdypians.com/wod/5yaActive.webp");
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: center;

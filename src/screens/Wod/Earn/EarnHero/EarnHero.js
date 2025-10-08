@@ -1,4 +1,3 @@
-import React, { useRef, useState } from "react";
 
 import "../../../Wod/Token/MainHero/_mainhero.scss";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";

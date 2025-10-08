@@ -361,6 +361,10 @@ place-items: center;
       @media only screen and (max-width: 767px) {
  grid-template-columns: repeat(3, 1fr);
   }
+
+        @media only screen and (max-width: 600px) {
+ grid-template-columns: repeat(2, 1fr);
+  }
   }
 
   .walletbutton:hover {
@@ -371,7 +375,7 @@ place-items: center;
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
+    background: linear-gradient(111.64deg, #080b2a 0%, #1e2383 100.5%);
   }
 
   .walletclose {

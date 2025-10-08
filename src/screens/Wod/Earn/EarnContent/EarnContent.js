@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../_earn.scss";
 import TopPoolsCard from "./TopPoolsCard";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
@@ -7,8 +7,6 @@ import LandDetails from "./pools/land";
 import CawsWodDetails from "./pools/cawsWod";
 import CawsDetailsPremium from "./pools/cawsPremium";
 import LandDetailsPremium from "./pools/landPremium";
-import TopPoolsListCard from "./TopPoolsListCard";
-import StakeWodDetails from "./pools/stakingWod";
 import StakeWodDetails2 from "./pools/stakingWod2";
 import { NavLink } from "react-router-dom";
 
@@ -21,15 +19,14 @@ const EarnContent = ({
   onConnectWallet,
   selectedFilter,
   stakingPools,
-  onPoolSelect,
   selectedViewStyle,
   expired,
   binanceW3WProvider,
   isPremium,
-  onSelectFilter,
-  onSelectViewStyle,
+  // onSelectFilter,
+  // onSelectViewStyle,
   onViewPastPools,
-  onViewStakedOnlyPools,
+  // onViewStakedOnlyPools,
   tvl,
   wodBalance,
   userPools,
@@ -38,14 +35,15 @@ const EarnContent = ({
   publicClient,
   network_matchain,
   handleSwitchChainBinanceWallet,
-  handleSwitchChainGateWallet
+  handleSwitchChainGateWallet,
+  bnbUSDPrice,
 }) => {
-  const [sorting, setSorting] = useState("");
+  const [sorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
-  const [filterTitle, setFilterTitle] = useState("All");
+  const [filterTitle] = useState("All");
   // const [listStyle, setListStyle] = useState("table");
   const [pastPools, setpastPools] = useState(false);
-  const [stakedOnly, setstakedOnly] = useState(false);
+  // const [stakedOnly, setstakedOnly] = useState(false);
   const [isHover, setisHover] = useState(false);
   const [totalStakesLandPremium, settotalStakesLandPremium] = useState(0);
   const [totalStakesCawsPremium, settotalStakesCawsPremium] = useState(0);
@@ -96,7 +94,7 @@ const EarnContent = ({
     getTotalStakedNfts();
   }, []);
 
-  const tvlUsd = localStorage.getItem("tvl");
+  // const tvlUsd = localStorage.getItem("tvl");
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center mb-5 pb-4 earncontent-bg">
@@ -294,6 +292,42 @@ const EarnContent = ({
           </div>
         </div>
       </div>
+      {userPools &&
+        userPools.length > 0 &&
+        userPools.find((item) => {
+          return (
+            item.contract_address.toLowerCase() ===
+              "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C".toLowerCase() ||
+            item.contract_address.toLowerCase() ===
+              "0x0675B497f52a0426874151c1e3267801fAA15C18".toLowerCase()
+          );
+        }) !== undefined && (
+          <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit w-100 overflow-hidden">
+            <div
+              className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+            ></div>
+
+            <div className="relative custom-container mx-auto">
+              <div className="d-flex flex-column">
+                <div className="flex items-center space-x-3">
+                  <img
+                    src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                    alt=""
+                    className="w-5 h-5 text-yellow-400"
+                  />
+                  <span className="font-semibold text-yellow-400">
+                    Update on Your Staking Pools
+                  </span>
+                </div>
+                <span className="challenge-popup-desc text-white">
+                  Your pools are now in the Past section and the rewards
+                  continue until 27 Nov 2025. New pools are live, check them
+                  out!
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
       <div className="custom-container  mt-5 tokenomicsTablewrapper">
         <div className="d-flex flex-column gap-2 w-100 px-2 px-lg-0">
           {/* <span className="earn-filter-title mt-0 mt-lg-4">{selectedFilter}</span> */}
@@ -393,7 +427,7 @@ const EarnContent = ({
                         }}
                       >
                         <TopPoolsCard
-                          key={index}
+                          tag={index === 0 && "exclusive"}
                           chain={chainId}
                           top_pick={false}
                           tokenName={item.pair_name}
@@ -464,12 +498,20 @@ const EarnContent = ({
                     >
                       <div
                         className={`${
-                          isHover === index ||
-                          selectedPool.find((obj) => {
+                          (isHover === index && index === 0) ||
+                          (selectedPool.find((obj) => {
                             return (
                               obj.id.toLowerCase() === item.id.toLowerCase()
                             );
-                          }) !== undefined
+                          }) !== undefined &&
+                            index === 0)
+                            ? "accHeaderBorderBnb"
+                            : isHover === index ||
+                              selectedPool.find((obj) => {
+                                return (
+                                  obj.id.toLowerCase() === item.id.toLowerCase()
+                                );
+                              }) !== undefined
                             ? "accHeaderBorder"
                             : "accHeaderBorder2"
                         } px-0 py-0 text-white position-relative`}
@@ -526,7 +568,7 @@ const EarnContent = ({
                             }}
                           >
                             <LandDetails
-                            isEOA={isEOA}
+                              isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -557,7 +599,7 @@ const EarnContent = ({
                             }}
                           >
                             <CawsWodDetails
-                            isEOA={isEOA}
+                              isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -587,7 +629,7 @@ const EarnContent = ({
                             }}
                           >
                             <CawsDetailsPremium
-                            isEOA={isEOA}
+                              isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -619,7 +661,7 @@ const EarnContent = ({
                             }}
                           >
                             <LandDetailsPremium
-                            isEOA={isEOA}
+                              isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -651,7 +693,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
-                            isEOA={isEOA}
+                              isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -671,8 +713,13 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
-                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
-                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
@@ -687,7 +734,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
-                            isEOA={isEOA}
+                              isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -707,8 +754,13 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
-                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
-                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
@@ -723,12 +775,13 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
-                            isEOA={isEOA}
+                              isEOA={isEOA}
+                              // other_info={true}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
                               handleConnection={onConnectWallet}
-                              expired={false}
+                              expired={true}
                               staking={window.constant_staking_wod3}
                               apr={item.apy_percent}
                               expiration_time={"27 Nov 2025"}
@@ -743,8 +796,136 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
-                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
-                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id ===
+                          "0xC5432cbf613aaE8626bC4301f29e6eE8e3d2a1b3" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              isEOA={isEOA}
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod6}
+                              apr={item.apy_percent}
+                              expiration_time={"22 Sep 2026"}
+                              poolCap={item.poolCap}
+                              start_date={"22 Sep 2025"}
+                              fee={item.performancefee}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+                              publicClient={publicClient}
+                              walletClient={walletClient}
+                              network_matchain={network_matchain}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id ===
+                          "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              isEOA={isEOA}
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod8}
+                              apr={item.apy_percent}
+                              expiration_time={"23 March 2026"}
+                              poolCap={item.poolCap}
+                              start_date={"23 Sep 2025"}
+                              fee={item.performancefee}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+                              publicClient={publicClient}
+                              walletClient={walletClient}
+                              network_matchain={network_matchain}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id ===
+                          "0x6A4057d68C10f450e306F191728ffa926E6c30F0" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              isEOA={isEOA}
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod7}
+                              apr={item.apy_percent}
+                              expiration_time={"22 Sep 2026"}
+                              poolCap={item.poolCap}
+                              start_date={"22 Sep 2025"}
+                              fee={item.performancefee}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+                              publicClient={publicClient}
+                              walletClient={walletClient}
+                              network_matchain={network_matchain}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
@@ -759,12 +940,13 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
-                            isEOA={isEOA}
+                              isEOA={isEOA}
+                              // other_info={true}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
                               handleConnection={onConnectWallet}
-                              expired={false}
+                              expired={true}
                               staking={window.constant_staking_wod4}
                               apr={item.apy_percent}
                               expiration_time={"27 Nov 2025"}
@@ -779,13 +961,18 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
-                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
-                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}
 
-{item?.id ===
+                        {item?.id ===
                           "0x5d35E4fC8624453A539eB261728aF5CDAbF4F652" && (
                           <div
                             onClick={() => {
@@ -795,7 +982,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
-                            isEOA={isEOA}
+                              isEOA={isEOA}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -815,8 +1002,13 @@ const EarnContent = ({
                               publicClient={publicClient}
                               walletClient={walletClient}
                               network_matchain={network_matchain}
-                              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
-                              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
                             />
                           </div>
                         )}

@@ -9,6 +9,10 @@ const WodPartners = ({ full }) => {
       icon: "bnbIcon.svg",
     },
     {
+      name: "Binance Alpha",
+      icon: "binance-alpha.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
     },
@@ -55,6 +59,10 @@ const WodPartners = ({ full }) => {
     {
       name: "KuCoin",
       icon: "kucoinLogoRound.svg",
+    },
+    {
+      name: "Taraxa",
+      icon: "taraxa.svg",
     },
     {
       name: "Binance Wallet",
@@ -337,6 +345,82 @@ const WodPartners = ({ full }) => {
       name: "Melitho Ventures",
       icon: "melitho.png",
     },
+    {
+      name: "CoinRabbit",
+      icon: "coinrabbit.png",
+    },
+    {
+      name: "Vameon",
+      icon: "vameon.svg",
+    },
+    {
+      name: "Phemex",
+      icon: "phemex.png",
+    },
+    {
+      name: "HiBt",
+      icon: "hibt.png",
+    },
+    {
+      name: "KCEX",
+      icon: "kcex.png",
+    },
+    {
+      name: "SUPERFORTUNE",
+      icon: "superfortune.png",
+    },
+    {
+      name: "WEEX",
+      icon: "weex.svg",
+    },
+    {
+      name: "Toobit",
+      icon: "toobit.svg",
+    },
+    {
+      name: "BingX",
+      icon: "bingx.svg",
+    },
+    {
+      name: "Uphold",
+      icon: "uphold.svg",
+    },
+    {
+      name: "Uniswap",
+      icon: "uniswapBuyWod.png",
+    },
+    {
+      name: "BVOX",
+      icon: "bvoxBuyWod.png",
+    },
+    {
+      name: "Bitkan",
+      icon: "bitkanBuyWod.png",
+    },
+    {
+      name: "Tothemoon",
+      icon: "tothemoonBuyWod.png",
+    },
+    {
+      name: "OpenOcean",
+      icon: "openoceanBuyWod.png",
+    },
+    {
+      name: "Bitexen",
+      icon: "bitexen.png",
+    },
+    {
+      name: "Biconomy",
+      icon: "biconomy.png",
+    },
+    {
+      name: "BTCC",
+      icon: "btcc.svg",
+    },
+    {
+      name: "SwissBorg",
+      icon: "swissborg.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
@@ -374,11 +458,7 @@ const WodPartners = ({ full }) => {
                 >
                   <div className="partner-logo-container">
                     <img
-                      src={
-                        partner.icon.includes("changeNow")
-                          ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
-                          : `https://cdn.worldofdypians.com/wod/${partner.icon}`
-                      }
+                      src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
                       alt=""
                       style={{
                         width: "60px",

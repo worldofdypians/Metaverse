@@ -1918,7 +1918,9 @@
 }
 
 .package-popup-wrapper2 {
-  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
   z-index: 99;
   position: fixed;
   top: 0;
@@ -1928,7 +1930,7 @@
 
 .golden-pass-popup {
   width: 40% !important;
-  height: 80% !important;
+  height: 85% !important;
   @media screen and (max-width: 1400px) {
     width: 50% !important;
   }
@@ -2423,6 +2425,84 @@
     aspect-ratio: 1/1;
   }
 }
+
+.past-bnb5ya-mint {
+  background-image: url("https://cdn.worldofdypians.com/wod/bnb5yaPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("https://cdn.worldofdypians.com/wod/bnb5yaPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+
+.past-taraxa-mint {
+  background-image: url("https://cdn.worldofdypians.com/wod/taraxaPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("https://cdn.worldofdypians.com/wod/taraxaPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+.past-taraxa-mint-amount {
+  color: #15AB5A;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-bnb5ya-mint-amount {
+  color: #ab4515;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-taraxa-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(171, 116, 21, 0.7);
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+.past-bnb5ya-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(171, 96, 21, 0.7);
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
 
 .past-opbnb-mint {
   background-image: url("https://cdn.worldofdypians.com/wod/opbnbPastMint.webp");
@@ -3330,6 +3410,12 @@
   background: linear-gradient(to bottom, #181636 15.48%, #0057ff 254.86%);
 }
 
+
+.taraxa-eventwrapper {
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #181636 15.48%, #18a85d 254.86%);
+}
+
 .cmc-eventwrapper {
   border-radius: 20px;
   background: linear-gradient(to bottom, #201d52 15.48%, #0057ff 254.86%);
@@ -3630,6 +3716,9 @@
 .mint-teafi {
   background: linear-gradient(90deg, #181b38 0%, rgb(255 29 254 / 50%) 168.67%);
 }
+.mint-taraxa {
+  background: linear-gradient(90deg, #181b38 0%, #15ab5a 168.67%);
+}
 
 .mint-viction {
   background: linear-gradient(90deg, #181b38 0%, #6c2cbe 168.67%);
@@ -3758,7 +3847,9 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
-  background: url(https://cdn.worldofdypians.com/wod/earnBg.webp);
+  // background: url(https://cdn.worldofdypians.com/wod/earnBg.webp);
+  background: url(https://cdn.worldofdypians.com/wod/newStakesBanner.webp);
+
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -3770,6 +3861,17 @@
   backdrop-filter: blur(12.5px);
   min-height: 160px;
   background: url(https://cdn.worldofdypians.com/wod/eventsBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.tradingClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(https://cdn.worldofdypians.com/wod/newTradingComp2.webp);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -4642,6 +4744,15 @@
   overflow-x: auto;
 }
 
+.premium-benefits-wrapper-std {
+  border-radius: 0px 0px 10px 10px;
+  background: #18193c;
+ display: grid !important;
+ grid-template-columns: repeat(4, 1fr);
+ overflow-x: auto;
+}
+
+
 .premium-benefits-title {
   color: #f7f7fc;
   font-size: 12px;
@@ -4827,6 +4938,11 @@
   background: linear-gradient(90deg, #171a3a 0%, rgb(255 29 254 / 50%) 168.67%);
 }
 
+.upcoming-taraxa-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181636 0%, #18a85d 168.67%);
+}
+ 
 
 .upcoming-taiko-event {
   border-radius: 20px;

@@ -2407,7 +2407,7 @@ const MatchainDailyBonus = ({
             onClick={onclose}
             style={{ cursor: "pointer" }}
           /> */}
-            <div className={"chest-test-wrapper"}>
+            <div className={"chest-test-wrapper h-100"}>
               <div
                 className="close-daily-btn d-flex align-items-center justify-content-center"
                 onClick={onclose}
@@ -2601,7 +2601,7 @@ const MatchainDailyBonus = ({
               </div>
               <div className="daily-bonus-inner-wrapper container p-4 p-lg-5 mt-3 mt-lg-0">
                 <div
-                  className="row daily-bonus-row 
+                  className="row daily-bonus-row p-3
                gap-lg-0 mx-3 mx-lg-2 mt-3 mt-lg-3"
                   style={{ height: "100%", marginTop: "64px" }}
                 >
@@ -2837,7 +2837,7 @@ const MatchainDailyBonus = ({
                     )}
                   </div>
                   <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
-                    <div className="grid-scroll">
+                    <div className="grid-scroll h-100">
                       <div className="new-chests-grid">
                         {chain === "bnb"
                           ? allChests && allChests.length > 0
@@ -3787,7 +3787,7 @@ const MatchainDailyBonus = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper">
+                  <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper h-auto">
                     {message === "" ||
                     message === "initial" ||
                     message === "waiting" ? (
@@ -4015,7 +4015,7 @@ const MatchainDailyBonus = ({
                         <h6 className="completed-text mb-0">Completed</h6>
                       </div>
                     ) : message === "needPremium" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4103,7 +4103,7 @@ const MatchainDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "caws" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4206,7 +4206,7 @@ const MatchainDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "won" ? (
-                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4260,7 +4260,7 @@ const MatchainDailyBonus = ({
                         />
                       </div>
                     ) : message === "wonPoints" ? (
-                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4297,7 +4297,7 @@ const MatchainDailyBonus = ({
                         />
                       </div>
                     ) : message === "wonPointsStars" ? (
-                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4350,7 +4350,7 @@ const MatchainDailyBonus = ({
                       </div>
                     ) : message === "premium" ? (
                       <div
-                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper"
                         style={{
                           border: "1px solid #8262D0",
                           background:
@@ -4393,7 +4393,7 @@ const MatchainDailyBonus = ({
                       </div>
                     ) : message === "login" ? (
                       <div
-                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper"
                         style={{
                           border: "1px solid #8262D0",
                           background:
@@ -4418,7 +4418,7 @@ const MatchainDailyBonus = ({
                             rewards!
                           </span>
                         </div>
-                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
+                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper">
                           <NavLink
                             className="sign-in-btn px-4 py-1"
                             to="/auth"
@@ -4432,7 +4432,7 @@ const MatchainDailyBonus = ({
                       </div>
                     ) : message === "connect" ? (
                       <div
-                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper"
                         style={{
                           border: "1px solid #8262D0",
                           background:
@@ -4440,7 +4440,7 @@ const MatchainDailyBonus = ({
                         }}
                       >
                         <div
-                          className="chain-desc-wrapper w-100 p-2 d-flex flex-column"
+                          className="chain-desc-wrapper w-100 d-flex flex-column"
                           style={{
                             filter: "brightness(1)",
                             position: "relative",
@@ -4457,7 +4457,7 @@ const MatchainDailyBonus = ({
                             earn tailored rewards!
                           </span>
                         </div>
-                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
+                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper">
                           <button
                             className="sign-in-btn px-4 py-1"
                             onClick={() => {
@@ -4469,7 +4469,7 @@ const MatchainDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDanger" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4589,7 +4589,7 @@ const MatchainDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerCaws" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -4806,7 +4806,7 @@ const MatchainDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerLand" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -5026,7 +5026,7 @@ const MatchainDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerNotEnoughLand" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -5230,7 +5230,7 @@ const MatchainDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerHasNftsNoPremium" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -5434,7 +5434,7 @@ const MatchainDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "winDangerHasNftsPremiumNoDyp" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -5638,7 +5638,7 @@ const MatchainDailyBonus = ({
                         </div>
                       </div>
                     ) : message === "wod" ? (
-                      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                      <div className="d-flex align-items-center justify-content-between p-2 w-100 chest-progress-wrapper">
                         <div
                           className="chain-desc-wrapper p-2 d-flex flex-column"
                           style={{
@@ -6307,7 +6307,7 @@ const MatchainDailyBonus = ({
             onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               chain === "bnb"
                 ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
                 : chain === "core"
@@ -6344,6 +6344,7 @@ const MatchainDailyBonus = ({
                     isActiveIndex - 1
                   );
             }, 2000);
+            return () => clearTimeout(timer);
           }}
         />
       )}

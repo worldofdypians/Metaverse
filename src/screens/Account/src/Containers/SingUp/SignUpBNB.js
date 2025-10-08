@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Auth } from "aws-amplify";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./SignUp.module.css";
+import ReCaptchaV2 from "react-google-recaptcha";
+
 
 function SingUpBNB({
   onVerifySuccess,
@@ -27,7 +29,13 @@ function SingUpBNB({
   const [userExists, setuserExists] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [verifyCode, setVerifyCode] = useState("");
+  const [captchaValue, setCaptchaValue] = useState(null);
+  const recaptchaRef = useRef(null);
 
+    const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+  };
+  
   const login = () => {
     LoginGlobal(username, password);
   };
@@ -55,6 +63,9 @@ function SingUpBNB({
   }
 
   const signup = () => {
+        if (!captchaValue) {
+      window.alertify.error("Please verify the reCAPTCHA");
+    } else {
     Auth.signUp({
       username,
       password,
@@ -75,10 +86,11 @@ function SingUpBNB({
               loginError: err?.message,
             };
           });
-          setTimeout(() => {
+         const timer = setTimeout(() => {
             setuserExists(true);
             onUserExists();
           }, 3000);
+          return () => clearTimeout(timer);
         }
         setLoginValues((prev) => {
           return {
@@ -87,6 +99,7 @@ function SingUpBNB({
           };
         });
       });
+    }
   };
 
   useEffect(() => {
@@ -204,12 +217,19 @@ function SingUpBNB({
 
         <div className="summaryseparator"></div>
         <Button
-          disabled={disabled}
+          disabled={disabled || !captchaValue}
           onPress={signup}
           style={{ margin: "auto" }}
           title={"Continue"}
           type={"primary2"}
         />
+        <ReCaptchaV2
+                sitekey="6LfFVMQrAAAAAGauKrn5cyQZRaXHMMlHMUz9IOnu"
+                style={{ display: "inline-block" }}
+                theme="dark"
+                ref={recaptchaRef}
+                onChange={handleCaptchaChange}
+              />
       </div>
       <div className="d-flex align-items-center gap-2">
         <h6 className={classes.bottomGroup_graytxt}>

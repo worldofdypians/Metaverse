@@ -112,8 +112,9 @@ const GlobalLeaderboard = ({
                     <br />
                     <br />
                     Participate in Daily Chain Leaderboards from BNB Chain,
-                    SKALE, Core, Manta, Base,Matchain,Sei,Vanar, Taiko and
-                    Viction to earn STARS that will boost your global ranking.
+                    Skale, Core, Manta, Base, Matchain, Sei, Vanar, Taiko,
+                    Taraxa and Viction to earn STARS that will boost your global
+                    ranking.
                     <br />
                     <br />
                     Prime Users earn extra STARS from Daily Leaderboards,
@@ -641,6 +642,7 @@ const GlobalLeaderboard = ({
       {screen === "dash" &&
         allStarData &&
         leaderboardBtn === "monthly" &&
+        allStarData.player_data &&
         allStarData.player_data.displayName &&
         [allStarData.player_data].map((item, index) => {
           return (
@@ -690,6 +692,7 @@ const GlobalLeaderboard = ({
       {screen === "dash" &&
         allStarData &&
         leaderboardBtn === "weekly" &&
+        allStarData.player_data_weekly &&
         allStarData.player_data_weekly.displayName &&
         [allStarData.player_data_weekly].map((item, index) => {
           return (
@@ -805,6 +808,11 @@ const GlobalLeaderboard = ({
               />
               <img
                 src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
                 style={{ width: 20, height: 20 }}
                 alt=""
               />

@@ -105,7 +105,7 @@ const useSharedDataLatest20BoughtNFTS = (nftId, nftAddress) => {
     queryFn: () => getLatest20BoughtNFTS(nftId, nftAddress),
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!nftId && !!nftAddress,
   });
@@ -560,6 +560,20 @@ const SingleNft = ({
 
       setowner(owner);
       return owner;
+    } else if (nftType === "5ya") {
+      const nft_contract = new window.opBnbWeb3.eth.Contract(
+        window.OPBNB_NFT_ABI,
+        window.config.nft_bnb5ya_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      setowner(owner);
+      return owner;
     } else if (nftType === "opbnb") {
       const nft_contract = new window.opBnbWeb3.eth.Contract(
         window.OPBNB_NFT_ABI,
@@ -748,6 +762,20 @@ const SingleNft = ({
       const nft_contract = new window.opbnbWeb3.eth.Contract(
         window.OPBNB_NFT_ABI,
         window.config.nft_teaopbnb_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      setowner(owner);
+      return owner;
+    } else if (nftType === "taraxa") {
+      const nft_contract = new window.taraxaWeb3.eth.Contract(
+        window.TARAXA_NFT_ABI,
+        window.config.nft_taraxa_address
       );
       const owner = await nft_contract.methods
         .ownerOf(Id)
@@ -2363,7 +2391,7 @@ const SingleNft = ({
       nftAddress.toLowerCase() ===
       window.config.nft_cookie3_address.toLowerCase()
     ) {
-      setType("mat");
+      setType("cookie3");
     } else if (nftAddress === window.config.nft_mat_address) {
       setType("mat");
     } else if (
@@ -2374,6 +2402,11 @@ const SingleNft = ({
       nftAddress.toLowerCase() === window.config.nft_bnb_address.toLowerCase()
     ) {
       setType("bnb");
+    } else if (
+      nftAddress.toLowerCase() ===
+      window.config.nft_bnb5ya_address.toLowerCase()
+    ) {
+      setType("5ya");
     } else if (
       nftAddress.toLowerCase() === window.config.nft_skale_address.toLowerCase()
     ) {
@@ -2398,8 +2431,10 @@ const SingleNft = ({
       window.config.nft_multivers_address.toLowerCase()
     ) {
       setType("multivers");
-    } else if (nftAddress === window.config.nft_base_address) {
+    } else if (nftAddress === window.config.nft_base_address.toLowerCase()) {
       setType("base");
+    } else if (nftAddress === window.config.nft_taraxa_address) {
+      setType("taraxa");
     } else if (
       nftAddress.toLowerCase() === window.config.nft_gate_address.toLowerCase()
     ) {
@@ -2521,6 +2556,9 @@ const SingleNft = ({
           window.config.nft_bnb_address.toLowerCase()
         ? "bnb"
         : nftAddress.toLowerCase() ===
+          window.config.nft_bnb5ya_address.toLowerCase()
+        ? "5ya"
+        : nftAddress.toLowerCase() ===
           window.config.nft_skale_address.toLowerCase()
         ? "skale"
         : nftAddress.toLowerCase() ===
@@ -2537,8 +2575,10 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_multivers_address.toLowerCase()
         ? "multivers"
-        : nftAddress === window.config.nft_base_address
+        : nftAddress === window.config.nft_base_address.toLowerCase()
         ? "base"
+        : nftAddress === window.config.nft_taraxa_address
+        ? "taraxa"
         : nftAddress.toLowerCase() ===
           window.config.nft_caws_bnb_address.toLowerCase()
         ? "cawsbnb"
@@ -2680,6 +2720,18 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
+            ) : type === "taraxa" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Taraxa{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
             ) : type === "gate" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -2792,6 +2844,18 @@ const SingleNft = ({
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
                   BNB CHAIN{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
+            ) : type === "5ya" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  BNB CHAIN 5YA
                   <h6
                     className="market-banner-title m-0"
                     style={{ color: "#8C56FF", lineHeight: "80%" }}
@@ -2964,6 +3028,8 @@ const SingleNft = ({
                         ? `https://cdn.worldofdypians.com/media/matchbp400x400.png`
                         : type === "doge"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
+                        : type === "taraxa"
+                        ? `https://cdn.worldofdypians.com/wod/taraxa-nft-400.png`
                         : type === "cmc"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
                         : type === "tea-bnb" ||
@@ -2983,6 +3049,8 @@ const SingleNft = ({
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+400x400.png`
                         : type === "bnb"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+400.png`
+                        : type === "5ya"
+                        ? `https://cdn.worldofdypians.com/wod/5ya-400.png`
                         : type === "opbnb"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+400.png`
                         : type === "immutable"
@@ -3034,7 +3102,8 @@ const SingleNft = ({
                           ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
                           : type === "opbnb" ||
                             type === "kucoin" ||
-                            type === "tea-opbnb"
+                            type === "tea-opbnb" ||
+                            type === "5ya"
                           ? "https://cdn.worldofdypians.com/wod/opbnbChain.png"
                           : type === "skale"
                           ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
@@ -3048,6 +3117,8 @@ const SingleNft = ({
                           ? "https://cdn.worldofdypians.com/wod/multiversx.svg"
                           : type === "immutable"
                           ? "https://cdn.worldofdypians.com/wod/immutable.svg"
+                          : type === "taraxa"
+                          ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
                           : type === "sei" || type === "tea-sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                           : type === "vanar"
@@ -3082,6 +3153,8 @@ const SingleNft = ({
                       ? "SKALE"
                       : type === "viction"
                       ? "Viction"
+                      : type === "taraxa"
+                      ? "Taraxa"
                       : type === "multivers"
                       ? "MultiversX"
                       : type === "core"
@@ -3094,7 +3167,8 @@ const SingleNft = ({
                       ? "Vanar"
                       : type === "opbnb" ||
                         type === "kucoin" ||
-                        type === "tea-opbnb"
+                        type === "tea-opbnb" ||
+                        type === "5ya"
                       ? "opBNB Chain"
                       : type === "immutable"
                       ? "Immutable"
@@ -3150,6 +3224,8 @@ const SingleNft = ({
                         ? "Dogecoin Beta Pass"
                         : type === "bnb"
                         ? "BNB Chain Beta Pass"
+                        : type === "5ya"
+                        ? "BNB Chain 5YA Beta Pass"
                         : type === "skale"
                         ? "SKALE Beta Pass"
                         : type === "tea-bnb" ||
@@ -3163,6 +3239,8 @@ const SingleNft = ({
                         ? "CORE Beta Pass"
                         : type === "viction"
                         ? "Viction Beta Pass"
+                        : type === "taraxa"
+                        ? "Taraxa Beta Pass"
                         : type === "multivers"
                         ? "MultiversX Beta Pass"
                         : type === "immutable"
@@ -3307,6 +3385,7 @@ const SingleNft = ({
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "bnb" &&
+                      type !== "5ya" &&
                       type !== "opbnb" &&
                       type !== "cmc" &&
                       type !== "core" &&
@@ -3322,6 +3401,7 @@ const SingleNft = ({
                       type !== "tea-opbnb" &&
                       type !== "tea-base" &&
                       type !== "tea-sei" &&
+                      type !== "taraxa" &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -3478,6 +3558,7 @@ const SingleNft = ({
                       type !== "base" &&
                       type !== "doge" &&
                       type !== "bnb" &&
+                      type !== "5ya" &&
                       type !== "opbnb" &&
                       type !== "cmc" &&
                       type !== "core" &&
@@ -3498,6 +3579,7 @@ const SingleNft = ({
                       type !== "tea-bnb" &&
                       type !== "tea-opbnb" &&
                       type !== "tea-base" &&
+                      type !== "taraxa" &&
                       type !== "tea-sei" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
@@ -3686,6 +3768,7 @@ const SingleNft = ({
                         type === "base" ||
                         type === "doge" ||
                         type === "bnb" ||
+                        type === "5ya" ||
                         type === "opbnb" ||
                         type === "skale" ||
                         type === "cmc" ||
@@ -3706,7 +3789,8 @@ const SingleNft = ({
                         type === "tea-bnb" ||
                         type === "tea-opbnb" ||
                         type === "tea-sei" ||
-                        type === "tea-base") && (
+                        type === "tea-base" ||
+                        type === "taraxa") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                             <span className="currentprice-txt">
@@ -3727,6 +3811,7 @@ const SingleNft = ({
                                 type === "cmc" ||
                                 type === "doge" ||
                                 type === "bnb" ||
+                                type === "5ya" ||
                                 type === "cawsbnb" ||
                                 type === "landbnb" ||
                                 type === "cookie3" ||
@@ -3760,6 +3845,8 @@ const SingleNft = ({
                                   ? `https://explorer.vanarchain.com/address/${owner}`
                                   : type === "mat"
                                   ? `https://matchscan.io/address/${owner}`
+                                  : type === "taraxa"
+                                  ? `https://mainnet.explorer.taraxa.io/address/${owner}`
                                   : type === "sei" || type === "tea-sei"
                                   ? `https://seitrace.com/address/${owner}`
                                   : `https://etherscan.io/address/${owner}`
@@ -3955,6 +4042,7 @@ const SingleNft = ({
                         type !== "core" &&
                         type !== "doge" &&
                         type !== "bnb" &&
+                        type !== "5ya" &&
                         type !== "opbnb" &&
                         type !== "skale" &&
                         type !== "immutable" &&
@@ -3968,6 +4056,7 @@ const SingleNft = ({
                         type !== "sei" &&
                         type !== "kucoin" &&
                         type !== "vanar" &&
+                        type !== "taraxa" &&
                         type !== "tea-bnb" &&
                         type !== "tea-opbnb" &&
                         type !== "tea-base" &&
@@ -4040,6 +4129,7 @@ const SingleNft = ({
                         type !== "base" &&
                         type !== "doge" &&
                         type !== "bnb" &&
+                        type !== "5ya" &&
                         type !== "opbnb" &&
                         type !== "skale" &&
                         type !== "cmc" &&
@@ -4056,6 +4146,7 @@ const SingleNft = ({
                         type !== "mat" &&
                         type !== "sei" &&
                         type !== "kucoin" &&
+                        type !== "taraxa" &&
                         type !== "vanar" &&
                         type !== "tea-bnb" &&
                         type !== "tea-opbnb" &&
@@ -4090,6 +4181,7 @@ const SingleNft = ({
                         type !== "base" &&
                         type !== "doge" &&
                         type !== "bnb" &&
+                        type !== "5ya" &&
                         type !== "opbnb" &&
                         type !== "skale" &&
                         type !== "cmc" &&
@@ -4107,6 +4199,7 @@ const SingleNft = ({
                         type !== "sei" &&
                         type !== "kucoin" &&
                         type !== "vanar" &&
+                        type !== "taraxa" &&
                         type !== "tea-bnb" &&
                         type !== "tea-opbnb" &&
                         type !== "tea-base" &&
@@ -4150,6 +4243,7 @@ const SingleNft = ({
             type !== "base" &&
             type !== "doge" &&
             type !== "bnb" &&
+            type !== "5ya" &&
             type !== "opbnb" &&
             type !== "skale" &&
             type !== "cmc" &&
@@ -4161,6 +4255,7 @@ const SingleNft = ({
             type !== "sei" &&
             type !== "kucoin" &&
             type !== "vanar" &&
+            type !== "taraxa" &&
             type !== "tea-bnb" &&
             type !== "tea-opbnb" &&
             type !== "tea-base" &&
@@ -4431,6 +4526,7 @@ const SingleNft = ({
             type === "base" ||
             type === "doge" ||
             type === "bnb" ||
+            type === "5ya" ||
             type === "opbnb" ||
             type === "skale" ||
             type === "cmc" ||
@@ -4442,6 +4538,7 @@ const SingleNft = ({
             type === "sei" ||
             type === "kucoin" ||
             type === "vanar" ||
+            type === "taraxa" ||
             type === "tea-bnb" ||
             type === "tea-opbnb" ||
             type === "tea-base" ||
@@ -4508,6 +4605,8 @@ const SingleNft = ({
                             ? "SEI"
                             : type === "vanar"
                             ? "VANRY"
+                            : type === "taraxa"
+                            ? "TARA"
                             : "BNB"}{" "}
                           rewards
                         </span>

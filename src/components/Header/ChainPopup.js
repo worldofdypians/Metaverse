@@ -9,7 +9,7 @@ const ChainPopup = ({
   isPremium,
 }) => {
   return (
-    <div className="challenge-popup-wrapper popup-active p-3">
+    <div className="chain-popup-wrapper popup-active p-3">
       <div className="d-flex align-items-center justify-content-between mb-3">
         <span className="select-gray-txt ">SELECT A NETWORK</span>
         <img
@@ -241,18 +241,38 @@ const ChainPopup = ({
               />
               Conflux
             </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => onSwitchNetwork("0x7f8", 2040)}
-              className={activeChain === "vanar" ? "active-chain-btn" : ""}
-            >
-              <img
-                src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
-                alt=""
-                width={20}
-                height={20}
-              />
-              Vanar
-            </Dropdown.Item>
+            {window.WALLET_TYPE !== "matchId" &&
+              window.WALLET_TYPE !== "binance" &&
+              !window.ethereum?.isBinance && (
+                <Dropdown.Item
+                  onClick={() => onSwitchNetwork("0x7f8", 2040)}
+                  className={activeChain === "vanar" ? "active-chain-btn" : ""}
+                >
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                    alt=""
+                    width={20}
+                    height={20}
+                  />
+                  Vanar
+                </Dropdown.Item>
+              )}
+            {window.WALLET_TYPE !== "matchId" &&
+              window.WALLET_TYPE !== "binance" &&
+              !window.ethereum?.isBinance && (
+                <Dropdown.Item
+                  onClick={() => onSwitchNetwork("0x349", 841)}
+                  className={activeChain === "taraxa" ? "active-chain-btn" : ""}
+                >
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
+                    alt=""
+                    width={20}
+                    height={20}
+                  />
+                  Taraxa
+                </Dropdown.Item>
+              )}
           </div>
         </div>
         {!isMobile && (

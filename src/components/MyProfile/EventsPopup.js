@@ -99,6 +99,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                     ? "https://cdn.worldofdypians.com/wod/skalePopupImage.png"
                     : dummyEvent.popupInfo.linkState === "core"
                     ? "https://cdn.worldofdypians.com/wod/coreThumb.png"
+                    : dummyEvent.popupInfo.linkState === "taraxa"
+                    ? "https://cdn.worldofdypians.com/wod/taraxaThumb.webp"
                     : dummyEvent.popupInfo.linkState === "sei"
                     ? "https://cdn.worldofdypians.com/wod/seiThumb.png"
                     : dummyEvent.popupInfo.linkState === "immutable"
@@ -127,6 +129,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                     ? "https://cdn.worldofdypians.com/wod/kucoinThumb.png"
                     : dummyEvent.popupInfo.linkState === "vanar"
                     ? "https://cdn.worldofdypians.com/wod/vanarThumb.webp"
+                    : dummyEvent.popupInfo.linkState === "trust"
+                    ? "https://cdn.worldofdypians.com/wod/trustwalletThumb.webp"
                     : "https://cdn.worldofdypians.com/wod/eventPopupImage.png"
                 }
                 alt=""
@@ -318,15 +322,24 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   daily and venture into the CoinGecko area to uncover hidden
                   treasures.
                 </p>
-              ) : dummyEvent.popupInfo.id === "event5" ? (
+              ) : dummyEvent.popupInfo.id === "event5" ||
+                dummyEvent.popupInfo.id === "event200" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to own at
-                  least one of the Beta Pass NFTs (CoinGecko, Conflux, Gate, or
-                  Base). By actively participating in the game on a daily basis
-                  and exploring the downtown area, players have the opportunity
-                  to secure daily rewards in DYP. Remember to log in to the game
-                  daily and venture into the downtown area to uncover hidden
-                  treasures.
+                  least one of the Beta Pass NFTs{" "}
+                  {dummyEvent.popupInfo.id === "event200" &&
+                    "(opBNB Beta Pass or BNB Chain Beta Pass)"}
+                  . By actively participating in the game on a daily basis and
+                  exploring the{" "}
+                  {dummyEvent.popupInfo.id === "event200"
+                    ? "Trust Wallet"
+                    : "downtown"}{" "}
+                  area, players have the opportunity to secure daily rewards.
+                  Remember to log in to the game daily and venture into the{" "}
+                  {dummyEvent.popupInfo.id === "event200"
+                    ? "Trust Wallet"
+                    : "downtown"}{" "}
+                  area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event6" ? (
                 <p className="popup-event-desc">
@@ -426,6 +439,17 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   earn points for their placement on the global leaderboard.
                   Remember to log in to the game daily and venture into the CORE
                   area to uncover hidden treasures.
+                </p>
+              ) : dummyEvent.popupInfo.id === "event30" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a Taraxa Beta Pass NFT</b>. You can get the Taraxa
+                  Beta Pass NFT from the World of Dypians Shop. By engaging in
+                  the game on a daily basis and exploring the Taraxa area,
+                  players not only stand a chance to secure daily rewards in
+                  Taraxa, but also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Taraxa area to uncover hidden treasures.
                 </p>
               ) : dummyEvent.popupInfo.id === "event16" ? (
                 <p className="popup-event-desc">
@@ -576,6 +600,15 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
             Yield Engine offers effortless access to tailored growth
             opportunities by integrating a wide variety of yield tools into a
             unified ecosystem.
+          </p>
+        ) : dummyEvent.popupInfo.id === "event200" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            Trust Wallet is a secure multi-chain self-custody wallet and your
+            gateway to 10+ million digital assets, NFTs, and thousands of Web3
+            dApps.
           </p>
         ) : dummyEvent.popupInfo.id === "event20" ? (
           <p
@@ -785,6 +818,17 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
             Core is focused instead on platform growth and driving the global
             adoption of blockchain technology.
           </p>
+        ) : dummyEvent.popupInfo.id === "event30" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            Taraxa is a public, EVM-compatible blockchain designed to support
+            fast, scalable, and cost-efficient decentralized applications
+            (dApps). It was originally created to address audit logging for
+            off-chain data and real-world events, but has since evolved into a
+            general-purpose platform.
+          </p>
         ) : dummyEvent.popupInfo.id === "event25" ? (
           <p
             className="popup-event-desc"
@@ -818,6 +862,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://twitter.com/dypius"
                 : dummyEvent.popupInfo.id === "event3"
                 ? "https://twitter.com/coingecko"
+                : dummyEvent.popupInfo.id === "event200"
+                ? "https://x.com/TrustWallet"
                 : dummyEvent.popupInfo.id === "event4"
                 ? "https://x.com/TeaFi_Official"
                 : dummyEvent.popupInfo.id === "event6"
@@ -838,6 +884,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://twitter.com/SeiNetwork"
                 : dummyEvent.popupInfo.id === "event12"
                 ? "https://twitter.com/Coredao_Org"
+                : dummyEvent.popupInfo.id === "event30"
+                ? "https://x.com/taraxa_project"
                 : dummyEvent.popupInfo.id === "event16"
                 ? "https://twitter.com/MultiversX"
                 : dummyEvent.popupInfo.id === "event21"
@@ -872,7 +920,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
               height={16}
               src={"https://cdn.worldofdypians.com/wod/greenTwitter.svg"}
             />{" "}
-            Twitter
+            X
           </a>
 
           <a
@@ -888,6 +936,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://t.me/TeaFi_Official"
                 : dummyEvent.popupInfo.id === "event8"
                 ? "https://t.me/CoinMarketCapAnnouncements"
+                : dummyEvent.popupInfo.id === "event200"
+                ? "https://t.me/trustwallet"
                 : dummyEvent.popupInfo.id === "event6"
                 ? "https://t.me/gateio_en"
                 : dummyEvent.popupInfo.id === "event7"
@@ -904,6 +954,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://t.me/seinetwork?ref=blog.sei.io"
                 : dummyEvent.popupInfo.id === "event12"
                 ? "https://t.me/CoreDAOTelegram"
+                : dummyEvent.popupInfo.id === "event30"
+                ? "https://t.me/taraxa_project"
                 : dummyEvent.popupInfo.id === "event16"
                 ? "https://t.me/MultiversX"
                 : dummyEvent.popupInfo.id === "event21"
@@ -957,6 +1009,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://www.coingecko.com/"
                 : dummyEvent.popupInfo.id === "event4"
                 ? "https://tea-fi.com/"
+                : dummyEvent.popupInfo.id === "event200"
+                ? "https://trustwallet.com/"
                 : dummyEvent.popupInfo.id === "event6"
                 ? "https://www.gate.io/"
                 : dummyEvent.popupInfo.id === "event7"
@@ -975,6 +1029,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 ? "https://www.bnbchain.org/en"
                 : dummyEvent.popupInfo.id === "event12"
                 ? "https://coredao.org/"
+                : dummyEvent.popupInfo.id === "event30"
+                ? "https://taraxa.io/"
                 : dummyEvent.popupInfo.id === "event16"
                 ? "https://multiversx.com/"
                 : dummyEvent.popupInfo.id === "event21"

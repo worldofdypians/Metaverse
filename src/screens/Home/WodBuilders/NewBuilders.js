@@ -11,10 +11,14 @@ const NewBuilders = () => {
       backer: true,
     },
     {
+      name: "Binance Alpha",
+      icon: "binance-alpha.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
-      banner: "victionBanner.png",
-      link: "https://x.com/VictionEco/status/1789987120083562640",
+      banner: "trustwalletBanner.webp",
+      link: "https://x.com/TrustWallet/status/1972662705426165966",
       backer: true,
     },
     {
@@ -157,6 +161,12 @@ const NewBuilders = () => {
     {
       name: "KuCoin",
       icon: "kucoinLogoRound.svg",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "Taraxa",
+      icon: "taraxa.svg",
       banner: "kucoinBanner.png",
       backer: false,
     },
@@ -456,6 +466,82 @@ const NewBuilders = () => {
       name: "Melitho Ventures",
       icon: "melitho.png",
     },
+    {
+      name: "CoinRabbit",
+      icon: "coinrabbit.png",
+    },
+    {
+      name: "Vameon",
+      icon: "vameon.svg",
+    },
+    {
+      name: "Phemex",
+      icon: "phemex.png",
+    },
+    {
+      name: "HiBt",
+      icon: "hibt.png",
+    },
+    {
+      name: "KCEX",
+      icon: "kcex.png",
+    },
+    {
+      name: "SUPERFORTUNE",
+      icon: "superfortune.png",
+    },
+    {
+      name: "WEEX",
+      icon: "weex.svg",
+    },
+    {
+      name: "Toobit",
+      icon: "toobit.svg",
+    },
+    {
+      name: "BingX",
+      icon: "bingx.svg",
+    },
+    {
+      name: "Uphold",
+      icon: "uphold.svg",
+    },
+    {
+      name: "Uniswap",
+      icon: "uniswapBuyWod.png",
+    },
+    {
+      name: "BVOX",
+      icon: "bvoxBuyWod.png",
+    },
+    {
+      name: "Bitkan",
+      icon: "bitkanBuyWod.png",
+    },
+    {
+      name: "Tothemoon",
+      icon: "tothemoonBuyWod.png",
+    },
+    {
+      name: "OpenOcean",
+      icon: "openoceanBuyWod.png",
+    },
+    {
+      name: "Bitexen",
+      icon: "bitexen.png",
+    },
+    {
+      name: "Biconomy",
+      icon: "biconomy.png",
+    },
+    {
+      name: "BTCC",
+      icon: "btcc.svg",
+    },
+    {
+      name: "SwissBorg",
+      icon: "swissborg.svg",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
@@ -472,11 +558,7 @@ const NewBuilders = () => {
                   className={`d-flex flex-column align-items-center gap-2`}
                 >
                   <img
-                    src={
-                      item.icon.includes("changeNow")
-                        ? "https://cdn.worldofdypians.com/wod/changeNow.webp"
-                        : `https://cdn.worldofdypians.com/wod/${item.icon}`
-                    }
+                    src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                     width={45}
                     height={45}
                     alt=""

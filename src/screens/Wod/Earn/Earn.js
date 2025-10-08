@@ -25,6 +25,7 @@ const Earn = ({
   network_matchain,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
+  bnbUSDPrice,
 }) => {
   // const nftPools = [
   //   {
@@ -79,16 +80,22 @@ const Earn = ({
   const handleSetPools = (poolFilter, isExpired) => {
     if (poolFilter === "All") {
       const allPools = [...tokenPools, ...nftPools];
+      const bnbPool = tokenPools.filter((item)=>{return item.id === '0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600'})
       if (isExpired === false) {
-        let poolsActive = allPools.filter((item) => {
-          return item.expired === "No";
-        });
-        setStakingPools(poolsActive);
+        let poolsActive = allPools
+          .filter((item) => {
+            return item.expired === "No" && item.id !== '0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600';
+          })
+          .sort((a, b) => Number(b.apy_percent) - Number(a.apy_percent));
+        setStakingPools([...bnbPool, ...poolsActive]);
       } else if (isExpired === true) {
         let nftPoolsExpired = nftPools.filter((item) => {
           return item.expired === "Yes";
         });
-        setStakingPools(nftPoolsExpired);
+        let tokenPoolsExpired = tokenPools.filter((item) => {
+          return item.expired === "Yes";
+        });
+        setStakingPools([...tokenPoolsExpired, ...nftPoolsExpired]);
       }
     } else if (poolFilter === "WOD") {
       if (isExpired === false) {
@@ -140,11 +147,11 @@ const Earn = ({
   }, [nftPools]);
   return (
     <>
-      <div className="container-fluid earn-mainhero-wrapper  px-0">
+      <div className="container-fluid earn-mainhero-wrapper px-0">
         <div className="d-flex flex-column gap-3">
           <EarnHero />
           <EarnContent
-          isEOA={isEOA}
+            isEOA={isEOA}
             onSelectFilter={(value, expirevalue) => {
               setSelectedFilter(value);
               handleSetPools(value, expirevalue);
@@ -180,6 +187,7 @@ const Earn = ({
             network_matchain={network_matchain}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            bnbUSDPrice={bnbUSDPrice}
           />
         </div>
       </div>

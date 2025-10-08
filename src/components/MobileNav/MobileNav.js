@@ -175,6 +175,13 @@ const MobileNav = () => {
             }}
           />
         )}
+         <a href="https://www.space.id/tld/21/" target="_blank">
+            <img
+              src="https://cdn.worldofdypians.com/wod/domainNameIcon.png"
+              style={{ width: "22px", height: "22px" }}
+              alt="wod domain"
+            />
+          </a>
       </div>
       {/* <OutsideClickHandler onOutsideClick={() => setOpenMint(false)}>
         <div id="bgmenu1" className={` ${openMint && 'comming-soon-mint-active'} d-flex align-items-center justify-content-center px-3 py-2 comming-soon-mint`}>
@@ -201,7 +208,7 @@ const MobileNav = () => {
           } nft-outer-wrapper-1 mobile-nft-wrapper d-flex flex-column p-3 gap-3 w-100`}
         >
           <NavLink
-            to={"/shop/beta-pass/base"}
+            to={"/shop/beta-pass/bnb"}
             className={({ isActive }) =>
               isActive
                 ? "nft-link-active d-flex align-items-center justify-content-between"

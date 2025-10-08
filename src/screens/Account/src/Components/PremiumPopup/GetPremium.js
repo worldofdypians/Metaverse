@@ -7,6 +7,8 @@ import { ethers } from "ethers";
 import "./_getpremium.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import ChainPopup from "../../../../../components/Header/ChainPopup";
+import { useBinancePayPremium } from "../../../../../hooks/useBinancePayPremium";
+import { motion } from "motion/react";
 
 const GetPremiumPopup = ({
   isEOA,
@@ -26,6 +28,30 @@ const GetPremiumPopup = ({
   publicClient,
   network_matchain,
 }) => {
+  const { statusPrime, txHash, createPremiumOrder, QRComponent } =
+    useBinancePayPremium();
+
+  let buttonText = "Binance Pay";
+  if (statusPrime === "creating") buttonText = "Creating order...";
+  if (statusPrime === "waitingPayment") buttonText = "Waiting for payment...";
+  if (statusPrime === "validating") buttonText = "Validating bundle...";
+  if (statusPrime === "activating") buttonText = "Activating on-chain...";
+  if (statusPrime === "success") buttonText = "✅ Success!";
+  if (statusPrime === "failed") buttonText = "❌ Failed";
+  if (statusPrime === "idle") buttonText = "Activate";
+
+  const handleUpdatePremiumUser = async (wallet) => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  const handlePurchasePremium = (walletAddress, price) => {
+    createPremiumOrder(walletAddress, price);
+  };
+
   const chainDropdowns = [
     {
       name: "Ethereum",
@@ -92,6 +118,11 @@ const GetPremiumPopup = ({
       symbol: "vanar",
       chainId: 2040,
     },
+    {
+      name: "Taraxa",
+      symbol: "taraxa",
+      chainId: 841,
+    },
   ];
 
   const { BigNumber } = window;
@@ -109,6 +140,7 @@ const GetPremiumPopup = ({
   let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
   let wmataddress = "0xB6dc6C8b71e88642cEAD3be1025565A9eE74d1C6";
   let wseiAddress = "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1";
+  let wtaraxaAddress = "0x8712796136Ac8e0EEeC123251ef93702f265aa80";
 
   const allBenefits = [
     {
@@ -139,7 +171,13 @@ const GetPremiumPopup = ({
       title: "Priority Support",
       image: "https://cdn.worldofdypians.com/wod/prioritySupportBg.webp",
     },
+    {
+      title: "Lifetime Plan",
+      image: "https://cdn.worldofdypians.com/wod/lifetimePlanBg.webp",
+    },
   ];
+
+  const [binancePay, setbinancePay] = useState(false);
 
   const [dropdownIcon, setdropdownIcon] = useState("");
   const [dropdownTitle, setdropdownTitle] = useState("");
@@ -182,6 +220,12 @@ const GetPremiumPopup = ({
   const [nftPremium_tokenIdMat, setnftPremium_tokenIdMat] = useState(0);
   const [nftPremium_totalMat, setnftPremium_totalMat] = useState(0);
   const [nftDiscountObjectMat, setnftDiscountObjectMat] = useState([]);
+
+  const [nftDiscountObjectTaraxa, setnftDiscountObjectTaraxa] = useState([]);
+  const [discountPercentageTaraxa, setdiscountPercentageTaraxa] = useState(0);
+  const [nftPremium_tokenIdTaraxa, setnftPremium_tokenIdTaraxa] = useState(0);
+  const [nftPremium_totalTaraxa, setnftPremium_totalTaraxa] = useState(0);
+
   const [chainState, setchainState] = useState("");
 
   const switchNetwork = async (hexChainId, chain) => {
@@ -250,6 +294,8 @@ const GetPremiumPopup = ({
         setchainState("sei");
       } else if (chainId === 2040) {
         setchainState("vanar");
+      } else if (chainId === 841) {
+        setchainState("taraxa");
       } else {
         setchainState("");
       }
@@ -282,6 +328,11 @@ const GetPremiumPopup = ({
       window.config.subscription_mat_address
     );
 
+    const premiumSc_taraxa = new window.taraxaWeb3.eth.Contract(
+      window.SUBSCRIPTION_TARAXA_ABI,
+      window.config.subscription_taraxa_address
+    );
+
     const nftContract = new window.bscWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_ABI,
       window.config.nft_dypius_premium_address
@@ -304,6 +355,11 @@ const GetPremiumPopup = ({
     const nftContract_mat = new window.matWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_MAT_ABI,
       window.config.nft_dypius_premium_mat_address
+    );
+
+    const nftContract_taraxa = new window.taraxaWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_MAT_ABI,
+      window.config.nft_dypius_premium_taraxa_address
     );
 
     if (wallet) {
@@ -339,6 +395,13 @@ const GetPremiumPopup = ({
         });
 
       const result_mat = await nftContract_mat.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const result_taraxa = await nftContract_taraxa.methods
         .balanceOf(wallet)
         .call()
         .catch((e) => {
@@ -385,6 +448,14 @@ const GetPremiumPopup = ({
           return 0;
         });
 
+      const discount_taraxa = await premiumSc_taraxa.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
         .call()
@@ -414,6 +485,13 @@ const GetPremiumPopup = ({
 
       const nftObject_mat = await premiumSc_mat.methods
         .nftDiscounts(window.config.nft_dypius_premium_mat_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const nftObject_taraxa = await premiumSc_taraxa.methods
+        .nftDiscounts(window.config.nft_dypius_premium_taraxa_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -534,6 +612,29 @@ const GetPremiumPopup = ({
 
         setnftPremium_tokenIdMat(tokenId);
         setnftPremium_totalMat(parseInt(result_mat));
+      } else if (result_taraxa && parseInt(result_taraxa) > 0) {
+        const tokenId = await nftContract_taraxa.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_taraxa) {
+          setnftDiscountObjectTaraxa(nftObject_taraxa);
+          if (discount_taraxa) {
+            setdiscountPercentageTaraxa(
+              Math.max(
+                parseInt(discount_taraxa),
+                parseInt(nftObject_taraxa.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdTaraxa(tokenId);
+        setnftPremium_totalTaraxa(parseInt(result_taraxa));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
@@ -545,6 +646,8 @@ const GetPremiumPopup = ({
         setnftPremium_totalTaiko(0);
         setnftPremium_tokenIdMat(0);
         setnftPremium_totalMat(0);
+        setnftPremium_tokenIdTaraxa(0);
+        setnftPremium_totalTaraxa(0);
 
         if (discount) {
           setdiscountPercentage(parseInt(discount));
@@ -556,11 +659,15 @@ const GetPremiumPopup = ({
           setdiscountPercentageTaiko(parseInt(discount_taiko));
         } else if (discount_mat) {
           setdiscountPercentageMat(parseInt(discount_mat));
+        } else if (discount_taraxa) {
+          setdiscountPercentageTaraxa(parseInt(discount_taraxa));
         }
       }
     } else {
       setnftPremium_tokenIdMat(0);
       setnftPremium_totalMat(0);
+      setnftPremium_tokenIdTaraxa(0);
+      setnftPremium_totalTaraxa(0);
       setnftPremium_tokenId(0);
       setnftPremium_total(0);
       setnftPremium_tokenIdViction(0);
@@ -571,14 +678,6 @@ const GetPremiumPopup = ({
       setnftPremium_totalTaiko(0);
     }
     // } else setdiscountPercentage(0);
-  };
-
-  const handleUpdatePremiumUser = async (wallet) => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/sub/${wallet}`)
-      .catch((e) => {
-        console.error(e);
-      });
   };
 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
@@ -622,6 +721,8 @@ const GetPremiumPopup = ({
         ? window.config.subscriptionmat_tokens[token]?.decimals
         : chainId === 1030
         ? window.config.subscriptioncfx_tokens[token]?.decimals
+        : chainId === 841
+        ? window.config.subscriptiontaraxa_tokens[token]?.decimals
         : window.config.subscriptioneth_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -671,6 +772,11 @@ const GetPremiumPopup = ({
             token,
             discountPercentageMat
           )
+        : chainId === 841
+        ? await window.getEstimatedTokenSubscriptionAmountTaraxa(
+            token,
+            discountPercentageTaraxa
+          )
         : chainId === 1329
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmountETH(token);
@@ -682,7 +788,7 @@ const GetPremiumPopup = ({
       tokenDecimals
     );
 
-    if (coinbase && window.WALLET_TYPE === "binance") {
+    if (coinbase && window.WALLET_TYPE === "binance" && binanceW3WProvider) {
       let token_Sc = new ethers.Contract(
         token,
         window.ERC20_ABI,
@@ -737,6 +843,7 @@ const GetPremiumPopup = ({
     const mantasubscribeAddress = window.config.subscription_manta_address;
     const taikosubscribeAddress = window.config.subscription_taiko_address;
     const matsubscribeAddress = window.config.subscription_mat_address;
+    const taraxasubscribeAddress = window.config.subscription_taraxa_address;
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
@@ -761,6 +868,11 @@ const GetPremiumPopup = ({
     let nftContract_mat = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_MAT_ABI,
       window.config.nft_dypius_premium_mat_address
+    );
+
+    let nftContract_taraxa = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_MAT_ABI,
+      window.config.nft_dypius_premium_taraxa_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
@@ -803,11 +915,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         } else if (approveStatus === "approveAmount") {
           await tokenContract.methods
@@ -823,11 +936,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         }
       } else if (window.WALLET_TYPE === "matchId") {
@@ -848,11 +962,12 @@ const GetPremiumPopup = ({
                 setloadspinner(false);
                 setapproveStatus("fail");
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
                   setapproveStatus("initial");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -892,11 +1007,12 @@ const GetPremiumPopup = ({
                 setloadspinner(false);
                 setapproveStatus("fail");
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
                   setapproveStatus("initial");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -941,11 +1057,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -971,11 +1088,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
 
           const txReceipt = await txResponse.wait();
@@ -1012,6 +1130,65 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
+            const timer = setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+            return () => clearTimeout(timer);
+          });
+      } else if (approveStatus === "approveAmount") {
+        let tokenContract = new window.web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+          .approve(victionsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            const timer = setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+            return () => clearTimeout(timer);
+          });
+      }
+    } else if (
+      chainId === 841 &&
+      nftPremium_totalTaraxa > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_taraxa.methods
+          .approve(
+            window.config.subscription_taraxa_address,
+            nftPremium_tokenIdTaraxa
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageViction < 100) {
+              setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
             setTimeout(() => {
               setstatus("");
               setloadspinner(false);
@@ -1024,7 +1201,7 @@ const GetPremiumPopup = ({
           selectedSubscriptionToken
         );
         await tokenContract.methods
-          .approve(victionsubscribeAddress, price)
+          .approve(taraxasubscribeAddress, price)
           .send({ from: coinbase })
           .then(() => {
             setloadspinner(false);
@@ -1069,11 +1246,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       } else if (approveStatus === "approveAmount") {
         let tokenContract = new window.web3.eth.Contract(
@@ -1093,11 +1271,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       }
     } else if (
@@ -1126,11 +1305,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       } else if (approveStatus === "approveAmount") {
         let tokenContract = new window.web3.eth.Contract(
@@ -1150,11 +1330,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       }
     } else if (
@@ -1180,11 +1361,12 @@ const GetPremiumPopup = ({
                 setloadspinner(false);
                 setapproveStatus("fail");
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
                   setapproveStatus("initial");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -1219,11 +1401,12 @@ const GetPremiumPopup = ({
                 setloadspinner(false);
                 setapproveStatus("fail");
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setstatus("");
                   setloadspinner(false);
                   setapproveStatus("initial");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -1265,11 +1448,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         } else if (approveStatus === "approveAmount") {
           let tokenContract = new window.web3.eth.Contract(
@@ -1289,11 +1473,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.message);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         }
       }
@@ -1331,6 +1516,8 @@ const GetPremiumPopup = ({
               ? taikosubscribeAddress
               : chainId === 698
               ? matsubscribeAddress
+              : chainId === 841
+              ? taraxasubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
               : chainId === 1329
@@ -1349,11 +1536,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       } else if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
@@ -1376,11 +1564,12 @@ const GetPremiumPopup = ({
               setloadspinner(false);
               setapproveStatus("fail");
               window.alertify.error(e?.shortMessage);
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setstatus("");
                 setloadspinner(false);
                 setapproveStatus("initial");
               }, 5000);
+              return () => clearTimeout(timer);
             });
 
           if (result) {
@@ -1441,11 +1630,12 @@ const GetPremiumPopup = ({
             setloadspinner(false);
             setapproveStatus("fail");
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setstatus("");
               setloadspinner(false);
               setapproveStatus("initial");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -1473,6 +1663,7 @@ const GetPremiumPopup = ({
     const mantaWeb3 = new Web3(window.config.manta_endpoint);
     const taikoWeb3 = new Web3(window.config.taiko_endpoint);
     const matWeb3 = new Web3(window.config.mat_endpoint);
+    const taraxaWeb3 = new Web3(window.config.taraxa_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1487,6 +1678,7 @@ const GetPremiumPopup = ({
     const mantasubscribeAddress = window.config.subscription_manta_address;
     const taikosubscribeAddress = window.config.subscription_taiko_address;
     const matsubscribeAddress = window.config.subscription_mat_address;
+    const taraxasubscribeAddress = window.config.subscription_taraxa_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -1552,6 +1744,11 @@ const GetPremiumPopup = ({
       subscribeToken
     );
 
+    const subscribeTokencontracttaraxa = new taraxaWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -1589,6 +1786,11 @@ const GetPremiumPopup = ({
         ? await window.getEstimatedTokenSubscriptionAmountMat(
             token,
             discountPercentageMat
+          )
+        : chainId === 841
+        ? await window.getEstimatedTokenSubscriptionAmountTaraxa(
+            token,
+            discountPercentageTaraxa
           )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
@@ -1783,6 +1985,68 @@ const GetPremiumPopup = ({
         } else {
           const result = await subscribeTokencontractviction.methods
             .allowance(coinbase, victionsubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        }
+      } else if (chainId === 841) {
+        if (nftPremium_totalTaraxa > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
+            window.config.nft_dypius_premium_taraxa_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdViction)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, victionsubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === taraxasubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageTaraxa === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+            // if (discountPercentageViction < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontracttaraxa.methods
+            .allowance(coinbase, taraxasubscribeAddress)
             .call()
             .then();
 
@@ -2144,6 +2408,10 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_CORE"
             : chainId === 1329
             ? "SUBSCRIPTION_SEI"
+            : chainId === 841
+            ? "SUBSCRIPTION_TARAXA"
+            : chainId === 167000
+            ? "SUBSCRIPTION_TAIKO"
             : "",
       });
 
@@ -2174,12 +2442,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
         if (txResponse) {
           const txReceipt = await txResponse.wait();
@@ -2189,12 +2458,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
       } else if (
@@ -2248,12 +2518,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         if (txResponse) {
@@ -2264,12 +2535,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
       } else if (chainId === 88 && nftPremium_totalViction > 0) {
@@ -2298,12 +2570,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         if (txResponse) {
@@ -2314,12 +2587,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
 
@@ -2356,11 +2630,11 @@ const GetPremiumPopup = ({
         //       setstatus("");
         //     }, 5000);
         //   });
-      } else if (chainId === 2040 && nftPremium_totalVanar > 0) {
+      } else if (chainId === 841 && nftPremium_totalTaraxa > 0) {
         const txResponse = await subscriptionContract
           .subscribeNFT(
-            nftDiscountObjectVanar.nftAddress,
-            nftPremium_tokenIdVanar,
+            nftDiscountObjectTaraxa.nftAddress,
+            nftPremium_tokenIdTaraxa,
             selectedSubscriptionToken,
             price,
             { from: coinbase }
@@ -2404,6 +2678,58 @@ const GetPremiumPopup = ({
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+          }
+        }
+      } else if (chainId === 2040 && nftPremium_totalVanar > 0) {
+        const txResponse = await subscriptionContract
+          .subscribeNFT(
+            nftDiscountObjectVanar.nftAddress,
+            nftPremium_tokenIdVanar,
+            selectedSubscriptionToken,
+            price,
+            { from: coinbase }
+          )
+          .catch((e) => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            let cleanReason = "Transaction failed";
+
+            const fullMessage = e?.reason || e?.message || "";
+
+            const match = fullMessage.match(/execution reverted: ([^"]+)/);
+            if (match) {
+              cleanReason = match[1];
+            } else {
+              cleanReason = fullMessage;
+            }
+
+            setstatus(cleanReason);
+            window.alertify.error(cleanReason);
+
+            const timer = setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+            return () => clearTimeout(timer);
+          });
+
+        if (txResponse) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+
+            onSuccessDeposit();
+            const timer = setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+            return () => clearTimeout(timer);
           }
         }
 
@@ -2466,12 +2792,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         if (txResponse) {
@@ -2482,12 +2809,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
 
@@ -2550,12 +2878,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         if (txResponse) {
@@ -2566,12 +2895,13 @@ const GetPremiumPopup = ({
             setapproveStatus("successsubscribe");
 
             onSuccessDeposit();
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
         // await window
@@ -2627,12 +2957,13 @@ const GetPremiumPopup = ({
             setstatus(cleanReason);
             window.alertify.error(cleanReason);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
         if (txResponse) {
           const txReceipt = await txResponse.wait();
@@ -2642,42 +2973,15 @@ const GetPremiumPopup = ({
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           }
         }
-        // await subscriptionContract.methods
-        //   .subscribe(selectedSubscriptionToken, price)
-        //   .send({ from: await window.getCoinbase() })
-        //   .then(() => {
-        //     setloadspinnerSub(false);
-        //     onSuccessDeposit();
-        //     handleUpdatePremiumUser(coinbase);
-        //     setapproveStatus("successsubscribe");
-
-        //     setTimeout(() => {
-        //       setloadspinnerSub(false);
-        //       setloadspinner(false);
-        //       setapproveStatus("initial");
-        //       setstatus("");
-        //     }, 5000);
-        //   })
-        //   .catch((e) => {
-        //     setloadspinnerSub(false);
-        //     setapproveStatus("failsubscribe");
-        //     setstatus(e?.message);
-        //     window.alertify.error(e?.message);
-        //     setTimeout(() => {
-        //       setloadspinnerSub(false);
-        //       setloadspinner(false);
-        //       setapproveStatus("initial");
-        //       setstatus("");
-        //     }, 5000);
-        //   });
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
@@ -2702,12 +3006,13 @@ const GetPremiumPopup = ({
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
 
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -2725,12 +3030,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("successsubscribe");
 
                 onSuccessDeposit();
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               }
             }
           } else if (
@@ -2754,12 +3060,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("failsubscribe");
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -2776,12 +3083,13 @@ const GetPremiumPopup = ({
                 onSuccessDeposit();
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               }
             }
           } else {
@@ -2797,12 +3105,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("failsubscribe");
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
             if (result) {
               const receipt = await publicClient
@@ -2819,12 +3128,13 @@ const GetPremiumPopup = ({
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
 
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               }
             }
           }
@@ -2848,12 +3158,13 @@ const GetPremiumPopup = ({
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
 
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -2870,12 +3181,13 @@ const GetPremiumPopup = ({
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
                 onSuccessDeposit();
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               }
             }
           } else {
@@ -2891,12 +3203,13 @@ const GetPremiumPopup = ({
                 setapproveStatus("failsubscribe");
                 setstatus(e?.shortMessage);
                 window.alertify.error(e?.shortMessage);
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (result) {
@@ -2914,12 +3227,13 @@ const GetPremiumPopup = ({
                 handleUpdatePremiumUser(coinbase);
                 setapproveStatus("successsubscribe");
 
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setloadspinnerSub(false);
                   setloadspinner(false);
                   setapproveStatus("initial");
                   setstatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               }
             }
           }
@@ -2938,18 +3252,8 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_CFX"
             : chainId === 8453
             ? "SUBSCRIPTION_BASE"
-            : chainId === 1482601649
-            ? "SUBSCRIPTION_SKALE"
-            : chainId === 88
-            ? "SUBSCRIPTION_VICTION"
-            : chainId === 2040
-            ? "SUBSCRIPTION_VANAR"
             : chainId === 169
             ? "SUBSCRIPTION_MANTA"
-            : chainId === 1116
-            ? "SUBSCRIPTION_CORE"
-            : chainId === 1329
-            ? "SUBSCRIPTION_SEI"
             : "",
       });
 
@@ -2972,12 +3276,13 @@ const GetPremiumPopup = ({
             setstatus(e?.message);
             window.alertify.error(e?.message);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -3005,12 +3310,13 @@ const GetPremiumPopup = ({
           //     console.error(e);
           //   });
 
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else if (
         chainId === 56 &&
@@ -3024,12 +3330,13 @@ const GetPremiumPopup = ({
             setapproveStatus("failsubscribe");
             setstatus(e?.message);
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -3057,12 +3364,13 @@ const GetPremiumPopup = ({
           //     console.error(e);
           //   });
 
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else {
         const txResponse = await subscriptionContract
@@ -3072,12 +3380,13 @@ const GetPremiumPopup = ({
             setapproveStatus("failsubscribe");
             setstatus(e?.message);
             window.alertify.error(e?.message);
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
               setapproveStatus("initial");
               setstatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
         const txReceipt = await txResponse.wait();
@@ -3087,12 +3396,13 @@ const GetPremiumPopup = ({
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
 
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
             setapproveStatus("initial");
             setstatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       }
     }
@@ -3262,10 +3572,23 @@ const GetPremiumPopup = ({
       setdropdownIcon("usdt");
       setdropdownTitle("usdt");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionsei_tokens)[11]
+        Object.keys(window.config.subscriptionsei_tokens)[0]
       );
       handleSubscriptionTokenChange(wseiAddress);
       handleCheckIfAlreadyApproved(wseiAddress);
+    } else if (chainId === 841) {
+      setChainDropdown(
+        chainDropdowns.find((item) => {
+          return item.chainId === chainId;
+        })
+      );
+      setdropdownIcon("usdt");
+      setdropdownTitle("usdt");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptiontaraxa_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wtaraxaAddress);
+      handleCheckIfAlreadyApproved(wtaraxaAddress);
     } else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -3282,16 +3605,20 @@ const GetPremiumPopup = ({
     nftPremium_totalVanar,
     nftPremium_totalTaiko,
     nftPremium_totalMat,
+    nftPremium_totalTaraxa,
+
     discountPercentage,
     discountPercentageViction,
     discountPercentageVanar,
     discountPercentageTaiko,
     discountPercentageMat,
+    discountPercentageTaraxa,
     nftPremium_tokenId,
     nftPremium_tokenIdViction,
     nftPremium_tokenIdVanar,
     nftPremium_tokenIdTaiko,
     nftPremium_tokenIdMat,
+    nftPremium_tokenIdTaraxa,
   ]);
 
   useEffect(() => {
@@ -3317,6 +3644,11 @@ const GetPremiumPopup = ({
     } else if (chainId === 88 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionviction_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    } else if (chainId === 841 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptiontaraxa_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     } else if (chainId === 2040 && selectedSubscriptionToken !== "") {
@@ -3380,11 +3712,18 @@ const GetPremiumPopup = ({
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    if (statusPrime === "success" && coinbase) {
+      onSuccessDeposit();
+      handleUpdatePremiumUser(coinbase);
+    }
+  }, [statusPrime, coinbase]);
+
   return (
     <>
       <div className="custom-container mt-5 mt-lg-0">
         {isPremium ? (
-          <div className="px-0 pt-5 pt-lg-2 position-relative">
+          <div className="px-0 pt-5 position-relative">
             <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
               <div className="d-flex flex-column w-100 justify-content-center gap-2 align-items-center bgwrapper p-3">
                 <h6 className="mb-0 already-premium-title">PRIME ENABLED</h6>
@@ -3417,18 +3756,20 @@ const GetPremiumPopup = ({
             </div>
           </div>
         ) : (
-          <div className="px-0 pt-5 pt-lg-2 position-relative">
+          <div className="px-0 pt-5 position-relative">
             <div className="" style={{ background: "#8E97CD" }}></div>
             {discountPercentage > 0 ||
             discountPercentageViction > 0 ||
             discountPercentageVanar > 0 ||
             discountPercentageTaiko > 0 ||
             discountPercentageMat > 0 ||
+            discountPercentageTaraxa > 0 ||
             nftPremium_total > 0 ||
             nftPremium_totalViction ||
             nftPremium_totalVanar ||
             nftPremium_totalTaiko > 0 ||
-            nftPremium_totalMat > 0 ? (
+            nftPremium_totalMat > 0 ||
+            nftPremium_totalTaraxa > 0 ? (
               <div className="premium-gold-bg mt-3 p-4 position-relative d-flex align-items-center justify-content-between">
                 <div className="premiumRedTag position-absolute">
                   <div className="position-relative d-flex flex-column">
@@ -3450,6 +3791,8 @@ const GetPremiumPopup = ({
                           ? discountPercentageTaiko
                           : discountPercentageMat > 0
                           ? discountPercentageMat
+                          : discountPercentageTaraxa > 0
+                          ? discountPercentageTaraxa
                           : discountPercentage}
                         %
                       </span>
@@ -3464,7 +3807,8 @@ const GetPremiumPopup = ({
                       nftPremium_totalViction > 0 ||
                       nftPremium_totalVanar > 0 ||
                       nftPremium_totalTaiko > 0 ||
-                      nftPremium_totalMat > 0) && (
+                      nftPremium_totalMat > 0 ||
+                      nftPremium_totalTaraxa > 0) && (
                       <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
                         Valid until:{" "}
                         {new Date(
@@ -3476,6 +3820,8 @@ const GetPremiumPopup = ({
                             ? nftDiscountObjectMat.expiration * 1000
                             : nftPremium_totalVanar > 0
                             ? nftDiscountObjectVanar.expiration * 1000
+                            : nftPremium_totalTaraxa > 0
+                            ? nftDiscountObjectTaraxa.expiration * 1000
                             : nftDiscountObjectViction.expiration * 1000
                         )
                           .toDateString()
@@ -3490,6 +3836,8 @@ const GetPremiumPopup = ({
                                 ? nftDiscountObjectMat.expiration * 1000
                                 : nftPremium_totalVanar > 0
                                 ? nftDiscountObjectVanar.expiration * 1000
+                                : nftPremium_totalTaraxa > 0
+                                ? nftDiscountObjectTaraxa.expiration * 1000
                                 : nftDiscountObjectViction.expiration * 1000
                             ).toDateString().length
                           )}
@@ -3502,7 +3850,8 @@ const GetPremiumPopup = ({
                       discountPercentageViction == 100 ||
                       discountPercentageVanar == 100 ||
                       discountPercentageTaiko == 100 ||
-                      discountPercentageMat == 100
+                      discountPercentageMat == 100 ||
+                      discountPercentageTaraxa == 100
                         ? "FREE"
                         : "$" +
                           (100 -
@@ -3517,6 +3866,8 @@ const GetPremiumPopup = ({
                                 ? discountPercentageTaiko
                                 : discountPercentageMat > 0
                                 ? discountPercentageMat
+                                : discountPercentageTaraxa > 0
+                                ? discountPercentageTaraxa
                                 : discountPercentage
                             ))}
                     </h6>
@@ -3526,7 +3877,8 @@ const GetPremiumPopup = ({
                     nftPremium_totalViction > 0 ||
                     nftPremium_totalVanar > 0 ||
                     nftPremium_totalTaiko > 0 ||
-                    nftPremium_totalMat > 0) && (
+                    nftPremium_totalMat > 0 ||
+                    nftPremium_totalTaraxa > 0) && (
                     <h6 className="token-amount-placeholder m-0 premium-custom-text">
                       Valid until:{" "}
                       {new Date(
@@ -3538,6 +3890,8 @@ const GetPremiumPopup = ({
                           ? nftDiscountObjectMat.expiration * 1000
                           : nftPremium_totalVanar > 0
                           ? nftDiscountObjectVanar.expiration * 1000
+                          : nftPremium_totalTaraxa > 0
+                          ? nftDiscountObjectTaraxa.expiration * 1000
                           : nftDiscountObjectViction.expiration * 1000
                       )
                         .toDateString()
@@ -3552,6 +3906,8 @@ const GetPremiumPopup = ({
                               ? nftDiscountObjectMat.expiration * 1000
                               : nftPremium_totalVanar > 0
                               ? nftDiscountObjectVanar.expiration * 1000
+                              : nftPremium_totalTaraxa > 0
+                              ? nftDiscountObjectTaraxa.expiration * 1000
                               : nftDiscountObjectViction.expiration * 1000
                           ).toDateString().length
                         )}
@@ -3685,6 +4041,14 @@ const GetPremiumPopup = ({
                       />
                       <span className="subscription-chain mb-0">Vanar</span>
                     </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
+                        alt=""
+                        style={{ width: 18, height: 18 }}
+                      />
+                      <span className="subscription-chain mb-0">Taraxa</span>
+                    </div>
                   </div>
                   <img
                     src={"https://cdn.worldofdypians.com/wod/premiumIcon.webp"}
@@ -3694,1063 +4058,1711 @@ const GetPremiumPopup = ({
                 </div>
               </div>
             )}
-            <div className="d-flex flex-column">
-              <div className="mt-3 p-3 benefits-title-wrapper justify-content-center">
-                <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
+            <div className="d-flex gap-2 flex-column flex-xl-row">
+              <div className="d-flex flex-column w-100">
+                <div className="mt-3 p-3 benefits-title-wrapper justify-content-center">
+                  <h6 className="premium-benefits-popup-title mb-0">
+                    Benefits
+                  </h6>
+                </div>
+                <div className="sidebar-separator2 m-0"></div>
+                <div className="premium-benefits-wrapper-std d-flex gap-3 justify-content-between p-3">
+                  {allBenefits.map((item, index) => {
+                    return (
+                      <div key={index} className="benefit-item">
+                        <div className="d-flex flex-column gap-3">
+                          <img src={item.image} alt="" className="benefitimg" />
+                          <span className="benefittitle p-3">{item.title}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="sidebar-separator2 m-0"></div>
-              <div className="premium-benefits-wrapper d-flex gap-3 justify-content-between p-3">
-                {allBenefits.map((item, index) => {
-                  return (
-                    <div key={index} className="benefit-item">
-                      <div className="d-flex flex-column gap-3">
-                        <img src={item.image} alt="" className="benefitimg" />
-                        <span className="benefittitle p-3">{item.title}</span>
+              <div className="mt-3 p-3 benefits-title-wrapper w-100 d-flex flex-column justify-content-between">
+                <div className="d-flex flex-column w-100">
+                  <div className="pb-3 benefits-title-wrapper justify-content-center">
+                    <h6 className="premium-benefits-popup-title mb-0">
+                      SUBSCRIBE
+                    </h6>
+                  </div>
+                  <div className="sidebar-separator2 m-0"></div>
+
+                  <div className="premium-benefits-wrapper d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column w-100 gap-4">
+                    <div className="d-flex flex-column prime-subs-container w-100">
+                      <div className="prime-subs-firsthalf p-3">
+                        <div className="d-flex align-items-center gap-3 w-100 justify-content-between">
+                          <div className="d-flex flex-column">
+                            <h3 className="prime-subs-txt">
+                              Prime Subscription
+                            </h3>
+                            <span className="prime-subs-desc">
+                              Lifetime Plan
+                            </span>
+                          </div>
+                          <h3 className="plan-cost2 mb-0">$100</h3>
+                        </div>
+                      </div>
+                      <div className="prime-subs-secondhalf p-3">
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="text-white w-100">
+                            Payment Method
+                          </span>
+                          <div className="d-flex gap-2 align-items-center w-100">
+                            <motion.div
+                              // whileTap={{ scale: 0.98 }}
+                              className={` flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                !binancePay
+                                  ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                  : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                              }`}
+                              onClick={() => setbinancePay(false)}
+                            >
+                              <div className="flex items-center space-x-3">
+                                <img
+                                  style={{ height: 20 }}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/walletRound.svg"
+                                  }
+                                  alt=""
+                                />
+                                <div>
+                                  <p
+                                    className={`text-base font-medium m-0 ${
+                                      !binancePay
+                                        ? "text-white"
+                                        : "text-gray-200"
+                                    }`}
+                                  >
+                                    Wallet
+                                  </p>
+                                </div>
+                              </div>
+                            </motion.div>
+                            <motion.div
+                              // whileTap={{ scale: 0.98 }}
+                              className={` w-100 min-w-122 flex items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
+                                binancePay
+                                  ? "bg-gradient-to-r from-blue-500/40 to-blue-500/30 border-cyan-400/50 bordertw"
+                                  : "bg-slate-800/50 bordertw border-white/20 hover:border-cyan-400/50 hover:bg-cyan-400/10"
+                              }`}
+                              onClick={() => setbinancePay(true)}
+                            >
+                              <div className="flex items-center space-x-3">
+                                <img
+                                  style={{ height: 20 }}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/b-pay.svg"
+                                  }
+                                  alt=""
+                                />
+                                <div>
+                                  <p
+                                    className={`text-base font-medium m-0 ${
+                                      binancePay
+                                        ? "text-white"
+                                        : "text-gray-200"
+                                    }`}
+                                  >
+                                    Binance Pay
+                                  </p>
+                                </div>
+                              </div>
+                            </motion.div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-            {/* <hr className="form-divider my-4" /> */}
-            <div className="d-flex align-items-lg-end align-items-start flex-column flex-lg-row justify-content-between mt-3">
-              <h6 className="become-premium-new-title mb-0">
-                Become Prime User
-              </h6>
-              <span className="my-premium-balance">
-                My Balance:{" "}
-                {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
-                {dropdownIcon?.toUpperCase()}
-              </span>
-            </div>
-            <div
-              className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column flex-lg-row w-100 gap-4 gap-lg-0"
-              style={{ overflowX: "clip" }}
-            >
-              <div className="d-flex flex-column flex-lg-row align-items-lg-end gap-lg-4">
-                <div className="d-flex flex-column gap-lg-3">
-                  <span className="token-amount-placeholder">Select chain</span>
-                  <div className="dropdown position relative">
+                    {binancePay === false && (
+                      <div className="border-0 prime-subs-container w-100 p-3">
+                        <div className="d-flex align-items-center gap-2">
+                          <div className="d-flex flex-column gap-lg-3">
+                            <span className="token-amount-placeholder2">
+                              Select chain
+                            </span>
+                            <div className=" position relative">
+                              <button
+                                className={`btn launchpad-dropdown dropdown-toggle d-flex justify-content-between align-items-center`}
+                                type="button"
+                                // data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                onClick={() => {
+                                  setshowChainDropdown(true);
+                                }}
+                              >
+                                <div
+                                  className="d-flex align-items-center gap-2 pe-3"
+                                  style={{ color: "#fff" }}
+                                >
+                                  <img
+                                    src={`https://cdn.worldofdypians.com/wod/${chainDropdown.symbol}IconPremium.svg`}
+                                    alt=""
+                                    style={{ width: 18, height: 18 }}
+                                  />
+                                  {chainDropdown.name}
+                                </div>
+                                {/* <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
+                                  }
+                                  alt=""
+                                /> */}
+                              </button>
+                            </div>
+                          </div>
+                          <div className="d-flex flex-column gap-lg-3">
+                            <span className="token-amount-placeholder2">
+                              Subscription Price
+                            </span>
+                            <div className="launchpad-dropdown dropdown-toggle d-flex align-items-center ps-0 gap-3">
+                              <div className="d-flex align-items-center gap-2">
+                                <div className="dropdown position relative">
+                                  <button
+                                    className={`btn launchpad-dropdown d-flex gap-1 justify-content-between dropdown-toggle-game align-items-center  w-100`}
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ color: "#fff" }}
+                                    >
+                                      {dropdownIcon !== "" && (
+                                        <img
+                                          src={`https://cdn.worldofdypians.com/wod/${dropdownIcon.toLowerCase()}IconPremium.svg`}
+                                          alt=""
+                                          style={{ width: 20, height: 20 }}
+                                        />
+                                      )}
+                                      {/* {dropdownTitle} */}
+                                    </div>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
+                                      }
+                                      alt=""
+                                    />
+                                  </button>
+                                  <ul className="dropdown-menu w-100">
+                                    {Object.keys(
+                                      chainId === 1
+                                        ? window.config.subscriptioneth_tokens
+                                        : chainId === 56
+                                        ? window.config.subscriptionbnb_tokens
+                                        : chainId === 1030
+                                        ? window.config.subscriptioncfx_tokens
+                                        : chainId === 43114
+                                        ? window.config.subscription_tokens
+                                        : chainId === 8453
+                                        ? window.config.subscriptionbase_tokens
+                                        : chainId === 1482601649
+                                        ? window.config.subscriptionskale_tokens
+                                        : chainId === 88
+                                        ? window.config
+                                            .subscriptionviction_tokens
+                                        : chainId === 2040
+                                        ? window.config.subscriptionvanar_tokens
+                                        : chainId === 169
+                                        ? window.config.subscriptionmanta_tokens
+                                        : chainId === 167000
+                                        ? window.config.subscriptiontaiko_tokens
+                                        : chainId === 698
+                                        ? window.config.subscriptionmat_tokens
+                                        : chainId === 1116
+                                        ? window.config.subscriptioncore_tokens
+                                        : chainId === 841
+                                        ? window.config
+                                            .subscriptiontaraxa_tokens
+                                        : chainId === 1329
+                                        ? window.config.subscriptionsei_tokens
+                                        : window.config.subscriptioneth_tokens
+                                    ).map((t, i) => (
+                                      <li
+                                        key={i}
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={() => {
+                                          window.cached_contracts =
+                                            Object.create(null);
+                                          setTimeout(() => {
+                                            setdropdownIcon(
+                                              chainId === 1
+                                                ? window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 56
+                                                ? window.config
+                                                    .subscriptionbnb_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 43114
+                                                ? window.config
+                                                    .subscription_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 8453
+                                                ? window.config
+                                                    .subscriptionbase_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1030
+                                                ? window.config
+                                                    .subscriptioncfx_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1482601649
+                                                ? window.config
+                                                    .subscriptionskale_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 88
+                                                ? window.config
+                                                    .subscriptionviction_tokens[
+                                                    t
+                                                  ]?.symbol
+                                                : chainId === 2040
+                                                ? window.config
+                                                    .subscriptionvanar_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 169
+                                                ? window.config
+                                                    .subscriptionmanta_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 167000
+                                                ? window.config
+                                                    .subscriptiontaiko_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 698
+                                                ? window.config
+                                                    .subscriptionmat_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 841
+                                                ? window.config
+                                                    .subscriptiontaraxa_tokens[
+                                                    t
+                                                  ]?.symbol
+                                                : chainId === 1116
+                                                ? window.config
+                                                    .subscriptioncore_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1329
+                                                ? window.config
+                                                    .subscriptionsei_tokens[t]
+                                                    ?.symbol
+                                                : window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                            );
+                                            setdropdownTitle(
+                                              chainId === 1
+                                                ? window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 56
+                                                ? window.config
+                                                    .subscriptionbnb_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 43114
+                                                ? window.config
+                                                    .subscription_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 8453
+                                                ? window.config
+                                                    .subscriptionbase_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1030
+                                                ? window.config
+                                                    .subscriptioncfx_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1482601649
+                                                ? window.config
+                                                    .subscriptionskale_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 88
+                                                ? window.config
+                                                    .subscriptionviction_tokens[
+                                                    t
+                                                  ]?.symbol
+                                                : chainId === 841
+                                                ? window.config
+                                                    .subscriptiontaraxa_tokens[
+                                                    t
+                                                  ]?.symbol
+                                                : chainId === 2040
+                                                ? window.config
+                                                    .subscriptionvanar_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 169
+                                                ? window.config
+                                                    .subscriptionmanta_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 167000
+                                                ? window.config
+                                                    .subscriptiontaiko_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 698
+                                                ? window.config
+                                                    .subscriptionmat_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1329
+                                                ? window.config
+                                                    .subscriptionsei_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1116
+                                                ? window.config
+                                                    .subscriptionsei_tokens[t]
+                                                    ?.symbol
+                                                : window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                            );
+
+                                            // console.log(t);
+                                            handleSubscriptionTokenChange(t);
+                                            handleCheckIfAlreadyApproved(t);
+                                          }, 200);
+                                        }}
+                                      >
+                                        <img
+                                          src={
+                                            chainId === 1
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 56
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbnb_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 43114
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscription_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 1030
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncfx_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 8453
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbase_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 1482601649
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionskale_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 1116
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncore_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 88
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionviction_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 2040
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 169
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 167000
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaiko_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 698
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 841
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaraxa_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : chainId === 1329
+                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionsei_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                              : `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
+                                                  t
+                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                          }
+                                          alt=""
+                                          style={{
+                                            width: 20,
+                                            height: 20,
+                                          }}
+                                        />
+                                        {chainId === 1
+                                          ? window.config
+                                              .subscriptioneth_tokens[t]?.symbol
+                                          : chainId === 56
+                                          ? window.config
+                                              .subscriptionbnb_tokens[t]?.symbol
+                                          : chainId === 43114
+                                          ? window.config.subscription_tokens[t]
+                                              ?.symbol
+                                          : chainId === 1030
+                                          ? window.config
+                                              .subscriptioncfx_tokens[t]?.symbol
+                                          : chainId === 8453
+                                          ? window.config
+                                              .subscriptionbase_tokens[t]
+                                              ?.symbol
+                                          : chainId === 1482601649
+                                          ? window.config
+                                              .subscriptionskale_tokens[t]
+                                              ?.symbol
+                                          : chainId === 1116
+                                          ? window.config
+                                              .subscriptioncore_tokens[t]
+                                              ?.symbol
+                                          : chainId === 88
+                                          ? window.config
+                                              .subscriptionviction_tokens[t]
+                                              ?.symbol
+                                          : chainId === 2040
+                                          ? window.config
+                                              .subscriptionvanar_tokens[t]
+                                              ?.symbol
+                                          : chainId === 169
+                                          ? window.config
+                                              .subscriptionmanta_tokens[t]
+                                              ?.symbol
+                                          : chainId === 167000
+                                          ? window.config
+                                              .subscriptiontaiko_tokens[t]
+                                              ?.symbol
+                                          : chainId === 698
+                                          ? window.config
+                                              .subscriptionmat_tokens[t]?.symbol
+                                          : chainId === 841
+                                          ? window.config
+                                              .subscriptiontaraxa_tokens[t]
+                                              ?.symbol
+                                          : chainId === 1329
+                                          ? window.config
+                                              .subscriptionsei_tokens[t]?.symbol
+                                          : window.config
+                                              .subscriptioneth_tokens[t]
+                                              ?.symbol}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+
+                                <span className="subscription-price-token mb-0 text-uppercase">
+                                  {formattedPrice !== ""
+                                    ? formattedPrice.slice(0, 7)
+                                    : getFormattedNumber(100, 4)}{" "}
+                                  {dropdownTitle}
+                                </span>
+                              </div>
+                              <span className="subscription-price-usd-game mb-0">
+                                {" "}
+                                $
+                                {100 -
+                                  Number(
+                                    discountPercentage != 0
+                                      ? discountPercentage
+                                      : discountPercentageViction != 0
+                                      ? discountPercentageViction
+                                      : discountPercentageVanar != 0
+                                      ? discountPercentageVanar
+                                      : discountPercentageTaiko != 0
+                                      ? discountPercentageTaiko
+                                      : discountPercentageMat != 0
+                                      ? discountPercentageMat
+                                      : discountPercentageTaraxa != 0
+                                      ? discountPercentageTaraxa
+                                      : discountPercentage
+                                  )}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {isConnected && discountPercentage > 0 && chainId === 56 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" || !coinbase || !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_total > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentage > 0 || nftPremium_total > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageViction > 0 &&
+                  chainId === 88 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" || !coinbase || !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalViction > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageViction > 0 ||
+                              nftPremium_totalViction > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaraxa > 0 &&
+                  chainId === 841 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" || !coinbase
+                              ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" || !coinbase || isApproved
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalTaraxa > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          } `}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageTaraxa > 0 ||
+                              nftPremium_totalTaraxa > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageVanar > 0 &&
+                  chainId === 2040 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" || !coinbase || !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
+                              : "explore-btn px-3 py-2"
+                          } `}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalVanar > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageVanar > 0 ||
+                              nftPremium_totalVanar > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaiko > 0 &&
+                  chainId === 167000 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" || !coinbase || !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
+                              : "explore-btn px-3 py-2"
+                          } `}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalTaiko > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageTaiko > 0 ||
+                              nftPremium_totalTaiko > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : isConnected &&
+                  discountPercentageMat > 0 &&
+                  chainId === 698 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    {binancePay === false ? (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" || !coinbase || !isEOA
+                              ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>
+                              Approve{" "}
+                              {approveStatus === "approveAmount"
+                                ? "token"
+                                : nftPremium_totalMat > 0
+                                ? "NFT"
+                                : ""}
+                            </>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          } `}
+                          onClick={() => handleSubscribe()}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>
+                              {discountPercentageMat > 0 ||
+                              nftPremium_totalMat > 0
+                                ? "Redeem"
+                                : "Buy"}
+                            </>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+                      </>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE === "binance" ? (
+                      <button
+                        className={`btn ${"explore-btn px-3 py-2"}`}
+                        disabled={
+                          statusPrime !== "idle" &&
+                          statusPrime !== "failed" &&
+                          statusPrime !== "success"
+                        }
+                        onClick={() => {
+                          handlePurchasePremium(coinbase, price);
+                        }}
+                      >
+                        {buttonText}
+                      </button>
+                    ) : binancePay === true &&
+                      window.WALLET_TYPE !== "binance" ? (
+                      <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
+                        {/* Background image */}
+
+                        {/* Glow effect */}
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                        ></div>
+
+                        <div className="relative">
+                          <div className="d-flex flex-column gap-2">
+                            <div className="flex items-center space-x-3">
+                              <img
+                                src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                alt=""
+                                className="w-5 h-5 text-yellow-400"
+                              />
+                              <span className="font-medium text-yellow-400">
+                                Binance Pay Setup
+                              </span>
+                            </div>
+                            <span className="challenge-popup-desc text-white">
+                              Import your game wallet into Binance Wallet app or
+                              connect your existing Binance Wallet.
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                        ></div>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
                     <button
-                      className={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
                       onClick={() => {
-                        setshowChainDropdown(true);
+                        switchNetwork("0x38", 56);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
                       }}
                     >
-                      <div
-                        className="d-flex align-items-center gap-2 pe-3"
-                        style={{ color: "#fff" }}
-                      >
-                        <img
-                          src={`https://cdn.worldofdypians.com/wod/${chainDropdown.symbol}IconPremium.svg`}
-                          alt=""
-                          style={{ width: 18, height: 18 }}
-                        />
-                        {chainDropdown.name}
-                      </div>
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
-                        }
-                        alt=""
-                      />
+                      Switch to BNB Chain
                     </button>
                   </div>
-                </div>
-                <div className="d-flex flex-column gap-lg-3">
-                  <span className="token-amount-placeholder">
-                    Subscription Price
-                  </span>
-                  <div className="launchpad-dropdown dropdown-toggle d-flex align-items-center ps-0 gap-3">
-                    <div className="d-flex align-items-center gap-2">
-                      <div className="dropdown position relative">
-                        <button
-                          className={`btn launchpad-dropdown d-flex gap-1 justify-content-between dropdown-toggle-game align-items-center  w-100`}
-                          type="button"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <div
-                            className="d-flex align-items-center gap-2"
-                            style={{ color: "#fff" }}
-                          >
-                            {dropdownIcon !== "" && (
-                              <img
-                                src={`https://cdn.worldofdypians.com/wod/${dropdownIcon.toLowerCase()}IconPremium.svg`}
-                                alt=""
-                                style={{ width: 20, height: 20 }}
-                              />
-                            )}
-                            {/* {dropdownTitle} */}
+                ) : isConnected &&
+                  discountPercentageViction > 0 &&
+                  chainId !== 88 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x58", 88);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Viction
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaraxa > 0 &&
+                  chainId !== 841 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x349", 841);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Taraxa
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageVanar > 0 &&
+                  chainId !== 2040 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x7f8", 2040);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Vanar
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaiko > 0 &&
+                  chainId !== 167000 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x28c58", 167000);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Taiko
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageMat > 0 &&
+                  chainId !== 698 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 reverse-btn px-3 py-2 align-items-center"
+                      onClick={() => {
+                        switchNetwork("0x2ba", 698);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Matchain
+                    </button>
+                  </div>
+                ) : (
+                  <div className="d-flex align-items-center gap-3 justify-content-center w-100">
+                    <>
+                      {window.WALLET_TYPE !== "binance" &&
+                        binancePay === true && (
+                          <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
+                            {/* Background image */}
+
+                            {/* Glow effect */}
+                            <div
+                              className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
+                            ></div>
+
+                            <div className="relative">
+                              <div className="d-flex flex-column gap-2">
+                                <div className="flex items-center space-x-3">
+                                  <img
+                                    src="https://cdn.worldofdypians.com/wod/yellowthunder.svg"
+                                    alt=""
+                                    className="w-5 h-5 text-yellow-400"
+                                  />
+                                  <span className="font-medium text-yellow-400">
+                                    Binance Pay Setup
+                                  </span>
+                                </div>
+                                <span className="challenge-popup-desc text-white">
+                                  Import your game wallet into Binance Wallet
+                                  app or connect your existing Binance Wallet.
+                                </span>
+                              </div>
+                            </div>
+                            <div
+                              className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 opacitytw-0 group-hover:opacitytw-20 transition-opacity duration-500 animate-pulse`}
+                            ></div>
                           </div>
+                        )}
+                    </>
+                    {binancePay === true &&
+                      window.WALLET_TYPE === "binance" && (
+                        <button
+                          className={`btn ${"explore-btn px-3 py-2"}`}
+                          disabled={
+                            statusPrime !== "idle" &&
+                            statusPrime !== "failed" &&
+                            statusPrime !== "success"
+                          }
+                          onClick={() => {
+                            handlePurchasePremium(coinbase, price);
+                          }}
+                        >
+                          {buttonText}
+                        </button>
+                      )}
+
+                    {binancePay === false && (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" || !isEOA || !coinbase
+                              ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                              ? "d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !isEOA ||
+                            !coinbase ||
+                            isApproved
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>Approve token</>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
+                              : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            !isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={() => {
+                            handleSubscribe();
+                          }}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>Buy</>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>
+                          )}
+                        </button>
+                      </>
+                    )}
+
+                    {/* {window.WALLET_TYPE === "binance" && (
+                      <div>
+                        <button
+                          onClick={() => handlePurchasePremium(coinbase, price)}
+                          className="bg-yellow-400 text-black px-6 py-2 font-semibold rounded-lg hover:bg-yellow-300 transition d-flex align-items-center gap-2"
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            !isApproved ||
+                            !isEOA
+                          }
+                        >
                           <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
-                            }
+                            style={{ height: 18 }}
+                            src={"https://cdn.worldofdypians.com/wod/b-pay.svg"}
                             alt=""
                           />
+                          {buttonText}
                         </button>
-                        <ul className="dropdown-menu w-100">
-                          {Object.keys(
-                            chainId === 1
-                              ? window.config.subscriptioneth_tokens
-                              : chainId === 56
-                              ? window.config.subscriptionbnb_tokens
-                              : chainId === 1030
-                              ? window.config.subscriptioncfx_tokens
-                              : chainId === 43114
-                              ? window.config.subscription_tokens
-                              : chainId === 8453
-                              ? window.config.subscriptionbase_tokens
-                              : chainId === 1482601649
-                              ? window.config.subscriptionskale_tokens
-                              : chainId === 88
-                              ? window.config.subscriptionviction_tokens
-                              : chainId === 2040
-                              ? window.config.subscriptionvanar_tokens
-                              : chainId === 169
-                              ? window.config.subscriptionmanta_tokens
-                              : chainId === 167000
-                              ? window.config.subscriptiontaiko_tokens
-                              : chainId === 698
-                              ? window.config.subscriptionmat_tokens
-                              : chainId === 1116
-                              ? window.config.subscriptioncore_tokens
-                              : chainId === 1329
-                              ? window.config.subscriptionsei_tokens
-                              : window.config.subscriptioneth_tokens
-                          ).map((t, i) => (
-                            <li
-                              key={i}
-                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                              onClick={() => {
-                                window.cached_contracts = Object.create(null);
-                                setTimeout(() => {
-                                  setdropdownIcon(
-                                    chainId === 1
-                                      ? window.config.subscriptioneth_tokens[t]
-                                          ?.symbol
-                                      : chainId === 56
-                                      ? window.config.subscriptionbnb_tokens[t]
-                                          ?.symbol
-                                      : chainId === 43114
-                                      ? window.config.subscription_tokens[t]
-                                          ?.symbol
-                                      : chainId === 8453
-                                      ? window.config.subscriptionbase_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1030
-                                      ? window.config.subscriptioncfx_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1482601649
-                                      ? window.config.subscriptionskale_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 88
-                                      ? window.config
-                                          .subscriptionviction_tokens[t]?.symbol
-                                      : chainId === 2040
-                                      ? window.config.subscriptionvanar_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 169
-                                      ? window.config.subscriptionmanta_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 167000
-                                      ? window.config.subscriptiontaiko_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 698
-                                      ? window.config.subscriptionmat_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1116
-                                      ? window.config.subscriptioncore_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1329
-                                      ? window.config.subscriptionsei_tokens[t]
-                                          ?.symbol
-                                      : window.config.subscriptioneth_tokens[t]
-                                          ?.symbol
-                                  );
-                                  setdropdownTitle(
-                                    chainId === 1
-                                      ? window.config.subscriptioneth_tokens[t]
-                                          ?.symbol
-                                      : chainId === 56
-                                      ? window.config.subscriptionbnb_tokens[t]
-                                          ?.symbol
-                                      : chainId === 43114
-                                      ? window.config.subscription_tokens[t]
-                                          ?.symbol
-                                      : chainId === 8453
-                                      ? window.config.subscriptionbase_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1030
-                                      ? window.config.subscriptioncfx_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1482601649
-                                      ? window.config.subscriptionskale_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 88
-                                      ? window.config
-                                          .subscriptionviction_tokens[t]?.symbol
-                                      : chainId === 2040
-                                      ? window.config.subscriptionvanar_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 169
-                                      ? window.config.subscriptionmanta_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 167000
-                                      ? window.config.subscriptiontaiko_tokens[
-                                          t
-                                        ]?.symbol
-                                      : chainId === 698
-                                      ? window.config.subscriptionmat_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1329
-                                      ? window.config.subscriptionsei_tokens[t]
-                                          ?.symbol
-                                      : chainId === 1116
-                                      ? window.config.subscriptionsei_tokens[t]
-                                          ?.symbol
-                                      : window.config.subscriptioneth_tokens[t]
-                                          ?.symbol
-                                  );
-
-                                  // console.log(t);
-                                  handleSubscriptionTokenChange(t);
-                                  handleCheckIfAlreadyApproved(t);
-                                }, 200);
-                              }}
-                            >
-                              <img
-                                src={
-                                  chainId === 1
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 56
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbnb_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 43114
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscription_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 1030
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncfx_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 8453
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbase_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 1482601649
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionskale_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 1116
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncore_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 88
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionviction_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 2040
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 169
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 167000
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaiko_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 698
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : chainId === 1329
-                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionsei_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                    : `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
-                                        t
-                                      ]?.symbol.toLowerCase()}IconPremium.svg`
-                                }
-                                alt=""
-                                style={{
-                                  width: 20,
-                                  height: 20,
-                                }}
-                              />
-                              {chainId === 1
-                                ? window.config.subscriptioneth_tokens[t]
-                                    ?.symbol
-                                : chainId === 56
-                                ? window.config.subscriptionbnb_tokens[t]
-                                    ?.symbol
-                                : chainId === 43114
-                                ? window.config.subscription_tokens[t]?.symbol
-                                : chainId === 1030
-                                ? window.config.subscriptioncfx_tokens[t]
-                                    ?.symbol
-                                : chainId === 8453
-                                ? window.config.subscriptionbase_tokens[t]
-                                    ?.symbol
-                                : chainId === 1482601649
-                                ? window.config.subscriptionskale_tokens[t]
-                                    ?.symbol
-                                : chainId === 1116
-                                ? window.config.subscriptioncore_tokens[t]
-                                    ?.symbol
-                                : chainId === 88
-                                ? window.config.subscriptionviction_tokens[t]
-                                    ?.symbol
-                                : chainId === 2040
-                                ? window.config.subscriptionvanar_tokens[t]
-                                    ?.symbol
-                                : chainId === 169
-                                ? window.config.subscriptionmanta_tokens[t]
-                                    ?.symbol
-                                : chainId === 167000
-                                ? window.config.subscriptiontaiko_tokens[t]
-                                    ?.symbol
-                                : chainId === 698
-                                ? window.config.subscriptionmat_tokens[t]
-                                    ?.symbol
-                                : chainId === 1329
-                                ? window.config.subscriptionsei_tokens[t]
-                                    ?.symbol
-                                : window.config.subscriptioneth_tokens[t]
-                                    ?.symbol}
-                            </li>
-                          ))}
-                        </ul>
                       </div>
-
-                      <span className="subscription-price-token mb-0 text-uppercase">
-                        {formattedPrice !== ""
-                          ? formattedPrice.slice(0, 7)
-                          : getFormattedNumber(100, 4)}{" "}
-                        {dropdownTitle}
-                      </span>
-                    </div>
-                    <span className="subscription-price-usd-game mb-0">
-                      {" "}
-                      $
-                      {100 -
-                        Number(
-                          discountPercentage != 0
-                            ? discountPercentage
-                            : discountPercentageViction != 0
-                            ? discountPercentageViction
-                            : discountPercentageVanar != 0
-                            ? discountPercentageVanar
-                            : discountPercentageTaiko != 0
-                            ? discountPercentageTaiko
-                            : discountPercentageMat != 0
-                            ? discountPercentageMat
-                            : discountPercentage
-                        )}
-                    </span>
+                    )} */}
                   </div>
+                )}
+
+                {chainId === 1482601649 && isConnected && (
+                  <div className="gotoNebula-wrapper p-3 mb-3">
+                    <div className="d-flex w-100 justify-content-between gap-2">
+                      <span className="nebula-wrapper-text">
+                        Bridge your USDC to Nebula now!
+                      </span>
+                      <a
+                        className="nebula-bridgebtn"
+                        href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Nebula Bridge
+                      </a>
+                    </div>
+                  </div>
+                )}
+                <div
+                  className={`d-flex align-items-center ${
+                    !coinbase
+                      ? "justify-content-between"
+                      : "justify-content-end"
+                  }`}
+                >
+                  {!coinbase && (
+                    <span style={{ color: "rgb(227, 6 ,19)" }}>
+                      Please connect your wallet first
+                    </span>
+                  )}
+
+                  {isConnected && coinbase && !isEOA && (
+                    <span className="text-danger">
+                      Smart contract wallets are not supported for this action.
+                    </span>
+                  )}
                 </div>
               </div>
-              {isConnected && discountPercentage > 0 && chainId === 56 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_total > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentage > 0 || nftPremium_total > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageViction > 0 &&
-                chainId === 88 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalViction > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageViction > 0 ||
-                        nftPremium_totalViction > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageVanar > 0 &&
-                chainId === 2040 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalVanar > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageVanar > 0 ||
-                        nftPremium_totalVanar > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageTaiko > 0 &&
-                chainId === 167000 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalTaiko > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageTaiko > 0 ||
-                        nftPremium_totalTaiko > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageMat > 0 &&
-                chainId === 698 ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalMat > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageMat > 0 || nftPremium_totalMat > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x38", 56);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to BNB Chain
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageViction > 0 &&
-                chainId !== 88 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x58", 88);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to Viction
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageVanar > 0 &&
-                chainId !== 88 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x7f8", 2040);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to Vanar
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageTaiko > 0 &&
-                chainId !== 167000 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x28c58", 167000);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to Taiko
-                  </button>
-                </div>
-              ) : isConnected &&
-                discountPercentageMat > 0 &&
-                chainId !== 698 ? (
-                <div
-                  className={`d-flex align-items-center justify-content-center mb-2`}
-                >
-                  <button
-                    className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
-                    onClick={() => {
-                      switchNetwork("0x2ba", 698);
-                    }}
-                    style={{
-                      width: "fit-content",
-                      whiteSpace: "nowrap",
-                      fontSize: 14,
-                    }}
-                  >
-                    Switch to Matchain
-                  </button>
-                </div>
-              ) : (
-                <div className="d-flex align-items-center gap-3 justify-content-center">
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" ||
-                      !isEOA ||
-                      !coinbase ||
-                      isApproved
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !isEOA ||
-                      !coinbase ||
-                      isApproved
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>Approve token</>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-
-                  <button
-                    className={`btn ${
-                      isApproved === false || !isEOA
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" ||
-                      !coinbase ||
-                      !isApproved ||
-                      !isEOA
-                        ? true
-                        : false
-                    }
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>Buy</>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div
-                        className="spinner-border "
-                        role="status"
-                        style={{
-                          height: "1rem",
-                          width: "1rem",
-                        }}
-                      ></div>
-                    )}
-                  </button>
-                </div>
-              )}
             </div>
 
-            {chainId === 1482601649 && isConnected && (
-              <div className="gotoNebula-wrapper p-3 mb-3">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="nebula-wrapper-text">
-                    Bridge your USDC to Nebula now!
-                  </span>
-                  <a
-                    className="nebula-bridgebtn"
-                    href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Nebula Bridge
-                  </a>
-                </div>
-              </div>
-            )}
-            <div
-              className={`d-flex align-items-center ${
-                !coinbase ? "justify-content-between" : "justify-content-end"
-              }`}
-            >
-              {!coinbase && (
-                <span style={{ color: "rgb(227, 6 ,19)" }}>
-                  Please connect your wallet first
-                </span>
-              )}
-
-              {isConnected && coinbase && !isEOA && (
-                <span className="text-danger">
-                  Smart contract wallets are not supported for this action.
-                </span>
-              )}
-            </div>
+            {/* <hr className="form-divider my-4" /> */}
           </div>
         )}
       </div>
-
+      <QRComponent />
       {showChainDropdown && (
         <OutsideClickHandler
           onOutsideClick={() => {

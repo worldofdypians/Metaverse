@@ -42,7 +42,9 @@ const MyRewardsPopupNew = ({
   // weeklyDataAmountTaiko,
   // monthlyDataAmountTaiko,
   allTaikoChests,
+  allTaraxaChests,
   taikoEarnUsd,
+  taraxaEarnUsd,
   immutableEarnUsd,
   cookieEarnUsd,
   landPremiumRewards,
@@ -55,6 +57,8 @@ const MyRewardsPopupNew = ({
   coingeckoEarnUsd,
   chainlinkEarnUsd,
   teaEarnUsd,
+  aiQuestionRewards,
+  trustEarnUsd,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -82,6 +86,7 @@ const MyRewardsPopupNew = ({
   const [treasureRewardMoneyBase, setTreasureRewardMoneyBase] = useState(0);
 
   const [treasureRewardMoneyTaiko, setTreasureRewardMoneyTaiko] = useState(0);
+  const [treasureRewardMoneyTaraxa, setTreasureRewardMoneyTaraxa] = useState(0);
   const [treasureRewardMoneyMat, setTreasureRewardMoneyMat] = useState(0);
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
@@ -371,6 +376,7 @@ const MyRewardsPopupNew = ({
     var moneyResultBase = 0;
 
     var moneyResultTaiko = 0;
+    var moneyResultTaraxa = 0;
     var moneyResultMat = 0;
 
     var moneyResultSei = 0;
@@ -542,6 +548,24 @@ const MyRewardsPopupNew = ({
         }
       });
     }
+    if (allTaraxaChests && allTaraxaChests.length > 0) {
+      allTaraxaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultTaraxa += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
 
     if (allMatChests && allMatChests.length > 0) {
       allMatChests.forEach((chest) => {
@@ -570,6 +594,7 @@ const MyRewardsPopupNew = ({
     setTreasureRewardMoneyManta(moneyResultManta);
     setTreasureRewardMoneyBase(moneyResultBase);
     setTreasureRewardMoneyTaiko(moneyResultTaiko);
+    setTreasureRewardMoneyTaraxa(moneyResultTaraxa);
     setTreasureRewardMoneyMat(moneyResultMat);
     setTreasureRewardMoneySei(moneyResultSei);
   };
@@ -799,7 +824,9 @@ const MyRewardsPopupNew = ({
                       Number(chainlinkEarnUsd) +
                       Number(baseEarnUSD) +
                       Number(kucoinEarnUsd) +
-                      Number(midleEarnUsd),
+                      Number(midleEarnUsd) +
+                      Number(seiEarnUsd) +
+                      Number(mantaEarnUsd),
                     2
                   )
                 : getFormattedNumber(
@@ -809,16 +836,19 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneyBase) +
+                      Number(aiQuestionRewards) +
                       Number(treasureRewardMoney) +
                       Number(treasureRewardMoneySkale) +
-                      Number(seiEarnUsd) +
+                      Number(treasureRewardMoneyTaraxa) +
+                      Number(treasureRewardMoneyTaiko) +
+                      Number(treasureRewardMoneyMat) +
                       Number(taikoEarnUsd) +
-                      Number(mantaEarnUsd) +
+                      Number(taraxaEarnUsd) +
                       Number(bnbEarnUsd) +
+                      Number(teaEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(vanarEarnUsd) +
-                      Number(teaEarnUsd) +
-                      // Number(dailyDataAmountCore) +
+                      Number(trustEarnUsd) +
                       // Number(weeklyDataAmountCore) +
                       // Number(monthlyDataAmountCore) +
                       // Number(dailyDataAmountSkale) +
@@ -1012,7 +1042,7 @@ const MyRewardsPopupNew = ({
                   : "reward-item-desc"
               }
             >
-              Daily Bonus
+              Daily Opportunity
             </span>
             <div
               className={
@@ -1035,12 +1065,15 @@ const MyRewardsPopupNew = ({
                     Number(treasureRewardMoney) +
                       Number(treasureRewardMoneyCore) +
                       Number(treasureRewardMoneyVanar) +
+                      Number(aiQuestionRewards) +
                       Number(treasureRewardMoneyMat) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneyBase) +
                       Number(treasureRewardMoneySkale) +
-                      Number(treasureRewardMoneySei),
+                      Number(treasureRewardMoneySei) +
+                      Number(treasureRewardMoneyTaraxa) +
+                      Number(treasureRewardMoneyTaiko),
                     2
                   )}
             </span>
@@ -1111,19 +1144,21 @@ const MyRewardsPopupNew = ({
                       Number(matEarnUsd) +
                       Number(chainlinkEarnUsd) +
                       Number(multiversEarnUsd) +
-                      Number(bnbEarnUsd) +
                       Number(midleEarnUsd) +
                       Number(baseEarnUSD) +
-                      Number(kucoinEarnUsd),
+                      Number(kucoinEarnUsd) +
+                      Number(mantaEarnUsd) +
+                      Number(seiEarnUsd),
                     2
                   )
                 : getFormattedNumber(
                     Number(taikoEarnUsd) +
+                      Number(taraxaEarnUsd) +
+                      Number(teaEarnUsd) +
+                      Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
-                      Number(seiEarnUsd) +
-                      Number(mantaEarnUsd) +
-                      Number(vanarEarnUsd) +
-                      Number(teaEarnUsd),
+                      Number(trustEarnUsd) +
+                      Number(vanarEarnUsd),
                     2
                   )}
             </span>
@@ -1189,8 +1224,8 @@ const MyRewardsPopupNew = ({
         <span
           className={
             rewardCategory === "leaderboard"
-              ? "item-name-title-selected d-flex align-items-center gap-2"
-              : "item-name-title d-flex align-items-center gap-2"
+              ? "item-name-title-selected d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2"
+              : "item-name-title d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2"
           }
         >
           Global Leaderboards
@@ -1245,6 +1280,11 @@ const MyRewardsPopupNew = ({
             />
             <img
               src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
               style={{ width: 16, height: 16 }}
               alt=""
             />
@@ -1357,6 +1397,12 @@ const MyRewardsPopupNew = ({
                 </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="item-name-left">Viction</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Taraxa</span>
                   <span className="item-name-right">
                     ${getFormattedNumber(0, 2)}
                   </span>
@@ -1477,7 +1523,7 @@ const MyRewardsPopupNew = ({
               : "item-name-title"
           }
         >
-          Daily Bonus
+          Daily Opportunity
         </span>
         <div
           className={
@@ -1486,6 +1532,15 @@ const MyRewardsPopupNew = ({
               : "item-name-wrapper p-2"
           }
         >
+          <span
+            className={
+              rewardCategory === "dailyBonus"
+                ? "item-name-title-selected"
+                : "item-name-title"
+            }
+          >
+            Daily Bonus
+          </span>
           <div className="d-flex justify-content-between gap-4 align-items-start">
             <div className="d-flex flex-column gap-2 w-50">
               <div className="d-flex w-100 justify-content-between gap-2">
@@ -1531,6 +1586,15 @@ const MyRewardsPopupNew = ({
                   {previousRewards
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneySei, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Taraxa</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyTaraxa, 2)}
                 </span>
               </div>
             </div>
@@ -1594,7 +1658,69 @@ const MyRewardsPopupNew = ({
               </div> */}
             </div>
           </div>
+
+          <span
+            className={
+              rewardCategory === "dailyBonus"
+                ? "item-name-title-selected"
+                : "item-name-title"
+            }
+          >
+            Question of the day
+          </span>
+          <div>
+            <div className="d-flex justify-content-between gap-4 align-items-start">
+              {/* <div className="d-flex flex-column gap-2"> */}
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">BNB Chain</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(aiQuestionRewards, 2)}
+                </span>
+              </div>
+              {/* </div> */}
+            </div>
+          </div>
         </div>
+        {/* <div
+          className="d-flex flex-column gap-2"
+          id={previousRewards ? "pastdailyBonus" : "dailyBonus"}
+        >
+          <div
+            className={
+              rewardCategory === "dailyBonus"
+                ? "item-name-wrapper-selected p-2"
+                : "item-name-wrapper p-2"
+            }
+          >
+            <span
+              className={
+                rewardCategory === "dailyBonus"
+                  ? "item-name-title-selected"
+                  : "item-name-title"
+              }
+            >
+              Question of the day
+            </span>
+            <div>
+              <div className="d-flex justify-content-between gap-4 align-items-start">
+                
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">BNB Chain</span>
+                  <span className="item-name-right">
+                    $
+                    {previousRewards
+                      ? getFormattedNumber(pasttreasureRewardMoney, 2)
+                      : getFormattedNumber(treasureRewardMoney, 2)}
+                  </span>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        </div> */}
       </div>
 
       {!previousRewards ? (
@@ -1618,35 +1744,64 @@ const MyRewardsPopupNew = ({
             <div className="treasure-hunt-item-wrapper-active">
               {/* <div className="d-flex justify-content-between gap-4 align-items-start"> */}
               <div className="d-flex flex-column gap-2">
-               
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    BNB Chain
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(bnbEarnUsd, 2)}
+                  </span>
+                </div>
+
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
+                      src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
-                    Sei
+                    Taraxa
                   </span>
                   <span className="item-name-right">
-                    ${getFormattedNumber(seiEarnUsd, 2)}
+                    ${getFormattedNumber(taraxaEarnUsd, 2)}
                   </span>
                 </div>
-                 <div className="d-flex w-100 justify-content-between gap-2">
+                <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/teafi.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                      }
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
-                    Tea-Fi
+                    Trust Wallet
                   </span>
                   <span className="item-name-right">
-                    ${getFormattedNumber(teaEarnUsd, 2)}
+                    ${getFormattedNumber(trustEarnUsd, 2)}
                   </span>
                 </div>
               </div>
+
               <div className="d-flex flex-column gap-2">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Taiko
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(taikoEarnUsd, 2)}
+                  </span>
+                </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1658,6 +1813,34 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(coreEarnUsd, 2)}
+                  </span>
+                </div>
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Vanar
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(mantaEarnUsd, 2)}
+                  </span>
+                </div> */}
+              </div>
+              <div className="d-flex flex-column gap-2">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/teafi.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Tea-Fi
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(teaEarnUsd, 2)}
                   </span>
                 </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1673,50 +1856,6 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(vanarEarnUsd, 2)}
                   </span>
                 </div>
-              </div>
-
-              <div className="d-flex flex-column gap-2">
-              
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/manta.png"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Manta
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(mantaEarnUsd, 2)}
-                  </span>
-                </div>
-                   <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Taiko
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(taikoEarnUsd, 2)}
-                  </span>
-                </div>
-               
-                {/* <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/teafi.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Tea-Fi
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(mantaEarnUsd, 2)}
-                  </span>
-                </div> */}
               </div>
               {/* </div> */}
             </div>
@@ -1742,6 +1881,19 @@ const MyRewardsPopupNew = ({
           >
             <div className="treasure-hunt-item-wrapper">
               <div className="d-flex flex-column gap-2">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Sei
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(seiEarnUsd, 2)}
+                  </span>
+                </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1828,7 +1980,21 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(victionEarnUsd, 2)}
                   </span>
                 </div>
-                
+                <div className="d-flex flex-column gap-2">
+                  {/* <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      Vanar
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(vanarEarnUsd, 2)}
+                    </span>
+                  </div> */}
+                </div>
               </div>
 
               <div className="d-flex flex-column gap-2">
@@ -1923,6 +2089,19 @@ const MyRewardsPopupNew = ({
               </div>
 
               <div className="d-flex flex-column gap-2">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/manta.png"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Manta
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(mantaEarnUsd, 2)}
+                  </span>
+                </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1992,19 +2171,6 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(matEarnUsd, 2)}
-                  </span>
-                </div>
-                <div className="d-flex gap-2 align-items-center justify-content-between">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    BNB Chain
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(bnbEarnUsd, 2)}
                   </span>
                 </div>
               </div>

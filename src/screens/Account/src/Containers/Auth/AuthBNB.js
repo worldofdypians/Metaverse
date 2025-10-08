@@ -121,7 +121,7 @@ function AuthBNB({
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      handleFirstTask(data.getPlayer.wallet.publicAddress);
+      // handleFirstTask(data.getPlayer.wallet.publicAddress);
       navigate("/account");
     }
   }, [data, playerId, isAuthenticated, isLogin]);
@@ -164,7 +164,7 @@ function AuthBNB({
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      handleFirstTask(data.getPlayer.wallet.publicAddress);
+      // handleFirstTask(data.getPlayer.wallet.publicAddress);
       navigate("/account");
     } else if (isAuthenticated && !playerId) {
       setplayerCreation(true);
@@ -216,10 +216,11 @@ function AuthBNB({
     ) {
       console.log(result3);
       setsuccessLink(true);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         // window.location.reload();
         navigate("/account");
       }, 3000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -237,7 +238,7 @@ function AuthBNB({
         },
       }).then(() => {
         onWalletLinkComplete();
-        handleFirstTask(coinbase);
+        // handleFirstTask(coinbase);
       });
     } catch (error) {
       console.log(error);
@@ -276,9 +277,9 @@ function AuthBNB({
             <div className="col-12 col-md-12 col-lg-4 mt-0 px-0 px-lg-2">
               <div className="d-flex flex-column gap-5 gap-lg-2 gap-md-2">
                 <LoginCardBNB
-                  containerStyles={{
-                    height: 500,
-                  }}
+                  // containerStyles={{
+                  //   height: 500,
+                  // }}
                   cardStyles={{
                     height:
                       linkWallet === true || value === 0
@@ -362,7 +363,7 @@ function AuthBNB({
                             }}
                             onSuccessLogin={() => {
                               handleManageLoginStates();
-                              handleFirstTask(coinbase);
+                              // handleFirstTask(coinbase);
                               onSuccessLogin();
                             }}
                             handleGoToSignup={() => {
@@ -382,6 +383,7 @@ function AuthBNB({
                           isLogin={isLogin}
                           handleGoToLogin={() => {
                             handleChange("click", 0);
+                            handleManageLoginStates();
                           }}
                           onShowVerify={(value) => {
                             setShowVerify(value);

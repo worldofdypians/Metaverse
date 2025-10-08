@@ -14,18 +14,33 @@ const Campaigns = ({ coinbase }) => {
 
   const dummyBanner = [
     {
-      title: "$150,000 Rewards with OKX Wallet",
+      title: "Surge to Glory: Claim Your Share of $95,000",
       status: "Expired",
-      start_date: "Jun 18, 2025",
-      end_date: "Jul 18, 2025",
-      image: "https://cdn.worldofdypians.com/wod/wod-x-wallet2.webp",
-      desc: `To celebrate our campaign with OKX Wallet, we're giving away $150,000 in WOD to the first 15,000 users who complete all steps:<br/>
-    <ul><li>Follow World of Dypians on X</li>
-    <li>Swap at least $25 in WOD using OKX Wallet</li>
-    <li>Login or create a game account and link your wallet </li>
+      start_date: "Sep 08, 2025",
+      end_date: "Sep 15, 2025",
+      image: "https://cdn.worldofdypians.com/wod/vault-of-power.webp",
+      desc: `Fuel your summer surge in the World of Dypians with a powerful new challenge and a massive $95,000 in rewards up for grabs! Whether you’re a seasoned explorer or just entering the realm, the Power Surge Quest is your chance to rise through the ranks with strategic gameplay and smart on-chain actions. Open daily bonus chests, stake your strength, and power up your WOD!<br/>
+    <ul><li style="list-style-type: disc;">Open at least 10 Daily Bonus Chests</li>
+    <li style="list-style-type: disc;">Swap a minimum of $20 in WOD</li>
+    <li style="list-style-type: disc;">Mint 5YA Beta Pass NFT</li>
     </ul>
    `,
-      link: "https://web3.okx.com/ul/qa6RR4",
+      link: "https://dappbay.bnbchain.org/campaign/413",
+      target: "_blank",
+    },
+    {
+      title: "Binance Alpha WOD Trading Competition",
+      status: "Expired",
+      start_date: "Aug 31, 2025",
+      end_date: "Sep 14, 2025",
+      image: "https://cdn.worldofdypians.com/wod/newTradingComp.webp",
+      desc: `To celebrate our campaign with Binance, we’re giving away $300,000 worth of rewards to eligible traders who complete the steps below:<br/>
+    <ul><li style="list-style-type: disc;">Update your Binance App and create/backup a Binance Wallet (Keyless) or use Binance Alpha</li>
+    <li style="list-style-type: disc;">Trade WOD during the promotion period using Binance Wallet (Keyless) or Binance Alpha</li>
+    <li style="list-style-type: disc;">After the promotion, rankings will be calculated automatically and winners can claim rewards on the event page</li>
+    </ul>
+   `,
+      link: "https://www.binance.com/en/support/announcement/detail/7a596428195643a883bb927f7040caba",
       target: "_blank",
     },
     //   {
@@ -83,6 +98,36 @@ const Campaigns = ({ coinbase }) => {
   ];
 
   const dummyData = [
+        {
+      title: "Binance Alpha WOD Trading Competition",
+      status: "Expired",
+      start_date: "Aug 31, 2025",
+      end_date: "Sep 14, 2025",
+      image: "https://cdn.worldofdypians.com/wod/newTradingComp.webp",
+      desc: `To celebrate our campaign with Binance, we’re giving away $300,000 worth of rewards to eligible traders who complete the steps below:<br/>
+    <ul><li style="list-style-type: disc;">Update your Binance App and create/backup a Binance Wallet (Keyless) or use Binance Alpha</li>
+    <li style="list-style-type: disc;">Trade WOD during the promotion period using Binance Wallet (Keyless) or Binance Alpha</li>
+    <li style="list-style-type: disc;">After the promotion, rankings will be calculated automatically and winners can claim rewards on the event page</li>
+    </ul>
+   `,
+      link: "https://www.binance.com/en/support/announcement/detail/7a596428195643a883bb927f7040caba",
+      target: "_blank",
+    },
+    {
+      title: "$150,000 Rewards with OKX Wallet",
+      status: "Expired",
+      start_date: "Jun 18, 2025",
+      end_date: "Jul 18, 2025",
+      image: "https://cdn.worldofdypians.com/wod/wod-x-wallet2.webp",
+      desc: `To celebrate our campaign with OKX Wallet, we're giving away $150,000 in WOD to the first 15,000 users who complete all steps:<br/>
+    <ul><li>Follow World of Dypians on X</li>
+    <li>Swap at least $25 in WOD using OKX Wallet</li>
+    <li>Login or create a game account and link your wallet </li>
+    </ul>
+   `,
+      link: "https://web3.okx.com/ul/qa6RR4",
+      target: "_blank",
+    },
     {
       title: "The Gathering Storm",
       status: "Expired",
@@ -283,7 +328,7 @@ const Campaigns = ({ coinbase }) => {
   return (
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-2 px-lg-0">
       <div className="custom-container  my-5 py-0 py-lg-5">
-        {dummyBanner
+        {dummyBanner.slice(0,1)
           // .filter((item) => {
           //   return item.status === "Live";
           // })

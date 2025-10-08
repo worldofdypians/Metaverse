@@ -24,14 +24,13 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/BNBCHAIN",
@@ -208,7 +207,7 @@ const chainAreas = [
     marker: markers.coingeckoMarker,
     activeMarker: activeMarkers.coingeckoMarker,
     icon: "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg",
-    location: [-0.06883619559843743, 0.08705377578735353],
+    location: [-0.06865380551670601, 0.08697330951690675],
     banner: "coingeckoBanner.png",
     area: [
       [
@@ -263,7 +262,7 @@ const chainAreas = [
     activeMarker: activeMarkers.baseMarker,
 
     icon: "https://cdn.worldofdypians.com/wod/base.svg",
-    location: [-0.0694799252930712, 0.08724689483642578],
+    location: [-0.06939409466762383, 0.08718252182006837],
     banner: "baseBanner.png",
     area: [
       [
@@ -328,7 +327,7 @@ const chainAreas = [
     activeMarker: activeMarkers.coin98Marker,
 
     icon: "https://cdn.worldofdypians.com/wod/coin98Icon.svg",
-    location: [-0.06973741716847187, 0.08653879165649415],
+    location: [-0.0695442982620486, 0.0864475965499878],
     banner: "coin98Banner.png",
     area: [
       [
@@ -376,7 +375,7 @@ const chainAreas = [
     activeMarker: activeMarkers.immutableMarker,
 
     icon: "https://cdn.worldofdypians.com/wod/immutable.svg",
-    location: [-0.0671697067836984, 0.08526742458343507],
+    location: [-0.0670697067836984, 0.08526742458343507],
     banner: "immutableBanner.png",
     area: [
       [
@@ -422,6 +421,60 @@ const chainAreas = [
       "Explore an immersive environment",
       "Experience real-time interactions",
       "Join community-driven contests",
+    ],
+  },
+  {
+    title: "Trust Wallet Area",
+    marker: markers.trustwalletMarker,
+    activeMarker: activeMarkers.trustwalletMarker,
+    icon: "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg",
+    location: [-0.06912771797944854, 0.0847846269607544],
+
+    area: [
+      [
+        [-0.06902395009360253, 0.08444666862487794],
+        [-0.06931362845611903, 0.08451640605926514],
+        [-0.06913123837621961, 0.08517622947692871],
+        [-0.06885765325506008, 0.08509039878845216],
+      ],
+    ],
+    banner: "trustwalletBanner.webp",
+    events: [
+      // {
+      //   title: "Treasure Hunt",
+      //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      //   link: "/account/challenges/treasure-hunt",
+      // },
+    ],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/TrustWallet",
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+      },
+      {
+        link: "https://t.me/trustwallet",
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+      },
+      {
+        link: "https://discord.gg/trustwallet",
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+      },
+      {
+        link: "https://trustwallet.com/",
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+      },
+    ],
+    city: "Dypians",
+    size: "500x500",
+    rewards: "Available",
+    desc: "Trust Wallet is a secure multi-chain self-custody wallet and your gateway to 10+ million digital assets, NFTs, and thousands of Web3 dApps.",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Explore an immersive environment ",
+      "Experience real-time interactions",
+      "Get ranked in dedicated leaderboards",
     ],
   },
   {
@@ -547,14 +600,14 @@ const chainAreas = [
     marker: markers.midleMarker,
     activeMarker: activeMarkers.midleMarker,
     icon: "https://cdn.worldofdypians.com/wod/midle.svg",
-    location: [-0.06773297028649591, 0.08424818515777588],
+    location: [-0.0699144428319988, 0.08710205554962158],
     banner: "midleBanner.png",
     area: [
       [
-        [-0.067521914111659, 0.0843501091003418],
-        [-0.06759165149756868, 0.08407115936279298],
-        [-0.06792424518284669, 0.08415162563323976],
-        [-0.06783305014033982, 0.08444130420684816],
+        [-0.06980715455115011, 0.08719325065612794],
+        [-0.06985006986351756, 0.08695721626281738],
+        [-0.07004318876868135, 0.08700549602508546],
+        [-0.06997345138634661, 0.08725225925445558],
       ],
     ],
     events: [],
@@ -701,7 +754,7 @@ const chainAreas = [
     marker: markers.gateMarker,
     activeMarker: activeMarkers.gateMarker,
     icon: "https://cdn.worldofdypians.com/wod/gateIcon.svg",
-    location: [-0.06845180179486188, 0.08445203304290771],
+    location: [-0.06840180179486188, 0.08445203304290771],
     banner: "gateioBanner.png",
     area: [
       [
@@ -754,7 +807,7 @@ const chainAreas = [
     marker: markers.easy2stakeMarker,
     activeMarker: activeMarkers.easy2stakeMarker,
     icon: "https://cdn.worldofdypians.com/wod/easy2stakeIcon.svg",
-    location: [-0.06881121754499282, 0.08454322814941408],
+    location: [-0.06873427172931765, 0.08453786373138428],
     banner: "easy2stakeBanner.png",
     area: [
       [
@@ -808,14 +861,14 @@ const chainAreas = [
     activeMarker: activeMarkers.chainlinkMarker,
 
     icon: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg",
-    location: [-0.06912771797944854, 0.0847846269607544],
+    location: [-0.06907222982081583, 0.08404433727264406],
     banner: "chainlinkBanner.png",
     area: [
       [
-        [-0.06902395009360253, 0.08444666862487794],
-        [-0.06931362845611903, 0.08451640605926514],
-        [-0.06913123837621961, 0.08517622947692871],
-        [-0.06885765325506008, 0.08509039878845216],
+        [-0.06875572938599118, 0.08403360843658449],
+        [-0.0687879158709824, 0.08386194705963136],
+        [-0.06936727259713496, 0.0840282440185547],
+        [-0.0693082640420238, 0.0842052698135376],
       ],
     ],
     events: [],
@@ -862,7 +915,7 @@ const chainAreas = [
     activeMarker: activeMarkers.victionMarker,
 
     icon: "https://cdn.worldofdypians.com/wod/viction.svg",
-    location: [-0.07002709552661193, 0.08453786373138428],
+    location: [-0.0699144428319988, 0.08450567722320558],
     banner: "victionBanner.png",
     area: [
       [
@@ -954,9 +1007,7 @@ const chainAreas = [
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [
-      
-    ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/taikoxyz",
@@ -1046,7 +1097,7 @@ const chainAreas = [
     activeMarker: activeMarkers.multiversxMarker,
 
     icon: "https://cdn.worldofdypians.com/wod/multiversx.svg",
-    location: [-0.0696194000590765, 0.08443593978881837],
+    location: [-0.06949601853531874, 0.08441448211669922],
     banner: "multiversxBanner.png",
     area: [
       [
@@ -1094,7 +1145,7 @@ const chainAreas = [
     activeMarker: activeMarkers.confluxMarker,
 
     icon: "https://cdn.worldofdypians.com/wod/confluxIcon.svg",
-    location: [-0.06990907841795445, 0.08591651916503908],
+    location: [-0.06971595951224362, 0.08577167987823488],
     banner: "confluxBanner.png",
     area: [
       [
@@ -1148,7 +1199,7 @@ const chainAreas = [
     activeMarker: activeMarkers.mantaMarker,
 
     icon: "https://cdn.worldofdypians.com/wod/manta.png",
-    location: [-0.07001821071588557, 0.08503675460815431],
+    location: [-0.06994662931620123, 0.08502066135406496],
     banner: "mantaBanner.png",
     area: [
       [
@@ -1169,13 +1220,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/mantanetwork",
@@ -1211,7 +1263,7 @@ const chainAreas = [
     marker: markers.babydogeMarker,
     activeMarker: activeMarkers.babydogeMarker,
     icon: "https://cdn.worldofdypians.com/wod/babydogeIcon.svg",
-    location: [-0.06669579430174531, 0.08574485778808595],
+    location: [-0.06643830241009838, 0.08567512035369873],
     banner: "babyDogeBanner.png",
     area: [
       [
@@ -1440,13 +1492,14 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/SeiNetwork",
@@ -1511,7 +1564,13 @@ const chainAreas = [
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
+    pastEvents: [
+      {
+        title: "Treasure Hunt",
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
     socials: [
       {
         link: "https://x.com/vanarchain",
@@ -1599,6 +1658,70 @@ const chainAreas = [
     size: "250x250",
     rewards: "N/A",
     desc: "Tea-Fi is taking the Hustle out of DeFi with a seamless, intuitive & unified SUPER APP. It offers a frictionless, unified platform, to manage and grow digital assets. ",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Participate in daily challenges",
+      "Explore an immersive environment",
+      "Experience real-time interactions",
+      "Join community-driven contests",
+    ],
+  },
+  {
+    title: "Taraxa Area",
+    marker: markers.taraxaMarker,
+    activeMarker: activeMarkers.taraxaMarker,
+
+    icon: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    location: [-0.06771503302624994, 0.08426427841186523],
+    banner: "taraxaArea.webp",
+    area: [
+      [
+        [-0.06749509204012691, 0.08437156677246094],
+        [-0.06755946501177595, 0.08404970169067384],
+        [-0.06789205869727025, 0.08415162563323976],
+        [-0.06781159248324645, 0.0844627618789673],
+      ],
+    ],
+    events: [
+      {
+        title: "Daily Bonus",
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
+        link: "/account#dailybonus",
+      },
+      {
+        title: "Leaderboard",
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
+        link: "/account#leaderboard",
+      },
+      {
+        title: "Treasure Hunt",
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/taraxa_project",
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+      },
+      {
+        link: "https://t.me/taraxa_project",
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+      },
+      {
+        link: "https://discord.com/invite/WaXnwUb",
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+      },
+      {
+        link: "https://taraxa.io/",
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+      },
+    ],
+    city: "Dypians",
+    size: "250x250",
+    rewards: "N/A",
+    desc: "Taraxa is revolutionizing the DeFi and Social AI landscape with the world’s only EVM-compatible blockDAG Layer-1, delivering unmatched scalability and parallel transaction processing. ",
     benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",

@@ -1,7 +1,6 @@
 import React from "react";
 import "./_itemcard.scss";
 
-import _ from "lodash";
 
 const CawsWodItem = ({ cawsImg, wodImg, cawsName, wodName }) => {
   return (

@@ -1,14 +1,29 @@
 export const dragon_ruins_address =
-  "0x6AC1f8315b485dA07aBB7f18A7DA107Ea4d4ea23";
-export const cold_bite_address = "0xc361bedcf5a59200fed1a1cf6ee45558dc1a1ec6";
-export const fury_beast_address = "0x79fb1A71c950605d96FA89c4eA96B45de0391eed";
-export const wing_storm_address = "0x0E745F8128406d3855990859F0C918fc2aaDf066";
+  "0xA9D3c4f11C9a9eb4ea47E30d3210EEbF939d71De";
+export const cold_bite_address = "0x6fDB783a9102961B9Ea62D40C69C067e93Ac170b";
+export const fury_beast_address = "0xEceF913121D299f7D962A7887C11bf60F3338a63";
+export const wing_storm_address = "0x5990a2e7c895A5A5F35787E81bC7BF5cFF085688";
 export const scorpion_king_address =
-  "0x16b9eC0f2C1B3c82C52087b777E12e8be5A9b953";
-export const stone_eye_address = "0x24405FADC76D00481f4A3d83A33E7e9289350aCc";
-export const golden_pass_address = "0xCD30c0C1bca73537c2A2809863B90D8c0431Defb";
+  "0x6fC8de0936d45071aFF7918137a436148107574C";
+export const stone_eye_address = "0x736F553A3eA9af11C5966A056064572c03737b5A";
+export const golden_pass_address = "0x64D519666D67F95124C3ac755F731ad6e15786DF";
 export const puzzle_madness_address =
-  "0x5e55203cd881716498771b2D163375B10F0F0449";
+  "0xE44E483486d38DADC77bBF968B55F39bBDACE80d";
+
+export const dragon_ruins2_address =
+  "0xE969D8f1E8b9f41A6b473C150df6C6af86a6332a";
+export const cold_bite2_address = "0xe243d88F2A3b2f975d52bCd4Aa225E2152D5c361";
+export const fury_beast2_address = "0x267f3f546939Da36A793527C4F351623F6D79452";
+export const wing_storm2_address = "0x927E4197354CEdFC11c29EE06a67Cfad0b5AEa1F";
+export const scorpion_king2_address =
+  "0x3F4D9adfD84B15B955D33Fc625dBe8Fc8E402Aa3";
+export const stone_eye2_address = "0x0687e6251f9E286Adc6Bc6d2dfE4870bbCa3C997";
+export const golden_pass2_address =
+  "0xD1a796a2b0dFB42Ae3b78AB63EF31C5255bFcc4a";
+  export const golden_passold_address =
+  "0xCD30c0C1bca73537c2A2809863B90D8c0431Defb";
+export const puzzle_madness2_address =
+  "0x99cbFa88Bc5AE3bF84F49Ecd72aC24B3A2A58CE7";
 
 export const DRAGON_RUINS_ABI = [
   {

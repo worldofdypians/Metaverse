@@ -4,6 +4,11 @@ import "./_mainhero.scss";
 const MainHero = ({ scrollInto }) => {
   const exchanges = [
     {
+      title: "Binance Alpha",
+      logo: "binance-alpha-exchange.png",
+      link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+    },
+    {
       title: "Kucoin",
       logo: "kucoin.svg",
       link: "https://www.kucoin.com/trade/WOD-USDT",
@@ -53,6 +58,38 @@ const MainHero = ({ scrollInto }) => {
       logo: "trustwallet.svg",
       link: "https://short.trustwallet.com/app-download",
     },
+    {
+      title: "BingX",
+      logo: "bingx-exchange.svg",
+      link: "https://bingx.com/en/spot/WODUSDT",
+    },
+    {
+      title: "Uphold",
+      logo: "upholdFull.svg",
+      link: "https://uphold.com/en-us/prices/crypto/wod",
+    },
+
+    {
+      title: "Toobit",
+      logo: "toobit-exchange.svg",
+      link: "https://www.toobit.com/en-US/spot/WOD_USDT",
+    },
+
+    {
+      title: "KCEX",
+      logo: "kcex-exchange.png",
+      link: "https://www.kcex.com/exchange/WOD_USDT",
+    },
+    {
+      title: "HiBt",
+      logo: "hibt-exchange-white.png",
+      link: "https://hibt.com/trade/WOD-USDT",
+    },
+    {
+      title: "Phemex",
+      logo: "phemex-exchange.png",
+      link: "https://phemex.com/trade/WOD-USDT",
+    },
 
     {
       title: "ChangeNOW",
@@ -68,6 +105,56 @@ const MainHero = ({ scrollInto }) => {
       title: "LetsExchange",
       logo: "letsExchange.svg",
       link: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
+       },
+    {
+      title: "WEEX",
+      logo: "weex-exchange.svg",
+      link: "https://www.weex.com/spot/WOD-USDT",
+    },
+    {
+      title: "Uniswap",
+      logo: "uniswap-exchange.png",
+      link: "https://app.uniswap.org/explore/tokens/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+    {
+      title: "BVOX",
+      logo: "bvox-exchange.png",
+      link: "https://www.bvox.com/exchange/WOD/USDT",
+    },
+    {
+      title: "Bitkan",
+      logo: "bitkan-exchange.png",
+      link: "https://bitkan.com/trade/WOD-USDT",
+    },
+    {
+      title: "Tothemoon",
+      logo: "tothemoon-exchange.png",
+      link: "https://tothemoon.com/trading/WOD_USDT",
+    },
+    {
+      title: "OpenOcean",
+      logo: "openocean-exchange.png",
+      link: "https://app.openocean.finance/swap/bsc/BNB/WOD_0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+    {
+      title: "Bitexen",
+      logo: "bitexen-exchange.png",
+      link: "https://global.bitexen.com/instant/trade/USDT_WOD",
+    },
+    {
+      title: "Biconomy",
+      logo: "biconomy-exchange.png",
+      link: "https://www.biconomy.com/exchange/WOD_USDT",
+    },
+    {
+      title: "BTCC",
+      logo: "btcc-exchange.svg",
+      link: "https://www.btcc.com/en-US/spot/WODUSDT",
+    },
+    {
+      title: "SwissBorg",
+      logo: "swissborg-exchange.svg",
+      link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
     },
   ];
 
@@ -122,6 +209,7 @@ const MainHero = ({ scrollInto }) => {
                   href={item.link}
                   target="_blank"
                   className="investors-item py-2"
+                  rel="noreferrer"
                   key={index}
                 >
                   <img
@@ -130,7 +218,12 @@ const MainHero = ({ scrollInto }) => {
                         ? require("./changeNowExchange.svg").default
                         : `https://cdn.worldofdypians.com/wod/${item.logo}`
                     }
-                    className=" exchange-grid-image"
+                    className={` exchange-grid-image ${
+                      (index === 0 ||
+                        item.title === "KCEX" ||
+                        item.title === "HiBt") &&
+                      "h-auto"
+                    }`}
                     alt=""
                   />
                 </a>

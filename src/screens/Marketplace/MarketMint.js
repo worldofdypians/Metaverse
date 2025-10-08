@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
@@ -10,13 +10,13 @@ import EventSliderCard from "./components/EventSliderCard";
 import TimepieceChecklistModal from "../Timepiece/TimepieceChecklistModal";
 import Slider from "react-slick";
 
-const renderer = ({ days, hours, minutes }) => {
-  return (
-    <h6 className="latest-mint-number mb-0">
-      {hours} hours : {minutes} minutes
-    </h6>
-  );
-};
+// const renderer = ({ days, hours, minutes }) => {
+//   return (
+//     <h6 className="latest-mint-number mb-0">
+//       {hours} hours : {minutes} minutes
+//     </h6>
+//   );
+// };
 const renderer2 = ({ days, hours, minutes }) => {
   return (
     <h6 className="latest-mint-number mb-0">
@@ -44,10 +44,6 @@ const MarketMint = ({
   calculateCaws,
   timepieceMetadata,
   nftCreated,
-  myTeaBnbNfts,
-  myTeaOpbnbNfts,
-  myTeaSeiNfts,
-  myTeaBaseNfts,
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -64,6 +60,34 @@ const MarketMint = ({
   //   mobileBg: "gateMobileBg.png",
   // };
   const allMints = [
+    // {
+    //   id: "taraxa",
+    //   cardTitle: "Taraxa Beta Pass",
+    //   title: "Taraxa Beta Pass",
+    //   background: "taraxa-mint-bg",
+    //   mobileBg: "taraxaMobileBg.png",
+    //   activeClass: "taraxa-active",
+    //   emptyClass: "conflux-empty",
+    //   nftcreated: nftCreated,
+    //   nft_address: window.config.nft_taraxa_address,
+    //   chainId: [841],
+    //   chainName: "Taraxa",
+    //   logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    // },
+    // {
+    //   id: "bnbchain-5ya",
+    //   cardTitle: "BNB Chain 5YA Beta Pass",
+    //   title: "BNB Chain 5YA Beta Pass",
+    //   background: "bnb5ya-mint-bg",
+    //   mobileBg: "5yaMintMobile.webp",
+    //   activeClass: "bnb5ya-active",
+    //   emptyClass: "conflux-empty",
+    //   nftcreated: nftCreated,
+    //   nft_address: window.config.nft_bnb5ya_address,
+    //   chainId: [204],
+    //   chainName: "opBNB Chain",
+    //   logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
+    // },
     {
       id: "kucoin",
       cardTitle: "KuCoin Beta Pass",
@@ -74,7 +98,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_kucoin_address,
-      chainId: 204,
+      chainId: [204],
       chainName: "opBNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
     },
@@ -88,7 +112,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_conflux_address,
-      chainId: 1030,
+      chainId: [1030],
       chainName: "Conflux Network",
       logo: "https://cdn.worldofdypians.com/wod/confluxIcon.svg",
     },
@@ -116,7 +140,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_immutable_address,
-      chainId: 13371,
+      chainId: [13371],
       chainName: "Immutable Chain",
       logo: "https://cdn.worldofdypians.com/wod/immutable.svg",
     },
@@ -130,7 +154,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_sei_address,
-      chainId: 1329,
+      chainId: [1329],
       chainName: "SEI Network",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
     },
@@ -144,7 +168,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_bnb_address,
-      chainId: 56,
+      chainId: [56],
       chainName: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
     },
@@ -158,7 +182,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_opbnb_address,
-      chainId: 204,
+      chainId: [204],
       logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
     },
     {
@@ -171,7 +195,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_manta_address,
-      chainId: 169,
+      chainId: [169],
       chainName: "Manta Network",
       logo: "https://cdn.worldofdypians.com/wod/manta.png",
     },
@@ -185,7 +209,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_taiko_address,
-      chainId: 167000,
+      chainId: [167000],
       chainName: "Taiko Network",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
     },
@@ -199,7 +223,7 @@ const MarketMint = ({
       emptyClass: "conflux-empty",
       nftcreated: nftCreated,
       nft_address: window.config.nft_vanar_address,
-      chainId: 2040,
+      chainId: [2040],
       chainName: "Vanar Chain",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
     },
@@ -227,7 +251,7 @@ const MarketMint = ({
   ];
 
   const windowSize = useWindowSize();
-  const params = useParams();
+  // const params = useParams();
   const location = useLocation();
   const [viewCollection, setViewCollection] = useState(false);
   const [nftCount, setNftCount] = useState(1);
@@ -239,7 +263,7 @@ const MarketMint = ({
   const [mouseOver, setMouseOver] = useState(false);
 
   const [latestMintId, setlatestMintId] = useState(0);
-  const [latestConfluxMintId, setlatestConfluxMintId] = useState(0);
+  // const [latestConfluxMintId, setlatestConfluxMintId] = useState(0);
 
   const [activeTab, setActiveTab] = useState("live");
   const [confluxSold, setconfluxSold] = useState(0);
@@ -256,6 +280,8 @@ const MarketMint = ({
   const [seiNftsSold, setSeiNftsSold] = useState(0);
   const [kucoinNftsSold, setKucoinNftsSold] = useState(0);
   const [vanarNftsSold, setVanarNftsSold] = useState(0);
+  const [taraxaNftsSold, setTaraxaNftsSold] = useState(0);
+  const [bnb5yaNftsSold, setbnb5yaNftsSold] = useState(0);
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
@@ -265,7 +291,7 @@ const MarketMint = ({
     })
   );
   const [mintTitle, setMintTitle] = useState("timepiece");
-  const [sliderCut, setSliderCut] = useState();
+  const [sliderCut] = useState();
 
   const slider = useRef(null);
   const html = document.querySelector("html");
@@ -324,6 +350,14 @@ const MarketMint = ({
       window.config.nft_kucoin_address
     );
 
+    const bnb_5yaContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_bnb5ya_address
+    );
+    const taraxaContract = new window.taraxaWeb3.eth.Contract(
+      window.TARAXA_NFT_ABI,
+      window.config.nft_taraxa_address
+    );
     const vanarContract = new window.vanarWeb3.eth.Contract(
       window.VANAR_NFT_ABI,
       window.config.nft_vanar_address
@@ -488,6 +522,25 @@ const MarketMint = ({
       });
 
     setKucoinNftsSold(kucoinresult);
+
+    const taraxaResult = await taraxaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    setTaraxaNftsSold(taraxaResult);
+
+    const bnb_5ya_result = await bnb_5yaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+    setbnb5yaNftsSold(bnb_5ya_result);
   };
 
   const handleEthPool = async () => {
@@ -538,61 +591,13 @@ const MarketMint = ({
     }
   };
 
-  const handleBNBPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x38")
-            .then(() => {
-              handleSwitchNetwork(56);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
-
-  const handleBasePool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x2105")
-            .then(() => {
-              handleSwitchNetwork(8453);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
-        }
-      } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
-      }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
-    }
-  };
-
   const handleSeiPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x531")
+          await handleSwitchNetworkhook("0x349")
             .then(() => {
-              handleSwitchNetwork(1329);
+              handleSwitchNetwork(841);
             })
             .catch((e) => {
               console.log(e);
@@ -613,7 +618,8 @@ const MarketMint = ({
   useEffect(() => {
     if (
       location.pathname.includes("bnbchain") &&
-      !location.pathname.includes("opbnbchain")
+      !location.pathname.includes("opbnbchain") &&
+      !location.pathname.includes("bnbchain-5ya")
     ) {
       setSelectedMint(
         allMints.find((obj) => {
@@ -668,11 +674,21 @@ const MarketMint = ({
         })
       );
       setMintTitle("kucoin");
+    } else if (location.pathname.includes("taraxa")) {
+      setSelectedMint(
+        allMints.find((obj) => {
+          return obj.id === "taraxa";
+        })
+      );
+      setMintTitle("taraxa");
+    } else if (location.pathname.includes("bnbchain-5ya")) {
+      setSelectedMint(
+        allMints.find((obj) => {
+          return obj.id === "bnbchain-5ya";
+        })
+      );
+      setMintTitle("bnbchain-5ya");
     }
-    // else if (location.pathname.includes("vanar")) {
-    //   setSelectedMint(vanarData);
-    //   setMintTitle("vanar");
-    // }
     getTotalSupply();
   }, [location]);
 
@@ -680,7 +696,7 @@ const MarketMint = ({
     html.classList.remove("hidescroll");
   }, []);
 
-  let countToExpiresei = new Date("2025-07-31T14:00:00.000+02:00");
+  let countToExpiresei = new Date("2025-09-15T14:00:00.000+02:00");
   const dummyCards = [
     // {
     //   title: "Avalanche Pass",
@@ -844,6 +860,28 @@ const MarketMint = ({
     //   class: "mint-teafi",
     //   id: "tea-fi",
     // },
+    // {
+    //   title: "Taraxa Pass",
+    //   eventId: "taraxa",
+    //   desc: "Gain entry to metaverse, and join exclusive Taraxa event with special ticket.",
+    //   img: "https://cdn.worldofdypians.com/wod/taraxaMintSlide.png",
+    //   data: allMints.find((item) => {
+    //     return item.id === "taraxa";
+    //   }),
+    //   class: "mint-taraxa",
+    //   id: "taraxa",
+    // },
+    // {
+    //   id: "bnbchain-5ya",
+    //   title: "BNB Chain 5YA Beta Pass",
+    //   eventId: "bnbchain-5ya",
+    //   desc: "Gain entry to metaverse, and join exclusive BNB Chain event with special ticket.",
+    //   img: "https://cdn.worldofdypians.com/wod/5yaMintSlide.webp",
+    //   data: allMints.find((item) => {
+    //     return item.id === "bnbchain-5ya";
+    //   }),
+    //   class: "mint-7",
+    // },
     {
       title: "CAWS Timepiece",
       eventId: "timepiece",
@@ -954,10 +992,10 @@ const MarketMint = ({
     setlatestMintId(result - 1);
   };
 
-  const getConfluxLatestMint = async () => {
-    const result = await window.conflux_nft.getConfluxLatestMint();
-    setlatestConfluxMintId(result - 1);
-  };
+  // const getConfluxLatestMint = async () => {
+  //   const result = await window.conflux_nft.getConfluxLatestMint();
+  //   setlatestConfluxMintId(result - 1);
+  // };
 
   async function updateViewCount(tokenId, nftAddress) {
     try {
@@ -1127,6 +1165,35 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
+        } else if (selectedMint.id === "taraxa") {
+          if (chainId !== 841 && nftCreated.length === 0) {
+            setactiveButton(false);
+            setStatus("Switch to Taraxa to continue minting.");
+          } else if (chainId === 841 && isEOA && nftCreated.length === 0) {
+            setactiveButton(true);
+            setStatus("");
+          } else if (chainId === 841 && !isEOA && nftCreated.length === 0) {
+            setactiveButton(false);
+            setStatus(
+              "Smart contract wallets are not supported for this action."
+            );
+          } else if (isEOA && nftCreated.length > 0) {
+            setactiveButton(true);
+            setStatus("");
+          }
+        } else if (selectedMint.id === "bnbchain-5ya") {
+          if (chainId !== 204) {
+            setactiveButton(false);
+            setStatus("Switch to opBNB Chain to continue minting.");
+          } else if (chainId === 204 && isEOA) {
+            setactiveButton(true);
+            setStatus("");
+          } else if (chainId === 204 && !isEOA) {
+            setactiveButton(false);
+            setStatus(
+              "Smart contract wallets are not supported for this action."
+            );
+          }
         } else if (selectedMint.id === "tea-fi") {
           if (!selectedMint.chainId.includes(chainId)) {
             setactiveButton(false);
@@ -1138,7 +1205,7 @@ const MarketMint = ({
         }
       }
     }
-  }, [isConnected, chainId, coinbase, selectedMint, isEOA]);
+  }, [isConnected, chainId, coinbase, selectedMint, isEOA, nftCreated]);
 
   useEffect(() => {
     getTimepieceLatestMint();
@@ -1361,25 +1428,11 @@ const MarketMint = ({
                                 activeButton === false ||
                                 nftCreated.length === 0
                               }
-                              to={`/shop/nft/${nftCreated[0]}/${
-                                myTeaBnbNfts.length > 0
-                                  ? window.config.nft_teabnb_address
-                                  : myTeaOpbnbNfts.length > 0
-                                  ? window.config.nft_teaopbnb_address
-                                  : myTeaBaseNfts.length > 0
-                                  ? window.config.nft_teabase_address
-                                  : window.config.nft_teasei_address
-                              }`}
+                              to={`/shop/nft/${nftCreated[0]}/${selectedMint.nft_address}`}
                               onClick={() => {
                                 updateViewCount(
                                   nftCreated[0],
-                                  myTeaBnbNfts.length > 0
-                                    ? window.config.nft_teabnb_address
-                                    : myTeaOpbnbNfts.length > 0
-                                    ? window.config.nft_teaopbnb_address
-                                    : myTeaBaseNfts.length > 0
-                                    ? window.config.nft_teabase_address
-                                    : window.config.nft_teasei_address
+                                  selectedMint.nft_address
                                 );
                               }}
                             >
@@ -1697,7 +1750,7 @@ const MarketMint = ({
                                   </h6>
                                 </div>
                               </div>
-                              <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
+                              {/* <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
                                 <span className="mb-0 latest-mint">
                                   Select chain
                                 </span>
@@ -1768,7 +1821,7 @@ const MarketMint = ({
                                     />
                                   </div>
                                 </div>
-                              </div>
+                              </div> */}
                               <div className="dark-wrapper d-flex align-items-center justify-content-between p-2">
                                 <span className="mb-0 latest-mint">
                                   Minting ends in
@@ -1848,19 +1901,116 @@ const MarketMint = ({
                             )}
                             <hr className="gray-divider" />
                             <div className="d-flex w-100 justify-content-center">
-                              {selectedMint.id !== "timepiece" && (
+                              {selectedMint.id !== "timepiece" &&
+                                selectedMint.id !== "bnbchain-5ya" && (
+                                  <button
+                                    className={`py-2 ${
+                                      mintloading === "error"
+                                        ? "fail-button"
+                                        : (isConnected === true &&
+                                            !selectedMint.chainId.includes(
+                                              chainId
+                                            )) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                          nftCreated.length > 0 ||
+                                          (!isEOA && isConnected)
+                                        ? "outline-btn-disabled"
+                                        : "stake-wod-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true &&
+                                      isEOA &&
+                                      selectedMint.chainId.includes(chainId)
+                                        ? handleMint()
+                                        : isConnected === true &&
+                                          !selectedMint.chainId.includes(
+                                            chainId
+                                          )
+                                        ? handleSeiPool()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      (!isEOA && isConnected) ||
+                                      mintloading === "success" ||
+                                      (isConnected === true &&
+                                        !selectedMint.chainId.includes(
+                                          chainId
+                                        )) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      nftCreated.length > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {isConnected === false && (
+                                      <img
+                                        src={
+                                          mouseOver === true
+                                            ? "https://cdn.worldofdypians.com/wod/wallet-black.svg"
+                                            : "https://cdn.worldofdypians.com/wod/wallet-white.svg"
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    selectedMint.chainId.includes(chainId) ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      selectedMint.chainId.includes(chainId) ? (
+                                      <>
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      selectedMint.chainId.includes(chainId) ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          selectedMint.chainId.includes(
+                                            chainId
+                                          )) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      !selectedMint.chainId.includes(
+                                        chainId
+                                      ) ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                )}
+                              {selectedMint.id === "bnbchain-5ya" && (
                                 <button
                                   className={`py-2 ${
                                     mintloading === "error"
                                       ? "fail-button"
-                                      : (isConnected === true &&
-                                          !selectedMint.chainId.includes(
-                                            chainId
-                                          )) ||
-                                        (status !== "Connect your wallet." &&
-                                          status !== "") ||
-                                        nftCreated.length > 0 ||
-                                        !isEOA
+                                      : nftCreated.length > 0 ||
+                                        (!isEOA && isConnected)
                                       ? "outline-btn-disabled"
                                       : "stake-wod-btn"
                                   }  px-4 w-100`}
@@ -1871,19 +2021,13 @@ const MarketMint = ({
                                       ? handleMint()
                                       : isConnected === true &&
                                         !selectedMint.chainId.includes(chainId)
-                                      ? handleSeiPool()
+                                      ? handleOpBnbPool()
                                       : showWalletConnect();
                                   }}
                                   disabled={
                                     mintloading === "error" ||
-                                    !isEOA ||
+                                    (!isEOA && isConnected) ||
                                     mintloading === "success" ||
-                                    (isConnected === true &&
-                                      !selectedMint.chainId.includes(
-                                        chainId
-                                      )) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
                                     nftCreated.length > 0
                                       ? true
                                       : false
@@ -1963,6 +2107,29 @@ const MarketMint = ({
                     </span>
                   </div>
                 </div>
+                // <div className="upcoming-mint-wrapper upcoming-taraxa-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                //   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                //     <h6 className="upcoming-mint-title">Taraxa Beta Pass</h6>
+                //     <p className="upcoming-mint-desc">
+                //       Get access to a special ticket to enter the metaverse and
+                //       participate in an exclusive event hosted by Taraxa
+                //     </p>
+                //   </div>
+                //   <img
+                //     src={
+                //       "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp"
+                //     }
+                //     alt=""
+                //     className="upcoming-mint-img d-none d-lg-block"
+                //   />
+                //   <img
+                //     src={
+                //       "https://cdn.worldofdypians.com/wod/taraxaMobileMint.webp"
+                //     }
+                //     alt=""
+                //     className="upcoming-mint-img d-block d-lg-none d-md-none"
+                //   />
+                // </div>
 
                 // <div className="upcoming-mint-wrapper upcoming-teafi-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                 //   <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
@@ -2284,6 +2451,47 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
+
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-taraxa-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">Taraxa Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-taraxa-mint-amount">
+                            {getFormattedNumber(taraxaNftsSold, 0)}
+                          </h6>
+                          <span className="past-taraxa-mint-desc">
+                            SOLD OUT
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-bnb5ya-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">
+                          BNB Chain 5YA Beta Pass
+                        </h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-bnb5ya-mint-amount">
+                            {getFormattedNumber(bnb5yaNftsSold, 0)}
+                          </h6>
+                          <span className="past-bnb5ya-mint-desc">
+                            SOLD OUT
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* <div className="col-12 col-lg-6 mt-lg-5">
                     <div className="past-vanar-mint p-4">
                       <div className="sold-out-tag px-3 py-1">

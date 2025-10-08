@@ -59,9 +59,10 @@ function PlayerCreation() {
         },
       });
       getUpdatedUser();
-      setTimeout(() => {
+     const timer = setTimeout(() => {
         navigate("/account");
       }, 1000);
+      return () => clearTimeout(timer);
     } catch (error) {
       setCreateError(getErrorMessage(error));
     }

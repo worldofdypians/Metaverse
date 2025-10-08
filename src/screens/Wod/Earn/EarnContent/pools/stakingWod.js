@@ -9,7 +9,6 @@ import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import axios from "axios";
 import Countdown from "react-countdown";
-import { ClickAwayListener } from "@material-ui/core";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 
@@ -788,7 +787,7 @@ const StakeWodDetails = ({
                       Amount
                     </label> */}
                       <button
-                        className="inner-max-btn position-absolute"
+                        className="inner-max-btn position-absolute px-2"
                         // onClick={handleSetMaxDeposit}
                       >
                         Max
@@ -1359,7 +1358,7 @@ const StakeWodDetails = ({
                         Withdraw Amount
                       </label>
                       <button
-                        className="inner-max-btn position-absolute"
+                        className="inner-max-btn position-absolute px-2"
                         onClick={handleSetMaxWithdraw}
                       >
                         Max

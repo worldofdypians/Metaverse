@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./_gamestats.scss";
 
-
 import { NavLink } from "react-router-dom";
 
 const GameStats = ({ totalSupply, monthlyPlayers }) => {
@@ -26,7 +25,9 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
       <div>
         <div className="container-fluid d-flex  p-0">
           <img
-            src={"https://cdn.worldofdypians.com/wod/transactionsBannerSmall.webp"}
+            src={
+              "https://cdn.worldofdypians.com/wod/transactionsBannerSmall.webp"
+            }
             className="small-transaction-banner"
             alt=""
           />
@@ -86,7 +87,12 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                   className="explore-btn col-lg-4 py-2 d-flex align-items-center gap-2"
                   style={{ whiteSpace: "nowrap" }}
                 >
-                  <img src={"https://cdn.worldofdypians.com/wod/epicblack.svg"} width={24} height={24} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/epicblack.svg"}
+                    width={24}
+                    height={24}
+                    alt=""
+                  />
                   Join the Fight
                 </NavLink>
                 <NavLink
@@ -104,7 +110,9 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
       <div>
         <div className="container-fluid d-flex p-0">
           <img
-            src={"https://cdn.worldofdypians.com/wod/darkLordSpaceBannerSmall.webp"}
+            src={
+              "https://cdn.worldofdypians.com/wod/darkLordSpaceBannerSmall.webp"
+            }
             className="small-transaction-banner"
             alt=""
           />
@@ -205,7 +213,9 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
       <div>
         <div className="container-fluid d-flex p-0">
           <img
-            src={"https://cdn.worldofdypians.com/wod/secondCityBannerSmall.webp"}
+            src={
+              "https://cdn.worldofdypians.com/wod/secondCityBannerSmall.webp"
+            }
             className="small-transaction-banner"
             alt=""
           />
@@ -225,7 +235,8 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
                 <NavLink
-                  to={"/game-updates"}
+                  to={"https://medium.com/@worldofdypians"}
+                  target="_blank"
                   className="getpremium-btn col-lg-4 py-2"
                 >
                   Learn More

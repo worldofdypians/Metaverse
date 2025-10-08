@@ -9,6 +9,7 @@ import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../../../hooks/useWindowSize";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 
 const Portfolio = ({
   address,
@@ -69,7 +70,9 @@ const Portfolio = ({
   myTeaBnbNfts,
   myTeaOpbnbNfts,
   myTeaSeiNfts,
+  myTaraxaNfts,
   myTeaBaseNfts,
+  mybnb5yaNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -83,7 +86,7 @@ const Portfolio = ({
   const [listedItemsFiltered, setlistedItemsFiltered] = useState([]);
   const [listedItems, setlistedItems] = useState([]);
 
-  const [filterTitle, setFilterTitle] = useState("Collected");
+  const [filterTitle, setFilterTitle] = useState("Balance");
   const [nftItems, setNftItems] = useState([]);
   const [collectedItems, setcollectedItems] = useState([]);
   const [showNfts, setShowNfts] = useState(false);
@@ -108,7 +111,7 @@ const Portfolio = ({
   const [eventPopup, setEventPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [announcementsNews, setAnnouncementsNews] = useState([]);
-
+  const [balanceView, setBalanceView] = useState(true);
   const [showAllEvents, setShowAllEvents] = useState(false);
   const slider = useRef(null);
   const windowSize = useWindowSize();
@@ -223,36 +226,61 @@ const Portfolio = ({
   const sortNfts = (sortValue) => {
     if (sortValue === "collected") {
       setFilterTitle("Collected");
+      setBalanceView(false);
     } else if (sortValue === "favorites") {
       setFilterTitle("Favorites");
+      setBalanceView(false);
+
       getAllFavs();
       setLoading(true);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 2000);
+      return () => clearTimeout(timer);
+    } else if (sortValue === "balance") {
+      setFilterTitle("Balance");
+      setLoading(true);
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+      return () => clearTimeout(timer);
     } else if (sortValue === "listed") {
       setFilterTitle("Listed");
+      setBalanceView(false);
+
       setLoading(true);
       getListed();
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 2000);
+      return () => clearTimeout(timer);
     } else if (sortValue === "staked") {
       setFilterTitle("Staked");
+      setBalanceView(false);
+
       setLoading(true);
       // getStakes();
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 2000);
+      return () => clearTimeout(timer);
     } else if (sortValue === "eth") {
       setFilterTitle("");
-    } else if (sortValue === "offers") {
+      setBalanceView(false);
+    }
+    //  else if (sortValue === "balance") {
+    //   setFilterTitle("Balance");
+    // }
+    else if (sortValue === "offers") {
+      setBalanceView(false);
+
       setLoading(true);
       setFilterTitle("Offers");
       setmyOffersFiltered(myOffers);
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setLoading(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -343,9 +371,10 @@ const Portfolio = ({
         setmyOffersFiltered(myOffers);
       }
     }
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setLoadingRecentListings(false);
     }, 1000);
+    return () => clearTimeout(timer);
   };
 
   const getListed = async () => {
@@ -416,6 +445,8 @@ const Portfolio = ({
     let teaopBnbArray = [];
     let teaBaseArray = [];
     let teaSeiArray = [];
+    let taraxaArray = [];
+    let bnb5yaNftsArray = [];
 
     // console.log(allListed, "allListed");
 
@@ -883,6 +914,37 @@ const Portfolio = ({
           })
         );
       }
+      if (myTaraxaNfts && myTaraxaNfts.length > 0) {
+        await Promise.all(
+          myTaraxaNfts.map(async (i) => {
+            taraxaArray.push({
+              nftAddress: window.config.nft_taraxa_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "taraxa",
+              chain: 841,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
+      if (mybnb5yaNfts && mybnb5yaNfts.length > 0) {
+        await Promise.all(
+          mybnb5yaNfts.map(async (i) => {
+            bnb5yaNftsArray.push({
+              nftAddress: window.config.nft_bnb5ya_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "5ya",
+              chain: 56,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
 
       if (myTaikoNfts && myTaikoNfts.length > 0) {
         await Promise.all(
@@ -1101,9 +1163,11 @@ const Portfolio = ({
       setmyNftsOffer(recievedOffers);
 
       finalCollection = [
+        ...bnb5yaNftsArray,
         ...teaBaseArray,
         ...teaBnbArray,
         ...teaSeiArray,
+        ...taraxaArray,
         ...teaopBnbArray,
         ...kucoinNftsArray,
         ...vanarNftsArray,
@@ -1322,6 +1386,14 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_mat_address
       );
 
+      let taraxaFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_taraxa_address
+      );
+
+      let bnb5yaFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_bnb5ya_address
+      );
+
       let teaFilter = collectedItems.filter(
         (item) =>
           item.nftAddress === window.config.nft_teabnb_address ||
@@ -1331,7 +1403,9 @@ const Portfolio = ({
       );
 
       const allBetapassArray = [
+        ...bnb5yaFilter,
         ...teaFilter,
+        ...taraxaFilter,
         ...coingeckoFilter,
         ...vanarFilter,
         ...confluxFilter,
@@ -1585,6 +1659,159 @@ const Portfolio = ({
 
   var options = { year: "numeric", month: "short", day: "numeric" };
 
+  const buyWodLinks = [
+    {
+      name: "Binance Alpha",
+      href: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+      img: "https://cdn.worldofdypians.com/wod/binance-alpha.png",
+    },
+    {
+      name: "KuCoin",
+      href: "https://www.kucoin.com/trade/WOD-USDT",
+      img: "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg",
+    },
+    {
+      name: "Gate.io",
+      href: "https://www.gate.io/trade/WOD_USDT",
+      img: "https://cdn.worldofdypians.com/wod/gateBuyWod.svg",
+    },
+    {
+      name: "MEXC Global",
+      href: "https://www.mexc.com/exchange/WOD_USDT",
+      img: "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg",
+    },
+    {
+      name: "Bitget",
+      href: "https://www.bitget.com/on-chain/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+      img: "https://cdn.worldofdypians.com/wod/bitgetRound.png",
+    },
+    {
+      name: "Bitpanda",
+      href: "https://www.bitpanda.com/en/prices/world-of-dypians-wod",
+      img: "https://cdn.worldofdypians.com/wod/bitpandaLogo.svg",
+    },
+    {
+      name: "Binance Wallet",
+      href: "https://www.binance.com/en/download",
+      img: "https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg",
+    },
+    {
+      name: "OKX Wallet",
+      href: "https://web3.okx.com/token/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+      img: "https://cdn.worldofdypians.com/wod/okxConnect.svg",
+    },
+    {
+      name: "PancakeSwap",
+      href: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
+      img: "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg",
+    },
+    {
+      name: "TrustWallet",
+      href: "https://short.trustwallet.com/app-download",
+      img: "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg",
+    },
+    {
+      name: "BingX",
+      href: "https://bingx.com/en/spot/WODUSDT",
+      img: "https://cdn.worldofdypians.com/wod/bingx.svg",
+    },
+    {
+      name: "WEEX",
+      href: "https://www.weex.com/spot/WOD-USDT",
+      img: "https://cdn.worldofdypians.com/wod/phemex.png",
+    },
+    {
+      name: "Toobit",
+      href: "https://www.toobit.com/en-US/spot/WOD_USDT",
+      img: "https://cdn.worldofdypians.com/wod/toobit.svg",
+    },
+    {
+      name: "KCEX",
+      href: "https://www.kcex.com/exchange/WOD_USDT",
+      img: "https://cdn.worldofdypians.com/wod/kcex.png",
+    },
+    {
+      name: "CoinRabbit",
+      href: "https://coinrabbit.io/exchange/",
+      img: "https://cdn.worldofdypians.com/wod/coinrabbit.png",
+    },
+    {
+      name: "HiBt",
+      href: "https://hibt.com/trade/WOD-USDT",
+      img: "https://cdn.worldofdypians.com/wod/hibt.png",
+    },
+    {
+      name: "Phemex",
+      href: "https://phemex.com/trade/WOD-USDT",
+      img: "https://cdn.worldofdypians.com/wod/phemex.png",
+    },
+    {
+      name: "ChangeNOW",
+      href: "https://changenow.io/currencies/world-of-dypians",
+      img: "https://cdn.worldofdypians.com/wod/changeNow.webp",
+    },
+    {
+      name: "BloFin",
+      href: "https://blofin.com/spot/WOD-USDT",
+      img: "https://cdn.worldofdypians.com/wod/blofinBuywod.png",
+    },
+    {
+      name: "LetsExchange",
+      href: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
+      img: "https://cdn.worldofdypians.com/wod/letsexchangeLogo.svg",
+    },
+    {
+      name: "Uphold",
+      href: "https://uphold.com/en-us/prices/crypto/wod",
+      img: "https://cdn.worldofdypians.com/wod/uphold.svg",
+    },
+    {
+      name: "Uniswap",
+      href: "https://app.uniswap.org/explore/tokens/bnb/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+      img: "https://cdn.worldofdypians.com/wod/uniswapBuyWod.png",
+    },
+    {
+      name: "BVOX",
+      href: "https://www.bvox.com/exchange/WOD/USDT",
+      img: "https://cdn.worldofdypians.com/wod/bvoxBuyWod.png",
+    },
+    {
+      name: "Bitkan",
+      href: "https://bitkan.com/trade/WOD-USDT",
+      img: "https://cdn.worldofdypians.com/wod/bitkanBuyWod.png",
+    },
+    {
+      name: "Tothemoon",
+      href: "https://tothemoon.com/trading/WOD_USDT",
+      img: "https://cdn.worldofdypians.com/wod/tothemoonBuyWod.png",
+    },
+    {
+      name: "OpenOcean",
+      href: "https://app.openocean.finance/swap/bsc/BNB/WOD_0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+      img: "https://cdn.worldofdypians.com/wod/openoceanBuyWod.png",
+    },
+    {
+      name: "Bitexen",
+      href: "https://global.bitexen.com/instant/trade/USDT_WOD",
+      img: "https://cdn.worldofdypians.com/wod/bitexen.png",
+    },
+    {
+      name: "Biconomy",
+      href: "https://www.biconomy.com/exchange/WOD_USDT",
+      img: "https://cdn.worldofdypians.com/wod/biconomy.png",
+    },
+    {
+      name: "BTCC",
+      href: "https://www.btcc.com/en-US/spot/WODUSDT",
+      img: "https://cdn.worldofdypians.com/wod/btcc.svg",
+    },
+    {
+      name: "SwissBorg",
+      href: "https://swissborg.com/crypto-market/coins/world-of-dypians",
+      img: "https://cdn.worldofdypians.com/wod/swissborg.svg",
+    },
+  ];
+
   return (
     <>
       <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 justify-content-center align-items-center">
@@ -1592,6 +1819,17 @@ const Portfolio = ({
           <div className="col-12 px-0 position-relative mt-lg-0">
             <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
+                <h6
+                  className={`account-nft-sort ${
+                    filterTitle === "Balance" && "nft-sort-selected"
+                  } `}
+                  onClick={() => {
+                    sortNfts("balance");
+                    setShowNfts(false);
+                  }}
+                >
+                  Balance
+                </h6>
                 <h6
                   className={`account-nft-sort ${
                     filterTitle === "Collected" && "nft-sort-selected"
@@ -1648,8 +1886,61 @@ const Portfolio = ({
                 >
                   Offers made
                 </h6>
+                {/* <h6
+                  className={`account-nft-sort ${
+                    filterTitle === "Balance" && "nft-sort-selected"
+                  } `}
+                  onClick={() => {
+                    sortNfts("balance");
+                    setShowNfts(false);
+                  }}
+                >
+                  Balance
+                </h6> */}
               </div>
+              {filterTitle === "Balance" && loading === false && (
+                <div className="row px-3 flex-column">
+                  <div className="d-flex align-items-center gap-2">
+                    <h6 className="mb-0 wod-balance-txt">My Balance:</h6>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/wodToken.svg"}
+                      width={20}
+                      height={20}
+                      alt=""
+                    />
+                    <h6 className="mb-0 wod-balance-txt">
+                      {getFormattedNumber(wodBalance, 2)}
+                    </h6>
+                  </div>
+                  <div className="d-flex flex-column gap-1">
+                    <h6 className="mb-0 wod-balance-txt w-100 text-center mt-3">
+                      Get WOD on
+                    </h6>
+                    <div className="sidebar-separator2 my-1"></div>
+                  </div>
 
+                  <div className="get-wod-portfolio-grid mt-2">
+                    {buyWodLinks.map((item, index) => (
+                      <a
+                        key={index}
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={item.img}
+                            className="buywodimg"
+                            alt={item.name}
+                          />
+                          {item.name}
+                        </h6>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
               {filterTitle === "Favorites" && loading === false && (
                 <div
                   className="row px-3 mt-3"
@@ -1957,6 +2248,10 @@ const Portfolio = ({
                                   ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
                                   : item.type === "vanar"
                                   ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
+                                  : item.type === "taraxa"
+                                  ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
+                                  : item.type === "5ya"
+                                  ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
                                   : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
@@ -1999,6 +2294,10 @@ const Portfolio = ({
                                   ? "KCBP"
                                   : item.type === "vanar"
                                   ? "VNBP"
+                                  : item.type === "taraxa"
+                                  ? "TXBP"
+                                  : item.type === "5ya"
+                                  ? "5YABP"
                                   : item.type === "immutable"
                                   ? "IMXBP"
                                   : item.type === "multivers"
@@ -2235,6 +2534,194 @@ const Portfolio = ({
                   )}
                 </div>
               )}
+              {/* 
+              {filterTitle === "Balance" && loading === false && (
+                <div className="d-flex flex-column  justify-content-center gap-2">
+                  <div className="d-flex flex-row gap-2 align-items-center">
+                    <h6 className="account-nft-title">Wallet Balance: </h6>
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/wodToken.svg"}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      <h6 className="account-nft-title">
+                        {getFormattedNumber(wodBalance, 2)}
+                      </h6>
+                    </div>
+                  </div>
+                  <div className="d-flex w-100 flex-column gap-2 align-items-start">
+                    <div className="d-flex justify-content-center align-items-center flex-column w-100">
+                      <h6 className="getwodon-title mb-0">Get WOD on</h6>
+                      <div className="sidebar-separator2 my-1"></div>
+                    </div>
+                    <div className="row mx-0 w-100">
+                      <a
+                        href="https://www.kucoin.com/trade/WOD-USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          KuCoin
+                        </h6>
+                      </a>
+                      <a
+                        href="https://www.gate.io/trade/WOD_USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/gateBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          Gate.io
+                        </h6>
+                      </a>
+
+                      <a
+                        href="https://www.mexc.com/exchange/WOD_USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          MEXC Global
+                        </h6>
+                      </a>
+                      <a
+                        href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/bitpandaLogo.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          Bitpanda
+                        </h6>
+                      </a>
+                      <a
+                        href="https://www.binance.com/en/download"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          Binance Wallet
+                        </h6>
+                      </a>
+                      <a
+                        href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          PancakeSwap
+                        </h6>
+                      </a>
+                      <a
+                        href="https://thena.fi/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8&swapType=1"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/thenaBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          THENA
+                        </h6>
+                      </a>
+                      <a
+                        href="https://short.trustwallet.com/app-download"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                            }
+                            className="buywodimg"
+                          />
+                          TrustWallet
+                        </h6>
+                      </a>
+                      <a
+                        href="https://changenow.io/currencies/world-of-dypians"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/changeNow.webp"
+                            }
+                            className="buywodimg"
+                          />
+                          ChangeNOW
+                        </h6>
+                      </a>
+                      <a
+                        href="https://blofin.com/spot/WOD-USDT"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="getwod-item"
+                      >
+                        <h6 className="bottomitems buy-wod-portfolio-text mb-0">
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/blofinBuywod.png"
+                            }
+                            className="buywodimg"
+                          />
+                          BloFin
+                        </h6>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )} */}
 
               {loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||
@@ -2799,6 +3286,12 @@ const Portfolio = ({
                                 : nft.nftAddress ===
                                   window.config.nft_sei_address
                                 ? "sei"
+                                : nft.nftAddress ===
+                                  window.config.nft_taraxa_address
+                                ? "taraxa"
+                                : nft.nftAddress ===
+                                  window.config.nft_bnb5ya_address
+                                ? "5ya"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -2919,6 +3412,12 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_taraxa_address
+                                    ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb5ya_address
+                                    ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -3013,6 +3512,12 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_sei_address
                                     ? "SEBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_taraxa_address
+                                    ? "TXBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb5ya_address
+                                    ? "5YABP"
                                     : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address
@@ -3224,6 +3729,12 @@ const Portfolio = ({
                                 : nft.nftAddress ===
                                   window.config.nft_sei_address
                                 ? "sei"
+                                : nft.nftAddress ===
+                                  window.config.nft_taraxa_address
+                                ? "taraxa"
+                                : nft.nftAddress ===
+                                  window.config.nft_bnb5ya_address
+                                ? "5ya"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3343,6 +3854,12 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_taraxa_address
+                                    ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb5ya_address
+                                    ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
@@ -3439,6 +3956,12 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_sei_address
                                     ? "SEBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_taraxa_address
+                                    ? "TXBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb5ya_address
+                                    ? "5YABP"
                                     : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address

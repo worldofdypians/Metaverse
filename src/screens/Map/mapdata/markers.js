@@ -311,6 +311,18 @@ const iconData = [
     size: 24,
     chain: true,
   },
+  {
+    name: "taraxaMarker",
+    url: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+    size: 24,
+    chain: true,
+  },
+  {
+    name: "trustwalletMarker",
+    url: "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg",
+    size: 24,
+    chain: true,
+  },
 ];
 
 // Function to create markers dynamically

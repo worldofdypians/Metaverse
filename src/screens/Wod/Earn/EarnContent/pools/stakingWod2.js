@@ -65,6 +65,7 @@ const StakeWodDetails2 = ({
   network_matchain,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
+  bnbUSDPrice,
 }) => {
   let { reward_token_wod, BigNumber } = window;
   let token_symbol = "WOD";
@@ -164,7 +165,7 @@ const StakeWodDetails2 = ({
 
   const [referralFeeEarned, setreferralFeeEarned] = useState("");
   // const [stakingOwner, setstakingOwner] = useState(null);
-  const [usdPerToken, setusdPerToken] = useState("");
+
   const [errorMsg, seterrorMsg] = useState("");
   const [errorMsg2, seterrorMsg2] = useState("");
   const [errorMsg3, seterrorMsg3] = useState("");
@@ -318,33 +319,6 @@ const StakeWodDetails2 = ({
     setpopup(false);
   };
 
-  const handleSecondTask = async (wallet) => {
-    const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
-      .catch((e) => {
-        console.error(e);
-      });
-    if (result2 && result2.status === 200) {
-      console.log(result2);
-    }
-  };
-
-  const getPriceDYP = async () => {
-    const dypprice = await axios
-      .get(
-        "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-      )
-      .then((res) => {
-        return res.data.data.attributes.base_token_price_usd;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    // let usdPerToken = await window.getPrice("defi-yield-protocol");
-    setusdPerToken(dypprice);
-  };
-
   const refreshBalance = async () => {
     if (window.WALLET_TYPE === "matchId") {
       refreshBalanceMatchId();
@@ -468,10 +442,6 @@ const StakeWodDetails2 = ({
   };
 
   useEffect(() => {
-    getPriceDYP();
-  }, []);
-
-  useEffect(() => {
     if (chainId === "56") {
       refreshBalance();
       if (depositAmount !== "") {
@@ -500,24 +470,6 @@ const StakeWodDetails2 = ({
         signer
       );
 
-      // await reward_token_wod
-      //   .approve(staking._address, amount)
-      //   .then(() => {
-      //     setdepositLoading(false);
-      //     setdepositStatus("deposit");
-      //     refreshBalance();
-      //     getApprovedAmount();
-      //   })
-      //   .catch((e) => {
-      //     setdepositLoading(false);
-      //     setdepositStatus("fail");
-      //     seterrorMsg(e?.message);
-      //     setTimeout(() => {
-      //       setdepositAmount("");
-      //       setdepositStatus("initial");
-      //       seterrorMsg("");
-      //     }, 10000);
-      //   });
       const txResponse = await reward_token_Sc
         .approve(staking._address, amount)
         .catch((e) => {
@@ -630,30 +582,6 @@ const StakeWodDetails2 = ({
         return;
       }
 
-      // await staking
-      //   .stake(amount, referrer)
-      //   .then(() => {
-      //     // handleSecondTask(coinbase);
-      //     setdepositLoading(false);
-      //     setdepositStatus("success");
-      //     refreshBalance();
-      //     getApprovedAmount();
-      //     onSuccessfulStake();
-      //     setTimeout(() => {
-      //       setdepositStatus("initial");
-      //       setdepositAmount("");
-      //     }, 5000);
-      //   })
-      //   .catch((e) => {
-      //     setdepositLoading(false);
-      //     setdepositStatus("fail");
-      //     seterrorMsg(e?.message);
-      //     setTimeout(() => {
-      //       setdepositAmount("");
-      //       setdepositStatus("fail");
-      //       seterrorMsg("");
-      //     }, 10000);
-      //   });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       let staking_Sc = new ethers.Contract(
@@ -682,12 +610,12 @@ const StakeWodDetails2 = ({
         if (txReceipt) {
           setdepositLoading(false);
           setdepositStatus("success");
-          refreshBalance();
           getApprovedAmount();
           onSuccessfulStake();
           setTimeout(() => {
             setdepositStatus("initial");
             setdepositAmount("");
+            refreshBalance();
           }, 5000);
         }
       }
@@ -734,6 +662,12 @@ const StakeWodDetails2 = ({
         }
       }
     } else if (window.WALLET_TYPE === "matchId") {
+      if (other_info) {
+        window.$.alert("This pool no longer accepts deposits!");
+        setdepositLoading(false);
+
+        return;
+      }
       if (walletClient) {
         let amount = depositAmount;
         amount = new BigNumber(amount).times(1e18).toFixed(0);
@@ -1109,7 +1043,14 @@ const StakeWodDetails2 = ({
     const millisecondsInADay = 1000 * 60 * 60 * 24;
     const daysUntilExpiration = Math.floor(timeDifference / millisecondsInADay);
 
-    return ((depositAmount * apr) / 100 / 365) * daysUntilExpiration;
+    if (staking._address === "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600") {
+      return (
+        (((depositAmount * apr) / 100 / 180) * daysUntilExpiration * 0.12) /
+        bnbUSDPrice
+      );
+    } else {
+      return ((depositAmount * apr) / 100 / 365) * daysUntilExpiration;
+    }
   };
 
   const getApprovedAmount = async () => {
@@ -1122,7 +1063,7 @@ const StakeWodDetails2 = ({
             staking._address
           )
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             return data;
           });
 
@@ -1369,7 +1310,7 @@ const StakeWodDetails2 = ({
           staking._address
         )
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           return data;
         });
 
@@ -1414,11 +1355,11 @@ const StakeWodDetails2 = ({
         "Deposit amount is greater than available quota. Please add another amount."
       );
       setCanDeposit(false);
-    } else if (isEOA && result <= poolCap) {
+    } else if (isEOA && result <= poolCap && !other_info) {
       seterrorMsg("");
       setCanDeposit(true);
     }
-  }, [depositAmount, totalDeposited, poolCap, isEOA]);
+  }, [depositAmount, totalDeposited, poolCap, isEOA, other_info]);
 
   useEffect(() => {
     getAvailableQuota();
@@ -1427,10 +1368,19 @@ const StakeWodDetails2 = ({
   useEffect(() => {
     if (!isEOA && isConnected && coinbase) {
       seterrorMsg("Smart contract wallets are not supported for this action.");
-    } else if (isEOA && isConnected && coinbase) {
+    } else if (isEOA && isConnected && coinbase && !other_info) {
       seterrorMsg("");
     }
-  }, [isEOA, isConnected, coinbase]);
+  }, [isEOA, isConnected, coinbase, other_info]);
+
+  useEffect(() => {
+    if (other_info === true) {
+      seterrorMsg(
+        "Staking is no longer available because the lock period extends beyond the reward distribution period"
+      );
+      setCanDeposit(false);
+    }
+  }, [other_info]);
 
   return (
     <div className={`p-0 ${listType === "list" && "pt-4"} `}>
@@ -1511,7 +1461,7 @@ const StakeWodDetails2 = ({
                       />
 
                       <button
-                        className="inner-max-btn position-absolute"
+                        className="inner-max-btn position-absolute px-2"
                         onClick={handleSetMaxDeposit}
                       >
                         Max
@@ -1627,9 +1577,12 @@ const StakeWodDetails2 = ({
                         >
                           {getFormattedNumber(
                             getApproxReturn(depositAmount),
-                            2
+                            3
                           )}{" "}
-                          WOD
+                          {staking._address ===
+                          "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                            ? "WBNB"
+                            : "WOD"}
                         </span>
                       </span>
                     </div>
@@ -1638,7 +1591,11 @@ const StakeWodDetails2 = ({
 
                 <button
                   disabled={
-                    chainId !== "56"
+                    other_info === true &&
+                    isConnected === true &&
+                    chainId === "56"
+                      ? true
+                      : chainId !== "56"
                       ? false
                       : depositAmount === "" ||
                         depositLoading === true ||
@@ -1650,7 +1607,10 @@ const StakeWodDetails2 = ({
                     ((depositAmount === "" &&
                       isConnected &&
                       chainId === "56") ||
-                      !isEOA) &&
+                      !isEOA ||
+                      (other_info === true &&
+                        isConnected &&
+                        chainId === "56")) &&
                     "disabled-btn"
                   } ${
                     depositStatus === "initial" &&
@@ -1730,10 +1690,7 @@ const StakeWodDetails2 = ({
               <div
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-                }  ${
-                  (expired === true || chainId !== "56" || !isEOA) &&
-                  "blurrypool"
-                } `}
+                }  ${(chainId !== "56" || !isEOA) && "blurrypool"} `}
               >
                 <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
                   <h6
@@ -1750,9 +1707,10 @@ const StakeWodDetails2 = ({
                       placement="top"
                       title={
                         <div className="tooltip-text">
-                          {
-                            "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The reinvest function does not reset the lock-in period."
-                          }
+                          {staking._address ===
+                          "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                            ? "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The rewards are calculated with 1 WOD = $0.12 for the whole duration of the staking pool."
+                            : "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The reinvest function does not reset the lock-in period."}
                         </div>
                       }
                     >
@@ -1772,8 +1730,22 @@ const StakeWodDetails2 = ({
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />{" "} */}
-                      {getFormattedNumber(pendingDivs, pendingDivs > 0 ? 6 : 2)}{" "}
-                      WOD
+                      {getFormattedNumber(
+                        staking._address ===
+                          "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                          ? (pendingDivs * 0.12) / bnbUSDPrice
+                          : pendingDivs,
+                        pendingDivs > 0
+                          ? staking._address ===
+                            "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                            ? 8
+                            : 6
+                          : 2
+                      )}{" "}
+                      {staking._address ===
+                      "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600"
+                        ? "WBNB"
+                        : "WOD"}
                     </h6>
                     <div className="d-flex w-100 align-items-center gap-2">
                       <button
@@ -1827,45 +1799,51 @@ const StakeWodDetails2 = ({
                           <>Claim</>
                         )}
                       </button>
-                      <button
-                        disabled={pendingDivs > 0 && isEOA ? false : true}
-                        className={`btn w-100 outline-btn-stake ${
-                          reInvestStatus === "invest" ||
-                          pendingDivs <= 0 ||
-                          !isEOA
-                            ? "disabled-btn"
-                            : reInvestStatus === "failed"
-                            ? "fail-button"
-                            : reInvestStatus === "success"
-                            ? "success-button"
-                            : null
-                        } d-flex justify-content-center align-items-center gap-2`}
-                        style={{ height: "fit-content" }}
-                        onClick={handleReinvest}
-                      >
-                        {reInvestLoading ? (
-                          <div
-                            className="spinner-border spinner-border-sm text-light"
-                            role="status"
-                          >
-                            <span className="visually-hidden">Loading...</span>
-                          </div>
-                        ) : reInvestStatus === "failed" ? (
-                          <>
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/failMark.svg"
-                              }
-                              alt=""
-                            />
-                            Failed
-                          </>
-                        ) : reInvestStatus === "success" ? (
-                          <>Success</>
-                        ) : (
-                          <>Reinvest</>
-                        )}
-                      </button>
+                      {staking._address !==
+                        "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600" && (
+                        <button
+                          disabled={pendingDivs > 0 && isEOA ? false : true}
+                          className={`btn w-100 outline-btn-stake ${
+                            reInvestStatus === "invest" ||
+                            pendingDivs <= 0 ||
+                            !isEOA ||
+                            expired === true
+                              ? "disabled-btn"
+                              : reInvestStatus === "failed"
+                              ? "fail-button"
+                              : reInvestStatus === "success"
+                              ? "success-button"
+                              : null
+                          } d-flex justify-content-center align-items-center gap-2`}
+                          style={{ height: "fit-content" }}
+                          onClick={handleReinvest}
+                        >
+                          {reInvestLoading ? (
+                            <div
+                              className="spinner-border spinner-border-sm text-light"
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
+                          ) : reInvestStatus === "failed" ? (
+                            <>
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/failMark.svg"
+                                }
+                                alt=""
+                              />
+                              Failed
+                            </>
+                          ) : reInvestStatus === "success" ? (
+                            <>Success</>
+                          ) : (
+                            <>Reinvest</>
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
                   {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}
@@ -2115,7 +2093,7 @@ const StakeWodDetails2 = ({
                         Withdraw Amount
                       </label>
                       <button
-                        className="inner-max-btn position-absolute"
+                        className="inner-max-btn position-absolute px-2"
                         onClick={handleSetMaxWithdraw}
                       >
                         Max

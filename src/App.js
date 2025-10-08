@@ -51,8 +51,8 @@ import MarketMint from "./screens/Marketplace/MarketMint";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
 import SIDRegister from "@web3-name-sdk/register";
-import { createWeb3Name } from "@web3-name-sdk/core";
-import { ethers, providers } from "ethers";
+// import { createWeb3Name } from "@web3-name-sdk/core";
+import { ethers } from "ethers";
 import { getWeb3Connector } from "@binance/w3w-web3-connector";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
@@ -97,6 +97,8 @@ import { http, createPublicClient } from "viem";
 import SyncModal from "./screens/Marketplace/MarketNFTs/SyncModal.js";
 import TradingComp from "./screens/Community/Campaigns/TradingComp/TradingComp.js";
 import WodBitGet from "./screens/Community/Campaigns/WodBitGet/WodBitGet.js";
+import Kickstarter from "./components/Kickstarter/Kickstarter.js";
+import KickstarterPage from "./components/Kickstarter/KickstarterPage.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -153,7 +155,7 @@ const useSharedData = () => {
     queryFn: fetchAllNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -173,7 +175,7 @@ const useSharedDataListedNfts = () => {
     queryFn: fetchListedNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -222,7 +224,7 @@ const useSharedDataLatest20BoughtNFTs = () => {
     queryFn: fetchLatest20BoughtNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -242,7 +244,7 @@ const useSharedDataCawsNfts = () => {
     queryFn: fetchAllCawsNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -262,7 +264,7 @@ const useSharedDataWodNfts = () => {
     queryFn: fetchAllWodNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -282,7 +284,7 @@ const useSharedDataTimepieceNfts = () => {
     queryFn: fetchAllTimepieceNFTs,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
@@ -319,7 +321,7 @@ const useSharedDataListedByUser = (wallet) => {
     queryFn: () => getAllnftsListed(wallet),
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!wallet,
   });
@@ -470,12 +472,12 @@ function App() {
   };
 
   const { useUserInfo, useWallet } = Hooks;
-  const { login, address, username, logout: logoutUser } = useUserInfo();
+  const { login, address, logout: logoutUser } = useUserInfo();
   const { signMessage, createWalletClient } = useWallet();
   const {
     data,
     refetch: refetchPlayer,
-    loading: loadingPlayer,
+    loading,
   } = useQuery(GET_PLAYER, {
     fetchPolicy: "network-only",
   });
@@ -485,7 +487,7 @@ function App() {
   const authToken = localStorage.getItem("authToken");
   const [orynPop, setOrynPop] = useState(true);
   const [showWalletModal, setShowWalletModal] = useState(false);
-
+  const [royaltyCount, setRoyaltyCount] = useState(0);
   const [betaModal, setBetaModal] = useState(false);
 
   const [totalSupply, setTotalSupply] = useState(0);
@@ -498,17 +500,17 @@ function App() {
   const [gameAccount, setGameAccount] = useState();
 
   const [networkId, setChainId] = useState();
-  const [currencyAmount, setCurrencyAmount] = useState(0);
+
   const [showForms, setShowForms] = useState(false);
   const [showForms2, setShowForms2] = useState(false);
-  const [myNFTs, setMyNFTs] = useState([]);
+  // const [myNFTs, setMyNFTs] = useState([]);
   const [myCAWNFTs, setMyCAWNFTs] = useState([]);
   const [cawsToUse, setcawsToUse] = useState([]);
   const [avatar, setAvatar] = useState();
-  const [mystakes, setMystakes] = useState([]);
+  // const [mystakes, setMystakes] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [listedNFTS, setListedNFTS] = useState([]);
-  const [count44, setCount44] = useState(0);
+  // const [count44, setCount44] = useState(0);
   const [count55, setCount55] = useState(0);
   const [cawsListed, setcawsListed] = useState([]);
   const [wodListed, setwodListed] = useState([]);
@@ -519,7 +521,7 @@ function App() {
   const [mybaseNFTsCreated, setmybaseNFTsCreated] = useState([]);
   const [myMantaNFTsCreated, setMyMantaNFTsCreated] = useState([]);
 
-  const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
+  // const [myCAWSNFTsCreated, setMyCAWSNFTsCreated] = useState([]);
   const [myCAWSNFTsTotalStaked, setMyCAWSNFTsTotalStaked] = useState([]);
   const [walletModal, setwalletModal] = useState(false);
   const [walletId, setwalletId] = useState("connect");
@@ -575,16 +577,19 @@ function App() {
   const [mykucoinNFTs, setMykucoinNFTs] = useState([]);
   const [myOpbnbNfts, setmyOpbnbNfts] = useState([]);
   const [myVanarNFTs, setmyVanarNFTs] = useState([]);
+  const [mybnb5yaNfts, setmyBnb5yaNfts] = useState([]);
+
   const [myTeaOpbnbNfts, setmyTeaOpbnbNfts] = useState([]);
   const [myTeaBnbNfts, setmyTeaBnbNfts] = useState([]);
   const [myTeaBaseNfts, setmyTeaBaseNfts] = useState([]);
   const [myTeaSeiNfts, setmyTeaSeiNfts] = useState([]);
-
+  const [myTaraxaNfts, setMyTaraxaNfts] = useState([]);
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
   const [isBnb, setisBnb] = useState(false);
   const [isBnbSuccess, setisBnbSuccess] = useState(false);
-  const [logoutCount, setLogoutCount] = useState(0);
+  const [syncCount, setsyncCount] = useState(1);
+  const [logoutCount, setlogoutCount] = useState(1);
 
   const [nftCount, setNftCount] = useState(1);
   const [countBalance, setcountBalance] = useState(1);
@@ -603,8 +608,14 @@ function App() {
 
   const [isPremium, setIsPremium] = useState(false);
   const [premiumOryn, setPremiumOryn] = useState(false);
+  const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
+  const [royalChestIndex, setRoyalChestIndex] = useState();
+
+  const [openedRoyaltyChestTaiko, setOpenedRoyaltyChestTaiko] = useState([]);
+  const [royalChestIndexTaiko, setRoyalChestIndexTaiko] = useState();
 
   const [domainPopup, setDomainPopup] = useState(false);
+  const [kickstarterAddClass, setKickstarterAddClass] = useState(false);
   const [showSync, setshowSync] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
   const [availableDomain, setAvailableDomain] = useState("initial");
@@ -619,11 +630,12 @@ function App() {
   const [domainMetaData, setDomainMetaData] = useState(null);
   const [totalTx, setTotalTx] = useState(0);
 
-  const [totalvolume, setTotalVolume] = useState(0);
+  
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
   const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
   const [wodPrice, setWodPrice] = useState(0);
+  const [kickstarter, setKickstarter] = useState(false);
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
   const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
@@ -637,7 +649,7 @@ function App() {
 
   const { activate, deactivate, library, provider } = useWeb3React();
 
-  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let taraxaLastDay = new Date("2025-12-13T14:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2025-07-10T16:00:00.000+02:00");
@@ -646,10 +658,10 @@ function App() {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let teaLastDay = new Date("2025-10-16T13:00:00.000+02:00");
-  let bnbLastDay = new Date("2025-08-07T14:00:00.000+02:00");
+  let bnbLastDay = new Date("2025-12-11T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
-  let coreLastDay2 = new Date("2025-08-08T14:00:00.000+02:00");
+  let coreLastDay2 = new Date("2025-12-12T14:00:00.000+02:00");
 
   let mantaLastDay = new Date("2025-08-13T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
@@ -658,9 +670,10 @@ function App() {
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
-  let seiLastDay = new Date("2025-08-16T14:00:00.000+02:00");
+  let seiLastDay = new Date("2025-08-18T14:00:00.000+02:00");
 
-  let vanarLastDay = new Date("2025-09-16T14:00:00.000+02:00");
+  let vanarLastDay = new Date("2026-01-14T14:00:00.000+02:00");
+  let trustwalletLastDay = new Date("2026-01-29T14:00:00.000+02:00");
 
   const placeholderplayerData = [
     {
@@ -772,6 +785,11 @@ function App() {
   const [bnbEarnToken, setBnbEarnToken] = useState(0);
   const [bnbEarnUsd, setBnbEarnUsd] = useState(0);
   const [bnbPoints, setBnbPoints] = useState(0);
+
+  const [trustEarnToken, setTrustEarnToken] = useState(0);
+  const [trustEarnUsd, setTrustEarnUsd] = useState(0);
+  const [trustPoints, setTrustPoints] = useState(0);
+
   const [teaEarnToken, setTeaEarnToken] = useState(0);
   const [teaEarnUsd, setTeaEarnUsd] = useState(0);
   const [teaPoints, setTeaPoints] = useState(0);
@@ -801,6 +819,11 @@ function App() {
   const [taikoPrice, setTaikoPrice] = useState(0);
   const [taikoEarnToken, setTaikoEarnToken] = useState(0);
   const [taikoPoints, setTaikoPoints] = useState(0);
+
+  const [taraxaEarnUsd, setTaraxaEarnUsd] = useState(0);
+  const [taraxaPrice, setTaraxaPrice] = useState(0);
+  const [taraxaEarnToken, setTaraxaEarnToken] = useState(0);
+  const [taraxaPoints, setTaraxaPoints] = useState(0);
 
   const [cookieEarnUsd, setCookieEarnUsd] = useState(0);
   const [cookiePrice, setCookiePrice] = useState(0);
@@ -835,6 +858,8 @@ function App() {
   const [multiversEarnToken, setmultiversEarnToken] = useState(0);
   const [multiversPoints, setmultiversPoints] = useState(0);
   const [bnbPrice, setBnbPrice] = useState(0);
+  const [trustPrice, setTrustPrice] = useState(0);
+
   const [cfxPrice, setCfxPrice] = useState(0);
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
   const [seiEarnToken, setSeiEarnToken] = useState(0);
@@ -879,10 +904,24 @@ function App() {
     transport: http(`${chain?.chain?.rpcUrls?.default?.http[0]}`),
   });
 
+  const handleSecondTask = async (wallet) => {
+    if (wallet) {
+      const result = await axios
+        .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (result && result.status === 200) {
+        console.log(result);
+      }
+    }
+  };
+
   const handleFirstTask = async (wallet) => {
     if (wallet) {
       const result2 = await axios
-        .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+        .get(`https://api.worldofdypians.com/api/dappbay/task3/${wallet}`)
         .catch((e) => {
           console.error(e);
         });
@@ -903,11 +942,12 @@ function App() {
       });
     } catch (error) {
       setsyncStatus("error");
-      setTimeout(() => {
+      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      const timer = setTimeout(() => {
         setsyncStatus("initial");
         setshowSync(false);
       }, 3000);
-      console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      return () => clearTimeout(timer);
     }
   };
 
@@ -986,6 +1026,27 @@ function App() {
           console.error(e);
         });
 
+      const totaldesposited_wod6 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod6._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const totaldesposited_wod7 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod7._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const totaldesposited_wod8 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod8._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
       const totaldesposited_wod4_formatted = new window.BigNumber(
         totaldesposited_wod4
       )
@@ -994,6 +1055,23 @@ function App() {
 
       const totaldesposited_wod5_formatted = new window.BigNumber(
         totaldesposited_wod5
+      )
+        .div(1e18)
+        .toFixed(6);
+
+      const totaldesposited_wod6_formatted = new window.BigNumber(
+        totaldesposited_wod6
+      )
+        .div(1e18)
+        .toFixed(6);
+
+      const totaldesposited_wod7_formatted = new window.BigNumber(
+        totaldesposited_wod7
+      )
+        .div(1e18)
+        .toFixed(6);
+      const totaldesposited_wod8_formatted = new window.BigNumber(
+        totaldesposited_wod8
       )
         .div(1e18)
         .toFixed(6);
@@ -1024,6 +1102,21 @@ function App() {
           poolCap: 5000000,
           totaldeposited: totaldesposited_wod5_formatted,
         },
+        {
+          id: "0xC5432cbf613aaE8626bC4301f29e6eE8e3d2a1b3",
+          poolCap: 10000000,
+          totaldeposited: totaldesposited_wod6_formatted,
+        },
+        {
+          id: "0x6A4057d68C10f450e306F191728ffa926E6c30F0",
+          poolCap: 10000000,
+          totaldeposited: totaldesposited_wod7_formatted,
+        },
+        {
+          id: "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600",
+          poolCap: 6500000,
+          totaldeposited: totaldesposited_wod8_formatted,
+        },
       ];
 
       let resultWodToken = bnb_result.data.stakingInfoWODBnb;
@@ -1036,6 +1129,18 @@ function App() {
       let resultWodToken2 = resultWodToken.map((item) => {
         return {
           ...item,
+          // expired:
+          //   item.id === "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C" ||
+          //   item.id === "0x0675B497f52a0426874151c1e3267801fAA15C18"
+          //     ? "Yes"
+          //     : item.expired,
+          // new_pool:
+          //   item.id === "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C" ||
+          //   item.id === "0x0675B497f52a0426874151c1e3267801fAA15C18" ||
+          //   item.id === "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C" ||
+          //   item.id === "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e"
+          //     ? "No"
+          //     : item.new_pool,
           type: "token",
           chain: "bnb",
           tokenURL: ["wodToken"],
@@ -1080,6 +1185,7 @@ function App() {
       localStorage.setItem("tvl", Number(tvl) + Number(resultWodTokenTVL));
       setnftTvl(Number(tvl) + Number(resultWodTokenTVL));
       setnftPools([...resultCaws2, ...resultLand2, ...resultCawsLand2]);
+
       settokenPools(resultWodToken2);
     }
   };
@@ -1128,7 +1234,11 @@ function App() {
             return obj.betapassId === "skale";
           });
           const bnbEvent = responseData.events.filter((obj) => {
-            return obj.id === "bnbChainEvent10";
+            return obj.id === "bnbChainEvent31";
+          });
+
+          const trustwalletEvent = responseData.events.filter((obj) => {
+            return obj.name === "Trust Wallet Treasure Hunt";
           });
 
           const coreEvent = responseData.events.filter((obj) => {
@@ -1149,6 +1259,9 @@ function App() {
 
           const taikoEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "taiko";
+          });
+          const taraxaEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taraxa";
           });
 
           const multiversEvent = responseData.events.filter((obj) => {
@@ -1208,7 +1321,7 @@ function App() {
           });
 
           const teafiEvent = responseData.events.filter((obj) => {
-            return obj.id === "tea-fi";
+            return obj.betapassId === "teafi";
           });
 
           const kucoinEvent = responseData.events.filter((obj) => {
@@ -1226,9 +1339,9 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            // if (bnbEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (bnbEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /
@@ -1238,6 +1351,21 @@ function App() {
             setBnbPoints(pointsBnb);
             setBnbEarnUsd(userEarnedusd);
             setBnbEarnToken(userEarnedusd / bnbPrice);
+          }
+
+          if (trustwalletEvent && trustwalletEvent[0]) {
+            if (trustwalletEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
+
+            const userEarnedusd =
+              trustwalletEvent[0].reward.earn.total /
+              trustwalletEvent[0].reward.earn.multiplier;
+            const pointstrust = trustwalletEvent[0].reward.earn.totalPoints;
+
+            setTrustPoints(pointstrust);
+            setTrustEarnUsd(userEarnedusd);
+            setTrustEarnToken(userEarnedusd / trustPrice);
           }
 
           if (teafiEvent && teafiEvent[0]) {
@@ -1313,6 +1441,20 @@ function App() {
             setTaikoEarnToken(userEarnedusd / taikoPrice);
           }
 
+          if (taraxaEvent && taraxaEvent[0]) {
+            if (taraxaEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
+
+            const userEarnedusd =
+              taraxaEvent[0].reward.earn.total /
+              taraxaEvent[0].reward.earn.multiplier;
+            const pointsTaraxa = taraxaEvent[0].reward.earn.totalPoints;
+            setTaraxaPoints(pointsTaraxa);
+            setTaraxaEarnUsd(userEarnedusd);
+            setTaraxaEarnToken(userEarnedusd / taraxaPrice);
+          }
+
           if (midleEvent && midleEvent[0]) {
             // if (midleEvent[0].reward.earn.totalPoints > 0) {
             //   userActiveEvents = userActiveEvents + 1;
@@ -1365,9 +1507,9 @@ function App() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            if (seiEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (seiEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
@@ -1420,9 +1562,9 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            if (mantaEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (mantaEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -1566,7 +1708,7 @@ function App() {
 
   const checkIfEOA = async (address) => {
     if (window.ethereum) {
-      if (address) {
+      if (address && window.WALLET_TYPE !== "binance") {
         let web3 = new Web3(window.ethereum);
         const code = await web3.eth.getCode(address).catch((e) => {
           console.error(e);
@@ -1715,6 +1857,11 @@ function App() {
       window.config.nft_kucoin_address
     );
 
+    const bnb_5yaContract = new window.opBnbWeb3.eth.Contract(
+      window.OPBNB_NFT_ABI,
+      window.config.nft_bnb5ya_address
+    );
+
     const victionContract = new window.victionWeb3.eth.Contract(
       window.VICTION_NFT_ABI,
       window.config.nft_viction_address.toLowerCase()
@@ -1759,7 +1906,10 @@ function App() {
       window.VANAR_NFT_ABI,
       window.config.nft_vanar_address
     );
-
+    const taraxaContract = new window.taraxaWeb3.eth.Contract(
+      window.TARAXA_NFT_ABI,
+      window.config.nft_taraxa_address
+    );
     const teaseicontract = new window.seiWeb3.eth.Contract(
       window.SEI_NFT_ABI,
       window.config.nft_teasei_address
@@ -1871,6 +2021,14 @@ function App() {
         return 0;
       });
 
+    const bnb_5ya_result = await bnb_5yaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     const multiversresult = await multiversContract.methods
       .totalSupply()
       .call()
@@ -1927,6 +2085,14 @@ function App() {
         return 0;
       });
 
+    const taraxaResult = await taraxaContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
 
     setTotalSupply(
@@ -1953,6 +2119,8 @@ function App() {
         Number(teaOPBNBResult) +
         Number(teaBaseResult) +
         Number(teaseiResult) +
+        Number(taraxaResult) +
+        Number(bnb_5ya_result) +
         20002
     );
   };
@@ -2029,20 +2197,22 @@ function App() {
             "You have successfully registered your .bnb domain"
           );
           setSuccessDomain(true);
-          setTimeout(() => {
+          setLoadingDomain(false);
+          const timer = setTimeout(() => {
             setSuccessMessage("");
             setSuccessDomain(false);
           }, 5000);
-          setLoadingDomain(false);
+          return () => clearTimeout(timer);
         })
         .catch((e) => {
           setLoadingDomain(false);
           setSuccessDomain(false);
           setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
-          setTimeout(() => {
+          console.log(e);
+          const timer = setTimeout(() => {
             setSuccessMessage("");
           }, 5000);
-          console.log(e);
+          return () => clearTimeout(timer);
         });
     } else if (window.WALLET_TYPE === "binance" && library) {
       setLoadingDomain(true);
@@ -2060,11 +2230,12 @@ function App() {
             "You have successfully registered your .bnb domain"
           );
           setSuccessDomain(true);
-          setTimeout(() => {
+          setLoadingDomain(false);
+          const timer = setTimeout(() => {
             setSuccessMessage("");
             setSuccessDomain(false);
           }, 5000);
-          setLoadingDomain(false);
+          return () => clearTimeout(timer);
         })
         .catch((e) => {
           setLoadingDomain(false);
@@ -2072,10 +2243,11 @@ function App() {
           setSuccessMessage(
             `Something went wrong: ${{ e }.e.reason ?? "try again later"}`
           );
-          setTimeout(() => {
+          console.log({ e }.e.reason);
+          const timer = setTimeout(() => {
             setSuccessMessage("");
           }, 5000);
-          console.log({ e }.e.reason);
+          return () => clearTimeout(timer);
         });
     }
   };
@@ -2135,6 +2307,19 @@ function App() {
       });
   };
 
+  const fetchTWTPrice = async () => {
+    await axios
+      .get("https://api.worldofdypians.com/api/price/trust-wallet-token")
+      .then((obj) => {
+        if (obj.data) {
+          setTrustPrice(obj.data.price);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   const fetchKucoinCoinPrice = async () => {
     await axios
       .get("https://api.worldofdypians.com/api/price/kucoin-shares")
@@ -2150,7 +2335,7 @@ function App() {
 
   const getTokenDatabnb = async () => {
     await axios
-      .get("https://api.worldofdypians.com/api/price/dogecoin")
+      .get("https://api.worldofdypians.com/api/price/wbnb")
       .then((obj) => {
         if (obj.data) {
           setBnbUSDPrice(obj.data.price);
@@ -2398,7 +2583,7 @@ function App() {
       //
       // setIsConnected(isActive);
     } catch (e) {
-      window.alertify.error(String(e) || "Cannot connect wallet!");
+      window.alertify.error(e?.message || "Cannot connect wallet!");
       console.log(e);
       return;
     }
@@ -2520,7 +2705,7 @@ function App() {
 
       nfts = await Promise.all(nfts);
       nfts.reverse();
-      setMyNFTs(nfts);
+      // setMyNFTs(nfts);
     }
   };
 
@@ -2638,7 +2823,7 @@ function App() {
       getMyNFTS(coinbase, "land").then((NFTS) => {
         setMyNFTSLand(NFTS);
         setMyLandNFTs(NFTS);
-        setMyNFTs(NFTS);
+        // setMyNFTs(NFTS);
       });
 
       getMyNFTS(coinbase, "base").then((NFTS) => {
@@ -2680,6 +2865,14 @@ function App() {
       getMyNFTS(coinbase, "tea-sei").then((NFTS) => {
         setmyTeaSeiNfts(NFTS);
       });
+      getMyNFTS(coinbase, "taraxa").then((NFTS) => {
+        setMyTaraxaNfts(NFTS);
+      });
+
+      getMyNFTS(coinbase, "5ya").then((NFTS) => {
+        setmyBnb5yaNfts(NFTS);
+      });
+
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -2792,7 +2985,7 @@ function App() {
       let stakes = myStakes.map((stake) => window.getLandNft(stake));
       stakes = await Promise.all(stakes);
       stakes.reverse();
-      setMystakes(stakes);
+      // setMystakes(stakes);
     }
   };
 
@@ -2891,11 +3084,12 @@ function App() {
                 setmintStatus("Success! Your Nft was minted successfully!");
                 setmintloading("success");
                 settextColor("rgb(123, 216, 176)");
-                setTimeout(() => {
+                checkCawsToUse();
+                const timer = setTimeout(() => {
                   setmintStatus("");
                   setmintloading("initial");
                 }, 5000);
-                checkCawsToUse();
+                return () => clearTimeout(timer);
               })
               .catch((e) => {
                 console.error(e);
@@ -2909,10 +3103,11 @@ function App() {
                     "Oops, something went wrong! Refresh the page and try again!"
                   );
                 }
-                setTimeout(() => {
+                const timer = setTimeout(() => {
                   setmintloading("initial");
                   setmintStatus("");
                 }, 5000);
+                return () => clearTimeout(timer);
               });
 
             if (tokenId) {
@@ -2939,10 +3134,11 @@ function App() {
               ? String(e)
               : "Oops, something went wrong! Refresh the page and try again!"
           );
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setmintloading("initial");
             setmintStatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else {
         try {
@@ -2976,13 +3172,14 @@ function App() {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
-                setmintStatus("");
-                setmintloading("initial");
-              }, 5000);
               getMyNFTS(coinbase, "vanar").then((NFTS) => {
                 setmyVanarNFTs(NFTS);
               });
+              const timer = setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              return () => clearTimeout(timer);
             })
             .catch((e) => {
               console.error(e);
@@ -2996,10 +3193,11 @@ function App() {
                   "Oops, something went wrong! Refresh the page and try again!"
                 );
               }
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setmintloading("initial");
                 setmintStatus("");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         } catch (e) {
           setmintloading("error");
@@ -3018,10 +3216,11 @@ function App() {
               ? String(e)
               : "Oops, something went wrong! Refresh the page and try again!"
           );
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setmintloading("initial");
             setmintStatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else if (window.WALLET_TYPE === "binance") {
         try {
@@ -3047,10 +3246,11 @@ function App() {
                 "Oops, something went wrong! Refresh the page and try again!"
               );
             }
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setmintloading("initial");
               setmintStatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
 
           const txReceipt = txResponse.wait();
@@ -3058,13 +3258,14 @@ function App() {
             setmintStatus("Success! Your Nft was minted successfully!");
             setmintloading("success");
             settextColor("rgb(123, 216, 176)");
-            setTimeout(() => {
-              setmintStatus("");
-              setmintloading("initial");
-            }, 5000);
             getMyNFTS(coinbase, "vanar").then((NFTS) => {
               setmyVanarNFTs(NFTS);
             });
+            const timer = setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            return () => clearTimeout(timer);
           }
         } catch (e) {
           setmintloading("error");
@@ -3083,10 +3284,11 @@ function App() {
               ? String(e)
               : "Oops, something went wrong! Refresh the page and try again!"
           );
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setmintloading("initial");
             setmintStatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         }
       } else if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
@@ -3109,10 +3311,11 @@ function App() {
                   "Oops, something went wrong! Refresh the page and try again!"
                 );
               }
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setmintloading("initial");
                 setmintStatus("");
               }, 5000);
+              return () => clearTimeout(timer);
             });
 
           if (result) {
@@ -3128,13 +3331,14 @@ function App() {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
-                setmintStatus("");
-                setmintloading("initial");
-              }, 5000);
               getMyNFTS(coinbase, "vanar").then((NFTS) => {
                 setmyVanarNFTs(NFTS);
               });
+              const timer = setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              return () => clearTimeout(timer);
             }
           }
         }
@@ -3159,10 +3363,11 @@ function App() {
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setmintStatus("");
                 setmintloading("initial");
               }, 5000);
+              return () => clearTimeout(timer);
               // getMyNFTS(coinbase, "skale").then((NFTS) => {
               //   setmyskaleNFTsCreated(NFTS);
               //   settotalSkaleNft(NFTS.length);
@@ -3181,10 +3386,11 @@ function App() {
                   "Oops, something went wrong! Refresh the page and try again!"
                 );
               }
-              setTimeout(() => {
+              const timer = setTimeout(() => {
                 setmintloading("initial");
                 setmintStatus("");
               }, 5000);
+              return () => clearTimeout(timer);
             });
         } else {
           // setShowWhitelistLoadingModal(true);
@@ -3206,10 +3412,11 @@ function App() {
             ? String(e)
             : "Oops, something went wrong! Refresh the page and try again!"
         );
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setmintloading("initial");
           setmintStatus("");
         }, 5000);
+        return () => clearTimeout(timer);
       }
     }
   };
@@ -3226,13 +3433,14 @@ function App() {
             setmintStatus("Success! Your Nft was minted successfully!");
             setmintloading("success");
             settextColor("rgb(123, 216, 176)");
-            setTimeout(() => {
-              setmintStatus("");
-              setmintloading("initial");
-            }, 5000);
             getMyNFTS(coinbase, "opbnb").then((NFTS) => {
               setmyOpbnbNfts(NFTS);
             });
+            const timer = setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            return () => clearTimeout(timer);
           })
           .catch((e) => {
             console.error(e);
@@ -3246,10 +3454,11 @@ function App() {
                 "Oops, something went wrong! Refresh the page and try again!"
               );
             }
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setmintloading("initial");
               setmintStatus("");
             }, 5000);
+            return () => clearTimeout(timer);
           });
       } else if (window.WALLET_TYPE === "binance") {
         const nft_contract = new ethers.Contract(
@@ -3269,10 +3478,11 @@ function App() {
               "Oops, something went wrong! Refresh the page and try again!"
             );
           }
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             setmintloading("initial");
             setmintStatus("");
           }, 5000);
+          return () => clearTimeout(timer);
         });
 
         const txReceipt = await txResponse.wait();
@@ -3280,13 +3490,14 @@ function App() {
           setmintStatus("Success! Your Nft was minted successfully!");
           setmintloading("success");
           settextColor("rgb(123, 216, 176)");
-          setTimeout(() => {
-            setmintStatus("");
-            setmintloading("initial");
-          }, 5000);
           getMyNFTS(coinbase, "opbnb").then((NFTS) => {
             setmyOpbnbNfts(NFTS);
           });
+          const timer = setTimeout(() => {
+            setmintStatus("");
+            setmintloading("initial");
+          }, 5000);
+          return () => clearTimeout(timer);
         }
       }
     }
@@ -3647,7 +3858,208 @@ function App() {
       }
     }
   };
-  // console.log(myTeaBaseNfts, myTeaBnbNfts, myTeaSeiNfts, myTeaOpbnbNfts);
+
+  const handleMintTaraxa = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const nft_contract = new ethers.Contract(
+        window.config.nft_taraxa_address,
+        window.TARAXA_NFT_ABI,
+        signer
+      );
+      const txResponse = await nft_contract.mintBetaPass().catch((e) => {
+        console.error(e);
+        setmintloading("error");
+        settextColor("#d87b7b");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setmintStatus("Success! Your Nft was minted successfully!");
+        setmintloading("success");
+        settextColor("rgb(123, 216, 176)");
+        setTimeout(() => {
+          setmintStatus("");
+          setmintloading("initial");
+        }, 5000);
+        getMyNFTS(coinbase, "taraxa").then((NFTS) => {
+          setMyTaraxaNfts(NFTS);
+        });
+      }
+    }
+  };
+
+  const handleMintBnb5ya = async () => {
+    if (isConnected && coinbase) {
+      setmintloading("mint");
+      setmintStatus("Minting in progress...");
+      settextColor("rgb(123, 216, 176)");
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
+        await window.bnb5ya_nft
+          .mintBNB5YANFT()
+          .then(() => {
+            setmintStatus("Success! Your Nft was minted successfully!");
+            setmintloading("success");
+            settextColor("rgb(123, 216, 176)");
+            setTimeout(() => {
+              setmintStatus("");
+              setmintloading("initial");
+            }, 5000);
+            getMyNFTS(coinbase, "5ya").then((NFTS) => {
+              setmyBnb5yaNfts(NFTS);
+            });
+            // handleFirstTask(coinbase);
+          })
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+      } else if (window.WALLET_TYPE === "matchId") {
+        if (walletClient) {
+          const result = await walletClient
+            .writeContract({
+              address: window.config.nft_bnb5ya_address,
+              abi: window.OPBNB_NFT_ABI,
+              functionName: "mintBetaPass",
+              args: [],
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+          if (result) {
+            const receipt = await publicClient
+              .waitForTransactionReceipt({
+                hash: result,
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+
+            if (receipt) {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "5ya").then((NFTS) => {
+                setmyBnb5yaNfts(NFTS);
+              });
+            }
+          }
+        }
+      } else if (window.WALLET_TYPE === "binance") {
+        const nft_contract = new ethers.Contract(
+          window.config.nft_bnb5ya_address,
+          window.OPBNB_NFT_ABI,
+          library.getSigner()
+        );
+
+        const gasPrice = await library.getGasPrice();
+        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+        const gasPriceInWei = ethers.utils.parseUnits(
+          currentGwei.toString().slice(0, 14),
+          "gwei"
+        );
+
+        const transactionParameters = {
+          gasPrice: gasPriceInWei,
+        };
+
+        let gasLimit;
+        try {
+          gasLimit = await nft_contract.estimateGas.mintBetaPass();
+          transactionParameters.gasLimit = gasLimit;
+          console.log("transactionParameters", transactionParameters);
+        } catch (error) {
+          console.error(error);
+        }
+
+        const txResponse = await nft_contract
+          .mintBetaPass({ ...transactionParameters })
+          .catch((e) => {
+            console.error(e);
+            setmintloading("error");
+            settextColor("#d87b7b");
+
+            if (typeof e == "object" && e.message) {
+              setmintStatus(e.message);
+            } else {
+              setmintStatus(
+                "Oops, something went wrong! Refresh the page and try again!"
+              );
+            }
+            setTimeout(() => {
+              setmintloading("initial");
+              setmintStatus("");
+            }, 5000);
+          });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setmintStatus("Success! Your Nft was minted successfully!");
+          setmintloading("success");
+          settextColor("rgb(123, 216, 176)");
+          setTimeout(() => {
+            setmintStatus("");
+            setmintloading("initial");
+          }, 5000);
+          getMyNFTS(coinbase, "5ya").then((NFTS) => {
+            setmyBnb5yaNfts(NFTS);
+          });
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     if (
       binanceData &&
@@ -3847,6 +4259,7 @@ function App() {
   };
 
   const handleManageLogin = async (signature, message) => {
+    setsyncCount(syncCount + 1);
     const data2 = {
       email: email,
       walletAddress: data?.getPlayer?.wallet?.publicAddress ?? coinbase,
@@ -3913,14 +4326,15 @@ function App() {
             );
           });
 
-        handleFirstTask(userWallet);
+        // handleFirstTask(userWallet);
       } catch (error) {
         setsyncStatus("error");
-        setTimeout(() => {
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+        const timer = setTimeout(() => {
           setsyncStatus("initial");
           setshowSync(false);
         }, 3000);
-        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+        return () => clearTimeout(timer);
       }
     } else if (window.WALLET_TYPE === "matchId" && address) {
       try {
@@ -3933,10 +4347,11 @@ function App() {
           }).catch((e) => {
             console.log(e);
             setsyncStatus("error");
-            setTimeout(() => {
+            const timer = setTimeout(() => {
               setsyncStatus("initial");
               setshowSync(false);
             }, 3000);
+            return () => clearTimeout(timer);
           });
 
           if (res) {
@@ -3965,10 +4380,11 @@ function App() {
       } catch (error) {
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
         setsyncStatus("error");
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setsyncStatus("initial");
           setshowSync(false);
         }, 3000);
+        return () => clearTimeout(timer);
       }
     } else if (coinbase && library) {
       try {
@@ -3993,10 +4409,11 @@ function App() {
       } catch (error) {
         console.log("🚀 ~ file: App.js:2248 ~ getTokens ~ error", error);
         setsyncStatus("error");
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           setsyncStatus("initial");
           setshowSync(false);
         }, 3000);
+        return () => clearTimeout(timer);
       }
     }
   };
@@ -4112,26 +4529,14 @@ function App() {
       myCAWStakes();
       myLandStakes();
       getmyCawsWodStakes();
-      // myNft2();
-      // myLandNft();
     }
+  }, [isConnected, networkId, coinbase, count]);
+
+  useEffect(() => {
     if (isConnected === true && coinbase) {
-      // myNft();
-      // myCAWNft();
       fetchAllMyNfts();
     }
-
-    // if (isConnected === true && coinbase && networkId === 56) {
-    //   myNftBNB();
-    //   myLandNftBNB();
-    // } else if (isConnected === true && coinbase && networkId === 43114) {
-    //   myNft2Avax();
-    //   myLandNftAVAX();
-    // } else if (isConnected === true && coinbase && networkId === 8453) {
-    //   myNftsBase();
-    //   myLandNftsBase();
-    // }
-  }, [isConnected, networkId, coinbase, count]);
+  }, [isConnected, coinbase]);
 
   // useEffect(() => {
   //   if (
@@ -4278,6 +4683,16 @@ function App() {
         console.log(e);
       });
   };
+  const fetchTaraxaPrice = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/price/taraxa`)
+      .then((obj) => {
+        setTaraxaPrice(obj.data.price);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   const fetchCookiePrice = async () => {
     await axios
@@ -4342,6 +4757,7 @@ function App() {
     fetchSeiPrice();
     fetchMantaPrice();
     fetchTaikoPrice();
+    fetchTaraxaPrice();
     fetchCookiePrice();
     fetchCorePrice();
     fetchCFXPrice();
@@ -4394,10 +4810,11 @@ function App() {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
       setsyncStatus("success");
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setsyncStatus("initial");
         setshowSync(false);
       }, 1000);
+      return () => clearTimeout(timer);
     }
   }, [dataVerify]);
 
@@ -4434,36 +4851,78 @@ function App() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Coming Soon",
-      totalRewards: "$20,000 in BNB Rewards",
+      eventStatus: "Live",
+      totalRewards: "$30,000 in BNB Rewards",
+      rewardAmount: "$30,000",
       myEarnings: 0.0,
       location: [-0.06735561726792588, 0.08666753768920898],
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "Aug 13, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
-      userEarnUsd: 0,
-      userEarnCrypto: 0,
-      userEarnPoints: 0,
+      userEarnUsd: bnbEarnUsd,
+      userEarnCrypto: bnbEarnToken,
+      userEarnPoints: bnbPoints,
       image: "bnbBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
+      rewardType: "BNB",
+
       marker: markers.treasureMarker,
       popupInfo: {
         title: "BNB Chain",
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Coming Soon",
+        status: "Live",
         id: "event20",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
+        totalRewards: "$30,000 in BNB Rewards",
         eventDuration: bnbLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Aug 13, 2025",
+      },
+    },
+    {
+      title: "Trust Wallet",
+      logo: "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg",
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TWT Rewards",
+      rewardAmount: "$20,000",
+      myEarnings: 0.0,
+      location: [-0.06912771797944854, 0.0847846269607544],
+      eventType: "Explore & Mine",
+      eventDate: "Oct 01, 2025",
+      backgroundImage:
+        "https://cdn.worldofdypians.com/wod/trustwalletEventBg.webp",
+      userEarnUsd: trustEarnUsd,
+      userEarnCrypto: trustEarnToken,
+      userEarnPoints: trustPoints,
+      image: "trustwalletBanner.webp",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      rewardType: "TWT",
+
+      marker: markers.treasureMarker,
+      popupInfo: {
+        title: "Trust Wallet",
+        chain: "BNB Chain",
+        linkState: "trust",
+        rewards: "TWT",
+        status: "Live",
+        id: "event200",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TWT Rewards",
+        eventDuration: trustwalletLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Oct 01, 2025",
       },
     },
     {
@@ -4501,6 +4960,42 @@ function App() {
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Jul 18, 2025",
+      },
+    },
+    {
+      title: "Vanar",
+      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in VANRY Rewards",
+      location: [-0.06784377896887378, 0.0839531421661377],
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "May 19, 2025",
+      type: "Treasure Hunt",
+      rewardType: "VANRY",
+      rewardAmount: "$20,000",
+      infoType: "Treasure Hunt",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+      image: "vanarArea.webp",
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
+      popupInfo: {
+        title: "Vanar",
+        chain: "Vanar Network",
+        linkState: "vanar",
+        rewards: "VANRY",
+        status: "Expired",
+        id: "event2",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in VANRY Rewards",
+        eventDuration: vanarLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "May 19, 2025",
       },
     },
     {
@@ -4626,7 +5121,7 @@ function App() {
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Dec 06, 2025",
+      eventDate: "Aug 08, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
@@ -4646,7 +5141,44 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 06, 2025",
+        eventDate: "Aug 08, 2025",
+      },
+    },
+    {
+      title: "Taraxa",
+      logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
+      eventStatus: "Live",
+      rewardType: "TARA",
+      rewardAmount: "$20,000",
+      location: [-0.06917415368919773, 0.08433401584625246],
+      image: "taraxaArea.webp",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in TARA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/taraxaEventBg.webp",
+      userEarnUsd: taraxaEarnUsd,
+      userEarnCrypto: taraxaEarnToken,
+      userEarnPoints: taraxaPoints,
+      popupInfo: {
+        title: "Taraxa",
+        chain: "Taraxa",
+        linkState: "taraxa",
+        rewards: "TARA",
+        status: "Live",
+        id: "event30",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TARA Rewards",
+        eventDuration: taraxaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 15, 2025",
       },
     },
     {
@@ -4734,7 +5266,7 @@ function App() {
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 10, 2025",
+      eventDate: "Aug 14, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
       image: "coreBanner.png",
       type: "Treasure Hunt",
@@ -4759,13 +5291,13 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Apr 10, 2025",
+        eventDate: "Aug 14, 2025",
       },
     },
     {
       title: "SEI",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "SEI",
       rewardAmount: "$20,000",
       location: [-0.06734488843929015, 0.08361518383026124],
@@ -4786,7 +5318,7 @@ function App() {
         chain: "Sei Network",
         linkState: "sei",
         rewards: "SEI",
-        status: "Live",
+        status: "Expired",
         id: "event13",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SEI Rewards",
@@ -4990,7 +5522,7 @@ function App() {
     {
       title: "Manta",
       logo: "https://cdn.worldofdypians.com/wod/mantaLogoBig.png",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.07001821071588557, 0.08503675460815431],
@@ -5012,7 +5544,7 @@ function App() {
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Live",
+        status: "Expired",
         id: "event21",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in MANTA Rewards",
@@ -5257,6 +5789,7 @@ function App() {
         learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
       },
     },
+
     {
       title: "Vanar",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
@@ -5265,7 +5798,7 @@ function App() {
       location: [-0.06784377896887378, 0.0839531421661377],
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "May 19, 2025",
+      eventDate: "Sep 17, 2025",
       type: "Treasure Hunt",
       rewardType: "VANRY",
       rewardAmount: "$20,000",
@@ -5377,133 +5910,139 @@ function App() {
   };
 
   const refreshSubscription = async (addr) => {
-    const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
-      window.DAILY_BONUS_ABI,
-      window.config.daily_bonus_address
-    );
-
-    const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
-      window.DAILY_BONUS_BNB_ABI,
-      window.config.daily_bonus_bnb_address
-    );
-
-    const daily_bonus_contract_skale = new window.skaleWeb3.eth.Contract(
-      window.DAILY_BONUS_SKALE_ABI,
-      window.config.daily_bonus_skale_address
-    );
-
-    const daily_bonus_contract_core = new window.coreWeb3.eth.Contract(
-      window.DAILY_BONUS_CORE_ABI,
-      window.config.daily_bonus_core_address
-    );
-
-    const daily_bonus_contract_viction = new window.victionWeb3.eth.Contract(
-      window.DAILY_BONUS_VICTION_ABI,
-      window.config.daily_bonus_viction_address
-    );
-
-    // const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
-    //   window.DAILY_BONUS_MANTA_ABI,
-    //   window.config.daily_bonus_manta_address
-    // );
-
-    const daily_bonus_contract_taiko = new window.taikoWeb3.eth.Contract(
-      window.DAILY_BONUS_TAIKO_ABI,
-      window.config.daily_bonus_taiko_address
-    );
-
-    const daily_bonus_contract_base = new window.baseWeb3.eth.Contract(
-      window.DAILY_BONUS_BASE_ABI,
-      window.config.daily_bonus_base_address
-    );
-
-    const daily_bonus_contract_mat = new window.matWeb3.eth.Contract(
-      window.DAILY_BONUS_MAT_ABI,
-      window.config.daily_bonus_mat_address
-    );
-
     if (addr) {
-      const isPremium_bnb = await daily_bonus_contract_bnb.methods
-        .isPremiumUser(addr)
-        .call()
-        .catch((e) => {
-          console.error(e);
-          return false;
-        });
-      if (isPremium_bnb === true) {
-        setIsPremium(true);
-      } else {
-        const isPremium_opbnb = await daily_bonus_contract.methods
+      const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
+        window.DAILY_BONUS_ABI,
+        window.config.daily_bonus_address
+      );
+
+      const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
+        window.DAILY_BONUS_BNB_ABI,
+        window.config.daily_bonus_bnb_address
+      );
+
+      const daily_bonus_contract_skale = new window.skaleWeb3.eth.Contract(
+        window.DAILY_BONUS_SKALE_ABI,
+        window.config.daily_bonus_skale_address
+      );
+
+      const daily_bonus_contract_core = new window.coreWeb3.eth.Contract(
+        window.DAILY_BONUS_CORE_ABI,
+        window.config.daily_bonus_core_address
+      );
+
+      const daily_bonus_contract_viction = new window.victionWeb3.eth.Contract(
+        window.DAILY_BONUS_VICTION_ABI,
+        window.config.daily_bonus_viction_address
+      );
+
+      // const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
+      //   window.DAILY_BONUS_MANTA_ABI,
+      //   window.config.daily_bonus_manta_address
+      // );
+
+      const daily_bonus_contract_taiko = new window.taikoWeb3.eth.Contract(
+        window.DAILY_BONUS_TAIKO_ABI,
+        window.config.daily_bonus_taiko_address
+      );
+
+      const daily_bonus_contract_base = new window.baseWeb3.eth.Contract(
+        window.DAILY_BONUS_BASE_ABI,
+        window.config.daily_bonus_base_address
+      );
+
+      const daily_bonus_contract_mat = new window.matWeb3.eth.Contract(
+        window.DAILY_BONUS_MAT_ABI,
+        window.config.daily_bonus_mat_address
+      );
+
+      if (addr) {
+        const isPremium_bnb = await daily_bonus_contract_bnb.methods
           .isPremiumUser(addr)
           .call()
           .catch((e) => {
             console.error(e);
             return false;
           });
-        if (isPremium_opbnb === true) {
+        if (isPremium_bnb === true) {
           setIsPremium(true);
         } else {
-          const isPremium_core = await daily_bonus_contract_core.methods
+          const isPremium_opbnb = await daily_bonus_contract.methods
             .isPremiumUser(addr)
             .call()
             .catch((e) => {
               console.error(e);
               return false;
             });
-          if (isPremium_core === true) {
+          if (isPremium_opbnb === true) {
             setIsPremium(true);
           } else {
-            const isPremium_viction = await daily_bonus_contract_viction.methods
+            const isPremium_core = await daily_bonus_contract_core.methods
               .isPremiumUser(addr)
               .call()
               .catch((e) => {
                 console.error(e);
                 return false;
               });
-            if (isPremium_viction === true) {
+            if (isPremium_core === true) {
               setIsPremium(true);
             } else {
-              const isPremium_skale = await daily_bonus_contract_skale.methods
-                .isPremiumUser(addr)
-                .call()
-                .catch((e) => {
-                  console.error(e);
-                  return false;
-                });
-              if (isPremium_skale === true) {
-                setIsPremium(true);
-              } else {
-                const isPremium_taiko = await daily_bonus_contract_taiko.methods
+              const isPremium_viction =
+                await daily_bonus_contract_viction.methods
                   .isPremiumUser(addr)
                   .call()
                   .catch((e) => {
                     console.error(e);
                     return false;
                   });
-                if (isPremium_taiko === true) {
+              if (isPremium_viction === true) {
+                setIsPremium(true);
+              } else {
+                const isPremium_skale = await daily_bonus_contract_skale.methods
+                  .isPremiumUser(addr)
+                  .call()
+                  .catch((e) => {
+                    console.error(e);
+                    return false;
+                  });
+                if (isPremium_skale === true) {
                   setIsPremium(true);
                 } else {
-                  const isPremium_base = await daily_bonus_contract_base.methods
-                    .isPremiumUser(addr)
-                    .call()
-                    .catch((e) => {
-                      console.error(e);
-                      return false;
-                    });
-                  if (isPremium_base === true) {
-                    setIsPremium(true);
-                  } else {
-                    const isPremium_mat = await daily_bonus_contract_mat.methods
+                  const isPremium_taiko =
+                    await daily_bonus_contract_taiko.methods
                       .isPremiumUser(addr)
                       .call()
                       .catch((e) => {
                         console.error(e);
                         return false;
                       });
-                    if (isPremium_mat === true) {
+                  if (isPremium_taiko === true) {
+                    setIsPremium(true);
+                  } else {
+                    const isPremium_base =
+                      await daily_bonus_contract_base.methods
+                        .isPremiumUser(addr)
+                        .call()
+                        .catch((e) => {
+                          console.error(e);
+                          return false;
+                        });
+                    if (isPremium_base === true) {
                       setIsPremium(true);
                     } else {
-                      setIsPremium(false);
+                      const isPremium_mat =
+                        await daily_bonus_contract_mat.methods
+                          .isPremiumUser(addr)
+                          .call()
+                          .catch((e) => {
+                            console.error(e);
+                            return false;
+                          });
+                      if (isPremium_mat === true) {
+                        setIsPremium(true);
+                      } else {
+                        setIsPremium(false);
+                      }
                     }
                   }
                 }
@@ -5511,9 +6050,9 @@ function App() {
             }
           }
         }
+      } else {
+        setIsPremium(false);
       }
-    } else {
-      setIsPremium(false);
     }
   };
 
@@ -5715,7 +6254,7 @@ function App() {
       if (window.WALLET_TYPE === "matchId") {
         await logoutUser();
       }
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         window.disconnectWallet();
         if (window.WALLET_TYPE === "matchId") {
           deactivate();
@@ -5729,6 +6268,7 @@ function App() {
         setIsPremium(false);
         window.WALLET_TYPE = "";
       }, 500);
+      return () => clearTimeout(timer);
     } else {
       localStorage.setItem("logout", "true");
     }
@@ -5842,16 +6382,22 @@ function App() {
   // };
   const fetchBscBalance = async () => {
     if (coinbase && networkId === 56 && window.ethereum) {
-      const balance = await window.ethereum.request({
-        method: "eth_getBalance",
-        params: [coinbase, "latest"],
-      });
+      const balance = await window.ethereum
+        .request({
+          method: "eth_getBalance",
+          params: [coinbase, "latest"],
+        })
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      if (balance) {
+        const bscWeb3 = new Web3(window.config.bsc_endpoint);
+        const stringBalance = bscWeb3.utils.hexToNumberString(balance);
 
-      const bscWeb3 = new Web3(window.config.bsc_endpoint);
-      const stringBalance = bscWeb3.utils.hexToNumberString(balance);
-
-      const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
-      setBscAmount(amount.slice(0, 7));
+        const amount = bscWeb3.utils.fromWei(stringBalance, "ether");
+        setBscAmount(amount.slice(0, 7));
+      }
     }
   };
 
@@ -5948,10 +6494,10 @@ function App() {
   useEffect(() => {
     if (coinbase) {
       fetchUserPools(coinbase);
-
+      // handleSecondTask(coinbase);
       // getNotifications(coinbase);
     }
-  }, [coinbase, nftCount]);
+  }, [coinbase]);
 
   useEffect(() => {
     if (
@@ -5983,6 +6529,7 @@ function App() {
     fetchDogeCoinPrice();
     fetchWodPrice();
     fetchKucoinCoinPrice();
+    fetchTWTPrice();
   }, []);
 
   useEffect(() => {
@@ -6013,11 +6560,11 @@ function App() {
     }
   }, [allTimepieceNfts]);
 
-  useEffect(() => {
-    if (loginListener !== 0 || userWallet !== undefined) {
-      handleFirstTask(userWallet);
-    }
-  }, [loginListener, userWallet]);
+  // useEffect(() => {
+  //   if (loginListener !== 0 || userWallet !== undefined) {
+  //     handleFirstTask(userWallet);
+  //   }
+  // }, [loginListener, userWallet]);
 
   useEffect(() => {
     if (isConnected && coinbase) {
@@ -6036,7 +6583,7 @@ function App() {
   //     setCoinbase();
   //   }
   // }, [address, window.WALLET_TYPE]);
-
+  const hashValue = window.location.hash;
   return (
     <>
       <div
@@ -6052,6 +6599,7 @@ function App() {
           !location.pathname.includes("trading-competition") &&
           !location.pathname.includes("bonus-otc") &&
           !location.pathname.includes("special-otc") &&
+          !location.pathname.includes("special-otc-4") &&
           !location.pathname.includes("pool") &&
           !location.pathname.includes("pool2") &&
           !location.pathname.includes("auth") &&
@@ -6060,6 +6608,7 @@ function App() {
           !location.pathname.includes("ResetPassword") &&
           !location.pathname.includes("forgotPassword") &&
           !location.pathname.includes("wod-okxwallet") &&
+          !location.pathname.includes("keep-building") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -6083,6 +6632,7 @@ function App() {
           domainName={domainName}
           onLogout={() => {
             setCount55(count55 + 1);
+            setlogoutCount(logoutCount + 1);
           }}
           onSigninClick={checkData}
           gameAccount={gameAccount}
@@ -6106,6 +6656,7 @@ function App() {
           }}
           onLogout={() => {
             setCount55(count55 + 1);
+            setlogoutCount(logoutCount + 1);
           }}
           handleDisconnect={handleDisconnect}
           myOffers={myNftsOffer}
@@ -6124,6 +6675,7 @@ function App() {
 
         <Routes>
           <Route path="/news/:newsId?/:titleId?" element={<News />} />
+
           <Route
             path="shop/nft/:nftId/:nftAddress?"
             element={
@@ -6413,6 +6965,48 @@ function App() {
 
           <Route
             exact
+            path="/special-otc-4"
+            element={
+              <Whitelist
+                isEOA={isEOA}
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="special-otc-4"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/cliff-otc"
+            element={
+              <Whitelist
+                isEOA={isEOA}
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="cliff-otc"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
+          <Route
+            exact
             path="/bonus-otc"
             element={
               <Whitelist
@@ -6631,11 +7225,25 @@ function App() {
             path="/account"
             element={
               <Dashboard
+                setRoyalChestIndex={(value) => {
+                  setRoyalChestIndex(value);
+                }}
+                setRoyalChestIndexTaiko={(value) => {
+                  setRoyalChestIndexTaiko(value);
+                }}
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
+                onOpenRoyaltyChestTaiko={(value) => {
+                  setOpenedRoyaltyChestTaiko(value);
+                }}
                 isEOA={isEOA}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 wodPrice={wodPrice}
+                openKickstarter={() => setKickstarter(true)}
                 onSuccessDeposit={() => {
                   // setCount55(count55 + 1);
                   setTimeout(() => {
@@ -6648,8 +7256,12 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
+                mybnb5yaNfts={mybnb5yaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 syncStatus={syncStatus}
+                syncCount={syncCount}
+                logoutCount={logoutCount}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -6662,10 +7274,12 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 multiversEarnUsd={multiversEarnUsd}
+                trustEarnUsd={trustEarnUsd}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
@@ -6686,11 +7300,6 @@ function App() {
                 handleOpenDomains={() => setDomainPopup(true)}
                 domainName={domainName}
                 dogePrice={dogePrice}
-                onSubscribeSuccess={(account) => {
-                  // refetchPlayer();
-                  // setCount55(count55 + 1);
-                  refreshSubscription(account);
-                }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
                 handleConnectionMatchId={handleConnectionMatchId}
@@ -6728,6 +7337,20 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+                setRoyalChestIndex={(value) => {
+                  setRoyalChestIndex(value);
+                }}
+                setRoyalChestIndexTaiko={(value) => {
+                  setRoyalChestIndexTaiko(value);
+                }}
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
+                onOpenRoyaltyChestTaiko={(value) => {
+                  setOpenedRoyaltyChestTaiko(value);
+                }}
+                openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
@@ -6746,7 +7369,11 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
+                mybnb5yaNfts={mybnb5yaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
+                syncCount={syncCount}
+                logoutCount={logoutCount}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -6759,10 +7386,12 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 multiversEarnUsd={multiversEarnUsd}
+                trustEarnUsd={trustEarnUsd}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
@@ -6787,11 +7416,6 @@ function App() {
                 handleOpenDomains={() => setDomainPopup(true)}
                 domainName={domainName}
                 dogePrice={dogePrice}
-                onSubscribeSuccess={(account) => {
-                  // refetchPlayer();
-                  // setCount55(count55 + 1);
-                  refreshSubscription(account);
-                }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
                 handleConnectBinance={handleConnectBinance}
@@ -6831,7 +7455,6 @@ function App() {
                 handleRegister={handleRegister}
                 chainId={networkId}
                 showForms={showForms2}
-                balance={currencyAmount}
                 socials={socials}
               />
             }
@@ -6952,6 +7575,22 @@ function App() {
           <Route
             exact
             path="/shop/beta-pass/tea-fi"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/taraxa"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -7295,11 +7934,27 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                setRoyalChestIndex={(value) => {
+                  setRoyalChestIndex(value);
+                }}
+                setRoyalChestIndexTaiko={(value) => {
+                  setRoyalChestIndexTaiko(value);
+                }}
+                royaltyCount={royaltyCount}
+                onOpenRoyaltyChest={(value) => {
+                  setOpenedRoyaltyChest(value);
+                }}
+                onOpenRoyaltyChestTaiko={(value) => {
+                  setOpenedRoyaltyChestTaiko(value);
+                }}
+                openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
                   isTokenExpired(authToken);
                 }}
                 syncStatus={syncStatus}
+                syncCount={syncCount}
+                logoutCount={logoutCount}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}
@@ -7313,6 +7968,8 @@ function App() {
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
+                myTaraxaNfts={myTaraxaNfts}
+                mybnb5yaNfts={mybnb5yaNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 userActiveEvents={userEvents}
                 dummyBetaPassData2={dummyBetaPassData2}
@@ -7326,10 +7983,12 @@ function App() {
                 chainlinkEarnUsd={chainlinkEarnUsd}
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
+                taraxaEarnUsd={taraxaEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 multiversEarnUsd={multiversEarnUsd}
+                trustEarnUsd={trustEarnUsd}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
@@ -7354,11 +8013,6 @@ function App() {
                 handleOpenDomains={() => setDomainPopup(true)}
                 domainName={domainName}
                 dogePrice={dogePrice}
-                onSubscribeSuccess={(account) => {
-                  // refetchPlayer();
-                  // setCount55(count55 + 1);
-                  refreshSubscription(account);
-                }}
                 isPremium={isPremium}
                 handleConnectionPassport={handleConnectPassport}
                 handleConnectBinance={handleConnectBinance}
@@ -7481,10 +8135,6 @@ function App() {
                 timepieceMetadata={timepieceMetadata}
                 nftCreated={totalTimepieceCreated}
                 totalCreated={totalTimepieceCreated}
-                myTeaBnbNfts={myTeaBnbNfts}
-                myTeaOpbnbNfts={myTeaOpbnbNfts}
-                myTeaSeiNfts={myTeaSeiNfts}
-                myTeaBaseNfts={myTeaBaseNfts}
               />
             }
           />
@@ -7512,6 +8162,8 @@ function App() {
                     ? handleMintTeaopBnb()
                     : networkId === 8453
                     ? handleMintTeaBase()
+                    : networkId === 841
+                    ? handleMintTaraxa()
                     : handleMintTeaSei();
                 }}
                 mintStatus={mintStatus}
@@ -7523,6 +8175,7 @@ function App() {
                     myTeaBaseNfts,
                     myTeaOpbnbNfts,
                     myTeaSeiNfts,
+                    // myTaraxaNfts,
                     myTeaBnbNfts,
                   ].find((item) => {
                     return item.length > 0;
@@ -7530,12 +8183,78 @@ function App() {
                 }
                 myTeaBnbNfts={myTeaBnbNfts}
                 myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
+                totalCreated={totalTimepieceCreated}
+              />
+            }
+          />*/}
+          {/* <Route
+            exact
+            path="/shop/mint/taraxa"
+            element={
+              <MarketMint
+                isEOA={isEOA}
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleMintTaraxa}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                timepieceMetadata={timepieceMetadata}
+                nftCreated={myTaraxaNfts}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
                 myTeaSeiNfts={myTeaSeiNfts}
                 myTeaBaseNfts={myTeaBaseNfts}
                 totalCreated={totalTimepieceCreated}
               />
             }
-          /> */}
+
+          /> 
+
+          <Route
+            exact
+            path="/shop/mint/bnbchain-5ya"
+            element={
+              <MarketMint
+                isEOA={isEOA}
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleMintBnb5ya}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                timepieceMetadata={timepieceMetadata}
+                nftCreated={mybnb5yaNfts}
+                myTeaBnbNfts={myTeaBnbNfts}
+                myTeaOpbnbNfts={myTeaOpbnbNfts}
+                myTeaSeiNfts={myTeaSeiNfts}
+                myTeaBaseNfts={myTeaBaseNfts}
+                totalCreated={totalTimepieceCreated}
+              />
+            }
+          />*/}
+
           {/* <Route
             exact
             path="/shop/mint/vanar"
@@ -7663,6 +8382,7 @@ function App() {
                 network_matchain={chain}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                bnbUSDPrice={bnbUSDPrice}
               />
             }
           />
@@ -7731,7 +8451,7 @@ function App() {
             path="/game"
             element={<Game allStarData={allStarData} />}
           />
-          <Route exact path="/game-updates" element={<GameUpdates />} />
+          {/* <Route exact path="/game-updates" element={<GameUpdates />} /> */}
           <Route exact path="/about" element={<About />} />
 
           {/* <Route
@@ -8190,6 +8910,17 @@ function App() {
             path="/map"
             element={<Map dummyBetaPassData2={dummyBetaPassData2} />}
           />
+          <Route
+            exact
+            path="/keep-building"
+            element={
+              <KickstarterPage
+                monthlyPlayers={monthlyPlayers}
+                totalVolumeNew={totalVolumeNew}
+                wodHolders={wodHolders}
+              />
+            }
+          />
         </Routes>
 
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
@@ -8267,6 +8998,41 @@ function App() {
       )}
 
       {fireAppcontent === true && <AppContent />}
+      {(kickstarter || hashValue === "#royalty-chest") &&
+        window.location.pathname.includes("/account") && (
+          <Kickstarter
+            royalChestIndex={royalChestIndex}
+            royalChestIndexTaiko={royalChestIndexTaiko}
+            publicClient={publicClient}
+            onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
+            walletClient={walletClient}
+            binanceW3WProvider={library}
+            onClose={() => {
+              setKickstarter(false);
+              html.classList.remove("hidescroll");
+              window.location.hash = "";
+            }}
+            isOpen={
+              kickstarter ||
+              (hashValue === "#royalty-chest" &&
+                window.location.pathname.includes("/account"))
+            }
+            coinbase={coinbase}
+            chainId={networkId}
+            handleSwitchNetwork={handleSwitchNetwork}
+            isConnected={isConnected}
+            email={email}
+            address={gameAccount}
+            onConnectWallet={() => {
+              setwalletModal(true);
+            }}
+            onAddClass={(value) => {
+              setKickstarterAddClass(value);
+            }}
+            openedRoyaltyChest={openedRoyaltyChest}
+            openedRoyaltyChestTaiko={openedRoyaltyChestTaiko}
+          />
+        )}
     </>
   );
 }
