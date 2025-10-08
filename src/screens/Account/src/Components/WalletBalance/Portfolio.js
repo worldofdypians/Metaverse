@@ -1805,6 +1805,11 @@ const Portfolio = ({
       href: "https://swissborg.com/crypto-market/coins/world-of-dypians",
       img: "https://cdn.worldofdypians.com/wod/swissborg.svg",
     },
+    {
+      name: "LetsExchange",
+      img: "https://cdn.worldofdypians.com/wod/letsexchangeLogo.svg",
+      href: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
+    },
   ];
 
   return (
