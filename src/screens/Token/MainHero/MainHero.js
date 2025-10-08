@@ -151,6 +151,11 @@ const MainHero = ({ scrollInto }) => {
       logo: "swissborg-exchange.svg",
       link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
     },
+    {
+      title: "LetsExchange",
+      logo: "letsExchange.svg",
+      link: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
+    },
   ];
 
   return (
