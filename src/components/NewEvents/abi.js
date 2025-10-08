@@ -20,6 +20,8 @@ export const scorpion_king2_address =
 export const stone_eye2_address = "0x0687e6251f9E286Adc6Bc6d2dfE4870bbCa3C997";
 export const golden_pass2_address =
   "0xD1a796a2b0dFB42Ae3b78AB63EF31C5255bFcc4a";
+  export const golden_passold_address =
+  "0xCD30c0C1bca73537c2A2809863B90D8c0431Defb";
 export const puzzle_madness2_address =
   "0x99cbFa88Bc5AE3bF84F49Ecd72aC24B3A2A58CE7";
 
