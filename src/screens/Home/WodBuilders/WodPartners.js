@@ -421,6 +421,10 @@ const WodPartners = ({ full }) => {
       name: "SwissBorg",
       icon: "swissborg.svg",
     },
+     {
+      name: "LetsExchange",
+      icon: "letsexchangeLogo.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);

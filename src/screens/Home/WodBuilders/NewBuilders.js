@@ -542,6 +542,10 @@ const NewBuilders = () => {
       name: "SwissBorg",
       icon: "swissborg.svg",
     },
+     {
+      name: "LetsExchange",
+      icon: "letsexchangeLogo.svg",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>

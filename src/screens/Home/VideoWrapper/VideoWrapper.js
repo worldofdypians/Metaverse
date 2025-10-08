@@ -195,6 +195,11 @@ const VideoWrapper = ({
       link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
       logo: "swissborg.svg",
     },
+      {
+      title: "LetsExchange",
+      logo: "letsexchangeLogo.svg",
+      link: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
+    },
   ];
 
   const dummyBetaPassData2 = [
