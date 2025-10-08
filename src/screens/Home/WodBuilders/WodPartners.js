@@ -305,6 +305,10 @@ const WodPartners = ({ full }) => {
       name: "BloFin",
       icon: "blofinBuywod.png",
     },
+     {
+      name: "LetsExchange",
+      icon: "letsexchangeLogo.svg",
+    },
     {
       name: "JOY",
       icon: "joy.png",

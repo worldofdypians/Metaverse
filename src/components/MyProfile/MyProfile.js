@@ -822,6 +822,25 @@ const MyProfile = ({
                                         BloFin
                                       </h6>
                                     </a>
+                                    <a
+                                      href="https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120"
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      onClick={() => {
+                                        setshowBuyTooltip(false);
+                                      }}
+                                      className="getwod-item"
+                                    >
+                                      <h6 className="bottomitems mb-0">
+                                        <img
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/letsExchangeLogo.svg"
+                                          }
+                                          className="buywodimg"
+                                        />
+                                        LetsExchange
+                                      </h6>
+                                    </a>
                                   </div>
                                 </div>
                               </div>
