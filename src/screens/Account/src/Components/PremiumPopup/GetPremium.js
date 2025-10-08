@@ -1178,7 +1178,7 @@ const GetPremiumPopup = ({
           .then(() => {
             setloadspinner(false);
             setisApproved(true);
-            if (discountPercentageViction < 100) {
+            if (discountPercentageTaraxa < 100) {
               setapproveStatus("approveAmount");
             } else {
               setapproveStatus("deposit");
@@ -1869,7 +1869,7 @@ const GetPremiumPopup = ({
             .call()
             .catch((e) => {
               console.error(e);
-              return false;
+              return "false";
             });
 
           let approvedAll = await contract.methods
@@ -1948,7 +1948,7 @@ const GetPremiumPopup = ({
             .call()
             .catch((e) => {
               console.error(e);
-              return false;
+              return "false";
             });
 
           let approvedAll = await contract.methods
@@ -2010,7 +2010,7 @@ const GetPremiumPopup = ({
             .call()
             .catch((e) => {
               console.error(e);
-              return false;
+              return "false";
             });
 
           let approvedAll = await contract.methods
@@ -2020,7 +2020,7 @@ const GetPremiumPopup = ({
               console.error(e);
               return false;
             });
-
+          console.log("approvedapproved", approved);
           if (
             approved.toLowerCase() === taraxasubscribeAddress.toLowerCase() ||
             approvedAll === true
@@ -2072,7 +2072,7 @@ const GetPremiumPopup = ({
             .call()
             .catch((e) => {
               console.error(e);
-              return false;
+              return "false";
             });
 
           let approvedAll = await contract.methods
@@ -2138,7 +2138,7 @@ const GetPremiumPopup = ({
             .call()
             .catch((e) => {
               console.error(e);
-              return false;
+              return "false";
             });
 
           let approvedAll = await contract.methods
@@ -2200,7 +2200,7 @@ const GetPremiumPopup = ({
             .call()
             .catch((e) => {
               console.error(e);
-              return false;
+              return "false";
             });
 
           let approvedAll = await contract.methods
@@ -4100,7 +4100,27 @@ const GetPremiumPopup = ({
                               Lifetime Plan
                             </span>
                           </div>
-                          <h3 className="plan-cost2 mb-0">$100</h3>
+                          <div className="d-flex align-items-center gap-2">
+                            <h3 className="plan-cost2 mb-0">
+                              {" "}
+                              {nftPremium_total > 0 ||
+                              nftPremium_totalViction > 0 ||
+                              nftPremium_totalVanar > 0 ||
+                              nftPremium_totalTaiko > 0 ||
+                              nftPremium_totalMat > 0 ||
+                              nftPremium_totalTaraxa > 0
+                                ? "Free"
+                                : "$100"}
+                            </h3>
+                            {nftPremium_total > 0 ||
+                              nftPremium_totalViction > 0 ||
+                              nftPremium_totalVanar > 0 ||
+                              nftPremium_totalTaiko > 0 ||
+                              nftPremium_totalMat > 0 ||
+                              (nftPremium_totalTaraxa > 0 && (
+                                <h6 className="old-price-text m-0">$100</h6>
+                              ))}
+                          </div>
                         </div>
                       </div>
                       <div className="prime-subs-secondhalf p-3">

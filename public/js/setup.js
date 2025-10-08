@@ -13,7 +13,7 @@ window.config = {
   beta_test: "WorldOfDypians Beta Tester Application",
   dyp_token_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
   wod_token_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
-  usdt_token_address: '0x55d398326f99059fF775485246999027B3197955', // usdt in bnb chain
+  usdt_token_address: "0x55d398326f99059fF775485246999027B3197955", // usdt in bnb chain
   token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
   nft_marketplace_address: "0xF55D96735Fa22ba1C119bA37aF76C2c4E3BeC224",
   nft_caws_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
@@ -57,7 +57,7 @@ window.config = {
 
   nft_dypius_premium_mat_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
   nft_dypius_premium_taraxa_address:
-    "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
+    "0xd5755822D34f84F84E8CEDc2Cf8eA1190d522FfD",
 
   nft_dypius_premium_vanar_address:
     "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
@@ -164,7 +164,7 @@ window.config = {
   subscription_taiko_address: "0x0570cb2bb014d0eda8dfffffdeb07906a5b40aa3",
   subscription_mat_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
   subscription_sei_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
-  subscription_taraxa_address: "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
+  subscription_taraxa_address: "0x32D2411E137a00616B646f3FcF32bc1990e468EF",
   // default_gasprice_gwei: 60,
   default_gas_amount: 1200000,
 
@@ -188,13 +188,11 @@ window.config = {
   otcspecial_address: "0xd9d30dcf8dceaf4da5444cac87bea4ea965351e4",
   otcspecial4_address: "0xd358c423ec0a57f2f471b91f933190c2a77071ba",
 
-
   otcpoolbonus_address: "0x3b04c32afc70cc29e1f2040bf91e9924bef537f8",
   otcpooldynamic_address: "0x3d373f680d0a5bbdbc9a48577652f9a327e9280d", //40%
   otcpool2dynamic_address: "0x96718b893aef64c8ff19df30c920aa6b4669984a", //30%
   otcwoddynamic_address: "0xf0a43b4549792f6116564a4253cb685d983e90fd", //50%
   otccliff_address: "0x14ad9288a2607ed872364b2a34506242c49ae741", //30%
-
 
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
@@ -436,8 +434,6 @@ window.config = {
   constant_staking_wod7_address: "0x6A4057d68C10f450e306F191728ffa926E6c30F0",
   constant_staking_wod8_address: "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600",
 
-
-
   reward_token_wod_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
   reward_token_wod_test_address: "0x810C42A71358dc1e0Ecc32815DadD90c586AfD1c",
 
@@ -486,8 +482,6 @@ window.CONSTANT_STAKING_WOD5_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD6_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD7_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD8_ABI = window.CONSTANT_STAKING_WOD_ABI;
-
-
 
 async function getMaxFee() {
   let maxPriorityFeePerGas = new BigNumber(10000000000).toFixed(0) * 1;
@@ -696,7 +690,6 @@ window.constant_staking_wod7 = new CONSTANT_STAKING_WOD(
 window.constant_staking_wod8 = new CONSTANT_STAKING_WOD(
   "CONSTANT_STAKING_WOD8"
 );
-
 
 /**
  *
@@ -2358,12 +2351,6 @@ class BNB_NFT {
 
 window.bnb_nft = new BNB_NFT();
 
-
-
-
-
-
-
 async function getContractBNB5YANFT(key) {
   if (!window.cached_contracts[key]) {
     window.web3 = new Web3(window.ethereum);
@@ -2457,11 +2444,6 @@ class BNB5YA_NFT {
 }
 
 window.bnb5ya_nft = new BNB5YA_NFT();
-
-
-
-
-
 
 /**
  *
@@ -4210,7 +4192,7 @@ async function getMyNFTs(address, type = "") {
     );
 
     return tokens;
-  }  else if (type === "5ya") {
+  } else if (type === "5ya") {
     contract = new window.opBnbWeb3.eth.Contract(
       window.OPBNB_NFT_ABI,
       window.config.nft_bnb5ya_address
@@ -14085,7 +14067,6 @@ window.DAILY_BONUS_TAIKO_ABI = [
   },
 ];
 
-
 window.DAILY_BONUS_TARAXA_ABI = [
   {
     inputs: [
@@ -14701,7 +14682,6 @@ window.DAILY_BONUS_SEI_ABI = [
     type: "function",
   },
 ];
-
 
 window.DAILY_BONUS_MAT_ABI = [
   {
@@ -36743,11 +36723,7 @@ async function getEstimatedTokenSubscriptionAmountTaraxa(
     window.SUBSCRIPTION_TARAXA_ABI,
     window.config.subscription_taraxa_address
   );
-  console.log(
-    taraxaContract.methods
-      .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
-      .call()
-  );
+ 
   return await taraxaContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
     .call()
@@ -36894,8 +36870,8 @@ Object.keys(window.config)
       k.startsWith("constant_staking_wod2") ||
       k.startsWith("constant_staking_wod3") ||
       k.startsWith("constant_staking_wod4") ||
-      k.startsWith("constant_staking_wod5")||
-      k.startsWith("constant_staking_wod6")||
+      k.startsWith("constant_staking_wod5") ||
+      k.startsWith("constant_staking_wod6") ||
       k.startsWith("constant_staking_wod7") ||
       k.startsWith("constant_staking_wod8")
   )
