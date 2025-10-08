@@ -29,6 +29,7 @@ import {
   golden_pass2_address,
   GOLDEN_PASS_ABI,
   golden_pass_address,
+  golden_passold_address,
 } from "../../../../../components/NewEvents/abi";
 import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
 import { useParams } from "react-router-dom";
@@ -190,7 +191,7 @@ function Dashboard({
   onOpenRoyaltyChestTaiko,
   setRoyalChestIndexTaiko,
   mybnb5yaNfts,
-  trustEarnUsd
+  trustEarnUsd,
 }) {
   const { email } = useAuth();
   const { eventId } = useParams();
@@ -4547,12 +4548,24 @@ function Dashboard({
         golden_pass_address
       );
 
+      const goldenPassContract_old = new window.bscWeb3.eth.Contract(
+        GOLDEN_PASS_ABI,
+        golden_passold_address
+      );
+
       const goldenPassContract2 = new window.bscWeb3.eth.Contract(
         GOLDEN_PASS_ABI,
         golden_pass2_address
       );
 
       const purchaseTimestamp = await goldenPassContract.methods
+        .getTimeOfExpireBuff(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const purchaseTimestamp_old = await goldenPassContract_old.methods
         .getTimeOfExpireBuff(wallet)
         .call()
         .catch((e) => {
@@ -4568,14 +4581,19 @@ function Dashboard({
           return 0;
         });
 
-      const today = new Date();
+      // const today = new Date();
+      let finalTimestamp = Math.max(
+        Number(purchaseTimestamp),
+        Number(purchaseTimestamp_old),
+        Number(purchaseTimestamp2)
+      );
 
-      if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
-        handleSetAvailableTime(purchaseTimestamp);
-      }
-      if (today.getTime() <= Number(purchaseTimestamp2) * 1000) {
-        handleSetAvailableTime(purchaseTimestamp2);
-      }
+      // if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
+      //   handleSetAvailableTime(purchaseTimestamp);
+      // }
+      // if (today.getTime() <= Number(purchaseTimestamp2) * 1000) {
+      handleSetAvailableTime(Number(finalTimestamp));
+      // }
     }
   };
 
