@@ -80,7 +80,7 @@ const TwitterRewards = ({
               </svg>
               <div className="d-flex flex-column">
                 <h6 className="text-white font-medium mb-1">
-                  X Account Connected
+                  Account Connected
                 </h6>
                 <span className="text-[#1E90FF] font-medium">@{username}</span>
               </div>
