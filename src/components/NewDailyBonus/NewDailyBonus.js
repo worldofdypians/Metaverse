@@ -8680,7 +8680,7 @@ const NewDailyBonus = ({
             {windowSize.width > 992 ? (
               <div
                 className={`${
-                  chain === "manta" ? "new-rewards-grid-2" : "new-rewards-grid"
+                  chain === "manta" ? "new-rewards-grid" : "new-rewards-grid"
                 }`}
               >
                 {dummyRewards.map((item, index) => (
@@ -8938,7 +8938,7 @@ const NewDailyBonus = ({
                     </div>
                   </div>
                 ))}
-                {chain === "manta" && (
+                {/* {chain === "manta" && (
                   <a
                     href="https://app.superfortune.xyz/fortunecharm"
                     target="_blank"
@@ -8961,7 +8961,7 @@ const NewDailyBonus = ({
                       <img src="https://cdn.worldofdypians.com/wod/link.svg" />
                     </div>
                   </a>
-                )}
+                )} */}
               </div>
             ) : (
               <></>
