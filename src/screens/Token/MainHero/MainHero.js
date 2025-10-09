@@ -101,6 +101,11 @@ const MainHero = ({ scrollInto }) => {
       logo: "blofinExchange.png",
       link: "https://blofin.com/spot/WOD-USDT",
     },
+       {
+      title: "LetsExchange",
+      logo: "letsExchange.svg",
+      link: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
+       },
     {
       title: "WEEX",
       logo: "weex-exchange.svg",

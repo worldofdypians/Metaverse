@@ -435,6 +435,10 @@ const NewBuilders = () => {
       icon: "blofinBuywod.png",
     },
     {
+      name: "LetsExchange",
+      icon: "letsexchangeLogo.svg",
+    },
+    {
       name: "JOY",
       icon: "joy.png",
     },

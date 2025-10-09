@@ -1756,6 +1756,11 @@ const Portfolio = ({
       img: "https://cdn.worldofdypians.com/wod/blofinBuywod.png",
     },
     {
+      name: "LetsExchange",
+      href: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
+      img: "https://cdn.worldofdypians.com/wod/letsexchangeLogo.svg",
+    },
+    {
       name: "Uphold",
       href: "https://uphold.com/en-us/prices/crypto/wod",
       img: "https://cdn.worldofdypians.com/wod/uphold.svg",
