@@ -33,6 +33,11 @@
   src: url("./fonts/UnZialish.ttf");
 }
 
+@font-face {
+  font-family: "Abaddon";
+  src: url("./fonts/abaddon.ttf");
+}
+
 .custom-container {
   max-width: 1600px;
   width: 100%;
@@ -54,6 +59,10 @@
 
 .font-unzialish {
   font-family: "UnZialish" !important;
+}
+
+.font-abaddon {
+  font-family: "Abaddon" !important;
 }
 
 html {

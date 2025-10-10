@@ -9,8 +9,8 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import cawsLOOP from './fightvideos/cawsLOOP.mp4';
-import darkLordLOOP from './fightvideos/darkLordLOOP.mp4';
+
+import { fighters } from "./battleInfo";
 
 const rewardCategories = [
   {
@@ -62,18 +62,18 @@ const BattlePopup = ({
   const videoRef2 = useRef(null);
   const windowSize = useWindowSize();
 
-  const fighters = [
-    "caws",
-    "futuristicFemale",
-    "futuristicMale",
-    "mageFemale",
-    "matrix",
-    "miner",
-    "ninjaFemale",
-    "ninja",
-    "slayer",
-    "viking",
-  ];
+  // const fighters = [
+  //   "caws",
+  //   "futuristicFemale",
+  //   "futuristicMale",
+  //   "mageFemale",
+  //   "matrix",
+  //   "miner",
+  //   "ninjaFemale",
+  //   "ninja",
+  //   "slayer",
+  //   "viking",
+  // ];
 
   const glassyContainerStyle = {
     background:
@@ -178,13 +178,18 @@ const BattlePopup = ({
   const [ischestOpen, setIsChestOpen] = useState(false);
   const [rewards, setRewards] = useState([]);
   const [mute, setMute] = useState(false);
-  const [selectedPlayer, setselectedPlayer] = useState();
+  const [selectedPlayer, setselectedPlayer] = useState(fighters[0]);
+  const [isFighting, setIsFighting] = useState(false);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
       onClose();
     }
   }
+
+  const handleStartFight = () => {
+    setIsFighting(true);
+  };
 
   // Attach listener
   window.addEventListener("keydown", handleEsc);
@@ -855,7 +860,7 @@ const BattlePopup = ({
 
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
-      <div className="position-relative  d-flex w-100 h-100 flex-column justify-content-between align-items-center">
+      <div className="position-relative  d-flex w-100 h-100 flex-column align-items-center">
         <img
           src={xMark}
           className="kickstarter-close"
@@ -865,20 +870,40 @@ const BattlePopup = ({
             onClose();
           }}
         />
+        <div className="position-absolute hero-name-wrapper overflow-hidden d-flex justify-content-between align-items-center">
+          <div className="d-flex hero-name-item col-3 justify-content-center">
+            <span className=" selected-hero-name font-abaddon">
+              {selectedPlayer.name}
+            </span>
+          </div>
+          <div className="d-flex hero-name-item col-3 justify-content-center">
+            <span className=" selected-hero-name font-abaddon">Dark Lord</span>
+          </div>
+        </div>
         <div className="d-flex align-items-center h-100 w-100">
+          <motion.div
+            key={
+              // isFighting
+              //   ? selectedFighter.videoOfFight:
+              selectedPlayer.videoLoop
+            }
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <video
+              src={selectedPlayer.videoLoop}
+              className={`fight-video`}
+              playsInline
+              preload="auto"
+              loop
+              autoPlay
+            />
+          </motion.div>
           <video
-      
-            src={cawsLOOP}
-            className={`fight-video`}
-            playsInline
-            preload="auto"
-            loop
-            autoPlay
-
-          />
-          <video
-           
-            src={darkLordLOOP}
+            src={
+              "https://cdn.worldofdypians.com/wod/battleVideos/darkLordLOOP.mp4"
+            }
             className={`fight-video-2`}
             playsInline
             preload="auto"
@@ -1528,19 +1553,17 @@ const BattlePopup = ({
                         }}
                       >
                         <div className="d-flex align-items-center gap-3 h-100">
-                          {[...Array(9)].map((_, index) => (
+                          {fighters.map((item, index) => (
                             <img
                               key={index}
-                              src={`http://cdn.worldofdypians.com/wod/players/player${
-                                index + 1
-                              }.png`}
+                              src={item.thumb}
                               alt=""
                               className={`player-img ${
-                                selectedPlayer === index + 1 &&
+                                selectedPlayer.id === item.id &&
                                 "player-img-active"
                               } `}
                               onClick={() => {
-                                setselectedPlayer(index + 1);
+                                setselectedPlayer(item);
                               }}
                             />
                           ))}
@@ -2198,7 +2221,7 @@ const BattlePopup = ({
                       }}
                     >
                       <button
-                        onClick={handleOpenChest}
+                        onClick={handleStartFight}
                         disabled={loading || chestOpened || disable}
                         className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center kick-claim-btn d-flex justify-content-center align-items-center font-unzialish"
                         style={{
