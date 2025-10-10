@@ -9,6 +9,8 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import cawsLOOP from './fightvideos/cawsLOOP.mp4';
+import darkLordLOOP from './fightvideos/darkLordLOOP.mp4';
 
 const rewardCategories = [
   {
@@ -59,6 +61,19 @@ const BattlePopup = ({
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
   const windowSize = useWindowSize();
+
+  const fighters = [
+    "caws",
+    "futuristicFemale",
+    "futuristicMale",
+    "mageFemale",
+    "matrix",
+    "miner",
+    "ninjaFemale",
+    "ninja",
+    "slayer",
+    "viking",
+  ];
 
   const glassyContainerStyle = {
     background:
@@ -850,93 +865,28 @@ const BattlePopup = ({
             onClose();
           }}
         />
+        <div className="d-flex align-items-center h-100 w-100">
+          <video
+      
+            src={cawsLOOP}
+            className={`fight-video`}
+            playsInline
+            preload="auto"
+            loop
+            autoPlay
 
-        {openedRoyaltyChest &&
-        openedRoyaltyChest.isOpened === true &&
-        (selectedChain === "opbnb" || selectedChain === "bnb") ? (
-          <>
-            {/* {windowSize.width && windowSize.width > 700 ? (
-              <img
-                src={royaltyChestIdle}
-                className="kickstarter-video visible"
-                alt=""
-              />
-            ) : (
-              <img
-                src={royaltyChestIdleMoblie}
-                className="kickstarter-video visible"
-                alt=""
-              />
-            )} */}
-          </>
-        ) : selectedChain === "opbnb" || selectedChain === "bnb" ? (
-          <>
-            {windowSize.width && windowSize.width > 700 ? (
-              <>
-                {/* VIDEO ONE (Intro) */}
-                {/* <video
-                  ref={videoRef1}
-                  muted={mute}
-                  src={"https://cdn.worldofdypians.com/wod/firstPart.mp4"}
-                  className={`kickstarter-video ${
-                    step === 1 ? "visible" : "hidden"
-                  }`}
-                  playsInline
-                  preload="auto"
-                /> */}
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/battleIdle.webp"}
-                  className="kickstarter-video visible"
-                  alt=""
-                />
+          />
+          <video
+           
+            src={darkLordLOOP}
+            className={`fight-video-2`}
+            playsInline
+            preload="auto"
+            loop
+            autoPlay
+          />
+        </div>
 
-                {/* VIDEO TWO (Reward animation) */}
-                <video
-                  ref={videoRef2}
-                  src={"https://cdn.worldofdypians.com/wod/secondPart.mp4"}
-                  className={`kickstarter-video ${
-                    step === 2 || step === 3 ? "visible" : "hidden"
-                  }`}
-                  playsInline
-                  preload="auto"
-                />
-              </>
-            ) : windowSize.width && windowSize.width <= 700 ? (
-              <>
-                {/* VIDEO ONE (Intro) */}
-                <video
-                  ref={videoRef1}
-                  muted={mute}
-                  src={
-                    "https://cdn.worldofdypians.com/wod//firstPartMobile.mp4"
-                  }
-                  className={`kickstarter-video ${
-                    step === 1 ? "visible" : "hidden"
-                  }`}
-                  playsInline
-                  preload="auto"
-                />
-
-                {/* VIDEO TWO (Reward animation) */}
-                <video
-                  ref={videoRef2}
-                  src={
-                    "https://cdn.worldofdypians.com/wod/secondPartMobile.mp4"
-                  }
-                  className={`kickstarter-video ${
-                    step === 2 || step === 3 ? "visible" : "hidden"
-                  }`}
-                  playsInline
-                  preload="auto"
-                />
-              </>
-            ) : (
-              <></>
-            )}
-          </>
-        ) : (
-          <></>
-        )}
         {showContent && (
           <>
             {rewards && rewards.length > 0 && (
