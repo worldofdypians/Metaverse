@@ -3561,22 +3561,7 @@ const NewDailyBonus = ({
                             chain === "vanar" && "chain-item-active"
                           } w-100`}
                         >
-                          <HtmlTooltipGift
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                            }
-                          >
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/gift.png"
-                              }
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
+                         
 
                           <img
                             src={
@@ -3682,6 +3667,22 @@ const NewDailyBonus = ({
                             chain === "taraxa" && "chain-item-active"
                           } w-100`}
                         >
+                           <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/taraxaBg.webp"
@@ -4743,22 +4744,7 @@ const NewDailyBonus = ({
                             chain === "vanar" && "chain-item-active"
                           }`}
                         >
-                          <HtmlTooltipGift
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                            }
-                          >
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/gift.png"
-                              }
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
+                          
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon3.png"
@@ -4805,6 +4791,22 @@ const NewDailyBonus = ({
                             chain === "taraxa" && "chain-item-active"
                           } w-auto`}
                         >
+                          <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/taraxaBg.webp"
