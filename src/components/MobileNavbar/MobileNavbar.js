@@ -1075,6 +1075,18 @@ const MobileNavbar = ({
                       <span className={`sidebar-title`}>Tokenomics</span>
                     </NavLink>
                     <NavLink
+                      to="/about#reserve"
+                      end
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#reserve"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Reserve</span>
+                    </NavLink>
+                    <NavLink
                       to="/about#security"
                       end
                       className={({ isActive }) =>
