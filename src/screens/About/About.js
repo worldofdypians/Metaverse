@@ -8,7 +8,7 @@ import MainHero from "./MainHero/MainHero";
 import { useLocation } from "react-router-dom";
 import Security from "./Security/Security";
 
-const About = () => {
+const About = ({ wodPrice }) => {
   const location = useLocation();
 
   const scrollToElement = () => {
@@ -35,7 +35,7 @@ const About = () => {
     <div className="container-fluid token-wrapper px-0">
       <div className="d-flex flex-column">
         <MainHero />
-        <Tokenomics />
+        <Tokenomics wodPrice={wodPrice} />
         <Security />
         <Roadmap />
         <OurTeam />

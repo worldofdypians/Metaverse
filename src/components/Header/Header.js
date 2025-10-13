@@ -678,6 +678,16 @@ const Header = ({
                       Tokenomics
                     </NavLink>
                     <NavLink
+                      to={"/about#reserve"}
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#reserve"
+                          ? "dropdown-nav nav-active p-2"
+                          : "dropdown-nav p-2"
+                      }
+                    >
+                      Reserve
+                    </NavLink>
+                    <NavLink
                       to={"/about#security"}
                       className={({ isActive }) =>
                         isActive && window.location.hash === "#security"

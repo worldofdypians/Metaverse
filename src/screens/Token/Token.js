@@ -8,7 +8,7 @@ import Investors from "./Investors/Investors";
 import WodBuilders from "../Home/WodBuilders/WodBuilders";
 import InGameEconomy from "./InGameEconomy";
 
-const Token = () => {
+const Token = ({wodPrice}) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,7 +28,7 @@ const Token = () => {
       <div className="d-flex flex-column"> 
         <MainHero scrollInto={scrollToView}/>
         <TokenUtility />
-        <Tokenomics />
+        <Tokenomics wodPrice={wodPrice}/>
         <InGameEconomy />
         <Investors page={"token"} />
         {/* <Utility /> */}

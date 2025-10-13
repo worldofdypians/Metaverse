@@ -630,7 +630,6 @@ function App() {
   const [domainMetaData, setDomainMetaData] = useState(null);
   const [totalTx, setTotalTx] = useState(0);
 
-  
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
   const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
@@ -6609,6 +6608,8 @@ function App() {
           !location.pathname.includes("forgotPassword") &&
           !location.pathname.includes("wod-okxwallet") &&
           !location.pathname.includes("keep-building") &&
+          !location.pathname.includes("token") &&
+          !location.pathname.includes("about") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -8337,7 +8338,7 @@ function App() {
               />
             }
           /> */}
-          <Route exact path="/token" element={<Token />} />
+          <Route exact path="/token" element={<Token wodPrice={wodPrice} />} />
           <Route
             exact
             path="/bridge"
@@ -8452,7 +8453,7 @@ function App() {
             element={<Game allStarData={allStarData} />}
           />
           {/* <Route exact path="/game-updates" element={<GameUpdates />} /> */}
-          <Route exact path="/about" element={<About />} />
+          <Route exact path="/about" element={<About wodPrice={wodPrice} />} />
 
           {/* <Route
             exact
