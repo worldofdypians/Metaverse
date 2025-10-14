@@ -7,7 +7,6 @@ import { NavLink } from "react-router-dom";
 
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
-import Reserve from "../../../Reserve/Reserve";
 
 const Tokenomics = ({ wodPrice }) => {
   const [tooltip, setTooltip] = useState(false);
@@ -287,7 +286,6 @@ const Tokenomics = ({ wodPrice }) => {
           </div>
         </div>
       </div>
-      <Reserve wodPrice={wodPrice} />
     </div>
   );
 };

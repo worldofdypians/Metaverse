@@ -367,7 +367,7 @@ export const chartData = [
     date: "October 13, 2025",
     value: 26794231.98,
   },
-   {
+  {
     date: "October 14, 2025",
     value: 26794231.98,
   },

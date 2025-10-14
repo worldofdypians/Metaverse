@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   AreaChart,
   Area,
@@ -29,6 +29,43 @@ const Reserve = ({ wodPrice }) => {
       year: undefined,
     });
   };
+
+  const INITIAL_COUNT = 13;
+  const LOAD_COUNT = 20;
+  const chartRef = useRef(null);
+
+  const [displayData, setDisplayData] = useState([]);
+  const [startIndex, setStartIndex] = useState(
+    Math.max(chartData.length - INITIAL_COUNT, 0)
+  );
+
+  useEffect(() => {
+    setDisplayData(chartData.slice(startIndex));
+  }, [startIndex, chartData]);
+
+  useEffect(() => {
+    const handleWheel = (e) => {
+      e.preventDefault(); // now works
+
+      if (e.deltaY < 0) {
+        const newStart = Math.max(startIndex - LOAD_COUNT, 0);
+        setStartIndex(newStart);
+      } else if (e.deltaY > 0) {
+        const newStart = Math.min(
+          startIndex + LOAD_COUNT,
+          Math.max(chartData.length - INITIAL_COUNT, 0)
+        );
+        setStartIndex(newStart);
+      }
+    };
+
+    const chartDiv = chartRef.current;
+    chartDiv.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      chartDiv.removeEventListener("wheel", handleWheel);
+    };
+  }, [startIndex, chartData.length]);
 
   return (
     <div
@@ -147,9 +184,13 @@ const Reserve = ({ wodPrice }) => {
                     Reserve Activity
                   </h3>
                   <p className="text-slate-400/70 text-xs">Updated Oct 2025</p>
-                  <div className="h-96">
+                  <div
+                    id="zoomable-chart"
+                    className="relative h-96 w-full select-none"
+                    ref={chartRef}
+                  >
                     <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={chartData}>
+                      <AreaChart data={displayData}>
                         <defs>
                           <linearGradient
                             id="colorGradient"
@@ -210,7 +251,7 @@ const Reserve = ({ wodPrice }) => {
                           formatter={(value) => [value.toLocaleString(), "WOD"]}
                         />
                         <Area
-                          type="stepAfter"
+                          type="monotone"
                           dataKey="value"
                           stroke="#06b6d4"
                           fill="url(#colorGradient)"

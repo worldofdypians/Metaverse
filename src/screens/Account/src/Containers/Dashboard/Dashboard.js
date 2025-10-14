@@ -503,7 +503,7 @@ function Dashboard({
 
   const [showNfts, setShowNfts] = useState(false);
   const [showWalletModal, setshowWalletModal] = useState(false);
-  const [goldenPassRemainingTime, setGoldenPassRemainingTime] = useState();
+  const [goldenPassRemainingTime, setGoldenPassRemainingTime] = useState(0);
 
   const [landstakes, setLandStakes] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -4538,7 +4538,15 @@ function Dashboard({
   };
 
   const handleSetAvailableTime = (value) => {
-    setGoldenPassRemainingTime(value);
+    const today = new Date();
+    if (
+      today.getTime() > Number(goldenPassRemainingTime) * 1000 &&
+      value === undefined
+    ) {
+      setGoldenPassRemainingTime(value);
+    } else if (value !== undefined && today.getTime() <= Number(value) * 1000) {
+      setGoldenPassRemainingTime(value);
+    }
   };
 
   const handleRefreshCountdown700 = async (wallet) => {
@@ -6599,7 +6607,7 @@ function Dashboard({
       <div className="d-none">
         {goldenPassRemainingTime !== undefined && (
           <Countdown
-            date={Number(goldenPassRemainingTime) * 1000}
+            date={goldenPassRemainingTime}
             onComplete={() => {
               handleSetAvailableTime();
             }}
@@ -6895,7 +6903,6 @@ function Dashboard({
               setPuzzleMadnessTimer={setPuzzleMadnessTimer}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
-              availableTime={goldenPassRemainingTime}
               coinbase={coinbase}
               wallet={userWallet}
               chainId={chainId}
@@ -7656,7 +7663,6 @@ function Dashboard({
                 allMatChests={allMatChests}
                 allSeiChests={allSeiChests}
                 allTaraxaChests={allTaraxaChests}
-                availableTime={goldenPassRemainingTime}
                 userSocialRewards={userSocialRewards}
                 bnbEarnUsd={bnbEarnUsd}
                 skaleEarnUsd={skaleEarnUsd}

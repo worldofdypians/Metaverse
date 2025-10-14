@@ -88,7 +88,6 @@ const NewEvents = ({
   chainId,
   binanceW3WProvider,
   selectedEvent,
-  availableTime,
   eventCardCount,
   wodPrice,
   email,
