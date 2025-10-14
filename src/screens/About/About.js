@@ -7,6 +7,7 @@ import OurTeam from "../OurTeam/OurTeam";
 import MainHero from "./MainHero/MainHero";
 import { useLocation } from "react-router-dom";
 import Security from "./Security/Security";
+import Reserve from "../Reserve/Reserve";
 
 const About = ({ wodPrice }) => {
   const location = useLocation();
@@ -35,7 +36,8 @@ const About = ({ wodPrice }) => {
     <div className="container-fluid token-wrapper px-0">
       <div className="d-flex flex-column">
         <MainHero />
-        <Tokenomics wodPrice={wodPrice} />
+        <Tokenomics />
+        <Reserve wodPrice={wodPrice} />
         <Security />
         <Roadmap />
         <OurTeam />

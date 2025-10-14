@@ -677,7 +677,11 @@ const Roadmap = () => {
         //   desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
         //   completed: false,
         // },
-      
+        {
+          title: "WOD Strategic Reserve",
+          desc: "Creation of a transparent on-chain reserve that supports continuous WOD buybacks and reinforces the ecosystem's long-term value.",
+          completed: true,
+        },
         {
           title: "Adopt CAWS Functionality",
           desc: "Allow players to adopt a CAWS (cat) in-game, feed it, grow it, and use it within the game world.",
@@ -712,8 +716,8 @@ const Roadmap = () => {
           title: "Intelligent Economy Integration",
           desc: "Combine AI-powered features with DeFi mechanics to create an adaptive and engaging in-game economy.",
           completed: false,
-        }, 
-         {
+        },
+        {
           title: "Launch of Crypto Museum",
           desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
           completed: false,
