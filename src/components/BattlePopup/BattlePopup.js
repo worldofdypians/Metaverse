@@ -189,19 +189,20 @@ const BattlePopup = ({
     }
   }
 
-const handleStartFight = () => {
-  setFightStep(2);
+  const handleStartFight = () => {
+    setFightStep(2);
 
-  // Step 2 lasts 4.3s
-  setTimeout(() => {
-    setFightStep(3);
-
-    // Step 3 lasts 25.5s, then back to 1
+    // Step 2 lasts 4.3s
     setTimeout(() => {
-      setFightStep(1);
-    }, 25500);
-  }, 4300);
-};
+      setFightStep(3);
+
+      // Step 3 lasts 25.5s, then back to 1
+      setTimeout(() => {
+        setFightStep(1);
+        console.log("hello");
+      }, 25500);
+    }, 4300);
+  };
 
   // Attach listener
   window.addEventListener("keydown", handleEsc);
@@ -1014,365 +1015,106 @@ const handleStartFight = () => {
                 </div>
               </motion.div>
             )}
-            <motion.div
-              initial={{ opacity: 0, x: -50, y: -50 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              className="position-absolute"
+            <div
+              className="d-flex flex-column gap-2 position-absolute"
               style={{ top: "16px", left: "24px", zIndex: 30 }}
             >
               <motion.div
-                className="py-2 px-4 gap-2 gap-lg-0 d-flex flex-column align-items-center"
-                style={glassyContainerStyle}
-                whileHover={{ scale: 1.02 }}
+                initial={{ opacity: 0, x: -50, y: -50 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
               >
                 <motion.div
-                  className="text-center mb-0 mb-lg-3"
-                  style={{
-                    color: "rgba(219, 234, 254, 0.9)",
-                    fontSize: "0.75rem",
-                    fontWeight: "600",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                  }}
-                  animate={{
-                    color: [
-                      "rgba(219, 234, 254, 0.9)",
-                      "rgba(191, 219, 254, 0.7)",
-                      "rgba(219, 234, 254, 0.9)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
+                  className="py-2 px-4 gap-2 gap-lg-0 d-flex flex-column align-items-center"
+                  style={glassyContainerStyle}
+                  whileHover={{ scale: 1.02 }}
                 >
-                  Chains
-                </motion.div>
+                  <motion.div
+                    className="text-center mb-0 mb-lg-3"
+                    style={{
+                      color: "rgba(219, 234, 254, 0.9)",
+                      fontSize: "0.75rem",
+                      fontWeight: "600",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                    }}
+                    animate={{
+                      color: [
+                        "rgba(219, 234, 254, 0.9)",
+                        "rgba(191, 219, 254, 0.7)",
+                        "rgba(219, 234, 254, 0.9)",
+                      ],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    Chains
+                  </motion.div>
 
-                <div className="d-flex flex-column align-items-center">
-                  <div className="d-flex align-items-center gap-2 mb-2 bnb-chains-wrapper p-2">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0, rotate: -90 }}
-                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                      transition={{
-                        delay: 0,
-                        type: "spring",
-                        stiffness: 150,
-                      }}
-                    >
-                      <button
-                        // disabled={disable}
-                        onClick={() => {
-                          setSelectedChain(chains[0].id);
-                          setSocials(chains[0].socials);
-                          switchNetwork(chains[0].hex, chains[0].chainId);
-                        }}
-                        onMouseEnter={() => setHoveredChain(chains[0].id)}
-                        onMouseLeave={() => setHoveredChain(null)}
-                        className="btn p-2 position-relative overflow-hidden border-0 rounded font-unzialish"
-                        style={{
-                          // width: "32px",
-                          height: "32px",
-                          background:
-                            selectedChain === chains[0].id
-                              ? "linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(14, 25, 48, 0.8) 100%)"
-                              : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
-                          backdropFilter: "blur(10px)",
-                          WebkitBackdropFilter: "blur(10px)",
-                          border:
-                            selectedChain === chains[0].id
-                              ? "1px solid rgba(59, 130, 246, 0.4)"
-                              : "1px solid rgba(59, 130, 246, 0.2)",
-                          // transform:
-                          //   selectedChain === chains[0].id
-                          //     ? "scale(1.1)"
-                          //     : "scale(1)",
-                          transition: "all 0.3s ease",
-                        }}
-                        aria-label={`Select ${chains[0].name}`}
-                      >
-                        <motion.div
-                          className="position-absolute top-0 start-0 w-100 h-100"
-                          style={getChainGradient(chains[0])}
-                          animate={{
-                            opacity:
-                              selectedChain === chains[0].id
-                                ? 0.3
-                                : hoveredChain === chains[0].id
-                                ? 0.2
-                                : 0.1,
-                            scale:
-                              selectedChain === chains[0].id ? [1, 1.1, 1] : 1,
-                          }}
-                          transition={{
-                            duration: selectedChain === chains[0].id ? 2 : 0.3,
-                            repeat:
-                              selectedChain === chains[0].id ? Infinity : 0,
-                          }}
-                        />
-
-                        <div className="d-flex align-items-center gap-1">
-                          <motion.span
-                            className="position-relative d-flex align-items-center gap-1"
-                            style={{ fontSize: "14px", zIndex: 10 }}
-                            animate={{
-                              scale:
-                                selectedChain === chains[0].id
-                                  ? [1, 1.2, 1]
-                                  : 1,
-                              rotate:
-                                hoveredChain === chains[0].id
-                                  ? [0, 5, -5, 0]
-                                  : 0,
-                            }}
-                            transition={{
-                              duration:
-                                selectedChain === chains[0].id ? 1 : 0.5,
-                              repeat:
-                                selectedChain === chains[0].id ? Infinity : 0,
-                            }}
-                          >
-                            <img
-                              src={chains[0].logo}
-                              width={16}
-                              height={16}
-                              alt=""
-                            />
-                          </motion.span>
-                          <motion.div
-                            style={{
-                              color: "#fff",
-                              fontSize: "0.9rem",
-                              letterSpacing: "0.025em",
-                              zIndex: 1,
-                            }}
-                          >
-                            {chains[0]?.name}
-                          </motion.div>
-                        </div>
-
-                        {selectedChain === chains[0].id && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
-                            style={{
-                              width: "12px",
-                              height: "12px",
-                              background:
-                                "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
-                              marginTop: "-2px",
-                              marginRight: "-2px",
-                            }}
-                          >
-                            <motion.div
-                              className="rounded-circle bg-white"
-                              style={{ width: "4px", height: "4px" }}
-                              animate={{ scale: [1, 1.3, 1] }}
-                              transition={{ duration: 1, repeat: Infinity }}
-                            />
-                          </motion.div>
-                        )}
-                      </button>
-                    </motion.div>{" "}
-                    <div
-                      style={{
-                        width: "2px",
-                        height: "40px",
-                        background:
-                          "linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.4) 25%, rgba(147, 197, 253, 0.8) 50%, rgba(59, 130, 246, 0.4) 75%, transparent 100%)",
-                        alignSelf: "center",
-                        borderRadius: "2px",
-                        boxShadow: "0 0 8px rgba(59, 130, 246, 0.4)",
-                        flexShrink: 0,
-                      }}
-                    />
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0, rotate: -90 }}
-                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                      transition={{
-                        delay: 1 * 0.08,
-                        type: "spring",
-                        stiffness: 150,
-                      }}
-                    >
-                      <button
-                        // disabled={disable}
-                        onClick={() => {
-                          setSelectedChain(chains[1].id);
-                          setSocials(chains[1].socials);
-                          switchNetwork(chains[1].hex, chains[1].chainId);
-                        }}
-                        onMouseEnter={() => setHoveredChain(chains[1].id)}
-                        onMouseLeave={() => setHoveredChain(null)}
-                        className="btn p-2 position-relative overflow-hidden border-0 rounded font-unzialish"
-                        style={{
-                          // width: "32px",
-                          height: "32px",
-                          background:
-                            selectedChain === chains[1].id
-                              ? "linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(14, 25, 48, 0.8) 100%)"
-                              : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
-                          backdropFilter: "blur(10px)",
-                          WebkitBackdropFilter: "blur(10px)",
-                          border:
-                            selectedChain === chains[1].id
-                              ? "1px solid rgba(59, 130, 246, 0.4)"
-                              : "1px solid rgba(59, 130, 246, 0.2)",
-                          // transform:
-                          //   selectedChain === chains[1].id
-                          //     ? "scale(1.1)"
-                          //     : "scale(1)",
-                          transition: "all 0.3s ease",
-                        }}
-                        aria-label={`Select ${chains[1].name}`}
-                      >
-                        <motion.div
-                          className="position-absolute top-0 start-0 w-100 h-100"
-                          style={getChainGradient(chains[1])}
-                          animate={{
-                            opacity:
-                              selectedChain === chains[1].id
-                                ? 0.3
-                                : hoveredChain === chains[1].id
-                                ? 0.2
-                                : 0.1,
-                            scale:
-                              selectedChain === chains[1].id ? [1, 1.1, 1] : 1,
-                          }}
-                          transition={{
-                            duration: selectedChain === chains[1].id ? 2 : 0.3,
-                            repeat:
-                              selectedChain === chains[1].id ? Infinity : 0,
-                          }}
-                        />
-
-                        <div className="d-flex align-items-center gap-1">
-                          <motion.span
-                            className="position-relative d-flex align-items-center gap-1"
-                            style={{ fontSize: "14px", zIndex: 10 }}
-                            animate={{
-                              scale:
-                                selectedChain === chains[1].id
-                                  ? [1, 1.2, 1]
-                                  : 1,
-                              rotate:
-                                hoveredChain === chains[1].id
-                                  ? [0, 5, -5, 0]
-                                  : 0,
-                            }}
-                            transition={{
-                              duration:
-                                selectedChain === chains[1].id ? 1 : 0.5,
-                              repeat:
-                                selectedChain === chains[1].id ? Infinity : 0,
-                            }}
-                          >
-                            <img
-                              src={chains[1].logo}
-                              width={16}
-                              height={16}
-                              alt=""
-                            />
-                          </motion.span>
-                          <motion.div
-                            style={{
-                              color: "#fff",
-                              fontSize: "0.9rem",
-                              letterSpacing: "0.025em",
-                              zIndex: 1,
-                            }}
-                          >
-                            {chains[1]?.name}
-                          </motion.div>
-                        </div>
-
-                        {selectedChain === chains[1].id && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
-                            style={{
-                              width: "12px",
-                              height: "12px",
-                              background:
-                                "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
-                              marginTop: "-2px",
-                              marginRight: "-2px",
-                            }}
-                          >
-                            <motion.div
-                              className="rounded-circle bg-white"
-                              style={{ width: "4px", height: "4px" }}
-                              animate={{ scale: [1, 1.3, 1] }}
-                              transition={{ duration: 1, repeat: Infinity }}
-                            />
-                          </motion.div>
-                        )}
-                      </button>
-                    </motion.div>
-                  </div>
-                  <div className="d-flex flex-column gap-1 w-100">
-                    {chains.slice(2, chains.length).map((chain, index) => (
+                  <div className="d-flex flex-column align-items-center">
+                    <div className="d-flex align-items-center gap-2 mb-2 bnb-chains-wrapper p-2">
                       <motion.div
-                        key={chain.id}
                         initial={{ opacity: 0, scale: 0, rotate: -90 }}
                         animate={{ opacity: 1, scale: 1, rotate: 0 }}
                         transition={{
-                          delay: index * 0.08,
+                          delay: 0,
                           type: "spring",
                           stiffness: 150,
                         }}
-                        style={{ width: "100%" }}
                       >
                         <button
                           // disabled={disable}
                           onClick={() => {
-                            setSelectedChain(chain.id);
-                            setSocials(chain.socials);
-                            switchNetwork(chain.hex, chain.chainId);
+                            setSelectedChain(chains[0].id);
+                            setSocials(chains[0].socials);
+                            switchNetwork(chains[0].hex, chains[0].chainId);
                           }}
-                          onMouseEnter={() => setHoveredChain(chain.id)}
+                          onMouseEnter={() => setHoveredChain(chains[0].id)}
                           onMouseLeave={() => setHoveredChain(null)}
                           className="btn p-2 position-relative overflow-hidden border-0 rounded font-unzialish"
                           style={{
-                            width: "100%",
+                            // width: "32px",
                             height: "32px",
                             background:
-                              selectedChain === chain.id
-                                ? "linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(236, 72, 153, 0.145) 50%, rgba(14, 25, 48, 0.8) 100%)"
+                              selectedChain === chains[0].id
+                                ? "linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(14, 25, 48, 0.8) 100%)"
                                 : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
                             backdropFilter: "blur(10px)",
                             WebkitBackdropFilter: "blur(10px)",
                             border:
-                              selectedChain === chain.id
+                              selectedChain === chains[0].id
                                 ? "1px solid rgba(59, 130, 246, 0.4)"
                                 : "1px solid rgba(59, 130, 246, 0.2)",
                             // transform:
-                            //   selectedChain === chain.id
+                            //   selectedChain === chains[0].id
                             //     ? "scale(1.1)"
                             //     : "scale(1)",
                             transition: "all 0.3s ease",
                           }}
-                          aria-label={`Select ${chain.name}`}
+                          aria-label={`Select ${chains[0].name}`}
                         >
                           <motion.div
                             className="position-absolute top-0 start-0 w-100 h-100"
-                            style={getChainGradient(chain)}
+                            style={getChainGradient(chains[0])}
                             animate={{
                               opacity:
-                                selectedChain === chain.id
+                                selectedChain === chains[0].id
                                   ? 0.3
-                                  : hoveredChain === chain.id
+                                  : hoveredChain === chains[0].id
                                   ? 0.2
                                   : 0.1,
                               scale:
-                                selectedChain === chain.id ? [1, 1.1, 1] : 1,
+                                selectedChain === chains[0].id
+                                  ? [1, 1.1, 1]
+                                  : 1,
                             }}
                             transition={{
-                              duration: selectedChain === chain.id ? 2 : 0.3,
-                              repeat: selectedChain === chain.id ? Infinity : 0,
+                              duration:
+                                selectedChain === chains[0].id ? 2 : 0.3,
+                              repeat:
+                                selectedChain === chains[0].id ? Infinity : 0,
                             }}
                           />
 
@@ -1382,18 +1124,23 @@ const handleStartFight = () => {
                               style={{ fontSize: "14px", zIndex: 10 }}
                               animate={{
                                 scale:
-                                  selectedChain === chain.id ? [1, 1.2, 1] : 1,
+                                  selectedChain === chains[0].id
+                                    ? [1, 1.2, 1]
+                                    : 1,
                                 rotate:
-                                  hoveredChain === chain.id ? [0, 5, -5, 0] : 0,
+                                  hoveredChain === chains[0].id
+                                    ? [0, 5, -5, 0]
+                                    : 0,
                               }}
                               transition={{
-                                duration: selectedChain === chain.id ? 1 : 0.5,
+                                duration:
+                                  selectedChain === chains[0].id ? 1 : 0.5,
                                 repeat:
-                                  selectedChain === chain.id ? Infinity : 0,
+                                  selectedChain === chains[0].id ? Infinity : 0,
                               }}
                             >
                               <img
-                                src={chain.logo}
+                                src={chains[0].logo}
                                 width={16}
                                 height={16}
                                 alt=""
@@ -1407,11 +1154,150 @@ const handleStartFight = () => {
                                 zIndex: 1,
                               }}
                             >
-                              {chain?.name}
+                              {chains[0]?.name}
                             </motion.div>
                           </div>
 
-                          {selectedChain === chain.id && (
+                          {selectedChain === chains[0].id && (
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
+                              style={{
+                                width: "12px",
+                                height: "12px",
+                                background:
+                                  "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
+                                marginTop: "-2px",
+                                marginRight: "-2px",
+                              }}
+                            >
+                              <motion.div
+                                className="rounded-circle bg-white"
+                                style={{ width: "4px", height: "4px" }}
+                                animate={{ scale: [1, 1.3, 1] }}
+                                transition={{ duration: 1, repeat: Infinity }}
+                              />
+                            </motion.div>
+                          )}
+                        </button>
+                      </motion.div>{" "}
+                      <div
+                        style={{
+                          width: "2px",
+                          height: "40px",
+                          background:
+                            "linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.4) 25%, rgba(147, 197, 253, 0.8) 50%, rgba(59, 130, 246, 0.4) 75%, transparent 100%)",
+                          alignSelf: "center",
+                          borderRadius: "2px",
+                          boxShadow: "0 0 8px rgba(59, 130, 246, 0.4)",
+                          flexShrink: 0,
+                        }}
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0, rotate: -90 }}
+                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        transition={{
+                          delay: 1 * 0.08,
+                          type: "spring",
+                          stiffness: 150,
+                        }}
+                      >
+                        <button
+                          // disabled={disable}
+                          onClick={() => {
+                            setSelectedChain(chains[1].id);
+                            setSocials(chains[1].socials);
+                            switchNetwork(chains[1].hex, chains[1].chainId);
+                          }}
+                          onMouseEnter={() => setHoveredChain(chains[1].id)}
+                          onMouseLeave={() => setHoveredChain(null)}
+                          className="btn p-2 position-relative overflow-hidden border-0 rounded font-unzialish"
+                          style={{
+                            // width: "32px",
+                            height: "32px",
+                            background:
+                              selectedChain === chains[1].id
+                                ? "linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(14, 25, 48, 0.8) 100%)"
+                                : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
+                            backdropFilter: "blur(10px)",
+                            WebkitBackdropFilter: "blur(10px)",
+                            border:
+                              selectedChain === chains[1].id
+                                ? "1px solid rgba(59, 130, 246, 0.4)"
+                                : "1px solid rgba(59, 130, 246, 0.2)",
+                            // transform:
+                            //   selectedChain === chains[1].id
+                            //     ? "scale(1.1)"
+                            //     : "scale(1)",
+                            transition: "all 0.3s ease",
+                          }}
+                          aria-label={`Select ${chains[1].name}`}
+                        >
+                          <motion.div
+                            className="position-absolute top-0 start-0 w-100 h-100"
+                            style={getChainGradient(chains[1])}
+                            animate={{
+                              opacity:
+                                selectedChain === chains[1].id
+                                  ? 0.3
+                                  : hoveredChain === chains[1].id
+                                  ? 0.2
+                                  : 0.1,
+                              scale:
+                                selectedChain === chains[1].id
+                                  ? [1, 1.1, 1]
+                                  : 1,
+                            }}
+                            transition={{
+                              duration:
+                                selectedChain === chains[1].id ? 2 : 0.3,
+                              repeat:
+                                selectedChain === chains[1].id ? Infinity : 0,
+                            }}
+                          />
+
+                          <div className="d-flex align-items-center gap-1">
+                            <motion.span
+                              className="position-relative d-flex align-items-center gap-1"
+                              style={{ fontSize: "14px", zIndex: 10 }}
+                              animate={{
+                                scale:
+                                  selectedChain === chains[1].id
+                                    ? [1, 1.2, 1]
+                                    : 1,
+                                rotate:
+                                  hoveredChain === chains[1].id
+                                    ? [0, 5, -5, 0]
+                                    : 0,
+                              }}
+                              transition={{
+                                duration:
+                                  selectedChain === chains[1].id ? 1 : 0.5,
+                                repeat:
+                                  selectedChain === chains[1].id ? Infinity : 0,
+                              }}
+                            >
+                              <img
+                                src={chains[1].logo}
+                                width={16}
+                                height={16}
+                                alt=""
+                              />
+                            </motion.span>
+                            <motion.div
+                              style={{
+                                color: "#fff",
+                                fontSize: "0.9rem",
+                                letterSpacing: "0.025em",
+                                zIndex: 1,
+                              }}
+                            >
+                              {chains[1]?.name}
+                            </motion.div>
+                          </div>
+
+                          {selectedChain === chains[1].id && (
                             <motion.div
                               initial={{ opacity: 0, scale: 0 }}
                               animate={{ opacity: 1, scale: 1 }}
@@ -1435,10 +1321,139 @@ const handleStartFight = () => {
                           )}
                         </button>
                       </motion.div>
-                    ))}
-                  </div>
+                    </div>
+                    <div className="d-flex flex-column gap-1 w-100">
+                      {chains.slice(2, chains.length).map((chain, index) => (
+                        <motion.div
+                          key={chain.id}
+                          initial={{ opacity: 0, scale: 0, rotate: -90 }}
+                          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                          transition={{
+                            delay: index * 0.08,
+                            type: "spring",
+                            stiffness: 150,
+                          }}
+                          style={{ width: "100%" }}
+                        >
+                          <button
+                            // disabled={disable}
+                            onClick={() => {
+                              setSelectedChain(chain.id);
+                              setSocials(chain.socials);
+                              switchNetwork(chain.hex, chain.chainId);
+                            }}
+                            onMouseEnter={() => setHoveredChain(chain.id)}
+                            onMouseLeave={() => setHoveredChain(null)}
+                            className="btn p-2 position-relative overflow-hidden border-0 rounded font-unzialish"
+                            style={{
+                              width: "100%",
+                              height: "32px",
+                              background:
+                                selectedChain === chain.id
+                                  ? "linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(236, 72, 153, 0.145) 50%, rgba(14, 25, 48, 0.8) 100%)"
+                                  : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
+                              backdropFilter: "blur(10px)",
+                              WebkitBackdropFilter: "blur(10px)",
+                              border:
+                                selectedChain === chain.id
+                                  ? "1px solid rgba(59, 130, 246, 0.4)"
+                                  : "1px solid rgba(59, 130, 246, 0.2)",
+                              // transform:
+                              //   selectedChain === chain.id
+                              //     ? "scale(1.1)"
+                              //     : "scale(1)",
+                              transition: "all 0.3s ease",
+                            }}
+                            aria-label={`Select ${chain.name}`}
+                          >
+                            <motion.div
+                              className="position-absolute top-0 start-0 w-100 h-100"
+                              style={getChainGradient(chain)}
+                              animate={{
+                                opacity:
+                                  selectedChain === chain.id
+                                    ? 0.3
+                                    : hoveredChain === chain.id
+                                    ? 0.2
+                                    : 0.1,
+                                scale:
+                                  selectedChain === chain.id ? [1, 1.1, 1] : 1,
+                              }}
+                              transition={{
+                                duration: selectedChain === chain.id ? 2 : 0.3,
+                                repeat:
+                                  selectedChain === chain.id ? Infinity : 0,
+                              }}
+                            />
 
-                  {/* <AnimatePresence mode="wait">
+                            <div className="d-flex align-items-center gap-1">
+                              <motion.span
+                                className="position-relative d-flex align-items-center gap-1"
+                                style={{ fontSize: "14px", zIndex: 10 }}
+                                animate={{
+                                  scale:
+                                    selectedChain === chain.id
+                                      ? [1, 1.2, 1]
+                                      : 1,
+                                  rotate:
+                                    hoveredChain === chain.id
+                                      ? [0, 5, -5, 0]
+                                      : 0,
+                                }}
+                                transition={{
+                                  duration:
+                                    selectedChain === chain.id ? 1 : 0.5,
+                                  repeat:
+                                    selectedChain === chain.id ? Infinity : 0,
+                                }}
+                              >
+                                <img
+                                  src={chain.logo}
+                                  width={16}
+                                  height={16}
+                                  alt=""
+                                />
+                              </motion.span>
+                              <motion.div
+                                style={{
+                                  color: "#fff",
+                                  fontSize: "0.9rem",
+                                  letterSpacing: "0.025em",
+                                  zIndex: 1,
+                                }}
+                              >
+                                {chain?.name}
+                              </motion.div>
+                            </div>
+
+                            {selectedChain === chain.id && (
+                              <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
+                                style={{
+                                  width: "12px",
+                                  height: "12px",
+                                  background:
+                                    "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
+                                  marginTop: "-2px",
+                                  marginRight: "-2px",
+                                }}
+                              >
+                                <motion.div
+                                  className="rounded-circle bg-white"
+                                  style={{ width: "4px", height: "4px" }}
+                                  animate={{ scale: [1, 1.3, 1] }}
+                                  transition={{ duration: 1, repeat: Infinity }}
+                                />
+                              </motion.div>
+                            )}
+                          </button>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* <AnimatePresence mode="wait">
                     <motion.div
                       key={selectedChain}
                       initial={{ opacity: 0, y: 8 }}
@@ -1469,19 +1484,374 @@ const handleStartFight = () => {
                       </motion.div>
                     </motion.div>
                   </AnimatePresence> */}
+                  </div>
+                </motion.div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.7 }}
+                className="d-none d-lg-flex position-relative"
+              >
+                <div
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(8, 16, 32, 0.95) 0%, rgba(12, 20, 40, 0.85) 50%, rgba(6, 12, 28, 0.75) 100%)",
+                    backdropFilter: "blur(25px)",
+                    WebkitBackdropFilter: "blur(25px)",
+                    border: "2px solid rgba(59, 130, 246, 0.4)",
+                    borderRadius: "12px",
+                    boxShadow:
+                      "0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(120, 170, 255, 0.2)",
+                    // height: "100%",
+                    position: "relative",
+                    overflow: "hidden",
+                    width: "100%",
+                  }}
+                >
+                  {/* VERTICAL Rewards List - No Header */}
+                  {/* <div
+                          className="py-2 py-xxl-3 px-2"
+                          style={{
+                            color: "rgba(219, 234, 254, 1)",
+                            fontSize: "15px",
+                            fontWeight: "700",
+                            letterSpacing: "0.05em",
+                            textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          PRIZES
+                        </div> */}
+                  <div
+                    className="py-2 px-2 d-flex flex-column align-items-center justify-content-center gap-2 w-100"
+                    style={{ zIndex: 2 }}
+                  >
+                    {rewardCategories.map((category, index) => (
+                      <motion.div
+                        key={category.id}
+                        initial={{ opacity: 0, scale: 0, x: 30 }}
+                        animate={{
+                          opacity: 1,
+                          scale: 1,
+                          x: 0,
+                        }}
+                        transition={{
+                          delay: 0.9 + index * 0.1,
+                          type: "spring",
+                          stiffness: 120,
+                        }}
+                        // whileHover={{ scale: 1.02, y: -2, x: 3 }}
+                        className="position-relative overflow-hidden w-100"
+                        style={{
+                          padding: "6px 12px",
+                          background:
+                            rewards.find((item) => {
+                              return (
+                                item.rewardType.toLowerCase() ===
+                                category.id.toLowerCase()
+                              );
+                            }) !== undefined
+                              ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 50%, rgba(8, 16, 32, 0.8) 100%)"
+                              : "linear-gradient(135deg, rgba(8, 16, 32, 0.8) 0%, rgba(12, 20, 40, 0.6) 50%, rgba(6, 12, 28, 0.4) 100%)",
+                          border:
+                            rewards.find((item) => {
+                              return (
+                                item.rewardType.toLowerCase() ===
+                                category.id.toLowerCase()
+                              );
+                            }) !== undefined
+                              ? "2px solid rgba(59, 130, 246, 0.6)"
+                              : "1px solid rgba(59, 130, 246, 0.25)",
+                          borderRadius: "10px",
+                          boxShadow:
+                            rewards.find((item) => {
+                              return (
+                                item.rewardType.toLowerCase() ===
+                                category.id.toLowerCase()
+                              );
+                            }) !== undefined
+                              ? `0 0 20px ${
+                                  category.color.includes("yellow")
+                                    ? "#F59E0B"
+                                    : category.color.includes("blue")
+                                    ? "#3B82F6"
+                                    : "#A855F7"
+                                }40, inset 0 1px 0 rgba(120, 170, 255, 0.15)`
+                              : "0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(120, 170, 255, 0.1)",
+                          // cursor: "pointer",
+                          transition: "all 0.3s ease",
+                        }}
+                      >
+                        {/* Gaming-style tier indicator */}
+                        <motion.div
+                          className="position-absolute top-0 start-0"
+                          style={{
+                            width: "3px",
+                            height: "100%",
+                            ...getRewardGradient(category),
+                            borderRadius: "2px 0 0 2px",
+                          }}
+                          animate={{
+                            opacity:
+                              rewards.find((item) => {
+                                return (
+                                  item.rewardType.toLowerCase() ===
+                                  category.id.toLowerCase()
+                                );
+                              }) !== undefined
+                                ? [0.6, 1, 0.6]
+                                : 0.4,
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat:
+                              rewards.find((item) => {
+                                return (
+                                  item.rewardType.toLowerCase() ===
+                                  category.id.toLowerCase()
+                                );
+                              }) !== undefined
+                                ? Infinity
+                                : 0,
+                            ease: "easeInOut",
+                          }}
+                        />
+
+                        {/* Animated scan line for active rewards */}
+                        {rewards.find((item) => {
+                          return (
+                            item.rewardType.toLowerCase() ===
+                            category.id.toLowerCase()
+                          );
+                        }) !== undefined && (
+                          <motion.div
+                            className="position-absolute top-0 start-0 w-100 h-100"
+                            style={{
+                              background:
+                                "linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent)",
+                              borderRadius: "8px",
+                            }}
+                            animate={{
+                              x: ["-100%", "200%"],
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "linear",
+                            }}
+                          />
+                        )}
+
+                        <div
+                          className="d-flex align-items-center justify-content-between position-relative"
+                          style={{ zIndex: 2 }}
+                        >
+                          <div className="d-flex align-items-center gap-2">
+                            {/* Reward icon */}
+                            <img
+                              src={category.icon}
+                              width={32}
+                              height={32}
+                              alt=""
+                            />
+
+                            {/* Reward info */}
+                            <div className="flex-grow-1">
+                              <div className="d-flex align-items-center gap-1 mb-1">
+                                <div className="kickstarter-reward-title">
+                                  {category.name}
+                                </div>
+                              </div>
+                              <div className="d-flex align-items-center gap-1">
+                                <div
+                                  style={{
+                                    color: "rgba(168, 192, 255, 0.7)",
+                                    fontSize: "10px",
+                                    fontWeight: "500",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.05em",
+                                  }}
+                                >
+                                  {category.rarity}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Count display */}
+                          <div className="d-flex flex-column">
+                            <span
+                              className="text-end text-sm"
+                              style={{
+                                color: "rgba(168, 192, 255, 0.7)",
+                              }}
+                            >
+                              Up to
+                            </span>
+                            <div className="text-end">
+                              <motion.span
+                                className="d-block"
+                                style={{
+                                  fontSize: "15px",
+                                  fontWeight: "700",
+                                  color:
+                                    rewards.find((item) => {
+                                      return (
+                                        item.rewardType.toLowerCase() ===
+                                        category.id.toLowerCase()
+                                      );
+                                    }) !== undefined
+                                      ? "rgba(219, 234, 254, 1)"
+                                      : "rgba(168, 192, 255, 0.9)",
+                                  textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                                  letterSpacing: "0.025em",
+                                }}
+                                animate={{
+                                  scale:
+                                    rewards.find((item) => {
+                                      return (
+                                        item.rewardType.toLowerCase() ===
+                                        category.id.toLowerCase()
+                                      );
+                                    }) !== undefined
+                                      ? [1, 1.1, 1]
+                                      : 1,
+                                  color:
+                                    rewards.find((item) => {
+                                      return (
+                                        item.rewardType.toLowerCase() ===
+                                        category.id.toLowerCase()
+                                      );
+                                    }) !== undefined
+                                      ? [
+                                          "rgba(219, 234, 254, 1)",
+                                          "rgba(96, 165, 250, 1)",
+                                          "rgba(219, 234, 254, 1)",
+                                        ]
+                                      : "rgba(168, 192, 255, 0.9)",
+                                }}
+                                transition={{
+                                  duration: 0.8,
+                                  repeat:
+                                    rewards.find((item) => {
+                                      return (
+                                        item.rewardType.toLowerCase() ===
+                                        category.id.toLowerCase()
+                                      );
+                                    }) !== undefined
+                                      ? Infinity
+                                      : 0,
+                                  ease: "easeInOut",
+                                }}
+                              >
+                                {category.count}
+                              </motion.span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Activation indicator */}
+                        {/* {activatedReward === category.id && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 3 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              className="text-center mt-2 position-relative"
+                              style={{ zIndex: 2 }}
+                            >
+                              <motion.div
+                                className="px-2 py-1 rounded"
+                                style={{
+                                  background:
+                                    "linear-gradient(90deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.3), rgba(34, 197, 94, 0.2))",
+                                  border: "1px solid rgba(34, 197, 94, 0.4)",
+                                  color: "rgba(147, 197, 253, 0.9)",
+                                  letterSpacing: "0.05em",
+                                  fontSize: "9px",
+                                  fontWeight: "600",
+                                  textTransform: "uppercase",
+                                }}
+                                animate={{
+                                  scale: [1, 1.03, 1],
+                                }}
+                                transition={{
+                                  duration: 1.5,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                }}
+                              >
+                                🎉 ACTIVATED 🎉
+                              </motion.div>
+                            </motion.div>
+                          )} */}
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Gaming panel ambient effect */}
+                  <motion.div
+                    className="position-absolute top-0 start-0 w-100 h-100"
+                    style={{
+                      background:
+                        "radial-gradient(circle at center, rgba(59, 130, 246, 0.05), transparent)",
+                      borderRadius: "12px",
+                    }}
+                    animate={{
+                      opacity: [0.3, 0.7, 0.3],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
                 </div>
               </motion.div>
-            </motion.div>
+            </div>
 
             {fightStep === 1 && (
               <>
                 <div className="d-flex flex-column gap-3 w-100 align-items-center">
-                  <button
-                    class="fantasy-btn font-abaddon text-white"
-                    onClick={handleStartFight}
-                  >
-                    Select your Player
-                  </button>
+                  {!email && coinbase && (
+                    <NavLink
+                      to={"/auth"}
+                      class="fantasy-btn font-abaddon text-white"
+                      onClick={onClose}
+                    >
+                      Log In
+                    </NavLink>
+                  )}
+                  {!isConnected && !coinbase && (
+                    <button
+                      class="fantasy-btn font-abaddon text-white"
+                      onClick={onConnectWallet}
+                    >
+                      Connect Wallet
+                    </button>
+                  )}
+                  {isConnected &&
+                    coinbase &&
+                    email &&
+                    chainId !== selectedChainData.chainId && (
+                      <button
+                        class="fantasy-btn font-abaddon text-white"
+                        onClick={() => switchNetwork("0x38", 56)}
+                      >
+                        Switch Chain
+                      </button>
+                    )}
+
+                  {isConnected &&
+                    coinbase &&
+                    email &&
+                    chainId === selectedChainData.chainId && (
+                      <button
+                        class="fantasy-btn font-abaddon text-white"
+                        onClick={handleStartFight}
+                      >
+                        Select Your Fighter
+                      </button>
+                    )}
 
                   <div className="d-flex align-items-center gap-3 players-grid-container mb-5">
                     {fighters.map((item, index) => (
