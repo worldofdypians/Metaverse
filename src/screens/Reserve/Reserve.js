@@ -350,6 +350,14 @@ const Reserve = ({ wodPrice }) => {
                             amount.toLocaleString(),
                             "WOD",
                           ]}
+                          labelFormatter={(label) => {
+                            const date = new Date(label);
+                            return date.toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            });
+                          }}
                         />
                         <Area
                           type="monotone"
