@@ -32,6 +32,8 @@ const Reserve = ({ wodPrice }) => {
   const dataFetchedRef = useRef(false);
 
   const [chartData, setChartData] = useState(localData);
+  const [avgPrice, setavgPrice] = useState(0);
+
   const [metrics] = useState({
     totalReserve: chartData[chartData.length - 1].amount,
     totalSupply: "26,794,231.98",
@@ -60,13 +62,21 @@ const Reserve = ({ wodPrice }) => {
         amount: lastAmount,
       };
     });
-    if (alteredFetch.length > 0) {
-      const lastItem = alteredFetch[alteredFetch.length - 1];
-      alteredFetch.push({
-        date: addOneDay(lastItem.date),
-        amount: lastItem.amount,
-      });
-    }
+    // if (alteredFetch.length > 0) {
+    //   const lastItem = alteredFetch[alteredFetch.length - 1];
+    //   alteredFetch.push({
+    //     date: addOneDay(lastItem.date),
+    //     amount: lastItem.amount,
+    //     wodPrice: lastItem.wodPrice,
+    //   });
+    // }
+    let allprice = 0;
+    const sumFunction = (a, b) => a + b;
+    [...result, ...alteredFetch].forEach((data) => {
+      return (allprice = sumFunction(allprice, Number(data.wodPrice)));
+    });
+
+    setavgPrice(allprice / [...result, ...alteredFetch].length);
     setChartData([...result, ...alteredFetch]);
     return [...result, ...alteredFetch];
   };
@@ -122,7 +132,7 @@ const Reserve = ({ wodPrice }) => {
     dataFetchedRef.current = true;
     fetchDynamicData();
   }, []);
-  
+
   return (
     <div
       className="container-fluid bg-[#0a0d1f] py-5 bottom-border-divider position-relative"
@@ -235,7 +245,7 @@ const Reserve = ({ wodPrice }) => {
                   />
                   <MetricCard
                     title="Average WOD Cost Basis"
-                    value={metrics.collateralRatio}
+                    value={"$" + getFormattedNumber(avgPrice, 6)}
                   />
                 </div>
 
