@@ -7229,16 +7229,16 @@ function App() {
                 setRoyalChestIndex={(value) => {
                   setRoyalChestIndex(value);
                 }}
-                setRoyalChestIndexTaiko={(value) => {
-                  setRoyalChestIndexTaiko(value);
-                }}
+                // setRoyalChestIndexTaiko={(value) => {
+                //   setRoyalChestIndexTaiko(value);
+                // }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
                 }}
-                onOpenRoyaltyChestTaiko={(value) => {
-                  setOpenedRoyaltyChestTaiko(value);
-                }}
+                // onOpenRoyaltyChestTaiko={(value) => {
+                //   setOpenedRoyaltyChestTaiko(value);
+                // }}
                 isEOA={isEOA}
                 wodBalance={wodBalance}
                 authToken={authToken}
@@ -7341,16 +7341,16 @@ function App() {
                 setRoyalChestIndex={(value) => {
                   setRoyalChestIndex(value);
                 }}
-                setRoyalChestIndexTaiko={(value) => {
-                  setRoyalChestIndexTaiko(value);
-                }}
+                // setRoyalChestIndexTaiko={(value) => {
+                //   setRoyalChestIndexTaiko(value);
+                // }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
                 }}
-                onOpenRoyaltyChestTaiko={(value) => {
-                  setOpenedRoyaltyChestTaiko(value);
-                }}
+                // onOpenRoyaltyChestTaiko={(value) => {
+                //   setOpenedRoyaltyChestTaiko(value);
+                // }}
                 openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
@@ -7938,16 +7938,16 @@ function App() {
                 setRoyalChestIndex={(value) => {
                   setRoyalChestIndex(value);
                 }}
-                setRoyalChestIndexTaiko={(value) => {
-                  setRoyalChestIndexTaiko(value);
-                }}
+                // setRoyalChestIndexTaiko={(value) => {
+                //   setRoyalChestIndexTaiko(value);
+                // }}
                 royaltyCount={royaltyCount}
                 onOpenRoyaltyChest={(value) => {
                   setOpenedRoyaltyChest(value);
                 }}
-                onOpenRoyaltyChestTaiko={(value) => {
-                  setOpenedRoyaltyChestTaiko(value);
-                }}
+                // onOpenRoyaltyChestTaiko={(value) => {
+                //   setOpenedRoyaltyChestTaiko(value);
+                // }}
                 openKickstarter={() => setKickstarter(true)}
                 isEOA={isEOA}
                 isTokenExpired={() => {
@@ -9003,7 +9003,7 @@ function App() {
         window.location.pathname.includes("/account") && (
           <Kickstarter
             royalChestIndex={royalChestIndex}
-            royalChestIndexTaiko={royalChestIndexTaiko}
+            // royalChestIndexTaiko={royalChestIndexTaiko}
             publicClient={publicClient}
             onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
             walletClient={walletClient}
@@ -9031,7 +9031,7 @@ function App() {
               setKickstarterAddClass(value);
             }}
             openedRoyaltyChest={openedRoyaltyChest}
-            openedRoyaltyChestTaiko={openedRoyaltyChestTaiko}
+            // openedRoyaltyChestTaiko={openedRoyaltyChestTaiko}
           />
         )}
     </>

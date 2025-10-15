@@ -2456,14 +2456,15 @@ const NewChestItem = ({
 
   return (
     <>
-      {chestId === 99 && (chain === "bnb" || chain === "taiko") ? (
+      {/* {chestId === 99 && (chain === "bnb" || chain === "taiko") ? ( */}
+      {chestId === 99 && chain === "bnb" ? (
         <div
           className={` ${
             open && chestId === 99 && chain === "bnb"
               ? "new-chest-item-open-premium"
-              : open && chestId === 99 && chain === "taiko"
-              ? "new-chest-item-open-premium-taiko"
-              : open
+              : // : open && chestId === 99 && chain === "taiko"
+              // ? "new-chest-item-open-premium-taiko"
+              open
               ? "new-chest-item-open"
               : ""
           }  ${
@@ -2498,8 +2499,8 @@ const NewChestItem = ({
               className={` ${
                 chestId === 99 && chain === "bnb"
                   ? "premium-chest-item-img"
-                  : chestId === 99 && chain === "taiko"
-                  ? "premium-chest-item-img-taiko"
+                  // : chestId === 99 && chain === "taiko"
+                  // ? "premium-chest-item-img-taiko"
                   : chain !== "skale"
                   ? "new-chest-item-img"
                   : "new-chest-item-img-skale"
@@ -2515,10 +2516,10 @@ const NewChestItem = ({
                   ? `https://cdn.worldofdypians.com/wod/${
                       open ? "premiumChestOpenFront" : "premiumChest"
                     }.png`
-                  : chestId === 99 && chain === "taiko"
-                  ? `https://cdn.worldofdypians.com/wod/${
-                      open ? "premiumChestOpenFrontTaiko2" : "premiumChestTaiko"
-                    }.png`
+                  // : chestId === 99 && chain === "taiko"
+                  // ? `https://cdn.worldofdypians.com/wod/${
+                  //     open ? "premiumChestOpenFrontTaiko2" : "premiumChestTaiko"
+                  //   }.png`
                   : chain !== "skale"
                   ? `https://cdn.worldofdypians.com/wod/${
                       open ? image + "open" : image

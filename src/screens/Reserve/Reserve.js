@@ -11,16 +11,11 @@ import {
   Legend,
   Line,
 } from "recharts";
-import { chartData } from "./data";
+import { localData } from "./data";
 import { abbreviateNumber } from "js-abbreviation-number";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
+import axios from "axios";
 const Reserve = ({ wodPrice }) => {
-  const [metrics] = useState({
-    totalReserve: 26794231.98,
-    totalSupply: "26,794,231.98",
-    collateralRatio: "$0,0826",
-  });
-
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
     return dateObj.toLocaleDateString("en-US", {
@@ -30,14 +25,61 @@ const Reserve = ({ wodPrice }) => {
     });
   };
 
-  const INITIAL_COUNT = 13;
+  const INITIAL_COUNT = 15;
   const LOAD_COUNT = 20;
   const chartRef = useRef(null);
+  const dataFetchedRef = useRef(false);
 
+  const [chartData, setChartData] = useState(localData);
+  const [metrics] = useState({
+    totalReserve: chartData[chartData.length - 1].amount,
+    totalSupply: "26,794,231.98",
+    collateralRatio: "$0,0826",
+  });
   const [displayData, setDisplayData] = useState([]);
   const [startIndex, setStartIndex] = useState(
-    Math.max(chartData.length - INITIAL_COUNT, 0)
+    Math.max(localData.length - INITIAL_COUNT, 0)
   );
+
+  const addOneDay = (dateStr) => {
+    const date = new Date(dateStr);
+    date.setDate(date.getDate() + 1);
+    return date.toISOString().split("T")[0];
+  };
+
+  const mergeData = (fetchData) => {
+    const result = [...localData];
+    let lastAmount = localData[localData.length - 1]?.amount || 0;
+
+    const alteredFetch = fetchData.map((item) => {
+      lastAmount += item.amount;
+      return {
+        ...item,
+        amount: lastAmount,
+      };
+    });
+    if (alteredFetch.length > 0) {
+      const lastItem = alteredFetch[alteredFetch.length - 1];
+      alteredFetch.push({
+        date: addOneDay(lastItem.date),
+        amount: lastItem.amount,
+      });
+    }
+    setChartData([...result, ...alteredFetch]);
+    return [...result, ...alteredFetch];
+  };
+  const fetchDynamicData = async () => {
+    const result = await axios
+      .get("https://api.worldofdypians.com/api/reserve-transfers")
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      // console.log(result.data);
+      // chartData.push(...result.data);
+      mergeData(result.data);
+    }
+  };
 
   useEffect(() => {
     setDisplayData(chartData.slice(startIndex));
@@ -67,6 +109,12 @@ const Reserve = ({ wodPrice }) => {
     };
   }, [startIndex, chartData.length]);
 
+  useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
+    fetchDynamicData();
+  }, []);
+  
   return (
     <div
       className="container-fluid bg-[#0a0d1f] py-5 bottom-border-divider position-relative"
@@ -165,12 +213,17 @@ const Reserve = ({ wodPrice }) => {
                   <MetricCard
                     title="USD Value of Reserve"
                     value={
-                      "$" + getFormattedNumber(metrics.totalReserve * wodPrice)
+                      "$" +
+                      getFormattedNumber(
+                        chartData[chartData.length - 1].amount * wodPrice
+                      )
                     }
                   />
                   <MetricCard
                     title="Current Reserve Size in WOD"
-                    value={metrics.totalSupply}
+                    value={getFormattedNumber(
+                      chartData[chartData.length - 1].amount
+                    )}
                   />
                   <MetricCard
                     title="Average WOD Cost Basis"
@@ -234,8 +287,8 @@ const Reserve = ({ wodPrice }) => {
                           }}
                           axisLine={false}
                           width={40}
-                          tickFormatter={(value) =>
-                            `${abbreviateNumber(value, 1).replace("G", "B")}`
+                          tickFormatter={(amount) =>
+                            `${abbreviateNumber(amount, 1).replace("G", "B")}`
                           }
                           tickCount={8}
                         />
@@ -248,11 +301,14 @@ const Reserve = ({ wodPrice }) => {
                             backdropFilter: "blur(10px)",
                           }}
                           labelStyle={{ color: "#67e8f9", marginBottom: "4px" }}
-                          formatter={(value) => [value.toLocaleString(), "WOD"]}
+                          formatter={(amount) => [
+                            amount.toLocaleString(),
+                            "WOD",
+                          ]}
                         />
                         <Area
                           type="monotone"
-                          dataKey="value"
+                          dataKey="amount"
                           stroke="#06b6d4"
                           fill="url(#colorGradient)"
                           strokeWidth={2}
