@@ -15,6 +15,7 @@ import { localData } from "./data";
 import { abbreviateNumber } from "js-abbreviation-number";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import axios from "axios";
+import { Add, Remove } from "@mui/icons-material";
 const Reserve = ({ wodPrice }) => {
   const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
@@ -38,7 +39,8 @@ const Reserve = ({ wodPrice }) => {
   });
   const [displayData, setDisplayData] = useState([]);
   const [startIndex, setStartIndex] = useState(
-    Math.max(localData.length - INITIAL_COUNT, 0)
+    // Math.max(localData.length - INITIAL_COUNT, 0)
+    0
   );
 
   const addOneDay = (dateStr) => {
@@ -87,18 +89,11 @@ const Reserve = ({ wodPrice }) => {
 
   useEffect(() => {
     const handleWheel = (e) => {
-      e.preventDefault(); // now works
+      // if (!zoomActive) return;
+      e.preventDefault();
 
-      if (e.deltaY < 0) {
-        const newStart = Math.max(startIndex - LOAD_COUNT, 0);
-        setStartIndex(newStart);
-      } else if (e.deltaY > 0) {
-        const newStart = Math.min(
-          startIndex + LOAD_COUNT,
-          Math.max(chartData.length - INITIAL_COUNT, 0)
-        );
-        setStartIndex(newStart);
-      }
+      if (e.deltaY < 0) handleScrollUp();
+      if (e.deltaY > 0) handleScrollDown();
     };
 
     const chartDiv = chartRef.current;
@@ -108,6 +103,19 @@ const Reserve = ({ wodPrice }) => {
       chartDiv.removeEventListener("wheel", handleWheel);
     };
   }, [startIndex, chartData.length]);
+
+  const handleScrollUp = () => {
+    const newStart = Math.max(startIndex - LOAD_COUNT, 0);
+    setStartIndex(newStart);
+  };
+
+  const handleScrollDown = () => {
+    const newStart = Math.min(
+      startIndex + LOAD_COUNT,
+      Math.max(chartData.length - INITIAL_COUNT, 0)
+    );
+    setStartIndex(newStart);
+  };
 
   useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -233,10 +241,37 @@ const Reserve = ({ wodPrice }) => {
 
                 {/* Chart */}
                 <div className="bg-[#0f1729]/90 backdrop-blur-xl rounded-xl p-4 shadow-lg w-100">
-                  <h3 className="text-lg font-semibold mb-1 text-white">
-                    Reserve Activity
-                  </h3>
-                  <p className="text-slate-400/70 text-xs">Updated Oct 2025</p>
+                  <div className="d-flex align-items-center gap-2 justify-content-between">
+                    <div className="d-flex flex-column">
+                      <h3 className="text-lg font-semibold mb-1 text-white">
+                        Reserve Activity
+                      </h3>
+                      <p className="text-slate-400/70 text-xs">
+                        Updated Oct 2025
+                      </p>
+                    </div>
+                    <div className="d-flex align-items-center gap-2 justify-content-end">
+                      {/* 👇 Scroll control buttons */}
+                      <button
+                        onClick={handleScrollUp}
+                        disabled={startIndex === 0}
+                        className={` ${
+                          startIndex === 0 ? "bg-cyan-500/5" : "bg-cyan-500"
+                        } group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30  hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300 text-white`}
+                      >
+                        <Remove />
+                      </button>
+                      <button
+                        onClick={handleScrollDown}
+                        disabled={displayData.length === INITIAL_COUNT}
+                        className={` ${
+                          startIndex === 0 ? "bg-cyan-500" : "bg-cyan-500/5"
+                        } group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30  hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300 text-white`}
+                      >
+                        <Add />
+                      </button>
+                    </div>
+                  </div>
                   <div
                     id="zoomable-chart"
                     className="relative h-96 w-full select-none"
