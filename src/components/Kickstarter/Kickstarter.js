@@ -11,8 +11,6 @@ import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import royaltyChestIdle from "./assets/royaltyChestIdle.webp";
 import royaltyChestIdleMoblie from "./assets/royaltyChestIdleMobile.webp";
-import royaltyChestIdleTaiko from "./assets/royaltyChestIdleTaiko.webp";
-import royaltyChestIdleMoblieTaiko from "./assets/royaltyChestIdleTaikoMobile.webp";
 
 const rewardCategories = [
   {
@@ -61,14 +59,14 @@ const Kickstarter = ({
   publicClient,
   onClaimRewards,
   openedRoyaltyChest,
-  royalChestIndexTaiko,
-  openedRoyaltyChestTaiko,
+  // royalChestIndexTaiko,
+  // openedRoyaltyChestTaiko,
 }) => {
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
 
-  const videoRef1Taiko = useRef(null);
-  const videoRef2Taiko = useRef(null);
+  // const videoRef1Taiko = useRef(null);
+  // const videoRef2Taiko = useRef(null);
 
   const windowSize = useWindowSize();
 
@@ -161,50 +159,50 @@ const Kickstarter = ({
         },
       ],
     },
-    {
-      id: "taiko",
-      name: "Taiko",
-      symbol: "TAIKO",
-      logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
-      desc: "Taiko is a fully decentralized, Ethereum-equivalent ZK-Rollup (Type 1 ZK-EVM). The goal is to scale Ethereum while upholding the root principles of security and decentralization. ",
-      color: "from-blue-400 to-purple-600",
-      gradientFrom: "#ce0bf5ff",
-      gradientTo: "#9d52e7ff",
-      hex: "0x28c58",
-      chainId: 167000,
-      socials: [
-        {
-          Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-          label: "Twitter",
-          color: "#1DA1F2",
-          link: "https://x.com/taikoxyz",
-        },
-        {
-          Icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-          label: "Telegram",
-          color: "#0088CC",
-          link: "https://t.me/TaikoEcosystem",
-        },
-        {
-          Icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-          label: "Discord",
-          color: "#5865F2",
-          link: "https://discord.com/invite/taikoxyz",
-        },
-        {
-          Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-          label: "Website",
-          color: "#059669",
-          link: "https://taiko.xyz/",
-        },
-      ],
-    },
+    //  {
+    //   id: "taiko",
+    //   name: "Taiko",
+    //   symbol: "TAIKO",
+    //   logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
+    //   desc: "Taiko is a fully decentralized, Ethereum-equivalent ZK-Rollup (Type 1 ZK-EVM). The goal is to scale Ethereum while upholding the root principles of security and decentralization. ",
+    //   color: "from-blue-400 to-purple-600",
+    //   gradientFrom: "#ce0bf5ff",
+    //   gradientTo: "#9d52e7ff",
+    //   hex: "0x28c58",
+    //   chainId: 167000,
+    //   socials: [
+    //     {
+    //       Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+    //       label: "Twitter",
+    //       color: "#1DA1F2",
+    //       link: "https://x.com/taikoxyz",
+    //     },
+    //     {
+    //       Icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+    //       label: "Telegram",
+    //       color: "#0088CC",
+    //       link: "https://t.me/TaikoEcosystem",
+    //     },
+    //     {
+    //       Icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+    //       label: "Discord",
+    //       color: "#5865F2",
+    //       link: "https://discord.com/invite/taikoxyz",
+    //     },
+    //     {
+    //       Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+    //       label: "Website",
+    //       color: "#059669",
+    //       link: "https://taiko.xyz/",
+    //     },
+    //   ],
+    // },
   ];
 
   const [showContent, setShowContent] = useState(false);
   const [step, setStep] = useState(1);
   const [chestOpened, setChestOpened] = useState(false);
-  const [selectedChain, setSelectedChain] = useState("");
+  const [selectedChain, setSelectedChain] = useState("bnb");
   const [hoveredChain, setHoveredChain] = useState(null);
   const [loading, setLoading] = useState(false);
   const [disable, setDisable] = useState(true);
@@ -224,7 +222,7 @@ const Kickstarter = ({
   window.addEventListener("keydown", handleEsc);
 
   const chestIndex = royalChestIndex + 1;
-  const chestIndexTaiko = royalChestIndexTaiko + 1;
+  // const chestIndexTaiko = royalChestIndexTaiko + 1;
 
   const getUserRewardsByChest = async (
     userEmail,
@@ -388,7 +386,8 @@ const Kickstarter = ({
 
       console.log(txResult);
       const video =
-        chainText === "taiko" ? videoRef2Taiko.current : videoRef2.current;
+        // chainText === "taiko" ? videoRef2Taiko.current :
+        videoRef2.current;
       if (txResult) {
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
         setLoading(false);
@@ -426,7 +425,8 @@ const Kickstarter = ({
         });
       console.log(txResult_binance);
       const video =
-        chainText === "taiko" ? videoRef2Taiko.current : videoRef2.current;
+        // chainText === "taiko" ? videoRef2Taiko.current :
+        videoRef2.current;
 
       if (txResult_binance) {
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
@@ -466,7 +466,8 @@ const Kickstarter = ({
         });
       console.log(txResult_matchain, txHash);
       const video =
-        chainText === "taiko" ? videoRef2Taiko.current : videoRef2.current;
+        // chainText === "taiko" ? videoRef2Taiko.current :
+        videoRef2.current;
 
       if (txResult_matchain) {
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
@@ -516,10 +517,10 @@ const Kickstarter = ({
       window.config.daily_bonus_bnb_address
     );
 
-    const daily_bonus_contract_taiko = new window.web3.eth.Contract(
-      window.DAILY_BONUS_TAIKO_ABI,
-      window.config.daily_bonus_taiko_address
-    );
+    // const daily_bonus_contract_taiko = new window.web3.eth.Contract(
+    //   window.DAILY_BONUS_TAIKO_ABI,
+    //   window.config.daily_bonus_taiko_address
+    // );
 
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
@@ -528,8 +529,8 @@ const Kickstarter = ({
           .openChest()
           .send({
             from: address,
-             maxPriorityFeePerGas: null,
-              maxFeePerGas: null,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
           })
           .then((data) => {
             getUserRewardsByChest(
@@ -626,8 +627,8 @@ const Kickstarter = ({
           .openChest()
           .send({
             from: address,
-             maxPriorityFeePerGas: null,
-              maxFeePerGas: null,
+            maxPriorityFeePerGas: null,
+            maxFeePerGas: null,
             // ...transactionParameters,
           })
           .then((data) => {
@@ -741,51 +742,52 @@ const Kickstarter = ({
             }, 8000);
           }
         }
-      }
-    } else if (chainId === 167000) {
-      // const web3 = new Web3(window.ethereum);
-      // const gasPrice = await window.taikoWeb3.eth.getGasPrice();
-      // console.log("gasPrice", gasPrice);
-      // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-      // const increasedGwei = parseInt(currentGwei) + 0.01;
-      // console.log("increasedGwei", increasedGwei);
+      } 
+      // else if (chainId === 167000) {
+        // const web3 = new Web3(window.ethereum);
+        // const gasPrice = await window.taikoWeb3.eth.getGasPrice();
+        // console.log("gasPrice", gasPrice);
+        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
 
-      // const transactionParameters = {
-      //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-      // };
+        // const transactionParameters = {
+        //   gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        // };
 
-      // await daily_bonus_contract_taiko.methods
-      //   .openChest()
-      //   .estimateGas({ from: address })
-      //   .then((gas) => {
-      //     transactionParameters.gas = web3.utils.toHex(gas);
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
-      // console.log(transactionParameters);
+        // await daily_bonus_contract_taiko.methods
+        //   .openChest()
+        //   .estimateGas({ from: address })
+        //   .then((gas) => {
+        //     transactionParameters.gas = web3.utils.toHex(gas);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        // console.log(transactionParameters);
 
-      await daily_bonus_contract_taiko.methods
-        .openChest()
-        .send({
-          from: address,
-           maxPriorityFeePerGas: null,
-              maxFeePerGas: null,
-          // ...transactionParameters,
-        })
-        .then((data) => {
-          handleCheckIfTxExists(
-            email,
-            data.transactionHash,
-            chestIndexTaiko - 1,
-            "taiko"
-          );
-        })
-        .catch((e) => {
-          console.error(e);
-          window.alertify.error(e?.message);
-          setLoading(false);
-        });
+      //   await daily_bonus_contract_taiko.methods
+      //     .openChest()
+      //     .send({
+      //       from: address,
+      //       maxPriorityFeePerGas: null,
+      //       maxFeePerGas: null,
+      //       // ...transactionParameters,
+      //     })
+      //     .then((data) => {
+      //       handleCheckIfTxExists(
+      //         email,
+      //         data.transactionHash,
+      //         chestIndexTaiko - 1,
+      //         "taiko"
+      //       );
+      //     })
+      //     .catch((e) => {
+      //       console.error(e);
+      //       window.alertify.error(e?.message);
+      //       setLoading(false);
+      //     });
+      // }
     }
   };
 
@@ -875,36 +877,48 @@ const Kickstarter = ({
       setMute(true);
       html.classList.add("hidescroll");
     }
+
+    var time;
+
+    if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
+      time = 0;
+    } else {
+      time = 4000;
+    }
+
+    // window.scrollTo(0, 0);
+    const video = videoRef1.current;
+
+    setTimeout(() => {
+      setShowContent(true);
+    }, time);
+
+    if (
+      openedRoyaltyChest.length === 0 ||
+      (openedRoyaltyChest && openedRoyaltyChest.isOpened === true)
+    ) {
+      const timeout1 = setTimeout(() => {
+        if (video) {
+          video.play().catch((err) => console.error("Play failed:", err));
+
+          const pauseTimeout = setTimeout(() => {
+            video.pause();
+            setDisable(false);
+            onAddClass(true);
+          }, 6200);
+
+          return () => clearTimeout(pauseTimeout);
+        }
+      }, 1500);
+
+      return () => clearTimeout(timeout1);
+    }
   }, [count]);
 
   useEffect(() => {
-    const video = videoRef1.current;
-    const videoTaiko = videoRef1Taiko.current;
-    var timeTaiko;
-    var time;
+    if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
+      var time;
 
-    if (
-      openedRoyaltyChest &&
-      openedRoyaltyChest.isOpened === true &&
-      (selectedChain === "opbnb" || selectedChain === "bnb")
-    ) {
-      timeTaiko = 0;
-    } else if (
-      openedRoyaltyChestTaiko &&
-      openedRoyaltyChestTaiko.isOpened === true &&
-      selectedChain === "taiko"
-    ) {
-      timeTaiko = 0;
-    } else {
-      timeTaiko = 4000;
-    }
-
-    if (
-      openedRoyaltyChest &&
-      openedRoyaltyChest.isOpened === true &&
-      (selectedChain === "opbnb" || selectedChain === "bnb") &&
-      isOpen
-    ) {
       if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
         time = 0;
       } else {
@@ -925,115 +939,14 @@ const Kickstarter = ({
       setTimeout(() => {
         setRewards(openedRoyaltyChest.rewards);
       }, time);
-      setTimeout(() => {
-        setShowContent(true);
-      }, time);
-    } else if (
-      openedRoyaltyChestTaiko &&
-      openedRoyaltyChestTaiko.isOpened === true &&
-      selectedChain === "taiko" &&
-      isOpen
-    ) {
-      // var timeTaiko;
-
-      if (
-        openedRoyaltyChestTaiko &&
-        openedRoyaltyChestTaiko.isOpened === true
-      ) {
-        timeTaiko = 0;
-      } else {
-        timeTaiko = 3600;
-      }
-
-      setChestOpened(true);
-      setStep(3);
-      const video = videoRef2Taiko.current;
-      if (video) {
-        video.play().catch((err) => console.error("Play failed:", err));
-        setTimeout(() => {
-          video.pause();
-          setStep(3);
-        }, 8000);
-      }
-
-      setTimeout(() => {
-        setRewards(openedRoyaltyChestTaiko.rewards);
-      }, timeTaiko);
-      setTimeout(() => {
-        setShowContent(true);
-      }, timeTaiko);
-    } else if (
-      (openedRoyaltyChestTaiko.length === 0 ||
-        (openedRoyaltyChestTaiko &&
-          openedRoyaltyChestTaiko.isOpened === false)) &&
-      selectedChain === "taiko" &&
-      isOpen
-    ) {
-      setStep(1);
-      setRewards([]);
-      setChestOpened(false);
-      setTimeout(() => {
-        setShowContent(true);
-      }, timeTaiko);
-      const timeout1 = setTimeout(() => {
-        if (videoTaiko) {
-          videoTaiko.play().catch((err) => console.error("Play failed:", err));
-
-          const pauseTimeout = setTimeout(() => {
-            videoTaiko.pause();
-            setDisable(false);
-            onAddClass(true);
-          }, 6200);
-
-          return () => clearTimeout(pauseTimeout);
-        }
-      }, 1500);
-
-      return () => clearTimeout(timeout1);
-    } else if (
-      (openedRoyaltyChest.length === 0 ||
-        (openedRoyaltyChest && openedRoyaltyChest.isOpened === false)) &&
-      (selectedChain === "opbnb" || selectedChain === "bnb") &&
-      isOpen
-    ) {
-      setStep(1);
-      setRewards([]);
-      setChestOpened(false);
-
-      setTimeout(() => {
-        setShowContent(true);
-      }, time);
-      const timeout1 = setTimeout(() => {
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
-
-          const pauseTimeout = setTimeout(() => {
-            video.pause();
-            setDisable(false);
-            onAddClass(true);
-          }, 6200);
-
-          return () => clearTimeout(pauseTimeout);
-        }
-      }, 1500);
-
-      return () => clearTimeout(timeout1);
     }
-  }, [openedRoyaltyChest, openedRoyaltyChestTaiko, selectedChain, isOpen]);
+  }, [openedRoyaltyChest]);
 
   useEffect(() => {
     if (chainId === 56) {
       setSelectedChain("bnb");
-      setSocials(chains[0].socials);
     } else if (chainId === 204) {
       setSelectedChain("opbnb");
-      setSocials(chains[1].socials);
-    } else if (chainId === 167000) {
-      setSelectedChain("taiko");
-      setSocials(chains[2].socials);
-    } else {
-      setSelectedChain("bnb");
-      setSocials(chains[0].socials);
     }
   }, [chainId]);
 
@@ -1052,9 +965,7 @@ const Kickstarter = ({
           }}
         />
 
-        {openedRoyaltyChest &&
-        openedRoyaltyChest.isOpened === true &&
-        (selectedChain === "opbnb" || selectedChain === "bnb") ? (
+        {openedRoyaltyChest && openedRoyaltyChest.isOpened === true ? (
           <>
             {windowSize.width && windowSize.width > 700 ? (
               <img
@@ -1070,25 +981,7 @@ const Kickstarter = ({
               />
             )}
           </>
-        ) : openedRoyaltyChestTaiko &&
-          openedRoyaltyChestTaiko.isOpened === true &&
-          selectedChain === "taiko" ? (
-          <>
-            {windowSize.width && windowSize.width > 700 ? (
-              <img
-                src={royaltyChestIdleTaiko}
-                className="kickstarter-video visible"
-                alt=""
-              />
-            ) : (
-              <img
-                src={royaltyChestIdleMoblieTaiko}
-                className="kickstarter-video visible"
-                alt=""
-              />
-            )}
-          </>
-        ) : selectedChain === "opbnb" || selectedChain === "bnb" ? (
+        ) : (
           <>
             {windowSize.width && windowSize.width > 700 ? (
               <>
@@ -1148,69 +1041,133 @@ const Kickstarter = ({
               <></>
             )}
           </>
-        ) : (
-          <>
-            {windowSize.width && windowSize.width > 700 ? (
-              <>
-                {/* VIDEO ONE (Intro) */}
-                <video
-                  ref={videoRef1Taiko}
-                  muted={mute}
-                  src={"https://cdn.worldofdypians.com/wod/firstPartTaiko.mp4"}
-                  className={`kickstarter-video ${
-                    step === 1 ? "visible" : "hidden"
-                  }`}
-                  playsInline
-                  preload="auto"
-                />
-
-                {/* VIDEO TWO (Reward animation) */}
-                <video
-                  ref={videoRef2Taiko}
-                  src={"https://cdn.worldofdypians.com/wod/secondPartTaiko.mp4"}
-                  className={`kickstarter-video ${
-                    step === 2 || step === 3 ? "visible" : "hidden"
-                  }`}
-                  playsInline
-                  preload="auto"
-                />
-              </>
-            ) : windowSize.width && windowSize.width <= 700 ? (
-              <>
-                {/* VIDEO ONE (Intro) */}
-                <video
-                  ref={videoRef1Taiko}
-                  muted={mute}
-                  src={
-                    "https://cdn.worldofdypians.com/wod//firstPartTaikoMobile.mp4"
-                  }
-                  className={`kickstarter-video ${
-                    step === 1 ? "visible" : "hidden"
-                  }`}
-                  playsInline
-                  preload="auto"
-                />
-
-                {/* VIDEO TWO (Reward animation) */}
-                <video
-                  ref={videoRef2Taiko}
-                  src={
-                    "https://cdn.worldofdypians.com/wod/secondPartTaikoMobile.mp4"
-                  }
-                  className={`kickstarter-video ${
-                    step === 2 || step === 3 ? "visible" : "hidden"
-                  }`}
-                  playsInline
-                  preload="auto"
-                />
-              </>
-            ) : (
-              <></>
-            )}
-          </>
         )}
         {showContent && (
           <>
+            {/* <div className="d-flex flex-column gap-1 switch-chain-position switch-info-container p-3">
+       
+            {chains.map((item, index) => (
+              <div
+                key={index}
+                className={`${
+                  activeChain === item.id
+                    ? "kickstarter-chain-item-active"
+                    : "kickstarter-chain-item"
+                } align-items-center p-2 d-flex flex-column gap-1`}
+                onMouseEnter={() => handleMouseEnter(item.id)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => {
+                  setActiveChain(item.id);
+                  switchNetwork(item.tag, item.chainId);
+                }}
+              >
+                <img
+                  src={`https://cdn.worldofdypians.com/wod/${
+                    activeChain === item.id
+                      ? item.activeImage
+                      : hoverState === item.id
+                      ? item.hoverImage
+                      : item.inactiveImage
+                  }`}
+                  width={30}
+                  height={30}
+                  alt=""
+                />
+                <span
+                  className="kickstarter-chain-span"
+                  style={{
+                    color:
+                      hoverState === item.id
+                        ? "#fff"
+                        : activeChain === item.id
+                        ? "gold"
+                        : "#828FBB",
+                  }}
+                >
+                  {item.name}
+                </span>
+              </div>
+            ))}
+          </div> */}
+            {/* <h6
+            className={`kickstarter-title mb-0 mt-4 fade-in ${
+              step === 3 && "opacity-0"
+            }`}
+          >
+            Unlock Container
+          </h6> */}
+
+            {/* <div className="position-absolute top-0 start-0 w-100 h-100">
+            {Array.from({ length: chestOpened ? 80 : 40 }).map((_, i) => (
+              <motion.div
+                key={`particle-${i}`}
+                className="position-absolute rounded-circle"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  width: chestOpened ? "8px" : "4px",
+                  height: chestOpened ? "8px" : "4px",
+                  background: chestOpened
+                    ? "linear-gradient(45deg, #FDE047, #FB923C, #EF4444)"
+                    : "linear-gradient(45deg, #FBBF24, #F97316)",
+                  opacity: 0.8,
+                  filter: chestOpened ? "blur(0.5px)" : "none",
+                }}
+                animate={{
+                  scale: chestOpened ? [0, 3, 0] : [0, 1.5, 0],
+                  opacity: [0, 1, 0],
+                  y: [0, chestOpened ? -300 : -180],
+                  x: [0, (Math.random() - 0.5) * 200],
+                }}
+                transition={{
+                  duration: chestOpened ? 2.5 : 5 + Math.random() * 3,
+                  repeat: Infinity,
+                  delay: Math.random() * 5,
+                  ease: "easeOut",
+                }}
+              />
+            ))}
+          </div> */}
+
+            {/* <motion.div
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`position-absolute start-50 translate-middle-x d-none ${
+                step === 3 ? "d-none" : "d-lg-flex"
+              }`}
+              style={{ top: "20px", zIndex: 30 }}
+            >
+              <motion.div
+                className="px-4 py-3"
+                style={glassyContainerStyle}
+                whileHover={{ scale: 1.02 }}
+              >
+                <motion.h1
+                  className="text-center mb-0"
+                  style={{
+                    color: "rgba(219, 234, 254, 0.95)",
+                    fontSize: "1.5rem",
+                    fontWeight: "600",
+                    letterSpacing: "0.1em",
+                    textShadow: "0 0 20px rgba(56, 189, 248, 0.5)",
+                  }}
+                  animate={{
+                    textShadow: [
+                      "0 0 20px rgba(56, 189, 248, 0.5)",
+                      "0 0 40px rgba(56, 189, 248, 0.8)",
+                      "0 0 20px rgba(56, 189, 248, 0.5)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  UNLOCK CONTAINER
+                </motion.h1>
+              </motion.div>
+            </motion.div> */}
             {rewards && rewards.length > 0 && (
               <motion.div
                 key={rewardCategories[0].id}
@@ -1280,7 +1237,7 @@ const Kickstarter = ({
               style={{ top: "16px", left: "24px", zIndex: 30 }}
             >
               <motion.div
-                className="py-2 px-4 gap-2 gap-lg-0 d-flex flex-column align-items-center"
+                className="py-2 px-4 gap-2 gap-lg-0 d-flex flex-row flex-lg-column align-items-center"
                 style={glassyContainerStyle}
                 whileHover={{ scale: 1.02 }}
               >
@@ -1306,274 +1263,12 @@ const Kickstarter = ({
                     ease: "easeInOut",
                   }}
                 >
-                  Chains
+                  Chain
                 </motion.div>
 
                 <div className="d-flex flex-column align-items-center">
-                  <div className="d-flex align-items-center gap-2 mb-2 bnb-chains-wrapper p-2">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0, rotate: -90 }}
-                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                      transition={{
-                        delay: 0,
-                        type: "spring",
-                        stiffness: 150,
-                      }}
-                    >
-                      <button
-                        // disabled={disable}
-                        onClick={() => {
-                          setSelectedChain(chains[0].id);
-                          setSocials(chains[0].socials);
-                          switchNetwork(chains[0].hex, chains[0].chainId);
-                        }}
-                        onMouseEnter={() => setHoveredChain(chains[0].id)}
-                        onMouseLeave={() => setHoveredChain(null)}
-                        className="btn p-2 position-relative overflow-hidden border-0 rounded"
-                        style={{
-                          // width: "32px",
-                          height: "32px",
-                          background:
-                            selectedChain === chains[0].id
-                              ? "linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(14, 25, 48, 0.8) 100%)"
-                              : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
-                          backdropFilter: "blur(10px)",
-                          WebkitBackdropFilter: "blur(10px)",
-                          border:
-                            selectedChain === chains[0].id
-                              ? "1px solid rgba(59, 130, 246, 0.4)"
-                              : "1px solid rgba(59, 130, 246, 0.2)",
-                          // transform:
-                          //   selectedChain === chains[0].id
-                          //     ? "scale(1.1)"
-                          //     : "scale(1)",
-                          transition: "all 0.3s ease",
-                        }}
-                        aria-label={`Select ${chains[0].name}`}
-                      >
-                        <motion.div
-                          className="position-absolute top-0 start-0 w-100 h-100"
-                          style={getChainGradient(chains[0])}
-                          animate={{
-                            opacity:
-                              selectedChain === chains[0].id
-                                ? 0.3
-                                : hoveredChain === chains[0].id
-                                ? 0.2
-                                : 0.1,
-                            scale:
-                              selectedChain === chains[0].id ? [1, 1.1, 1] : 1,
-                          }}
-                          transition={{
-                            duration: selectedChain === chains[0].id ? 2 : 0.3,
-                            repeat:
-                              selectedChain === chains[0].id ? Infinity : 0,
-                          }}
-                        />
-
-                        <div className="d-flex align-items-center gap-1">
-                          <motion.span
-                            className="position-relative d-flex align-items-center gap-1"
-                            style={{ fontSize: "14px", zIndex: 10 }}
-                            animate={{
-                              scale:
-                                selectedChain === chains[0].id
-                                  ? [1, 1.2, 1]
-                                  : 1,
-                              rotate:
-                                hoveredChain === chains[0].id
-                                  ? [0, 5, -5, 0]
-                                  : 0,
-                            }}
-                            transition={{
-                              duration:
-                                selectedChain === chains[0].id ? 1 : 0.5,
-                              repeat:
-                                selectedChain === chains[0].id ? Infinity : 0,
-                            }}
-                          >
-                            <img
-                              src={chains[0].logo}
-                              width={16}
-                              height={16}
-                              alt=""
-                            />
-                          </motion.span>
-                          <motion.div
-                            style={{
-                              color: "#fff",
-                              fontSize: "0.9rem",
-                              letterSpacing: "0.025em",
-                              zIndex: 1,
-                            }}
-                          >
-                            {chains[0]?.name}
-                          </motion.div>
-                        </div>
-
-                        {selectedChain === chains[0].id && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
-                            style={{
-                              width: "12px",
-                              height: "12px",
-                              background:
-                                "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
-                              marginTop: "-2px",
-                              marginRight: "-2px",
-                            }}
-                          >
-                            <motion.div
-                              className="rounded-circle bg-white"
-                              style={{ width: "4px", height: "4px" }}
-                              animate={{ scale: [1, 1.3, 1] }}
-                              transition={{ duration: 1, repeat: Infinity }}
-                            />
-                          </motion.div>
-                        )}
-                      </button>
-                    </motion.div>{" "}
-                    <div
-                      style={{
-                        width: "2px",
-                        height: "40px",
-                        background:
-                          "linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.4) 25%, rgba(147, 197, 253, 0.8) 50%, rgba(59, 130, 246, 0.4) 75%, transparent 100%)",
-                        alignSelf: "center",
-                        borderRadius: "2px",
-                        boxShadow: "0 0 8px rgba(59, 130, 246, 0.4)",
-                        flexShrink: 0,
-                      }}
-                    />
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0, rotate: -90 }}
-                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                      transition={{
-                        delay: 1 * 0.08,
-                        type: "spring",
-                        stiffness: 150,
-                      }}
-                    >
-                      <button
-                        // disabled={disable}
-                        onClick={() => {
-                          setSelectedChain(chains[1].id);
-                          setSocials(chains[1].socials);
-                          switchNetwork(chains[1].hex, chains[1].chainId);
-                        }}
-                        onMouseEnter={() => setHoveredChain(chains[1].id)}
-                        onMouseLeave={() => setHoveredChain(null)}
-                        className="btn p-2 position-relative overflow-hidden border-0 rounded"
-                        style={{
-                          // width: "32px",
-                          height: "32px",
-                          background:
-                            selectedChain === chains[1].id
-                              ? "linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(14, 25, 48, 0.8) 100%)"
-                              : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
-                          backdropFilter: "blur(10px)",
-                          WebkitBackdropFilter: "blur(10px)",
-                          border:
-                            selectedChain === chains[1].id
-                              ? "1px solid rgba(59, 130, 246, 0.4)"
-                              : "1px solid rgba(59, 130, 246, 0.2)",
-                          // transform:
-                          //   selectedChain === chains[1].id
-                          //     ? "scale(1.1)"
-                          //     : "scale(1)",
-                          transition: "all 0.3s ease",
-                        }}
-                        aria-label={`Select ${chains[1].name}`}
-                      >
-                        <motion.div
-                          className="position-absolute top-0 start-0 w-100 h-100"
-                          style={getChainGradient(chains[1])}
-                          animate={{
-                            opacity:
-                              selectedChain === chains[1].id
-                                ? 0.3
-                                : hoveredChain === chains[1].id
-                                ? 0.2
-                                : 0.1,
-                            scale:
-                              selectedChain === chains[1].id ? [1, 1.1, 1] : 1,
-                          }}
-                          transition={{
-                            duration: selectedChain === chains[1].id ? 2 : 0.3,
-                            repeat:
-                              selectedChain === chains[1].id ? Infinity : 0,
-                          }}
-                        />
-
-                        <div className="d-flex align-items-center gap-1">
-                          <motion.span
-                            className="position-relative d-flex align-items-center gap-1"
-                            style={{ fontSize: "14px", zIndex: 10 }}
-                            animate={{
-                              scale:
-                                selectedChain === chains[1].id
-                                  ? [1, 1.2, 1]
-                                  : 1,
-                              rotate:
-                                hoveredChain === chains[1].id
-                                  ? [0, 5, -5, 0]
-                                  : 0,
-                            }}
-                            transition={{
-                              duration:
-                                selectedChain === chains[1].id ? 1 : 0.5,
-                              repeat:
-                                selectedChain === chains[1].id ? Infinity : 0,
-                            }}
-                          >
-                            <img
-                              src={chains[1].logo}
-                              width={16}
-                              height={16}
-                              alt=""
-                            />
-                          </motion.span>
-                          <motion.div
-                            style={{
-                              color: "#fff",
-                              fontSize: "0.9rem",
-                              letterSpacing: "0.025em",
-                              zIndex: 1,
-                            }}
-                          >
-                            {chains[1]?.name}
-                          </motion.div>
-                        </div>
-
-                        {selectedChain === chains[1].id && (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
-                            style={{
-                              width: "12px",
-                              height: "12px",
-                              background:
-                                "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
-                              marginTop: "-2px",
-                              marginRight: "-2px",
-                            }}
-                          >
-                            <motion.div
-                              className="rounded-circle bg-white"
-                              style={{ width: "4px", height: "4px" }}
-                              animate={{ scale: [1, 1.3, 1] }}
-                              transition={{ duration: 1, repeat: Infinity }}
-                            />
-                          </motion.div>
-                        )}
-                      </button>
-                    </motion.div>
-                  </div>
-                  <div className="d-flex flex-column gap-1 w-100">
-                    {chains.slice(2, chains.length).map((chain, index) => (
+                  <div className="d-flex gap-2">
+                    {chains.map((chain, index) => (
                       <motion.div
                         key={chain.id}
                         initial={{ opacity: 0, scale: 0, rotate: -90 }}
@@ -1583,10 +1278,9 @@ const Kickstarter = ({
                           type: "spring",
                           stiffness: 150,
                         }}
-                        style={{ width: "100%" }}
                       >
                         <button
-                          // disabled={disable}
+                          disabled={disable}
                           onClick={() => {
                             setSelectedChain(chain.id);
                             setSocials(chain.socials);
@@ -1596,11 +1290,11 @@ const Kickstarter = ({
                           onMouseLeave={() => setHoveredChain(null)}
                           className="btn p-2 position-relative overflow-hidden border-0 rounded"
                           style={{
-                            width: "100%",
+                            width: "32px",
                             height: "32px",
                             background:
                               selectedChain === chain.id
-                                ? "linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(236, 72, 153, 0.145) 50%, rgba(14, 25, 48, 0.8) 100%)"
+                                ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 100%)"
                                 : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
                             backdropFilter: "blur(10px)",
                             WebkitBackdropFilter: "blur(10px)",
@@ -1608,10 +1302,10 @@ const Kickstarter = ({
                               selectedChain === chain.id
                                 ? "1px solid rgba(59, 130, 246, 0.4)"
                                 : "1px solid rgba(59, 130, 246, 0.2)",
-                            // transform:
-                            //   selectedChain === chain.id
-                            //     ? "scale(1.1)"
-                            //     : "scale(1)",
+                            transform:
+                              selectedChain === chain.id
+                                ? "scale(1.1)"
+                                : "scale(1)",
                             transition: "all 0.3s ease",
                           }}
                           aria-label={`Select ${chain.name}`}
@@ -1635,40 +1329,27 @@ const Kickstarter = ({
                             }}
                           />
 
-                          <div className="d-flex align-items-center gap-1">
-                            <motion.span
-                              className="position-relative d-flex align-items-center gap-1"
-                              style={{ fontSize: "14px", zIndex: 10 }}
-                              animate={{
-                                scale:
-                                  selectedChain === chain.id ? [1, 1.2, 1] : 1,
-                                rotate:
-                                  hoveredChain === chain.id ? [0, 5, -5, 0] : 0,
-                              }}
-                              transition={{
-                                duration: selectedChain === chain.id ? 1 : 0.5,
-                                repeat:
-                                  selectedChain === chain.id ? Infinity : 0,
-                              }}
-                            >
-                              <img
-                                src={chain.logo}
-                                width={16}
-                                height={16}
-                                alt=""
-                              />
-                            </motion.span>
-                            <motion.div
-                              style={{
-                                color: "#fff",
-                                fontSize: "0.9rem",
-                                letterSpacing: "0.025em",
-                                zIndex: 1,
-                              }}
-                            >
-                              {chain?.name}
-                            </motion.div>
-                          </div>
+                          <motion.span
+                            className="position-relative"
+                            style={{ fontSize: "14px", zIndex: 10 }}
+                            animate={{
+                              scale:
+                                selectedChain === chain.id ? [1, 1.2, 1] : 1,
+                              rotate:
+                                hoveredChain === chain.id ? [0, 5, -5, 0] : 0,
+                            }}
+                            transition={{
+                              duration: selectedChain === chain.id ? 1 : 0.5,
+                              repeat: selectedChain === chain.id ? Infinity : 0,
+                            }}
+                          >
+                            <img
+                              src={chain.logo}
+                              width={16}
+                              height={16}
+                              alt=""
+                            />
+                          </motion.span>
 
                           {selectedChain === chain.id && (
                             <motion.div
@@ -1697,7 +1378,7 @@ const Kickstarter = ({
                     ))}
                   </div>
 
-                  {/* <AnimatePresence mode="wait">
+                  <AnimatePresence mode="wait">
                     <motion.div
                       key={selectedChain}
                       initial={{ opacity: 0, y: 8 }}
@@ -1727,7 +1408,7 @@ const Kickstarter = ({
                         {selectedChainData?.name}
                       </motion.div>
                     </motion.div>
-                  </AnimatePresence> */}
+                  </AnimatePresence>
                 </div>
               </motion.div>
             </motion.div>
@@ -1994,8 +1675,6 @@ const Kickstarter = ({
                           "BNB Chain delivers high-speed, low-cost transactions for Web3, DeFi, NFTs, and gaming applications. Built for developers who want Ethereum compatibility with superior performance and minimal fees."}
                         {selectedChain === "opbnb" &&
                           "An optimized layer-2 solution that delivers lower fees and higher throughput to unlock the full potential of the BNB Chain"}
-                        {selectedChain === "taiko" &&
-                          "Taiko is a fully decentralized, Ethereum-equivalent ZK-Rollup (Type 1 ZK-EVM). The goal is to scale Ethereum while upholding the root principles of security and decentralization."}
                       </motion.div>
                       <div className="d-flex flex-column h-100 justify-content-end justify-content-lg-between gap-3 gap-lg-0 d-flex d-lg-none">
                         <div
@@ -2419,86 +2098,163 @@ const Kickstarter = ({
                 </div>
               </div>
             </motion.div>
-            {!disable && (
-              <div className="kickstarter-button-position">
-                {!email && coinbase && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+            <div className="kickstarter-button-position">
+              {!email && coinbase && (
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+                >
+                  <NavLink
+                    to="/auth"
+                    onClick={() => {
+                      onClose();
+                      onAddClass(false);
+                    }}
+                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
+                    style={{
+                      padding: "14px 48px",
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      background:
+                        "linear-gradient(135deg, #10b96aff, #05963dff, #04782bff)",
+
+                      border: "2px solid rgba(16, 185, 100, 0.8)",
+
+                      borderRadius: "14px",
+                      boxShadow:
+                        "0 0 50px rgba(34, 197, 121, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
+
+                      backdropFilter: "blur(10px)",
+                      WebkitBackdropFilter: "blur(10px)",
+                      transition: "all 0.3s ease",
+                      textShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                      zIndex: 10,
+                      width: "276px",
+                    }}
                   >
-                    <NavLink
-                      to="/auth"
-                      onClick={() => {
-                        onClose();
-                        onAddClass(false);
-                      }}
-                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
+                    <motion.div
+                      className="position-absolute top-0 start-0 w-100 h-100"
                       style={{
-                        padding: "14px 48px",
-                        fontSize: "16px",
-                        fontWeight: "700",
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
                         background:
-                          "linear-gradient(135deg, #10b96aff, #05963dff, #04782bff)",
-
-                        border: "2px solid rgba(16, 185, 100, 0.8)",
-
-                        borderRadius: "14px",
-                        boxShadow:
-                          "0 0 50px rgba(34, 197, 121, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
-
-                        backdropFilter: "blur(10px)",
-                        WebkitBackdropFilter: "blur(10px)",
-                        transition: "all 0.3s ease",
-                        textShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                        zIndex: 10,
-                        width: "276px",
+                          "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                        transform: "skewX(-20deg)",
                       }}
-                    >
-                      <motion.div
-                        className="position-absolute top-0 start-0 w-100 h-100"
-                        style={{
-                          background:
-                            "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-                          transform: "skewX(-20deg)",
-                        }}
-                        animate={{
-                          x: ["-150%", "250%"],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: Math.random() * 2,
-                        }}
-                      />
+                      animate={{
+                        x: ["-150%", "250%"],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: Math.random() * 2,
+                      }}
+                    />
 
-                      <motion.div
-                        className="position-absolute top-0 start-0 w-100 h-100"
-                        style={{
-                          border: "2px solid rgba(255,255,255,0.3)",
-                          borderRadius: "14px",
-                        }}
-                        animate={{
-                          scale: [1, 1.05, 1],
-                          opacity: [0.5, 1, 0.5],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
+                    <motion.div
+                      className="position-absolute top-0 start-0 w-100 h-100"
+                      style={{
+                        border: "2px solid rgba(255,255,255,0.3)",
+                        borderRadius: "14px",
+                      }}
+                      animate={{
+                        scale: [1, 1.05, 1],
+                        opacity: [0.5, 1, 0.5],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
 
-                      <div className="d-flex align-items-center justify-content-center gap-3">
-                        <span>LOG IN</span>
-                      </div>
-                    </NavLink>
-                  </motion.div>
-                )}
-                {!isConnected && !coinbase && (
+                    <div className="d-flex align-items-center justify-content-center gap-3">
+                      <span>LOG IN</span>
+                    </div>
+                  </NavLink>
+                </motion.div>
+              )}
+              {!isConnected && !coinbase && (
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+                >
+                  <button
+                    disabled={disable}
+                    onClick={onConnectWallet}
+                    className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
+                    style={{
+                      padding: "14px 48px",
+                      fontSize: "16px",
+                      fontWeight: "700",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      background:
+                        "linear-gradient(135deg, #1083b9ff, #056196ff, #042978ff)",
+
+                      border: "2px solid rgba(16, 165, 185, 0.8)",
+
+                      borderRadius: "14px",
+                      boxShadow:
+                        "0 0 50px rgba(34, 165, 197, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
+
+                      backdropFilter: "blur(10px)",
+                      WebkitBackdropFilter: "blur(10px)",
+                      transition: "all 0.3s ease",
+                      textShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                      zIndex: 10,
+                      width: "276px",
+                    }}
+                  >
+                    <motion.div
+                      className="position-absolute top-0 start-0 w-100 h-100"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                        transform: "skewX(-20deg)",
+                      }}
+                      animate={{
+                        x: ["-150%", "250%"],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: Math.random() * 2,
+                      }}
+                    />
+
+                    <motion.div
+                      className="position-absolute top-0 start-0 w-100 h-100"
+                      style={{
+                        border: "2px solid rgba(255,255,255,0.3)",
+                        borderRadius: "14px",
+                      }}
+                      animate={{
+                        scale: [1, 1.05, 1],
+                        opacity: [0.5, 1, 0.5],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+
+                    <div className="d-flex align-items-center gap-3">
+                      <span>CONNECT WALLET</span>
+                    </div>
+                  </button>
+                </motion.div>
+              )}
+              {isConnected &&
+                coinbase &&
+                email &&
+                chainId !== 56 &&
+                chainId !== 204 && (
                   <motion.div
                     initial={{ opacity: 0, y: 100 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -2506,7 +2262,7 @@ const Kickstarter = ({
                   >
                     <button
                       disabled={disable}
-                      onClick={onConnectWallet}
+                      onClick={() => switchNetwork("0x38", 56)}
                       className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
                       style={{
                         padding: "14px 48px",
@@ -2515,13 +2271,13 @@ const Kickstarter = ({
                         letterSpacing: "0.1em",
                         textTransform: "uppercase",
                         background:
-                          "linear-gradient(135deg, #1083b9ff, #056196ff, #042978ff)",
+                          "linear-gradient(135deg, #b6b910ff, #968005ff, #785304ff)",
 
-                        border: "2px solid rgba(16, 165, 185, 0.8)",
+                        border: "2px solid rgba(185, 168, 16, 0.8)",
 
                         borderRadius: "14px",
                         boxShadow:
-                          "0 0 50px rgba(34, 165, 197, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
+                          "0 0 50px rgba(197, 181, 34, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
 
                         backdropFilter: "blur(10px)",
                         WebkitBackdropFilter: "blur(10px)",
@@ -2567,190 +2323,105 @@ const Kickstarter = ({
                       />
 
                       <div className="d-flex align-items-center gap-3">
-                        <span>CONNECT WALLET</span>
+                        <span>SWITCH CHAIN</span>
                       </div>
                     </button>
                   </motion.div>
                 )}
-                {isConnected &&
-                  coinbase &&
-                  email &&
-                  chainId !== selectedChainData.chainId && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 100 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        delay: 0.3,
-                        type: "spring",
-                        stiffness: 100,
+              {isConnected &&
+                coinbase &&
+                email &&
+                (chainId === 56 || chainId === 204) && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
+                  >
+                    <button
+                      onClick={handleOpenChest}
+                      disabled={loading || chestOpened || disable}
+                      className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center kick-claim-btn d-flex justify-content-center align-items-center"
+                      style={{
+                        padding: "14px 48px",
+                        fontSize: "16px",
+                        fontWeight: "700",
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        background: chestOpened
+                          ? "linear-gradient(135deg, #10B981, #059669, #047857)"
+                          : "linear-gradient(135deg, #F97316, #DC2626, #BE185D)",
+                        border: chestOpened
+                          ? "2px solid rgba(16, 185, 129, 0.8)"
+                          : "2px solid rgba(249, 115, 22, 0.8)",
+                        borderRadius: "14px",
+                        boxShadow: chestOpened
+                          ? "0 0 50px rgba(34, 197, 94, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)"
+                          : "0 0 50px rgba(249, 115, 22, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
+                        backdropFilter: "blur(10px)",
+                        WebkitBackdropFilter: "blur(10px)",
+                        transition: "all 0.3s ease",
+                        opacity: loading || chestOpened ? 0.9 : 1,
+                        textShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                        zIndex: 10,
+                        width: "276px",
                       }}
                     >
-                      <button
-                        disabled={disable}
-                        onClick={() => switchNetwork("0x38", 56)}
-                        className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center"
+                      <motion.div
+                        className="position-absolute top-0 start-0 w-100 h-100"
                         style={{
-                          padding: "14px 48px",
-                          fontSize: "16px",
-                          fontWeight: "700",
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
                           background:
-                            "linear-gradient(135deg, #b6b910ff, #968005ff, #785304ff)",
-
-                          border: "2px solid rgba(185, 168, 16, 0.8)",
-
-                          borderRadius: "14px",
-                          boxShadow:
-                            "0 0 50px rgba(197, 181, 34, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
-
-                          backdropFilter: "blur(10px)",
-                          WebkitBackdropFilter: "blur(10px)",
-                          transition: "all 0.3s ease",
-                          textShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                          zIndex: 10,
-                          width: "276px",
+                            "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                          transform: "skewX(-20deg)",
                         }}
-                      >
-                        <motion.div
-                          className="position-absolute top-0 start-0 w-100 h-100"
-                          style={{
-                            background:
-                              "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-                            transform: "skewX(-20deg)",
-                          }}
-                          animate={{
-                            x: ["-150%", "250%"],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: Math.random() * 2,
-                          }}
-                        />
+                        animate={{
+                          x: ["-150%", "250%"],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: Math.random() * 2,
+                        }}
+                      />
 
-                        <motion.div
-                          className="position-absolute top-0 start-0 w-100 h-100"
-                          style={{
-                            border: "2px solid rgba(255,255,255,0.3)",
-                            borderRadius: "14px",
-                          }}
-                          animate={{
-                            scale: [1, 1.05, 1],
-                            opacity: [0.5, 1, 0.5],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        />
-
-                        <div className="d-flex align-items-center gap-3">
-                          <span>SWITCH CHAIN</span>
-                        </div>
-                      </button>
-                    </motion.div>
-                  )}
-                {isConnected &&
-                  coinbase &&
-                  email &&
-                  chainId === selectedChainData.chainId && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 100 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        delay: 0.3,
-                        type: "spring",
-                        stiffness: 100,
-                      }}
-                    >
-                      <button
-                        onClick={handleOpenChest}
-                        disabled={loading || chestOpened || disable}
-                        className="btn btn-lg border-0 rounded text-white position-relative overflow-hidden d-flex justify-content-center kick-claim-btn d-flex justify-content-center align-items-center"
+                      <motion.div
+                        className="position-absolute top-0 start-0 w-100 h-100"
                         style={{
-                          padding: "14px 48px",
-                          fontSize: "16px",
-                          fontWeight: "700",
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          background: chestOpened
-                            ? "linear-gradient(135deg, #10B981, #059669, #047857)"
-                            : "linear-gradient(135deg, #F97316, #DC2626, #BE185D)",
-                          border: chestOpened
-                            ? "2px solid rgba(16, 185, 129, 0.8)"
-                            : "2px solid rgba(249, 115, 22, 0.8)",
+                          border: "2px solid rgba(255,255,255,0.3)",
                           borderRadius: "14px",
-                          boxShadow: chestOpened
-                            ? "0 0 50px rgba(34, 197, 94, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)"
-                            : "0 0 50px rgba(249, 115, 22, 0.7), inset 0 0 40px rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.4)",
-                          backdropFilter: "blur(10px)",
-                          WebkitBackdropFilter: "blur(10px)",
-                          transition: "all 0.3s ease",
-                          opacity: loading || chestOpened ? 0.9 : 1,
-                          textShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                          zIndex: 10,
-                          width: "276px",
                         }}
-                      >
-                        <motion.div
-                          className="position-absolute top-0 start-0 w-100 h-100"
-                          style={{
-                            background:
-                              "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-                            transform: "skewX(-20deg)",
-                          }}
-                          animate={{
-                            x: ["-150%", "250%"],
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: Math.random() * 2,
-                          }}
-                        />
+                        animate={{
+                          scale: [1, 1.05, 1],
+                          opacity: [0.5, 1, 0.5],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
 
-                        <motion.div
-                          className="position-absolute top-0 start-0 w-100 h-100"
-                          style={{
-                            border: "2px solid rgba(255,255,255,0.3)",
-                            borderRadius: "14px",
-                          }}
-                          animate={{
-                            scale: [1, 1.05, 1],
-                            opacity: [0.5, 1, 0.5],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                        />
-
-                        {loading ? (
-                          <div className="d-flex align-items-center gap-3">
-                            <motion.div
-                              animate={{ rotate: 360 }}
-                              transition={{
-                                duration: 1,
-                                repeat: Infinity,
-                                ease: "linear",
-                              }}
-                              className="border border-white rounded-circle"
-                              style={{
-                                width: "18px",
-                                height: "18px",
-                                borderTop: "3px solid transparent",
-                              }}
-                            />
-                            <span>UNLOCKING</span>
-                          </div>
-                        ) : chestOpened ? (
-                          <div className="d-flex align-items-center gap-3">
-                            {/* <motion.div
+                      {loading ? (
+                        <div className="d-flex align-items-center gap-3">
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{
+                              duration: 1,
+                              repeat: Infinity,
+                              ease: "linear",
+                            }}
+                            className="border border-white rounded-circle"
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                              borderTop: "3px solid transparent",
+                            }}
+                          />
+                          <span>UNLOCKING</span>
+                        </div>
+                      ) : chestOpened ? (
+                        <div className="d-flex align-items-center gap-3">
+                          {/* <motion.div
                               animate={{
                                 scale: [1, 1.3, 1],
                                 rotate: [0, 360, 0],
@@ -2763,8 +2434,8 @@ const Kickstarter = ({
                             >
                               ✅
                             </motion.div> */}
-                            <span>UNLOCKED!</span>
-                            {/* <motion.div
+                          <span>UNLOCKED!</span>
+                          {/* <motion.div
                               animate={{
                                 scale: [1, 1.4, 1],
                                 rotate: [0, 15, -15, 0],
@@ -2777,17 +2448,16 @@ const Kickstarter = ({
                             >
                               🎉
                             </motion.div> */}
-                          </div>
-                        ) : (
-                          <div className="d-flex align-items-center gap-3">
-                            <span>CLAIM</span>
-                          </div>
-                        )}
-                      </button>
-                    </motion.div>
-                  )}
-              </div>
-            )}
+                        </div>
+                      ) : (
+                        <div className="d-flex align-items-center gap-3">
+                          <span>CLAIM</span>
+                        </div>
+                      )}
+                    </button>
+                  </motion.div>
+                )}
+            </div>
           </>
         )}
       </div>
