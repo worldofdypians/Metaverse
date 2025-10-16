@@ -826,6 +826,7 @@ const MyRewardsPopupNew = ({
                       Number(kucoinEarnUsd) +
                       Number(midleEarnUsd) +
                       Number(seiEarnUsd) +
+                      Number(teaEarnUsd) +
                       Number(mantaEarnUsd),
                     2
                   )
@@ -845,7 +846,6 @@ const MyRewardsPopupNew = ({
                       Number(taikoEarnUsd) +
                       Number(taraxaEarnUsd) +
                       Number(bnbEarnUsd) +
-                      Number(teaEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(vanarEarnUsd) +
                       Number(trustEarnUsd) +
@@ -1148,13 +1148,13 @@ const MyRewardsPopupNew = ({
                       Number(baseEarnUSD) +
                       Number(kucoinEarnUsd) +
                       Number(mantaEarnUsd) +
-                      Number(seiEarnUsd),
+                      Number(seiEarnUsd) +
+                      Number(teaEarnUsd),
                     2
                   )
                 : getFormattedNumber(
                     Number(taikoEarnUsd) +
                       Number(taraxaEarnUsd) +
-                      Number(teaEarnUsd) +
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(trustEarnUsd) +
@@ -1771,21 +1771,6 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(taraxaEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Trust Wallet
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(trustEarnUsd, 2)}
-                  </span>
-                </div>
               </div>
 
               <div className="d-flex flex-column gap-2">
@@ -1833,14 +1818,16 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/teafi.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                      }
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
-                    Tea-Fi
+                    Trust Wallet
                   </span>
                   <span className="item-name-right">
-                    ${getFormattedNumber(teaEarnUsd, 2)}
+                    ${getFormattedNumber(trustEarnUsd, 2)}
                   </span>
                 </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1998,6 +1985,19 @@ const MyRewardsPopupNew = ({
               </div>
 
               <div className="d-flex flex-column gap-2">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/teafi.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Tea-Fi
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(teaEarnUsd, 2)}
+                  </span>
+                </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img

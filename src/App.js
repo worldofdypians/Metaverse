@@ -1368,9 +1368,9 @@ function App() {
           }
 
           if (teafiEvent && teafiEvent[0]) {
-            if (teafiEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (teafiEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               teafiEvent[0].reward.earn.total /
@@ -4927,7 +4927,7 @@ function App() {
     {
       title: "Tea-Fi",
       logo: "https://cdn.worldofdypians.com/wod/teafi.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$50,000 in TEA Rewards",
       myEarnings: 0.0,
       rewardAmount: "$50,000",
@@ -4948,7 +4948,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "tea-fi",
         rewards: "TEA",
-        status: "Live",
+        status: "Expired",
         id: "event4",
         eventType: "Explore & Mine",
         totalRewards: "$50,000 in TEA Rewards",

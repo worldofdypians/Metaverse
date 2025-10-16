@@ -34,11 +34,7 @@ const Reserve = ({ wodPrice }) => {
   const [chartData, setChartData] = useState(localData);
   const [avgPrice, setavgPrice] = useState(0);
 
-  const [metrics] = useState({
-    totalReserve: chartData[chartData.length - 1].amount,
-    totalSupply: "26,794,231.98",
-    collateralRatio: "$0,0826",
-  });
+  const [activeButton, setActiveButton] = useState("down");
   const [displayData, setDisplayData] = useState([]);
   const [startIndex, setStartIndex] = useState(
     // Math.max(localData.length - INITIAL_COUNT, 0)
@@ -115,6 +111,7 @@ const Reserve = ({ wodPrice }) => {
   }, [startIndex, chartData.length]);
 
   const handleScrollUp = () => {
+    setActiveButton("up");
     const newStart = Math.max(startIndex - LOAD_COUNT, 0);
     setStartIndex(newStart);
   };
@@ -125,6 +122,7 @@ const Reserve = ({ wodPrice }) => {
       Math.max(chartData.length - INITIAL_COUNT, 0)
     );
     setStartIndex(newStart);
+    setActiveButton("down");
   };
 
   useEffect(() => {
@@ -132,7 +130,8 @@ const Reserve = ({ wodPrice }) => {
     dataFetchedRef.current = true;
     fetchDynamicData();
   }, []);
-
+  const isUpDisabled = startIndex === 0;
+  const isDownDisabled = displayData.length <= INITIAL_COUNT;
   return (
     <div
       className="container-fluid bg-[#0a0d1f] py-5 bottom-border-divider position-relative"
@@ -264,19 +263,29 @@ const Reserve = ({ wodPrice }) => {
                       {/* 👇 Scroll control buttons */}
                       <button
                         onClick={handleScrollUp}
-                        disabled={startIndex === 0}
-                        className={` ${
-                          startIndex === 0 ? "bg-cyan-500/5" : "bg-cyan-500"
-                        } group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30  hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300 text-white`}
+                        disabled={isUpDisabled}
+                        className={`group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30 transition-all duration-300 text-white
+          ${isUpDisabled ? "bg-cyan-500/5 cursor-not-allowed" : ""}
+          ${
+            activeButton === "up" && !isUpDisabled
+              ? "bg-cyan-500"
+              : "hover:bg-cyan-500/10 hover:border-cyan-400/50"
+          }
+        `}
                       >
                         <Remove />
                       </button>
                       <button
                         onClick={handleScrollDown}
-                        disabled={displayData.length === INITIAL_COUNT}
-                        className={` ${
-                          startIndex === 0 ? "bg-cyan-500" : "bg-cyan-500/5"
-                        } group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30  hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300 text-white`}
+                        disabled={isDownDisabled}
+                        className={`group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30 transition-all duration-300 text-white
+          ${isDownDisabled ? "bg-cyan-500/5 cursor-not-allowed" : ""}
+          ${
+            activeButton === "down" && !isDownDisabled
+              ? "bg-cyan-500"
+              : "hover:bg-cyan-500/10 hover:border-cyan-400/50"
+          }
+        `}
                       >
                         <Add />
                       </button>

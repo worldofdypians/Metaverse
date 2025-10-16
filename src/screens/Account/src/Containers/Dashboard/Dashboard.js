@@ -6757,7 +6757,7 @@ function Dashboard({
                   Number(taikoEarnUsd) +
                   Number(taraxaEarnUsd) +
                   Number(vanarEarnUsd) +
-                  Number(teaEarnUsd) +
+                  // Number(teaEarnUsd) +
                   aiQuestionRewards.length >
                 0
                   ? aiQuestionRewards.find((item) => {
