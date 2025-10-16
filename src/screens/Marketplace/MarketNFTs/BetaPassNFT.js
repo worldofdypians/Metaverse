@@ -245,7 +245,7 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "teafi-mint-bg",
       wrapperClassName: "tea-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$40,000 in TEA rewards",
       rewardType: "TEA",
       userEarned: teafiEarnUsd,

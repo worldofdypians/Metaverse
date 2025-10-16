@@ -542,9 +542,13 @@ const NewBuilders = () => {
       name: "SwissBorg",
       icon: "swissborg.svg",
     },
-     {
+    {
       name: "LetsExchange",
       icon: "letsexchangeLogo.svg",
+    },
+    {
+      name: "Equity Block",
+      icon: "equityblock.png",
     },
   ];
   return (

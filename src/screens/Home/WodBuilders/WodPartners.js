@@ -313,7 +313,7 @@ const WodPartners = ({ full }) => {
       name: "BloFin",
       icon: "blofinBuywod.png",
     },
-     {
+    {
       name: "LetsExchange",
       icon: "letsexchangeLogo.svg",
     },
@@ -421,9 +421,13 @@ const WodPartners = ({ full }) => {
       name: "SwissBorg",
       icon: "swissborg.svg",
     },
-     {
+    {
       name: "LetsExchange",
       icon: "letsexchangeLogo.svg",
+    },
+    {
+      name: "Equity Block",
+      icon: "equityblock.png",
     },
   ];
 
