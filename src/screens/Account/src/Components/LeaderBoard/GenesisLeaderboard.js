@@ -851,7 +851,9 @@ const GenesisLeaderboard = ({
                         {item.displayName === username ? (
                           <div className="position-relative d-flex align-items-center">
                             <img
-                              src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/premiumAvatar.png"
+                              }
                               alt=""
                               className="playerAvatar"
                             />
@@ -921,7 +923,9 @@ const GenesisLeaderboard = ({
                         {item.displayName === username ? (
                           <div className="position-relative d-flex align-items-center">
                             <img
-                              src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/premiumAvatar.png"
+                              }
                               alt=""
                               className="playerAvatar"
                             />
@@ -984,7 +988,8 @@ const GenesisLeaderboard = ({
             <tbody>
               <tr className={`playerInnerRow-inactive`}>
                 <td className={`playerData font-montserrat col-1`}>
-                  {playerdata[0].statValue > 0 ? (
+                  {playerdata[0]?.statValue !== undefined &&
+                  playerdata[0]?.statValue > 0 ? (
                     <>
                       {getFormattedNumber(
                         parseInt(playerdata[0]?.position) + 1,
@@ -1010,7 +1015,7 @@ const GenesisLeaderboard = ({
                   </div>
                 </td>
                 <td className="playerScore col-2 text-center font-montserrat">
-                  {getFormattedNumber(playerdata[0].statValue, 0)}
+                  {getFormattedNumber(playerdata[0]?.statValue, 0)}
                 </td>
               </tr>
             </tbody>
