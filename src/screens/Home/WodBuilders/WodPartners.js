@@ -427,7 +427,7 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "Equity Block",
-      icon: "equityblock.png",
+      icon: "euqityblock.png",
     },
   ];
 

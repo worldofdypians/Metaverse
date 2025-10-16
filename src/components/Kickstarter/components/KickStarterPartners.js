@@ -422,7 +422,7 @@ const KickstarterPartners = () => {
     },
     {
       name: "Equity Block",
-      icon: "equityblock.png",
+      icon: "euqityblock.png",
     },
   ];
 
