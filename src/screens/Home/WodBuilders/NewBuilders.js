@@ -548,7 +548,7 @@ const NewBuilders = () => {
     },
     {
       name: "Equity Block",
-      icon: "equityblock.png",
+      icon: "euqityblock.png",
     },
   ];
   return (
