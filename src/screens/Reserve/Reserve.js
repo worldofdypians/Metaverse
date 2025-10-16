@@ -85,7 +85,16 @@ const Reserve = ({ wodPrice }) => {
     if (result && result.status === 200) {
       // console.log(result.data);
       // chartData.push(...result.data);
-      mergeData(result.data);
+
+      const formatedData = result.data.map((item) => {
+        return { ...item, date: new Date(item.date) };
+      });
+
+      mergeData(
+        formatedData.sort(function (a, b) {
+          return a.date - b.date;
+        })
+      );
     }
   };
 
