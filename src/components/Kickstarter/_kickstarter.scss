@@ -91,13 +91,21 @@
   }
 }
 
-
-.players-grid-container{
+.players-grid-container {
   width: 100%;
   justify-content: space-between;
   padding-left: 50px;
   padding-right: 50px;
   z-index: 1;
+  @media screen and (max-width: 786px) {
+    overflow-x: scroll;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.players-grid-container::-webkit-scrollbar {
+  display: none;
 }
 
 .player-img {
@@ -110,9 +118,9 @@
   }
 }
 
-
 .fantasy-btn {
   font-size: 24px;
+  width: 315px;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -120,32 +128,131 @@
   border: 2px solid #7a3e00;
   border-radius: 8px;
   background: linear-gradient(to bottom, #f7b34a 0%, #c46a17 50%, #7b3f00 100%);
-  box-shadow:
-    0 4px 0 #5e2d00,          /* bottom border emboss */
-    inset 0 2px 4px rgba(255, 255, 255, 0.3), /* top inner light */
-    0 0 10px rgba(0, 0, 0, 0.5); /* outer glow */
-  text-shadow:
-    0 2px 2px rgba(0, 0, 0, 0.7),
-    0 -1px 1px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 0 #5e2d00,
+    /* bottom border emboss */ inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    /* top inner light */ 0 0 10px rgba(0, 0, 0, 0.5); /* outer glow */
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.7), 0 -1px 1px rgba(255, 255, 255, 0.3);
   cursor: pointer;
   transition: all 0.2s ease;
   z-index: 1;
+  @media screen and (max-width: 786px) {
+    font-size: 14px;
+    width: 220px;
+  }
 }
 
 .fantasy-btn:hover {
   background: linear-gradient(to bottom, #ffd26a 0%, #e88b26 50%, #a24b00 100%);
   transform: translateY(-2px);
-  box-shadow:
-    0 6px 0 #5e2d00,
-    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+  box-shadow: 0 6px 0 #5e2d00, inset 0 2px 4px rgba(255, 255, 255, 0.3),
     0 0 14px rgba(0, 0, 0, 0.7);
 }
 
 .fantasy-btn:active {
   transform: translateY(1px);
-  box-shadow:
-    0 3px 0 #5e2d00,
-    inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 0 #5e2d00, inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.fantasy-btn-2 {
+  font-size: 24px;
+  width: 315px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 20px;
+  border: 2px solid #4a007a;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #b06ff1 0%, #7e3dc4 50%, #4a007a 100%);
+  box-shadow: 0 4px 0 #32005a, inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    0 0 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.7), 0 -1px 1px rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 1;
+    @media screen and (max-width: 786px) {
+    font-size: 14px;
+    width: 220px;
+  }
+}
+
+.fantasy-btn-2:hover {
+  background: linear-gradient(to bottom, #c88fff 0%, #9951e6 50%, #5e009e 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #32005a, inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    0 0 14px rgba(0, 0, 0, 0.7);
+}
+
+.fantasy-btn-2:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 0 #32005a, inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.fantasy-btn-3 {
+  font-size: 24px;
+  width: 315px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 20px;
+  border: 2px solid #004a7a;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #4ac6f7 0%, #1773c4 50%, #003f7b 100%);
+  box-shadow: 0 4px 0 #002e5e, inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    0 0 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.7), 0 -1px 1px rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 1;
+    @media screen and (max-width: 786px) {
+    font-size: 14px;
+    width: 220px;
+  }
+}
+
+.fantasy-btn-3:hover {
+  background: linear-gradient(to bottom, #6fd8ff 0%, #2c8ee6 50%, #005fa2 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #002e5e, inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    0 0 14px rgba(0, 0, 0, 0.7);
+}
+
+.fantasy-btn-3:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 0 #002e5e, inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.fantasy-btn-4 {
+  font-size: 24px;
+  width: 315px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 20px;
+  border: 2px solid #155e00;
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #5ebf3a 0%, #3e8c1f 50%, #1e5500 100%);
+  box-shadow: 0 4px 0 #134000, inset 0 2px 4px rgba(255, 255, 255, 0.25),
+    0 0 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.7), 0 -1px 1px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 1;
+    @media screen and (max-width: 786px) {
+    font-size: 14px;
+    width: 220px;
+  }
+}
+
+.fantasy-btn-4:hover {
+  background: linear-gradient(to bottom, #6dd14a 0%, #4ea828 50%, #206600 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #134000, inset 0 2px 4px rgba(255, 255, 255, 0.25),
+    0 0 14px rgba(0, 0, 0, 0.7);
+}
+
+.fantasy-btn-4:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 0 #134000, inset 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .player-img:hover,
@@ -269,6 +376,24 @@
   line-height: normal;
   text-transform: uppercase;
 }
+.selected-hero-name-2 {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  line-height: normal;
+  text-transform: uppercase;
+    position: absolute;
+  top: 1%;
+}
+.selected-hero-name-3 {
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  line-height: normal;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 47%;
+}
 .fight-video {
   width: 50%;
   height: 100%;
@@ -279,6 +404,10 @@
   opacity: 1;
   z-index: -1;
   border-radius: 16px;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    height: 50%;
+  }
 }
 .fight-video-2 {
   width: 50%;
@@ -290,6 +419,22 @@
   opacity: 1;
   z-index: -1;
   border-radius: 16px;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    height: 50%;
+    bottom: 0;
+    top: 50%;
+  }
+}
+
+.fighter-chains-wrapper {
+  top: 16px;
+  left: 24px;
+  z-index: 30;
+  @media screen and (max-width: 786px) {
+    top: 6px;
+    left: 6px;
+  }
 }
 .fight-video-vs {
   width: 100%;
