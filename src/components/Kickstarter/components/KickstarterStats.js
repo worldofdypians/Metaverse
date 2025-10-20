@@ -86,7 +86,7 @@ const KickstarterStats = ({ monthlyPlayers, totalVolumeNew }) => {
     },
     {
       icon: "https://cdn.worldofdypians.com/wod/tropyStats.svg",
-      number: "80+",
+      number: "100+",
       label: "Successful Partnerships",
       color: "from-yellow-400 to-orange-500",
       glowColor: "shadow-yellow-500/50",
