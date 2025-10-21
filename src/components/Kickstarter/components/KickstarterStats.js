@@ -72,7 +72,11 @@ import axios from "axios";
 
 // export default KickstarterStats;
 
-const KickstarterStats = ({ monthlyPlayers, totalVolumeNew }) => {
+const KickstarterStats = ({
+  monthlyPlayers,
+  totalVolumeNew,
+  totalPartners,
+}) => {
   const [totalTx2, setTotalTx] = useState(0);
   const [, setTotalVolume] = useState(0);
 
@@ -86,7 +90,7 @@ const KickstarterStats = ({ monthlyPlayers, totalVolumeNew }) => {
     },
     {
       icon: "https://cdn.worldofdypians.com/wod/tropyStats.svg",
-      number: "100+",
+      number: Math.floor(totalPartners / 10) * 10 + "+",
       label: "Successful Partnerships",
       color: "from-yellow-400 to-orange-500",
       glowColor: "shadow-yellow-500/50",

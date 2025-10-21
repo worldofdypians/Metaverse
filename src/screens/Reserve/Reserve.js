@@ -26,6 +26,15 @@ const Reserve = ({ wodPrice }) => {
     });
   };
 
+  const formatDate2 = (dateString) => {
+    const dateObj = new Date(dateString);
+    return dateObj.toLocaleDateString("en-US", {
+      day: undefined,
+      month: "short",
+      year: "numeric",
+    });
+  };
+
   const INITIAL_COUNT = 15;
   const LOAD_COUNT = 20;
   const chartRef = useRef(null);
@@ -40,6 +49,7 @@ const Reserve = ({ wodPrice }) => {
     // Math.max(localData.length - INITIAL_COUNT, 0)
     0
   );
+  const updatedMonth = chartData[chartData.length - 1]?.date;
 
   const addOneDay = (dateStr) => {
     const date = new Date(dateStr);
@@ -265,7 +275,7 @@ const Reserve = ({ wodPrice }) => {
                         Reserve Activity
                       </h3>
                       <p className="text-slate-400/70 text-xs">
-                        Updated Oct 2025
+                        Updated {formatDate2(updatedMonth)}
                       </p>
                     </div>
                     <div className="d-flex align-items-center gap-2 justify-content-end">
