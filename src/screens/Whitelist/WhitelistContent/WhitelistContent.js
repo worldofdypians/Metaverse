@@ -51,6 +51,7 @@ const WhitelistContent = ({
   const [timerFinishedOTCSpecial4, settimerFinishedOTCSpecial4] =
     useState(false);
   const [timerFinishedOTCCliff, settimerFinishedOTCCliff] = useState(false);
+  const [timerFinishedOTCCliff2, settimerFinishedOTCCliff2] = useState(false);
 
   const [timerFinishedOTCPoolBonus, settimerFinishedOTCPoolBonus] =
     useState(false);
@@ -111,6 +112,13 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCCliff(true);
+        }
+      } else if (selectedRound.id == "cliff-otc2") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedOTCCliff2(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedOTCCliff2(true);
         }
       } else if (selectedRound.id == "pool-bonus") {
         if (today.getTime() > cliffTime) {
@@ -363,6 +371,17 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedOTCCliff(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "cliff-otc2" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTCCliff2(true);
                           onTimerFinished(true);
                         }}
                       />
@@ -714,6 +733,49 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedOTCCliff === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "cliff-otc2" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedOTCCliff2 === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedOTCCliff2 === false ||
                     Number(wodBalance) === 0 ||
                     !isEOA
                       ? true

@@ -193,6 +193,8 @@ window.config = {
   otcpool2dynamic_address: "0x96718b893aef64c8ff19df30c920aa6b4669984a", //30%
   otcwoddynamic_address: "0xf0a43b4549792f6116564a4253cb685d983e90fd", //50%
   otccliff_address: "0x14ad9288a2607ed872364b2a34506242c49ae741", //30%
+  otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220", 
+
 
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
