@@ -224,6 +224,7 @@ const BattlePopup = ({
   const [showRewards, setShowRewards] = useState(false);
   const [disableButtons, setDisableButtons] = useState(false);
   const [showPrizes, setShowPrizes] = useState(false);
+  const [tempfighter, setTempfighter] = useState(fighters[0])
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -334,8 +335,9 @@ const BattlePopup = ({
     if (fightInfo) {
       setDisableButtons(true);
       setselectedPlayer(fightInfo.fighter);
+      setTempfighter(fightInfo.fighter);
     }
-  }, [fightInfo]);
+  }, []);
 
   // Attach listener
   window.addEventListener("keydown", handleEsc);
@@ -1003,6 +1005,9 @@ const BattlePopup = ({
     }
   }, [chainId]);
 
+  console.log(tempfighter.name, selectedPlayer.name);
+  
+
   if (!isOpen) return null;
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
@@ -1051,6 +1056,7 @@ const BattlePopup = ({
           <>
             {fightInfo.win ? (
               <>
+                {selectedPlayer.name === tempfighter.name &&
                 <div className="fighter-win-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
                   <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
                     Winner
@@ -1066,6 +1072,7 @@ const BattlePopup = ({
                     </div>
                   </div>
                 </div>
+                }
                 <div className="fighter-lose-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
                   <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
                     Loser
@@ -1074,11 +1081,13 @@ const BattlePopup = ({
               </>
             ) : (
               <>
+               {selectedPlayer.name === tempfighter.name &&
                 <div className="fighter-lose-rewards-wrapper-2 d-flex flex-column gap-2 align-items-center justify-content-center">
                   <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
                     Loser
                   </h6>
                 </div>
+               }
                 <div className="fighter-win-rewards-wrapper-2 d-flex flex-column gap-2 align-items-center justify-content-center">
                   <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
                     Winner
@@ -2071,7 +2080,6 @@ const BattlePopup = ({
                         src={item.thumb}
                         alt=""
                         style={{
-                          pointerEvents: disableButtons ? "none" : "auto",
                         }}
                         className={`player-img ${
                           selectedPlayer.id === item.id && "player-img-active"
@@ -2089,7 +2097,7 @@ const BattlePopup = ({
                             : ""
                         }`}
                         onClick={() => {
-                          !disableButtons && new Audio(click).play();
+                          new Audio(click).play();
                           setselectedPlayer(item);
                         }}
                       />
