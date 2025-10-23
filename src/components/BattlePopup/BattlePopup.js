@@ -201,6 +201,7 @@ const BattlePopup = ({
   const [fightType, setFightType] = useState(null);
   const [tooltip, setTooltip] = useState(false);
   const [showRewards, setShowRewards] = useState(false);
+  const [disableButtons, setDisableButtons] = useState(false);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -230,9 +231,9 @@ const BattlePopup = ({
         // Step 3 lasts 25.5s, then back to 1
         setTimeout(() => {
           videoRef3.current.pause();
-        }, 24500);
+        }, 25500);
         setTimeout(() => {
-          localStorage.setItem("rewards", {
+          localStorage.setItem("rewards", JSON.stringify({
             id: "Points",
             name: "POINTS",
             icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
@@ -240,15 +241,22 @@ const BattlePopup = ({
             color: "from-blue-400 to-purple-500",
             rarity: "COMMON",
             tier: "TIER II",
-          });
-          localStorage.setItem("fighter", selectedPlayer);
+          }));
+          localStorage.setItem("fighter", JSON.stringify(selectedPlayer));
           setShowRewards(true);
         }, 26500);
       }, 4300);
     }, 2500);
   };
 
-  const usedFighter = localStorage.getItem("fighter");
+  const usedFighter = JSON.parse(localStorage.getItem("fighter"));
+  const hasRewards = JSON.parse(localStorage.getItem("rewards"));
+
+  useEffect(() => {
+    if (hasRewards) {
+      setDisableButtons(true);
+    }
+  }, [hasRewards]);
 
   useEffect(() => {
     if (usedFighter) {
@@ -1042,7 +1050,7 @@ const BattlePopup = ({
               width: "fit-content",
               height: "fit-content",
             }}
-            className="d-flex player-win-wrapper"
+            className="d-flex player-win-wrapper flex-column gap-2 align-items-center"
           >
             <div
               style={{
@@ -1064,6 +1072,13 @@ const BattlePopup = ({
                 className="py-2 px-2 d-flex flex-column align-items-center justify-content-center gap-2 w-100"
                 style={{ zIndex: 2 }}
               >
+                <h6
+                  className="kickstarter-reward-title mb-0"
+                  style={{ fontSize: "16px" }}
+                >
+                  You Win
+                </h6>
+
                 <motion.div
                   initial={{ opacity: 0, scale: 0, x: 30 }}
                   animate={{
@@ -1076,7 +1091,7 @@ const BattlePopup = ({
                     type: "spring",
                     stiffness: 120,
                   }}
-                  className="position-relative overflow-hidden w-100"
+                  className="position-relative overflow-hidden w-100 d-flex flex-column align-items-center gap-3"
                   style={{
                     padding: "6px 12px",
                     background:
@@ -1279,6 +1294,15 @@ const BattlePopup = ({
                     </div>
                   </div>
                 </motion.div>
+                <span
+                  className="close-fight-rewards text-white"
+                  onClick={() => {
+                    setFightStep(1);
+                    setShowRewards(false);
+                  }}
+                >
+                  Close
+                </span>
               </div>
 
               {/* Gaming panel ambient effect */}
@@ -1288,6 +1312,7 @@ const BattlePopup = ({
                   background:
                     "radial-gradient(circle at center, rgba(59, 130, 246, 0.05), transparent)",
                   borderRadius: "12px",
+                  pointerEvents: "none",
                 }}
                 animate={{
                   opacity: [0.3, 0.7, 0.3],
@@ -2559,8 +2584,9 @@ const BattlePopup = ({
                     chainId === selectedChainData.chainId && (
                       <button
                         className="fantasy-btn font-abaddon text-white"
+                        style={{ opacity: disableButtons ? "0.8" : "1", pointerEvents: disableButtons ? "none" : "auto"  }}
                         onClick={handleStartFight}
-                        disabled={loading}
+                        disabled={loading || disableButtons}
                       >
                         {loading ? (
                           <div
@@ -2581,11 +2607,12 @@ const BattlePopup = ({
                         key={index}
                         src={item.thumb}
                         alt=""
+                        style={{ opacity: disableButtons ? "0.8" : "1", pointerEvents: disableButtons ? "none" : "auto" }}
                         className={`player-img ${
                           selectedPlayer.id === item.id && "player-img-active"
                         } `}
                         onClick={() => {
-                          new Audio(click).play();
+                          !disableButtons && new Audio(click).play();
                           setselectedPlayer(item);
                         }}
                       />
