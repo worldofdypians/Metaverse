@@ -23,6 +23,7 @@ import {
   OTCPOOL2DYNAMIC_ABI,
   OTCWODDYNAMIC_ABI,
   OTCCLIFF_ABI,
+  OTCCLIFF2_ABI,
 } from "./abis";
 // import Countdown from "react-countdown";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
@@ -62,6 +63,7 @@ const Whitelist = ({
   const [cliffTimeOtcSpecial, setcliffTimeOtcSpecial] = useState(0);
   const [cliffTimeOtcSpecial4, setcliffTimeOtcSpecial4] = useState(0);
   const [cliffTimeOtcCliff, setcliffTimeOtcCliff] = useState(0);
+  const [cliffTimeOtcCliff2, setcliffTimeOtcCliff2] = useState(0);
 
   const [cliffTimeOtcPoolBonus, setcliffTimeOtcPoolBonus] = useState(0);
   const [cliffTimeOtcPoolDynamic, setcliffTimeOtcPoolDynamic] = useState(0);
@@ -96,6 +98,11 @@ const Whitelist = ({
   const [pendingTokensOTCCliff, setpendingTokensOTCCliff] = useState(0);
   const [userClaimedTokensOTCCliff, setuserClaimedTokensOTCCliff] = useState(0);
   const [userVestedTokensOTCCliff, setuserVestedTokensOTCCliff] = useState(0);
+
+  const [pendingTokensOTCCliff2, setpendingTokensOTCCliff2] = useState(0);
+  const [userClaimedTokensOTCCliff2, setuserClaimedTokensOTCCliff2] =
+    useState(0);
+  const [userVestedTokensOTCCliff2, setuserVestedTokensOTCCliff2] = useState(0);
 
   const [pendingTokensOTCPoolBonus, setpendingTokensOTCPoolBonus] = useState(0);
   const [userClaimedTokensOTCPoolBonus, setuserClaimedTokensOTCPoolBonus] =
@@ -172,6 +179,10 @@ const Whitelist = ({
   const [canClaimOTCCliff, setcanClaimOTCCliff] = useState(false);
   const [claimLoadingOTCCliff, setclaimLoadingOTCCliff] = useState(false);
   const [claimStatusOTCCliff, setclaimStatusOTCCliff] = useState("initial");
+
+  const [canClaimOTCCliff2, setcanClaimOTCCliff2] = useState(false);
+  const [claimLoadingOTCCliff2, setclaimLoadingOTCCliff2] = useState(false);
+  const [claimStatusOTCCliff2, setclaimStatusOTCCliff2] = useState("initial");
 
   const [canClaimOTCPoolBonus, setcanClaimOTCPoolBonus] = useState(false);
   const [claimLoadingOTCPoolBonus, setclaimLoadingOTCPoolBonus] =
@@ -262,6 +273,11 @@ const Whitelist = ({
     const otcScCliff = new window.bscWeb3.eth.Contract(
       OTCCLIFF_ABI,
       window.config.otccliff_address
+    );
+
+    const otcScCliff2 = new window.bscWeb3.eth.Contract(
+      OTCCLIFF2_ABI,
+      window.config.otccliff2_address
     );
 
     const otcScPoolBonus = new window.bscWeb3.eth.Contract(
@@ -419,6 +435,19 @@ const Whitelist = ({
     }
 
     setcanClaimOTCCliff(Number(availableTGE_OTCCliff) === 1);
+
+    let availableTGE_OTCCliff2 = 0;
+    if (coinbase) {
+      availableTGE_OTCCliff2 = await otcScCliff2.methods
+        .availableTGE(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+    }
+
+    setcanClaimOTCCliff2(Number(availableTGE_OTCCliff2) === 1);
 
     let availableTGE_OTCPoolBonus = 0;
     if (coinbase) {
@@ -642,6 +671,23 @@ const Whitelist = ({
     ).toFixed(6);
     setcanClaimOTCCliff(tokensToClaimAmountOTCCliff_formatted > 0);
     setpendingTokensOTCCliff(tokensToClaimAmountOTCCliff_formatted);
+
+    let tokensToClaimAmountOTCCliff2 = 0;
+    if (coinbase) {
+      tokensToClaimAmountOTCCliff2 = await otcScCliff2.methods
+        .getPendingUnlocked(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+    }
+
+    const tokensToClaimAmountOTCCliff_formatted2 = new window.BigNumber(
+      tokensToClaimAmountOTCCliff2 / 1e18
+    ).toFixed(6);
+    setcanClaimOTCCliff2(tokensToClaimAmountOTCCliff_formatted2 > 0);
+    setpendingTokensOTCCliff2(tokensToClaimAmountOTCCliff_formatted2);
 
     let tokensToClaimAmountOTCPoolBonus = 0;
     if (coinbase) {
@@ -908,6 +954,25 @@ const Whitelist = ({
       );
     }
 
+    let totalClaimedTokensByUserOTCCliff2 = 0;
+    if (coinbase) {
+      totalClaimedTokensByUserOTCCliff2 = await otcScCliff2.methods
+        .claimedTokens(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const totalClaimedTokensByUserOTCSpecial_formatted2 =
+        new window.BigNumber(totalClaimedTokensByUserOTCCliff2 / 1e18).toFixed(
+          6
+        );
+
+      setuserClaimedTokensOTCCliff2(
+        totalClaimedTokensByUserOTCSpecial_formatted2
+      );
+    }
+
     let totalClaimedTokensByUserOTCPoolBonus = 0;
     if (coinbase) {
       totalClaimedTokensByUserOTCPoolBonus = await otcScPoolBonus.methods
@@ -1161,6 +1226,25 @@ const Whitelist = ({
       setuserVestedTokensOTCCliff(totalClaimedTokensByUserOTCSpecial_formatted);
     }
 
+    let totalVestedTokensPerUserOTCCliff2 = 0;
+    if (coinbase) {
+      totalVestedTokensPerUserOTCCliff2 = await otcScCliff2.methods
+        .vestedTokens(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const totalClaimedTokensByUserOTCSpecial_formatted2 =
+        new window.BigNumber(totalVestedTokensPerUserOTCCliff2 / 1e18).toFixed(
+          6
+        );
+
+      setuserVestedTokensOTCCliff2(
+        totalClaimedTokensByUserOTCSpecial_formatted2
+      );
+    }
+
     let totalVestedTokensPerUserOTCPoolBonus = 0;
     if (coinbase) {
       totalVestedTokensPerUserOTCPoolBonus = await otcScPoolBonus.methods
@@ -1370,6 +1454,11 @@ const Whitelist = ({
       window.config.otccliff_address
     );
 
+    const otcScCliff2 = new window.bscWeb3.eth.Contract(
+      OTCCLIFF2_ABI,
+      window.config.otccliff2_address
+    );
+
     const otcScPoolBonus = new window.bscWeb3.eth.Contract(
       OTCPOOLBONUS_ABI,
       window.config.otcpoolbonus_address
@@ -1464,6 +1553,14 @@ const Whitelist = ({
         return 0;
       });
 
+    const lastClaimedTimeOTCCliff2 = await otcScCliff2.methods
+      .lastClaimedTime(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     const lastClaimedTimeOTCPoolBonus = await otcScPoolBonus.methods
       .lastClaimedTime(coinbase)
       .call()
@@ -1536,6 +1633,7 @@ const Whitelist = ({
     setcliffTimeOtcSpecial(Number(lastClaimedTimeOTCSpecial * 1000));
     setcliffTimeOtcSpecial4(Number(lastClaimedTimeOTCSpecial4 * 1000));
     setcliffTimeOtcCliff(Number(lastClaimedTimeOTCCliff * 1000));
+    setcliffTimeOtcCliff2(Number(lastClaimedTimeOTCCliff2 * 1000));
 
     setcliffTimeOtcPoolBonus(Number(lastClaimedTimeOTCPoolBonus * 1000));
 

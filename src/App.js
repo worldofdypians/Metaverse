@@ -7005,6 +7005,28 @@ function App() {
               />
             }
           />
+          
+             <Route
+            exact
+            path="/cliff-otc2"
+            element={
+              <Whitelist
+                isEOA={isEOA}
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                type="cliff-otc2"
+                network_matchain={chain}
+                walletClient={walletClient}
+                binanceW3WProvider={library}
+                publicClient={publicClient}
+              />
+            }
+          />
+
 
           <Route
             exact
