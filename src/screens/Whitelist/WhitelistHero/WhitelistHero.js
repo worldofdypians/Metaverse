@@ -15,7 +15,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "pool-dynamic" ||
       type === "pool2-dynamic" ||
       type === "wod-dynamic" ||
-      type === "cliff-otc"
+      type === "cliff-otc" ||
+      type === "cliff-otc2"
       ? "otc"
       : "seed"
   );
@@ -73,7 +74,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
           ? type
           : "otc",
       title: "OTC Round",
@@ -91,7 +93,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
           ? "12 months"
           : type === "cliff-otc"
           ? "2 months"
-          : type === "special-otc-4"
+          : type === "special-otc-4" || type === "cliff-otc2"
           ? "4 months"
           : type === "bonus-otc"
           ? "18 months"
@@ -115,7 +117,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "pool-dynamic" ||
       type === "pool2-dynamic" ||
       type === "wod-dynamic" ||
-      type === "cliff-otc"
+      type === "cliff-otc" ||
+      type === "cliff-otc2"
         ? 1
         : 4,
     slidesToScroll: 1,
@@ -140,7 +143,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? 1
               : 4,
           slidesToScroll: 1,
@@ -160,7 +164,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? 1
               : 4,
           slidesToScroll: 1,
@@ -180,7 +185,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? 1
               : 3,
           slidesToScroll: 1,
@@ -195,7 +201,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? false
               : true,
           autoplay:
@@ -208,7 +215,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? false
               : true,
           dots:
@@ -221,7 +229,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? false
               : true,
         },
@@ -239,7 +248,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? 1
               : 2,
           slidesToScroll: 1,
@@ -254,7 +264,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? false
               : true,
           autoplay:
@@ -267,7 +278,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? false
               : true,
           dots:
@@ -280,7 +292,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? false
               : true,
         },
@@ -301,7 +314,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? false
               : true,
           autoplay:
@@ -314,7 +328,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? false
               : true,
           dots:
@@ -327,7 +342,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool-dynamic" ||
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
-            type === "cliff-otc"
+            type === "cliff-otc" ||
+            type === "cliff-otc2"
               ? false
               : true,
         },
@@ -346,7 +362,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
         type === "pool-dynamic" ||
         type === "pool2-dynamic" ||
         type === "wod-dynamic" ||
-        type === "cliff-otc"
+        type === "cliff-otc" ||
+        type === "cliff-otc2"
         ? otc_data[0]
         : dummyBetaPassData2[0]
     );
@@ -380,7 +397,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "pool-dynamic" ||
                 type === "pool2-dynamic" ||
                 type === "wod-dynamic" ||
-                type === "cliff-otc"
+                type === "cliff-otc" ||
+                type === "cliff-otc2"
                   ? "otc-wrapper"
                   : "col-lg-10"
               } opacitywrapper-release position-relative`}
@@ -395,7 +413,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "pool-dynamic" ||
                 type === "pool2-dynamic" ||
                 type === "wod-dynamic" ||
-                type === "cliff-otc"
+                type === "cliff-otc" ||
+                type === "cliff-otc2"
                   ? otc_data
                   : dummyBetaPassData2
                 ).map((item, index) => (
