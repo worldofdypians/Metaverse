@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import "../Kickstarter/_kickstarter.scss";
+import "./_battlepopup.scss";
 import xMark from "../Kickstarter/assets/kickstarterXMark.svg";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import { NavLink } from "react-router-dom";
@@ -10,10 +10,27 @@ import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import click from "./click.mp3";
+import fightBgMusic from "./fightBgMusic.mp3";
 
 import { fighters } from "./battleInfo";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
+import Countdown from "react-countdown";
+
+const renderer = ({ hours, minutes }) => {
+  return (
+    <span
+      className="fighter-timer font-abaddon"
+      style={{
+        fontSize: "26px",
+        color: "#fff",
+      }}
+    >
+      {hours < 10 ? "0" + hours : hours}:
+      {minutes < 10 ? "0" + minutes : minutes}
+    </span>
+  );
+};
 
 const GeneralTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -74,12 +91,16 @@ const BattlePopup = ({
   walletClient,
   publicClient,
   openedRoyaltyChest,
+  closePopup,
+  setClosePopup,
 }) => {
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
   const videoRef3 = useRef(null);
   const windowSize = useWindowSize();
 
+  let now = new Date().getTime();
+  const midnightTime = new Date(now).setUTCHours(24, 30, 0, 0);
   // const fighters = [
   //   "caws",
   //   "futuristicFemale",
@@ -202,68 +223,119 @@ const BattlePopup = ({
   const [tooltip, setTooltip] = useState(false);
   const [showRewards, setShowRewards] = useState(false);
   const [disableButtons, setDisableButtons] = useState(false);
+  const [showPrizes, setShowPrizes] = useState(false);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
-      onClose();
+      if (fightStep === 1) {
+        onClose();
+      } else {
+        setClosePopup(true);
+      }
     }
   }
 
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    // ✅ Create audio once
+    audioRef.current = new Audio(fightBgMusic);
+    audioRef.current.volume = 0.3;
+    audioRef.current.loop = true;
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    // 🔊 Play or stop when popup opens/closes
+    if (isOpen && audioRef.current) {
+      audioRef.current.play().catch((err) => {
+        if (err.name !== "AbortError") console.warn(err);
+      });
+    } else if (!isOpen && audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  }, [isOpen]);
+
   const handleStartFight = () => {
     setLoading(true);
+
     setTimeout(() => {
       setLoading(false);
       const randomBit = Math.round(Math.random());
       console.log(randomBit, "random");
 
-      if (randomBit === 0) {
-        setFightType("LOSE");
-      } else {
-        setFightType("WIN");
-      }
-
+      setFightType(randomBit === 0 ? "LOSE" : "WIN");
       setFightStep(2);
+
+      // 🛑 Pause during fight
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
 
       // Step 2 lasts 4.3s
       setTimeout(() => {
         setFightStep(3);
 
-        // Step 3 lasts 25.5s, then back to 1
+        // Step 3 lasts 25.5s
         setTimeout(() => {
-          videoRef3.current.pause();
-        }, 25500);
-        setTimeout(() => {
-          localStorage.setItem("rewards", JSON.stringify({
-            id: "Points",
-            name: "POINTS",
-            icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-            count: "20K",
-            color: "from-blue-400 to-purple-500",
-            rarity: "COMMON",
-            tier: "TIER II",
-          }));
-          localStorage.setItem("fighter", JSON.stringify(selectedPlayer));
-          setShowRewards(true);
+          setClosePopup(false);
+          setFightStep(1);
+
+          // 🔁 Restart background music
+          if (audioRef.current) {
+            audioRef.current.play().catch((err) => {
+              if (err.name !== "AbortError")
+                console.warn("Audio play failed:", err);
+            });
+          }
         }, 26500);
+
+        // 🎁 Save data + show rewards
+        setTimeout(() => {
+          const nextMidnight = new Date();
+          nextMidnight.setHours(24, 0, 0, 0);
+          localStorage.setItem("midnight", nextMidnight.toISOString());
+
+          localStorage.setItem(
+            "fightInfo",
+            JSON.stringify({
+              id: "Points",
+              name: "POINTS",
+              icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+              count: "20K",
+              color: "from-blue-400 to-purple-500",
+              rarity: "COMMON",
+              tier: "TIER II",
+              fighter: selectedPlayer,
+              win: randomBit !== 0,
+            })
+          );
+
+          if (randomBit !== 0) {
+            setShowRewards(true);
+          }
+        }, 21500);
       }, 4300);
     }, 2500);
   };
 
-  const usedFighter = JSON.parse(localStorage.getItem("fighter"));
-  const hasRewards = JSON.parse(localStorage.getItem("rewards"));
+  const fightInfo = JSON.parse(localStorage.getItem("fightInfo"));
+  const midnight = localStorage.getItem("midnight");
 
   useEffect(() => {
-    if (hasRewards) {
+    if (fightInfo) {
       setDisableButtons(true);
+      setselectedPlayer(fightInfo.fighter);
     }
-  }, [hasRewards]);
-
-  useEffect(() => {
-    if (usedFighter) {
-      setselectedPlayer(usedFighter);
-      setDisable(true);
-    }
-  }, [usedFighter]);
+  }, [fightInfo]);
 
   // Attach listener
   window.addEventListener("keydown", handleEsc);
@@ -931,6 +1003,7 @@ const BattlePopup = ({
     }
   }, [chainId]);
 
+  if (!isOpen) return null;
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column align-items-center">
@@ -940,7 +1013,11 @@ const BattlePopup = ({
           alt=""
           onClick={() => {
             setShowContent(false);
-            onClose();
+            if (fightStep === 1) {
+              onClose();
+            } else {
+              setClosePopup(true);
+            }
           }}
         />
         {fightStep === 1 && (
@@ -966,6 +1043,47 @@ const BattlePopup = ({
                 <span className=" selected-hero-name-3 font-abaddon">
                   Dark Lord
                 </span>
+              </>
+            )}
+          </>
+        )}
+        {fightInfo && fightStep === 1 && (
+          <>
+            {fightInfo.win ? (
+              <>
+                <div className="fighter-win-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
+                  <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
+                    Winner
+                  </h6>
+                  <div className="fighter-win-rewards d-flex align-items-center gap-3 p-2">
+                    <div className="d-flex align-items-end gap-1">
+                      <span className="fighter-win-rewards-amount">2,520</span>
+                      <span className="fighter-win-rewards-type">Points</span>
+                    </div>
+                    <div className="d-flex align-items-end gap-1">
+                      <span className="fighter-win-rewards-amount">134</span>
+                      <span className="fighter-win-rewards-type">Stars</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="fighter-lose-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
+                  <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
+                    Loser
+                  </h6>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="fighter-lose-rewards-wrapper-2 d-flex flex-column gap-2 align-items-center justify-content-center">
+                  <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
+                    Loser
+                  </h6>
+                </div>
+                <div className="fighter-win-rewards-wrapper-2 d-flex flex-column gap-2 align-items-center justify-content-center">
+                  <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
+                    Winner
+                  </h6>
+                </div>
               </>
             )}
           </>
@@ -1037,7 +1155,7 @@ const BattlePopup = ({
         ) : (
           <></>
         )}
-        {showRewards && (
+        {showRewards && fightStep === 3 && (
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -1294,15 +1412,6 @@ const BattlePopup = ({
                     </div>
                   </div>
                 </motion.div>
-                <span
-                  className="close-fight-rewards text-white"
-                  onClick={() => {
-                    setFightStep(1);
-                    setShowRewards(false);
-                  }}
-                >
-                  Close
-                </span>
               </div>
 
               {/* Gaming panel ambient effect */}
@@ -1836,716 +1945,54 @@ const BattlePopup = ({
                           </motion.div>
                         ))}
                       </div>
-
-                      {/* <AnimatePresence mode="wait">
-                    <motion.div
-                      key={selectedChain}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      className="text-center d-none d-lg-flex mt-3"
-                    >
-                      <motion.div
-                        style={{
-                          color: "rgba(219, 234, 254, 0.8)",
-                          fontSize: "0.75rem",
-                          letterSpacing: "0.025em",
-                        }}
-                        animate={{
-                          color: [
-                            "rgba(219, 234, 254, 0.8)",
-                            "rgba(191, 219, 254, 0.6)",
-                            "rgba(219, 234, 254, 0.8)",
-                          ],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      >
-                        {selectedChainData?.name}
-                      </motion.div>
-                    </motion.div>
-                  </AnimatePresence> */}
                     </div>
                   </motion.div>
                 </motion.div>
-                {windowSize.width > 786 ? (
-                  <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 }}
-                    className="d-none d-lg-flex position-relative"
+              </div>
+            )}
+            {fightStep === 1 && (
+              <div className="fight-info-container d-flex flex-column gap-2 align-items-end align-items-lg-center justify-content-center">
+                <img
+                  src="https://cdn.worldofdypians.com/wod/fightTooltip.png"
+                  style={{ cursor: "pointer" }}
+                  alt=""
+                  onClick={() => setShowPrizes(true)}
+                />
+                {showPrizes && (
+                  <OutsideClickHandler
+                    onOutsideClick={() => setShowPrizes(false)}
                   >
-                    <div
-                      style={{
-                        background:
-                          "linear-gradient(135deg, rgba(8, 16, 32, 0.95) 0%, rgba(12, 20, 40, 0.85) 50%, rgba(6, 12, 28, 0.75) 100%)",
-                        backdropFilter: "blur(25px)",
-                        WebkitBackdropFilter: "blur(25px)",
-                        border: "2px solid rgba(59, 130, 246, 0.4)",
-                        borderRadius: "12px",
-                        boxShadow:
-                          "0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(120, 170, 255, 0.2)",
-                        // height: "100%",
-                        position: "relative",
-                        overflow: "hidden",
-                        width: "100%",
-                      }}
+                    <motion.div
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 }}
+                      className="fight-rewards-list p-3 d-flex gap-2 flex-column"
                     >
-                      {/* VERTICAL Rewards List - No Header */}
-                      {/* <div
-                          className="py-2 py-xxl-3 px-2"
-                          style={{
-                            color: "rgba(219, 234, 254, 1)",
-                            fontSize: "15px",
-                            fontWeight: "700",
-                            letterSpacing: "0.05em",
-                            textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                            textTransform: "uppercase",
-                          }}
+                      <span className="fight-rewards-list-title font-abaddon mb-2">
+                        Prizes
+                      </span>
+                      {rewardCategories.map((item, index) => (
+                        <div
+                          key={index}
+                          className="fight-rewards-item ms-3 p-2 position-relative d-flex align-items-center justify-content-between"
                         >
-                          PRIZES
-                        </div> */}
-                      <div
-                        className="py-2 px-2 d-flex flex-column align-items-center justify-content-center gap-2 w-100"
-                        style={{ zIndex: 2 }}
-                      >
-                        {rewardCategories.map((category, index) => (
-                          <motion.div
-                            key={category.id}
-                            initial={{ opacity: 0, scale: 0, x: 30 }}
-                            animate={{
-                              opacity: 1,
-                              scale: 1,
-                              x: 0,
-                            }}
-                            transition={{
-                              delay: 0.9 + index * 0.1,
-                              type: "spring",
-                              stiffness: 120,
-                            }}
-                            // whileHover={{ scale: 1.02, y: -2, x: 3 }}
-                            className="position-relative overflow-hidden w-100"
-                            style={{
-                              padding: "6px 12px",
-                              background:
-                                rewards.find((item) => {
-                                  return (
-                                    item.rewardType.toLowerCase() ===
-                                    category.id.toLowerCase()
-                                  );
-                                }) !== undefined
-                                  ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 50%, rgba(8, 16, 32, 0.8) 100%)"
-                                  : "linear-gradient(135deg, rgba(8, 16, 32, 0.8) 0%, rgba(12, 20, 40, 0.6) 50%, rgba(6, 12, 28, 0.4) 100%)",
-                              border:
-                                rewards.find((item) => {
-                                  return (
-                                    item.rewardType.toLowerCase() ===
-                                    category.id.toLowerCase()
-                                  );
-                                }) !== undefined
-                                  ? "2px solid rgba(59, 130, 246, 0.6)"
-                                  : "1px solid rgba(59, 130, 246, 0.25)",
-                              borderRadius: "10px",
-                              boxShadow:
-                                rewards.find((item) => {
-                                  return (
-                                    item.rewardType.toLowerCase() ===
-                                    category.id.toLowerCase()
-                                  );
-                                }) !== undefined
-                                  ? `0 0 20px ${
-                                      category.color.includes("yellow")
-                                        ? "#F59E0B"
-                                        : category.color.includes("blue")
-                                        ? "#3B82F6"
-                                        : "#A855F7"
-                                    }40, inset 0 1px 0 rgba(120, 170, 255, 0.15)`
-                                  : "0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(120, 170, 255, 0.1)",
-                              // cursor: "pointer",
-                              transition: "all 0.3s ease",
-                            }}
-                          >
-                            {/* Gaming-style tier indicator */}
-                            <motion.div
-                              className="position-absolute top-0 start-0"
-                              style={{
-                                width: "3px",
-                                height: "100%",
-                                ...getRewardGradient(category),
-                                borderRadius: "2px 0 0 2px",
-                              }}
-                              animate={{
-                                opacity:
-                                  rewards.find((item) => {
-                                    return (
-                                      item.rewardType.toLowerCase() ===
-                                      category.id.toLowerCase()
-                                    );
-                                  }) !== undefined
-                                    ? [0.6, 1, 0.6]
-                                    : 0.4,
-                              }}
-                              transition={{
-                                duration: 1.5,
-                                repeat:
-                                  rewards.find((item) => {
-                                    return (
-                                      item.rewardType.toLowerCase() ===
-                                      category.id.toLowerCase()
-                                    );
-                                  }) !== undefined
-                                    ? Infinity
-                                    : 0,
-                                ease: "easeInOut",
-                              }}
-                            />
-
-                            {/* Animated scan line for active rewards */}
-                            {rewards.find((item) => {
-                              return (
-                                item.rewardType.toLowerCase() ===
-                                category.id.toLowerCase()
-                              );
-                            }) !== undefined && (
-                              <motion.div
-                                className="position-absolute top-0 start-0 w-100 h-100"
-                                style={{
-                                  background:
-                                    "linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent)",
-                                  borderRadius: "8px",
-                                }}
-                                animate={{
-                                  x: ["-100%", "200%"],
-                                }}
-                                transition={{
-                                  duration: 2,
-                                  repeat: Infinity,
-                                  ease: "linear",
-                                }}
-                              />
-                            )}
-
-                            <div
-                              className="d-flex align-items-center justify-content-between position-relative"
-                              style={{ zIndex: 2 }}
-                            >
-                              <div className="d-flex align-items-center gap-2">
-                                {/* Reward icon */}
-                                <img
-                                  src={category.icon}
-                                  width={32}
-                                  height={32}
-                                  alt=""
-                                />
-
-                                {/* Reward info */}
-                                <div className="flex-grow-1">
-                                  <div className="d-flex align-items-center gap-1 mb-1">
-                                    <div
-                                      className="kickstarter-reward-title"
-                                      style={{ fontSize: "11px" }}
-                                    >
-                                      {category.name}
-                                    </div>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-1">
-                                    <div
-                                      style={{
-                                        color: "rgba(168, 192, 255, 0.7)",
-                                        fontSize: "9px",
-                                        fontWeight: "500",
-                                        textTransform: "uppercase",
-                                        letterSpacing: "0.05em",
-                                      }}
-                                    >
-                                      {category.rarity}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Count display */}
-                              <div className="d-flex flex-column">
-                                <span
-                                  className="text-end text-sm"
-                                  style={{
-                                    color: "rgba(168, 192, 255, 0.7)",
-                                    fontSize: "10px",
-                                  }}
-                                >
-                                  Up to
-                                </span>
-                                <div className="text-end">
-                                  <motion.span
-                                    className="d-block"
-                                    style={{
-                                      fontSize: "13px",
-                                      fontWeight: "700",
-                                      color:
-                                        rewards.find((item) => {
-                                          return (
-                                            item.rewardType.toLowerCase() ===
-                                            category.id.toLowerCase()
-                                          );
-                                        }) !== undefined
-                                          ? "rgba(219, 234, 254, 1)"
-                                          : "rgba(168, 192, 255, 0.9)",
-                                      textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                                      letterSpacing: "0.025em",
-                                    }}
-                                    animate={{
-                                      scale:
-                                        rewards.find((item) => {
-                                          return (
-                                            item.rewardType.toLowerCase() ===
-                                            category.id.toLowerCase()
-                                          );
-                                        }) !== undefined
-                                          ? [1, 1.1, 1]
-                                          : 1,
-                                      color:
-                                        rewards.find((item) => {
-                                          return (
-                                            item.rewardType.toLowerCase() ===
-                                            category.id.toLowerCase()
-                                          );
-                                        }) !== undefined
-                                          ? [
-                                              "rgba(219, 234, 254, 1)",
-                                              "rgba(96, 165, 250, 1)",
-                                              "rgba(219, 234, 254, 1)",
-                                            ]
-                                          : "rgba(168, 192, 255, 0.9)",
-                                    }}
-                                    transition={{
-                                      duration: 0.8,
-                                      repeat:
-                                        rewards.find((item) => {
-                                          return (
-                                            item.rewardType.toLowerCase() ===
-                                            category.id.toLowerCase()
-                                          );
-                                        }) !== undefined
-                                          ? Infinity
-                                          : 0,
-                                      ease: "easeInOut",
-                                    }}
-                                  >
-                                    {category.count}
-                                  </motion.span>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Activation indicator */}
-                            {/* {activatedReward === category.id && (
-                            <motion.div
-                              initial={{ opacity: 0, y: 3 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              className="text-center mt-2 position-relative"
-                              style={{ zIndex: 2 }}
-                            >
-                              <motion.div
-                                className="px-2 py-1 rounded"
-                                style={{
-                                  background:
-                                    "linear-gradient(90deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.3), rgba(34, 197, 94, 0.2))",
-                                  border: "1px solid rgba(34, 197, 94, 0.4)",
-                                  color: "rgba(147, 197, 253, 0.9)",
-                                  letterSpacing: "0.05em",
-                                  fontSize: "9px",
-                                  fontWeight: "600",
-                                  textTransform: "uppercase",
-                                }}
-                                animate={{
-                                  scale: [1, 1.03, 1],
-                                }}
-                                transition={{
-                                  duration: 1.5,
-                                  repeat: Infinity,
-                                  ease: "easeInOut",
-                                }}
-                              >
-                                🎉 ACTIVATED 🎉
-                              </motion.div>
-                            </motion.div>
-                          )} */}
-                          </motion.div>
-                        ))}
-                      </div>
-
-                      {/* Gaming panel ambient effect */}
-                      <motion.div
-                        className="position-absolute top-0 start-0 w-100 h-100"
-                        style={{
-                          background:
-                            "radial-gradient(circle at center, rgba(59, 130, 246, 0.05), transparent)",
-                          borderRadius: "12px",
-                        }}
-                        animate={{
-                          opacity: [0.3, 0.7, 0.3],
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                ) : (
-                  <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
-                    <GeneralTooltip
-                      open={tooltip}
-                      disableFocusListener
-                      disableHoverListener
-                      disableTouchListener
-                      placement={"top"}
-                      title={
-                        <motion.div
-                          initial={{ opacity: 0, x: 50 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.7 }}
-                          className="d-flex position-relative w-100"
-                        >
-                          <div
-                            style={{
-                              background:
-                                "linear-gradient(135deg, rgba(8, 16, 32, 0.95) 0%, rgba(12, 20, 40, 0.85) 50%, rgba(6, 12, 28, 0.75) 100%)",
-                              backdropFilter: "blur(25px)",
-                              WebkitBackdropFilter: "blur(25px)",
-                              border: "2px solid rgba(59, 130, 246, 0.4)",
-                              borderRadius: "12px",
-                              boxShadow:
-                                "0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(120, 170, 255, 0.2)",
-                              // height: "100%",
-                              position: "relative",
-                              overflow: "hidden",
-                              width: "100%",
-                            }}
-                          >
-                            {/* VERTICAL Rewards List - No Header */}
-                            {/* <div
-                          className="py-2 py-xxl-3 px-2"
-                          style={{
-                            color: "rgba(219, 234, 254, 1)",
-                            fontSize: "15px",
-                            fontWeight: "700",
-                            letterSpacing: "0.05em",
-                            textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          PRIZES
-                        </div> */}
-                            <div
-                              className="py-2 px-2 d-flex flex-column align-items-center justify-content-center gap-2 w-100"
-                              style={{ zIndex: 2 }}
-                            >
-                              {rewardCategories.map((category, index) => (
-                                <motion.div
-                                  key={category.id}
-                                  initial={{ opacity: 0, scale: 0, x: 30 }}
-                                  animate={{
-                                    opacity: 1,
-                                    scale: 1,
-                                    x: 0,
-                                  }}
-                                  transition={{
-                                    delay: 0.9 + index * 0.1,
-                                    type: "spring",
-                                    stiffness: 120,
-                                  }}
-                                  // whileHover={{ scale: 1.02, y: -2, x: 3 }}
-                                  className="position-relative overflow-hidden w-100"
-                                  style={{
-                                    padding: "6px 12px",
-                                    background:
-                                      rewards.find((item) => {
-                                        return (
-                                          item.rewardType.toLowerCase() ===
-                                          category.id.toLowerCase()
-                                        );
-                                      }) !== undefined
-                                        ? "linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(29, 78, 216, 0.2) 50%, rgba(8, 16, 32, 0.8) 100%)"
-                                        : "linear-gradient(135deg, rgba(8, 16, 32, 0.8) 0%, rgba(12, 20, 40, 0.6) 50%, rgba(6, 12, 28, 0.4) 100%)",
-                                    border:
-                                      rewards.find((item) => {
-                                        return (
-                                          item.rewardType.toLowerCase() ===
-                                          category.id.toLowerCase()
-                                        );
-                                      }) !== undefined
-                                        ? "2px solid rgba(59, 130, 246, 0.6)"
-                                        : "1px solid rgba(59, 130, 246, 0.25)",
-                                    borderRadius: "10px",
-                                    boxShadow:
-                                      rewards.find((item) => {
-                                        return (
-                                          item.rewardType.toLowerCase() ===
-                                          category.id.toLowerCase()
-                                        );
-                                      }) !== undefined
-                                        ? `0 0 20px ${
-                                            category.color.includes("yellow")
-                                              ? "#F59E0B"
-                                              : category.color.includes("blue")
-                                              ? "#3B82F6"
-                                              : "#A855F7"
-                                          }40, inset 0 1px 0 rgba(120, 170, 255, 0.15)`
-                                        : "0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(120, 170, 255, 0.1)",
-                                    // cursor: "pointer",
-                                    transition: "all 0.3s ease",
-                                  }}
-                                >
-                                  {/* Gaming-style tier indicator */}
-                                  <motion.div
-                                    className="position-absolute top-0 start-0"
-                                    style={{
-                                      width: "3px",
-                                      height: "100%",
-                                      ...getRewardGradient(category),
-                                      borderRadius: "2px 0 0 2px",
-                                    }}
-                                    animate={{
-                                      opacity:
-                                        rewards.find((item) => {
-                                          return (
-                                            item.rewardType.toLowerCase() ===
-                                            category.id.toLowerCase()
-                                          );
-                                        }) !== undefined
-                                          ? [0.6, 1, 0.6]
-                                          : 0.4,
-                                    }}
-                                    transition={{
-                                      duration: 1.5,
-                                      repeat:
-                                        rewards.find((item) => {
-                                          return (
-                                            item.rewardType.toLowerCase() ===
-                                            category.id.toLowerCase()
-                                          );
-                                        }) !== undefined
-                                          ? Infinity
-                                          : 0,
-                                      ease: "easeInOut",
-                                    }}
-                                  />
-
-                                  {/* Animated scan line for active rewards */}
-                                  {rewards.find((item) => {
-                                    return (
-                                      item.rewardType.toLowerCase() ===
-                                      category.id.toLowerCase()
-                                    );
-                                  }) !== undefined && (
-                                    <motion.div
-                                      className="position-absolute top-0 start-0 w-100 h-100"
-                                      style={{
-                                        background:
-                                          "linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent)",
-                                        borderRadius: "8px",
-                                      }}
-                                      animate={{
-                                        x: ["-100%", "200%"],
-                                      }}
-                                      transition={{
-                                        duration: 2,
-                                        repeat: Infinity,
-                                        ease: "linear",
-                                      }}
-                                    />
-                                  )}
-
-                                  <div
-                                    className="d-flex align-items-center justify-content-between position-relative"
-                                    style={{ zIndex: 2 }}
-                                  >
-                                    <div className="d-flex align-items-center gap-2">
-                                      {/* Reward icon */}
-                                      <img
-                                        src={category.icon}
-                                        width={32}
-                                        height={32}
-                                        alt=""
-                                      />
-
-                                      {/* Reward info */}
-                                      <div className="flex-grow-1">
-                                        <div className="d-flex align-items-center gap-1 mb-1">
-                                          <div
-                                            className="kickstarter-reward-title"
-                                            style={{ fontSize: "11px" }}
-                                          >
-                                            {category.name}
-                                          </div>
-                                        </div>
-                                        <div className="d-flex align-items-center gap-1">
-                                          <div
-                                            style={{
-                                              color: "rgba(168, 192, 255, 0.7)",
-                                              fontSize: "9px",
-                                              fontWeight: "500",
-                                              textTransform: "uppercase",
-                                              letterSpacing: "0.05em",
-                                            }}
-                                          >
-                                            {category.rarity}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    {/* Count display */}
-                                    <div className="d-flex flex-column">
-                                      <span
-                                        className="text-end text-sm"
-                                        style={{
-                                          color: "rgba(168, 192, 255, 0.7)",
-                                          fontSize: "10px",
-                                        }}
-                                      >
-                                        Up to
-                                      </span>
-                                      <div className="text-end">
-                                        <motion.span
-                                          className="d-block"
-                                          style={{
-                                            fontSize: "13px",
-                                            fontWeight: "700",
-                                            color:
-                                              rewards.find((item) => {
-                                                return (
-                                                  item.rewardType.toLowerCase() ===
-                                                  category.id.toLowerCase()
-                                                );
-                                              }) !== undefined
-                                                ? "rgba(219, 234, 254, 1)"
-                                                : "rgba(168, 192, 255, 0.9)",
-                                            textShadow:
-                                              "0 1px 2px rgba(0,0,0,0.3)",
-                                            letterSpacing: "0.025em",
-                                          }}
-                                          animate={{
-                                            scale:
-                                              rewards.find((item) => {
-                                                return (
-                                                  item.rewardType.toLowerCase() ===
-                                                  category.id.toLowerCase()
-                                                );
-                                              }) !== undefined
-                                                ? [1, 1.1, 1]
-                                                : 1,
-                                            color:
-                                              rewards.find((item) => {
-                                                return (
-                                                  item.rewardType.toLowerCase() ===
-                                                  category.id.toLowerCase()
-                                                );
-                                              }) !== undefined
-                                                ? [
-                                                    "rgba(219, 234, 254, 1)",
-                                                    "rgba(96, 165, 250, 1)",
-                                                    "rgba(219, 234, 254, 1)",
-                                                  ]
-                                                : "rgba(168, 192, 255, 0.9)",
-                                          }}
-                                          transition={{
-                                            duration: 0.8,
-                                            repeat:
-                                              rewards.find((item) => {
-                                                return (
-                                                  item.rewardType.toLowerCase() ===
-                                                  category.id.toLowerCase()
-                                                );
-                                              }) !== undefined
-                                                ? Infinity
-                                                : 0,
-                                            ease: "easeInOut",
-                                          }}
-                                        >
-                                          {category.count}
-                                        </motion.span>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  {/* Activation indicator */}
-                                  {/* {activatedReward === category.id && (
-                            <motion.div
-                              initial={{ opacity: 0, y: 3 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              className="text-center mt-2 position-relative"
-                              style={{ zIndex: 2 }}
-                            >
-                              <motion.div
-                                className="px-2 py-1 rounded"
-                                style={{
-                                  background:
-                                    "linear-gradient(90deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.3), rgba(34, 197, 94, 0.2))",
-                                  border: "1px solid rgba(34, 197, 94, 0.4)",
-                                  color: "rgba(147, 197, 253, 0.9)",
-                                  letterSpacing: "0.05em",
-                                  fontSize: "9px",
-                                  fontWeight: "600",
-                                  textTransform: "uppercase",
-                                }}
-                                animate={{
-                                  scale: [1, 1.03, 1],
-                                }}
-                                transition={{
-                                  duration: 1.5,
-                                  repeat: Infinity,
-                                  ease: "easeInOut",
-                                }}
-                              >
-                                🎉 ACTIVATED 🎉
-                              </motion.div>
-                            </motion.div>
-                          )} */}
-                                </motion.div>
-                              ))}
-                            </div>
-
-                            {/* Gaming panel ambient effect */}
-                            <motion.div
-                              className="position-absolute top-0 start-0 w-100 h-100"
-                              style={{
-                                background:
-                                  "radial-gradient(circle at center, rgba(59, 130, 246, 0.05), transparent)",
-                                borderRadius: "12px",
-                              }}
-                              animate={{
-                                opacity: [0.3, 0.7, 0.3],
-                              }}
-                              transition={{
-                                duration: 4,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                              }}
-                            />
+                          <img src={item.icon} alt="" />
+                          <span className="fight-rewards-item-name ps-4">
+                            {item.id}
+                          </span>
+                          <div className="d-flex flex-column align-items-end">
+                            <span className="new-up-to">Up to</span>
+                            <span className="fight-rewards-item-count">
+                              {item.count}
+                            </span>
                           </div>
-                        </motion.div>
-                      }
-                    >
-                      <img
-                        onClick={() => setTooltip(true)}
-                        src={"https://cdn.worldofdypians.com/wod/infoIcon.svg"}
-                        width={35}
-                        height={35}
-                        style={{ cursor: "pointer" }}
-                        alt=""
-                      />
-                    </GeneralTooltip>
+                        </div>
+                      ))}
+                    </motion.div>
                   </OutsideClickHandler>
                 )}
               </div>
             )}
-
             {fightStep === 1 && (
               <>
                 <div className="d-flex flex-column gap-3 w-100 align-items-center">
@@ -2569,7 +2016,8 @@ const BattlePopup = ({
                   {isConnected &&
                     coinbase &&
                     email &&
-                    chainId !== selectedChainData.chainId && (
+                    chainId !== 56 &&
+                    chainId !== 204 && (
                       <button
                         className="fantasy-btn-4 font-abaddon text-white"
                         onClick={() => switchNetwork("0x38", 56)}
@@ -2581,12 +2029,27 @@ const BattlePopup = ({
                   {isConnected &&
                     coinbase &&
                     email &&
-                    chainId === selectedChainData.chainId && (
+                    (chainId === 204 || chainId === 56) &&
+                    fightInfo && (
                       <button
                         className="fantasy-btn font-abaddon text-white"
-                        style={{ opacity: disableButtons ? "0.8" : "1", pointerEvents: disableButtons ? "none" : "auto"  }}
+                        style={{
+                          pointerEvents: disableButtons ? "none" : "auto",
+                        }}
+                        disabled
+                      >
+                        <Countdown date={midnightTime} renderer={renderer} />
+                      </button>
+                    )}
+                  {isConnected &&
+                    coinbase &&
+                    email &&
+                    (chainId === 204 || chainId === 56) &&
+                    !fightInfo && (
+                      <button
+                        className="fantasy-btn font-abaddon text-white"
                         onClick={handleStartFight}
-                        disabled={loading || disableButtons}
+                        disabled={loading}
                       >
                         {loading ? (
                           <div
@@ -2596,7 +2059,7 @@ const BattlePopup = ({
                             <span className="visually-hidden">Loading...</span>
                           </div>
                         ) : (
-                          "Select Your Fighter"
+                          "Fight"
                         )}
                       </button>
                     )}
@@ -2607,10 +2070,24 @@ const BattlePopup = ({
                         key={index}
                         src={item.thumb}
                         alt=""
-                        style={{ opacity: disableButtons ? "0.8" : "1", pointerEvents: disableButtons ? "none" : "auto" }}
+                        style={{
+                          pointerEvents: disableButtons ? "none" : "auto",
+                        }}
                         className={`player-img ${
                           selectedPlayer.id === item.id && "player-img-active"
-                        } `}
+                        } ${
+                          selectedPlayer.id === item.id &&
+                          fightInfo &&
+                          fightInfo?.win
+                            ? "player-img-win"
+                            : ""
+                        } ${
+                          selectedPlayer.id === item.id &&
+                          fightInfo &&
+                          !fightInfo?.win
+                            ? "player-img-lose"
+                            : ""
+                        }`}
                         onClick={() => {
                           !disableButtons && new Audio(click).play();
                           setselectedPlayer(item);

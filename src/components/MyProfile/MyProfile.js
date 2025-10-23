@@ -174,7 +174,7 @@ const MyProfile = ({
   onDailyQuestionClick,
   openKickstarter,
   onOpenBooster,
-  battleCompleted,
+  // battleCompleted,
   openBattlePopup,
 }) => {
   const totalClaimedChests = allClaimedChests;
@@ -376,6 +376,9 @@ const MyProfile = ({
       },
     ],
   };
+
+
+  const battleCompleted = localStorage.getItem("midnight")
 
   useEffect(() => {
     if (canBuy && email) {

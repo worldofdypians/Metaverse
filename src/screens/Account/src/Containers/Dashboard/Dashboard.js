@@ -59,6 +59,7 @@ import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
 import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
 import BattlePopup from "../../../../../components/BattlePopup/BattlePopup";
+import CloseBattlePopup from "../../../../../components/BattlePopup/CloseBattlePopup";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -498,6 +499,7 @@ function Dashboard({
 
   const [userRankRewards, setUserRankRewards] = useState(0);
   const [closePopup, setClosePopup] = useState(false);
+  const [closeBattle, setcloseBattle] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -6625,7 +6627,7 @@ function Dashboard({
               openBattlePopup={() => {
                 setbattlePopup(true);
               }}
-              battleCompleted={false}
+              // battleCompleted={false}
               openKickstarter={openKickstarter}
               aiQuestionCompleted={aiQuestionCompleted}
               explorerHuntData={explorerHuntData}
@@ -7745,6 +7747,8 @@ function Dashboard({
         {(battlePopup || hashValue === "#arena-of-rage") && (
           <div className={`package-popup-wrapper2 `}>
           <BattlePopup
+          closePopup={closeBattle}
+          setClosePopup={setcloseBattle}
             publicClient={publicClient}
             walletClient={walletClient}
             binanceW3WProvider={binanceW3WProvider}
@@ -8004,6 +8008,7 @@ function Dashboard({
           <OutsideClickHandler onOutsideClick={() => setClosePopup(false)}>
             <ClosePopup
               onClose={() => {
+                setbattlePopup(false)
                 setSuspenseSound(true);
                 setShowDailyQuestion(false);
                 suspenseMusicRef.current?.pause();
@@ -8015,6 +8020,17 @@ function Dashboard({
                 checkAnswerTimeout();
               }}
               setClosePopup={setClosePopup}
+            />
+          </OutsideClickHandler>
+        )}
+        {closeBattle && (
+          <OutsideClickHandler onOutsideClick={() => setcloseBattle(false)}>
+            <CloseBattlePopup
+              onClose={() => {
+                setbattlePopup(false)
+
+              }}
+              setClosePopup={setcloseBattle}
             />
           </OutsideClickHandler>
         )}
