@@ -13,7 +13,6 @@ import click from "./click.mp3";
 import fightBgMusic from "./fightBgMusic.mp3";
 
 import { fighters } from "./battleInfo";
-import { styled, Tooltip, tooltipClasses } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import Countdown from "react-countdown";
 
@@ -32,19 +31,7 @@ const renderer = ({ hours, minutes }) => {
   );
 };
 
-const GeneralTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    background: "none",
-    width: "fit-content",
-    borderRadius: "20px",
-    marginTop: 0,
-    fontSize: theme.typography.pxToRem(12),
-    display: "flex",
-    justifyContent: "center",
-  },
-}));
+
 
 const rewardCategories = [
   {
@@ -220,11 +207,10 @@ const BattlePopup = ({
   const [mute, setMute] = useState(false);
   const [selectedPlayer, setselectedPlayer] = useState(fighters[0]);
   const [fightType, setFightType] = useState(null);
-  const [tooltip, setTooltip] = useState(false);
   const [showRewards, setShowRewards] = useState(false);
   const [disableButtons, setDisableButtons] = useState(false);
   const [showPrizes, setShowPrizes] = useState(false);
-  const [tempfighter, setTempfighter] = useState(fighters[0])
+  const [tempfighter, setTempfighter] = useState(fighters[0]);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -238,19 +224,19 @@ const BattlePopup = ({
 
   const audioRef = useRef(null);
 
-  useEffect(() => {
-    // ✅ Create audio once
-    audioRef.current = new Audio(fightBgMusic);
-    audioRef.current.volume = 0.3;
-    audioRef.current.loop = true;
+  // useEffect(() => {
+  //   // ✅ Create audio once
+  //   audioRef.current = new Audio(fightBgMusic);
+  //   audioRef.current.volume = 0.3;
+  //   audioRef.current.loop = true;
 
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (audioRef.current) {
+  //       audioRef.current.pause();
+  //       audioRef.current.currentTime = 0;
+  //     }
+  //   };
+  // }, []);
 
   useEffect(() => {
     // 🔊 Play or stop when popup opens/closes
@@ -1005,9 +991,6 @@ const BattlePopup = ({
     }
   }, [chainId]);
 
-  console.log(tempfighter.name, selectedPlayer.name);
-  
-
   if (!isOpen) return null;
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
@@ -1029,22 +1012,22 @@ const BattlePopup = ({
           <>
             {windowSize.width > 786 ? (
               <div className="position-absolute hero-name-wrapper overflow-hidden d-flex justify-content-between align-items-center">
-                <div className="d-flex hero-name-item col-3 justify-content-center">
+                {/* <div className="d-flex hero-name-item col-3 justify-content-center">
                   <span className=" selected-hero-name font-abaddon">
                     {selectedPlayer.name}
                   </span>
-                </div>
-                <div className="d-flex hero-name-item col-3 justify-content-center">
+                </div> */}
+                {/* <div className="d-flex hero-name-item col-3 justify-content-center">
                   <span className=" selected-hero-name font-abaddon">
                     Dark Lord
                   </span>
-                </div>
+                </div> */}
               </div>
             ) : (
               <>
-                <span className=" selected-hero-name-2 font-abaddon">
+                {/* <span className=" selected-hero-name-2 font-abaddon">
                   {selectedPlayer.name}
-                </span>
+                </span> */}
                 <span className=" selected-hero-name-3 font-abaddon">
                   Dark Lord
                 </span>
@@ -1056,23 +1039,7 @@ const BattlePopup = ({
           <>
             {fightInfo.win ? (
               <>
-                {selectedPlayer.name === tempfighter.name &&
-                <div className="fighter-win-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
-                  <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
-                    Winner
-                  </h6>
-                  <div className="fighter-win-rewards d-flex align-items-center gap-3 p-2">
-                    <div className="d-flex align-items-end gap-1">
-                      <span className="fighter-win-rewards-amount">2,520</span>
-                      <span className="fighter-win-rewards-type">Points</span>
-                    </div>
-                    <div className="d-flex align-items-end gap-1">
-                      <span className="fighter-win-rewards-amount">134</span>
-                      <span className="fighter-win-rewards-type">Stars</span>
-                    </div>
-                  </div>
-                </div>
-                }
+                {selectedPlayer.name === tempfighter.name && <></>}
                 <div className="fighter-lose-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
                   <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
                     Loser
@@ -1081,13 +1048,7 @@ const BattlePopup = ({
               </>
             ) : (
               <>
-               {selectedPlayer.name === tempfighter.name &&
-                <div className="fighter-lose-rewards-wrapper-2 d-flex flex-column gap-2 align-items-center justify-content-center">
-                  <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
-                    Loser
-                  </h6>
-                </div>
-               }
+                {selectedPlayer.name === tempfighter.name && <></>}
                 <div className="fighter-win-rewards-wrapper-2 d-flex flex-column gap-2 align-items-center justify-content-center">
                   <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
                     Winner
@@ -1109,6 +1070,53 @@ const BattlePopup = ({
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
             >
+              <div className="hero-name-position">
+                <div className="d-flex hero-name-item  justify-content-center">
+                  <span className=" selected-hero-name font-abaddon">
+                    {selectedPlayer.name}
+                  </span>
+                </div>
+              </div>
+              {fightInfo?.win ? (
+                <>
+                  {selectedPlayer.name === tempfighter.name && (
+                    <div className="fighter-win-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
+                      <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
+                        Winner
+                      </h6>
+                      <div className="fighter-win-rewards d-flex align-items-center gap-3 p-2">
+                        <div className="d-flex align-items-end gap-1">
+                          <span className="fighter-win-rewards-amount">
+                            2,520
+                          </span>
+                          <span className="fighter-win-rewards-type">
+                            Points
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-end gap-1">
+                          <span className="fighter-win-rewards-amount">
+                            134
+                          </span>
+                          <span className="fighter-win-rewards-type">
+                            Stars
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  {selectedPlayer.name === tempfighter.name && (
+                    <div className="fighter-lose-rewards-wrapper-2 d-flex flex-column gap-2 align-items-center justify-content-center">
+                      <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
+                        Loser
+                      </h6>
+                    </div>
+                  )}
+                </>
+              )}
+
               <video
                 src={selectedPlayer.videoLoop}
                 className={`fight-video`}
@@ -1118,6 +1126,13 @@ const BattlePopup = ({
                 autoPlay
               />
             </motion.div>
+            <div className="hero-name-position-2">
+              <div className="d-flex hero-name-item  justify-content-center">
+                <span className=" selected-hero-name font-abaddon">
+                  Dark Lord
+                </span>
+              </div>
+            </div>
             <video
               src={
                 "https://cdn.worldofdypians.com/wod/battleVideos/darkLordLOOP.mp4"
@@ -1961,12 +1976,15 @@ const BattlePopup = ({
             )}
             {fightStep === 1 && (
               <div className="fight-info-container d-flex flex-column gap-2 align-items-end align-items-lg-center justify-content-center">
-                <img
+               <div className="shape">
+                 <img
                   src="https://cdn.worldofdypians.com/wod/fightTooltip.png"
+                  className="shape__img"
                   style={{ cursor: "pointer" }}
                   alt=""
-                  onClick={() => setShowPrizes(true)}
+                  onClick={() => setShowPrizes(!showPrizes)}
                 />
+               </div>
                 {showPrizes && (
                   <OutsideClickHandler
                     onOutsideClick={() => setShowPrizes(false)}
@@ -2047,7 +2065,7 @@ const BattlePopup = ({
                         }}
                         disabled
                       >
-                        <Countdown date={midnightTime} renderer={renderer} />
+                      <Countdown date={midnightTime} renderer={renderer} />
                       </button>
                     )}
                   {isConnected &&
@@ -2079,8 +2097,7 @@ const BattlePopup = ({
                         key={index}
                         src={item.thumb}
                         alt=""
-                        style={{
-                        }}
+                        style={{}}
                         className={`player-img ${
                           selectedPlayer.id === item.id && "player-img-active"
                         } ${
