@@ -18,20 +18,12 @@ import Countdown from "react-countdown";
 
 const renderer = ({ hours, minutes }) => {
   return (
-    <span
-      className="fighter-timer font-abaddon"
-      style={{
-        fontSize: "26px",
-        color: "#fff",
-      }}
-    >
-      {hours < 10 ? "0" + hours : hours}:
-      {minutes < 10 ? "0" + minutes : minutes}
+    <span className="fighter-timer">
+      {hours < 10 ? "0" + hours : hours}H:
+      {minutes < 10 ? "0" + minutes : minutes}M
     </span>
   );
 };
-
-
 
 const rewardCategories = [
   {
@@ -191,7 +183,7 @@ const BattlePopup = ({
       ],
     },
   ];
-
+  const btnRef = useRef(null);
   const [showContent, setShowContent] = useState(false);
   const [step, setStep] = useState(1);
   const [fightStep, setFightStep] = useState(1);
@@ -287,10 +279,6 @@ const BattlePopup = ({
 
         // 🎁 Save data + show rewards
         setTimeout(() => {
-          const nextMidnight = new Date();
-          nextMidnight.setHours(24, 0, 0, 0);
-          localStorage.setItem("midnight", nextMidnight.toISOString());
-
           localStorage.setItem(
             "fightInfo",
             JSON.stringify({
@@ -315,7 +303,6 @@ const BattlePopup = ({
   };
 
   const fightInfo = JSON.parse(localStorage.getItem("fightInfo"));
-  const midnight = localStorage.getItem("midnight");
 
   useEffect(() => {
     if (fightInfo) {
@@ -433,7 +420,6 @@ const BattlePopup = ({
           window.alertify.error(e?.message);
         });
       if (result && result.status === 200) {
-        console.log(result.data);
         setTimeout(() => {
           setRewards(result.data.rewards);
         }, 3600);
@@ -458,7 +444,6 @@ const BattlePopup = ({
         // if (chainText === "opbnb" || chainText === "bnb") {
         //   handleSecondTask(coinbase);
         // }
-        console.log(result.data);
         setTimeout(() => {
           setRewards(result.data.rewards);
         }, 3600);
@@ -595,7 +580,6 @@ const BattlePopup = ({
     const video = videoRef2.current;
 
     window.web3 = new Web3(window.ethereum);
-    // console.log(window.config.daily_bonus_address, address);
     const daily_bonus_contract = new window.web3.eth.Contract(
       window.DAILY_BONUS_ABI,
       window.config.daily_bonus_address
@@ -611,7 +595,6 @@ const BattlePopup = ({
       window.config.daily_bonus_taiko_address
     );
 
-    // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (window.WALLET_TYPE !== "binance") {
         await daily_bonus_contract.methods
@@ -678,14 +661,10 @@ const BattlePopup = ({
         window.WALLET_TYPE !== "binance" &&
         window.WALLET_TYPE !== "matchId"
       ) {
-        // console.log("standard");
-
         // const web3 = new Web3(window.ethereum);
         // const gasPrice = await web3.eth.getGasPrice();
-        // console.log("gasPrice", gasPrice);
         // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
         // const increasedGwei = parseInt(currentGwei) + 1;
-        // console.log("increasedGwei", increasedGwei);
 
         // const transactionParameters = {
         //   gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
@@ -698,9 +677,7 @@ const BattlePopup = ({
         //     transactionParameters.gas = web3.utils.toHex(gas);
         //   })
         //   .catch(function (error) {
-        //     console.log(error);
         //   });
-        // console.log(transactionParameters);
 
         await daily_bonus_contract_bnb.methods
           .openChest()
@@ -991,6 +968,8 @@ const BattlePopup = ({
     }
   }, [chainId]);
 
+  console.log(showPrizes);
+
   if (!isOpen) return null;
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
@@ -1058,7 +1037,7 @@ const BattlePopup = ({
             )}
           </>
         )}
-        {fightStep === 1 ? (
+        {fightStep === 1  ? (
           <div className="d-flex align-items-center flex-column flex-lg-row h-100 w-100">
             <motion.div
               key={
@@ -1077,42 +1056,46 @@ const BattlePopup = ({
                   </span>
                 </div>
               </div>
-              {fightInfo?.win ? (
+              {fightInfo && fightStep === 1 && (
                 <>
-                  {selectedPlayer.name === tempfighter.name && (
-                    <div className="fighter-win-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
-                      <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
-                        Winner
-                      </h6>
-                      <div className="fighter-win-rewards d-flex align-items-center gap-3 p-2">
-                        <div className="d-flex align-items-end gap-1">
-                          <span className="fighter-win-rewards-amount">
-                            2,520
-                          </span>
-                          <span className="fighter-win-rewards-type">
-                            Points
-                          </span>
+                  {fightInfo?.win ? (
+                    <>
+                      {selectedPlayer.name === tempfighter.name && (
+                        <div className="fighter-win-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
+                          <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
+                            Winner
+                          </h6>
+                          <div className="fighter-win-rewards d-flex align-items-center gap-3 p-2">
+                            <div className="d-flex align-items-end gap-1">
+                              <span className="fighter-win-rewards-amount">
+                                2,520
+                              </span>
+                              <span className="fighter-win-rewards-type">
+                                Points
+                              </span>
+                            </div>
+                            <div className="d-flex align-items-end gap-1">
+                              <span className="fighter-win-rewards-amount">
+                                134
+                              </span>
+                              <span className="fighter-win-rewards-type">
+                                Stars
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="d-flex align-items-end gap-1">
-                          <span className="fighter-win-rewards-amount">
-                            134
-                          </span>
-                          <span className="fighter-win-rewards-type">
-                            Stars
-                          </span>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {selectedPlayer.name === tempfighter.name && (
+                        <div className="fighter-lose-rewards-wrapper-2 d-flex flex-column gap-2 align-items-center justify-content-center">
+                          <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
+                            Loser
+                          </h6>
                         </div>
-                      </div>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <>
-                  {selectedPlayer.name === tempfighter.name && (
-                    <div className="fighter-lose-rewards-wrapper-2 d-flex flex-column gap-2 align-items-center justify-content-center">
-                      <h6 className="fighter-win-rewards-text mb-0 text-white font-abaddon">
-                        Loser
-                      </h6>
-                    </div>
+                      )}
+                    </>
                   )}
                 </>
               )}
@@ -1976,18 +1959,26 @@ const BattlePopup = ({
             )}
             {fightStep === 1 && (
               <div className="fight-info-container d-flex flex-column gap-2 align-items-end align-items-lg-center justify-content-center">
-               <div className="shape">
-                 <img
-                  src="https://cdn.worldofdypians.com/wod/fightTooltip.png"
-                  className="shape__img"
-                  style={{ cursor: "pointer" }}
-                  alt=""
-                  onClick={() => setShowPrizes(!showPrizes)}
-                />
-               </div>
+                <div className="shape">
+                  <img
+                    ref={btnRef}
+                    src="https://cdn.worldofdypians.com/wod/fightTooltip.png"
+                    className="shape__img"
+                    style={{ cursor: "pointer" }}
+                    alt=""
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setTimeout(() => setShowPrizes((prev) => !prev), 0);
+                    }}
+                  />
+                </div>
                 {showPrizes && (
                   <OutsideClickHandler
-                    onOutsideClick={() => setShowPrizes(false)}
+                    onOutsideClick={(e) => {
+                      if (btnRef.current && btnRef.current.contains(e.target))
+                        return;
+                      setShowPrizes(false);
+                    }}
                   >
                     <motion.div
                       initial={{ opacity: 0, x: 50 }}
@@ -2059,13 +2050,14 @@ const BattlePopup = ({
                     (chainId === 204 || chainId === 56) &&
                     fightInfo && (
                       <button
-                        className="fantasy-btn font-abaddon text-white"
+                        className="fantasy-btn font-abaddon text-white d-flex align-items-center justify-content-between"
                         style={{
                           pointerEvents: disableButtons ? "none" : "auto",
                         }}
                         disabled
                       >
-                      <Countdown date={midnightTime} renderer={renderer} />
+                        <span className="next-fight-in">Next fight in</span>
+                        <Countdown date={midnightTime} renderer={renderer} />
                       </button>
                     )}
                   {isConnected &&

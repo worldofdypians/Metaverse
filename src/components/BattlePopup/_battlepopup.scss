@@ -1108,6 +1108,10 @@ line-height: 16px; /* 160% */
   height: auto;
 }
 
+.shape__img:hover{
+   filter: drop-shadow(0 0 10px gold);
+}
+
 /* glowing ripple */
 .shape::before {
   content: "";
@@ -1120,36 +1124,64 @@ line-height: 16px; /* 160% */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  filter: blur(20px) saturate(140%);
+  filter: drop-shadow(0 0 60px gold) blur(25px) brightness(3) saturate(250%);
+
   transform-origin: center;
   opacity: 0;
   pointer-events: none;
-  animation: ripple 3s cubic-bezier(.2,.8,.2,1) infinite;
+  animation: ripple 3s ease-out infinite;
 }
 
 @keyframes ripple {
   0% {
     opacity: 0;
     transform: scale(1);
-    filter: blur(14px) saturate(150%) brightness(1.2);
+    filter: drop-shadow(0 0 60px gold) blur(25px) brightness(3) saturate(250%);
+
   }
   8% {
-    opacity: 0.9; /* much stronger flash */
-    transform: scale(1.03);
+    opacity: 1; transform: scale(1.05);
   }
   30% {
-    opacity: 0.7;
-    transform: scale(1.25);
-    filter: blur(22px) saturate(150%) brightness(1.3);
+   opacity: 0.8; transform: scale(1.3);
+    filter: drop-shadow(0 0 60px gold) blur(25px) brightness(3) saturate(250%);
+
   }
   60% {
-    opacity: 0.4;
-    transform: scale(1.6);
-    filter: blur(28px) saturate(130%) brightness(1.2);
+    opacity: 0.4; transform: scale(1.6);
+    filter: drop-shadow(0 0 60px gold) blur(25px) brightness(3) saturate(250%);
+
   }
   100% {
     opacity: 0;
     transform: scale(2);
-    filter: blur(34px) saturate(120%) brightness(1);
+    filter: drop-shadow(0 0 60px gold) blur(25px) brightness(3) saturate(250%);
+
   }
+}
+
+.fighter-timer{
+  color: #FFF;
+text-shadow: 0 4px 4px rgba(55, 13, 0, 0.25);
+font-size: 24px;
+font-family: "Montserrat" !important;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+@media screen and (max-width: 786px) {
+  font-size: 18px;
+}
+}
+
+.next-fight-in{
+  color: #370D00;
+font-size: 16px;
+font-family: "Montserrat" !important;
+text-transform: none !important;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+@media screen and (max-width: 786px) {
+  font-size: 12px;
+}
 }
