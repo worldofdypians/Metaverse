@@ -224,19 +224,19 @@ const BattlePopup = ({
 
   const audioRef = useRef(null);
 
-  // useEffect(() => {
-  //   // ✅ Create audio once
-  //   audioRef.current = new Audio(fightBgMusic);
-  //   audioRef.current.volume = 0.3;
-  //   audioRef.current.loop = true;
+  useEffect(() => {
+    // ✅ Create audio once
+    audioRef.current = new Audio(fightBgMusic);
+    audioRef.current.volume = 0.3;
+    audioRef.current.loop = true;
 
-  //   return () => {
-  //     if (audioRef.current) {
-  //       audioRef.current.pause();
-  //       audioRef.current.currentTime = 0;
-  //     }
-  //   };
-  // }, []);
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     // 🔊 Play or stop when popup opens/closes
