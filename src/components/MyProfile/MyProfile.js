@@ -378,7 +378,7 @@ const MyProfile = ({
   };
 
 
-  const battleCompleted = localStorage.getItem("midnight")
+  const battleCompleted = localStorage.getItem("fightInfo")
 
   useEffect(() => {
     if (canBuy && email) {

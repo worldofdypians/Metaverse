@@ -203,6 +203,7 @@ const BattlePopup = ({
   const [disableButtons, setDisableButtons] = useState(false);
   const [showPrizes, setShowPrizes] = useState(false);
   const [tempfighter, setTempfighter] = useState(fighters[0]);
+  const [dummyCount, setDummyCount] = useState(0)
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -275,6 +276,7 @@ const BattlePopup = ({
                 console.warn("Audio play failed:", err);
             });
           }
+          setDummyCount(1)
         }, 26500);
 
         // 🎁 Save data + show rewards
