@@ -312,7 +312,7 @@ const BattlePopup = ({
       setselectedPlayer(fightInfo.fighter);
       setTempfighter(fightInfo.fighter);
     }
-  }, []);
+  }, [fightInfo]);
 
   // Attach listener
   window.addEventListener("keydown", handleEsc);
