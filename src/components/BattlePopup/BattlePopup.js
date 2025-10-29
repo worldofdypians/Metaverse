@@ -104,6 +104,8 @@ const BattlePopup = ({
     borderRadius: "16px",
   };
 
+  const clickSound = "https://cdn.worldofdypians.com/wod/aiOryn/click.mp3";
+
   const chains = [
     {
       id: "bnb",
@@ -203,7 +205,7 @@ const BattlePopup = ({
   const [disableButtons, setDisableButtons] = useState(false);
   const [showPrizes, setShowPrizes] = useState(false);
   const [tempfighter, setTempfighter] = useState(fighters[0]);
-  const [dummyCount, setDummyCount] = useState(0)
+  const [dummyCount, setDummyCount] = useState(0);
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -229,7 +231,7 @@ const BattlePopup = ({
         audioRef.current.currentTime = 0;
       }
     };
-  }, []);
+  }, [onClose]);
 
   useEffect(() => {
     // 🔊 Play or stop when popup opens/closes
@@ -276,7 +278,7 @@ const BattlePopup = ({
                 console.warn("Audio play failed:", err);
             });
           }
-          setDummyCount(1)
+          setDummyCount(1);
         }, 26500);
 
         // 🎁 Save data + show rewards
@@ -1039,7 +1041,7 @@ const BattlePopup = ({
             )}
           </>
         )}
-        {fightStep === 1  ? (
+        {fightStep === 1 ? (
           <div className="d-flex align-items-center flex-column flex-lg-row h-100 w-100">
             <motion.div
               key={
@@ -2069,7 +2071,11 @@ const BattlePopup = ({
                     !fightInfo && (
                       <button
                         className="fantasy-btn font-abaddon text-white"
-                        onClick={handleStartFight}
+                        onClick={() => {
+                          new Audio(clickSound).play();
+
+                          handleStartFight();
+                        }}
                         disabled={loading}
                       >
                         {loading ? (
