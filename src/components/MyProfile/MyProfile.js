@@ -252,18 +252,7 @@ const MyProfile = ({
       });
   };
 
-  const checkTwitterLike = async (tweetId) => {
-    await axios
-      .get(
-        `https://api.worldofdypians.com/twitter/check-like/${address}/${tweetId}`
-      )
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
 
   useEffect(() => {
     checkTwitter();
@@ -1864,7 +1853,7 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              {twitter ? (
+              {twitter?.twitterUsername ? (
                 <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                   <div
                     className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
@@ -2328,6 +2317,7 @@ const MyProfile = ({
             coinbase={coinbase}
             email={email}
             onConnectWallet={onConnectWallet}
+
           />
         </OutsideClickHandler>
       )}

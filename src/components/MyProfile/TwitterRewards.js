@@ -25,6 +25,21 @@ const TwitterRewards = ({
   );
 
   const [tab, setTab] = useState("available");
+  const [loading, setLoading] = useState(false);
+
+  const handleDisconnect = async () => {
+    setLoading(true);
+    await axios
+      .post(`https://api.worldofdypians.com/auth/twitter/unlink`, {
+        walletAddress: coinbase,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setLoading(false);
+        checkTwitter();
+        onClose();
+      });
+  };
 
   return (
     <div className="popup-wrapper popup-active twitter-popup p-3">
@@ -85,8 +100,20 @@ const TwitterRewards = ({
                 <span className="text-[#1E90FF] font-medium">@{username}</span>
               </div>
             </div>
-            <button className="unlink-twitter-button px-3 py-2">
-              Disconnect
+            <button
+              className="unlink-twitter-button px-3 py-2"
+              onClick={handleDisconnect}
+            >
+              {loading ? (
+                <div
+                  className="spinner-border spinner-border-sm text-light"
+                  role="status"
+                >
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              ) : (
+                "Disconnect"
+              )}
             </button>
           </div>
         </div>
