@@ -57,7 +57,7 @@ window.config = {
 
   nft_dypius_premium_mat_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
   nft_dypius_premium_taraxa_address:
-    "0xd5755822D34f84F84E8CEDc2Cf8eA1190d522FfD",
+    "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
 
   nft_dypius_premium_vanar_address:
     "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
@@ -164,7 +164,8 @@ window.config = {
   subscription_taiko_address: "0x0570cb2bb014d0eda8dfffffdeb07906a5b40aa3",
   subscription_mat_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
   subscription_sei_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
-  subscription_taraxa_address: "0x32D2411E137a00616B646f3FcF32bc1990e468EF",
+  subscription_taraxa_address: "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
+  native_bnb_address: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
   // default_gasprice_gwei: 60,
   default_gas_amount: 1200000,
 
@@ -195,10 +196,10 @@ window.config = {
   otccliff_address: "0x14ad9288a2607ed872364b2a34506242c49ae741", //30%
   otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220", 
 
-
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
   kol2_address: "0xc653D1AA94FD6A09056FC6de475305B4f5Fbe0C6",
+  
 
   advisors_address: "0x255b1C2e3f2FF180d45f1e055224d97b23079513",
   ido_address: "0x9f149D2d422a12Ba34bee11473863625B9793B66",
@@ -4047,9 +4048,21 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "timepiece",
+          isOwner: true,
+          chain: 1,
+          nftAddress: window.config.nft_timepiece_address,
+          image: `https://timepiece.worldofdypians.com/thumbs50/${tokenID}.png`,
+          nftName: "CAWS Timepiece",
+          nftSymbol: "CAWS Timepiece",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4062,9 +4075,21 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "land",
+          isOwner: true,
+          chain: 1,
+          nftAddress: window.config.nft_land_address,
+          image: `https://mint.worldofdypians.com/thumbs50/${tokenID}.png`,
+          nftName: "Genesis Land",
+          nftSymbol: "Genesis Land",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4077,9 +4102,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "landbnb",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_land_bnb_address,
+          image: `https://mint.worldofdypians.com/thumbs50/${tokenID}.png`,
+          nftName: "Genesis Land",
+          nftSymbol: "Genesis Land",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4092,9 +4131,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "landavax",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 43114,
+          nftAddress: window.config.nft_land_avax_address,
+          image: `https://mint.worldofdypians.com/thumbs50/${tokenID}.png`,
+          nftName: "Genesis Land",
+          nftSymbol: "Genesis Land",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4109,9 +4162,23 @@ async function getMyNFTs(address, type = "") {
 
         const balance = await contract.methods.balanceOf(address).call();
         const tokens = await Promise.all(
-          range(0, balance - 1).map((j) =>
-            contract.methods.tokenOfOwnerByIndex(address, j).call()
-          )
+          range(0, balance - 1).map(async (i) => {
+            const tokenID = await contract.methods
+              .tokenOfOwnerByIndex(address, i)
+              .call();
+            return {
+              type: "landbase",
+              isOwner: true,
+              isListed: false,
+              isStaked: false,
+              chain: 8453,
+              nftAddress: window.config.nft_land_base_address,
+              image: `https://mint.worldofdypians.com/thumbs50/${tokenID}.png`,
+              nftName: "Genesis Land",
+              nftSymbol: "Genesis Land",
+              tokenId: tokenID,
+            };
+          })
         );
 
         return tokens;
@@ -4143,9 +4210,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "coingecko",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_coingecko_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`,
+          nftName: "Coingecko Beta Pass",
+          nftSymbol: "CGBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4158,9 +4239,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "doge",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_doge_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`,
+          nftName: "Doge Beta Pass",
+          nftSymbol: "DCBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4173,9 +4268,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "cmc",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_cmc_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`,
+          nftName: "CoinMarketCap Beta Pass",
+          nftSymbol: "CMCBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4188,9 +4297,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "bnb",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_bnb_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`,
+          nftName: "BNB Chain Beta Pass",
+          nftSymbol: "BNBBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4203,9 +4326,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "5ya",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_bnb5ya_address,
+          image: `https://cdn.worldofdypians.com/wod/5ya-50.png`,
+          nftName: "BNB Chain 5YA",
+          nftSymbol: "5YABP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4218,9 +4355,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "cookie3",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_cookie3_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`,
+          nftName: "Cookie3 Beta Pass",
+          nftSymbol: "CKBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4233,9 +4384,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "tea-bnb",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_teabnb_address,
+          image: `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`,
+          nftName: "Tea-Fi Beta Pass",
+          nftSymbol: "TFBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4248,9 +4413,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "mat",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 698,
+          nftAddress: window.config.nft_mat_address,
+          image: `https://cdn.worldofdypians.com/media/matchbp50x50.png`,
+          nftName: "Matchain Beta Pass",
+          nftSymbol: "MCBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4269,9 +4448,23 @@ async function getMyNFTs(address, type = "") {
       });
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "opbnb",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 204,
+          nftAddress: window.config.nft_opbnb_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`,
+          nftName: "OPBNB Chain Beta Pass",
+          nftSymbol: "opBNBBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4284,9 +4477,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "kucoin",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 204,
+          nftAddress: window.config.nft_kucoin_address,
+          image: `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`,
+          nftName: "Kucoin Beta Pass",
+          nftSymbol: "KCBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4305,9 +4512,23 @@ async function getMyNFTs(address, type = "") {
       });
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "tea-opbnb",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 204,
+          nftAddress: window.config.nft_teaopbnb_address,
+          image: `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`,
+          nftName: "Tea-Fi Beta Pass",
+          nftSymbol: "TFBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4320,9 +4541,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "skale",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 1482601649,
+          nftAddress: window.config.nft_skale_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`,
+          nftName: "Skale Beta Pass",
+          nftSymbol: "SKBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4339,9 +4574,23 @@ async function getMyNFTs(address, type = "") {
         const balance = await contract.methods.balanceOf(address).call();
 
         const tokens = await Promise.all(
-          range(0, balance - 1).map((j) =>
-            contract.methods.tokenOfOwnerByIndex(address, j).call()
-          )
+          range(0, balance - 1).map(async (i) => {
+            const tokenID = await contract.methods
+              .tokenOfOwnerByIndex(address, i)
+              .call();
+            return {
+              type: "base",
+              isOwner: true,
+              isListed: false,
+              isStaked: false,
+              chain: 8453,
+              nftAddress: window.config.nft_base_address,
+              image: `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`,
+              nftName: "Base Beta Pass",
+              nftSymbol: "BSBP",
+              tokenId: tokenID,
+            };
+          })
         );
 
         return tokens;
@@ -4377,9 +4626,23 @@ async function getMyNFTs(address, type = "") {
         const balance = await contract.methods.balanceOf(address).call();
 
         const tokens = await Promise.all(
-          range(0, balance - 1).map((j) =>
-            contract.methods.tokenOfOwnerByIndex(address, j).call()
-          )
+          range(0, balance - 1).map(async (i) => {
+            const tokenID = await contract.methods
+              .tokenOfOwnerByIndex(address, i)
+              .call();
+            return {
+              type: "tea-base",
+              isOwner: true,
+              isListed: false,
+              isStaked: false,
+              chain: 8453,
+              nftAddress: window.config.nft_teabase_address,
+              image: `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`,
+              nftName: "Tea-Fi Beta Pass",
+              nftSymbol: "TFBP",
+              tokenId: tokenID,
+            };
+          })
         );
 
         return tokens;
@@ -4411,9 +4674,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "gate",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_gate_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`,
+          nftName: "Gate Beta Pass",
+          nftSymbol: "GTBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4426,9 +4703,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "conflux",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 1030,
+          nftAddress: window.config.nft_conflux_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`,
+          nftName: "Conflux Beta Pass",
+          nftSymbol: "CFBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4441,11 +4732,22 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "caws",
+          isOwner: true,
+          chain: 1,
+          nftAddress: window.config.nft_caws_address,
+          image: `https://mint.dyp.finance/thumbs50/${tokenID}.png`,
+          nftName: "CAWS",
+          nftSymbol: "CAWS",
+          tokenId: tokenID,
+        };
+      })
     );
-
     return tokens;
   } else if (type === "cawsbnb") {
     contract = new window.bscWeb3.eth.Contract(
@@ -4456,9 +4758,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "cawsbnb",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_caws_bnb_address,
+          image: `https://mint.dyp.finance/thumbs50/${tokenID}.png`,
+          nftName: "CAWS",
+          nftSymbol: "CAWS",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4471,9 +4787,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "cawsavax",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 43114,
+          nftAddress: window.config.nft_caws_avax_address,
+          image: `https://mint.dyp.finance/thumbs50/${tokenID}.png`,
+          nftName: "CAWS",
+          nftSymbol: "CAWS",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4488,9 +4818,23 @@ async function getMyNFTs(address, type = "") {
 
         const balance = await contract.methods.balanceOf(address).call();
         const tokens = await Promise.all(
-          range(0, balance - 1).map((j) =>
-            contract.methods.tokenOfOwnerByIndex(address, j).call()
-          )
+          range(0, balance - 1).map(async (i) => {
+            const tokenID = await contract.methods
+              .tokenOfOwnerByIndex(address, i)
+              .call();
+            return {
+              type: "cawsbase",
+              isOwner: true,
+              isListed: false,
+              isStaked: false,
+              chain: 8453,
+              nftAddress: window.config.nft_caws_base_address,
+              image: `https://mint.dyp.finance/thumbs50/${tokenID}.png`,
+              nftName: "CAWS",
+              nftSymbol: "CAWS",
+              tokenId: tokenID,
+            };
+          })
         );
 
         return tokens;
@@ -4539,7 +4883,22 @@ async function getMyNFTs(address, type = "") {
         return [];
       });
 
-    const tokens = events.length > 0 ? [events[0]?.returnValues.tokenId] : [];
+    const tokens_result =
+      events.length > 0 ? [events[0]?.returnValues.tokenId] : [];
+    const tokens = tokens_result.map((item) => {
+      return {
+        type: "core",
+        isOwner: true,
+        isListed: false,
+        isStaked: false,
+        chain: 1116,
+        nftAddress: window.config.nft_core_address,
+        image: `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`,
+        nftName: "Core Beta Pass",
+        nftSymbol: "COBP",
+        tokenId: item,
+      };
+    });
 
     return tokens;
   } else if (type === "viction") {
@@ -4557,9 +4916,23 @@ async function getMyNFTs(address, type = "") {
       });
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "viction",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 88,
+          nftAddress: window.config.nft_viction_address.toLowerCase(),
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`,
+          nftName: "Viction Beta Pass",
+          nftSymbol: "VCBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4587,9 +4960,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "multivers",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 56,
+          nftAddress: window.config.nft_multivers_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`,
+          nftName: "MultiversX Beta Pass",
+          nftSymbol: "MXBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4602,9 +4989,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "manta",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 169,
+          nftAddress: window.config.nft_manta_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`,
+          nftName: "Manta Beta Pass",
+          nftSymbol: "MNBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4617,9 +5018,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "taiko",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 167000,
+          nftAddress: window.config.nft_taiko_address,
+          image: `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`,
+          nftName: "Taiko Beta Pass",
+          nftSymbol: "TKBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4638,9 +5053,23 @@ async function getMyNFTs(address, type = "") {
       });
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "sei",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 1329,
+          nftAddress: window.config.nft_sei_address,
+          image: `https://cdn.worldofdypians.com/media/seibp50x50.png`,
+          nftName: "Sei Beta Pass",
+          nftSymbol: "SEBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4653,9 +5082,23 @@ async function getMyNFTs(address, type = "") {
     const balance = await contract.methods.balanceOf(address).call();
 
     const tokens = await Promise.all(
-      range(0, balance - 1).map((i) =>
-        contract.methods.tokenOfOwnerByIndex(address, i).call()
-      )
+      range(0, balance - 1).map(async (i) => {
+        const tokenID = await contract.methods
+          .tokenOfOwnerByIndex(address, i)
+          .call();
+        return {
+          type: "tea-sei",
+          isOwner: true,
+          isListed: false,
+          isStaked: false,
+          chain: 1329,
+          nftAddress: window.config.nft_teasei_address,
+          image: `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`,
+          nftName: "Tea-Fi Beta Pass",
+          nftSymbol: "TFBP",
+          tokenId: tokenID,
+        };
+      })
     );
 
     return tokens;
@@ -4675,7 +5118,22 @@ async function getMyNFTs(address, type = "") {
         return 0;
       });
 
-    const tokens = events.length > 0 ? [events[0]?.returnValues.tokenId] : [];
+    const tokens_result =
+      events.length > 0 ? [events[0]?.returnValues.tokenId] : [];
+    const tokens = tokens_result.map((item) => {
+      return {
+        type: "vanar",
+        isOwner: true,
+        isListed: false,
+        isStaked: false,
+        chain: 2040,
+        nftAddress: window.config.nft_vanar_address,
+        image: `https://cdn.worldofdypians.com/wod/vanar-50.png`,
+        nftName: "Vanar Beta Pass",
+        nftSymbol: "VNBP",
+        tokenId: item,
+      };
+    });
 
     return tokens;
   } else if (type === "taraxa") {
@@ -4694,8 +5152,22 @@ async function getMyNFTs(address, type = "") {
         return 0;
       });
 
-    const tokens = events.length > 0 ? [events[0]?.returnValues.tokenId] : [];
-
+    const tokens_result =
+      events.length > 0 ? [events[0]?.returnValues.tokenId] : [];
+    const tokens = tokens_result.map((item) => {
+      return {
+        type: "taraxa",
+        isOwner: true,
+        isListed: false,
+        isStaked: false,
+        chain: 841,
+        nftAddress: window.config.nft_taraxa_address,
+        image: `https://cdn.worldofdypians.com/wod/vanar-50.png`,
+        nftName: "Taraxa Beta Pass",
+        nftSymbol: "TXBP",
+        tokenId: item,
+      };
+    });
     return tokens;
   }
 }
@@ -36725,7 +37197,11 @@ async function getEstimatedTokenSubscriptionAmountTaraxa(
     window.SUBSCRIPTION_TARAXA_ABI,
     window.config.subscription_taraxa_address
   );
- 
+  console.log(
+    taraxaContract.methods
+      .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
+      .call()
+  );
   return await taraxaContract.methods
     .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
     .call()
