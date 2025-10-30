@@ -1,0 +1,95 @@
+// Contract addresses - using window.config as source of truth
+export const getContractAddresses = () => {
+  if (typeof window === "undefined" || !window.config) {
+    return {
+      marketplace: "0x0000000000000000000000000000000000000000",
+      caws: "0x0000000000000000000000000000000000000000",
+      land: "0x0000000000000000000000000000000000000000",
+      timepiece: "0x0000000000000000000000000000000000000000",
+      weth: "0x0000000000000000000000000000000000000000",
+    };
+  }
+
+  return {
+    marketplace: window.config.nft_marketplace_address,
+    caws: window.config.nft_caws_address,
+    cawsBnb: window.config.nft_caws_bnb_address,
+    cawsAvax: window.config.nft_caws_avax_address,
+    cawsBase: window.config.nft_caws_base_address,
+    land: window.config.nft_land_address,
+    landBnb: window.config.nft_land_bnb_address,
+    landAvax: window.config.nft_land_avax_address,
+    landBase: window.config.nft_land_base_address,
+    timepiece: window.config.nft_timepiece_address,
+    weth: window.config.weth2_address,
+    coingecko: window.config.nft_coingecko_address,
+    gate: window.config.nft_gate_address,
+    conflux: window.config.nft_conflux_address,
+    manta: window.config.nft_manta_address,
+    taiko: window.config.nft_taiko_address,
+    sei: window.config.nft_sei_address,
+    cookie3: window.config.nft_cookie3_address,
+    mat: window.config.nft_mat_address,
+    doge: window.config.nft_doge_address,
+    bnb: window.config.nft_bnb_address,
+    bnb5ya: window.config.nft_bnb5ya_address,
+    opbnb: window.config.nft_opbnb_address,
+    kucoin: window.config.nft_kucoin_address,
+    vanar: window.config.nft_vanar_address,
+    skale: window.config.nft_skale_address,
+    cmc: window.config.nft_cmc_address,
+    core: window.config.nft_core_address,
+    viction: window.config.nft_viction_address,
+    multivers: window.config.nft_multivers_address,
+    immutable: window.config.nft_immutable_address,
+    base: window.config.nft_base_address,
+    taraxa: window.config.nft_taraxa_address,
+    teaBnb: window.config.nft_teabnb_address,
+    teaSei: window.config.nft_teasei_address,
+    teaBase: window.config.nft_teabase_address,
+    teaOpbnb: window.config.nft_teaopbnb_address,
+  };
+};
+
+export const getNFTAddressByType = (type) => {
+  const addresses = getContractAddresses();
+  const typeMap = {
+    caws: addresses.caws,
+    cawsbnb: addresses.cawsBnb,
+    cawsavax: addresses.cawsAvax,
+    cawsbase: addresses.cawsBase,
+    land: addresses.land,
+    landbnb: addresses.landBnb,
+    landavax: addresses.landAvax,
+    landbase: addresses.landBase,
+    timepiece: addresses.timepiece,
+    coingecko: addresses.coingecko,
+    gate: addresses.gate,
+    conflux: addresses.conflux,
+    manta: addresses.manta,
+    taiko: addresses.taiko,
+    sei: addresses.sei,
+    cookie3: addresses.cookie3,
+    mat: addresses.mat,
+    doge: addresses.doge,
+    bnb: addresses.bnb,
+    "5ya": addresses.bnb5ya,
+    opbnb: addresses.opbnb,
+    kucoin: addresses.kucoin,
+    vanar: addresses.vanar,
+    skale: addresses.skale,
+    cmc: addresses.cmc,
+    core: addresses.core,
+    viction: addresses.viction,
+    multivers: addresses.multivers,
+    immutable: addresses.immutable,
+    base: addresses.base,
+    taraxa: addresses.taraxa,
+    "tea-bnb": addresses.teaBnb,
+    "tea-sei": addresses.teaSei,
+    "tea-base": addresses.teaBase,
+    "tea-opbnb": addresses.teaOpbnb,
+  };
+
+  return typeMap[type] || addresses.caws;
+};

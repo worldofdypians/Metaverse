@@ -1,0 +1,736 @@
+// Festive Theme Styles
+// This file contains CSS custom properties and animations for different festive themes
+
+:root {
+  /* Default Theme Variables */
+  --theme-primary: #7bd8b0;
+  --theme-secondary: #dcfb85;
+  --theme-accent: #8e97cd;
+  --theme-background: #080b2a;
+  --theme-text: #ffffff;
+  --theme-spooky: #ff0000;
+  --theme-pumpkin: #ff8c00;
+  --theme-pink: #ff69b4;
+  --theme-rose: #ff1493;
+
+  /* Animation Variables */
+  --animation-duration: 3s;
+  --animation-delay: 0s;
+}
+
+/* Halloween Theme */
+body.theme-halloween {
+  --theme-primary: #ff6b35;
+  --theme-secondary: #f7931e;
+  --theme-accent: #8b0000;
+  --theme-background: #1a0a0a;
+  --theme-text: #ffffff;
+  --theme-spooky: #ff0000;
+  --theme-pumpkin: #ff8c00;
+
+  /* Spooky floating animation */
+  .festive-floating {
+    animation: spookyFloat 4s ease-in-out infinite;
+  }
+
+  /* Bat animation */
+  .festive-bat {
+    position: fixed;
+    top: 20%;
+    left: -50px;
+    width: 30px;
+    height: 20px;
+    background: #000;
+    clip-path: polygon(
+      0% 60%,
+      10% 40%,
+      20% 30%,
+      30% 40%,
+      40% 25%,
+      50% 40%,
+      60% 25%,
+      70% 40%,
+      80% 30%,
+      90% 40%,
+      100% 60%,
+      85% 70%,
+      70% 60%,
+      60% 75%,
+      50% 60%,
+      40% 75%,
+      30% 60%,
+      15% 70%
+    );
+    animation: flyBat 8s linear infinite;
+      // flap 0.4s ease-in-out infinite alternate;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  /* Ghost animation */
+  .festive-ghost {
+    position: fixed;
+    top: 30%;
+    right: -50px;
+    width: 25px;
+    height: 35px;
+    background: #fff;
+    border-radius: 50% 50% 0 0;
+    animation: floatGhost 6s ease-in-out infinite;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .festive-ghost::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: #fff;
+    clip-path: polygon(0% 0%, 20% 100%, 40% 0%, 60% 100%, 80% 0%, 100% 100%);
+  }
+
+  /* Pumpkin glow effect */
+  .festive-pumpkin-glow {
+    box-shadow: 0 0 20px var(--theme-pumpkin), 0 0 40px var(--theme-pumpkin),
+      0 0 60px var(--theme-pumpkin);
+    animation: pumpkinGlow 2s ease-in-out infinite alternate;
+  }
+
+  /* Spooky text effect */
+  .festive-spooky-text {
+    color: var(--theme-spooky);
+    text-shadow: 0 0 10px var(--theme-spooky), 0 0 20px var(--theme-spooky),
+      0 0 30px var(--theme-spooky);
+    animation: spookyText 1.5s ease-in-out infinite alternate;
+  }
+
+  /* Spiderweb corner decorations */
+.festive-spiderweb {
+  position: fixed;
+  width: 60px;    /* adjust size */
+  height: 60px;
+  opacity: 0.6;
+  z-index: 1000;
+  pointer-events: none;
+  // animation: spiderwebSway 6s ease-in-out infinite alternate;
+}
+
+/* radial spiderweb lines using pseudo-element */
+.festive-spiderweb::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    var(--theme-spooky) 0deg 15deg,
+    transparent 15deg 30deg
+  );
+  border-radius: 50%;
+  // transform: rotate(0deg);
+  // animation: spiderwebSpin 20s linear infinite;
+}
+
+/* circular strands */
+.festive-spiderweb::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  background: var(--theme-spooky);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow:
+    0 0 0 4px var(--theme-spooky),
+    0 0 0 8px var(--theme-spooky),
+    0 0 0 12px var(--theme-spooky);
+  // animation: spiderwebGlow 3s ease-in-out infinite alternate;
+}
+  /* Corner pumpkin decorations */
+  .festive-corner-pumpkin {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    // background: var(--theme-pumpkin);
+    // border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 1000;
+    pointer-events: none;
+    animation: pumpkinBob 4s ease-in-out infinite;
+  }
+
+  /* Eyes that follow the cursor */
+  .festive-eyes {
+    position: fixed;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 16px;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .festive-eye {
+    position: relative;
+    width: 88px;
+    height: 45px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 3px #222;
+    overflow: hidden;
+  }
+
+  .festive-pupil {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    background: crimson;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 60ms linear;
+  }
+
+  .festive-eye::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 -8px 0 0 #222, inset 0 8px 0 0 #222;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .festive-eyelid {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100%;
+    top: 0;
+    background: #1a0a0a;
+    transform-origin: top center;
+    animation: blink 4.6s infinite ease-in-out;
+    opacity: 0;
+  }
+
+  .festive-eye:nth-child(2) .festive-eyelid {
+    animation-delay: 0.9s;
+  }
+
+  .festive-corner-pumpkin::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: #8b4513;
+    border-radius: 50%;
+  }
+
+  .festive-corner-pumpkin::after {
+    content: "😈";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    animation: pumpkinFace 2s ease-in-out infinite alternate;
+  }
+}
+
+/* Valentine's Day Theme */
+body.theme-valentine {
+  --theme-primary: #ff69b4;
+  --theme-secondary: #ff1493;
+  --theme-accent: #ffc0cb;
+  --theme-background: #2d0a1a;
+  --theme-text: #ffffff;
+  --theme-pink: #ff69b4;
+  --theme-rose: #ff1493;
+
+  /* Romantic floating animation */
+  .festive-floating {
+    animation: romanticFloat 3s ease-in-out infinite;
+  }
+
+  /* Heart animation */
+  .festive-heart {
+    position: fixed;
+    top: 15%;
+    left: -30px;
+    width: 20px;
+    height: 20px;
+    background: var(--theme-pink);
+    transform: rotate(45deg);
+    animation: floatHeart 5s ease-in-out infinite;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .festive-heart::before,
+  .festive-heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--theme-pink);
+    border-radius: 50%;
+  }
+
+  .festive-heart::before {
+    top: -10px;
+    left: 0;
+  }
+
+  .festive-heart::after {
+    top: 0;
+    left: -10px;
+  }
+
+  /* Rose petals animation */
+  .festive-petals {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .festive-petal {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--theme-rose);
+    border-radius: 50% 0;
+    animation: fallPetals 8s linear infinite;
+  }
+
+  /* Sparkle effect */
+  .festive-sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  /* Romantic glow effect */
+  .festive-romantic-glow {
+    box-shadow: 0 0 20px var(--theme-pink), 0 0 40px var(--theme-pink),
+      0 0 60px var(--theme-pink);
+    animation: romanticGlow 2s ease-in-out infinite alternate;
+  }
+
+  /* Valentine text effect */
+  .festive-valentine-text {
+    color: var(--theme-pink);
+    text-shadow: 0 0 10px var(--theme-pink), 0 0 20px var(--theme-pink),
+      0 0 30px var(--theme-pink);
+    animation: valentineText 1.5s ease-in-out infinite alternate;
+  }
+
+  /* Corner heart decorations */
+  .festive-corner-heart {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    background: var(--theme-pink);
+    transform: rotate(45deg);
+    z-index: 1000;
+    pointer-events: none;
+    animation: heartBeat 2s ease-in-out infinite;
+  }
+
+  .festive-corner-heart::before,
+  .festive-corner-heart::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: var(--theme-pink);
+    border-radius: 50%;
+  }
+
+  .festive-corner-heart::before {
+    top: -15px;
+    left: 0;
+  }
+
+  .festive-corner-heart::after {
+    top: 0;
+    left: -15px;
+  }
+
+  /* Corner rose decorations */
+  .festive-corner-rose {
+    position: fixed;
+    width: 25px;
+    height: 25px;
+    z-index: 1000;
+    pointer-events: none;
+    animation: roseBloom 3s ease-in-out infinite;
+  }
+
+  .festive-corner-rose::before {
+    content: "🌹";
+    font-size: 20px;
+    animation: roseTwirl 4s linear infinite;
+  }
+}
+
+/* Keyframe Animations */
+
+/* Halloween Animations */
+@keyframes spookyFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-15px) rotate(0.5deg);
+  }
+}
+
+@keyframes flyBat {
+  0% { left: -50px; transform: scaleX(1); }
+  50% { transform: scaleX(-1); }
+  100% { left: calc(100vw + 50px); transform: scaleX(1); }
+}
+
+// @keyframes flyBat {
+//   0% {
+//     transform: translateX(0) translateY(0) rotate(0deg);
+//   }
+//   50% {
+//     transform: translateX(110vw) translateY(-20px) rotate(6deg);
+//   }
+//   100% {
+//     transform: translateX(220vw) translateY(0) rotate(-4deg);
+//   }
+// }
+@keyframes flap {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0.85);
+  }
+}
+@keyframes floatGhost {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-25px) translateX(15px);
+    opacity: 0.9;
+  }
+}
+
+@keyframes pumpkinGlow {
+  0% {
+    box-shadow: 0 0 20px var(--theme-pumpkin), 0 0 40px var(--theme-pumpkin),
+      0 0 60px var(--theme-pumpkin);
+  }
+  100% {
+    box-shadow: 0 0 30px var(--theme-pumpkin), 0 0 60px var(--theme-pumpkin),
+      0 0 90px var(--theme-pumpkin);
+  }
+}
+
+@keyframes spookyText {
+  0% {
+    text-shadow: 0 0 10px var(--theme-spooky), 0 0 20px var(--theme-spooky),
+      0 0 30px var(--theme-spooky);
+  }
+  100% {
+    text-shadow: 0 0 15px var(--theme-spooky), 0 0 30px var(--theme-spooky),
+      0 0 45px var(--theme-spooky);
+  }
+}
+
+/* Valentine's Day Animations */
+@keyframes romanticFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-12px) rotate(0.5deg);
+  }
+}
+
+@keyframes floatHeart {
+  0% {
+    left: -30px;
+    transform: rotate(45deg) scale(1);
+  }
+  25% {
+    transform: rotate(45deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(45deg) scale(0.9);
+  }
+  75% {
+    transform: rotate(45deg) scale(1.05);
+  }
+  100% {
+    left: calc(100vw + 30px);
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+@keyframes fallPetals {
+  0% {
+    top: -10px;
+    left: var(--petal-start, 0%);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    top: calc(100vh + 10px);
+    left: calc(var(--petal-start, 0%) + 50px);
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes romanticGlow {
+  0% {
+    box-shadow: 0 0 20px var(--theme-pink), 0 0 40px var(--theme-pink),
+      0 0 60px var(--theme-pink);
+  }
+  100% {
+    box-shadow: 0 0 30px var(--theme-pink), 0 0 60px var(--theme-pink),
+      0 0 90px var(--theme-pink);
+  }
+}
+
+@keyframes valentineText {
+  0% {
+    text-shadow: 0 0 10px var(--theme-pink), 0 0 20px var(--theme-pink),
+      0 0 30px var(--theme-pink);
+  }
+  100% {
+    text-shadow: 0 0 15px var(--theme-pink), 0 0 30px var(--theme-pink),
+      0 0 45px var(--theme-pink);
+  }
+}
+
+/* Halloween Corner Animations */
+// @keyframes spiderwebSway {
+//   0%,
+//   100% {
+//     transform: rotate(0deg);
+//   }
+//   25% {
+//     transform: rotate(2deg);
+//   }
+//   75% {
+//     transform: rotate(-2deg);
+//   }
+// }
+
+@keyframes spiderwebPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+// @keyframes spiderwebGlow {
+//   0% {
+//     box-shadow: 0 0 0 1px var(--theme-spooky), 0 0 0 2px transparent,
+//       0 0 0 3px var(--theme-spooky), 0 0 0 4px transparent,
+//       0 0 0 5px var(--theme-spooky);
+//   }
+//   100% {
+//     box-shadow: 0 0 0 2px var(--theme-spooky), 0 0 0 4px transparent,
+//       0 0 0 6px var(--theme-spooky), 0 0 0 8px transparent,
+//       0 0 0 10px var(--theme-spooky);
+//   }
+// }
+
+@keyframes spiderwebSway {
+  0% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+  100% { transform: rotate(-4deg); }
+}
+
+/* continuous slow rotation of web lines */
+@keyframes spiderwebSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* subtle pulsing glow of circular strands */
+@keyframes spiderwebGlow {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+  100% { opacity: 0.6; }
+}
+
+
+@keyframes pumpkinBob {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pumpkinFace {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Blink animation for eyes */
+@keyframes blink {
+  0%, 92%, 100% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  95% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* Valentine Corner Animations */
+@keyframes heartBeat {
+  0%,
+  100% {
+    transform: rotate(45deg) scale(1);
+  }
+  50% {
+    transform: rotate(45deg) scale(1.1);
+  }
+}
+
+@keyframes roseBloom {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes roseTwirl {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Theme-aware button styles */
+.festive-btn {
+  background: linear-gradient(
+    89.7deg,
+    var(--theme-primary) 0.23%,
+    var(--theme-secondary) 99.72%
+  );
+  color: var(--theme-text);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.festive-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Theme-aware border styles */
+.festive-border {
+  border: 2px solid var(--theme-primary);
+  border-radius: 8px;
+  background: linear-gradient(
+    89.7deg,
+    var(--theme-primary) 0.23%,
+    var(--theme-secondary) 99.72%
+  );
+  padding: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .festive-bat,
+  .festive-ghost,
+  .festive-heart {
+    display: none; /* Hide floating elements on mobile for better performance */
+  }
+
+  .festive-petals {
+    display: none; /* Hide particle effects on mobile */
+  }
+
+  .festive-spiderweb,
+  .festive-corner-pumpkin,
+  .festive-corner-heart,
+  .festive-corner-rose {
+    display: none; /* Hide corner decorations on mobile */
+  }
+}
