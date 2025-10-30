@@ -1052,6 +1052,7 @@ const BattlePopup = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
+              className=""
             >
               <div className="hero-name-position">
                 <div className="d-flex hero-name-item  justify-content-center">
@@ -1103,7 +1104,13 @@ const BattlePopup = ({
                   )}
                 </>
               )}
-
+              {selectedPlayer.class && (
+                <div className="fighter-class-wrapper d-flex w-fit h-fit p-3 flex-column gap-2 align-items-center justify-content-center">
+                  <h6 className="selected-hero-class m-0 font-unzialish">
+                    {selectedPlayer.class}
+                  </h6>
+                </div>
+              )}
               <video
                 src={selectedPlayer.videoLoop}
                 className={`fight-video`}

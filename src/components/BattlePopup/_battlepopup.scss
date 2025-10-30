@@ -410,6 +410,17 @@
   width: 67%;
 }
 
+.selected-hero-class {
+    font-size: 36px;
+    color: #5e5050;
+  font-style: normal;
+  line-height: normal;
+  text-transform: uppercase;
+  @media screen and (max-width: 786px) {
+    font-size: 14px;
+  }
+}
+
 .selected-hero-name {
   color: #fff;
   font-size: 22px;
@@ -937,6 +948,25 @@
   position: absolute;
   left: 0;
   top: 0;
+  bottom: 0;
+  margin: auto;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    top: 25%;
+    height: 80px;
+    bottom: auto;
+  }
+}
+
+.fighter-class-wrapper {
+  border: 2px solid rgba(198, 0, 0, 0);
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    top: 7%;
+    right: 20%;
+    background: transparent;
+  position: absolute;
+  left: 0;
   bottom: 0;
   margin: auto;
   @media screen and (max-width: 786px) {
