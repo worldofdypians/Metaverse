@@ -143,8 +143,7 @@
   @media screen and (max-width: 786px) {
     font-size: 14px;
     width: 220px;
-  padding: 0px 20px;
-
+    padding: 0px 20px;
   }
 }
 .fantasy-btn-close {
@@ -196,8 +195,7 @@
   @media screen and (max-width: 786px) {
     font-size: 14px;
     width: 220px;
-  padding: 0px 20px;
-
+    padding: 0px 20px;
   }
 }
 
@@ -232,8 +230,7 @@
   @media screen and (max-width: 786px) {
     font-size: 14px;
     width: 220px;
-  padding: 0px 20px;
-
+    padding: 0px 20px;
   }
 }
 
@@ -268,8 +265,7 @@
   @media screen and (max-width: 786px) {
     font-size: 14px;
     width: 220px;
-  padding: 0px 20px;
-
+    padding: 0px 20px;
   }
 }
 
@@ -411,8 +407,8 @@
 }
 
 .selected-hero-class {
-    font-size: 36px;
-    color: #5e5050;
+  font-size: 36px;
+  color: #5e5050;
   font-style: normal;
   line-height: normal;
   text-transform: uppercase;
@@ -883,7 +879,6 @@
     bottom: auto;
     height: 80px;
   }
-
 }
 .fighter-lose-rewards-wrapper {
   border: 2px solid rgba(198, 0, 0, 0);
@@ -926,7 +921,7 @@
   top: 0;
   bottom: 0;
   margin: auto;
-  @media screen and (max-width:786px) {
+  @media screen and (max-width: 786px) {
     height: 80px;
     width: 100%;
     bottom: 20%;
@@ -960,11 +955,11 @@
 
 .fighter-class-wrapper {
   border: 2px solid rgba(198, 0, 0, 0);
-    margin-bottom: 0 !important;
-    margin-top: 0 !important;
-    top: 7%;
-    right: 20%;
-    background: transparent;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+  top: 7%;
+  right: 20%;
+  background: transparent;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -999,7 +994,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-   @media screen and (max-width: 786px) {
+  @media screen and (max-width: 786px) {
     font-size: 16px;
   }
 }
@@ -1010,7 +1005,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-     @media screen and (max-width: 786px) {
+  @media screen and (max-width: 786px) {
     font-size: 12px;
   }
 }
@@ -1068,32 +1063,32 @@
 }
 
 .fight-rewards-item-name {
-  color: #B78551;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 14px; /* 100% */
+  color: #b78551;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px; /* 100% */
 }
 
 .fight-rewards-item-count {
-  color: #B78551;
-text-align: right;
-font-size: 14px;
-font-style: normal;
-font-weight: 700;
-line-height: 14px; /* 100% */
+  color: #b78551;
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 14px; /* 100% */
 }
 
 .new-up-to {
-color: #694A29;
-text-align: right;
-font-size: 10px;
-font-style: normal;
-font-weight: 700;
-line-height: 16px; /* 160% */
+  color: #694a29;
+  text-align: right;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px; /* 160% */
 }
 
-.hero-name-position{
+.hero-name-position {
   width: 50%;
   position: absolute;
   display: flex;
@@ -1107,8 +1102,8 @@ line-height: 16px; /* 160% */
     top: 1%;
   }
 }
-.hero-name-position-2{
-    width: 50%;
+.hero-name-position-2 {
+  width: 50%;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -1116,11 +1111,9 @@ line-height: 16px; /* 160% */
   top: 2.5%;
   right: 0;
   @media screen and (max-width: 786px) {
-   display: none;
+    display: none;
   }
 }
-
-
 
 .shape {
   position: relative;
@@ -1138,8 +1131,8 @@ line-height: 16px; /* 160% */
   height: auto;
 }
 
-.shape__img:hover{
-   filter: drop-shadow(0 0 10px gold);
+.shape__img:hover {
+  filter: drop-shadow(0 0 10px gold);
 }
 
 /* glowing ripple */
@@ -1148,7 +1141,7 @@ line-height: 16px; /* 160% */
   position: absolute;
   inset: 0;
   z-index: 1;
-    mix-blend-mode: screen;
+  mix-blend-mode: screen;
   background-color: rgba(255, 215, 0, 0.6); /* soft gold tint */
   background-image: var(--shape-url);
   background-size: contain;
@@ -1167,51 +1160,50 @@ line-height: 16px; /* 160% */
     opacity: 0;
     transform: scale(1);
     filter: drop-shadow(0 0 60px gold) blur(25px) brightness(3) saturate(250%);
-
   }
   8% {
-    opacity: 1; transform: scale(1.05);
+    opacity: 1;
+    transform: scale(1.05);
   }
   30% {
-   opacity: 0.8; transform: scale(1.3);
+    opacity: 0.8;
+    transform: scale(1.3);
     filter: drop-shadow(0 0 60px gold) blur(25px) brightness(3) saturate(250%);
-
   }
   60% {
-    opacity: 0.4; transform: scale(1.6);
+    opacity: 0.4;
+    transform: scale(1.6);
     filter: drop-shadow(0 0 60px gold) blur(25px) brightness(3) saturate(250%);
-
   }
   100% {
     opacity: 0;
     transform: scale(2);
     filter: drop-shadow(0 0 60px gold) blur(25px) brightness(3) saturate(250%);
-
   }
 }
 
-.fighter-timer{
-  color: #FFF;
-text-shadow: 0 4px 4px rgba(55, 13, 0, 0.25);
-font-size: 24px;
-font-family: "Montserrat" !important;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-@media screen and (max-width: 786px) {
+.fighter-timer {
+  color: #fff;
+  text-shadow: 0 4px 4px rgba(55, 13, 0, 0.25);
   font-size: 18px;
-}
+  font-family: "Montserrat" !important;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 18px;
+  }
 }
 
-.next-fight-in{
-  color: #370D00;
-font-size: 16px;
-font-family: "Montserrat" !important;
-text-transform: none !important;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-@media screen and (max-width: 786px) {
-  font-size: 12px;
-}
+.next-fight-in {
+  color: #fff;
+  font-size: 16px;
+  font-family: "Montserrat" !important;
+  text-transform: none !important;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
 }
