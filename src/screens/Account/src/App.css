@@ -116,7 +116,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    width: 60px;
+    width: 90px;
 }
 
 .walletclose {
@@ -213,10 +213,10 @@
   margin: 0 !important;
 }
 
-iframe {
+/* iframe {
   z-index: -5;
   pointer-events: none !important;
-}
+} */
 
 .walletconnectBtn {
   background: linear-gradient(

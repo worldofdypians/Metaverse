@@ -3,7 +3,12 @@ const path = require("path");
 module.exports = function override(config, env) {
   config.resolve = {
     ...config.resolve,
-   
+    alias: {
+      ...(config.resolve?.alias || {}),
+      // Use ESM build so default export interop is preserved for sdk-analytics
+      "openapi-fetch": require.resolve("openapi-fetch/dist/index.js"),
+      "openapi-fetch$": require.resolve("openapi-fetch/dist/index.js"),
+    },
   };
   config.resolve.fallback = {
     url: require.resolve("url"),

@@ -1441,6 +1441,27 @@
     background-color: var(--color-slate-900);
   }
 
+  .bg-slate-900\/50 {
+    background-color: color-mix(in srgb, oklch(.208 .042 265.755) 50%, transparent);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-slate-900\/50 {
+      background-color: color-mix(in oklab, var(--color-slate-900) 50%, transparent);
+    }
+  }
+
+  .bg-slate-900\/90 {
+    background-color: color-mix(in srgb, oklch(.208 .042 265.755) 90%, transparent);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-slate-900\/90 {
+      background-color: color-mix(in oklab, var(--color-slate-900) 90%, transparent);
+    }
+  }
+
+
   .bg-transparent {
     background-color: #0000;
   }
@@ -1839,7 +1860,7 @@
 
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold) !important;
   }
 
   .tracking-tight {
@@ -2605,6 +2626,19 @@
       background-color: var(--color-slate-600);
     }
   }
+
+    @media (hover: hover) {
+    .hover\:bg-slate-800\/90:hover {
+      background-color: color-mix(in srgb, oklch(.279 .041 260.031) 90%, transparent);
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:bg-slate-800\/90:hover {
+        background-color: color-mix(in oklab, var(--color-slate-800) 90%, transparent);
+      }
+    }
+  }
+
 
   @media (hover: hover) {
     .hover\:bg-white:hover {

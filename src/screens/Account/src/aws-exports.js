@@ -1,13 +1,16 @@
 const amplifyConfig = {
-    Auth: {
-        region: 'eu-central-1',
-        identityPoolRegion: 'eu-central-1',
-        userPoolId: 'eu-central-1_qjH3uArwD',
-        userPoolWebClientId: 'guqq69uoiig1hgrbhig77poic',
+  Auth: {
+    Cognito: {
+      region: "eu-central-1",
+      identityPoolRegion: "eu-central-1",
+      userPoolId: "eu-central-1_qjH3uArwD",
+      userPoolClientId: "guqq69uoiig1hgrbhig77poic",
+      loginWith: {},
     },
     Analytics: {
-        disabled: true,
+      disabled: true,
     },
-}
+  },
+};
 
-export default amplifyConfig
+export default amplifyConfig;
