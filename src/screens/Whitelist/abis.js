@@ -2202,7 +2202,7 @@ export const OTCPOOLBONUS_ABI = [
   },
 ];
 
-export const OTCCLIFF_ABI = [
+export const OTCCLIFF2_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   { inputs: [], name: "MathOverflowedMulDiv", type: "error" },
   {
@@ -2422,7 +2422,7 @@ export const OTCCLIFF_ABI = [
   },
 ];
 
-export const OTCCLIFF2_ABI = [
+export const OTCCLIFF_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   { inputs: [], name: "MathOverflowedMulDiv", type: "error" },
   {
