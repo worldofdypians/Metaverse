@@ -424,6 +424,60 @@ const chainAreas = [
     ],
   },
   {
+    title: "Trust Wallet Area",
+    marker: markers.trustwalletMarker,
+    activeMarker: activeMarkers.trustwalletMarker,
+    icon: "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg",
+    location: [-0.06912771797944854, 0.0847846269607544],
+
+    area: [
+      [
+        [-0.06902395009360253, 0.08444666862487794],
+        [-0.06931362845611903, 0.08451640605926514],
+        [-0.06913123837621961, 0.08517622947692871],
+        [-0.06885765325506008, 0.08509039878845216],
+      ],
+    ],
+    banner: "trustwalletBanner.webp",
+    events: [
+      // {
+      //   title: "Treasure Hunt",
+      //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      //   link: "/account/challenges/treasure-hunt",
+      // },
+    ],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/TrustWallet",
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+      },
+      {
+        link: "https://t.me/trustwallet",
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+      },
+      {
+        link: "https://discord.gg/trustwallet",
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+      },
+      {
+        link: "https://trustwallet.com/",
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+      },
+    ],
+    city: "Dypians",
+    size: "500x500",
+    rewards: "Available",
+    desc: "Trust Wallet is a secure multi-chain self-custody wallet and your gateway to 10+ million digital assets, NFTs, and thousands of Web3 dApps.",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Explore an immersive environment ",
+      "Experience real-time interactions",
+      "Get ranked in dedicated leaderboards",
+    ],
+  },
+  {
     title: "SKALE Area",
     marker: markers.skaleMarker,
     activeMarker: activeMarkers.skaleMarker,
@@ -807,14 +861,14 @@ const chainAreas = [
     activeMarker: activeMarkers.chainlinkMarker,
 
     icon: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg",
-    location: [-0.06912771797944854, 0.0847846269607544],
+    location: [-0.06907222982081583, 0.08404433727264406],
     banner: "chainlinkBanner.png",
     area: [
       [
-        [-0.06902395009360253, 0.08444666862487794],
-        [-0.06931362845611903, 0.08451640605926514],
-        [-0.06913123837621961, 0.08517622947692871],
-        [-0.06885765325506008, 0.08509039878845216],
+        [-0.06875572938599118, 0.08403360843658449],
+        [-0.0687879158709824, 0.08386194705963136],
+        [-0.06936727259713496, 0.0840282440185547],
+        [-0.0693082640420238, 0.0842052698135376],
       ],
     ],
     events: [],
@@ -1569,19 +1623,19 @@ const chainAreas = [
       //   image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
       //   link: "/account#dailybonus",
       // },
-
       // {
       //   title: "Leaderboard",
       //   image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
       //   link: "/account#leaderboard",
       // },
+    ],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/TeaFi_Official",

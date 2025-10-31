@@ -1,0 +1,5606 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef, useState } from "react";
+
+import useWindowSize from "../../Utils.js/hooks/useWindowSize";
+import NewEvents from "../../../../../components/NewEvents/NewEvents";
+
+import GlobalLeaderboard from "../../../../../components/LeaderBoard/GlobalLeaderboard";
+import MobileNav from "../../../../../components/MobileNav/MobileNav";
+import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
+import axios from "axios";
+// import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
+import OutsideClickHandler from "react-outside-click-handler";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+// import MyBalance from "../../Components/WalletBalance/MyBalance";
+
+import { switchNetworkWagmi } from "../../../../../utils/wagmiSwitchChain";
+import { readContract } from "@wagmi/core";
+import { wagmiClient } from "../../../../../wagmiConnectors";
+
+import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
+import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
+import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
+import TextField from "@mui/material/TextField";
+import styled from "styled-components";
+import ReCaptchaV2 from "react-google-recaptcha";
+import GoldenPassPopup from "../../../../../components/PackagePopups/GoldenPassPopup";
+import {
+  golden_pass2_address,
+  GOLDEN_PASS_ABI,
+  golden_pass_address,
+} from "../../../../../components/NewEvents/abi";
+import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
+import { useParams } from "react-router-dom";
+import MyProfile from "../../../../../components/MyProfile/MyProfile";
+import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
+import { useLocation, useNavigate } from "react-router-dom";
+import Portfolio from "../../Components/WalletBalance/Portfolio";
+import Countdown from "react-countdown";
+import {
+  baseStars,
+  bnbStars,
+  monthlyStarPrizes,
+  monthlyExtraStarPrizes,
+  skaleStars,
+  taikoStars,
+  weeklyStarPrizes,
+  weeklyExtraStarPrizes,
+  seiStars,
+  taraxaStars,
+  matStars,
+  vanarStars,
+  coreStars,
+} from "./stars";
+import { bannedEmails, placeholderplayerData, dummyPremiums } from "./data";
+import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
+import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
+import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
+import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
+import BattlePopup from "../../../../../components/BattlePopup/BattlePopup";
+import CloseBattlePopup from "../../../../../components/BattlePopup/CloseBattlePopup";
+import { useUser } from "../../../../../redux/hooks/useWallet";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserProgress } from "../../../../../redux/slices/userSlice";
+
+const StyledTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#fff",
+    fontFamily: "Poppins",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#62688F",
+    fontFamily: "Poppins",
+    zIndex: "2",
+  },
+  "& .MuiFormHelperText-root": {
+    fontFamily: "Poppins",
+  },
+  "& .MuiSelect-select": {
+    color: "#fff",
+    fontFamily: "Poppins",
+    zIndex: "1",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#62688F",
+    fontFamily: "Poppins",
+    color: "#fff",
+    background: "#171932",
+    borderRadius: "8px",
+  },
+  "& .MuiOutlinedInput-input": {
+    zIndex: "1",
+    color: "#fff",
+    fontFamily: "Poppins",
+  },
+  "& .MuiOutlinedInput-root, & .MuiOutlinedInput-root:hover": {
+    "& fieldset": {
+      borderColor: "#62688F",
+      fontFamily: "Poppins",
+      background: "#171932",
+      borderRadius: "8px",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#62688F",
+      fontFamily: "Poppins",
+      color: "#fff",
+      background: "#171932",
+      borderRadius: "8px",
+    },
+  },
+});
+
+function Dashboard({
+  isEOA,
+  dailyBonuslistedNFTS,
+  isConnected,
+  chainId,
+  coinbase,
+  handleConnect,
+  ethTokenData,
+  onSyncClick,
+  handleSwitchNetwork,
+  handleSwitchChain,
+  logoutCount,
+  handleSwitchChainBinanceWallet,
+  handleSwitchChainGateWallet,
+  latest20BoughtNFTS,
+
+  onSuccessDeposit,
+  treasureHuntEvents,
+  onManageLogin,
+  authToken,
+  wodBalance,
+  isTokenExpired,
+  listedNFTS,
+  walletClient,
+  publicClient,
+  network_matchain,
+  syncStatus,
+  openKickstarter,
+  royaltyCount,
+  onOpenRoyaltyChest,
+  setRoyalChestIndex,
+  onOpenRoyaltyChestTaiko,
+  setRoyalChestIndexTaiko,
+  userTreasureHuntStats,
+  userCollectedNFTS,
+  email,
+  userId,
+  username,
+  userWallet,
+  isPremium,
+}) {
+  const { setUserNFTs } = useUser();
+  const dispatch = useDispatch();
+  const { eventId } = useParams();
+
+  // Get isPremium and primeStars from Redux store
+  const primeStars = useSelector((state) => state.user.userProgress.primeStars);
+
+  // const override = {
+  //   display: "block",
+  //   margin: "auto",
+  //   borderColor: "#554fd8",
+  // };
+  const suspenseful1Sound =
+    "https://cdn.worldofdypians.com/wod/aiOryn/longSuspense.mp3";
+  const clockSound = "https://cdn.worldofdypians.com/wod/aiOryn/clockSound.mp3";
+
+  const chestImagesBnb = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesSkale = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesCore = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesSei = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesViction = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  const chestImagesTaiko = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+
+  const chestImagesBase = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+
+  const chestImagesMat = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+    return array;
+  }
+
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+  const [showDailyQuestion, setShowDailyQuestion] = useState(false);
+  const [booster, setBooster] = useState(false);
+  const [battlePopup, setbattlePopup] = useState(false);
+
+  const [tooltip, setTooltip] = useState(false);
+
+  const [closePopup, setClosePopup] = useState(false);
+  const [closeBattle, setcloseBattle] = useState(false);
+
+  const [errors, setErrors] = useState({});
+
+  const [showNfts, setShowNfts] = useState(false);
+  const [goldenPassRemainingTime, setGoldenPassRemainingTime] = useState();
+
+  const [landstakes, setLandStakes] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+
+  const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
+  const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
+
+  const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
+  const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
+
+  const [openedChests, setOpenedChests] = useState([]);
+  const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
+  const [openedVictionChests, setOpenedVictionChests] = useState([]);
+  const [openedCoreChests, setOpenedCoreChests] = useState([]);
+  const [openedSeiChests, setOpenedSeiChests] = useState([]);
+  const [openedMantaChests, setOpenedMantaChests] = useState([]);
+  const [openedTaikoChests, setOpenedTaikoChests] = useState([]);
+  const [openedVanarChests, setOpenedVanarChests] = useState([]);
+  const [openedBaseChests, setOpenedBaseChests] = useState([]);
+  const [openedMatChests, setOpenedMatChests] = useState([]);
+  const [openedTaraxaChests, setOpenedTaraxaChests] = useState([]);
+
+  const [leaderboard, setLeaderboard] = useState(false);
+  const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
+
+  const [goldenPassPopup, setgoldenPassPopup] = useState(false);
+  const [aiQuestionCompleted, setAiQuestionCompleted] = useState(false);
+
+  const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
+
+  const [myOffers, setmyOffers] = useState([]);
+  const [allActiveOffers, setallOffers] = useState([]);
+
+  const [isonlink, setIsOnLink] = useState(false);
+  const [myRewardsPopup, setmyRewardsPopup] = useState(false);
+
+  const [dummypremiumChests, setDummyPremiumChests] = useState([]);
+
+  const [claimedChests, setclaimedChests] = useState(0);
+  const [claimedPremiumChests, setclaimedPremiumChests] = useState(0);
+
+  const [claimedSkaleChests, setclaimedSkaleChests] = useState(0);
+  const [claimedSkalePremiumChests, setclaimedSkalePremiumChests] = useState(0);
+
+  const [claimedCoreChests, setclaimedCoreChests] = useState(0);
+  const [claimedCorePremiumChests, setclaimedCorePremiumChests] = useState(0);
+
+  const [claimedBaseChests, setclaimedBaseChests] = useState(0);
+  const [claimedBasePremiumChests, setclaimedBasePremiumChests] = useState(0);
+
+  const [claimedVictionChests, setclaimedVictionChests] = useState(0);
+  const [claimedSeiChests, setclaimedSeiChests] = useState(0);
+  const [claimedMantaChests, setclaimedMantaChests] = useState(0);
+  const [claimedTaikoChests, setclaimedTaikoChests] = useState(0);
+  const [claimedVanarChests, setclaimedVanarChests] = useState(0);
+  const [claimedMatChests, setclaimedMatChests] = useState(0);
+  const [claimedTaraxaChests, setclaimedTaraxaChests] = useState(0);
+
+  const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
+    useState(0);
+  const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] = useState(0);
+  const [claimedMantaPremiumChests, setclaimedMantaPremiumChests] = useState(0);
+  const [claimedTaikoPremiumChests, setclaimedTaikoPremiumChests] = useState(0);
+  const [claimedVanarPremiumChests, setclaimedVanarPremiumChests] = useState(0);
+  const [claimedMatPremiumChests, setclaimedMatPremiumChests] = useState(0);
+  const [claimedTaraxaPremiumChests, setclaimedTaraxaPremiumChests] =
+    useState(0);
+
+  const [userSocialRewards, setuserSocialRewards] = useState(0);
+
+  const [canBuy, setCanBuy] = useState(false);
+
+  const [allChests, setallChests] = useState([]);
+  const [allSkaleChests, setallSkaleChests] = useState([]);
+  const [allCoreChests, setallCoreChests] = useState([]);
+  const [allVictionChests, setallVictionChests] = useState([]);
+  const [allTaikoChests, setallTaikoChests] = useState([]);
+  const [allVanarChests, setallVanarChests] = useState([]);
+  const [allSeiChests, setallSeiChests] = useState([]);
+  const [allMantaChests, setallMantaChests] = useState([]);
+  const [allBaseChests, setallBaseChests] = useState([]);
+  const [allMatChests, setallMatChests] = useState([]);
+  const [allTaraxaChests, setallTaraxaChests] = useState([]);
+
+  const [countdown, setcountdown] = useState();
+  const [countdown3500, setcountdown3500] = useState();
+
+  const [userDailyBundles, setuserDailyBundles] = useState([]);
+
+  const [count, setCount] = useState(0);
+  const [skalecount, setskalecount] = useState(0);
+  const [vicitoncount, setvicitoncount] = useState(0);
+  const [corecount, setcorecount] = useState(0);
+  const [mantacount, setmantacount] = useState(0);
+  const [taikocount, settaikocount] = useState(0);
+  const [vanarcount, setVanarcount] = useState(0);
+  const [basecount, setbasecount] = useState(0);
+  const [matcount, setmatcount] = useState(0);
+  const [seicount, setseicount] = useState(0);
+  const [taraxacount, settaraxacount] = useState(0);
+
+  const [genesisRank2, setGenesisRank2] = useState(0);
+
+  const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
+  const [landPremiumRewards, setlandPremiumRewards] = useState(0);
+
+  const [portfolio, setPortfolio] = useState(false);
+
+  const [bnbImages] = useState(shuffle(chestImagesBnb));
+  const [skaleImages] = useState(shuffle(chestImagesSkale));
+  const [coreImages] = useState(shuffle(chestImagesCore));
+  const [victionImages] = useState(shuffle(chestImagesViction));
+  const [taikoImages] = useState(shuffle(chestImagesTaiko));
+  const [mantaImages] = useState(shuffle(chestImagesViction));
+  const [baseImages] = useState(shuffle(chestImagesBase));
+  const [matImages] = useState(shuffle(chestImagesMat));
+  const [taraxaImages] = useState(shuffle(chestImagesMat));
+
+  const [seiImages] = useState(shuffle(chestImagesSei));
+
+  const [mediaUrl, setMediaUrl] = useState("");
+  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
+  const [suspenseSound, setSuspenseSound] = useState(false);
+  const [selectedEvent, setselectedEvent] = useState([]);
+  const [showEventPopup, setshowEventPopup] = useState(false);
+  const [aiStep, setAiStep] = useState(0);
+
+  const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
+
+  const suspenseMusicRef = useRef(null);
+  const clockSoundRef = useRef(null);
+  const totalTreasureHuntUsd = Object.entries(userTreasureHuntStats)
+    .filter(
+      ([key, value]) => key.toLowerCase().includes("earnusd") && value > 0
+    )
+    .reduce((sum, [, value]) => sum + value, 0);
+
+  const getAiStep = (data) => {
+    setAiStep(data);
+  };
+
+  // Function to update Redux store with user progress data
+  const updateUserProgressInRedux = () => {
+    const userProgressData = {
+      // Global Rankings
+      globalMonthly:
+        userDataStar?.statValue !== undefined && userDataStar?.statValue > 0
+          ? userDataStar.position + 1
+          : "---",
+      globalWeekly:
+        userDataStarWeekly?.statValue !== undefined &&
+          userDataStarWeekly?.statValue > 0
+          ? userDataStarWeekly.position + 1
+          : "---",
+      totalStars: userDataStar?.statValue || 0,
+
+      // BNB Chain
+      userRank:
+        userData?.statValue !== undefined && userData?.statValue > 0
+          ? userData.position + 1
+          : "---",
+      userBnbStars:
+        (userData?.statValue === 0
+          ? 0
+          : userData?.position > 100
+            ? 0
+            : bnbStars[userData?.position]) ?? 0,
+      userBnbScore:
+        userData?.statValue !== undefined && userData?.statValue > 0
+          ? userData?.statValue
+          : 0,
+
+      // Skale Chain
+      userRankSkale:
+        userDataSkale?.statValue !== undefined && userDataSkale?.statValue > 0
+          ? userDataSkale.position + 1
+          : "---",
+      userSkaleStars:
+        (userDataSkale?.statValue === 0
+          ? 0
+          : userDataSkale?.position > 100
+            ? 0
+            : skaleStars[userDataSkale?.position]) ?? 0,
+      userSkaleScore:
+        userDataSkale?.statValue !== undefined && userDataSkale?.statValue > 0
+          ? userDataSkale?.statValue
+          : 0,
+
+      // Core Chain
+      userRankCore:
+        userDataCore?.statValue !== undefined && userDataCore?.statValue > 0
+          ? userDataCore.position + 1
+          : "---",
+      userCoreStars:
+        (userDataCore?.statValue === 0
+          ? 0
+          : userDataCore?.position > 100
+            ? 0
+            : coreStars[userDataCore?.position]) ?? 0,
+      userCoreScore:
+        userDataCore?.statValue !== undefined && userDataCore?.statValue > 0
+          ? userDataCore?.statValue
+          : 0,
+
+      // Viction Chain
+      userRankViction:
+        userDataViction?.statValue !== undefined &&
+          userDataViction?.statValue > 0
+          ? userDataViction.position + 1
+          : "---",
+      userVictionStars:
+        (userDataViction?.statValue === 0
+          ? 0
+          : userDataViction?.position > 100
+            ? 0
+            : matStars[userDataViction?.position]) ?? 0,
+      userVictionScore:
+        userDataViction?.statValue !== undefined &&
+          userDataViction?.statValue > 0
+          ? userDataViction?.statValue
+          : 0,
+
+      // Manta Chain
+      userRankManta:
+        userDataManta?.statValue !== undefined && userDataManta?.statValue > 0
+          ? userDataManta.position + 1
+          : "---",
+      userMantaStars:
+        (userDataManta?.statValue === 0
+          ? 0
+          : userDataManta?.position > 100
+            ? 0
+            : baseStars[userDataManta?.position]) ?? 0,
+      userMantaScore:
+        userDataManta?.statValue !== undefined && userDataManta?.statValue > 0
+          ? userDataManta?.statValue
+          : 0,
+
+      // Base Chain
+      userRankBase:
+        userDataBase?.statValue !== undefined && userDataBase?.statValue > 0
+          ? userDataBase.position + 1
+          : "---",
+      userBaseStars:
+        (userDataBase?.statValue === 0
+          ? 0
+          : userDataBase?.position > 100
+            ? 0
+            : baseStars[userDataBase?.position]) ?? 0,
+      userBaseScore:
+        userDataBase?.statValue !== undefined && userDataBase?.statValue > 0
+          ? userDataBase?.statValue
+          : 0,
+
+      // Taiko Chain
+      userRankTaiko:
+        userDataTaiko?.statValue !== undefined && userDataTaiko?.statValue > 0
+          ? userDataTaiko.position + 1
+          : "---",
+      userTaikoStars:
+        (userDataTaiko?.statValue === 0
+          ? 0
+          : userDataTaiko?.position > 100
+            ? 0
+            : taikoStars[userDataTaiko?.position]) ?? 0,
+      userTaikoScore:
+        userDataTaiko?.statValue !== undefined && userDataTaiko?.statValue > 0
+          ? userDataTaiko?.statValue
+          : 0,
+
+      // MAT Chain
+      userRankMat:
+        userDataMat?.statValue !== undefined && userDataMat?.statValue > 0
+          ? userDataMat.position + 1
+          : "---",
+      userMatStars:
+        userDataMat?.statValue === 0
+          ? 0
+          : userDataMat?.position > 100
+            ? 0
+            : matStars[userDataMat?.position],
+      userMatScore:
+        userDataMat?.statValue !== undefined && userDataMat?.statValue > 0
+          ? userDataMat?.statValue
+          : 0,
+
+      // Sei Chain
+      userRankSei:
+        userDataSei?.statValue !== undefined && userDataSei?.statValue > 0
+          ? userDataSei.position + 1
+          : "---",
+      userSeiStars:
+        userDataSei?.statValue === 0
+          ? 0
+          : userDataSei?.position > 100
+            ? 0
+            : seiStars[userDataSei?.position],
+      userSeiScore:
+        userDataSei?.statValue !== undefined && userDataSei?.statValue > 0
+          ? userDataSei?.statValue
+          : 0,
+
+      // Vanar Chain
+      userRankVanar:
+        userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
+          ? userDataVanar.position + 1
+          : "---",
+      userVanarStars:
+        (userDataVanar?.statValue === 0
+          ? 0
+          : userDataVanar?.position > 100
+            ? 0
+            : vanarStars[userDataVanar?.position]) ?? 0,
+      userVanarScore:
+        userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
+          ? userDataVanar?.statValue
+          : 0,
+
+      // Taraxa Chain
+      userRankTaraxa:
+        userDataTaraxa?.statValue !== undefined && userDataTaraxa?.statValue > 0
+          ? userDataTaraxa.position + 1
+          : "---",
+      userTaraxaStars:
+        userDataTaraxa?.statValue === 0
+          ? 0
+          : userDataTaraxa?.position > 100
+            ? 0
+            : taraxaStars[userDataTaraxa?.position],
+      userTaraxaScore:
+        userDataTaraxa?.statValue !== undefined && userDataTaraxa?.statValue > 0
+          ? userDataTaraxa?.statValue
+          : 0,
+
+      // Prime Status
+      // primeStars: primeStars,
+      isPremium: isPremium,
+    };
+
+    dispatch(setUserProgress(userProgressData));
+  };
+
+  useEffect(() => {
+    suspenseMusicRef.current = new Audio(suspenseful1Sound);
+    clockSoundRef.current = new Audio(clockSound);
+  }, []);
+
+  const recaptchaRef = useRef(null);
+  const effectRan = useRef(false);
+  const effectRan2 = useRef(false);
+
+  const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
+  const html = document.querySelector("html");
+
+  const fetchUsersocialRewards = () => {
+    const cachedUserSocialRewards = localStorage.getItem(
+      "cacheduserSocialRewards"
+    );
+
+    if (cachedUserSocialRewards) {
+      setuserSocialRewardsCached(cachedUserSocialRewards);
+    }
+  };
+  const validateUrl = (url) => {
+    let errors = {};
+    let regex =
+      /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+    let match = url.match(regex);
+
+    if (!match) {
+      errors.url = "URL is not valid";
+    }
+
+    return errors;
+  };
+  const handleClosePopup = () => {
+    navigate("/account");
+  };
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    setErrors(validateUrl(mediaUrl));
+    const captchaToken = await recaptchaRef.current.executeAsync();
+    if (Object.keys(validateUrl(mediaUrl)).length === 0) {
+      const data = {
+        email: email,
+        url: mediaUrl,
+        walletAddress: coinbase,
+        username: username,
+        recaptcha: captchaToken,
+      };
+
+      if (email !== "" && mediaUrl !== "" && coinbase !== "") {
+        await axios
+          .post("https://api.worldofdypians.com/api/submissions", data, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          })
+          .then(function (result) {
+            // console.log(result.data);
+            setSpecialRewardsSuccess("Email sent successfully");
+            return result.data;
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      }
+    }
+
+    setLoading(false);
+  };
+
+  //leaderboard calls
+
+  const dataFetchedRef = useRef(false);
+
+  const [allBnbData, setAllBnbData] = useState([]);
+  const [allSkaleData, setAllSkaleData] = useState([]);
+  const [allCoreData, setAllCoreData] = useState([]);
+  const [allVictionData, setAllVictionData] = useState([]);
+  const [allVanarData, setAllVanarData] = useState([]);
+  const [allMantaData, setAllMantaData] = useState([]);
+  const [allTaikoData, setAllTaikoData] = useState([]);
+  const [allBaseData, setAllBaseData] = useState([]);
+  const [allMatData, setAllMatData] = useState([]);
+  const [allSeiData, setAllSeiData] = useState([]);
+  const [allTaraxaData, setAllTaraxaData] = useState([]);
+
+  const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
+  const [activePlayerCore, setActivePlayerCore] = useState(false);
+  const [activePlayerVanar, setActivePlayerVanar] = useState(false);
+  const [userDataCore, setUserDataCore] = useState({});
+  const [prevDataCore, setPrevDataCore] = useState([]);
+  const [prevDataVanar, setPrevDataVanar] = useState([]);
+  const [userDataVanar, setUserDataVanar] = useState({});
+
+  const [dailyRecordsSkale, setDailyRecordsSkale] = useState([]);
+
+  const [activePlayerSkale, setActivePlayerSkale] = useState(false);
+
+  const [userDataSkale, setUserDataSkale] = useState({});
+
+  const [prevDataSkale, setPrevDataSkale] = useState([]);
+
+  const [loadingBnb, setloadingBnb] = useState(false);
+  const [loadingMat, setloadingMat] = useState(false);
+  const [loadingSkale, setloadingSkale] = useState(false);
+  const [loadingCore, setloadingCore] = useState(false);
+  const [loadingViction, setloadingViction] = useState(false);
+  const [loadingManta, setloadingManta] = useState(false);
+  const [loadingTaiko, setloadingTaiko] = useState(false);
+  const [loadingBase, setloadingBase] = useState(false);
+  const [loadingSei, setloadingSei] = useState(false);
+  const [loadingVanar, setLoadingVanar] = useState(false);
+  const [loadingStarWeekly, setloadingStarWeekly] = useState(false);
+  const [loadingStarMonthly, setloadingStarMonthly] = useState(false);
+
+  const [eventCardCount, seteventCardCount] = useState(0);
+  const [explorerHuntData, setexplorerHuntData] = useState([]);
+  const [greatCollectionData, setgreatCollectionData] = useState([]);
+
+  const [allStarData, setAllStarData] = useState({});
+  const [starRecords, setStarRecords] = useState([]);
+  const [starRecordsWeekly, setStarRecordsWeekly] = useState([]);
+  const [activePlayerStar, setActivePlayerStar] = useState([]);
+  const [activePlayerStarWeekly, setActivePlayerStarWeekly] = useState([]);
+  const [userDataStar, setUserDataStar] = useState({});
+  const [userPreviousDataStar, setUserPreviousDataStar] = useState({});
+  const [userPreviousDataStar2, setUserPreviousDataStar2] = useState({});
+
+  const [userDataStarWeekly, setUserDataStarWeekly] = useState({});
+  const [prevDataStar, setPrevDataStar] = useState([]);
+  const [prevDataStarWeekly, setPrevDataStarWeekly] = useState([]);
+  const [dataAmountStar, setDataAmountStar] = useState([]);
+  const [dataAmountStarWeekly, setDataAmountStarWeekly] = useState([]);
+  // const [userCollectedStars, setuserCollectedStars] = useState(0);
+  // const [userCollectedStarsWeekly, setuserCollectedStarsWeekly] = useState(0);
+
+  const [dailyRecordsViction, setDailyRecordsViction] = useState([]);
+
+  const [activePlayerViction, setActivePlayerViction] = useState(false);
+
+  const [userDataViction, setUserDataViction] = useState({});
+
+  const [prevDataViction, setPrevDataViction] = useState([]);
+
+  // const [dailyDataAmountViction, setDailyDataAmountViction] = useState([]);
+
+  const [dailyRecordsManta, setDailyRecordsManta] = useState([]);
+
+  const [activePlayerManta, setActivePlayerManta] = useState(false);
+
+  const [userDataManta, setUserDataManta] = useState({});
+
+  const [prevDataManta, setPrevDataManta] = useState([]);
+
+  // const [dailyDataAmountManta, setDailyDataAmountManta] = useState([]);
+
+  const [dailyRecordsSei, setDailyRecordsSei] = useState([]);
+
+  const [activePlayerSei, setActivePlayerSei] = useState(false);
+
+  const [userDataSei, setUserDataSei] = useState({});
+
+  const [prevDataSei, setPrevDataSei] = useState([]);
+
+  const [dailyRecordsTaraxa, setDailyRecordsTaraxa] = useState([]);
+
+  const [activePlayerTaraxa, setActivePlayerTaraxa] = useState(false);
+
+  const [userDataTaraxa, setUserDataTaraxa] = useState({});
+
+  const [prevDataTaraxa, setPrevDataTaraxa] = useState([]);
+
+  const [loadingTaraxa, setLoadingTaraxa] = useState(false);
+
+  const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
+
+  const [activePlayerBase, setActivePlayerBase] = useState(false);
+
+  const [userDataBase, setUserDataBase] = useState({});
+  const [prevDataBase, setPrevDataBase] = useState([]);
+  const [dailyRecordsTaiko, setDailyRecordsTaiko] = useState([]);
+  const [activePlayerTaiko, setActivePlayerTaiko] = useState(false);
+  const [userDataTaiko, setUserDataTaiko] = useState({});
+
+  const [prevDataTaiko, setPrevDataTaiko] = useState([]);
+
+  const [dailyRecordsMat, setDailyRecordsMat] = useState([]);
+  const [activePlayerMat, setActivePlayerMat] = useState(false);
+  const [userDataMat, setUserDataMat] = useState({});
+
+  const [prevDataMat, setPrevDataMat] = useState([]);
+
+  const [dailyrecords, setRecords] = useState([]);
+  const [dailyRecordsVanar, setDailyRecordsVanar] = useState([]);
+  // const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
+  const [activePlayer, setActivePlayer] = useState(false);
+  // const [activePlayerWeekly, setActivePlayerWeekly] = useState(false);
+
+  const [userData, setUserData] = useState({});
+
+  const [dailyplayerData, setdailyplayerData] = useState([]);
+
+  const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
+
+  const [genesisData, setgenesisData] = useState([]);
+  const [previousgenesisData, setpreviousgenesisData] = useState([]);
+  const [specialRewardsSuccess, setSpecialRewardsSuccess] = useState(false);
+  const [treasureRewardMoney, setTreasureRewardMoney] = useState({
+    bnb: 0,
+    skale: 0,
+    sei: 0,
+    core: 0,
+    vanar: 0,
+    viction: 0,
+    manta: 0,
+    base: 0,
+    taiko: 0,
+    taraxa: 0,
+    mat: 0,
+  });
+  const [beastSiegeStatus, setBeastSiegeStatus] = useState({
+    dragon: false,
+    bear: false,
+    beast: false,
+    eagle: false,
+    scorpion: false,
+    cyclops: false,
+    puzzleMadness: false,
+  });
+  const [puzzleMadnessTimer, setPuzzleMadnessTimer] = useState(0);
+  const [aiQuestionRewards, setaiQuestionRewards] = useState([]);
+  const [aiQuestionObjectAnswered, setAiQuestionObjectAnswered] = useState({
+    question: "",
+    options: [],
+    id: "",
+    userIndex: undefined,
+    correctIndex: undefined,
+    chain: "",
+  });
+
+  const [aiQuestionObject2, setAiQuestionObject2] = useState({
+    question: "",
+    options: [],
+    id: "",
+  });
+
+  const totalDailyBonusSum = Object.values(treasureRewardMoney).reduce(
+    (sum, value) => sum + value,
+    0
+  );
+
+  const claimedMoneyReward = aiQuestionRewards.find(
+    (item) => item.rewardType === "Money" && item.status === "Claimed"
+  );
+
+  const useWarnOnRefresh = (shouldWarn) => {
+    useEffect(() => {
+      const handleBeforeUnload = (event) => {
+        if (shouldWarn === 0) return; // Do nothing if the condition is false
+
+        event.preventDefault();
+        event.returnValue = ""; // Required for the dialog to appear
+      };
+
+      window.addEventListener("beforeunload", handleBeforeUnload);
+      return () => {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+      };
+    }, [shouldWarn]);
+  };
+
+  useWarnOnRefresh(aiStep);
+
+  const fillRecords = (itemData) => {
+    if (itemData.length === 0) {
+      setRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setRecords(finalData);
+    }
+  };
+
+  const fillRecordsCore = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsCore(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsCore(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersCore = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardCoreDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataCore(result.data.data.leaderboard);
+    } else {
+      setPrevDataCore(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsCore = async () => {
+    if (dailyRecordsCore.length > 0) return;
+    setloadingCore(true);
+
+    const data = {
+      StatisticName: "LeaderboardCoreDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersCore(parseInt(result.data.data.version));
+      setDailyRecordsCore(result.data.data.leaderboard);
+      fillRecordsCore(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerCore(true);
+          fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerCore(false);
+          fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingCore(false);
+      fillRecordsCore([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingCore(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerCore = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardCoreDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard;
+
+      const userPosition = testArray[0].position;
+      setUserDataCore(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerCore(false);
+      } else {
+        setActivePlayerCore(true);
+      }
+    }
+  };
+
+  const fillRecordsViction = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsViction(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsViction(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersViction = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardVictionDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsViction([]);
+        });
+      setPrevDataViction(result.data.data.leaderboard);
+    } else {
+      setPrevDataViction(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsViction = async () => {
+    if (dailyRecordsViction.length > 0) return;
+    setloadingViction(true);
+
+    const data = {
+      StatisticName: "LeaderboardVictionDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersViction(parseInt(result.data.data.version));
+      setDailyRecordsViction(result.data.data.leaderboard);
+      fillRecordsViction(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerViction(true);
+          fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerViction(false);
+          fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingViction(false);
+      fillRecordsViction([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingViction(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerViction = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardVictionDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+
+      const userPosition = testArray[0].position;
+      setUserDataViction(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerViction(false);
+      } else {
+        setActivePlayerViction(true);
+      }
+    }
+  };
+
+  const fillRecordsManta = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsManta(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsManta(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersManta = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardMantaDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsManta([]);
+        });
+      setPrevDataManta(result.data.data.leaderboard);
+    } else {
+      setPrevDataManta(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsManta = async () => {
+    if (dailyRecordsManta.length > 0) return;
+    setloadingManta(true);
+
+    const data = {
+      StatisticName: "LeaderboardMantaDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersManta(parseInt(result.data.data.version));
+      setDailyRecordsManta(result.data.data.leaderboard);
+      fillRecordsManta(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerManta(true);
+          fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerManta(false);
+          fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingManta(false);
+      fillRecordsManta([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingManta(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerManta = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardMantaDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserDataManta(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerManta(false);
+      } else {
+        setActivePlayerManta(true);
+      }
+    }
+  };
+
+  const fillRecordsSei = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsSei(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsSei(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersSei = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardSeiDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsSei([]);
+        });
+      setPrevDataSei(result.data.data.leaderboard);
+    } else {
+      setPrevDataSei(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsSei = async () => {
+    if (dailyRecordsSei.length > 0) return;
+    setloadingSei(true);
+
+    const data = {
+      StatisticName: "LeaderboardSeiDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersSei(parseInt(result.data.data.version));
+      setDailyRecordsSei(result.data.data.leaderboard);
+      fillRecordsSei(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerSei(true);
+          fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerSei(false);
+          fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingSei(false);
+      fillRecordsSei([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingSei(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerSei = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSeiDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserDataSei(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerSei(false);
+      } else {
+        setActivePlayerSei(true);
+      }
+    }
+  };
+
+  //TARAXA
+  const fillRecordsTaraxa = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsTaraxa(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsTaraxa(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersTaraxa = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaraxaDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsTaraxa([]);
+        });
+      setPrevDataTaraxa(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaraxa(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsTaraxa = async () => {
+    if (dailyRecordsTaraxa.length > 0) return;
+    setLoadingTaraxa(true);
+
+    const data = {
+      StatisticName: "LeaderboardTaraxaDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersTaraxa(parseInt(result.data.data.version));
+      setDailyRecordsTaraxa(result.data.data.leaderboard);
+      fillRecordsTaraxa(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerTaraxa(true);
+          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerTaraxa(false);
+          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setLoadingTaraxa(false);
+      fillRecordsTaraxa([]);
+    } finally {
+      setTimeout(() => {
+        setLoadingTaraxa(false);
+      }, 1000);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerTaraxa = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaraxaDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserDataTaraxa(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerTaraxa(false);
+      } else {
+        setActivePlayerTaraxa(true);
+      }
+    }
+  };
+
+  const fillRecordsBase = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsBase(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsBase(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersBase = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardBaseDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsBase([]);
+        });
+      setPrevDataBase(result.data.data.leaderboard);
+    } else {
+      setPrevDataBase(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsBase = async () => {
+    if (dailyRecordsBase.length > 0) return;
+    setloadingBase(true);
+
+    const data = {
+      StatisticName: "LeaderboardBaseDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersBase(parseInt(result.data.data.version));
+      setDailyRecordsBase(result.data.data.leaderboard);
+      fillRecordsBase(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerBase(true);
+          fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerBase(false);
+          fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingBase(false);
+      fillRecordsBase([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingBase(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerBase = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardBaseDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserDataBase(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerBase(false);
+      } else {
+        setActivePlayerBase(true);
+      }
+    }
+  };
+
+  const fillRecordsVanar = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsVanar(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsVanar(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersVanar = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardVanarDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsVanar([]);
+        });
+      setPrevDataVanar(result.data.data.leaderboard);
+    } else {
+      setPrevDataVanar(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsVanar = async () => {
+    if (dailyRecordsVanar.length > 0) return;
+    setLoadingVanar(true);
+
+    const data = {
+      StatisticName: "LeaderboardVanarDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersVanar(parseInt(result.data.data.version));
+      setDailyRecordsVanar(result.data.data.leaderboard);
+      fillRecordsVanar(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerVanar(true);
+          fetchDailyRecordsAroundPlayerVanar(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerVanar(false);
+          fetchDailyRecordsAroundPlayerVanar(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setLoadingVanar(false);
+      fillRecordsVanar([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setLoadingVanar(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerVanar = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardVanarDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+
+      const userPosition = testArray[0].position;
+
+      setUserDataVanar(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerVanar(false);
+      } else {
+        setActivePlayerVanar(true);
+      }
+    }
+  };
+
+  const fillRecordsTaiko = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsTaiko(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsTaiko(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersTaiko = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaikoDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsTaiko([]);
+        });
+      setPrevDataTaiko(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaiko(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+
+  const fetchDailyRecordsTaiko = async () => {
+    if (dailyRecordsTaiko.length > 0) return;
+    setloadingTaiko(true);
+
+    const data = {
+      StatisticName: "LeaderboardTaikoDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersTaiko(parseInt(result.data.data.version));
+      setDailyRecordsTaiko(result.data.data.leaderboard);
+      fillRecordsTaiko(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerTaiko(true);
+          fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerTaiko(false);
+          fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingTaiko(false);
+      fillRecordsTaiko([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingTaiko(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaikoDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserDataTaiko(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerTaiko(false);
+      } else {
+        setActivePlayerTaiko(true);
+      }
+    }
+  };
+
+  const fillRecordsMat = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsMat(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsMat(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersMat = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardMatchainDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsMat([]);
+        });
+      setPrevDataMat(result.data.data.leaderboard);
+    } else {
+      setPrevDataMat(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsMat = async () => {
+    if (dailyRecordsMat.length > 0) return;
+    setloadingMat(true);
+
+    const data = {
+      StatisticName: "LeaderboardMatchainDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersMat(parseInt(result.data.data.version));
+      setDailyRecordsMat(result.data.data.leaderboard);
+      fillRecordsMat(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerMat(true);
+          fetchDailyRecordsAroundPlayerMat(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerMat(false);
+          fetchDailyRecordsAroundPlayerMat(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingMat(false);
+      fillRecordsMat([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingMat(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerMat = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardMatchainDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserDataMat(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerMat(false);
+      } else {
+        setActivePlayerMat(true);
+      }
+    }
+  };
+
+  const fillRecordsSkale = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsSkale(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsSkale(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersSkale = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardSkaleDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios
+        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
+        .catch((error) => {
+          console.error(error);
+          fillRecordsSkale([]);
+        });
+      setPrevDataSkale(result.data.data.leaderboard);
+    } else {
+      setPrevDataSkale(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsSkale = async () => {
+    if (dailyRecordsSkale.length > 0) return;
+    setloadingSkale(true);
+
+    const data = {
+      StatisticName: "LeaderboardSkaleDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersSkale(parseInt(result.data.data.version));
+      setDailyRecordsSkale(result.data.data.leaderboard);
+      fillRecordsSkale(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerSkale(true);
+          fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+        } else if (testArray.length === 0) {
+          setActivePlayerSkale(false);
+          fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingSkale(false);
+      fillRecordsSkale([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingSkale(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerSkale = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSkaleDaily",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserDataSkale(...testArray);
+      if (userPosition > 99) {
+        setActivePlayerSkale(false);
+      } else {
+        setActivePlayerSkale(true);
+      }
+    }
+  };
+
+  const fillRecordsStar = (itemData) => {
+    if (itemData.length === 0) {
+      setStarRecords(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setStarRecords(finalData);
+    }
+  };
+
+  const fetchPreviousUserDataStar = async (version, userId) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        MaxResultsCount: 1,
+        Version: version - 1,
+        PlayerId: userId,
+      };
+      // const data2 = {
+      //   StatisticName: "GlobalStarMonthlyLeaderboard",
+      //   MaxResultsCount: 1,
+      //   Version: version - 2,
+      //   PlayerId: userId,
+      // };
+      const result = await axios
+        .post(
+          `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
+          data
+        )
+        .catch((e) => {
+          console.error(e);
+        });
+      // const result2 = await axios
+      //   .post(
+      //     `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
+      //     data2
+      //   )
+      //   .catch((e) => {
+      //     console.error(e);
+      //   });
+      if (result) {
+        setUserPreviousDataStar(...result.data.data.leaderboard);
+      }
+      // if (result2) {
+      //   setUserPreviousDataStar2(...result2.data.data.leaderboard);
+      // }
+    } else {
+      setUserPreviousDataStar([]);
+      setUserPreviousDataStar2([]);
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
+    const data = {
+      StatisticName: "GlobalStarMonthlyLeaderboard",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      fetchPreviousUserDataStar(parseInt(result.data.data.version), userId);
+      var testArray = result.data.data.leaderboard;
+      if (testArray.length > 0) {
+        const userPosition = testArray[0].position;
+        // setuserCollectedStars(testArray[0].statValue);
+        if (goldenPassRemainingTime) {
+          setDataAmountStar(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                  ? Number(monthlyStarPrizes[99]) +
+                  Number(monthlyExtraStarPrizes[99])
+                  : Number(monthlyStarPrizes[userPosition]) +
+                  Number(monthlyExtraStarPrizes[userPosition])
+              : 0
+          );
+        } else if (!goldenPassRemainingTime) {
+          setDataAmountStar(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                  ? Number(monthlyStarPrizes[99])
+                  : Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
+        }
+      }
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerStar(true);
+          setUserDataStar([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerStar(false);
+          setUserDataStar(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerStar(false);
+        setUserDataStar(...testArray);
+      }
+    }
+  };
+
+  const fetchPreviousWinnersStar = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataStar(result.data.data.leaderboard);
+    } else {
+      setPrevDataStar(placeholderplayerData);
+    }
+  };
+
+  const fetchExplorerHunt = async () => {
+    if (userId) {
+      const data = {
+        StatisticName: "ExploreHuntEventKillCollection",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setexplorerHuntData(result.data.data.leaderboard);
+    }
+  };
+
+  const fetchGreatCollection = async () => {
+    if (userId) {
+      const data = {
+        StatisticName: "TheGreatCollection",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setgreatCollectionData(result.data.data.leaderboard);
+    }
+  };
+
+  const fetchRecordsStar = async () => {
+    if (starRecords.length > 0) return;
+    setloadingStarMonthly(true);
+
+    const data = {
+      StatisticName: "GlobalStarMonthlyLeaderboard",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersStar(parseInt(result.data.data.version));
+      setStarRecords(result.data.data.leaderboard);
+      fillRecordsStar(result.data.data.leaderboard);
+
+      if (userId && username) {
+        var testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        if (testArray.length > 0) {
+          setActivePlayerStar(true);
+          const userPosition = testArray[0].position;
+          // setuserCollectedStars(testArray[0].statValue);
+          setUserDataStar(...testArray);
+          if (goldenPassRemainingTime) {
+            setDataAmountStar(
+              testArray[0].statValue !== 0
+                ? userPosition > 100
+                  ? 0
+                  : userPosition === 100
+                    ? Number(monthlyStarPrizes[99]) +
+                    Number(monthlyExtraStarPrizes[99])
+                    : Number(monthlyStarPrizes[userPosition]) +
+                    Number(monthlyExtraStarPrizes[userPosition])
+                : 0
+            );
+          } else if (!goldenPassRemainingTime) {
+            setDataAmountStar(
+              testArray[0].statValue !== 0
+                ? userPosition > 100
+                  ? 0
+                  : userPosition === 100
+                    ? Number(monthlyStarPrizes[99])
+                    : Number(monthlyStarPrizes[userPosition])
+                : 0
+            );
+          }
+        } else if (testArray.length === 0) {
+          setActivePlayerStar(false);
+          fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingStarMonthly(false);
+      fillRecordsStar([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingStarMonthly(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fillRecordsStarWeekly = (itemData) => {
+    if (itemData.length === 0) {
+      setStarRecordsWeekly(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setStarRecordsWeekly(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersStarWeekly = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "GlobalStarWeeklyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataStarWeekly(result.data.data.leaderboard);
+    } else {
+      setPrevDataStarWeekly(placeholderplayerData);
+    }
+  };
+
+  const fetchRecordsStarWeekly = async () => {
+    if (starRecordsWeekly.length > 0) return;
+    setloadingStarWeekly(true);
+
+    const data = {
+      StatisticName: "GlobalStarWeeklyLeaderboard",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      fetchPreviousWinnersStarWeekly(parseInt(result.data.data.version));
+      setStarRecordsWeekly(result.data.data.leaderboard);
+      fillRecordsStarWeekly(result.data.data.leaderboard);
+
+      if (userId && username && result.data.data.leaderboard) {
+        if (userId && username) {
+          var testArray = result.data.data.leaderboard.filter(
+            (item) => item.displayName === username
+          );
+          if (testArray.length > 0) {
+            setActivePlayerStarWeekly(true);
+            const userPosition = testArray[0].position;
+            // setuserCollectedStarsWeekly(testArray[0].statValue);
+            setUserDataStarWeekly(...testArray);
+            if (goldenPassRemainingTime) {
+              setDataAmountStarWeekly(
+                testArray[0].statValue !== 0
+                  ? userPosition > 100
+                    ? 0
+                    : userPosition === 100
+                      ? Number(weeklyStarPrizes[99]) +
+                      Number(weeklyExtraStarPrizes[99])
+                      : Number(weeklyStarPrizes[userPosition]) +
+                      Number(weeklyExtraStarPrizes[userPosition])
+                  : 0
+              );
+            } else if (!goldenPassRemainingTime) {
+              setDataAmountStarWeekly(
+                testArray[0].statValue !== 0
+                  ? userPosition > 100
+                    ? 0
+                    : userPosition === 100
+                      ? Number(weeklyStarPrizes[99])
+                      : Number(weeklyStarPrizes[userPosition])
+                  : 0
+              );
+            }
+          } else if (testArray.length === 0) {
+            setActivePlayerStarWeekly(false);
+            fetchWeeklyRecordsAroundPlayerStar(result.data.data.leaderboard);
+          }
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingStarWeekly(false);
+      fillRecordsStarWeekly([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingStarWeekly(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchWeeklyRecordsAroundPlayerStar = async (itemData) => {
+    const data = {
+      StatisticName: "GlobalStarWeeklyLeaderboard",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard;
+      if (testArray.length > 0) {
+        const userPosition = testArray[0].position;
+        // setuserCollectedStarsWeekly(testArray[0].statValue);
+        if (goldenPassRemainingTime) {
+          setDataAmountStarWeekly(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                  ? Number(weeklyStarPrizes[99]) +
+                  Number(weeklyExtraStarPrizes[99])
+                  : Number(weeklyStarPrizes[userPosition]) +
+                  Number(weeklyExtraStarPrizes[userPosition])
+              : 0
+          );
+        } else if (!goldenPassRemainingTime) {
+          setDataAmountStarWeekly(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                  ? Number(weeklyStarPrizes[99])
+                  : Number(weeklyStarPrizes[userPosition])
+              : 0
+          );
+        }
+      }
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerStarWeekly(true);
+          setUserDataStarWeekly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerStarWeekly(false);
+          setUserDataStarWeekly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerStarWeekly(false);
+        setUserDataStarWeekly(...testArray);
+      }
+    }
+  };
+
+  const fillRecordsDaily = (itemData) => {
+    if (itemData.length === 0) {
+      setdailyplayerData(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setdailyplayerData(finalData);
+    }
+  };
+
+  const fillRecordsGenesis = (itemData) => {
+    if (itemData.length === 0) {
+      setgenesisData(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setgenesisData(finalData);
+    }
+  };
+
+  const fillPreviousRecordsGenesis = (itemData) => {
+    if (itemData.length === 0) {
+      setpreviousgenesisData(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setpreviousgenesisData(finalData);
+    }
+  };
+
+  const fetchPreviousWinners = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "DailyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      fillRecordsDaily(result.data.data.leaderboard);
+
+      setdailyplayerData(result.data.data.leaderboard);
+    }
+  };
+
+  // const fetchGenesisPreviousWinners = async (version) => {
+  //   if (version != 0) {
+  //     const data = {
+  //       StatisticName: "TheGreatCollection",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 10,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data
+  //     );
+
+  //     setpreviousgenesisData(result.data.data.leaderboard);
+  //   }
+  // };
+
+  const fetchDailyRecords = async () => {
+    if (dailyrecords.length > 0) return;
+    setloadingBnb(true);
+
+    const data = {
+      StatisticName: "DailyLeaderboard",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    try {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+
+      setRecords(result.data.data.leaderboard);
+      fillRecords(result.data.data.leaderboard);
+      fetchPreviousWinners(parseInt(result.data.data.version));
+
+      if (userId && username) {
+        const testArray = result.data.data.leaderboard.filter(
+          (item) => item.displayName === username
+        );
+        setActivePlayer(testArray.length > 0);
+        fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
+      }
+    } catch (error) {
+      console.error(error);
+      setloadingBnb(false);
+      fillRecords([]);
+    } finally {
+      const timer = setTimeout(() => {
+        setloadingBnb(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  };
+
+  const fetchGenesisRecords = async () => {
+    const data2 = {
+      StatisticName: "TheGreatCollection",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+
+    const result2 = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data2)
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (result2) {
+      setpreviousGenesisVersion(result2.data.data.version);
+      setgenesisData(result2.data.data.leaderboard);
+      fillRecordsGenesis(result2.data.data.leaderboard);
+    }
+
+    // fetchGenesisPreviousWinners(parseInt(result2.data.data.version));
+  };
+
+  useEffect(() => {
+    if (!email) {
+      setclaimedChests(0);
+      setclaimedPremiumChests(0);
+      setclaimedCorePremiumChests(0);
+      setclaimedCoreChests(0);
+      setclaimedVictionPremiumChests(0);
+      setclaimedVictionChests(0);
+      setclaimedMatChests(0);
+
+      setallChests([]);
+      setallSkaleChests([]);
+      setallCoreChests([]);
+      setallVictionChests([]);
+      setallMatChests([]);
+
+      setOpenedChests([]);
+      setOpenedCoreChests([]);
+      setOpenedVictionChests([]);
+      setOpenedSkaleChests([]);
+      setclaimedSkaleChests(0);
+      setclaimedSkalePremiumChests(0);
+
+      setOpenedMatChests([]);
+      setclaimedMatChests(0);
+      setclaimedMatPremiumChests(0);
+      setaiQuestionRewards([]);
+      setAiQuestionCompleted(false);
+      setAiQuestionObjectAnswered({
+        question: "",
+        options: [],
+        id: "",
+        userIndex: undefined,
+        correctIndex: undefined,
+        chain: "",
+      });
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (username !== undefined && userId !== undefined) {
+      fetchGenesisRecords();
+      fetchGreatCollection();
+      fetchExplorerHunt();
+    }
+  }, [username, userId, goldenPassRemainingTime]);
+
+  useEffect(() => {
+    if (
+      count !== 0 ||
+      (royaltyCount !== 0 && (chainId === 56 || chainId === 204))
+    ) {
+      getAllChests(email);
+    }
+  }, [count, royaltyCount, chainId]);
+
+  useEffect(() => {
+    if (corecount !== 0) {
+      getAllCoreChests(email);
+    }
+  }, [corecount]);
+
+  useEffect(() => {
+    if (skalecount !== 0) {
+      getAllSkaleChests(email);
+    }
+  }, [skalecount]);
+
+  useEffect(() => {
+    if (vicitoncount !== 0) {
+      getAllVictionChests(email);
+    }
+  }, [vicitoncount]);
+
+  useEffect(() => {
+    if (mantacount !== 0) {
+      getAllMantaChests(email);
+    }
+  }, [mantacount]);
+
+  useEffect(() => {
+    if (basecount !== 0) {
+      getAllBaseChests(email);
+    }
+  }, [basecount]);
+
+  useEffect(() => {
+    if (taikocount !== 0 || (royaltyCount !== 0 && chainId === 167000)) {
+      getAllTaikoChests(email);
+    }
+  }, [taikocount, royaltyCount, chainId]);
+  useEffect(() => {
+    if (vanarcount !== 0) {
+      getAllVanarChests(email);
+    }
+  }, [vanarcount]);
+
+  useEffect(() => {
+    if (matcount !== 0) {
+      getAllMatChests(email);
+    }
+  }, [matcount]);
+
+  useEffect(() => {
+    if (seicount !== 0) {
+      getAllSeiChests(email);
+    }
+  }, [seicount]);
+
+  useEffect(() => {
+    if (taraxacount !== 0) {
+      getAllTaraxaChests(email);
+    }
+  }, [taraxacount]);
+
+  useEffect(() => {
+    setAllStarData({
+      rewards: monthlyStarPrizes,
+      rewardsWeekly: weeklyStarPrizes,
+      premium_rewards: monthlyExtraStarPrizes,
+      premium_rewards_weekly: weeklyExtraStarPrizes,
+      activeData: starRecords,
+      activeDataWeekly: starRecordsWeekly,
+      previousData: prevDataStar,
+      previousDataWeekly: prevDataStarWeekly,
+      player_data: userDataStar,
+      player_data_weekly: userDataStarWeekly,
+      is_active: activePlayerStar,
+      is_active_weekly: activePlayerStarWeekly,
+      loading: loadingStarMonthly || loadingStarWeekly,
+    });
+  }, [
+    starRecords,
+    starRecordsWeekly,
+    prevDataStar,
+    prevDataStarWeekly,
+    userDataStar,
+    userDataStarWeekly,
+    activePlayerStar,
+    activePlayerStarWeekly,
+    loadingStarMonthly,
+    loadingStarWeekly,
+    userId,
+    username,
+  ]);
+
+  useEffect(() => {
+    const playerActiveArray = [
+      activePlayer,
+      activePlayerBase,
+      activePlayerCore,
+      activePlayerManta,
+      activePlayerSkale,
+      activePlayerViction,
+      activePlayerTaiko,
+      activePlayerMat,
+      activePlayerSei,
+      activePlayerVanar,
+      activePlayerTaraxa,
+    ];
+
+    const allFalse = playerActiveArray.every((v) => v === false);
+
+    // Exit if critical dependencies aren't available
+    if (
+      !allStarData.activeData ||
+      !userId ||
+      !isPremium ||
+      userDataStar.statValue === undefined ||
+      userDataStarWeekly.statValue === undefined
+    )
+      return;
+
+    if (!allFalse && isPremium === true) {
+      dispatch(setUserProgress({ primeStars: true }));
+    } else {
+      dispatch(setUserProgress({ primeStars: false }));
+    }
+  }, [
+    allStarData.activeData,
+    allStarData.activeDataWeekly, // Avoid passing all `allStarData` if only activeData is crucial
+    userDataStar,
+    userDataStarWeekly,
+    userId,
+    isPremium,
+    activePlayer,
+    activePlayerBase,
+    activePlayerCore,
+    activePlayerManta,
+    activePlayerSkale,
+    activePlayerViction,
+    activePlayerTaiko,
+    activePlayerMat,
+    activePlayerSei,
+    activePlayerVanar,
+    activePlayerTaraxa,
+  ]);
+
+  useEffect(() => {
+    setAllBnbData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: bnbStars,
+        previous_rewards: bnbStars,
+        activeData: dailyrecords,
+        previousData: dailyplayerData,
+        player_data: userData,
+        is_active: activePlayer,
+        loading: loadingBnb,
+      },
+    ]);
+  }, [dailyrecords, dailyplayerData, userData, activePlayer, loadingBnb]);
+  useEffect(() => {
+    setAllVanarData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: vanarStars,
+        previous_rewards: vanarStars,
+        activeData: dailyRecordsVanar,
+        previousData: prevDataVanar,
+        player_data: userDataVanar,
+        is_active: activePlayerVanar,
+        loading: loadingVanar,
+      },
+    ]);
+  }, [
+    dailyRecordsVanar,
+    prevDataVanar,
+    userDataVanar,
+    activePlayerVanar,
+    loadingVanar,
+  ]);
+
+  useEffect(() => {
+    setAllSkaleData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: skaleStars,
+        previous_rewards: skaleStars,
+        activeData: dailyRecordsSkale,
+        previousData: prevDataSkale,
+        player_data: userDataSkale,
+        is_active: activePlayerSkale,
+        loading: loadingSkale,
+      },
+    ]);
+  }, [
+    dailyRecordsSkale,
+    userDataSkale,
+    activePlayerSkale,
+    prevDataSkale,
+    loadingSkale,
+  ]);
+
+  useEffect(() => {
+    setAllCoreData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: coreStars,
+        previous_rewards: coreStars,
+        activeData: dailyRecordsCore,
+        previousData: prevDataCore,
+        player_data: userDataCore,
+        is_active: activePlayerCore,
+        loading: loadingCore,
+      },
+    ]);
+  }, [
+    dailyRecordsCore,
+    prevDataCore,
+    userDataCore,
+    activePlayerCore,
+    loadingCore,
+  ]);
+
+  useEffect(() => {
+    setAllVictionData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: matStars,
+        previous_rewards: matStars,
+        activeData: dailyRecordsViction,
+        previousData: prevDataViction,
+        player_data: userDataViction,
+        is_active: activePlayerViction,
+        loading: loadingViction,
+      },
+    ]);
+  }, [
+    dailyRecordsViction,
+    prevDataViction,
+    userDataViction,
+    activePlayerViction,
+    loadingViction,
+  ]);
+
+  useEffect(() => {
+    setAllMantaData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: baseStars,
+        previous_rewards: baseStars,
+        activeData: dailyRecordsManta,
+        previousData: prevDataManta,
+        player_data: userDataManta,
+        is_active: activePlayerManta,
+        loading: loadingManta,
+      },
+    ]);
+  }, [
+    dailyRecordsManta,
+    prevDataManta,
+    userDataManta,
+    activePlayerManta,
+    loadingManta,
+  ]);
+
+  useEffect(() => {
+    setAllSeiData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: seiStars,
+        previous_rewards: seiStars,
+        activeData: dailyRecordsSei,
+        previousData: prevDataSei,
+        player_data: userDataSei,
+        is_active: activePlayerSei,
+        loading: loadingSei,
+      },
+    ]);
+  }, [dailyRecordsSei, prevDataSei, userDataSei, activePlayerSei, loadingSei]);
+  useEffect(() => {
+    setAllTaraxaData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: taraxaStars,
+        previous_rewards: taraxaStars,
+        activeData: dailyRecordsTaraxa,
+        previousData: prevDataTaraxa,
+        player_data: userDataTaraxa,
+        is_active: activePlayerTaraxa,
+        loading: loadingTaraxa,
+      },
+    ]);
+  }, [
+    dailyRecordsTaraxa,
+    prevDataTaraxa,
+    userDataTaraxa,
+    activePlayerTaraxa,
+    loadingTaraxa,
+  ]);
+
+  useEffect(() => {
+    setAllBaseData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: baseStars,
+        previous_rewards: baseStars,
+        activeData: dailyRecordsBase,
+        previousData: prevDataBase,
+        player_data: userDataBase,
+        is_active: activePlayerBase,
+        loading: loadingBase,
+      },
+    ]);
+  }, [
+    dailyRecordsBase,
+    prevDataBase,
+    userDataBase,
+    activePlayerBase,
+    loadingBase,
+  ]);
+
+  useEffect(() => {
+    setAllTaikoData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: taikoStars,
+        previous_rewards: taikoStars,
+        activeData: dailyRecordsTaiko,
+        previousData: prevDataTaiko,
+        player_data: userDataTaiko,
+        is_active: activePlayerTaiko,
+        loading: loadingTaiko,
+      },
+    ]);
+  }, [
+    dailyRecordsTaiko,
+    prevDataTaiko,
+    userDataTaiko,
+    activePlayerTaiko,
+    loadingTaiko,
+  ]);
+
+  useEffect(() => {
+    setAllMatData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: matStars,
+        previous_rewards: matStars,
+        activeData: dailyRecordsMat,
+        previousData: prevDataMat,
+        player_data: userDataMat,
+        is_active: activePlayerMat,
+        loading: loadingMat,
+      },
+    ]);
+  }, [dailyRecordsMat, prevDataMat, userDataMat, activePlayerMat, loadingMat]);
+
+  const handleResetRecords = () => {
+    setRecords([]);
+    setDailyRecordsTaiko([]);
+    setDailyRecordsMat([]);
+    setDailyRecordsSei([]);
+    setDailyRecordsManta([]);
+    setDailyRecordsBase([]);
+    setDailyRecordsCore([]);
+    setDailyRecordsViction([]);
+    setDailyRecordsSkale([]);
+    setDailyRecordsVanar([]);
+    setDailyRecordsTaraxa([]);
+  };
+
+  const handleResetRecordsStars = () => {
+    setStarRecords([]);
+    setStarRecordsWeekly([]);
+  };
+  const handleFetchRecordsStars = (type) => {
+    if (type === "weekly") {
+      if (starRecordsWeekly.length === 0) {
+        fetchRecordsStarWeekly();
+      }
+    } else if (type === "monthly") {
+      if (starRecords.length === 0) {
+        fetchRecordsStar();
+      }
+    }
+  };
+  const handleFetchRecords = async (chain) => {
+    if (chain === "bnb") {
+      if (dailyrecords.length === 0) {
+        fetchDailyRecords();
+      }
+    } else if (chain === "taiko") {
+      if (dailyRecordsTaiko.length === 0) {
+        fetchDailyRecordsTaiko();
+      }
+    } else if (chain === "vanar") {
+      if (dailyRecordsVanar.length === 0) {
+        fetchDailyRecordsVanar();
+      }
+    } else if (chain === "matchain") {
+      if (dailyRecordsMat.length === 0) {
+        fetchDailyRecordsMat();
+      }
+    } else if (chain === "sei") {
+      if (dailyRecordsSei.length === 0) {
+        fetchDailyRecordsSei();
+      }
+    } else if (chain === "taraxa") {
+      if (dailyRecordsTaraxa.length === 0) {
+        fetchDailyRecordsTaraxa();
+      }
+    } else if (chain === "manta") {
+      if (dailyRecordsManta.length === 0) {
+        fetchDailyRecordsManta();
+      }
+    } else if (chain === "base") {
+      if (dailyRecordsBase.length === 0) {
+        fetchDailyRecordsBase();
+      }
+    } else if (chain === "core") {
+      if (dailyRecordsCore.length === 0) {
+        fetchDailyRecordsCore();
+      }
+    } else if (chain === "viction") {
+      if (dailyRecordsViction.length === 0) {
+        fetchDailyRecordsViction();
+      }
+    } else if (chain === "skale") {
+      if (dailyRecordsSkale.length === 0) {
+        fetchDailyRecordsSkale();
+      }
+    } else if (chain === "all") {
+      fetchDailyRecordsAroundPlayer([]);
+      fetchDailyRecordsAroundPlayerTaiko([]);
+      fetchDailyRecordsAroundPlayerVanar([]);
+      fetchDailyRecordsAroundPlayerMat([]);
+      fetchDailyRecordsAroundPlayerSei([]);
+      fetchDailyRecordsAroundPlayerManta([]);
+      fetchDailyRecordsAroundPlayerBase([]);
+      fetchDailyRecordsAroundPlayerCore([]);
+      fetchDailyRecordsAroundPlayerViction([]);
+      fetchDailyRecordsAroundPlayerSkale([]);
+      fetchDailyRecordsAroundPlayerStar([]);
+      fetchWeeklyRecordsAroundPlayerStar([]);
+      fetchDailyRecordsAroundPlayerTaraxa([]);
+    }
+  };
+
+  const handleSetAvailableTime = (value) => {
+    setGoldenPassRemainingTime(value);
+  };
+
+  const handleRefreshCountdown700 = async (wallet) => {
+    if (wallet) {
+      try {
+        const purchaseTimestamp = await readContract(wagmiClient, {
+          address: golden_pass_address,
+          abi: GOLDEN_PASS_ABI,
+          functionName: "getTimeOfExpireBuff",
+          args: [wallet],
+          chainId: 56,
+        }).catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+        const purchaseTimestamp2 = await readContract(wagmiClient, {
+          address: golden_pass2_address,
+          abi: GOLDEN_PASS_ABI,
+          functionName: "getTimeOfExpireBuff",
+          args: [wallet],
+
+          chainId: 56,
+        }).catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+        const today = new Date();
+
+        if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
+          handleSetAvailableTime(purchaseTimestamp);
+        }
+        if (today.getTime() <= Number(purchaseTimestamp2) * 1000) {
+          handleSetAvailableTime(purchaseTimestamp2);
+        }
+      } catch (e) {
+        console.error("Error refreshing countdown:", e);
+      }
+    }
+  };
+
+  const countUserDailyBundles = async (address) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/userBundlesCount?walletAddress=${address}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      setuserDailyBundles(result.data);
+    }
+  };
+
+  const backendApi =
+    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
+
+  const onOpenNfts = () => {
+    setShowNfts(!showNfts);
+  };
+
+  //land only stakes
+  const getStakesIdsWod = async () => {
+    const address = coinbase;
+    try {
+      const result = await readContract(wagmiClient, {
+        address: window.config.landnftstake_address,
+        abi: window.LANDSTAKING_ABI,
+        functionName: "depositsOf",
+        args: [address],
+        chainId: 1,
+      });
+
+      let stakenft_cawsWod = [];
+      for (let i = 0; i < result.length; i++) {
+        stakenft_cawsWod.push(parseInt(result[i]));
+      }
+      return stakenft_cawsWod;
+    } catch (e) {
+      console.error("Error getting WOD stakes:", e);
+      return [];
+    }
+  };
+
+  const getmyWodStakes = async () => {
+    let myStakes = await getStakesIdsWod();
+    if (myStakes && myStakes.length > 0) {
+      let stakes = myStakes.map((stake) => window.getNft(stake));
+
+      stakes = await Promise.all(stakes);
+
+      stakes.reverse();
+      setLandStakes(stakes);
+    } else setLandStakes([]);
+  };
+
+  const getCawsStakesIdsCawsWod = async () => {
+    const address = coinbase;
+    try {
+      const result = await readContract(wagmiClient, {
+        address: window.config.wod_caws_address,
+        abi: window.WOD_CAWS_ABI,
+        functionName: "depositsOf",
+        args: [address],
+        chainId: 1,
+      });
+
+      let stakenft_cawsWod = [];
+      for (let i = 0; i < result.length; i++) {
+        stakenft_cawsWod.push(parseInt(result[i]));
+      }
+      return stakenft_cawsWod;
+    } catch (e) {
+      console.error("Error getting CAWS WOD stakes:", e);
+      return [];
+    }
+  };
+
+  const getWodStakesIdsCawsWod = async () => {
+    const address = coinbase;
+    try {
+      const result = await readContract(wagmiClient, {
+        address: window.config.wod_caws_address,
+        abi: window.WOD_CAWS_ABI,
+        functionName: "depositsOfWoD",
+        args: [address],
+        chainId: 1,
+      });
+
+      let stakenft_cawsWod = [];
+      for (let i = 0; i < result.length; i++) {
+        stakenft_cawsWod.push(parseInt(result[i]));
+      }
+      return stakenft_cawsWod;
+    } catch (e) {
+      console.error("Error getting WOD CAWS stakes:", e);
+      return [];
+    }
+  };
+
+  const getCawsStakesIds = async (address) => {
+    try {
+      const result = await readContract(wagmiClient, {
+        address: window.config.nft_caws_premiumstake_address,
+        abi: window.CAWSPREMIUM_ABI,
+        functionName: "depositsOf",
+        args: [address],
+        chainId: 1,
+      });
+
+      let stakenft = [];
+      for (let i = 0; i < result.length; i++) {
+        stakenft.push(parseInt(result[i]));
+      }
+      return stakenft;
+    } catch (e) {
+      console.error("Error getting CAWS premium stakes:", e);
+      return [];
+    }
+  };
+
+  const getLandPremiumStakesIds = async (address) => {
+    try {
+      const result = await readContract(wagmiClient, {
+        address: window.config.nft_land_premiumstake_address,
+        abi: window.LANDPREMIUM_ABI,
+        functionName: "depositsOf",
+        args: [address],
+        chainId: 1,
+      });
+
+      let stakenft = [];
+      for (let i = 0; i < result.length; i++) {
+        stakenft.push(parseInt(result[i]));
+      }
+      return stakenft;
+    } catch (e) {
+      console.error("Error getting Land premium stakes:", e);
+      return [];
+    }
+  };
+
+  const calculateAllRewardsCawsPremium = async (address) => {
+    try {
+      let myStakes = await getCawsStakesIds(address);
+      let result = 0;
+
+      if (address !== null && myStakes && myStakes.length > 0) {
+        const calculateRewards = await readContract(wagmiClient, {
+          address: window.config.nft_caws_premiumstake_address,
+          abi: window.CAWSPREMIUM_ABI,
+          functionName: "calculateRewards",
+          args: [address, myStakes],
+          chainId: 1,
+        });
+
+        for (let i = 0; i < calculateRewards.length; i++) {
+          const rewardInEth = Number(calculateRewards[i]) / 1e18;
+          result = result + rewardInEth;
+        }
+      }
+      setcawsPremiumRewards(result);
+    } catch (e) {
+      console.error("Error calculating CAWS premium rewards:", e);
+      setcawsPremiumRewards(0);
+    }
+  };
+
+  const calculateAllRewardsLandPremium = async (address) => {
+    try {
+      let myStakes = await getLandPremiumStakesIds(address);
+      let result = 0;
+
+      if (address !== null && myStakes && myStakes.length > 0) {
+        const calculateRewards = await readContract(wagmiClient, {
+          address: window.config.nft_land_premiumstake_address,
+          abi: window.LANDPREMIUM_ABI,
+          functionName: "calculateRewards",
+          args: [address, myStakes],
+          chainId: 1,
+        });
+
+        for (let i = 0; i < calculateRewards.length; i++) {
+          const rewardInEth = Number(calculateRewards[i]) / 1e18;
+          result = result + rewardInEth;
+        }
+      }
+      setlandPremiumRewards(result);
+    } catch (e) {
+      console.error("Error calculating Land premium rewards:", e);
+      setlandPremiumRewards(0);
+    }
+  };
+
+  const fetchGenesisAroundPlayer = async (userId, userName) => {
+    const data = {
+      StatisticName: "GenesisLandRewards",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    const result = await axios.post(
+      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
+
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === userName
+    );
+
+    setGenesisRank2(testArray[0].statValue);
+  };
+
+  const fetchDailyRecordsAroundPlayer = async (itemData) => {
+    const data = {
+      StatisticName: "DailyLeaderboard",
+      MaxResultsCount: 1,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      // setRecordsAroundPlayer(result.data.data.leaderboard);
+      var testArray = result.data.data.leaderboard;
+      const userPosition = testArray[0].position;
+      setUserData(...testArray);
+      if (userPosition > 99) {
+        setActivePlayer(false);
+      } else {
+        setActivePlayer(true);
+      }
+    }
+  };
+
+  const getOpenedChestPerWallet = async () => {
+    if (email) {
+      if (isPremium) {
+        if (
+          claimedChests + claimedPremiumChests < 20 ||
+          claimedSkaleChests + claimedSkalePremiumChests < 20 ||
+          claimedCoreChests + claimedCorePremiumChests < 20 ||
+          claimedVictionChests + claimedVictionPremiumChests < 20 ||
+          claimedMantaChests + claimedMantaPremiumChests < 20 ||
+          claimedBaseChests + claimedBasePremiumChests < 20 ||
+          claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
+          claimedVanarChests + claimedVanarPremiumChests < 20 ||
+          claimedMatChests + claimedMatPremiumChests < 20 ||
+          claimedSeiChests + claimedSeiPremiumChests < 20 ||
+          claimedTaraxaChests + claimedTaraxaPremiumChests < 20
+        ) {
+          setCanBuy(true);
+        } else if (
+          claimedChests + claimedPremiumChests === 20 &&
+          claimedSkaleChests + claimedSkalePremiumChests === 20 &&
+          claimedCoreChests + claimedCorePremiumChests === 20 &&
+          claimedVictionChests + claimedVictionPremiumChests === 20 &&
+          claimedMantaChests + claimedMantaPremiumChests === 20 &&
+          claimedBaseChests + claimedBasePremiumChests === 20 &&
+          claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
+          claimedVanarChests + claimedVanarPremiumChests === 20 &&
+          claimedMatChests + claimedMatPremiumChests === 20 &&
+          claimedSeiChests + claimedSeiPremiumChests === 20 &&
+          claimedTaraxaChests + claimedTaraxaPremiumChests === 20
+        ) {
+          setCanBuy(false);
+        }
+      } else if (!isPremium) {
+        if (
+          claimedChests < 10 ||
+          claimedSkaleChests < 10 ||
+          claimedCoreChests < 10 ||
+          claimedVictionChests < 10 ||
+          claimedMantaChests < 10 ||
+          claimedBaseChests < 10 ||
+          claimedTaikoChests < 10 ||
+          claimedVanarChests < 10 ||
+          claimedMatChests < 10 ||
+          claimedSeiChests < 10 ||
+          claimedTaraxaChests < 10
+        ) {
+          setCanBuy(true);
+        } else if (
+          claimedChests === 10 &&
+          claimedSkaleChests === 10 &&
+          claimedCoreChests === 10 &&
+          claimedVictionChests === 10 &&
+          claimedMantaChests === 10 &&
+          claimedBaseChests === 10 &&
+          claimedTaikoChests === 10 &&
+          claimedVanarChests === 10 &&
+          claimedMatChests === 10 &&
+          claimedSeiChests === 10 &&
+          claimedTaraxaChests === 10
+        ) {
+          setCanBuy(false);
+        }
+      }
+    } else {
+      setCanBuy(false);
+    }
+  };
+
+  const getAllChests = async (userEmail) => {
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "bnb" };
+
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
+
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
+
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestId === 99) {
+              setRoyalChestIndex(item);
+              if (chestOrder[item].isOpened === true) {
+                onOpenRoyaltyChest(chestOrder[item]);
+              }
+            }
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+              premiumChestsArray.push(chestOrder[item]);
+            }
+          }
+          setOpenedChests(openedChests);
+          setclaimedChests(openedStandardChests.length);
+          setclaimedPremiumChests(openedPremiumChests.length);
+          setallChests(chestOrder);
+        }
+      }
+    }
+  };
+
+  const getAllSkaleChests = async (userEmail) => {
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "skale" };
+
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
+
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
+
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
+              }
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
+              }
+              premiumChestsArray.push(chestOrder[item]);
+            }
+          }
+          setOpenedSkaleChests(openedChests);
+          setclaimedSkaleChests(openedStandardChests.length);
+          setclaimedSkalePremiumChests(openedPremiumChests.length);
+          setallSkaleChests(chestOrder);
+        }
+      }
+    }
+  };
+
+  const getAllCoreChests = async (userEmail) => {
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "core" };
+
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
+
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
+
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
+              }
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
+              }
+              premiumChestsArray.push(chestOrder[item]);
+            }
+          }
+          setOpenedCoreChests(openedChests);
+
+          setclaimedCoreChests(openedStandardChests.length);
+          setclaimedCorePremiumChests(openedPremiumChests.length);
+          setallCoreChests(chestOrder);
+        }
+      }
+    }
+  };
+
+  const getAllVictionChests = async (userEmail) => {
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "viction" };
+
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
+
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
+
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
+              }
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
+              }
+              premiumChestsArray.push(chestOrder[item]);
+            }
+          }
+          setOpenedVictionChests(openedChests);
+
+          setclaimedVictionChests(openedStandardChests.length);
+          setclaimedVictionPremiumChests(openedPremiumChests.length);
+          setallVictionChests(chestOrder);
+        }
+      }
+    }
+  };
+
+  const getAllMantaChests = async (userEmail) => {
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "manta" };
+
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
+
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
+
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
+              }
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
+              }
+              premiumChestsArray.push(chestOrder[item]);
+            }
+          }
+          setOpenedMantaChests(openedChests);
+          setclaimedMantaChests(openedStandardChests.length);
+          setclaimedMantaPremiumChests(openedPremiumChests.length);
+          setallMantaChests(chestOrder);
+        }
+      }
+    }
+  };
+
+  const getAllBaseChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "base" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedBaseChests(openedChests);
+
+        setclaimedBaseChests(openedStandardChests.length);
+        setclaimedBasePremiumChests(openedPremiumChests.length);
+        setallBaseChests(chestOrder);
+      }
+    }
+  };
+
+  const getAllTaikoChests = async (userEmail) => {
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "taiko" };
+
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
+
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
+
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].chestId === 99) {
+                setRoyalChestIndexTaiko(item);
+                if (chestOrder[item].isOpened === true) {
+                  onOpenRoyaltyChestTaiko(chestOrder[item]);
+                }
+              }
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
+              }
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
+              }
+              premiumChestsArray.push(chestOrder[item]);
+            }
+          }
+          setOpenedTaikoChests(openedChests);
+          setclaimedTaikoChests(openedStandardChests.length);
+          setclaimedTaikoPremiumChests(openedPremiumChests.length);
+          setallTaikoChests(chestOrder);
+        }
+      }
+    }
+  };
+  const getAllVanarChests = async (userEmail) => {
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "vanar" };
+
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
+
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
+
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
+              }
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
+              }
+              premiumChestsArray.push(chestOrder[item]);
+            }
+          }
+          setOpenedVanarChests(openedChests);
+          setclaimedVanarChests(openedStandardChests.length);
+          setclaimedVanarPremiumChests(openedPremiumChests.length);
+          setallVanarChests(chestOrder);
+        }
+      }
+    }
+  };
+
+  const getAllMatChests = async (userEmail) => {
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "matchain" };
+
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
+
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
+
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
+              }
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
+              }
+            }
+          }
+          setOpenedMatChests(openedChests);
+          setclaimedMatChests(openedStandardChests.length);
+          setclaimedMatPremiumChests(openedPremiumChests.length);
+          setallMatChests(chestOrder);
+        }
+      }
+    }
+  };
+
+  const getAllSeiChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "sei" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedSeiChests(openedChests);
+
+        setclaimedSeiChests(openedStandardChests.length);
+        setclaimedSeiPremiumChests(openedPremiumChests.length);
+        setallSeiChests(chestOrder);
+      }
+    }
+  };
+  const getAllTaraxaChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "taraxa" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedTaraxaChests(openedChests);
+
+        setclaimedTaraxaChests(openedStandardChests.length);
+        setclaimedTaraxaPremiumChests(openedPremiumChests.length);
+        setallTaraxaChests(chestOrder);
+      }
+    }
+  };
+
+  const getAIQuestionRewardStatus = async (email) => {
+    const data = {
+      emailAddress: email,
+      chainId: "bnb",
+    };
+    const result = await axios
+      .post(
+        `https://worldofdypiansdailybonus.azurewebsites.net/api/GetDailyQuestionAnswer?code=YaQr78883ptswtmsk4Oyfl3QK_ni3SN2E5okDerTxsxwAzFurSAsvQ==`,
+        data
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data.status === "Success") {
+        setaiQuestionRewards(result.data.reward);
+      }
+    } else {
+      const data = {
+        emailAddress: email,
+        chainId: "opbnb",
+      };
+      const result = await axios
+        .post(
+          `https://worldofdypiansdailybonus.azurewebsites.net/api/GetDailyQuestionAnswer?code=YaQr78883ptswtmsk4Oyfl3QK_ni3SN2E5okDerTxsxwAzFurSAsvQ==`,
+          data
+        )
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (result && result.status === 200) {
+        if (result.data.status === "Success") {
+          setaiQuestionRewards(result.data.reward);
+        }
+      }
+    }
+  };
+
+  const getAIQuestionStatus = async (wallet, email) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/qa/profile?walletAddress=${wallet}&email=${email}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      const today = new Date();
+
+      const isToday = result.data.alreadyAnsweredToday;
+
+      const todayObj = result.data.todayResult;
+
+      if (todayObj && todayObj.correct === true) {
+        getAIQuestionRewardStatus(email);
+      }
+      if (isToday === true) {
+        const cleanedAnswers = todayObj.answers.map((answer) =>
+          answer.replace(/^[A-D][.)]\s*/, "")
+        );
+
+        setAiQuestionObjectAnswered({
+          question: todayObj.questionText,
+          options: cleanedAnswers,
+          id: "",
+          userIndex: todayObj.userIndex,
+          correctIndex: todayObj.correctIndex,
+          chain: todayObj.chain,
+        });
+        setAiQuestionCompleted(true);
+      }
+
+      //   if (result.data.totalAnswered > 0) {
+      //     getAIQuestion(chainId === 204 ? "opbnb" : "bnb", wallet);
+      //   }
+    }
+  };
+
+  const checkAnswerTimeout = async () => {
+    const data = {
+      walletAddress: coinbase,
+      email: email,
+      chain: chainId === 56 ? "bnb" : "opbnb",
+      questionId: aiQuestionObject2.id,
+      answerIndex: 4,
+    };
+
+    const result = await axios
+      .post(`https://api.worldofdypians.com/api/qa/answer`, data)
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      console.log(result.data);
+      getAIQuestionStatus(coinbase, email);
+    }
+  };
+
+  const handleShowSyncModal = () => {
+    onSyncClick();
+  };
+
+  const switchNetwork = async (hexChainId, chain) => {
+    // Extract chainId from hex or use chain number directly
+    const chainId = typeof chain === 'number' ? chain : parseInt(hexChainId, 16);
+    
+    try {
+      await switchNetworkWagmi(chainId, chain, {
+        handleSwitchNetwork,
+        handleSwitchChainGateWallet,
+        handleSwitchChainBinanceWallet,
+        network_matchain,
+        coinbase,
+      });
+    } catch (error) {
+      // Error handling is done in switchNetworkWagmi
+      console.error("Network switch error:", error);
+    }
+  };
+  // Fallback local fetching when parent does not provide NFTs
+
+  const windowSize = useWindowSize();
+
+  async function fetchUserFavorites(userId) {
+    if (userId !== undefined && userId !== null) {
+      try {
+        const response = await fetch(
+          `https://api.worldofdypians.com/user-favorites/${userId}`,
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Error fetching user favorites");
+        }
+        const data = await response.json();
+        // console.log(data.favorites);
+
+        setFavorites(data.favorites);
+        return data.favorites;
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+        throw error;
+      }
+    } else {
+      setFavorites([]);
+    }
+  }
+
+  const getUserRewardData = async (addr) => {
+    const result = await axios
+      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data && result.data.rewards && result.data.rewards === 0) {
+        setuserSocialRewards(0);
+        localStorage.setItem("cacheduserSocialRewards", 0);
+      } else if (result.data && !result.data.rewards) {
+        let amount = 0;
+        for (let i = 0; i < result.data.length; i++) {
+          amount += result.data[i].amount;
+        }
+        localStorage.setItem("cacheduserSocialRewards", amount);
+        setuserSocialRewards(amount);
+      }
+    }
+  };
+
+  const scrollToElement = () => {
+    const element = document.getElementById(eventId);
+    if (element && element !== "golden-pass") {
+      element.scrollIntoView({
+        behavior: "smooth",
+        // block: "end",
+        // inline: "nearest",
+      });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  };
+
+  useEffect(() => {
+    if (eventId) {
+      scrollToElement();
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [eventId, eventCardCount]);
+
+  const getTreasureChestsInfo = async () => {
+    let temp = { ...treasureRewardMoney };
+
+    if (openedChests && openedChests.length > 0) {
+      openedChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.bnb += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedSkaleChests && openedSkaleChests.length > 0) {
+      openedSkaleChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.skale += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedCoreChests && openedCoreChests.length > 0) {
+      openedCoreChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.core += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedVictionChests && openedVictionChests.length > 0) {
+      openedVictionChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.viction += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedMantaChests && openedMantaChests.length > 0) {
+      openedMantaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.manta += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedBaseChests && openedBaseChests.length > 0) {
+      openedBaseChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.base += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedTaikoChests && openedTaikoChests.length > 0) {
+      openedTaikoChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.taiko += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+    if (openedVanarChests && openedVanarChests.length > 0) {
+      openedVanarChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.vanar += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedMatChests && openedMatChests.length > 0) {
+      openedMatChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.mat += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedSeiChests && openedSeiChests.length > 0) {
+      openedSeiChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.sei += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+    if (openedTaraxaChests && openedTaraxaChests.length > 0) {
+      openedTaraxaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                temp.taraxa += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+    setTreasureRewardMoney(temp);
+  };
+
+  useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
+    setDummyPremiumChests(shuffle(dummyPremiums));
+    document.title = "WOD Account";
+
+    window.scrollTo(0, 0);
+
+    fetchGenesisRecords();
+
+    fetchGreatCollection();
+    fetchExplorerHunt();
+  }, []);
+
+  useEffect(() => {
+    if (userWallet && chainId === 1 && window.WALLET_TYPE !== "") {
+      calculateAllRewardsCawsPremium(userWallet);
+      calculateAllRewardsLandPremium(userWallet);
+    }
+  }, [userWallet, chainId]);
+
+  useEffect(() => {
+    if (userWallet && email) {
+      getOpenedChestPerWallet();
+    }
+  }, [
+    userWallet,
+    email,
+    count,
+    isPremium,
+    claimedChests,
+    claimedPremiumChests,
+    claimedSkaleChests,
+    claimedSkalePremiumChests,
+    claimedCoreChests,
+    claimedCorePremiumChests,
+    claimedVictionChests,
+    claimedVictionPremiumChests,
+    claimedMantaChests,
+    claimedMantaPremiumChests,
+    claimedSeiChests,
+    claimedSeiPremiumChests,
+    claimedTaraxaChests,
+    claimedTaraxaPremiumChests,
+    claimedTaikoChests,
+    claimedTaikoPremiumChests,
+    claimedVanarChests,
+    claimedVanarPremiumChests,
+    claimedMatChests,
+    claimedMatPremiumChests,
+  ]);
+
+  useEffect(() => {
+    if (userWallet !== undefined && email !== undefined && email !== "") {
+      // getUserRewardData(userWallet);
+      getAIQuestionStatus(userWallet, email);
+    }
+  }, [userWallet, email]);
+
+  useEffect(() => {
+    if (authToken && email && isConnected && !isTokenExpired) {
+      fetchUserFavorites(userWallet ? userWallet : coinbase);
+    }
+  }, [coinbase, userWallet, isConnected, authToken, email, isTokenExpired]);
+
+  // Update Redux store with user progress data whenever the data changes
+  useEffect(() => {
+    if (
+      userData ||
+      userDataSkale ||
+      userDataCore ||
+      userDataViction ||
+      userDataManta ||
+      userDataBase ||
+      userDataTaiko ||
+      userDataMat ||
+      userDataSei ||
+      userDataVanar ||
+      userDataTaraxa ||
+      userDataStar
+    ) {
+      updateUserProgressInRedux();
+    }
+  }, [
+    userData,
+    userDataSkale,
+    userDataCore,
+    userDataViction,
+    userDataManta,
+    userDataBase,
+    userDataTaiko,
+    userDataMat,
+    userDataSei,
+    userDataVanar,
+    userDataTaraxa,
+    userDataStar,
+    userDataStarWeekly,
+    isPremium,
+    primeStars,
+  ]);
+
+  useEffect(() => {
+    fetchUsersocialRewards();
+  }, [userSocialRewards]);
+
+  useEffect(() => {
+    if (
+      (dailyBonusPopup === true && dailyrewardpopup) ||
+      leaderboard === true ||
+      globalLeaderboard === true ||
+      genesisLeaderboard === true ||
+      showDailyQuestion === true ||
+      booster === true
+    ) {
+      html.classList.add("hidescroll");
+      // dailyrewardpopup.style.pointerEvents = "auto";
+      // leaderboardId.style.pointerEvents = "auto";
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [
+    dailyBonusPopup,
+    dailyrewardpopup,
+    leaderboard,
+    globalLeaderboard,
+    genesisLeaderboard,
+    showDailyQuestion,
+    booster,
+  ]);
+
+  const logoutItem = localStorage.getItem("logout");
+
+  useEffect(() => {
+    if (email && userWallet) {
+      getAllSkaleChests(email);
+      getAllChests(email);
+      // getAIQuestionRewardStatus(email);
+      getAllCoreChests(email);
+      getAllVictionChests(email);
+      getAllMantaChests(email);
+      getAllBaseChests(email);
+      getAllTaikoChests(email);
+      getAllVanarChests(email);
+      getAllMatChests(email);
+      getAllSeiChests(email);
+      getAllTaraxaChests(email);
+    }
+  }, [email, userWallet]);
+
+  useEffect(() => {
+    handleRefreshCountdown700(
+      email ? userWallet : isConnected ? coinbase : window.config.ZERO_ADDRESS
+    );
+  }, [coinbase, isConnected, email, userWallet]);
+
+  // Wallet modal visibility is globally managed via Redux in App.
+
+  useEffect(() => {
+    if (dailyBonusPopup || closePopup) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [dailyBonusPopup, closePopup]);
+
+  const hashValue = window.location.hash;
+
+  const location = useLocation();
+
+  useEffect(() => {
+    getTreasureChestsInfo();
+  }, [
+    openedChests,
+    userWallet,
+    openedCoreChests,
+    openedMatChests,
+    openedVictionChests,
+    openedSkaleChests,
+    openedMantaChests,
+    openedSeiChests,
+    openedBaseChests,
+    openedTaikoChests,
+    openedVanarChests,
+    openedTaraxaChests,
+  ]);
+
+  useEffect(() => {
+    if (effectRan2.current) return;
+    if (userId && username) {
+      fetchGenesisAroundPlayer(userId, username);
+      fetchDailyRecordsAroundPlayerStar([]);
+      fetchWeeklyRecordsAroundPlayerStar([]);
+      effectRan2.current = true;
+    }
+  }, [userId, username, goldenPassRemainingTime]);
+
+  useEffect(() => {
+    if (effectRan.current) return;
+    if (userId !== undefined && userId !== null) {
+      fetchDailyRecordsAroundPlayer([]);
+      fetchDailyRecordsAroundPlayerBase([]);
+      fetchDailyRecordsAroundPlayerCore([]);
+      fetchDailyRecordsAroundPlayerManta([]);
+      fetchDailyRecordsAroundPlayerSei([]);
+      fetchDailyRecordsAroundPlayerTaiko([]);
+      fetchDailyRecordsAroundPlayerVanar([]);
+      fetchDailyRecordsAroundPlayerMat([]);
+      fetchDailyRecordsAroundPlayerViction([]);
+      fetchDailyRecordsAroundPlayerSkale([]);
+      fetchDailyRecordsAroundPlayerTaraxa([]);
+      effectRan.current = true;
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (hashValue === "#prime") {
+      navigate("/account/prime");
+    }
+
+    if (hashValue === "#global-leaderboard") {
+      fetchRecordsStarWeekly();
+      setleaderboardBtn("weekly");
+    }
+  }, [hashValue]);
+
+  return (
+    <div
+      className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
+      style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
+    >
+      <div className="d-none">
+        {goldenPassRemainingTime !== undefined && (
+          <Countdown
+            date={Number(goldenPassRemainingTime) * 1000}
+            onComplete={() => {
+              handleSetAvailableTime();
+            }}
+          />
+        )}
+        {countdown !== undefined && (
+          <Countdown
+            date={Number(countdown) * 1000}
+            onComplete={() => {
+              setcountdown();
+            }}
+          />
+        )}
+        {countdown3500 !== undefined && (
+          <Countdown
+            date={Number(countdown3500) * 1000}
+            onComplete={() => {
+              setcountdown3500();
+            }}
+          />
+        )}
+      </div>
+      {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
+      <div className="container-nft2 d-flex flex-column align-items-start px-lg-4 px-2 position-relative">
+        {bannedEmails.includes(email) && (
+          <div className="custom-container mt-5 mt-lg-0">
+            <div className="banned-account-wrapper w-100 px-2 py-3 mt-5 mt-lg-2 d-flex align-items-center justify-content-center">
+              <h6 className="banned-account-message mb-0 text-white text-center">
+                This account has been banned permanently. Check your email for
+                more information.
+              </h6>
+            </div>
+          </div>
+        )}
+        {location.pathname === "/account" ||
+          location.pathname.includes("/account/challenges") ? (
+          <>
+            <MyProfile
+              onOpenBooster={() => setBooster(true)}
+              openBattlePopup={() => {
+                setbattlePopup(true);
+              }}
+              // battleCompleted={false}
+              openKickstarter={openKickstarter}
+              aiQuestionCompleted={aiQuestionCompleted}
+              explorerHuntData={explorerHuntData}
+              isgoldenPassActive={goldenPassRemainingTime}
+              userActiveEvents={userTreasureHuntStats.userEvents}
+              beastSiegeStatus={beastSiegeStatus}
+              puzzleMadnessTimer={puzzleMadnessTimer}
+              onGoldenpassClick={() => setgoldenPassPopup(true)}
+              onDailyQuestionClick={() => {
+                setShowDailyQuestion(true);
+              }}
+              onShowRankPopup={() => {
+                handleFetchRecords("all");
+              }}
+              onCloseRankPopup={() => {
+                handleResetRecords();
+                handleResetRecordsStars();
+              }}
+              allClaimedChests={
+                openedBaseChests.length +
+                openedChests.length +
+                openedCoreChests.length +
+                openedMantaChests.length +
+                openedSeiChests.length +
+                openedTaraxaChests.length +
+                openedSkaleChests.length +
+                openedTaikoChests.length +
+                openedVanarChests.length +
+                openedMatChests.length +
+                openedVictionChests.length
+              }
+              allClaimedChestsPremium={
+                claimedBasePremiumChests +
+                claimedCorePremiumChests +
+                claimedMantaPremiumChests +
+                claimedSeiPremiumChests +
+                claimedTaraxaPremiumChests +
+                claimedMatPremiumChests +
+                claimedTaikoPremiumChests +
+                claimedVanarPremiumChests +
+                claimedVictionPremiumChests +
+                claimedSkalePremiumChests +
+                claimedPremiumChests
+              }
+              allClaimedChestsstd={
+                claimedBaseChests +
+                claimedCoreChests +
+                claimedMantaChests +
+                claimedSeiChests +
+                claimedTaraxaChests +
+                claimedMatChests +
+                claimedTaikoChests +
+                claimedVanarChests +
+                claimedVictionChests +
+                claimedSkaleChests +
+                claimedChests
+              }
+              userDailyBundles={userDailyBundles}
+              treasureRewardMoney={totalDailyBonusSum}
+              totalTreasureHuntUsd={totalTreasureHuntUsd}
+              canBuy={canBuy}
+              email={email}
+              username={username}
+              isPremium={isPremium}
+              address={userWallet}
+              coinbase={coinbase}
+              // totalScore={userTotalScore}
+              openChainsLeaderboard={() => setLeaderboard(true)}
+              openGlobalLeaderboard={() => {
+                setGlobalLeaderboard(true);
+                handleFetchRecordsStars("weekly");
+              }}
+              openGenesisLeaderboard={() => setGenesisLeaderboard(true)}
+              openMyRewards={() => setmyRewardsPopup(true)}
+              openDailyBonus={() => setdailyBonusPopup(true)}
+              openPortfolio={() => setPortfolio(true)}
+              openSpecialRewards={() => setSpecialRewardsPopup(true)}
+              isConnected={isConnected}
+              onConnectWallet={handleConnect}
+              liveRewards={
+                Number(userSocialRewardsCached) +
+                Number(genesisRank2) +
+                Number(dataAmountStar) +
+                Number(dataAmountStarWeekly) +
+                Number(cawsPremiumRewards) +
+                Number(landPremiumRewards) +
+                (claimedMoneyReward
+                  ? Number(claimedMoneyReward.reward)
+                  : 0)
+                // Number(mantaEarnUsd) +
+                // Number(seiEarnUsd) +
+
+                // Number(coingeckoEarnUsd) +
+                // Number(matEarnUsd) +
+                // Number(bnbEarnUsd) +
+
+                // Number(chainlinkEarnUsd)
+              }
+              specialRewards={userSocialRewardsCached}
+              syncStatus={syncStatus}
+              onSyncClick={handleShowSyncModal}
+              onEventCardClick={() => {
+                seteventCardCount(eventCardCount + 1);
+              }}
+              onLinkWallet={onManageLogin}
+            />
+            <NewEvents
+              isEOA={isEOA}
+              events={treasureHuntEvents}
+              onEventClick={(value) => {
+                setselectedEvent(value);
+                setshowEventPopup(true);
+              }}
+              onConnectWallet={() => {
+                handleConnect();
+              }}
+              wodBalance={wodBalance}
+              setPuzzleMadnessTimer={setPuzzleMadnessTimer}
+              greatCollectionData={greatCollectionData}
+              explorerHuntData={explorerHuntData}
+              availableTime={goldenPassRemainingTime}
+              coinbase={coinbase}
+              wallet={userWallet}
+              chainId={chainId}
+              selectedEvent={eventId}
+              eventCardCount={eventCardCount}
+              email={email}
+              isConnected={isConnected}
+              setBeastSiegeStatus={setBeastSiegeStatus}
+              genesisUsd={genesisRank2}
+              walletClient={walletClient}
+              publicClient={publicClient}
+              network_matchain={network_matchain}
+            />
+          </>
+        ) : location.pathname === "/account/prime" ? (
+          <GetPremiumPopup
+            isEOA={isEOA}
+            chainId={chainId}
+            coinbase={coinbase}
+            isPremium={isPremium}
+            handleSwitchNetwork={handleSwitchNetwork}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            onSuccessDeposit={() => {
+              onSuccessDeposit();
+            }}
+            isConnected={isConnected}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            network_matchain={network_matchain}
+          />
+        ) : (
+          <></>
+        )}
+        {(dailyBonusPopup || hashValue === "#dailybonus") && (
+          // <OutsideClickHandler
+          //   onOutsideClick={() => {
+          //     setdailyBonusPopup(false);
+          //   }}
+          // >
+          <NewDailyBonus
+            openKickstarter={openKickstarter}
+            isPremium={isPremium}
+            bnbImages={bnbImages}
+            skaleImages={skaleImages}
+            seiImages={seiImages}
+            victionImages={victionImages}
+            mantaImages={mantaImages}
+            baseImages={baseImages}
+            taikoImages={taikoImages}
+            matImages={matImages}
+            taraxaImages={taraxaImages}
+            coreImages={coreImages}
+            chainId={chainId}
+            ethTokenData={ethTokenData}
+            handleSwitchChain={handleSwitchChain}
+            handleSwitchNetwork={handleSwitchNetwork}
+            listedNFTS={dailyBonuslistedNFTS}
+            onclose={() => {
+              setdailyBonusPopup(false);
+              window.location.hash = "";
+            }}
+            onConnectWallet={() => {
+              handleConnect();
+            }}
+            coinbase={coinbase}
+            claimedChests={claimedChests}
+            claimedPremiumChests={claimedPremiumChests}
+            claimedSkaleChests={claimedSkaleChests}
+            claimedSkalePremiumChests={claimedSkalePremiumChests}
+            claimedCoreChests={claimedCoreChests}
+            claimedCorePremiumChests={claimedCorePremiumChests}
+            claimedVictionChests={claimedVictionChests}
+            claimedVictionPremiumChests={claimedVictionPremiumChests}
+            claimedMantaChests={claimedMantaChests}
+            claimedMantaPremiumChests={claimedMantaPremiumChests}
+            claimedBaseChests={claimedBaseChests}
+            claimedBasePremiumChests={claimedBasePremiumChests}
+            claimedTaikoChests={claimedTaikoChests}
+            claimedTaikoPremiumChests={claimedTaikoPremiumChests}
+            claimedVanarChests={claimedVanarChests}
+            claimedVanarPremiumChests={claimedVanarPremiumChests}
+            claimedMatChests={claimedMatChests}
+            claimedMatPremiumChests={claimedMatPremiumChests}
+            claimedSeiChests={claimedSeiChests}
+            claimedSeiPremiumChests={claimedSeiPremiumChests}
+            claimedTaraxaChests={claimedTaraxaChests}
+            claimedTaraxaPremiumChests={claimedTaraxaPremiumChests}
+            email={email}
+            openedChests={openedChests}
+            openedSkaleChests={openedSkaleChests}
+            openedCoreChests={openedCoreChests}
+            openedVictionChests={openedVictionChests}
+            openedMantaChests={openedMantaChests}
+            openedBaseChests={openedBaseChests}
+            openedTaikoChests={openedTaikoChests}
+            openedVanarChests={openedVanarChests}
+            openedMatChests={openedMatChests}
+            openedSeiChests={openedSeiChests}
+            openedTaraxaChests={openedTaraxaChests}
+            address={userWallet}
+            allChests={allChests}
+            allSkaleChests={allSkaleChests}
+            allCoreChests={allCoreChests}
+            allVictionChests={allVictionChests}
+            allMantaChests={allMantaChests}
+            allBaseChests={allBaseChests}
+            allTaikoChests={allTaikoChests}
+            allVanarChests={allVanarChests}
+            allMatChests={allMatChests}
+            allSeiChests={allSeiChests}
+            allTaraxaChests={allTaraxaChests}
+            onChestClaimed={() => {
+              setCount(count + 1);
+            }}
+            onSkaleChestClaimed={() => {
+              setskalecount(skalecount + 1);
+            }}
+            onCoreChestClaimed={() => {
+              setcorecount(corecount + 1);
+            }}
+            onVictionChestClaimed={() => {
+              setvicitoncount(vicitoncount + 1);
+            }}
+            onMantaChestClaimed={() => {
+              setmantacount(mantacount + 1);
+            }}
+            onVanarChestClaimed={() => {
+              setVanarcount(vanarcount + 1);
+            }}
+            onBaseChestClaimed={() => {
+              setbasecount(basecount + 1);
+            }}
+            onTaikoChestClaimed={() => {
+              settaikocount(taikocount + 1);
+            }}
+            onMatChestClaimed={() => {
+              setmatcount(matcount + 1);
+            }}
+            onSeiChestClaimed={() => {
+              setseicount(seicount + 1);
+            }}
+            onTaraxaChestClaimed={() => {
+              settaraxacount(taraxacount + 1);
+            }}
+            dummypremiumChests={dummypremiumChests}
+            // premiumTxHash={premiumTxHash}
+            // selectedChainforPremium={selectedChainforPremium}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            network_matchain={network_matchain}
+          />
+          // </OutsideClickHandler>
+        )}
+
+        {(leaderboard || hashValue === "#leaderboard") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setLeaderboard(false);
+              window.location.hash = "";
+              handleResetRecords();
+            }}
+          >
+            <div
+              className="popup-wrapper leaderboard-popup popup-active p-3"
+              id="leaderboard"
+              style={{ width: "50%", pointerEvents: "auto" }}
+            >
+              <div className="d-flex align-items-center justify-content-between">
+                <h2
+                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
+                  style={{ fontSize: "24px" }}
+                >
+                  WOD Leaderboard
+                </h2>
+
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => {
+                    setLeaderboard(false);
+                    window.location.hash = "";
+                    handleResetRecords();
+                  }}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+
+              <NewLeaderBoard
+                username={username}
+                userId={userId}
+                address={userWallet}
+                availableTime={goldenPassRemainingTime}
+                email={email}
+                isPremium={isPremium}
+                allBnbData={allBnbData}
+                allSkaleData={allSkaleData}
+                allCoreData={allCoreData}
+                allVictionData={allVictionData}
+                allMantaData={allMantaData}
+                allBaseData={allBaseData}
+                allTaikoData={allTaikoData}
+                allMatData={allMatData}
+                allSeiData={allSeiData}
+                allTaraxaData={allTaraxaData}
+                allVanarData={allVanarData}
+                dailyplayerData={dailyplayerData}
+                genesisData={genesisData}
+                onPremiumClick={() => {
+                  setLeaderboard(false);
+                  handleResetRecords();
+
+                  window.location.hash = "";
+                }}
+                onFetchRecords={(value) => {
+                  handleFetchRecords(value);
+                }}
+                onGoldenpassClick={() => {
+                  setgoldenPassPopup(true);
+                  handleResetRecords();
+                  setLeaderboard(false);
+                  window.location.hash = "";
+                }}
+              />
+            </div>
+          </OutsideClickHandler>
+        )}
+
+        {showEventPopup && (
+          <EventsPopup
+            dummyEvent={selectedEvent}
+            onClose={() => {
+              setshowEventPopup(false);
+            }}
+          />
+        )}
+
+        {/* Wallet modal handled at App level */}
+
+        {(genesisLeaderboard ||
+          hashValue === "#great-collection-leaderboard") && (
+            <OutsideClickHandler
+              onOutsideClick={() => {
+                setGenesisLeaderboard(false);
+                window.location.hash = "";
+              }}
+            >
+              <div
+                className="popup-wrapper leaderboard-popup popup-active p-3"
+                id="leaderboard"
+                style={{ width: "35%", pointerEvents: "auto" }}
+              >
+                <div
+                  className="d-flex align-items-center justify-content-end position-absolute"
+                  style={{
+                    position: "absolute",
+                    right: "22px",
+                    zIndex: 2,
+                    top: "22px",
+                  }}
+                >
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                    onClick={() => {
+                      setGenesisLeaderboard(false);
+                      window.location.hash = "";
+                    }}
+                    alt=""
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+
+                <GenesisLeaderboard
+                  data={genesisData}
+                  previousdata={previousgenesisData}
+                  playerdata={greatCollectionData}
+                  username={username}
+                  activePlayer={
+                    greatCollectionData[0]?.position < 100 ? true : false
+                  }
+                  email={email}
+                />
+              </div>
+            </OutsideClickHandler>
+          )}
+        {(globalLeaderboard || hashValue === "#global-leaderboard") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setGlobalLeaderboard(false);
+              handleResetRecordsStars();
+              window.location.hash = "";
+            }}
+          >
+            <div
+              className="popup-wrapper leaderboard-popup popup-active p-3"
+              id="leaderboard"
+              style={{
+                width: "35%",
+                pointerEvents: "auto",
+                backgroundSize: "auto",
+              }}
+            >
+              <div className="d-flex align-items-center justify-content-between">
+                <h2
+                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center   gap-2`}
+                  style={{ fontSize: "24px" }}
+                >
+                  Global Leaderboards
+                </h2>
+
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => {
+                    setGlobalLeaderboard(false);
+                    handleResetRecordsStars();
+                    window.location.hash = "";
+                  }}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+              <div className="d-flex align-items-center gap-2 mt-3 ">
+                <button
+                  className={` ${leaderboardBtn === "weekly"
+                      ? "getpremium-active-btn"
+                      : "getpremium-btn"
+                    }  w-100 py-lg-2 py-1`}
+                  onClick={() => {
+                    setleaderboardBtn("weekly");
+                    handleFetchRecordsStars("weekly");
+                  }}
+                >
+                  Weekly
+                </button>
+                <button
+                  className={` ${leaderboardBtn === "monthly"
+                      ? "getpremium-active-btn"
+                      : "getpremium-btn"
+                    }  w-100 py-lg-2 py-1`}
+                  onClick={() => {
+                    setleaderboardBtn("monthly");
+                    handleFetchRecordsStars("monthly");
+                  }}
+                >
+                  Monthly
+                </button>
+              </div>
+              <GlobalLeaderboard
+                leaderboardBtn={leaderboardBtn}
+                genesisData={genesisData}
+                previousgenesisData={previousgenesisData}
+                previousGenesisVersion={previousGenesisVersion}
+                allStarData={allStarData}
+                screen={"dash"}
+                availableTime={goldenPassRemainingTime}
+                username={username}
+                userId={userId}
+              />
+            </div>
+          </OutsideClickHandler>
+        )}
+
+        {(booster || hashValue === "#booster-1001") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setBooster(false);
+              window.location.hash = "";
+            }}
+          >
+            <div className="popup-wrapper booster-popup popup-active p-3">
+              <div className="d-flex align-items-center justify-content-end">
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => {
+                    setBooster(false);
+                    window.location.hash = "";
+                  }}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+
+              <BoosterPopup
+                userDataStar={
+                  !userDataStar?.statValue || userDataStar?.statValue === 0
+                    ? 0
+                    : userDataStar.position
+                      ? userDataStar.position + 1
+                      : 0
+                }
+                userPreviousDataStar={
+                  !userPreviousDataStar?.StatValue ||
+                    userPreviousDataStar?.StatValue === 0
+                    ? 0
+                    : userPreviousDataStar.Position !== undefined
+                      ? userPreviousDataStar.Position + 1
+                      : 0
+                }
+                userPreviousDataStar2={
+                  !userPreviousDataStar2?.StatValue ||
+                    userPreviousDataStar2?.StatValue === 0
+                    ? 0
+                    : userPreviousDataStar2.Position !== undefined
+                      ? userPreviousDataStar2.Position + 1
+                      : 0
+                }
+              />
+            </div>
+          </OutsideClickHandler>
+        )}
+
+        {(goldenPassPopup ||
+          eventId === "golden-pass" ||
+          hashValue === "#golden-pass") && (
+            <GoldenPassPopup
+              onClosePopup={() => {
+                setgoldenPassPopup(false);
+                // handleClosePopup();
+                window.location.hash = "";
+              }}
+              onConnectWallet={() => {
+                handleConnect();
+                setgoldenPassPopup(false);
+                handleClosePopup();
+                window.location.hash = "";
+              }}
+              isConnected={isConnected}
+              coinbase={coinbase}
+              chainId={chainId}
+              wallet={userWallet}
+              walletClient={walletClient}
+              publicClient={publicClient}
+              isEOA={isEOA}
+              onSuccessDeposit={() => {
+                handleRefreshCountdown700(coinbase);
+              }}
+              goldenPassRemainingTime={goldenPassRemainingTime}
+              email={email}
+            />
+          )}
+
+        {(myRewardsPopup || hashValue === "#my-rewards") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setmyRewardsPopup(false);
+              window.location.hash = "";
+            }}
+          >
+            <div
+              className="popup-wrapper popup-active p-4"
+              id="leaderboard"
+              style={{
+                width: "fit-content",
+                pointerEvents: "auto",
+                overflowX: "auto",
+              }}
+            >
+              <div className="d-flex align-items-center justify-content-between">
+                <h2
+                  className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                >
+                  My Rewards
+                </h2>
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => {
+                    setmyRewardsPopup(false);
+                    window.location.hash = "";
+                  }}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+              <MyRewardsPopupNew
+                userTreasureHuntStats={userTreasureHuntStats}
+                totalTreasureHuntUsd={totalTreasureHuntUsd}
+                address={userWallet}
+                email={email}
+                userDataStar={dataAmountStar}
+                userDataStarWeekly={dataAmountStarWeekly}
+                treasureRewardMoney={treasureRewardMoney}
+                totalDailyBonusSum={totalDailyBonusSum}
+                userSocialRewards={userSocialRewards}
+                cawsPremiumRewards={cawsPremiumRewards}
+                landPremiumRewards={landPremiumRewards}
+                genesisRank2={genesisRank2}
+                aiQuestionRewards={
+                  claimedMoneyReward ? Number(claimedMoneyReward.reward) : 0
+                }
+              />
+            </div>
+          </OutsideClickHandler>
+        )}
+
+        {(battlePopup || hashValue === "#arena-of-rage") && (
+          <div className={`package-popup-wrapper2 `}>
+          <BattlePopup
+          closePopup={closeBattle}
+          setClosePopup={setcloseBattle}
+            publicClient={publicClient}
+            walletClient={walletClient}
+            binanceW3WProvider={binanceW3WProvider}
+            onClose={() => {
+              setbattlePopup(false);
+              html.classList.remove("hidescroll");
+              window.location.hash = "";
+            }}
+            isOpen={battlePopup || hashValue === "#arena-of-rage"}
+            coinbase={coinbase}
+            chainId={chainId}
+            handleSwitchNetwork={handleSwitchNetwork}
+            isConnected={isConnected}
+            email={email}
+            address={userWallet}
+            onConnectWallet={() => {
+              setbattlePopup(false);
+              handleConnect();
+            }}
+            openedRoyaltyChest={[]}
+          />
+          </div>
+        )}
+
+        {(showDailyQuestion || hashValue === "#daily-question") && (
+          // <OutsideClickHandler
+          //   onOutsideClick={() => setShowDailyQuestion(false)}
+          // >
+          // <div
+          //   className="popup-wrapper popup-active p-4 ai-question-outer-wrapper d-flex flex-column"
+          //   id="aiQuestion"
+          //   style={{
+          //     minHeight: "460px",
+          //     pointerEvents: "auto",
+          //     overflowX: "auto",
+          //     width: "460px",
+          //   }}
+          // >
+          <div className={`package-popup-wrapper2 `}>
+            <div
+              className={`new-daily-bonus-popup overflow-visible d-flex flex-column gap-2 custom-container-width2 justify-content-center`}
+            >
+              <div className="ai-question-outer-wrapper custom-container-width2 position-relative p-lg-5 p-3 d-flex">
+                <div className="ai-question-header-wrapper">
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/ai-question-header-img2.webp"
+                    }
+                    className="ai-question-header-img"
+                  />
+                </div>
+                <div className="d-flex align-items-center justify-content-between w-100 ai-popup-x-wrapper">
+                  <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
+                    <div className="d-lg-none d-md-none d-flex position-relative top-0 start-0">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/ai-tooltip.png"
+                        }
+                        alt=""
+                        className="tooltip-icon"
+                        style={{
+                          cursor: "pointer",
+                          width: "40px",
+                          height: "40px",
+                        }}
+                        onClick={() => setTooltip(!tooltip)}
+                      />
+                      <div
+                        className={`tooltip-wrapper p-3 ${tooltip && "tooltip-active"
+                          }`}
+                        style={{
+                          width: 260,
+                          left: "40%",
+                          background: "#091235",
+                        }}
+                      >
+                        <div className=" gap-2 d-flex flex-column">
+                          <span className="ai-oryn-bottom-txt">
+                            A daily challenge where each player can unlock a AI
+                            question for a chance to win!
+                          </span>
+                          <span className="ai-oryn-bottom-txt">Notes:</span>
+                          <ul className="ai-oryn-bottom-txt ps-0">
+                            <li>🔹 Daily opportunity </li>
+                            <li>🔹 Available on BNB & opBNB</li>
+                            <li>🔹 Sign the transaction </li>
+                            <li>🔹 Answer in 20 seconds</li>
+                            <li>🔹 Win different rewards</li>
+                          </ul>
+
+                          <div
+                            className={"ai-rewards-info-active"}
+                          // onMouseOver={() => {
+                          //   setActiveClass("stars");
+                          // }}
+                          // onMouseLeave={() => {
+                          //   setActiveClass("");
+                          // }}
+                          >
+                            <div className="d-flex align-items-center px-3 py-2 gap-2">
+                              <div className="d-flex align-items-center gap-1">
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/ai-star-reward-active.webp"
+                                  }
+                                  alt=""
+                                  className={"ai-reward-logo-active"}
+                                />
+                                <div className="d-flex flex-column">
+                                  {/* <span className={"ai-rewards-stars"}>180</span> */}
+                                  <span
+                                    className={"ai-rewards-title-active ps-3"}
+                                  >
+                                    Up to 500 Stars
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className="ai-rewards-info-active"
+                          // onMouseOver={() => {
+                          //   setActiveClass("points");
+                          // }}
+                          // onMouseLeave={() => {
+                          //   setActiveClass("");
+                          // }}
+                          >
+                            <div className="d-flex align-items-center px-3 py-2 gap-2">
+                              <div className="d-flex align-items-center gap-1">
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp"
+                                  }
+                                  alt=""
+                                  className={"ai-reward-logo-active"}
+                                />
+                                <div className="d-flex flex-column">
+                                  {/* <span className={"ai-rewards-points"}>
+                      {getFormattedNumber(23200, 0)}
+                    </span> */}
+                                  <span
+                                    className={"ai-rewards-title-active ps-3"}
+                                  >
+                                    Up to 30,000 Points
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className="ai-rewards-info-active"
+                          // onMouseOver={() => {
+                          //   setActiveClass("rewards");
+                          // }}
+                          // onMouseLeave={() => {
+                          //   setActiveClass("");
+                          // }}
+                          >
+                            <div className="d-flex align-items-center px-3 py-2 gap-2">
+                              <div className="d-flex align-items-center gap-1">
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/ai-reward-active.webp"
+                                  }
+                                  alt=""
+                                  className={"ai-reward-logo-active"}
+                                />
+                                <div className="d-flex flex-column">
+                                  {/* <span className={"ai-rewards-money"}>$1.5</span> */}
+                                  <span
+                                    className={"ai-rewards-title-active ps-3"}
+                                  >
+                                    Up to $300 Rewards
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </OutsideClickHandler>
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/ai-popupx.png"}
+                    onClick={() => {
+                      if (aiStep === 0) {
+                        setSuspenseSound(true);
+                        setShowDailyQuestion(false);
+                        suspenseMusicRef.current?.pause();
+                        suspenseMusicRef.current.currentTime = 0;
+                        clockSoundRef.current?.pause();
+                        clockSoundRef.current.currentTime = 0;
+                        html.classList.remove("hidescroll");
+                        window.location.hash = "";
+                      } else {
+                        setClosePopup(true);
+                      }
+                    }}
+                    alt=""
+                    className="ai-x"
+                  />
+                </div>
+                <AIQuestion
+                  onQuestionComplete={(value) => {
+                    setAiQuestionCompleted(value);
+                    getAIQuestionRewardStatus(email);
+                    getAIQuestionStatus(coinbase, email);
+                  }}
+                  aiQuestionRewards={aiQuestionRewards}
+                  aiQuestionObjectAnswered={aiQuestionObjectAnswered}
+                  getAiStep={getAiStep}
+                  closePopup={closePopup}
+                  setClosePopup={setClosePopup}
+                  username={username ?? "Player"}
+                  address={userWallet}
+                  isConnected={isConnected}
+                  coinbase={coinbase}
+                  chainId={chainId}
+                  suspenseMusicRef={suspenseMusicRef}
+                  clockSoundRef={clockSoundRef}
+                  suspenseSound={suspenseSound}
+                  setSuspenseSound={setSuspenseSound}
+                  onConnectWallet={() => {
+                    setShowDailyQuestion(false);
+                    handleConnect();
+                  }}
+                  onQuestionReveal={(value) => {
+                    setAiQuestionObject2(value);
+                  }}
+                  onClose={() => {
+                    setSuspenseSound(true);
+                    setShowDailyQuestion(false);
+                    suspenseMusicRef.current?.pause();
+                    suspenseMusicRef.current.currentTime = 0;
+                    clockSoundRef.current?.pause();
+                    clockSoundRef.current.currentTime = 0;
+                    html.classList.remove("hidescroll");
+                    setAiStep(0);
+                  }}
+                  handleBnbPool={(hex, dec) => {
+                    switchNetwork(hex, dec);
+                  }}
+                  email={email}
+                  walletClient={walletClient}
+                  publicClient={publicClient}
+                />
+              </div>
+            </div>
+          </div>
+
+          // </OutsideClickHandler>
+        )}
+        {closePopup && (
+          <OutsideClickHandler onOutsideClick={() => setClosePopup(false)}>
+            <ClosePopup
+              onClose={() => {
+                setbattlePopup(false)
+                setSuspenseSound(true);
+                setShowDailyQuestion(false);
+                suspenseMusicRef.current?.pause();
+                suspenseMusicRef.current.currentTime = 0;
+                clockSoundRef.current?.pause();
+                clockSoundRef.current.currentTime = 0;
+                html.classList.remove("hidescroll");
+                setAiStep(0);
+                checkAnswerTimeout();
+              }}
+              setClosePopup={setClosePopup}
+            />
+          </OutsideClickHandler>
+        )}
+        {closeBattle && (
+          <OutsideClickHandler onOutsideClick={() => setcloseBattle(false)}>
+            <CloseBattlePopup
+              onClose={() => {
+                setbattlePopup(false)
+
+              }}
+              setClosePopup={setcloseBattle}
+            />
+          </OutsideClickHandler>
+        )}
+        {(portfolio || hashValue === "#portfolio") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setPortfolio(false);
+              window.location.hash = "";
+            }}
+          >
+            <div
+              className="popup-wrapper  popup-active p-3"
+              id="portfolio"
+              style={{ width: "60%", pointerEvents: "auto" }}
+            >
+              <div className="d-flex align-items-center justify-content-between">
+                <h2
+                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
+                  style={{ fontSize: "24px" }}
+                >
+                  My Portfolio
+                </h2>
+
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => {
+                    setPortfolio(false);
+                    window.location.hash = "";
+                  }}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+
+              <Portfolio
+                wodBalance={wodBalance}
+                allListed={listedNFTS}
+                address={userWallet}
+                coinbase={coinbase}
+                isVerified={userWallet !== undefined && userId !== undefined}
+                favoritesArray={favorites}
+                email={email}
+                userId={userId}
+                username={username}
+                landStaked={landstakes}
+                myCawsWodStakes={myCawsWodStakesAll}
+                myWodWodStakes={myWodWodStakesAll}
+                latestBoughtNFTS={latest20BoughtNFTS}
+                myOffers={myOffers}
+                userCollectedNFTS={userCollectedNFTS}
+              />
+            </div>
+          </OutsideClickHandler>
+        )}
+
+        {(specialRewardsPopup || hashValue === "#special-rewards") && (
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setSpecialRewardsPopup(false);
+              window.location.hash = "";
+            }}
+          >
+            <div
+              className="popup-wrapper popup-active p-3"
+              style={{ width: "30%", pointerEvents: "auto" }}
+            >
+              {specialRewardsSuccess === "Email sent successfully" ? (
+                <>
+                  <div className="d-flex align-items-center justify-content-end w-100 mb-4">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setSpecialRewardsPopup(false);
+                        window.location.hash = "";
+                      }}
+                      alt=""
+                    />
+                  </div>
+                  <div className="d-flex flex-column align-items-center justify-content-center w-100 mb-4">
+                    <h6 className="rewards-success-title font-organetto">
+                      Successfully
+                    </h6>
+                    <h6
+                      className="rewards-success-title font-organetto"
+                      style={{ color: "#8C56FF" }}
+                    >
+                      Applied
+                    </h6>
+                  </div>
+                  <div className="d-flex w-100 justify-content-center mb-4">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/successMark.svg"}
+                      alt=""
+                    />
+                  </div>
+                  <div className="d-flex w-100 justify-content-center">
+                    <p
+                      className="popup-paragraph w-50"
+                      style={{ textAlign: "center" }}
+                    >
+                      Congratulations, your Special Reward application request
+                      is submitted. Please check back soon when our team reviews
+                      your application.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="d-flex align-items-center justify-content-between w-100 mb-4">
+                    <h6 className="popup-title-2 mb-0">Special Rewards</h6>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setSpecialRewardsPopup(false);
+                        window.location.hash = "";
+                      }}
+                      alt=""
+                    />
+                  </div>
+                  <p className="popup-paragraph">
+                    The Special Rewards program is designed to recognize and
+                    reward players for sharing their World of Dypians gameplay
+                    content on various social media platforms, including X
+                    (Twitter), Instagram, TikTok, YouTube, Facebook, Reddit, and
+                    more.
+                    <ul className="mt-3">
+                      <li>
+                        Minimum requirement of 1,000 followers on social media.
+                      </li>
+                    </ul>
+                  </p>
+                  <p className="popup-paragraph mb-4">
+                    The WOD Team will review the quality of the content, the
+                    engagement of the post, and other details. If you are
+                    eligible, they will determine the reward, which is
+                    distributed in WOD on a monthly basis.
+                  </p>
+                  <p className="popup-paragraph mb-4">
+                    <b>*Note:</b> You can submit one post per time. The team
+                    will not reply in any form, but if you are eligible, you
+                    will see the reward here. The display of the rewards will
+                    occur every Monday and will be distributed monthly.
+                  </p>
+                  <div className="d-flex align-items-center gap-4 mb-4">
+                    <StyledTextField
+                      error={errors?.url ? true : false}
+                      size="small"
+                      label="URL"
+                      id="email"
+                      name="email"
+                      value={mediaUrl}
+                      helperText={errors?.url}
+                      required
+                      onChange={(e) => {
+                        setMediaUrl(e.target.value);
+                      }}
+                      sx={{ width: "100%" }}
+                    />
+                    <div
+                      className={`${!email || !coinbase
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                        }`}
+                      style={{
+                        width: "fit-content",
+                      }}
+                    >
+                      <button
+                        className={`btn ${!email || !coinbase
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                          } px-5`}
+                        onClick={handleSubmit}
+                        disabled={!email || !coinbase ? true : false}
+                      >
+                        {loading ? (
+                          <div
+                            className="spinner-border text-light spinner-border-sm"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        ) : (
+                          "Submit"
+                        )}
+                      </button>
+                      <ReCaptchaV2
+                        sitekey="6LflZgEgAAAAAO-psvqdoreRgcDdtkQUmYXoHuy2"
+                        style={{ display: "inline-block" }}
+                        theme="dark"
+                        size="invisible"
+                        ref={recaptchaRef}
+                      />
+                    </div>
+                  </div>
+                  <hr className="linear-divider" />
+                  <div className="d-flex align-items-center justify-content-between">
+                    <span className="my-special-rewards mb-0">My Rewards</span>
+                    <h6 className="my-special-rewards-value mb-0">
+                      ${getFormattedNumber(Number(userSocialRewardsCached), 2)}
+                    </h6>
+                  </div>
+                </>
+              )}
+            </div>
+          </OutsideClickHandler>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default Dashboard;

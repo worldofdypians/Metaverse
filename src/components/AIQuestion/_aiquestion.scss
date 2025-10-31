@@ -187,6 +187,17 @@
   border-radius: 50%;
 }
 
+/* nprogress overrides */
+#nprogress .bar {
+  background: #4ade80 !important; /* green color */
+  height: 3px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #4ade80, 0 0 5px #4ade80;
+}
+
+
 .radio-button-option-correct {
   width: 16px;
   height: 16px;
