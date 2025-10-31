@@ -214,6 +214,14 @@ const BattlePopup = ({
   const [showPrizes, setShowPrizes] = useState(false);
   const [tempfighter, setTempfighter] = useState(fighters[0]);
   const [dummyCount, setDummyCount] = useState(0);
+  const [fightInfo, setFightInfo] = useState(() => {
+    try {
+      const stored = localStorage.getItem("fightInfo");
+      return stored ? JSON.parse(stored) : null;
+    } catch (e) {
+      return null;
+    }
+  });
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -291,20 +299,19 @@ const BattlePopup = ({
 
         // 🎁 Save data + show rewards
         setTimeout(() => {
-          localStorage.setItem(
-            "fightInfo",
-            JSON.stringify({
-              id: "Points",
-              name: "POINTS",
-              icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-              count: "20K",
-              color: "from-blue-400 to-purple-500",
-              rarity: "COMMON",
-              tier: "TIER II",
-              fighter: selectedPlayer,
-              win: randomBit !== 0,
-            })
-          );
+          const newFightInfo = {
+            id: "Points",
+            name: "POINTS",
+            icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+            count: "20K",
+            color: "from-blue-400 to-purple-500",
+            rarity: "COMMON",
+            tier: "TIER II",
+            fighter: selectedPlayer,
+            win: randomBit !== 0,
+          };
+          localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
+          setFightInfo(newFightInfo); // Update state to trigger re-render
 
           if (randomBit !== 0) {
             setShowRewards(true);
@@ -314,15 +321,13 @@ const BattlePopup = ({
     }, 2500);
   };
 
-  const fightInfo = JSON.parse(localStorage.getItem("fightInfo"));
-
   useEffect(() => {
     if (fightInfo) {
       setDisableButtons(true);
       setselectedPlayer(fightInfo.fighter);
       setTempfighter(fightInfo.fighter);
     }
-  }, []);
+  }, [fightInfo]);
 
   // Attach listener
   window.addEventListener("keydown", handleEsc);
@@ -848,7 +853,7 @@ const BattlePopup = ({
     }
   }, [chainId]);
 
-  console.log(showPrizes);
+
 
   if (!isOpen) return null;
   return (
@@ -894,9 +899,9 @@ const BattlePopup = ({
             )}
           </>
         )}
-        {fightInfo && fightStep === 1 && (
+        {fightInfo !==null && fightStep === 1 && (
           <>
-            {fightInfo.win ? (
+            {fightInfo.win  ? (
               <>
                 {selectedPlayer.name === tempfighter.name && <></>}
                 <div className="fighter-lose-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
@@ -937,9 +942,9 @@ const BattlePopup = ({
                   </span>
                 </div>
               </div>
-              {fightInfo && fightStep === 1 && (
+              {fightInfo !==null && fightStep === 1 && (
                 <>
-                  {fightInfo?.win ? (
+                  {fightInfo.win === true ? (
                     <>
                       {selectedPlayer.name === tempfighter.name && (
                         <div className="fighter-win-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">

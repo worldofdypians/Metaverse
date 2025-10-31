@@ -458,7 +458,7 @@ function Dashboard({
           : "---",
       globalWeekly:
         userDataStarWeekly?.statValue !== undefined &&
-          userDataStarWeekly?.statValue > 0
+        userDataStarWeekly?.statValue > 0
           ? userDataStarWeekly.position + 1
           : "---",
       totalStars: userDataStar?.statValue || 0,
@@ -472,8 +472,8 @@ function Dashboard({
         (userData?.statValue === 0
           ? 0
           : userData?.position > 100
-            ? 0
-            : bnbStars[userData?.position]) ?? 0,
+          ? 0
+          : bnbStars[userData?.position]) ?? 0,
       userBnbScore:
         userData?.statValue !== undefined && userData?.statValue > 0
           ? userData?.statValue
@@ -488,8 +488,8 @@ function Dashboard({
         (userDataSkale?.statValue === 0
           ? 0
           : userDataSkale?.position > 100
-            ? 0
-            : skaleStars[userDataSkale?.position]) ?? 0,
+          ? 0
+          : skaleStars[userDataSkale?.position]) ?? 0,
       userSkaleScore:
         userDataSkale?.statValue !== undefined && userDataSkale?.statValue > 0
           ? userDataSkale?.statValue
@@ -504,8 +504,8 @@ function Dashboard({
         (userDataCore?.statValue === 0
           ? 0
           : userDataCore?.position > 100
-            ? 0
-            : coreStars[userDataCore?.position]) ?? 0,
+          ? 0
+          : coreStars[userDataCore?.position]) ?? 0,
       userCoreScore:
         userDataCore?.statValue !== undefined && userDataCore?.statValue > 0
           ? userDataCore?.statValue
@@ -514,18 +514,18 @@ function Dashboard({
       // Viction Chain
       userRankViction:
         userDataViction?.statValue !== undefined &&
-          userDataViction?.statValue > 0
+        userDataViction?.statValue > 0
           ? userDataViction.position + 1
           : "---",
       userVictionStars:
         (userDataViction?.statValue === 0
           ? 0
           : userDataViction?.position > 100
-            ? 0
-            : matStars[userDataViction?.position]) ?? 0,
+          ? 0
+          : matStars[userDataViction?.position]) ?? 0,
       userVictionScore:
         userDataViction?.statValue !== undefined &&
-          userDataViction?.statValue > 0
+        userDataViction?.statValue > 0
           ? userDataViction?.statValue
           : 0,
 
@@ -538,8 +538,8 @@ function Dashboard({
         (userDataManta?.statValue === 0
           ? 0
           : userDataManta?.position > 100
-            ? 0
-            : baseStars[userDataManta?.position]) ?? 0,
+          ? 0
+          : baseStars[userDataManta?.position]) ?? 0,
       userMantaScore:
         userDataManta?.statValue !== undefined && userDataManta?.statValue > 0
           ? userDataManta?.statValue
@@ -554,8 +554,8 @@ function Dashboard({
         (userDataBase?.statValue === 0
           ? 0
           : userDataBase?.position > 100
-            ? 0
-            : baseStars[userDataBase?.position]) ?? 0,
+          ? 0
+          : baseStars[userDataBase?.position]) ?? 0,
       userBaseScore:
         userDataBase?.statValue !== undefined && userDataBase?.statValue > 0
           ? userDataBase?.statValue
@@ -570,8 +570,8 @@ function Dashboard({
         (userDataTaiko?.statValue === 0
           ? 0
           : userDataTaiko?.position > 100
-            ? 0
-            : taikoStars[userDataTaiko?.position]) ?? 0,
+          ? 0
+          : taikoStars[userDataTaiko?.position]) ?? 0,
       userTaikoScore:
         userDataTaiko?.statValue !== undefined && userDataTaiko?.statValue > 0
           ? userDataTaiko?.statValue
@@ -586,8 +586,8 @@ function Dashboard({
         userDataMat?.statValue === 0
           ? 0
           : userDataMat?.position > 100
-            ? 0
-            : matStars[userDataMat?.position],
+          ? 0
+          : matStars[userDataMat?.position],
       userMatScore:
         userDataMat?.statValue !== undefined && userDataMat?.statValue > 0
           ? userDataMat?.statValue
@@ -602,8 +602,8 @@ function Dashboard({
         userDataSei?.statValue === 0
           ? 0
           : userDataSei?.position > 100
-            ? 0
-            : seiStars[userDataSei?.position],
+          ? 0
+          : seiStars[userDataSei?.position],
       userSeiScore:
         userDataSei?.statValue !== undefined && userDataSei?.statValue > 0
           ? userDataSei?.statValue
@@ -618,8 +618,8 @@ function Dashboard({
         (userDataVanar?.statValue === 0
           ? 0
           : userDataVanar?.position > 100
-            ? 0
-            : vanarStars[userDataVanar?.position]) ?? 0,
+          ? 0
+          : vanarStars[userDataVanar?.position]) ?? 0,
       userVanarScore:
         userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
           ? userDataVanar?.statValue
@@ -634,8 +634,8 @@ function Dashboard({
         userDataTaraxa?.statValue === 0
           ? 0
           : userDataTaraxa?.position > 100
-            ? 0
-            : taraxaStars[userDataTaraxa?.position],
+          ? 0
+          : taraxaStars[userDataTaraxa?.position],
       userTaraxaScore:
         userDataTaraxa?.statValue !== undefined && userDataTaraxa?.statValue > 0
           ? userDataTaraxa?.statValue
@@ -1982,9 +1982,9 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                  ? Number(monthlyStarPrizes[99]) +
+                ? Number(monthlyStarPrizes[99]) +
                   Number(monthlyExtraStarPrizes[99])
-                  : Number(monthlyStarPrizes[userPosition]) +
+                : Number(monthlyStarPrizes[userPosition]) +
                   Number(monthlyExtraStarPrizes[userPosition])
               : 0
           );
@@ -1994,8 +1994,8 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                  ? Number(monthlyStarPrizes[99])
-                  : Number(monthlyStarPrizes[userPosition])
+                ? Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition])
               : 0
           );
         }
@@ -2104,9 +2104,9 @@ function Dashboard({
                 ? userPosition > 100
                   ? 0
                   : userPosition === 100
-                    ? Number(monthlyStarPrizes[99]) +
+                  ? Number(monthlyStarPrizes[99]) +
                     Number(monthlyExtraStarPrizes[99])
-                    : Number(monthlyStarPrizes[userPosition]) +
+                  : Number(monthlyStarPrizes[userPosition]) +
                     Number(monthlyExtraStarPrizes[userPosition])
                 : 0
             );
@@ -2116,8 +2116,8 @@ function Dashboard({
                 ? userPosition > 100
                   ? 0
                   : userPosition === 100
-                    ? Number(monthlyStarPrizes[99])
-                    : Number(monthlyStarPrizes[userPosition])
+                  ? Number(monthlyStarPrizes[99])
+                  : Number(monthlyStarPrizes[userPosition])
                 : 0
             );
           }
@@ -2203,9 +2203,9 @@ function Dashboard({
                   ? userPosition > 100
                     ? 0
                     : userPosition === 100
-                      ? Number(weeklyStarPrizes[99]) +
+                    ? Number(weeklyStarPrizes[99]) +
                       Number(weeklyExtraStarPrizes[99])
-                      : Number(weeklyStarPrizes[userPosition]) +
+                    : Number(weeklyStarPrizes[userPosition]) +
                       Number(weeklyExtraStarPrizes[userPosition])
                   : 0
               );
@@ -2215,8 +2215,8 @@ function Dashboard({
                   ? userPosition > 100
                     ? 0
                     : userPosition === 100
-                      ? Number(weeklyStarPrizes[99])
-                      : Number(weeklyStarPrizes[userPosition])
+                    ? Number(weeklyStarPrizes[99])
+                    : Number(weeklyStarPrizes[userPosition])
                   : 0
               );
             }
@@ -2259,9 +2259,9 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                  ? Number(weeklyStarPrizes[99]) +
+                ? Number(weeklyStarPrizes[99]) +
                   Number(weeklyExtraStarPrizes[99])
-                  : Number(weeklyStarPrizes[userPosition]) +
+                : Number(weeklyStarPrizes[userPosition]) +
                   Number(weeklyExtraStarPrizes[userPosition])
               : 0
           );
@@ -2271,8 +2271,8 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                  ? Number(weeklyStarPrizes[99])
-                  : Number(weeklyStarPrizes[userPosition])
+                ? Number(weeklyStarPrizes[99])
+                : Number(weeklyStarPrizes[userPosition])
               : 0
           );
         }
@@ -3908,8 +3908,9 @@ function Dashboard({
 
   const switchNetwork = async (hexChainId, chain) => {
     // Extract chainId from hex or use chain number directly
-    const chainId = typeof chain === 'number' ? chain : parseInt(hexChainId, 16);
-    
+    const chainId =
+      typeof chain === "number" ? chain : parseInt(hexChainId, 16);
+
     try {
       await switchNetworkWagmi(chainId, chain, {
         handleSwitchNetwork,
@@ -4340,8 +4341,6 @@ function Dashboard({
     booster,
   ]);
 
-  const logoutItem = localStorage.getItem("logout");
-
   useEffect(() => {
     if (email && userWallet) {
       getAllSkaleChests(email);
@@ -4479,7 +4478,7 @@ function Dashboard({
           </div>
         )}
         {location.pathname === "/account" ||
-          location.pathname.includes("/account/challenges") ? (
+        location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
               onOpenBooster={() => setBooster(true)}
@@ -4573,9 +4572,7 @@ function Dashboard({
                 Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
-                (claimedMoneyReward
-                  ? Number(claimedMoneyReward.reward)
-                  : 0)
+                (claimedMoneyReward ? Number(claimedMoneyReward.reward) : 0)
                 // Number(mantaEarnUsd) +
                 // Number(seiEarnUsd) +
 
@@ -4851,50 +4848,50 @@ function Dashboard({
 
         {(genesisLeaderboard ||
           hashValue === "#great-collection-leaderboard") && (
-            <OutsideClickHandler
-              onOutsideClick={() => {
-                setGenesisLeaderboard(false);
-                window.location.hash = "";
-              }}
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setGenesisLeaderboard(false);
+              window.location.hash = "";
+            }}
+          >
+            <div
+              className="popup-wrapper leaderboard-popup popup-active p-3"
+              id="leaderboard"
+              style={{ width: "35%", pointerEvents: "auto" }}
             >
               <div
-                className="popup-wrapper leaderboard-popup popup-active p-3"
-                id="leaderboard"
-                style={{ width: "35%", pointerEvents: "auto" }}
+                className="d-flex align-items-center justify-content-end position-absolute"
+                style={{
+                  position: "absolute",
+                  right: "22px",
+                  zIndex: 2,
+                  top: "22px",
+                }}
               >
-                <div
-                  className="d-flex align-items-center justify-content-end position-absolute"
-                  style={{
-                    position: "absolute",
-                    right: "22px",
-                    zIndex: 2,
-                    top: "22px",
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
+                  onClick={() => {
+                    setGenesisLeaderboard(false);
+                    window.location.hash = "";
                   }}
-                >
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                    onClick={() => {
-                      setGenesisLeaderboard(false);
-                      window.location.hash = "";
-                    }}
-                    alt=""
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-
-                <GenesisLeaderboard
-                  data={genesisData}
-                  previousdata={previousgenesisData}
-                  playerdata={greatCollectionData}
-                  username={username}
-                  activePlayer={
-                    greatCollectionData[0]?.position < 100 ? true : false
-                  }
-                  email={email}
+                  alt=""
+                  style={{ cursor: "pointer" }}
                 />
               </div>
-            </OutsideClickHandler>
-          )}
+
+              <GenesisLeaderboard
+                data={genesisData}
+                previousdata={previousgenesisData}
+                playerdata={greatCollectionData}
+                username={username}
+                activePlayer={
+                  greatCollectionData[0]?.position < 100 ? true : false
+                }
+                email={email}
+              />
+            </div>
+          </OutsideClickHandler>
+        )}
         {(globalLeaderboard || hashValue === "#global-leaderboard") && (
           <OutsideClickHandler
             onOutsideClick={() => {
@@ -4933,10 +4930,11 @@ function Dashboard({
               </div>
               <div className="d-flex align-items-center gap-2 mt-3 ">
                 <button
-                  className={` ${leaderboardBtn === "weekly"
+                  className={` ${
+                    leaderboardBtn === "weekly"
                       ? "getpremium-active-btn"
                       : "getpremium-btn"
-                    }  w-100 py-lg-2 py-1`}
+                  }  w-100 py-lg-2 py-1`}
                   onClick={() => {
                     setleaderboardBtn("weekly");
                     handleFetchRecordsStars("weekly");
@@ -4945,10 +4943,11 @@ function Dashboard({
                   Weekly
                 </button>
                 <button
-                  className={` ${leaderboardBtn === "monthly"
+                  className={` ${
+                    leaderboardBtn === "monthly"
                       ? "getpremium-active-btn"
                       : "getpremium-btn"
-                    }  w-100 py-lg-2 py-1`}
+                  }  w-100 py-lg-2 py-1`}
                   onClick={() => {
                     setleaderboardBtn("monthly");
                     handleFetchRecordsStars("monthly");
@@ -4997,24 +4996,24 @@ function Dashboard({
                   !userDataStar?.statValue || userDataStar?.statValue === 0
                     ? 0
                     : userDataStar.position
-                      ? userDataStar.position + 1
-                      : 0
+                    ? userDataStar.position + 1
+                    : 0
                 }
                 userPreviousDataStar={
                   !userPreviousDataStar?.StatValue ||
-                    userPreviousDataStar?.StatValue === 0
+                  userPreviousDataStar?.StatValue === 0
                     ? 0
                     : userPreviousDataStar.Position !== undefined
-                      ? userPreviousDataStar.Position + 1
-                      : 0
+                    ? userPreviousDataStar.Position + 1
+                    : 0
                 }
                 userPreviousDataStar2={
                   !userPreviousDataStar2?.StatValue ||
-                    userPreviousDataStar2?.StatValue === 0
+                  userPreviousDataStar2?.StatValue === 0
                     ? 0
                     : userPreviousDataStar2.Position !== undefined
-                      ? userPreviousDataStar2.Position + 1
-                      : 0
+                    ? userPreviousDataStar2.Position + 1
+                    : 0
                 }
               />
             </div>
@@ -5024,32 +5023,32 @@ function Dashboard({
         {(goldenPassPopup ||
           eventId === "golden-pass" ||
           hashValue === "#golden-pass") && (
-            <GoldenPassPopup
-              onClosePopup={() => {
-                setgoldenPassPopup(false);
-                // handleClosePopup();
-                window.location.hash = "";
-              }}
-              onConnectWallet={() => {
-                handleConnect();
-                setgoldenPassPopup(false);
-                handleClosePopup();
-                window.location.hash = "";
-              }}
-              isConnected={isConnected}
-              coinbase={coinbase}
-              chainId={chainId}
-              wallet={userWallet}
-              walletClient={walletClient}
-              publicClient={publicClient}
-              isEOA={isEOA}
-              onSuccessDeposit={() => {
-                handleRefreshCountdown700(coinbase);
-              }}
-              goldenPassRemainingTime={goldenPassRemainingTime}
-              email={email}
-            />
-          )}
+          <GoldenPassPopup
+            onClosePopup={() => {
+              setgoldenPassPopup(false);
+              // handleClosePopup();
+              window.location.hash = "";
+            }}
+            onConnectWallet={() => {
+              handleConnect();
+              setgoldenPassPopup(false);
+              handleClosePopup();
+              window.location.hash = "";
+            }}
+            isConnected={isConnected}
+            coinbase={coinbase}
+            chainId={chainId}
+            wallet={userWallet}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            isEOA={isEOA}
+            onSuccessDeposit={() => {
+              handleRefreshCountdown700(coinbase);
+            }}
+            goldenPassRemainingTime={goldenPassRemainingTime}
+            email={email}
+          />
+        )}
 
         {(myRewardsPopup || hashValue === "#my-rewards") && (
           <OutsideClickHandler
@@ -5106,32 +5105,32 @@ function Dashboard({
 
         {(battlePopup || hashValue === "#arena-of-rage") && (
           <div className={`package-popup-wrapper2 `}>
-          <BattlePopup
-          closePopup={closeBattle}
-          setClosePopup={setcloseBattle}
-            publicClient={publicClient}
-            walletClient={walletClient}
-            onClose={() => {
-              setbattlePopup(false);
-              html.classList.remove("hidescroll");
-              window.location.hash = "";
-            }}
-            isOpen={battlePopup || hashValue === "#arena-of-rage"}
-            coinbase={coinbase}
-            chainId={chainId}
-            handleSwitchNetwork={handleSwitchNetwork}
-            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
-            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
-            network_matchain={network_matchain}
-            isConnected={isConnected}
-            email={email}
-            address={userWallet}
-            onConnectWallet={() => {
-              setbattlePopup(false);
-              handleConnect();
-            }}
-            openedRoyaltyChest={[]}
-          />
+            <BattlePopup
+              closePopup={closeBattle}
+              setClosePopup={setcloseBattle}
+              publicClient={publicClient}
+              walletClient={walletClient}
+              onClose={() => {
+                setbattlePopup(false);
+                html.classList.remove("hidescroll");
+                window.location.hash = "";
+              }}
+              isOpen={battlePopup || hashValue === "#arena-of-rage"}
+              coinbase={coinbase}
+              chainId={chainId}
+              handleSwitchNetwork={handleSwitchNetwork}
+              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+              network_matchain={network_matchain}
+              isConnected={isConnected}
+              email={email}
+              address={userWallet}
+              onConnectWallet={() => {
+                setbattlePopup(false);
+                handleConnect();
+              }}
+              openedRoyaltyChest={[]}
+            />
           </div>
         )}
 
@@ -5179,8 +5178,9 @@ function Dashboard({
                         onClick={() => setTooltip(!tooltip)}
                       />
                       <div
-                        className={`tooltip-wrapper p-3 ${tooltip && "tooltip-active"
-                          }`}
+                        className={`tooltip-wrapper p-3 ${
+                          tooltip && "tooltip-active"
+                        }`}
                         style={{
                           width: 260,
                           left: "40%",
@@ -5203,12 +5203,12 @@ function Dashboard({
 
                           <div
                             className={"ai-rewards-info-active"}
-                          // onMouseOver={() => {
-                          //   setActiveClass("stars");
-                          // }}
-                          // onMouseLeave={() => {
-                          //   setActiveClass("");
-                          // }}
+                            // onMouseOver={() => {
+                            //   setActiveClass("stars");
+                            // }}
+                            // onMouseLeave={() => {
+                            //   setActiveClass("");
+                            // }}
                           >
                             <div className="d-flex align-items-center px-3 py-2 gap-2">
                               <div className="d-flex align-items-center gap-1">
@@ -5232,12 +5232,12 @@ function Dashboard({
                           </div>
                           <div
                             className="ai-rewards-info-active"
-                          // onMouseOver={() => {
-                          //   setActiveClass("points");
-                          // }}
-                          // onMouseLeave={() => {
-                          //   setActiveClass("");
-                          // }}
+                            // onMouseOver={() => {
+                            //   setActiveClass("points");
+                            // }}
+                            // onMouseLeave={() => {
+                            //   setActiveClass("");
+                            // }}
                           >
                             <div className="d-flex align-items-center px-3 py-2 gap-2">
                               <div className="d-flex align-items-center gap-1">
@@ -5263,12 +5263,12 @@ function Dashboard({
                           </div>
                           <div
                             className="ai-rewards-info-active"
-                          // onMouseOver={() => {
-                          //   setActiveClass("rewards");
-                          // }}
-                          // onMouseLeave={() => {
-                          //   setActiveClass("");
-                          // }}
+                            // onMouseOver={() => {
+                            //   setActiveClass("rewards");
+                            // }}
+                            // onMouseLeave={() => {
+                            //   setActiveClass("");
+                            // }}
                           >
                             <div className="d-flex align-items-center px-3 py-2 gap-2">
                               <div className="d-flex align-items-center gap-1">
@@ -5368,7 +5368,7 @@ function Dashboard({
           <OutsideClickHandler onOutsideClick={() => setClosePopup(false)}>
             <ClosePopup
               onClose={() => {
-                setbattlePopup(false)
+                setbattlePopup(false);
                 setSuspenseSound(true);
                 setShowDailyQuestion(false);
                 suspenseMusicRef.current?.pause();
@@ -5385,13 +5385,14 @@ function Dashboard({
         )}
         {closeBattle && (
           <OutsideClickHandler onOutsideClick={() => setcloseBattle(false)}>
-            <CloseBattlePopup
-              onClose={() => {
-                setbattlePopup(false)
-
-              }}
-              setClosePopup={setcloseBattle}
-            />
+            <div className="package-popup-wrapper2">
+              <CloseBattlePopup
+                onClose={() => {
+                  setbattlePopup(false);
+                }}
+                setClosePopup={setcloseBattle}
+              />
+            </div>
           </OutsideClickHandler>
         )}
         {(portfolio || hashValue === "#portfolio") && (
@@ -5552,19 +5553,21 @@ function Dashboard({
                       sx={{ width: "100%" }}
                     />
                     <div
-                      className={`${!email || !coinbase
+                      className={`${
+                        !email || !coinbase
                           ? "linear-border-disabled"
                           : "linear-border"
-                        }`}
+                      }`}
                       style={{
                         width: "fit-content",
                       }}
                     >
                       <button
-                        className={`btn ${!email || !coinbase
+                        className={`btn ${
+                          !email || !coinbase
                             ? "outline-btn-disabled"
                             : "filled-btn"
-                          } px-5`}
+                        } px-5`}
                         onClick={handleSubmit}
                         disabled={!email || !coinbase ? true : false}
                       >

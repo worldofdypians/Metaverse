@@ -883,6 +883,28 @@
   }
 }
 
+
+.battle2-close-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-image: url("./assets/closeBorder.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  // background: #121235;
+  // border-radius: 12px;
+  width: fit-content;
+  height: fit-content;
+
+  pointer-events: auto !important;
+  @media screen and (max-width: 786px) {
+    width: 95%;
+  }
+}
+
+
 .close-ai-x {
   position: absolute;
   right: 10px;

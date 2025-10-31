@@ -2,7 +2,7 @@ import React from "react";
 
 const CloseBattlePopup = ({ onClose, setClosePopup }) => {
   return (
-    <div className="question-close-popup d-flex flex-column align-items-center justify-content-center gap-4 p-4 ">
+    <div className="battle2-close-popup shadow-none d-flex flex-column align-items-center justify-content-center gap-4 p-4 ">
       <img
         src={"https://cdn.worldofdypians.com/wod/ai-popupx.png"}
         onClick={() => {
