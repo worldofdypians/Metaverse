@@ -193,9 +193,9 @@ const VideoWrapper = ({
       logo: "swissborg.svg",
     },
         {
-      name: "LetsExchange",
-      img: "https://cdn.worldofdypians.com/wod/letsexchangeLogo.svg",
-      href: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
+      title: "LetsExchange",
+      logo: "https://cdn.worldofdypians.com/wod/letsexchangeLogo.svg",
+      link: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
     },
   ];
 
