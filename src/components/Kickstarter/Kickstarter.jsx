@@ -53,7 +53,7 @@ const rewardCategories = [
 const Kickstarter = ({
   royalChestIndex,
   onClose,
-  // onAddClass,
+  username,
   isConnected,
   coinbase,
   chainId,
@@ -231,6 +231,15 @@ const Kickstarter = ({
   const chestIndex = royalChestIndex + 1;
   // const chestIndexTaiko = royalChestIndexTaiko + 1;
 
+
+    const updateRewardApis = async(data)=>{
+      const result = await axios.post('https://api.worldofdypians.com/api/post-event', data).catch((e)=>{console.error(e)})
+      if(result && result.status === 200) {
+        console.log(result)
+      }
+    }
+  
+
   const getUserRewardsByChest = async (
     userEmail,
     txHash,
@@ -275,6 +284,39 @@ const Kickstarter = ({
         setTimeout(() => {
           setRewards(result.data.rewards);
         }, 3600);
+
+         if (
+          result.data.rewards.find((item) => {
+            return item.rewardType === "Money";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "royalty",
+            username: username,
+            rewardUSD: result.data.rewards.find((item) => {
+              return item.rewardType === "Money";
+            }).reward,
+            rarity: "legendary",
+          };
+          updateRewardApis(data);
+        }
+         if (
+          result.data.rewards.find((item) => {
+            return item.rewardType === "Points";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "royalty",
+            username: username,
+            points: result.data.rewards.find((item) => {
+              return item.rewardType === "Points";
+            }).reward,
+            rarity: "legendary",
+          };
+          updateRewardApis(data);
+        }
+
+
 
         setIsChestOpen(true);
         setLoading(false);
@@ -344,6 +386,38 @@ const Kickstarter = ({
         setTimeout(() => {
           setRewards(result.data.rewards);
         }, 3600);
+
+        
+         if (
+          result.data.reward.find((item) => {
+            return item.rewardType === "Money";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "royalty",
+            username: username,
+            rewardUSD: result.data.reward.find((item) => {
+              return item.rewardType === "Money";
+            }).reward,
+            rarity: "legendary",
+          };
+          updateRewardApis(data);
+        }
+         if (
+          result.data.reward.find((item) => {
+            return item.rewardType === "Points";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "royalty",
+            username: username,
+            points: result.data.reward.find((item) => {
+              return item.rewardType === "Points";
+            }).reward,
+            rarity: "legendary",
+          };
+          updateRewardApis(data);
+        }
 
         setIsChestOpen(true);
 

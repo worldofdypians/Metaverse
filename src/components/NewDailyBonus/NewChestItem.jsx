@@ -38,7 +38,7 @@ const NewChestItem = ({
   walletClient,
   publicClient,
   openKickstarter,
-  closeDaily,
+  closeDaily,username
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -56,6 +56,14 @@ const NewChestItem = ({
     "yellowCrystal",
     "purpleCrystal",
   ];
+
+
+      const updateRewardApis = async(data)=>{
+        const result = await axios.post('https://api.worldofdypians.com/api/post-event', data).catch((e)=>{console.error(e)})
+        if(result && result.status === 200) {
+          console.log(result)
+        }
+      }
 
   const getUserRewardsByChest2 = async (
     userEmail,
@@ -98,7 +106,34 @@ const NewChestItem = ({
       if (result && result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
-
+  if (
+          result.data.rewards.find((item) => {
+            return item.rewardType === "Money";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "daily",
+            username: username,
+            rewardUSD: result.data.rewards.find((item) => {
+              return item.rewardType === "Money";
+            }).reward,
+          };
+          updateRewardApis(data);
+        }
+         if (
+          result.data.rewards.find((item) => {
+            return item.rewardType === "Points";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "daily",
+            username: username,
+            points: result.data.rewards.find((item) => {
+              return item.rewardType === "Points";
+            }).reward,
+          };
+          updateRewardApis(data);
+        }
         // onChestStatus("success");
         onLoadingChest(false);
         setLoading(false);
@@ -190,6 +225,35 @@ const NewChestItem = ({
         //   handleSecondTask(coinbase);
         // }
         onClaimRewards(result.data);
+        
+         if (
+          result.data.rewards.find((item) => {
+            return item.rewardType === "Money";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "daily",
+            username: username,
+            rewardUSD: result.data.rewards.find((item) => {
+              return item.rewardType === "Money";
+            }).reward,
+          };
+          updateRewardApis(data);
+        }
+         if (
+          result.data.rewards.find((item) => {
+            return item.rewardType === "Points";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "daily",
+            username: username,
+            points: result.data.rewards.find((item) => {
+              return item.rewardType === "Points";
+            }).reward,
+          };
+          updateRewardApis(data);
+        }
         setIsChestOpen(true);
         // onChestStatus("success");
         onLoadingChest(false);
