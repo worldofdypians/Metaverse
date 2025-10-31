@@ -5111,7 +5111,6 @@ function Dashboard({
           setClosePopup={setcloseBattle}
             publicClient={publicClient}
             walletClient={walletClient}
-            binanceW3WProvider={binanceW3WProvider}
             onClose={() => {
               setbattlePopup(false);
               html.classList.remove("hidescroll");
@@ -5121,6 +5120,9 @@ function Dashboard({
             coinbase={coinbase}
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            network_matchain={network_matchain}
             isConnected={isConnected}
             email={email}
             address={userWallet}

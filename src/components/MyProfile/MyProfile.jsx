@@ -92,7 +92,8 @@ const MyProfile = ({
   onOpenBooster,
   // battleCompleted,
   openBattlePopup,
-  totalTreasureHuntUsd,isPremium
+  totalTreasureHuntUsd,
+  isPremium,
 }) => {
   // Get user progress data from Redux store
   const userProgress = useSelector((state) => state.user.userProgress);
@@ -302,8 +303,7 @@ const MyProfile = ({
     ],
   };
 
-
-  const battleCompleted = localStorage.getItem("fightInfo")
+  const battleCompleted = localStorage.getItem("fightInfo");
 
   useEffect(() => {
     if (canBuy && email) {
@@ -320,132 +320,135 @@ const MyProfile = ({
       <div className="custom-container mt-5">
         <div className="row mt-5 gap-5 gap-xl-0 mt-lg-3">
           <div className="col-12 col-xl-4 px-0 px-lg-2">
-            <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
-              <div className="d-flex align-items-center gap-2">
-                <div
-                  className="position-relative"
-                  style={{ cursor: "pointer" }}
-                >
-                  <img
-                    className="new-profile-img"
-                    src={
-                      isPremium
-                        ? "https://cdn.worldofdypians.com/wod/starterProfilePremium.png"
-                        : "https://cdn.worldofdypians.com/wod/starterProfile.png"
-                    }
-                    alt=""
-                  />
-                  {/* <div className="score-text-wrapper d-flex flex-column align-items-center">
+            <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between gap-3 h-100">
+              <div className="d-flex gap-2">
+                <div className="d-flex align-items-center gap-2 daily-progress-wrapper p-2 overflow-x-clip w-100">
+                  <div
+                    className="position-relative"
+                    style={{ cursor: "pointer" }}
+                  >
+                    <img
+                      className="new-profile-img"
+                      src={
+                        isPremium
+                          ? "https://cdn.worldofdypians.com/wod/starterProfilePremium.png"
+                          : "https://cdn.worldofdypians.com/wod/starterProfile.png"
+                      }
+                      alt=""
+                    />
+                    {/* <div className="score-text-wrapper d-flex flex-column align-items-center">
                   <h6 className="mb-0">{getFormattedNumber(totalScore, 0)}</h6>
                   <span>Score</span>
                 </div> */}
-                </div>
-                <div className="d-flex flex-column gap-2 w-100">
-                  <div className="d-flex align-items-center gap-1">
-                    <div
-                      className={`d-flex flex-column flex-lg-row align-items-lg-center ${
-                        !email
-                          ? "justify-content-between w-100"
-                          : "justify-content-start"
-                      }  gap-2`}
-                    >
-                      <h6 className="my-profile-username mb-0">
-                        {email && username ? username : "GUEST"}
-                      </h6>
-                      {!email && coinbase && (
-                        <NavLink
-                          className="loginbtn-profile px-5 py-2"
-                          to="/auth"
-                        >
-                          Log in
-                        </NavLink>
-                      )}
-                    </div>
                   </div>
-                  <span className="my-profile-email mb-2">{email}</span>
-                  <div className="d-flex flex-column custom-flex-lg gap-2">
-                    <div
-                      className={` ${
-                        isConnected &&
-                        address &&
-                        email &&
-                        coinbase &&
-                        syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase()
-                          ? "wallet-address-wrapper-error"
-                          : "wallet-address-wrapper"
-                      }  w-100 d-flex align-items-center justify-content-between gap-4 p-2`}
-                    >
-                      <div className="d-flex align-items-center w-100 justify-content-between">
-                        <div className="d-flex flex-column">
-                          <span className={`profile-wallet-span mb-2`}>
-                            Wallet Address
-                          </span>
-                          <div className="d-flex align-items-center gap-2">
-                            <span
-                              className={`${
-                                isConnected &&
-                                address &&
-                                email &&
-                                coinbase &&
-                                syncStatus !== "" &&
-                                address.toLowerCase() !== coinbase.toLowerCase()
-                                  ? "wallet-addr-error"
-                                  : "wallet-addr"
-                              } `}
-                            >
-                              {email !== undefined && address
-                                ? shortAddress(address)
-                                : coinbase
-                                ? shortAddress(coinbase)
-                                : "--"}
-                            </span>
-                            <Clipboard
-                              component="div"
-                              data-event="click"
-                              data-tip="Copied To Clipboard!"
-                              data-clipboard-text={
-                                email !== undefined && address
-                                  ? address
-                                  : coinbase
-                                  ? coinbase
-                                  : address
-                              }
-                              className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
-                            >
-                              <span
-                                className="menuitem2 p-0"
-                                onClick={() => {
-                                  setTooltip(true);
-                                  setTimeout(() => setTooltip(false), 2000);
-                                }}
-                              >
-                                <img
-                                  src={
-                                    tooltip
-                                      ? "https://cdn.worldofdypians.com/wod/check.svg"
-                                      : "https://cdn.worldofdypians.com/wod/copy.svg"
-                                  }
-                                  alt=""
-                                />{" "}
-                              </span>
-                            </Clipboard>
-                          </div>
-                        </div>
-                        {isConnected &&
+                  <div className="d-flex flex-column gap-2 w-100">
+                    <div className="d-flex align-items-center gap-1">
+                      <div
+                        className={`d-flex flex-column flex-lg-row align-items-lg-center ${
+                          !email
+                            ? "justify-content-between w-100"
+                            : "justify-content-start"
+                        }  gap-2`}
+                      >
+                        <h6 className="my-profile-username mb-0">
+                          {email && username ? username : "GUEST"}
+                        </h6>
+                        {!email && coinbase && (
+                          <NavLink
+                            className="loginbtn-profile px-5 py-2"
+                            to="/auth"
+                          >
+                            Log in
+                          </NavLink>
+                        )}
+                      </div>
+                    </div>
+                    <span className="my-profile-email mb-2">{email}</span>
+                    <div className="d-flex flex-column custom-flex-lg gap-2">
+                      <div
+                        className={` ${
+                          isConnected &&
                           address &&
                           email &&
                           coinbase &&
                           syncStatus !== "" &&
-                          address.toLowerCase() !== coinbase.toLowerCase() && (
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/errorchain.svg"
-                              }
-                              alt=""
-                            />
-                          )}
-                        {/* {!domainName &&
+                          address.toLowerCase() !== coinbase.toLowerCase()
+                            ? "wallet-address-wrapper-error"
+                            : "wallet-address-wrapper"
+                        }  w-100 d-flex align-items-center justify-content-between gap-4 p-2`}
+                      >
+                        <div className="d-flex align-items-center w-100 justify-content-between">
+                          <div className="d-flex flex-column">
+                            <span className={`profile-wallet-span mb-2`}>
+                              Wallet Address
+                            </span>
+                            <div className="d-flex align-items-center gap-2">
+                              <span
+                                className={`${
+                                  isConnected &&
+                                  address &&
+                                  email &&
+                                  coinbase &&
+                                  syncStatus !== "" &&
+                                  address.toLowerCase() !==
+                                    coinbase.toLowerCase()
+                                    ? "wallet-addr-error"
+                                    : "wallet-addr"
+                                } `}
+                              >
+                                {email !== undefined && address
+                                  ? shortAddress(address)
+                                  : coinbase
+                                  ? shortAddress(coinbase)
+                                  : "--"}
+                              </span>
+                              <Clipboard
+                                component="div"
+                                data-event="click"
+                                data-tip="Copied To Clipboard!"
+                                data-clipboard-text={
+                                  email !== undefined && address
+                                    ? address
+                                    : coinbase
+                                    ? coinbase
+                                    : address
+                                }
+                                className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
+                              >
+                                <span
+                                  className="menuitem2 p-0"
+                                  onClick={() => {
+                                    setTooltip(true);
+                                    setTimeout(() => setTooltip(false), 2000);
+                                  }}
+                                >
+                                  <img
+                                    src={
+                                      tooltip
+                                        ? "https://cdn.worldofdypians.com/wod/check.svg"
+                                        : "https://cdn.worldofdypians.com/wod/copy.svg"
+                                    }
+                                    alt=""
+                                  />{" "}
+                                </span>
+                              </Clipboard>
+                            </div>
+                          </div>
+                          {isConnected &&
+                            address &&
+                            email &&
+                            coinbase &&
+                            syncStatus !== "" &&
+                            address.toLowerCase() !==
+                              coinbase.toLowerCase() && (
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/errorchain.svg"
+                                }
+                                alt=""
+                              />
+                            )}
+                          {/* {!domainName &&
                           isConnected &&
                           address &&
                           email &&
@@ -469,7 +472,7 @@ const MyProfile = ({
                               />
                             </a>
                           )} */}
-                        {/* {!domainName &&
+                          {/* {!domainName &&
                           isConnected &&
                           address &&
                           email &&
@@ -493,38 +496,38 @@ const MyProfile = ({
                               />
                             </a>
                           )} */}
+                        </div>
                       </div>
-                    </div>
-                    {(isConnected &&
-                      address &&
-                      email &&
-                      coinbase &&
-                      syncStatus !== "" &&
-                      address.toLowerCase() === coinbase.toLowerCase()) ||
-                    (isConnected && !email && coinbase) ? (
-                      <div
-                        className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2 wallet-address-wrapper2"
-                        onClick={openPortfolio}
-                      >
-                        <div className="d-flex gap-2 w-100 align-items-center justify-content-start">
-                          <div className=" border-0 p-2">
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/portfolio.svg"
-                              }
-                              width={25}
-                              height={25}
-                              alt=""
-                            />
-                          </div>
-                          <div
-                            onClick={() => {
-                              setshowBuyTooltip(true);
-                            }}
-                            className="d-flex align-items-center gap-2 w-100 justify-content-between pe-2"
-                          >
-                            <div className="d-flex align-items-center gap-2">
-                              {/* <img
+                      {(isConnected &&
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() === coinbase.toLowerCase()) ||
+                      (isConnected && !email && coinbase) ? (
+                        <div
+                          className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2 wallet-address-wrapper2"
+                          onClick={openPortfolio}
+                        >
+                          <div className="d-flex gap-2 w-100 align-items-center justify-content-center p-2">
+                            <div className=" border-0 p-0">
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/portfolio.svg"
+                                }
+                                width={20}
+                                height={20}
+                                alt=""
+                              />
+                            </div>
+                            <div
+                              onClick={() => {
+                                setshowBuyTooltip(true);
+                              }}
+                              className="d-flex align-items-center gap-2 w-100 justify-content-between"
+                            >
+                              <div className="d-flex align-items-center gap-2">
+                                {/* <img
                                 src={
                                   "https://cdn.worldofdypians.com/wod/wodToken.svg"
                                 }
@@ -532,76 +535,363 @@ const MyProfile = ({
                                 height={20}
                                 alt=""
                               /> */}
-                              <h6
-                                className="mb-0 wod-balance-txt"
-                                style={{ fontSize: "16px" }}
-                              >
-                                {/* {getFormattedNumber(wodBalance, 2)} */}
-                                Portfolio
-                              </h6>
+                                <h6
+                                  className="mb-0 wod-balance-txt w-auto"
+                                  // style={{ fontSize: "16px" }}
+                                >
+                                  {/* {getFormattedNumber(wodBalance, 2)} */}
+                                  Portfolio
+                                </h6>
+                              </div>
                             </div>
-                           
                           </div>
                         </div>
-                      </div>
-                    ) : !isConnected ? (
-                      <button
-                        className="loginbtn-profile px-5 py-2"
-                        onClick={onConnectWallet}
-                      >
-                        Connect
-                      </button>
-                    ) : email &&
-                      username &&
-                      coinbase &&
-                      isConnected &&
-                      address ? (
-                      <button
-                        className="d-flex align-items-center gap-1 syncbtn px-3 py-2"
-                        onClick={onSyncClick}
+                      ) : !isConnected ? (
+                        <button
+                          className="loginbtn-profile px-5 py-2"
+                          onClick={onConnectWallet}
+                        >
+                          Connect
+                        </button>
+                      ) : email &&
+                        username &&
+                        coinbase &&
+                        isConnected &&
+                        address ? (
+                        <button
+                          className="d-flex align-items-center gap-1 syncbtn px-3 py-2"
+                          onClick={onSyncClick}
+                        >
+                          <img
+                            src={"https://cdn.worldofdypians.com/wod/sync.svg"}
+                            alt=""
+                            className={syncStatus === "loading" && "syncicon"}
+                          />{" "}
+                          {syncStatus === "initial"
+                            ? "Synchronize"
+                            : syncStatus === "loading"
+                            ? "Synchronising..."
+                            : syncStatus === "success"
+                            ? "Success"
+                            : "Error"}
+                        </button>
+                      ) : email &&
+                        username &&
+                        coinbase &&
+                        isConnected &&
+                        !address ? (
+                        <button
+                          className="loginbtn-profile px-5 py-2"
+                          onClick={onLinkWallet}
+                        >
+                          Link Wallet
+                        </button>
+                      ) : coinbase && email && !address && !username ? (
+                        <NavLink
+                          className="loginbtn-profile px-5 py-2 d-flex align-items-center"
+                          to={"/player"}
+                        >
+                          Create player
+                        </NavLink>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+
+                <NavLink to={"/account/prime"}>
+                  <div
+                    className={`${
+                      isPremium
+                        ? "premium-badge-profile-enabled"
+                        : "premium-badge-profile"
+                    } d-flex flex-column align-items-center justify-content-center h-100 p-2`}
+                  >
+                    <img
+                      src={
+                        isPremium
+                          ? "https://cdn.worldofdypians.com/wod/primeBadgeProfile.png"
+                          : "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                      }
+                      alt=""
+                      style={{ height: isPremium ? 75 : 55 }}
+                    />
+                    <span className="daily-progress-span text-wrap text-capitalize text-xxs line-height-normal">
+                      {isPremium ? "Prime Enabled" : "Become Prime"}
+                    </span>
+                  </div>
+                </NavLink>
+              </div>
+              <div className="d-flex flex-column gap-3 w-100">
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="progress-line"></div>
+                  <span className="daily-progress-span mx-2">
+                    Daily Progress
+                  </span>
+                  <div className="progress-line-2"></div>
+                </div>
+                <div className="daily-progress-wrapper p-4 d-flex flex-column gap-3">
+                  <div className="daily-progress-grid">
+                    {/* <div className="daily-progress-item position-relative">
+                  <img
+                    src={
+                      isgoldenPassActive ? goldenPassActive : goldenPassInactive
+                    }
+                    alt=""
+                  />
+                  {isgoldenPassActive && (
+                    <div className="daily-progress-value-golden">
+                      <Countdown
+                        date={isgoldenPassActive}
+                        renderer={renderer3}
+                      />
+                    </div>
+                  )}
+                 
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img
+                    src={
+                      userActiveEvents > 0
+                        ? treasureHuntActive
+                        : treasureHuntInactive
+                    }
+                    alt=""
+                  />
+                  <div className="daily-progress-value">
+                    <span>{userActiveEvents}</span>
+                  </div>
+                 
+                </div> */}
+                    <NavLink
+                      to={"/account/prime"}
+                      className="daily-progress-item position-relative"
+                    >
+                      <HtmlTooltip
+                        placement="top"
+                        title={
+                          <span className="card-eth-chain-text">
+                            With Prime enabled, earn 50 extra stars if you're in
+                            the top 100 of any leaderboard!
+                          </span>
+                        }
                       >
                         <img
-                          src={"https://cdn.worldofdypians.com/wod/sync.svg"}
+                          src={"https://cdn.worldofdypians.com/wod/prime.png"}
                           alt=""
-                          className={syncStatus === "loading" && "syncicon"}
-                        />{" "}
-                        {syncStatus === "initial"
-                          ? "Synchronize"
-                          : syncStatus === "loading"
-                          ? "Synchronising..."
-                          : syncStatus === "success"
-                          ? "Success"
-                          : "Error"}
-                      </button>
-                    ) : email &&
-                      username &&
-                      coinbase &&
-                      isConnected &&
-                      !address ? (
-                      <button
-                        className="loginbtn-profile px-5 py-2"
-                        onClick={onLinkWallet}
+                        />
+                      </HtmlTooltip>
+
+                      <div
+                        className={"daily-progress-value-golden"}
+                        style={{
+                          border:
+                            !isPremium || !userProgress.primeStars
+                              ? "1px solid gray"
+                              : "",
+                        }}
                       >
-                        Link Wallet
-                      </button>
-                    ) : coinbase && email && !address && !username ? (
-                      <NavLink
-                        className="loginbtn-profile px-5 py-2 d-flex align-items-center"
-                        to={"/player"}
-                      >
-                        Create player
-                      </NavLink>
-                    ) : null}
+                        <span
+                          style={{
+                            color:
+                              !isPremium || !userProgress.primeStars
+                                ? "gray"
+                                : "",
+                          }}
+                        >
+                          +50 Stars
+                        </span>
+                      </div>
+                      <span className="bundle-title-bottom">Prime</span>
+                    </NavLink>
+                    <div
+                      className="daily-progress-item position-relative"
+                      onClick={openDailyBonus}
+                    >
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/dailyBonusStdProfile.png"
+                        }
+                        alt=""
+                      />
+                      <div className="daily-progress-value-golden">
+                        <span>
+                          {allClaimedChestsstd < 110
+                            ? allClaimedChestsstd + "/110"
+                            : "Completed"}
+                        </span>
+                      </div>
+                      <span className="bundle-title-bottom">Daily Bonus</span>
+                    </div>
+                    <div
+                      className="daily-progress-item position-relative"
+                      onClick={openDailyBonus}
+                    >
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/dailyBonusPrimeProfile.png"
+                        }
+                        alt=""
+                      />
+                      <div className="daily-progress-value-golden">
+                        <span>
+                          {allClaimedChestsPremium < 110
+                            ? allClaimedChestsPremium + "/110"
+                            : "Completed"}
+                        </span>
+                      </div>
+                      <span className="bundle-title-bottom">
+                        Daily Bonus Prime
+                      </span>
+                    </div>
+                    <NavLink
+                      to={
+                        dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link
+                      }
+                      className="daily-progress-item position-relative"
+                    >
+                      <img
+                        src={
+                          dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.image
+                        }
+                        alt=""
+                      />
+                      <div className="daily-progress-value-golden">
+                        <span>
+                          {/* {userDailyBundles?.dragonRuinsCount
+                        ? userDailyBundles?.dragonRuinsCount === 0
+                          ? "Ready"
+                          : userDailyBundles?.dragonRuinsCount
+                        : "Ready"} */}
+                          {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.active
+                            ? "1"
+                            : "Ready"}
+                        </span>
+                      </div>
+
+                      <span className="bundle-title-bottom">
+                        {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                          ?.title === "BNB Chain Maze Day"
+                          ? "Maze Day"
+                          : dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                              ?.title}
+                      </span>
+                    </NavLink>
+
+                    <NavLink
+                      to={"/account/challenges/critical-hit"}
+                      className="daily-progress-item position-relative"
+                    >
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/criticalHitProfile.png"
+                        }
+                        alt=""
+                      />
+                      <div className="daily-progress-value-golden">
+                        <span>Ready</span>
+                      </div>
+
+                      <span className="bundle-title-bottom">Critical Hit</span>
+                    </NavLink>
+
+                    <NavLink
+                      to={"/account/challenges/treasure-hunt"}
+                      className="daily-progress-item position-relative"
+                    >
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/treasureHuntProfile.png"
+                        }
+                        alt=""
+                      />
+                      <div className="daily-progress-value-golden">
+                        <span>
+                          {userActiveEvents === 6
+                            ? "Completed"
+                            : userActiveEvents + "/6"}
+                        </span>
+                      </div>
+
+                      <span className="bundle-title-bottom">Treasure Hunt</span>
+                    </NavLink>
+
+                    <NavLink
+                      to={"/account/challenges/explorer-hunt"}
+                      className="daily-progress-item position-relative"
+                    >
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/explorerHuntProfile.png"
+                        }
+                        alt=""
+                      />
+                      <div className="daily-progress-value-golden">
+                        <span>
+                          {explorerHuntData[0]?.statValue
+                            ? explorerHuntData[0]?.statValue === 0
+                              ? "Ready"
+                              : explorerHuntData[0]?.statValue
+                            : "Ready"}
+                        </span>
+                      </div>
+
+                      <span className="bundle-title-bottom">Explorer Hunt</span>
+                    </NavLink>
+
+                    <NavLink
+                      to={"/account/challenges/puzzle-madness"}
+                      className="daily-progress-item position-relative"
+                    >
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/puzzleMadnessProfile.png"
+                        }
+                        alt=""
+                      />
+                      <div className="daily-progress-value-golden">
+                        <span>
+                          {userDailyBundles?.puzzleMadnessCount
+                            ? userDailyBundles?.puzzleMadnessCount === 0
+                              ? "Ready"
+                              : userDailyBundles?.puzzleMadnessCount
+                            : "Ready"}
+                          {/* Ready */}
+                        </span>
+                      </div>
+
+                      <span className="bundle-title-bottom">
+                        Puzzle Madness
+                      </span>
+                    </NavLink>
+
+                    {/* <div className="daily-progress-item position-relative">
+                  <img
+                    src={
+                      totalClaimedChests === 0
+                        ? dailyBonusInactive
+                        : dailyBonusActive
+                    }
+                    alt=""
+                  />
+
+                  <div className="daily-progress-value">
+                    <span>{totalClaimedChests}</span>
+                  </div>
+                  
+                </div> */}
                   </div>
                 </div>
               </div>
-              <div className="sidebar-separator2 my-2"></div>
+
+              <div className="sidebar-separator2"></div>
               <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row position-relative">
-                <NavLink
+                {/* <NavLink
                   className="wallet-address-wrapper2 p-2 w-100"
                   to="/account/prime"
                 >
-                  <div className="d-flex align-items-center justify-content-between">
+                 <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex gap-1 align-items-center">
                       <img
                         src={
@@ -612,12 +902,10 @@ const MyProfile = ({
                       />
                       <div className="d-flex flex-column">
                         <span className="user-data-item-left">
-                          {/* {!isPremium ? "Upgrade" : "Prime"} */}
+                         
                           Prime
                         </span>
-                        {/* <span className="user-data-item-left">
-                          {!isPremium ? "Status" : "Enabled"}
-                        </span> */}
+                       
                       </div>
                     </div>
                     <div className="d-flex">
@@ -626,13 +914,20 @@ const MyProfile = ({
                       </span>
                     </div>
                   </div>
-                </NavLink>
+                </NavLink> */}
                 <div
                   className="d-flex wallet-address-wrapper2 p-2 w-100 h-100"
                   onClick={openMyRewards}
                 >
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <div className="d-flex gap-1 align-items-center">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/myRewardsLogo2.png"
+                        }
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
                       <span className="user-data-item-left">My Rewards</span>
                     </div>
                     <span className="user-data-item-right">
@@ -668,10 +963,9 @@ const MyProfile = ({
 
                     <div className="d-flex">
                       {!isgoldenPassActive ? (
-                        // <button className="activate-btn2 px-3 py-1">
-                        //   Activate
-                        // </button>
-                        <></>
+                        <button className="activate-btn2 px-3 py-1">
+                          Activate
+                        </button>
                       ) : (
                         <Countdown
                           date={Number(isgoldenPassActive) * 1000}
@@ -700,259 +994,6 @@ const MyProfile = ({
                     />
                   </OutsideClickHandler>
                 )}
-              </div>
-              <div className="sidebar-separator2 my-2"></div>
-
-              <div className="daily-progress-wrapper p-4 d-flex flex-column gap-3">
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="progress-line"></div>
-                  <span className="daily-progress-span mx-2">
-                    Daily Progress
-                  </span>
-                  <div className="progress-line-2"></div>
-                </div>
-                <div className="daily-progress-grid">
-                  {/* <div className="daily-progress-item position-relative">
-                  <img
-                    src={
-                      isgoldenPassActive ? goldenPassActive : goldenPassInactive
-                    }
-                    alt=""
-                  />
-                  {isgoldenPassActive && (
-                    <div className="daily-progress-value-golden">
-                      <Countdown
-                        date={isgoldenPassActive}
-                        renderer={renderer3}
-                      />
-                    </div>
-                  )}
-                 
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img
-                    src={
-                      userActiveEvents > 0
-                        ? treasureHuntActive
-                        : treasureHuntInactive
-                    }
-                    alt=""
-                  />
-                  <div className="daily-progress-value">
-                    <span>{userActiveEvents}</span>
-                  </div>
-                 
-                </div> */}
-                  <NavLink
-                    to={"/account/prime"}
-                    className="daily-progress-item position-relative"
-                  >
-                    <HtmlTooltip
-                      placement="top"
-                      title={
-                        <span className="card-eth-chain-text">
-                          With Prime enabled, earn 50 extra stars if you're in
-                          the top 100 of any leaderboard!
-                        </span>
-                      }
-                    >
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/prime.png"}
-                        alt=""
-                      />
-                    </HtmlTooltip>
-
-                    <div
-                      className={"daily-progress-value-golden"}
-                      style={{
-                        border:
-                          !isPremium || !userProgress.primeStars ? "1px solid gray" : "",
-                      }}
-                    >
-                      <span
-                        style={{
-                          color: !isPremium || !userProgress.primeStars ? "gray" : "",
-                        }}
-                      >
-                        +50 Stars
-                      </span>
-                    </div>
-                    <span className="bundle-title-bottom">Prime</span>
-                  </NavLink>
-                  <div
-                    className="daily-progress-item position-relative"
-                    onClick={openDailyBonus}
-                  >
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/dailyBonusStdProfile.png"
-                      }
-                      alt=""
-                    />
-                    <div className="daily-progress-value-golden">
-                      <span>
-                        {allClaimedChestsstd < 110
-                          ? allClaimedChestsstd + "/110"
-                          : "Completed"}
-                      </span>
-                    </div>
-                    <span className="bundle-title-bottom">Daily Bonus</span>
-                  </div>
-                  <div
-                    className="daily-progress-item position-relative"
-                    onClick={openDailyBonus}
-                  >
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/dailyBonusPrimeProfile.png"
-                      }
-                      alt=""
-                    />
-                    <div className="daily-progress-value-golden">
-                      <span>
-                        {allClaimedChestsPremium < 110
-                          ? allClaimedChestsPremium + "/110"
-                          : "Completed"}
-                      </span>
-                    </div>
-                    <span className="bundle-title-bottom">
-                      Daily Bonus Prime
-                    </span>
-                  </div>
-                  <NavLink
-                    to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
-                    className="daily-progress-item position-relative"
-                  >
-                    <img
-                      src={
-                        dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.image
-                      }
-                      alt=""
-                    />
-                    <div className="daily-progress-value-golden">
-                      <span>
-                        {/* {userDailyBundles?.dragonRuinsCount
-                        ? userDailyBundles?.dragonRuinsCount === 0
-                          ? "Ready"
-                          : userDailyBundles?.dragonRuinsCount
-                        : "Ready"} */}
-                        {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
-                          ?.active
-                          ? "1"
-                          : "Ready"}
-                      </span>
-                    </div>
-
-                    <span className="bundle-title-bottom">
-                      {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
-                        ?.title === "BNB Chain Maze Day"
-                        ? "Maze Day"
-                        : dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
-                            ?.title}
-                    </span>
-                  </NavLink>
-
-                  <NavLink
-                    to={"/account/challenges/critical-hit"}
-                    className="daily-progress-item position-relative"
-                  >
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/criticalHitProfile.png"
-                      }
-                      alt=""
-                    />
-                    <div className="daily-progress-value-golden">
-                      <span>Ready</span>
-                    </div>
-
-                    <span className="bundle-title-bottom">Critical Hit</span>
-                  </NavLink>
-
-                  <NavLink
-                    to={"/account/challenges/treasure-hunt"}
-                    className="daily-progress-item position-relative"
-                  >
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/treasureHuntProfile.png"
-                      }
-                      alt=""
-                    />
-                    <div className="daily-progress-value-golden">
-                      <span>
-                        {userActiveEvents === 6
-                          ? "Completed"
-                          : userActiveEvents + "/6"}
-                      </span>
-                    </div>
-
-                    <span className="bundle-title-bottom">Treasure Hunt</span>
-                  </NavLink>
-
-                  <NavLink
-                    to={"/account/challenges/explorer-hunt"}
-                    className="daily-progress-item position-relative"
-                  >
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/explorerHuntProfile.png"
-                      }
-                      alt=""
-                    />
-                    <div className="daily-progress-value-golden">
-                      <span>
-                        {explorerHuntData[0]?.statValue
-                          ? explorerHuntData[0]?.statValue === 0
-                            ? "Ready"
-                            : explorerHuntData[0]?.statValue
-                          : "Ready"}
-                      </span>
-                    </div>
-
-                    <span className="bundle-title-bottom">Explorer Hunt</span>
-                  </NavLink>
-
-                  <NavLink
-                    to={"/account/challenges/puzzle-madness"}
-                    className="daily-progress-item position-relative"
-                  >
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/puzzleMadnessProfile.png"
-                      }
-                      alt=""
-                    />
-                    <div className="daily-progress-value-golden">
-                      <span>
-                        {userDailyBundles?.puzzleMadnessCount
-                          ? userDailyBundles?.puzzleMadnessCount === 0
-                            ? "Ready"
-                            : userDailyBundles?.puzzleMadnessCount
-                          : "Ready"}
-                        {/* Ready */}
-                      </span>
-                    </div>
-
-                    <span className="bundle-title-bottom">Puzzle Madness</span>
-                  </NavLink>
-
-                  {/* <div className="daily-progress-item position-relative">
-                  <img
-                    src={
-                      totalClaimedChests === 0
-                        ? dailyBonusInactive
-                        : dailyBonusActive
-                    }
-                    alt=""
-                  />
-
-                  <div className="daily-progress-value">
-                    <span>{totalClaimedChests}</span>
-                  </div>
-                  
-                </div> */}
-                </div>
               </div>
             </div>
           </div>
@@ -1274,25 +1315,6 @@ const MyProfile = ({
                     </>
                   )}
 
-                  <div className="d-flex flex-column">
-                    <h6
-                      className="special-rewards-total mb-0"
-                      style={{ color: isPremium ? "#F3BF09" : "#FFE8D2" }}
-                    >
-                      $
-                      {getFormattedNumber(
-                        liveRewards +
-                          Number(treasureRewardMoney) +
-                          totalTreasureHuntUsd
-                      )}
-                    </h6>
-                    <span
-                      className="special-rewards-total-span"
-                      style={{ color: "#FFE8D2" }}
-                    >
-                      Rewards
-                    </span>
-                  </div>
                   <img
                     src={"https://cdn.worldofdypians.com/wod/goldArrow.svg"}
                     width={20}
@@ -1318,6 +1340,9 @@ const MyProfile = ({
                   </h6>
 
                   <div className="d-flex">
+                    {/* {aiQuestionCompleted && (
+                      <Countdown date={Number(midnight)} renderer={renderer} />
+                    )} */}
                     {/* {!aiQuestionCompleted && ( */}
                     <div className={`d-flex flex-column infotips-holder`}>
                       <div className="d-flex align-items-center gap-1">
@@ -1565,7 +1590,10 @@ const MyProfile = ({
                           Activate
                         </button>
                       ) : (
-                         <></>
+                        <Countdown
+                          date={Number(isgoldenPassActive) * 1000}
+                          renderer={renderer}
+                        />
                       )}
                     </div>
                   </div>

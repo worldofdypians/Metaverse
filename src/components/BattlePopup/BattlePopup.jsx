@@ -1,20 +1,26 @@
 import { useRef, useEffect, useState } from "react";
 import "./_battlepopup.scss";
 import xMark from "../Kickstarter/assets/kickstarterXMark.svg";
-import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import { switchNetworkWagmi } from "../../utils/wagmiSwitchChain";
 import { NavLink } from "react-router-dom";
 import { motion } from "motion/react";
 import useWindowSize from "../../hooks/useWindowSize";
-import { ethers } from "ethers";
-import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import click from "./click.mp3";
 import fightBgMusic from "./fightBgMusic.mp3";
+import { getTransaction } from "@wagmi/core";
 
 import { fighters } from "./battleInfo";
 import OutsideClickHandler from "react-outside-click-handler";
 import Countdown from "react-countdown";
+import {
+  writeContract as wagmiWriteContract,
+  waitForTransactionReceipt as wagmiWaitForTransactionReceipt,
+  switchChain as wagmiSwitchChain,
+  getAccount,
+} from "@wagmi/core";
+import { wagmiClient } from "../../wagmiConnectors";
 
 const renderer = ({ hours, minutes }) => {
   return (
@@ -65,8 +71,10 @@ const BattlePopup = ({
   email,
   address,
   handleSwitchNetwork,
+    handleSwitchChainGateWallet,
+  handleSwitchChainBinanceWallet,
+  network_matchain,
   isOpen,
-  binanceW3WProvider,
   walletClient,
   publicClient,
   openedRoyaltyChest,
@@ -459,57 +467,24 @@ const BattlePopup = ({
   };
 
   let countRoyal = 1;
-  const handleCheckIfTxExists = async (email, txHash, chainText) => {
-    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
-      window.web3 = new Web3(window.ethereum);
-      const txResult = await window.web3.eth
-        .getTransaction(txHash)
-        .catch((e) => {
-          console.error(e);
-        });
+  const handleCheckIfTxExists = async (
+    email,
+    txHash,
+    chestIndex,
+    chainText
+  ) => {
+        const video =
+        // chainText === "taiko" ? videoRef2Taiko.current :
+        videoRef2.current;
+    if (window.WALLET_TYPE !== "matchId") {
+      const txResult = getTransaction(wagmiClient, {
+        hash: txHash,
+      });
 
       console.log(txResult);
-      const video = videoRef2.current;
+
       if (txResult) {
-        getUserRewardsByChest(email, txHash, chainText);
-        setLoading(false);
-        setChestOpened(true);
-        // setStep(2);
-
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
-          setTimeout(() => {
-            video.pause();
-            setStep(3);
-            onClaimRewards();
-          }, 8000);
-        }
-      } else {
-        if (countRoyal < 10) {
-          const timer = setTimeout(
-            () => {
-              handleCheckIfTxExists(txHash);
-            },
-            countRoyal === 9 ? 5000 : 2000
-          );
-          return () => clearTimeout(timer);
-        } else {
-          window.alertify.error("Something went wrong.");
-          setLoading(false);
-        }
-      }
-      countRoyal = countRoyal + 1;
-    } else if (window.WALLET_TYPE === "binance") {
-      const txResult_binance = await binanceW3WProvider
-        .getTransaction(txHash)
-        .catch((e) => {
-          console.error(e);
-        });
-      console.log(txResult_binance);
-      const video = videoRef2.current;
-
-      if (txResult_binance) {
-        getUserRewardsByChest(email, txHash, chainText);
+        getUserRewardsByChest(email, txHash, chestIndex, chainText);
         setLoading(false);
         setChestOpened(true);
         setStep(2);
@@ -545,10 +520,9 @@ const BattlePopup = ({
           console.error(e);
         });
       console.log(txResult_matchain, txHash);
-      const video = videoRef2.current;
 
       if (txResult_matchain) {
-        getUserRewardsByChest(email, txHash, chainText);
+        getUserRewardsByChest(email, txHash, chestIndex, chainText);
         setLoading(false);
         setChestOpened(true);
         setStep(2);
@@ -579,227 +553,145 @@ const BattlePopup = ({
     }
   };
 
-  const handleOpenChest = async () => {
+    const resolveChestContract = (cid) => {
+    try {
+      switch (cid) {
+        case 204:
+          return {
+            address: window.config.daily_bonus_address,
+            abi: window.DAILY_BONUS_ABI,
+            chainText: "opbnb",
+          };
+
+        case 56:
+          return {
+            address: window.config.daily_bonus_bnb_address,
+            abi: window.DAILY_BONUS_BNB_ABI,
+            chainText: "bnb",
+          };
+
+        default:
+          return null;
+      }
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  };
+  const chestIndex = 1;
+
+    const handleOpenChest = async () => {
     setLoading(true);
     const video = videoRef2.current;
 
-    window.web3 = new Web3(window.ethereum);
-    const daily_bonus_contract = new window.web3.eth.Contract(
-      window.DAILY_BONUS_ABI,
-      window.config.daily_bonus_address
-    );
+    try {
+      const contractConfig = resolveChestContract(chainId);
+      if (!contractConfig)
+        throw new Error("Unsupported chain for chest contract.");
 
-    const daily_bonus_contract_bnb = new window.web3.eth.Contract(
-      window.DAILY_BONUS_BNB_ABI,
-      window.config.daily_bonus_bnb_address
-    );
+      const functionName = "openChest";
 
-    const daily_bonus_contract_taiko = new window.web3.eth.Contract(
-      window.DAILY_BONUS_TAIKO_ABI,
-      window.config.daily_bonus_taiko_address
-    );
+      // If user is on MatchID wallet, use provided viem walletClient/publicClient
+      if (window.WALLET_TYPE === "matchId" && walletClient && publicClient) {
+        const txHash = await walletClient.writeContract({
+          address: contractConfig.address,
+          abi: contractConfig.abi,
+          functionName,
+          args: [],
+        });
 
-    if (chainId === 204) {
-      if (window.WALLET_TYPE !== "binance") {
-        await daily_bonus_contract.methods
-          .openChest()
-          .send({
-            from: address,
-            maxPriorityFeePerGas: null,
-            maxFeePerGas: null,
-          })
-          .then((data) => {
-            getUserRewardsByChest(email, data.transactionHash, "opbnb");
-            setLoading(false);
-            setChestOpened(true);
-            setStep(2);
-
-            if (video) {
-              video.play().catch((err) => console.error("Play failed:", err));
-              setTimeout(() => {
-                video.pause();
-                setStep(3);
-
-                onClaimRewards();
-              }, 8000);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-            window.alertify.error(e?.message);
-            setLoading(false);
-          });
-      } else if (window.WALLET_TYPE === "binance") {
-        const daily_bonus_contract_opbnb_binance = new ethers.Contract(
-          window.config.daily_bonus_address,
-          window.DAILY_BONUS_ABI,
-          binanceW3WProvider.getSigner()
+        await publicClient.waitForTransactionReceipt({ hash: txHash });
+        getUserRewardsByChest(
+          email,
+          txHash,
+          chestIndex - 1,
+          contractConfig.chainText
         );
-        const txResponse = await daily_bonus_contract_opbnb_binance
-          .openChest()
-          .catch((e) => {
-            console.error(e);
-            window.alertify.error(e?.message);
-            setLoading(false);
-          });
+        setLoading(false);
+        setChestOpened(true);
+        setStep(2);
 
-        const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          getUserRewardsByChest(email, txResponse.hash, "opbnb");
-          setLoading(false);
-          setChestOpened(true);
-          setStep(2);
-
-          if (video) {
-            video.play().catch((err) => console.error("Play failed:", err));
-            setTimeout(() => {
-              video.pause();
-              setStep(3);
-              onClaimRewards();
-            }, 8000);
-          }
+        if (video) {
+          video.play().catch((err) => console.error("Play failed:", err));
+          setTimeout(() => {
+            video.pause();
+            setStep(3);
+            onClaimRewards();
+          }, 8000);
         }
+
+        return;
       }
-    } else if (chainId === 56) {
-      if (
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
-      ) {
-        // const web3 = new Web3(window.ethereum);
-        // const gasPrice = await web3.eth.getGasPrice();
-        // const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        // const increasedGwei = parseInt(currentGwei) + 1;
 
-        // const transactionParameters = {
-        //   gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
-        // };
+      // Default: use wagmi connected wallet via viem
+      const account = getAccount(wagmiClient);
 
-        // await daily_bonus_contract_bnb.methods
-        //   .openChest()
-        //   .estimateGas({ from: address })
-        //   .then((gas) => {
-        //     transactionParameters.gas = web3.utils.toHex(gas);
-        //   })
-        //   .catch(function (error) {
-        //   });
-
-        await daily_bonus_contract_bnb.methods
-          .openChest()
-          .send({
-            from: address,
-            maxPriorityFeePerGas: null,
-            maxFeePerGas: null,
-            // ...transactionParameters,
-          })
-          .then((data) => {
-            getUserRewardsByChest(email, data.transactionHash, "bnb");
-
-            setLoading(false);
-            setChestOpened(true);
-            setStep(2);
-
-            if (video) {
-              video.play().catch((err) => console.error("Play failed:", err));
-              setTimeout(() => {
-                video.pause();
-                setStep(3);
-                onClaimRewards();
-              }, 8000);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-            window.alertify.error(e?.message);
-            setLoading(false);
-          });
-      } else if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient
-            .writeContract({
-              address: window.config.daily_bonus_bnb_address,
-              abi: window.DAILY_BONUS_BNB_ABI,
-              functionName: "openChest",
-              args: [],
-            })
-            .catch((e) => {
-              window.alertify.error(e?.shortMessage);
-              setLoading(false);
-              console.error(e);
-            });
-          if (result) {
-            const receipt = await publicClient
-              .waitForTransactionReceipt({
-                hash: result,
-              })
-              .catch((e) => {
-                console.error(e);
-              });
-
-            if (receipt) {
-              console.log("Transaction confirmed:", receipt);
-              handleCheckIfTxExists(email, result, "bnb");
-            }
-          }
-        }
-      } else if (window.WALLET_TYPE === "binance") {
-        const daily_bonus_contract_bnb_binance = new ethers.Contract(
-          window.config.daily_bonus_bnb_address,
-          window.DAILY_BONUS_BNB_ABI,
-          binanceW3WProvider.getSigner()
-        );
-        const gasPrice = await binanceW3WProvider.getGasPrice();
-        const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
-        const gasPriceInWei = ethers.utils.parseUnits(
-          currentGwei.toString().slice(0, 14),
-          "gwei"
-        );
-
-        const transactionParameters = {
-          gasPrice: gasPriceInWei,
-        };
-
-        let gasLimit;
+      if (account?.chainId && account.chainId !== chainId) {
         try {
-          gasLimit =
-            await daily_bonus_contract_bnb_binance.estimateGas.openPremiumChest();
-          transactionParameters.gasLimit = gasLimit;
-          console.log("transactionParameters", transactionParameters);
-        } catch (error) {
-          console.error(error);
-        }
-
-        const txResponse = await daily_bonus_contract_bnb_binance
-          .openChest({ ...transactionParameters })
-          // .send({
-          //   from: address,
-          //   ...transactionParameters,
-          // })
-          .catch((e) => {
-            console.error(e);
-            window.alertify.error(e?.message);
-            setLoading(false);
-          });
-
-        const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          getUserRewardsByChest(email, txResponse.hash, "bnb");
-
-          setLoading(false);
-          setChestOpened(true);
-          setStep(2);
-
-          if (video) {
-            video.play().catch((err) => console.error("Play failed:", err));
-            setTimeout(() => {
-              video.pause();
-              setStep(3);
-              onClaimRewards();
-            }, 8000);
-          }
+          await wagmiSwitchChain(wagmiClient, { chainId });
+        } catch (e) {
+          console.error("switchChain failed or not supported", e);
         }
       }
+
+      const txHash = await wagmiWriteContract(wagmiClient, {
+        address: contractConfig.address,
+        abi: contractConfig.abi,
+        functionName,
+        args: [],
+        account: account?.address, // optional, connector will provide
+        chainId,
+      });
+
+      let receipt;
+      const maxRetries = 5;
+      for (let i = 0; i < maxRetries; i++) {
+        receipt = await wagmiWaitForTransactionReceipt(wagmiClient, {
+          hash: txHash,
+        }).catch(() => null);
+        if (receipt) break;
+        // wait 2 seconds before retry
+        await new Promise((res) => setTimeout(res, 2000));
+      }
+
+      if (!receipt)
+        throw new Error("Failed to get transaction receipt after retries");
+
+      console.log("Transaction confirmed in block:", receipt.blockNumber);
+
+      if (receipt) {
+        getUserRewardsByChest(
+          email,
+          txHash,
+          chestIndex - 1,
+          contractConfig.chainText
+        );
+        setLoading(false);
+        setChestOpened(true);
+        setStep(2);
+
+        if (video) {
+          video.play().catch((err) => console.error("Play failed:", err));
+          setTimeout(() => {
+            video.pause();
+            setStep(3);
+            onClaimRewards();
+          }, 8000);
+        }
+      }
+
+      return;
+    } catch (unifiedError) {
+      // Fallback to legacy paths below if unified flow fails (keeps backward compatibility)
+      console.error(
+        "Unified wagmi/viem flow failed, falling back",
+        unifiedError
+      ); 
+      window.alertify.error(unifiedError?.message);
+      setLoading(false);
     }
   };
+
 
   const getRewardGradient = (category) => {
     if (category.color.includes("yellow"))
@@ -816,36 +708,20 @@ const BattlePopup = ({
   const selectedChainData = chains.find((c) => c.id === selectedChain);
 
   const switchNetwork = async (hexChainId, chain) => {
-    if (window.ethereum) {
-      if (
-        !window.gatewallet &&
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
-      ) {
-        await handleSwitchNetworkhook(hexChainId)
-          .then(() => {
-            handleSwitchNetwork(chain);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (
-        window.gatewallet &&
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
-      ) {
-        handleSwitchNetwork(chain);
-      } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
-        chain?.showChangeNetwork();
-      } else if (coinbase && window.WALLET_TYPE === "binance") {
-        handleSwitchNetwork(chain);
-      }
-    } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
-      chain?.showChangeNetwork();
-    } else if (coinbase && window.WALLET_TYPE === "binance") {
-      handleSwitchNetwork(chain);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
+    // Extract chainId from hex or use chain number directly
+    const chainId = typeof chain === 'number' ? chain : parseInt(hexChainId, 16);
+    
+    try {
+      await switchNetworkWagmi(chainId, chain, {
+        handleSwitchNetwork,
+        handleSwitchChainGateWallet,
+        handleSwitchChainBinanceWallet,
+        network_matchain,
+        coinbase,
+      });
+    } catch (error) {
+      // Error handling is done in switchNetworkWagmi
+      console.error("Network switch error:", error);
     }
   };
 

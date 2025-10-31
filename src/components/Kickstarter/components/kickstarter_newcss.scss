@@ -6738,6 +6738,10 @@
     line-height: var(--tw-leading, var(--text-sm--line-height));
   }
 
+  .line-height-normal {
+    line-height: normal !important;
+  }
+
   .text-xl {
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
