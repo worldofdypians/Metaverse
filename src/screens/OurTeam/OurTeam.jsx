@@ -21,7 +21,7 @@ const OurTeam = () => {
       photo: 'https://cdn.worldofdypians.com/wod/mihai.jpg',
       link: "https://www.linkedin.com/in/mihai-nicusor/",
       content:
-        "I am a self-professed crypto-capitalist. I got involved in crypto in early 2017 when I purchased my first Ethereum mining rigs and in 2018 I've created a company that is offering different services (like hosting and maintenance) for people that own mining rigs. I learned all about cryptocurrency and blockchain technology during this time. In July 2020, I discovered Uniswap and yield farming. Thus, I started to explore different protocols and learn more about Decentralized finance. Shortly afterward, I had the idea to create DeFi Yield Protocol, a platform that would allow anyone to provide their liquidity, receive rewards in Ethereum for the first time since DeFi started, and use an anti-manipulation feature to convert the rewards into ETH without overly affecting the price. In other words, any person can provide liquidity and earn ETH with minimum risks. DeFi Yield Protocol is my vision, so I am working on the business development and operations background.",
+        "Mihai is a visionary Web3 entrepreneur and blockchain pioneer with a deep passion for innovation and decentralization. Since entering the crypto space in 2017, he has built a track record of success, generating and distributing over $34M to users and scaling blockchain ventures to $46M in annual revenue. Today, Mihai leads World of Dypians, merging immersive gaming with real blockchain utility to define the future of the metaverse.",
     },
     {
       id: "razvan",
@@ -217,42 +217,31 @@ const OurTeam = () => {
       className="container-fluid  pt-lg-5 d-flex flex-column justify-content-center justify-content-lg-end p-0"
       id="ourteam"
     >
-   
-      <div className="our-team d-flex flex-column align-items-center justify-content-center py-4" style={{borderBottom: "3px solid black"}}>
-      <div className="px-3 px-lg-5 d-flex  flex-column justify-content-center align-items-center">
-        <div className="row w-100 justify-content-center align-items-center">
-          <div className="col-12 col-lg-6 d-flex flex-column align-items-center justify-content-center">
-            <h2 className="font-montserrat explorer-grid-title  text-center px-0">
-              Team
-            </h2>
-            <p className="text-white text-center">
-              Our dedicated team at World of Dypians is comprised of experienced
-              professionals passionate about gaming, blockchain, and innovation.
-              With a diverse skill set and a shared vision, we work tirelessly
-              to bring you an exceptional gaming experience and continuous
-              advancements in the World of Dypians ecosystem. Meet the talented
-              individuals driving our project's success!
-            </p>
+
+      <div className="our-team d-flex flex-column align-items-center justify-content-center py-4" style={{ borderBottom: "3px solid black" }}>
+        <div className="px-3 px-lg-5 d-flex  flex-column justify-content-center align-items-center">
+          <div className="row w-100 justify-content-center align-items-center">
+            <div className="col-12 col-lg-6 d-flex flex-column align-items-center justify-content-center">
+              <h2 className="font-montserrat explorer-grid-title  text-center px-0">
+                Team
+              </h2>
+              <p className="text-white text-center">
+                Our dedicated team at World of Dypians is comprised of experienced
+                professionals passionate about gaming, blockchain, and innovation.
+                With a diverse skill set and a shared vision, we work tirelessly
+                to bring you an exceptional gaming experience and continuous
+                advancements in the World of Dypians ecosystem. Meet the talented
+                individuals driving our project's success!
+              </p>
+            </div>
           </div>
-        </div>
-      </div>{" "}
+        </div>{" "}
         <div className="custom-container">
           <div className="team-container w-100 d-grid">
             {windowSize.width < 786
               ? bios
-                  .slice(0, slice)
-                  .map((person, index) => (
-                    <TeamCard
-                      key={index}
-                      id={person.id}
-                      name={person.name}
-                      position={person.position}
-                      content={person.content}
-                      photo={person.photo}
-                      link={person.link}
-                    />
-                  ))
-              : bios.map((person, index) => (
+                .slice(0, slice)
+                .map((person, index) => (
                   <TeamCard
                     key={index}
                     id={person.id}
@@ -262,12 +251,22 @@ const OurTeam = () => {
                     photo={person.photo}
                     link={person.link}
                   />
-                ))}
+                ))
+              : bios.map((person, index) => (
+                <TeamCard
+                  key={index}
+                  id={person.id}
+                  name={person.name}
+                  position={person.position}
+                  content={person.content}
+                  photo={person.photo}
+                  link={person.link}
+                />
+              ))}
           </div>
           <div
-            className={`row mt-4 mx-0  justify-content-center ${
-              windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
-            }`}
+            className={`row mt-4 mx-0  justify-content-center ${windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
+              }`}
           >
             <div
               className={`linear-border `}
@@ -275,9 +274,8 @@ const OurTeam = () => {
               style={{ width: "fit-content" }}
             >
               <button
-                className={`btn filled-btn px-5 ${
-                  windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
-                }`}
+                className={`btn filled-btn px-5 ${windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
+                  }`}
               >
                 Load More
               </button>
