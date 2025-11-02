@@ -657,6 +657,14 @@ function Dashboard({
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
 
+
+  const updateRewardApis = async(data)=>{
+    const result = await axios.post('https://api.worldofdypians.com/api/post-event', data).catch((e)=>{console.error(e)})
+    if(result && result.status === 200) {
+      console.log(result)
+    }
+  }
+
   const fetchUsersocialRewards = () => {
     const cachedUserSocialRewards = localStorage.getItem(
       "cacheduserSocialRewards"
@@ -3852,7 +3860,7 @@ function Dashboard({
 
       const todayObj = result.data.todayResult;
 
-      if (todayObj && todayObj.correct === true) {
+      if (todayObj && todayObj.correct === true && todayObj.userIndex === todayObj.correctIndex) {
         getAIQuestionRewardStatus(email);
       }
       if (isToday === true) {
@@ -4642,6 +4650,7 @@ function Dashboard({
           //   }}
           // >
           <NewDailyBonus
+          username={username}
             openKickstarter={openKickstarter}
             isPremium={isPremium}
             bnbImages={bnbImages}
@@ -5282,6 +5291,7 @@ function Dashboard({
                     getAIQuestionRewardStatus(email);
                     getAIQuestionStatus(coinbase, email);
                   }}
+                  onAddRewards={(value)=>{updateRewardApis(value)}}
                   aiQuestionRewards={aiQuestionRewards}
                   aiQuestionObjectAnswered={aiQuestionObjectAnswered}
                   getAiStep={getAiStep}

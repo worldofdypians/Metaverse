@@ -5909,6 +5909,7 @@ function AppRoutes() {
               (hashValue === "#royalty-chest" &&
                 window.location.pathname.includes("/account"))
             }
+            username={username}
             coinbase={coinbase}
             chainId={networkId}
             handleSwitchNetwork={handleSwitchNetwork}
