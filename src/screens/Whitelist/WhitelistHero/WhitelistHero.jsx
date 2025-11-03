@@ -93,9 +93,9 @@ const WhitelistHero = ({ onSelectRound, type }) => {
           ? "5 Months"
           : type === "special-otc"
           ? "12 months"
-          : type === "cliff-otc" || type === 'cliff1-otc4'
+          : type === "cliff-otc" 
           ? "2 months"
-          : type === "special-otc-4" || type === "cliff-otc2"
+          : type === "special-otc-4" || type === "cliff-otc2"|| type === 'cliff1-otc4'
           ? "4 months"
           : type === "bonus-otc"
           ? "18 months"
