@@ -16,6 +16,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "pool2-dynamic" ||
       type === "wod-dynamic" ||
       type === "cliff-otc" ||
+      type === "cliff1-otc4" ||
       type === "cliff-otc2"
       ? "otc"
       : "seed"
@@ -75,6 +76,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
           ? type
           : "otc",
@@ -91,7 +93,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
           ? "5 Months"
           : type === "special-otc"
           ? "12 months"
-          : type === "cliff-otc"
+          : type === "cliff-otc" || type === 'cliff1-otc4'
           ? "2 months"
           : type === "special-otc-4" || type === "cliff-otc2"
           ? "4 months"
@@ -118,6 +120,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "pool2-dynamic" ||
       type === "wod-dynamic" ||
       type === "cliff-otc" ||
+      type === "cliff1-otc4" ||
       type === "cliff-otc2"
         ? 1
         : 4,
@@ -144,6 +147,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? 1
               : 4,
@@ -165,6 +169,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? 1
               : 4,
@@ -186,6 +191,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? 1
               : 3,
@@ -202,6 +208,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? false
               : true,
@@ -216,6 +223,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? false
               : true,
@@ -230,6 +238,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? false
               : true,
@@ -249,6 +258,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? 1
               : 2,
@@ -265,6 +275,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? false
               : true,
@@ -279,6 +290,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? false
               : true,
@@ -293,6 +305,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? false
               : true,
@@ -315,6 +328,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? false
               : true,
@@ -329,6 +343,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? false
               : true,
@@ -343,6 +358,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "pool2-dynamic" ||
             type === "wod-dynamic" ||
             type === "cliff-otc" ||
+            type === "cliff1-otc4" ||
             type === "cliff-otc2"
               ? false
               : true,
@@ -363,6 +379,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
         type === "pool2-dynamic" ||
         type === "wod-dynamic" ||
         type === "cliff-otc" ||
+        type === "cliff1-otc4" ||
         type === "cliff-otc2"
         ? otc_data[0]
         : sliderData[0]
@@ -398,6 +415,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "pool2-dynamic" ||
                 type === "wod-dynamic" ||
                 type === "cliff-otc" ||
+                type === "cliff1-otc4" ||
                 type === "cliff-otc2"
                   ? "otc-wrapper"
                   : "col-lg-10"
@@ -414,6 +432,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "pool2-dynamic" ||
                 type === "wod-dynamic" ||
                 type === "cliff-otc" ||
+                type === "cliff1-otc4" ||
                 type === "cliff-otc2"
                   ? otc_data
                   : sliderData

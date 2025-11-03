@@ -5059,6 +5059,29 @@ function AppRoutes() {
               }
             />
 
+<Route
+              exact
+              path="/cliff1-otc4"
+              element={
+                <Whitelist
+                  isEOA={isEOA}
+                  chainId={networkId}
+                  isConnected={isConnected}
+                  handleConnection={() => {
+                    setWalletId("connect");
+                    setWalletModal(true);
+                  }}
+                  coinbase={coinbase}
+                  type="cliff1-otc4"
+                  network_matchain={chain}
+                  walletClient={walletClient}
+                  publicClient={publicClient}
+                  wagmiWalletClient={wagmiWalletClient}
+                  wagmiPublicClient={wagmiPublicClient}
+                />
+              }
+            />
+
             <Route
               exact
               path="/cliff-otc2"
