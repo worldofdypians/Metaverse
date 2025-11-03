@@ -4,20 +4,31 @@ import './ThemeSwitcher.scss';
 
 const ThemeSwitcher = () => {
   const { currentTheme, themes, changeTheme } = useTheme();
-  const [isHalloweenPeriod, setIsHalloweenPeriod] = useState(true);
+  const [isFestivePeriod, setIsFestivePeriod] = useState(false);
 
-  // Check if we're in the Halloween auto-theme period
+  // Check if we're in any festive auto-theme period
   useEffect(() => {
     const checkDate = () => {
       const now = new Date();
-      const november3rd = new Date(now.getFullYear(), 10, 2, 23, 59, 59); // November 2nd, 11:59:59 PM
+      const currentYear = now.getFullYear();
       
-      setIsHalloweenPeriod(now <= november3rd);
+      // Halloween period: October 30 to November 2 at 11:59:59 PM
+      const halloweenStart = new Date(currentYear, 9, 30, 0, 0, 0); // October 30
+      const halloweenEnd = new Date(currentYear, 10, 2, 23, 59, 59); // November 2nd
+      
+      // Valentine period: February 13 to February 14 at 11:59:59 PM
+      const valentineStart = new Date(currentYear, 1, 13, 0, 0, 0); // February 13
+      const valentineEnd = new Date(currentYear, 1, 14, 23, 59, 59); // February 14
+      
+      const inHalloweenPeriod = now >= halloweenStart && now <= halloweenEnd;
+      const inValentinePeriod = now >= valentineStart && now <= valentineEnd;
+      
+      setIsFestivePeriod(inHalloweenPeriod || inValentinePeriod);
     };
 
     checkDate();
-    // Check daily to see if we've passed November 2nd
-    const interval = setInterval(checkDate, 1000 * 60 * 60); // Check every hour
+    // Check every hour to see if we've entered/exited a festive period
+    const interval = setInterval(checkDate, 1000 * 60 * 60);
     
     return () => clearInterval(interval);
   }, []);
@@ -48,8 +59,8 @@ const ThemeSwitcher = () => {
     }
   };
 
-  // Hide the theme switcher during Halloween period (until Nov 3)
-  if (isHalloweenPeriod) {
+  // Hide the theme switcher during festive periods
+  if (isFestivePeriod) {
     return null;
   }
 
