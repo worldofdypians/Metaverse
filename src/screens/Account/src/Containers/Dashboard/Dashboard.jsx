@@ -4003,7 +4003,20 @@ function Dashboard({
   }, [eventId, eventCardCount]);
 
   const getTreasureChestsInfo = async () => {
-    let temp = { ...treasureRewardMoney };
+    // Recompute from zero to avoid accumulating and reduce unnecessary updates
+    let temp = {
+      bnb: 0,
+      skale: 0,
+      core: 0,
+      viction: 0,
+      manta: 0,
+      base: 0,
+      taiko: 0,
+      vanar: 0,
+      mat: 0,
+      sei: 0,
+      taraxa: 0,
+    };
 
     if (openedChests && openedChests.length > 0) {
       openedChests.forEach((chest) => {
@@ -4211,7 +4224,23 @@ function Dashboard({
         }
       });
     }
-    setTreasureRewardMoney(temp);
+
+    // Update state only when values actually changed
+    setTreasureRewardMoney((prev) => {
+      const equal =
+        prev.bnb === temp.bnb &&
+        prev.skale === temp.skale &&
+        prev.core === temp.core &&
+        prev.viction === temp.viction &&
+        prev.manta === temp.manta &&
+        prev.base === temp.base &&
+        prev.taiko === temp.taiko &&
+        prev.vanar === temp.vanar &&
+        prev.mat === temp.mat &&
+        prev.sei === temp.sei &&
+        prev.taraxa === temp.taraxa;
+      return equal ? prev : temp;
+    });
   };
 
   useEffect(() => {
