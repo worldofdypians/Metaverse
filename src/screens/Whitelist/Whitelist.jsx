@@ -21,7 +21,7 @@ import {
   OTCPOOLDYNAMIC_ABI,
   OTCPOOL2DYNAMIC_ABI,
   OTCWODDYNAMIC_ABI,
-  OTCCLIFF_ABI,
+  OTCCLIFF_ABI, OTC1CLIFF4_ABI,
   OTCCLIFF2_ABI,
 } from "./abis";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
@@ -62,6 +62,8 @@ const Whitelist = ({
   const [cliffTimeOtcSpecial4, setcliffTimeOtcSpecial4] = useState(0);
   const [cliffTimeOtcCliff, setcliffTimeOtcCliff] = useState(0);
   const [cliffTimeOtcCliff2, setcliffTimeOtcCliff2] = useState(0);
+  const [cliffTimeOtc1Cliff4, setcliffTimeOtc1Cliff4] = useState(0);
+
   const [cliffTimeOtcPoolBonus, setcliffTimeOtcPoolBonus] = useState(0);
   const [cliffTimeOtcPoolDynamic, setcliffTimeOtcPoolDynamic] = useState(0);
   const [cliffTimeOtcPool2Dynamic, setcliffTimeOtcPool2Dynamic] = useState(0);
@@ -95,6 +97,10 @@ const Whitelist = ({
   const [pendingTokensOTCCliff, setpendingTokensOTCCliff] = useState(0);
   const [userClaimedTokensOTCCliff, setuserClaimedTokensOTCCliff] = useState(0);
   const [userVestedTokensOTCCliff, setuserVestedTokensOTCCliff] = useState(0);
+
+  const [pendingTokensOTC1Cliff4, setpendingTokensOTC1Cliff4] = useState(0);
+  const [userClaimedTokensOTC1Cliff4, setuserClaimedTokensOTC1Cliff4] = useState(0);
+  const [userVestedTokensOTC1Cliff4, setuserVestedTokensOTC1Cliff4] = useState(0);
 
   const [pendingTokensOTCCliff2, setpendingTokensOTCCliff2] = useState(0);
   const [userClaimedTokensOTCCliff2, setuserClaimedTokensOTCCliff2] =
@@ -176,6 +182,10 @@ const Whitelist = ({
   const [canClaimOTCCliff, setcanClaimOTCCliff] = useState(false);
   const [claimLoadingOTCCliff, setclaimLoadingOTCCliff] = useState(false);
   const [claimStatusOTCCliff, setclaimStatusOTCCliff] = useState("initial");
+
+  const [canClaimOTC1Cliff4, setcanClaimOTC1Cliff4] = useState(false);
+  const [claimLoadingOTC1Cliff4, setclaimLoadingOTC1Cliff4] = useState(false);
+  const [claimStatusOTC1Cliff4, setclaimStatusOTC1Cliff4] = useState("initial");
 
   const [canClaimOTCCliff2, setcanClaimOTCCliff2] = useState(false);
   const [claimLoadingOTCCliff2, setclaimLoadingOTCCliff2] = useState(false);
@@ -322,6 +332,16 @@ const Whitelist = ({
         [coinbase]
       );
       setcanClaimOTCCliff(Number(availableTGE_OTCCliff) === 1);
+
+      const availableTGE_OTC1Cliff4 = await readContractData(
+        activePublicClient,
+        window.config.otc1cliff4_address,
+        OTC1CLIFF4_ABI,
+        "availableTGE",
+        [coinbase]
+      );
+      setcanClaimOTC1Cliff4(Number(availableTGE_OTC1Cliff4) === 1);
+
       const availableTGE_OTCCliff2 = await readContractData(
         activePublicClient,
         window.config.otccliff2_address,
@@ -487,6 +507,21 @@ const Whitelist = ({
       setcanClaimOTCCliff(tokensToClaimAmountOTCCliff_formatted > 0);
       setpendingTokensOTCCliff(tokensToClaimAmountOTCCliff_formatted);
 
+
+      const tokensToClaimAmountOTC1Cliff4 = await readContractData(
+        activePublicClient,
+        window.config.otc1cliff4_address,
+        OTC1CLIFF4_ABI,
+        "getPendingUnlocked",
+        [coinbase]
+      );
+      const tokensToClaimAmountOTC1Cliff4_formatted = formatTokenAmount(
+        tokensToClaimAmountOTC1Cliff4
+      );
+      setcanClaimOTC1Cliff4(tokensToClaimAmountOTC1Cliff4_formatted > 0);
+      setpendingTokensOTC1Cliff4(tokensToClaimAmountOTC1Cliff4_formatted);
+
+
       const tokensToClaimAmountOTCCliff2 = await readContractData(
         activePublicClient,
         window.config.otccliff2_address,
@@ -607,6 +642,7 @@ const Whitelist = ({
         claimedOTCSpecial,
         claimedOTCSpecial4,
         claimedOTCCliff,
+        claimedOTC1Cliff4,
         claimedOTCCliff2,
         claimedOTCPoolBonus,
         claimedOTCPoolDynamic,
@@ -662,6 +698,14 @@ const Whitelist = ({
           activePublicClient,
           window.config.otccliff_address,
           OTCCLIFF_ABI,
+          "claimedTokens",
+          [coinbase]
+        ),
+
+        readContractData(
+          activePublicClient,
+          window.config.otc1cliff4_address,
+          OTC1CLIFF4_ABI,
           "claimedTokens",
           [coinbase]
         ),
@@ -732,6 +776,8 @@ const Whitelist = ({
       setuserClaimedTokensOTCSpecial(formatTokenAmount(claimedOTCSpecial));
       setuserClaimedTokensOTCSpecial4(formatTokenAmount(claimedOTCSpecial4));
       setuserClaimedTokensOTCCliff(formatTokenAmount(claimedOTCCliff));
+      setuserClaimedTokensOTC1Cliff4(formatTokenAmount(claimedOTC1Cliff4));
+
       setuserClaimedTokensOTCCliff2(formatTokenAmount(claimedOTCCliff2));
 
       setuserClaimedTokensOTCPoolBonus(formatTokenAmount(claimedOTCPoolBonus));
@@ -757,8 +803,8 @@ const Whitelist = ({
         vestedOTCSpecial,
         vestedOTCSpecial4,
         vestedOTCCliff,
+        vestedOTC1Cliff4,
         vestedOTCCliff2,
-
         vestedOTCPoolBonus,
         vestedOTCPoolDynamic,
         vestedOTCPool2Dynamic,
@@ -813,6 +859,13 @@ const Whitelist = ({
           activePublicClient,
           window.config.otccliff_address,
           OTCCLIFF_ABI,
+          "vestedTokens",
+          [coinbase]
+        ),
+        readContractData(
+          activePublicClient,
+          window.config.otc1cliff4_address,
+          OTC1CLIFF4_ABI,
           "vestedTokens",
           [coinbase]
         ),
@@ -883,6 +936,8 @@ const Whitelist = ({
       setuserVestedTokensOTCSpecial(formatTokenAmount(vestedOTCSpecial));
       setuserVestedTokensOTCSpecial4(formatTokenAmount(vestedOTCSpecial4));
       setuserVestedTokensOTCCliff(formatTokenAmount(vestedOTCCliff));
+      setuserVestedTokensOTC1Cliff4(formatTokenAmount(vestedOTC1Cliff4));
+
       setuserVestedTokensOTCCliff2(formatTokenAmount(vestedOTCCliff2));
 
       setuserVestedTokensOTCPoolBonus(formatTokenAmount(vestedOTCPoolBonus));
@@ -925,6 +980,7 @@ const Whitelist = ({
         lastClaimedTimeOTCSpecial,
         lastClaimedTimeOTCSpecial4,
         lastClaimedTimeOTCCliff,
+        lastClaimedTimeOTC1Cliff4,
         lastClaimedTimeOTCCliff2,
         lastClaimedTimeOTCPoolBonus,
         lastClaimedTimeOTCPoolDynamic,
@@ -980,6 +1036,13 @@ const Whitelist = ({
           activePublicClient,
           window.config.otccliff_address,
           OTCCLIFF_ABI,
+          "lastClaimedTime",
+          [coinbase]
+        ),
+        readContractData(
+          activePublicClient,
+          window.config.otc1cliff4_address,
+          OTC1CLIFF4_ABI,
           "lastClaimedTime",
           [coinbase]
         ),
@@ -1049,6 +1112,8 @@ const Whitelist = ({
       setcliffTimeOtcSpecial(Number(lastClaimedTimeOTCSpecial) * 1000);
       setcliffTimeOtcSpecial4(Number(lastClaimedTimeOTCSpecial4) * 1000);
       setcliffTimeOtcCliff(Number(lastClaimedTimeOTCCliff) * 1000);
+      setcliffTimeOtc1Cliff4(Number(lastClaimedTimeOTC1Cliff4) * 1000);
+
       setcliffTimeOtcCliff2(Number(lastClaimedTimeOTCCliff2) * 1000);
 
       setcliffTimeOtcPoolBonus(Number(lastClaimedTimeOTCPoolBonus) * 1000);
@@ -1385,6 +1450,52 @@ const Whitelist = ({
       }, 5000);
     }
   };
+
+  const handleClaimOTC1Cliff4 = async () => {
+    if (!activeWalletClient || !activePublicClient) {
+      window.alertify.error("Wallet not connected");
+      return;
+    }
+console.log('cliff1-otc4')
+    setclaimLoadingOTC1Cliff4(true);
+
+    try {
+      const hash = await activeWalletClient.writeContract({
+        address: window.config.otc1cliff4_address,
+        abi: OTC1CLIFF4_ABI,
+        functionName: "claim",
+        args: [],
+        account: coinbase,
+      });
+
+      const receipt = await activePublicClient.waitForTransactionReceipt({
+        hash,
+      });
+
+      if (receipt.status === "success") {
+        setclaimStatusOTC1Cliff4("success");
+        setclaimLoadingOTC1Cliff4(false);
+        setTimeout(() => {
+          setclaimStatusOTC1Cliff4("initial");
+          getInfo();
+          getInfoTimer();
+        }, 5000);
+      } else {
+        throw new Error("Transaction failed");
+      }
+    } catch (error) {
+      console.error(error);
+      window.alertify.error(
+        error?.shortMessage || error?.message || "Transaction failed"
+      );
+      setclaimStatusOTC1Cliff4("failed");
+      setclaimLoadingOTC1Cliff4(false);
+      setTimeout(() => {
+        setclaimStatusOTC1Cliff4("initial");
+      }, 5000);
+    }
+  };
+
 
   const handleClaimOTCCliff2 = async () => {
     if (!activeWalletClient || !activePublicClient) {
@@ -1810,6 +1921,8 @@ const Whitelist = ({
               ? pendingTokensOTCSpecial4
               : type === "cliff-otc"
               ? pendingTokensOTCCliff
+              : type === "cliff1-otc4"
+              ? pendingTokensOTC1Cliff4
               : type === "cliff-otc2"
               ? pendingTokensOTCCliff2
               : type === "pool-bonus"
@@ -1843,6 +1956,8 @@ const Whitelist = ({
               ? userClaimedTokensOTCSpecial4
               : type === "cliff-otc"
               ? userClaimedTokensOTCCliff
+              : type === "cliff1-otc4"
+              ? userClaimedTokensOTC1Cliff4
               : type === "cliff-otc2"
               ? userClaimedTokensOTCCliff2
               : type === "pool-bonus"
@@ -1876,6 +1991,8 @@ const Whitelist = ({
               ? userVestedTokensOTCSpecial4
               : type === "cliff-otc"
               ? userVestedTokensOTCCliff
+              : type === "cliff1-otc4"
+              ? userVestedTokensOTC1Cliff4
               : type === "cliff-otc2"
               ? userVestedTokensOTCCliff2
               : type === "pool-bonus"
@@ -1909,6 +2026,8 @@ const Whitelist = ({
               ? handleClaimOTCSpecial4()
               : type === "cliff-otc"
               ? handleClaimOTCCliff()
+              : type === "cliff1-otc4"
+              ? handleClaimOTC1Cliff4()
               : type === "cliff-otc2"
               ? handleClaimOTCCliff2()
               : type === "pool-bonus"
@@ -1940,6 +2059,8 @@ const Whitelist = ({
               ? claimStatusOTCSpecial4
               : type === "cliff-otc"
               ? claimStatusOTCCliff
+              : type === "cliff1-otc4"
+              ? claimStatusOTC1Cliff4
               : type === "cliff-otc2"
               ? claimStatusOTCCliff2
               : type === "pool-bonus"
@@ -1973,6 +2094,8 @@ const Whitelist = ({
               ? claimLoadingOTCSpecial4
               : type === "cliff-otc"
               ? claimLoadingOTCCliff
+              : type === "cliff1-otc4"
+              ? claimLoadingOTC1Cliff4
               : type === "cliff-otc2"
               ? claimLoadingOTCCliff2
               : type === "pool-bonus"
@@ -2007,6 +2130,8 @@ const Whitelist = ({
               ? canClaimOTCSpecial4
               : type === "cliff-otc"
               ? canClaimOTCCliff
+              : type === "cliff1-otc4"
+              ? canClaimOTC1Cliff4
               : type === "cliff-otc2"
               ? canClaimOTCCliff2
               : type === "pool-bonus"
@@ -2040,6 +2165,8 @@ const Whitelist = ({
               ? setcanClaimOTCSpecial4(value)
               : type === "cliff-otc"
               ? setcanClaimOTCCliff(value)
+              : type === "cliff1-otc4"
+              ? setcanClaimOTC1Cliff4(value)
               : type === "cliff-otc2"
               ? setcanClaimOTCCliff2(value)
               : type === "pool-bonus"
@@ -2074,6 +2201,8 @@ const Whitelist = ({
               ? cliffTimeOtcSpecial4
               : type === "cliff-otc"
               ? cliffTimeOtcCliff
+              : type === "cliff1-otc4"
+              ? cliffTimeOtc1Cliff4
               : type === "cliff-otc2"
               ? cliffTimeOtcCliff2
               : type === "pool-bonus"
