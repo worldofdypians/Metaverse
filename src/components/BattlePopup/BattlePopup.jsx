@@ -71,7 +71,7 @@ const BattlePopup = ({
   email,
   address,
   handleSwitchNetwork,
-    handleSwitchChainGateWallet,
+  handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
   network_matchain,
   isOpen,
@@ -251,6 +251,8 @@ const BattlePopup = ({
 
   useEffect(() => {
     // 🔊 Play or stop when popup opens/closes
+          console.log(audioRef.current, isOpen, "audioref");
+
     if (isOpen && audioRef.current) {
       audioRef.current.play().catch((err) => {
         if (err.name !== "AbortError") console.warn(err);
@@ -269,10 +271,9 @@ const BattlePopup = ({
       const randomBit = Math.round(Math.random());
       console.log(randomBit, "random");
 
-      setFightType("WIN");
+      setFightType(randomBit === 0 ? "LOSE" : "WIN");
       setFightStep(2);
 
-      // 🛑 Pause during fight
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
@@ -286,8 +287,8 @@ const BattlePopup = ({
         setTimeout(() => {
           setClosePopup(false);
           setFightStep(1);
+          console.log(audioRef.current, "audioref");
 
-          // 🔁 Restart background music
           if (audioRef.current) {
             audioRef.current.play().catch((err) => {
               if (err.name !== "AbortError")
@@ -478,9 +479,9 @@ const BattlePopup = ({
     chestIndex,
     chainText
   ) => {
-        const video =
-        // chainText === "taiko" ? videoRef2Taiko.current :
-        videoRef2.current;
+    const video =
+      // chainText === "taiko" ? videoRef2Taiko.current :
+      videoRef2.current;
     if (window.WALLET_TYPE !== "matchId") {
       const txResult = getTransaction(wagmiClient, {
         hash: txHash,
@@ -558,7 +559,7 @@ const BattlePopup = ({
     }
   };
 
-    const resolveChestContract = (cid) => {
+  const resolveChestContract = (cid) => {
     try {
       switch (cid) {
         case 204:
@@ -585,7 +586,7 @@ const BattlePopup = ({
   };
   const chestIndex = 1;
 
-    const handleOpenChest = async () => {
+  const handleOpenChest = async () => {
     setLoading(true);
     const video = videoRef2.current;
 
@@ -691,12 +692,11 @@ const BattlePopup = ({
       console.error(
         "Unified wagmi/viem flow failed, falling back",
         unifiedError
-      ); 
+      );
       window.alertify.error(unifiedError?.message);
       setLoading(false);
     }
   };
-
 
   const getRewardGradient = (category) => {
     if (category.color.includes("yellow"))
@@ -714,8 +714,9 @@ const BattlePopup = ({
 
   const switchNetwork = async (hexChainId, chain) => {
     // Extract chainId from hex or use chain number directly
-    const chainId = typeof chain === 'number' ? chain : parseInt(hexChainId, 16);
-    
+    const chainId =
+      typeof chain === "number" ? chain : parseInt(hexChainId, 16);
+
     try {
       await switchNetworkWagmi(chainId, chain, {
         handleSwitchNetwork,
@@ -853,8 +854,6 @@ const BattlePopup = ({
     }
   }, [chainId]);
 
-
-
   if (!isOpen) return null;
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
@@ -899,9 +898,9 @@ const BattlePopup = ({
             )}
           </>
         )}
-        {fightInfo !==null && fightStep === 1 && (
+        {fightInfo !== null && fightStep === 1 && (
           <>
-            {fightInfo.win  ? (
+            {fightInfo.win ? (
               <>
                 {selectedPlayer.name === tempfighter.name && <></>}
                 <div className="fighter-lose-rewards-wrapper d-flex flex-column gap-2 align-items-center justify-content-center">
@@ -942,7 +941,7 @@ const BattlePopup = ({
                   </span>
                 </div>
               </div>
-              {fightInfo !==null && fightStep === 1 && (
+              {fightInfo !== null && fightStep === 1 && (
                 <>
                   {fightInfo.win === true ? (
                     <>
@@ -1062,41 +1061,24 @@ const BattlePopup = ({
             style={{
               zIndex: 2,
               position: "absolute",
-              top: "30%",
+              top: "65%",
               margin: "auto",
-              width: "fit-content",
-              height: "fit-content",
+              width: "100%",
             }}
             className="d-flex player-win-wrapper flex-column gap-2 align-items-center"
           >
-            <div className="fighter-win-rewards d-flex align-items-center gap-3 p-4">
-              <div className="d-flex align-items-end gap-1">
-                <span
-                  className="fighter-win-rewards-amount"
-                  style={{ fontSize: "18px" }}
-                >
-                  2,520
-                </span>
-                <span
-                  className="fighter-win-rewards-type"
-                  style={{ fontSize: "14px" }}
-                >
-                  Points
-                </span>
+            <div className="fighter-win-rewards-2 d-flex  align-items-center justify-content-center gap-5 p-4">
+              <div className="d-flex fight-rewards-item-2 flex-column gap-2 align-items-center">
+                <span className="fight-rewards-item-2-value">2,520</span>
+                <h6 className="fight-rewards-item-2-title mb-0">Points</h6>
               </div>
-              <div className="d-flex align-items-end gap-1">
-                <span
-                  className="fighter-win-rewards-amount"
-                  style={{ fontSize: "18px" }}
-                >
-                  134
-                </span>
-                <span
-                  className="fighter-win-rewards-type"
-                  style={{ fontSize: "14px" }}
-                >
-                  Stars
-                </span>
+              <div className="d-flex fight-rewards-item-2 flex-column gap-2 align-items-center">
+                <span className="fight-rewards-item-2-value">150</span>
+                <h6 className="fight-rewards-item-2-title mb-0">Stars</h6>
+              </div>
+              <div className="d-flex fight-rewards-item-2 flex-column gap-2 align-items-center">
+                <span className="fight-rewards-item-2-value">$1.5</span>
+                <h6 className="fight-rewards-item-2-title mb-0">Rewards</h6>
               </div>
             </div>
           </motion.div>
@@ -1709,13 +1691,18 @@ const BattlePopup = ({
                     (chainId === 204 || chainId === 56) &&
                     fightInfo && (
                       <button
-                        className="fantasy-btn font-abaddon text-white d-flex align-items-center justify-content-between"
+                        className="fantasy-btn font-abaddon text-white d-flex align-items-center justify-content-center gap-2"
                         style={{
                           pointerEvents: disableButtons ? "none" : "auto",
                         }}
                         disabled
                       >
-                        <span className="next-fight-in">Next fight in</span>
+                        <img
+                          src="https://cdn.worldofdypians.com/wod/battleTimer.svg"
+                          width={30}
+                          height={30}
+                          alt="battle-timer"
+                        />
                         <Countdown date={midnightTime} renderer={renderer} />
                       </button>
                     )}

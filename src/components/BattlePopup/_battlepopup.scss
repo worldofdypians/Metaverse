@@ -987,6 +987,36 @@
   background: #21403e;
 }
 
+
+.fighter-win-rewards-2{
+  width: 100%;
+  border-radius: 12px;
+background: rgba(8, 11, 42, 0.70);
+backdrop-filter: blur(11px);
+}
+
+.fight-rewards-item-2-value{
+color: #FFF;
+text-align: center;
+text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+font-family: "Montserrat";
+font-size: 38px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.fight-rewards-item-2-title{
+color: #00C6C3;
+text-align: center;
+text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+font-family: "Abaddon";
+font-size: 40px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
 .fighter-win-rewards-amount {
   color: #fff;
   text-align: center;

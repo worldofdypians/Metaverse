@@ -10,8 +10,8 @@ const CloseBattlePopup = ({ onClose, setClosePopup }) => {
         }}
         alt=""
         className="close-ai-x"
-        width={40}
-        height={40}
+        width={30}
+        height={30}
       />
 
       <div className="d-flex flex-column gap-2 mt-5">
