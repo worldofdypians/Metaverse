@@ -450,7 +450,7 @@ function Dashboard({
       // Global Rankings
       globalMonthly:
         userDataStar?.statValue !== undefined && userDataStar?.statValue > 0
-          ? userDataStar.position + 1
+          ? userDataStar.position
           : "---",
       globalWeekly:
         userDataStarWeekly?.statValue !== undefined &&
@@ -462,7 +462,7 @@ function Dashboard({
       // BNB Chain
       userRank:
         userData?.statValue !== undefined && userData?.statValue > 0
-          ? userData.position + 1
+          ? userData.position
           : "---",
       userBnbStars:
         (userData?.statValue === 0
@@ -478,7 +478,7 @@ function Dashboard({
       // Skale Chain
       userRankSkale:
         userDataSkale?.statValue !== undefined && userDataSkale?.statValue > 0
-          ? userDataSkale.position + 1
+          ? userDataSkale.position
           : "---",
       userSkaleStars:
         (userDataSkale?.statValue === 0
@@ -494,7 +494,7 @@ function Dashboard({
       // Core Chain
       userRankCore:
         userDataCore?.statValue !== undefined && userDataCore?.statValue > 0
-          ? userDataCore.position + 1
+          ? userDataCore.position
           : "---",
       userCoreStars:
         (userDataCore?.statValue === 0
@@ -511,7 +511,7 @@ function Dashboard({
       userRankViction:
         userDataViction?.statValue !== undefined &&
           userDataViction?.statValue > 0
-          ? userDataViction.position + 1
+          ? userDataViction.position
           : "---",
       userVictionStars:
         (userDataViction?.statValue === 0
@@ -528,7 +528,7 @@ function Dashboard({
       // Manta Chain
       userRankManta:
         userDataManta?.statValue !== undefined && userDataManta?.statValue > 0
-          ? userDataManta.position + 1
+          ? userDataManta.position
           : "---",
       userMantaStars:
         (userDataManta?.statValue === 0
@@ -544,7 +544,7 @@ function Dashboard({
       // Base Chain
       userRankBase:
         userDataBase?.statValue !== undefined && userDataBase?.statValue > 0
-          ? userDataBase.position + 1
+          ? userDataBase.position
           : "---",
       userBaseStars:
         (userDataBase?.statValue === 0
@@ -560,7 +560,7 @@ function Dashboard({
       // Taiko Chain
       userRankTaiko:
         userDataTaiko?.statValue !== undefined && userDataTaiko?.statValue > 0
-          ? userDataTaiko.position + 1
+          ? userDataTaiko.position
           : "---",
       userTaikoStars:
         (userDataTaiko?.statValue === 0
@@ -576,7 +576,7 @@ function Dashboard({
       // MAT Chain
       userRankMat:
         userDataMat?.statValue !== undefined && userDataMat?.statValue > 0
-          ? userDataMat.position + 1
+          ? userDataMat.position
           : "---",
       userMatStars:
         userDataMat?.statValue === 0
@@ -592,7 +592,7 @@ function Dashboard({
       // Sei Chain
       userRankSei:
         userDataSei?.statValue !== undefined && userDataSei?.statValue > 0
-          ? userDataSei.position + 1
+          ? userDataSei.position
           : "---",
       userSeiStars:
         userDataSei?.statValue === 0
@@ -608,7 +608,7 @@ function Dashboard({
       // Vanar Chain
       userRankVanar:
         userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
-          ? userDataVanar.position + 1
+          ? userDataVanar.position
           : "---",
       userVanarStars:
         (userDataVanar?.statValue === 0
@@ -624,7 +624,7 @@ function Dashboard({
       // Taraxa Chain
       userRankTaraxa:
         userDataTaraxa?.statValue !== undefined && userDataTaraxa?.statValue > 0
-          ? userDataTaraxa.position + 1
+          ? userDataTaraxa.position
           : "---",
       userTaraxaStars:
         userDataTaraxa?.statValue === 0
