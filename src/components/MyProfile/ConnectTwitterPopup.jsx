@@ -5,6 +5,15 @@ import { NavLink } from "react-router-dom";
 const ConnectTwitterPopup = ({ onClose, address, coinbase, isConnected, email, onConnectWallet }) => {
   return (
     <div className="popup-wrapper popup-active connect-twitter-popup p-3 d-flex flex-column align-items-center">
+         <img
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
+          className="kickstarter-close z-2"
+          alt=""
+          onClick={() => {
+            onClose();
+          }}
+        />
+
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="50"

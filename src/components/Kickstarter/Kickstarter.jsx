@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./_kickstarter.scss";
-import xMark from "./assets/kickstarterXMark.svg";
+
 import { getTransaction } from "@wagmi/core";
 
 import { switchNetworkWagmi } from "../../utils/wagmiSwitchChain";
@@ -751,7 +751,7 @@ const Kickstarter = ({
       <div className="position-relative  d-flex w-100 h-100 flex-column justify-content-between align-items-center">
         <img src={royaltyChestIdle} className="d-none" alt="" />
         <img
-          src={xMark}
+          src={'https://cdn.worldofdypians.com/wod/kickstarterXMark.svg'}
           className="kickstarter-close z-2"
           alt=""
           onClick={() => {
