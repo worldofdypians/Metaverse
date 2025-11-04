@@ -58,7 +58,7 @@ const GetPremiumPopup = ({
     args = [],
     chain,
   }) => {
-    const targetChainId = chain ?? chainId;
+    const targetChainId = chain ?? chainId ?? 1;
     if (isMatchIdWallet && publicClient) {
       return await publicClient.readContract({
         address,
@@ -1157,10 +1157,10 @@ const GetPremiumPopup = ({
   const handleCheckIfAlreadyApproved = async (token) => {
     const subscribeToken = token;
 
-    const contractConfig = resolvePremiumContract(chainId, token);
+    const contractConfig = resolvePremiumContract(chainId ?? 1, token);
 
     if (!contractConfig)
-      throw new Error("Unsupported chain for chest contract.");
+      console.error("Unsupported chain for premium contract.");
     const functionName = "getEstimatedTokenSubscriptionAmount";
 
     let tokenprice = await readOnChain({

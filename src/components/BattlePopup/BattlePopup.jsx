@@ -986,7 +986,7 @@ const BattlePopup = ({
                 </>
               )}
               {selectedPlayer.class && (
-                <div className="fighter-class-wrapper d-flex w-fit h-fit p-3 flex-column gap-2 align-items-center justify-content-center">
+                <div className="fighter-class-wrapper d-flex col-2  h-fit p-3 flex-column gap-2 align-items-end justify-content-center">
                   <h6 className="selected-hero-class m-0 font-unzialish">
                     {selectedPlayer.class}
                   </h6>
