@@ -10,15 +10,29 @@ export const useTheme = () => {
   return context;
 };
 
-// Check if we should auto-apply Halloween theme (outside component to avoid recreation)
+// Check if we should auto-apply festive themes based on dates
 const getAutoTheme = () => {
   const now = new Date();
-  const november3rd = new Date(now.getFullYear(), 10, 2, 23, 59, 59); // November 2nd, 11:59:59 PM
+  const currentYear = now.getFullYear();
   
-  // If current date is before or on November 2nd at 11:59 PM, use Halloween theme
-  if (now <= november3rd) {
+  // Halloween period: October 30 to November 2 at 11:59:59 PM
+  const halloweenStart = new Date(currentYear, 9, 30, 0, 0, 0); // October 30, 12:00:00 AM (month 9 = October, day 30)
+  const halloweenEnd = new Date(currentYear, 10, 2, 23, 59, 59); // November 2nd, 11:59:59 PM
+  
+  // Valentine period: February 13 to February 14 at 11:59:59 PM
+  const valentineStart = new Date(currentYear, 1, 13, 0, 0, 0); // February 13, 12:00:00 AM (month 1 = February, day 13)
+  const valentineEnd = new Date(currentYear, 1, 14, 23, 59, 59); // February 14, 11:59:59 PM
+  
+  // Check Halloween first (higher priority if dates overlap)
+  if (now >= halloweenStart && now <= halloweenEnd) {
     return 'halloween';
   }
+  
+  // Check Valentine period
+  if (now >= valentineStart && now <= valentineEnd) {
+    return 'valentine';
+  }
+  
   return 'default';
 };
 
@@ -52,12 +66,12 @@ export const ThemeProvider = ({ children }) => {
     const checkAndApplyAutoTheme = () => {
       const autoTheme = getAutoTheme();
       
-      // During Halloween period, always enforce Halloween theme
-      if (autoTheme === 'halloween') {
-        setCurrentTheme('halloween');
+      // During festive periods (Halloween or Valentine), always enforce the theme
+      if (autoTheme === 'halloween' || autoTheme === 'valentine') {
+        setCurrentTheme(autoTheme);
       }
-      // After November 3rd, switch to saved theme or default if currently on Halloween
-      else if (currentTheme === 'halloween') {
+      // After festive period ends, switch to saved theme or default if currently on festive theme
+      else if (currentTheme === 'halloween' || currentTheme === 'valentine') {
         const savedTheme = localStorage.getItem('festiveTheme');
         setCurrentTheme(savedTheme || 'default');
       }
@@ -77,7 +91,7 @@ export const ThemeProvider = ({ children }) => {
     const autoTheme = getAutoTheme();
     
     // Only save to localStorage if not in auto-theme period
-    // (During Halloween, we don't want to overwrite user's saved preference)
+    // (During festive periods, we don't want to overwrite user's saved preference)
     if (autoTheme === 'default') {
       localStorage.setItem('festiveTheme', currentTheme);
     }
@@ -144,10 +158,10 @@ export const ThemeProvider = ({ children }) => {
   };
 
   const changeTheme = (themeName) => {
-    // Prevent theme changes during Halloween auto-theme period
+    // Prevent theme changes during festive auto-theme periods
     const autoTheme = getAutoTheme();
-    if (autoTheme === 'halloween') {
-      // Theme switching is disabled during Halloween period (until Nov 3)
+    if (autoTheme === 'halloween' || autoTheme === 'valentine') {
+      // Theme switching is disabled during festive periods
       return;
     }
     

@@ -87,6 +87,23 @@ const WalletModal = ({
   const connectors = wagmiClient.connectors;
   const { setWalletType, setWalletModal } = useWallet();
 
+  // Helper to detect SafePal wallet in mobile app browser
+  const isSafePalProvider = () => {
+    if (typeof window === "undefined") return false;
+    // SafePal injects as window.ethereum with specific identifiers
+    const ethereum = window.ethereum;
+    if (!ethereum) return false;
+    
+    // Check for SafePal specific properties
+    return (
+      ethereum.isSafePal ||
+      ethereum.isSafePalWallet ||
+      (ethereum.providers && ethereum.providers.find(p => p.isSafePal || p.isSafePalWallet)) ||
+      window.safepalProvider ||
+      (navigator.userAgent && navigator.userAgent.includes("SafePal"))
+    );
+  };
+
   // Helper to connect by display name or connector name
   const connectWallet = async (option) => {
     if (option.customHandler) {
@@ -96,6 +113,50 @@ const WalletModal = ({
         return handleConnectionMatchId("evm");
       return;
     }
+    
+    // Special handling for SafePal wallet (especially mobile app browser)
+    if (option.walletType === "safepal") {
+      // First check if SafePal provider is detected
+      if (isSafePalProvider()) {
+        // Find injected connector for SafePal
+        const injectedConnector = connectors.find(
+          (c) => c.type === "injected" || c.id === "injected" || c.name.toLowerCase().includes("injected")
+        );
+        
+        if (injectedConnector) {
+          try {
+            await connect(wagmiClient, { connector: injectedConnector });
+            window.WALLET_TYPE = option.walletType;
+            setWalletType(option.walletType);
+            return;
+          } catch (err) {
+            console.error("Failed to connect SafePal:", err);
+          }
+        }
+      }
+      
+      // Fallback: try to find connector by name
+      const connector = connectors.find((c) =>
+        c.name.toLowerCase().includes(option.name.toLowerCase()) ||
+        c.name.toLowerCase().includes("safepal")
+      );
+      
+      if (connector) {
+        connect(wagmiClient, { connector: connector }).then(() => {
+          window.WALLET_TYPE = option.walletType;
+          setWalletType(option.walletType);
+        }).catch((err) => {
+          console.error("SafePal connection error:", err);
+          window.alertify.error("Failed to connect SafePal wallet. Please make sure SafePal is installed and unlocked.");
+        });
+        return;
+      }
+      
+      // If still not found, show error
+      window.alertify.error(option.name + " not found! Please make sure SafePal is installed and the wallet is unlocked.");
+      return;
+    }
+    
     // For Binance Wallet, use WalletConnect with BSC chain
     // if (option.connectorName === "Binance Wallet") {
     //   const connector = connectors.find((c) => c.name === "Binance Wallet");

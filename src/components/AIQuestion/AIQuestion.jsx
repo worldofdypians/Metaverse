@@ -33,6 +33,7 @@ const AIQuestion = ({
   aiQuestionRewards,
   aiQuestionObjectAnswered,
   onQuestionReveal,
+  onAddRewards
 }) => {
   const clickSound = "https://cdn.worldofdypians.com/wod/aiOryn/click.mp3";
   const drumrollSound =
@@ -261,6 +262,36 @@ const AIQuestion = ({
     if (result && result.status === 200) {
       if (result.data.status === "Success") {
         setquestionRewards(result.data.reward);
+        if (
+          result.data.rewards.find((item) => {
+            return item.rewardType === "Money";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "question",
+            username: username,
+            rewardUSD: result.data.rewards.find((item) => {
+              return item.rewardType === "Money";
+            }).reward,
+            rarity: "rare",
+          };
+          onAddRewards(data);
+        }
+         if (
+          result.data.rewards.find((item) => {
+            return item.rewardType === "Points";
+          }) !== undefined
+        ) {
+          const data = {
+            eventType: "question",
+            username: username,
+            points: result.data.rewards.find((item) => {
+              return item.rewardType === "Points";
+            }).reward,
+            rarity: "rare",
+          };
+          onAddRewards(data);
+        }
 
         setSelectedAnswer(correctAnswer);
         new Audio(successSound).play();
