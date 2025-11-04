@@ -1,73 +1,71 @@
+// main.jsx
 import React from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import "./app.scss";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MatchProvider, wagmiConfig } from "@matchain/matchid-sdk-react";
+// import { Hydrate } from "@tanstack/react-query";
 
-import AuthProvider from "./screens/Account/src/Utils.js/Auth/AuthDetails";
-import { ApolloProvider } from "@apollo/client";
-import client from "./screens/Account/src/apolloConfig";
-import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import { Web3Provider } from "@ethersproject/providers";
-import { Web3ReactProvider } from "@web3-react/core";
-import { getWeb3ReactContext } from "@web3-react/core";
-import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+// Wagmi + Wallet
 import { WagmiProvider } from "wagmi";
+import { wagmiClient } from "./wagmiConnectors.js";
 
-// const queryClient = new QueryClient({
-//   defaultOptions: {
-//     queries: {
-//       staleTime: 30 * 60 * 1000,
-//       cacheTime: 31 * 60 * 1000,
-//     },
-//   },
-// });
+// Redux
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
+// Apollo + React Query
+import { ApolloProvider } from "@apollo/client/react";
+import client from "./screens/Account/src/apolloConfig";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { createSyncStoragePersister  } from "@tanstack/query-sync-storage-persister";
+import { Amplify } from "aws-amplify";
+import awsExports from "./screens/Account/src/aws-exports";
+// Auth + MatchID
+import AuthProvider from "./screens/Account/src/Utils.js/Auth/AuthDetails.jsx";
+import { MatchProvider } from "@matchain/matchid-sdk-react";
+
+// App
+import App from "./App.jsx";
+import reportWebVitals from "./reportWebVitals";
+
+// Styles
+import "./app.scss";
+Amplify.configure(awsExports);
+// ✅ React Query + Persist setup
 const queryClient = new QueryClient();
-
-const persister = createSyncStoragePersister({
+const persister = createSyncStoragePersister ({
   storage: window.localStorage,
 });
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
 
-function getLibrary(provider) {
-  const library = new Web3Provider(provider);
-  library.pollingInterval = 12000;
-  return library;
-}
-
-root.render(
+// ✅ React root
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Web3ReactProvider getLibrary={getLibrary}>
+    <Provider store={store}>
+      <BrowserRouter>
         <ApolloProvider client={client}>
-          <PersistQueryClientProvider
-            client={queryClient}
-            persistOptions={{ persister }}
-          >
-            <AuthProvider>
-              <WagmiProvider config={wagmiConfig}>
-                <MatchProvider
-                  appid="ipgjm4nszcr36mcz"
-                  wallet={{ type: "UserPasscode" }}
-                >
-                  <App />
-                </MatchProvider>
-              </WagmiProvider>
-            </AuthProvider>
-          </PersistQueryClientProvider>
+          <QueryClientProvider client={queryClient}>
+            <PersistQueryClientProvider
+              client={queryClient}
+              persistOptions={{ persister }}
+              hydrateOptions={{ defaultOptions: { queries: { retry: false } } }} // <-- required in v5
+            >
+              {/* <Hydrate state={undefined}> */}
+                <AuthProvider>
+                  <WagmiProvider config={wagmiClient}>
+                    <MatchProvider appid="ipgjm4nszcr36mcz" wallet={{ type: "UserPasscode" }}>
+                      <App />
+                    </MatchProvider>
+                  </WagmiProvider>
+                </AuthProvider>
+              {/* </Hydrate> */}
+            </PersistQueryClientProvider>
+          </QueryClientProvider>
         </ApolloProvider>
-      </Web3ReactProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Optional: measure performance
 reportWebVitals();

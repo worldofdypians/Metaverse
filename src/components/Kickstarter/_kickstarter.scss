@@ -12,6 +12,7 @@
   // border: 1px solid rgba(77, 79, 119, 0.8);
   box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.90);
   pointer-events: auto !important;
+  background: black;
   @media screen and (max-width: 1440px) {
     width: 95vw;
     height: 95vh;
@@ -44,6 +45,9 @@
   overflow: hidden;
   @media screen and (max-height: 800px) {
     height: 32%;
+  }
+  @media screen and (max-height: 720px) {
+    height: 35% !important;
   }
   @media screen and (max-width: 1400px) {
     height: 32%;
@@ -492,4 +496,10 @@ transform: scale(1.15);
 
 .kick-claim-btn:disabled{
   opacity: 0.8 !important;
+}
+
+.bnb-chains-wrapper{
+  background: linear-gradient(135deg, rgba(8, 16, 32, 0.9) 0%, rgba(12, 20, 40, 0.8) 50%, rgba(6, 12, 28, 0.7) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
 }

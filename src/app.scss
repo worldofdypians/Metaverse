@@ -4,13 +4,33 @@
 @import "../src/screens/Caws/responsive";
 @import "../src/screens/Account/src/Components/BundleCard/bundle";
 @import "../src/screens/Account/src/Components/ProfileCard/profilecard";
+@import "../src/screens/Caws/NftMinting/General/NftCawCard/nftCawCard";
+@import "../src/screens/Caws/NftMinting/General/NftStakingCawCard/nftStakeCawCard"
+ ;
+@import "../src/screens/Home/CawsSociety/cawssociety";
+@import "../src/components/LandPopup/landpopup";
+@import "../src/components/MyProfile/myprofile";
 
-// @import "../src/screens/Account/src/Containers/Dashboard/Components/TopSection/topsection";
-@import '../src/screens/Caws/NftMinting/General/NftCawCard/nftCawCard';
-@import '../src/screens/Caws/NftMinting/General/NftStakingCawCard/nftStakeCawCard';
-@import  '../src/screens/Home/CawsSociety/cawssociety';
+@import "../src/screens/Game/game";
+@import "../src/screens/Wod/Earn/earn";
+@import "../src/screens/Wod/Earn/EarnContent/top-pools.css";
+@import "../src/screens/Game/game";
+@import "../src/screens/Wod/Earn/EarnContent/pools/stakingWod";
 
-@import '../src/components/LandPopup/landpopup';
+@import "../src/screens/Wod/Token/token";
+@import "../src/screens/Wod/Token/MainHero/mainhero";
+@import "../src/screens/Token/MainHero/mainhero";
+
+@import "../src/screens/About/MainHero/mainheroabout";
+@import "../src/components/ChallengePopup/challengepopup";
+@import "../src/components/StakeModal/stakemodal";
+
+@import "../src/screens/Wod/Token/TokenUtility/tokenutility";
+@import "../src/screens/Whitelist/WhitelistContent/whitelistcontent";
+
+
+@import "../src/screens/Account/src/Components/WalletBalance/walletbalance";
+@import "../src/styles/festive-themes";
 
 
 @font-face {
@@ -361,6 +381,10 @@ place-items: center;
       @media only screen and (max-width: 767px) {
  grid-template-columns: repeat(3, 1fr);
   }
+
+        @media only screen and (max-width: 600px) {
+ grid-template-columns: repeat(2, 1fr);
+  }
   }
 
   .walletbutton:hover {
@@ -371,7 +395,7 @@ place-items: center;
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
+    background: linear-gradient(111.64deg, #080b2a 0%, #1e2383 100.5%);
   }
 
   .walletclose {

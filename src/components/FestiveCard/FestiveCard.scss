@@ -1,0 +1,86 @@
+.festive-card {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  border: 2px solid var(--theme-primary, #7bd8b0);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: var(--theme-secondary, #dcfb85);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .festive-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .festive-card-icon {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .festive-card-title {
+    color: var(--theme-text, #ffffff);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .festive-card-content {
+    color: var(--theme-text, #ffffff);
+    line-height: 1.6;
+  }
+
+  /* Halloween specific styles */
+  &.festive-pumpkin-glow {
+    border-color: var(--theme-pumpkin, #ff8c00);
+    background: rgba(26, 10, 10, 0.8);
+    
+    &:hover {
+      border-color: var(--theme-spooky, #ff0000);
+    }
+  }
+
+  /* Valentine specific styles */
+  &.festive-romantic-glow {
+    border-color: var(--theme-pink, #ff69b4);
+    background: rgba(45, 10, 26, 0.8);
+    
+    &:hover {
+      border-color: var(--theme-rose, #ff1493);
+    }
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .festive-card {
+    padding: 15px;
+    margin: 15px 0;
+    
+    .festive-card-header {
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    
+    .festive-card-icon {
+      font-size: 20px;
+    }
+    
+    .festive-card-title {
+      font-size: 16px;
+    }
+  }
+}
+
