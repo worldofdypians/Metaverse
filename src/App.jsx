@@ -1,12 +1,5 @@
 // App.jsx
-import React, {
-  useEffect,
-  useState,
-  Suspense,
-  useRef,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useMemoryOptimization } from "./hooks/useMemoryOptimization";
 import MemoryMonitor from "./components/MemoryMonitor/MemoryMonitor";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -23,10 +16,10 @@ import "@matchain/matchid-sdk-react/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useUser, useWallet } from "./redux/hooks/useWallet.js";
 import { setUserProgress } from "./redux/slices/userSlice";
-import { useConnect, useDisconnect } from "wagmi";
+import { useConnect } from "wagmi";
 import { signMessage as signMessageWagmi, getBalance } from "@wagmi/core";
-import { formatEther } from 'viem'
-import { injected } from "@wagmi/connectors";
+import { formatEther } from "viem";
+
 import { createWalletClient as createWalletClientWagmi, custom } from "viem";
 import { http, createPublicClient } from "viem";
 import { bsc } from "viem/chains";
@@ -37,18 +30,14 @@ import {
   getBytecode,
   watchAccount,
   watchConnections,
-  reconnect,
 } from "@wagmi/core";
 import {
   writeContract as wagmiWriteContract,
   waitForTransactionReceipt as wagmiWaitForTransactionReceipt,
-  switchChain as wagmiSwitchChain,
 } from "@wagmi/core";
 import { Hooks } from "@matchain/matchid-sdk-react";
 import { monthlyStarPrizes } from "./screens/Account/src/Containers/Dashboard/stars.js";
-import AuthProvider, {
-  useAuth,
-} from "./screens/Account/src/Utils.js/Auth/AuthDetails.jsx";
+import { useAuth } from "./screens/Account/src/Utils.js/Auth/AuthDetails.jsx";
 import { markers } from "./screens/Map/mapdata/markers.jsx";
 import { HashLoader } from "react-spinners";
 // Screens
@@ -118,7 +107,6 @@ import {
 import { wagmiClient } from "./wagmiConnectors.js";
 import { CandlelightCursor } from "./components/FestiveElements/CandleLightCursor.jsx";
 
-
 const Marketplace = React.lazy(() =>
   import("./screens/Marketplace/Marketplace")
 );
@@ -153,7 +141,6 @@ const GovernanceInner = React.lazy(() =>
   import("./screens/Community/Governance/GovernanceContent/GovernanceInner.jsx")
 );
 
-
 const Redirect = React.lazy(() => import("./screens/Home/Redirect"));
 const Token = React.lazy(() => import("./screens/Token/Token"));
 const LoyaltyProgram = React.lazy(() =>
@@ -176,10 +163,10 @@ const Launchpool = React.lazy(() =>
 const ListNFT = React.lazy(() =>
   import("./screens/Marketplace/MarketNFTs/ListNFT")
 );
-const NFTBridge = React.lazy(() => import("./screens/NFTBridge/NftBridge"));
-const NewEvents = React.lazy(() => 
-  import("./components/NewEvents/NewEvents.jsx")
-);
+// const NFTBridge = React.lazy(() => import("./screens/NFTBridge/NftBridge"));
+// const NewEvents = React.lazy(() =>
+//   import("./components/NewEvents/NewEvents.jsx")
+// );
 const Dashboard = React.lazy(() =>
   import("./screens/Account/src/Containers/Dashboard/Dashboard.jsx")
 );
@@ -234,7 +221,7 @@ const useSharedData = () => {
     queryKey: ["nfts"],
     queryFn: fetchAllNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes (renamed from cacheTime)
+    gcTime: 10 * 60 * 1000, // 10 minutes (renamed from cacheTime)
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -254,7 +241,7 @@ const useSharedDataListedNfts = () => {
     queryKey: ["recentListedNFTS"],
     queryFn: fetchListedNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -303,7 +290,7 @@ const useSharedDataLatest20BoughtNFTs = () => {
     queryKey: ["latestBoughtNFTs"],
     queryFn: fetchLatest20BoughtNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -323,7 +310,7 @@ const useSharedDataCawsNfts = () => {
     queryKey: ["cawsnfts"],
     queryFn: fetchAllCawsNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -343,7 +330,7 @@ const useSharedDataWodNfts = () => {
     queryKey: ["wodnfts"],
     queryFn: fetchAllWodNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -363,7 +350,7 @@ const useSharedDataTimepieceNfts = () => {
     queryKey: ["timepiecenfts"],
     queryFn: fetchAllTimepieceNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -452,6 +439,13 @@ function WalletSync() {
           dispatch(setIsConnected(false));
           window.WALLET_TYPE = null;
           break;
+
+        default:
+          console.log("⚠️ Wallet disconnected - clearing Redux state");
+          dispatch(setAddress(null));
+          dispatch(setIsConnected(false));
+          window.WALLET_TYPE = null;
+          break;
       }
     });
 
@@ -497,7 +491,7 @@ function WalletSync() {
 
     // Cleanup watcher on unmount
     return () => unwatch();
-  }, [dispatch, setWalletType]);
+  }, [dispatch, setWalletType, setWalletModal]);
 
   // Handle MatchID wallet separately (not managed by wagmi)
   useEffect(() => {
@@ -548,11 +542,7 @@ function AppRoutes() {
   const chainId = useChainId();
   const [verifyWallet, { data: dataVerify }] = useMutation(VERIFY_WALLET);
   const [generateNonce, { data: dataNonce }] = useMutation(GENERATE_NONCE);
-  const {
-    data,
-    refetch: refetchPlayer,
-    loading,
-  } = useQuery(GET_PLAYER, {
+  const { data, refetch: refetchPlayer } = useQuery(GET_PLAYER, {
     fetchPolicy: "network-only",
   });
 
@@ -572,11 +562,9 @@ function AppRoutes() {
   const [totalSupply, setTotalSupply] = useState(0);
   const [totalVolumeNew, setTotalVolumeNew] = useState(0);
   const [wodHolders, setWodHolders] = useState(0);
-  const [showForms2, setShowForms2] = useState(false);
-  const [cawsToUse, setcawsToUse] = useState([]);
 
+  const [showForms2, setShowForms2] = useState(false);
   const [listedNFTS, setListedNFTS] = useState([]);
-  const [count55, setCount55] = useState(0);
   const [cawsListed, setcawsListed] = useState([]);
   const [wodListed, setwodListed] = useState([]);
   const [timepieceListed, settimepieceListed] = useState([]);
@@ -585,34 +573,45 @@ function AppRoutes() {
   const [mintStatus, setmintStatus] = useState("");
   const [textColor, settextColor] = useState("#fff");
   const [finalCaws, setFinalCaws] = useState([]);
+
+  const [cawsToUse, setcawsToUse] = useState([]);
+
   const [limit, setLimit] = useState(0);
+
   const [allCawsForTimepieceMint, setAllCawsForTimepieceMint] = useState([]);
+  const [myCAWstakes, setMyCAWstakes] = useState([]);
   const [timepieceMetadata, settimepieceMetadata] = useState([]);
+
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
+
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
 
-  const [socials, setSocials] = useState([]);
-  const [availTime, setavailTime] = useState();
-
   const [isBnb, setisBnb] = useState(false);
+
+  const [socials, setSocials] = useState([]);
   const [isBnbSuccess, setisBnbSuccess] = useState(false);
   const [syncCount, setsyncCount] = useState(1);
+
   const [logoutCount, setlogoutCount] = useState(1);
   const [nftCount, setNftCount] = useState(1);
   const [countBalance, setcountBalance] = useState(1);
 
   const [ethTokenData, setEthTokenData] = useState(0);
+
   const [favorites, setFavorites] = useState([]);
   const [cawsBought, setCawsBought] = useState([]);
   const [timepieceBought, setTimepieceBought] = useState([]);
   const [landBought, setLandBought] = useState([]);
+
   const [myNftsOffer, setmyNftsOffer] = useState([]);
   const [success, setSuccess] = useState(false);
   const [premiumOryn, setPremiumOryn] = useState(false);
   const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
   const [royalChestIndex, setRoyalChestIndex] = useState();
+
   const [openedRoyaltyChestTaiko, setOpenedRoyaltyChestTaiko] = useState([]);
+
   const [royalChestIndexTaiko, setRoyalChestIndexTaiko] = useState();
 
   const [showSync, setshowSync] = useState(false);
@@ -626,7 +625,6 @@ function AppRoutes() {
   const [kickstarter, setKickstarter] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { BigNumber } = window;
 
   let taraxaLastDay = new Date("2025-12-13T14:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -834,22 +832,22 @@ function AppRoutes() {
   };
 
   const fetchSkaleBalance = async () => {
-   const { address, chainId, isConnected } = getAccount(wagmiClient);
+    const { address, chainId, isConnected } = getAccount(wagmiClient);
 
-  if (!isConnected || !address) return;
-  if (chainId !== 1482601649) return;
+    if (!isConnected || !address) return;
+    if (chainId !== 1482601649) return;
 
-  const balanceBigInt = await getBalance(wagmiClient, {
-    address
-  });
+    const balanceBigInt = await getBalance(wagmiClient, {
+      address,
+    });
 
-  const formattedAmount = parseFloat(formatEther(balanceBigInt.value));
+    const formattedAmount = parseFloat(formatEther(balanceBigInt.value));
 
-  if (formattedAmount <= 0.000005) {
-    handleSkaleRefill(address);
-  } else {
-    console.log("formatted_amount", formattedAmount);
-  }
+    if (formattedAmount <= 0.000005) {
+      handleSkaleRefill(address);
+    } else {
+      console.log("formatted_amount", formattedAmount);
+    }
   };
 
   const getAllData = async () => {
@@ -860,7 +858,7 @@ function AppRoutes() {
       });
 
     if (result && result.status === 200) {
-      if (result.data && result.data != "NAN") {
+      if (result.data && result.data !== "NAN") {
         localStorage.setItem("cachedTvl", result.data);
       }
     }
@@ -2575,7 +2573,7 @@ function AppRoutes() {
         console.log(e);
       });
   };
-  
+
   const fetchSkalePrice = async () => {
     await axios
       .get(`https://api.worldofdypians.com/api/price/skale`)
@@ -2774,6 +2772,60 @@ function AppRoutes() {
     setBetaModal(true);
   };
 
+  const getStakesIds = async () => {
+    const address = coinbase;
+    let staking_contract = await window.getContractCawsPremiumNFT(
+      "CAWSPREMIUM"
+    );
+    let stakenft = [];
+    let myStakes = await staking_contract.methods
+      .depositsOf(address)
+      .call()
+      .then((result) => {
+        for (let i = 0; i < result.length; i++)
+          stakenft.push(parseInt(result[i]));
+        return stakenft;
+      });
+
+    return myStakes;
+  };
+
+  const myCAWStakes = async () => {
+    let myStakes = await getStakesIds();
+    if (myStakes && myStakes.length > 0) {
+      let stakes = myStakes.map((stake) => window.getNft(stake));
+      stakes = await Promise.all(stakes);
+      stakes.reverse();
+      setMyCAWstakes(stakes);
+    }
+  };
+
+  const getTimepieceNftMinted = async () => {
+    const result = await window.caws_timepiece.calculateTimepieceBalance(
+      coinbase
+    );
+    setTotalTimepieceCreated(result);
+    let metadataArray = [];
+    if (result && result > 0) {
+      for (let index = 0; index < result; index++) {
+        const tokenId =
+          +(await window.caws_timepiece.getCawsTimepieceTokenByIndex(
+            coinbase,
+            index
+          ));
+
+        metadataArray.push({
+          name: `CAWS Timepiece #${tokenId}`,
+          image: `https://timepiece.worldofdypians.com/thumbs150/${tokenId}.png`,
+        });
+      }
+      settimepieceMetadata(metadataArray);
+    } else {
+      settimepieceMetadata(metadataArray);
+      setTotalTimepieceCreated(0);
+    }
+  };
+
   const handleTimepieceMint = async () => {
     if (window.WALLET_TYPE === "matchId") {
       window.alertify?.error("Please connect to another EVM wallet.");
@@ -2815,6 +2867,7 @@ function AppRoutes() {
         setmintStatus("Success! Your Nft was minted successfully!");
         setmintloading("success");
         settextColor("rgb(123, 216, 176)");
+        checkCawsToUse();
       }
 
       return;
@@ -2849,6 +2902,42 @@ function AppRoutes() {
     }
     setLimit(requested);
     setFinalCaws(cawsToUse.slice(0, requested));
+  };
+
+  const checkCawsToUse = async () => {
+    const testArray = [];
+    const cawsArray = [...user.userNFTs.myNFTSCaws, ...myCAWstakes];
+
+    let nft_contract = new window.infuraWeb3.eth.Contract(
+      window.CAWS_TIMEPIECE_ABI,
+      window.config.caws_timepiece_address
+    );
+
+    if (cawsArray.length > 0) {
+      for (let i = 0; i < cawsArray.length; i++) {
+        // let cawsName = cawsArray[i].nftName;
+
+        // const cawsId = parseInt(cawsName.name.slice(6, cawsName.name.length));
+
+        const result = await nft_contract.methods
+          .cawsUsed(cawsArray[i].tokenId)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return false;
+          });
+
+        if (result === false) {
+          testArray.push(cawsArray[i].tokenId);
+        }
+      }
+
+      setcawsToUse(testArray);
+      setAllCawsForTimepieceMint(testArray);
+    } else if (cawsArray.length === 0) {
+      setcawsToUse([]);
+      setAllCawsForTimepieceMint([]);
+    }
   };
 
   const fetchEthStaking = async () => {
@@ -3433,9 +3522,9 @@ function AppRoutes() {
 
     connect.mount("connect");
 
-    connect.addListener(checkout.ConnectEventType.SUCCESS, async (data) => {
+    connect.addListener(checkout.ConnectEventType.SUCCESS, async () => {
       const passportProvider = passportInstance.connectEvm();
-      const accounts = await passportProvider.request({
+      await passportProvider.request({
         method: "eth_requestAccounts",
       });
       handleConnectWallet();
@@ -4524,7 +4613,7 @@ function AppRoutes() {
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [dataVerify]);
+  }, [dataVerify, refetchPlayer]);
 
   useEffect(() => {
     if (dataNonce?.generateWalletNonce) {
@@ -4566,6 +4655,21 @@ function AppRoutes() {
       fetchAllMyNfts(coinbase);
     }
   }, [coinbase, isConnected]);
+
+  useEffect(() => {
+    if (isConnected === true && coinbase && networkId === 1) {
+      checkCawsToUse();
+      getTimepieceNftMinted();
+      myCAWStakes();
+    }
+  }, [
+    user.userNFTs.myNFTSCaws.length,
+    myCAWstakes.length,
+    allCawsForTimepieceMint.length,
+    isConnected,
+    networkId,
+    coinbase,
+  ]);
 
   useEffect(() => {
     if (email && userWallet) {
@@ -5059,7 +5163,7 @@ function AppRoutes() {
               }
             />
 
-<Route
+            <Route
               exact
               path="/cliff1-otc4"
               element={
@@ -5952,7 +6056,7 @@ export default function App() {
   const [fireAppcontent, setFireAppContent] = useState(false);
 
   // Memory optimization for the main App component
-  const { addCleanup, addInterval } = useMemoryOptimization({
+  useMemoryOptimization({
     enableLogging: process.env.NODE_ENV === "development",
     logInterval: 120000, // Log every 2 minutes in development
   });
@@ -6002,7 +6106,7 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <CandlelightCursor/>
+      <CandlelightCursor />
       <WalletSync /> {/* keeps Redux wallet state in sync */}
       <AppRoutes />
       {fireAppcontent === true && <AccountAppContent />}
