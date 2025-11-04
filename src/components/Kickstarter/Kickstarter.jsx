@@ -302,7 +302,7 @@ const Kickstarter = ({
         }
          if (
           result.data.rewards.find((item) => {
-            return item.rewardType === "Points";
+            return item.rewardType === "Points" && item.reward >=18000;
           }) !== undefined
         ) {
           const data = {
@@ -405,7 +405,7 @@ const Kickstarter = ({
         }
          if (
           result.data.reward.find((item) => {
-            return item.rewardType === "Points";
+            return item.rewardType === "Points"&& item.reward >=18000;
           }) !== undefined
         ) {
           const data = {
