@@ -5384,15 +5384,18 @@ function AppRoutes() {
                   isSuccess={isBnbSuccess}
                   onWalletLinkComplete={() => {
                     setisBnbSuccess(false);
+                    refetchPlayer();
                   }}
                   handleConnect={() => {
                     setisBnb(true);
                     setWalletModal(true);
                   }}
+                  onLinkWallet={onSuccessLogin}
                   type="bnb"
                   onSuccessLogin={() => {
                     refetchPlayer();
                   }}
+                  data={data}
                 />
               }
             />
@@ -5407,6 +5410,7 @@ function AppRoutes() {
                   isSuccess={isBnbSuccess}
                   onWalletLinkComplete={() => {
                     setisBnbSuccess(false);
+                    refetchPlayer();
                   }}
                   handleConnect={() => {
                     setisBnb(true);
@@ -5415,14 +5419,26 @@ function AppRoutes() {
                   onSuccessLogin={() => {
                     refetchPlayer();
                   }}
+                  onLinkWallet={onSuccessLogin}
                   type="okx"
+                  data={data}
                 />
               }
             />
 
             <Route exact path="/forgotPassword" element={<ForgotPassword />} />
             <Route exact path="/ResetPassword" element={<ResetPassword />} />
-            <Route exact path="/player" element={<PlayerCreation />} />
+            <Route
+              exact
+              path="/player"
+              element={
+                <PlayerCreation
+                  onPlayerSuccessfulCreate={() => {
+                    refetchPlayer();
+                  }}
+                />
+              }
+            />
 
             <Route
               exact
