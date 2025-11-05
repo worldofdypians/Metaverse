@@ -64,11 +64,43 @@ function Login({ onSuccessLogin }) {
   }, [code]);
 
   async function verifyEmailValidationCode() {
-    await confirmSignUp(username, verifyCode)
-      .then(() => {
-        login();
+    if (!username || !verifyCode) {
+      setLoginValues((prev) => {
+        return {
+          ...prev,
+          loginError: "Username and verification code are required",
+        };
+      });
+      return;
+    }
+    await confirmSignUp({ username, confirmationCode: verifyCode })
+      .then(async () => {
+        // After successful verification, login the user
+        if (username && password) {
+          try {
+            await LoginGlobal(username, password);
+            setLoginValues((prev) => ({
+              ...prev,
+              code: undefined,
+            }));
+            onSuccessLogin();
+          } catch (error) {
+            setLoginValues((prev) => ({
+              ...prev,
+              code: undefined,
+              loginError: error?.message || "Login failed after verification",
+            }));
+          }
+        } else {
+          setLoginValues((prev) => ({
+            ...prev,
+            code: undefined,
+            loginError: "Please enter your password to complete login",
+          }));
+        }
       })
       .catch((e) => {
+        console.log("failed with error", e);
         setLoginValues((prev) => {
           return {
             ...prev,
@@ -95,10 +127,10 @@ function Login({ onSuccessLogin }) {
         />
 
         <Button
-          disabled={disabled}
+          disabled={disabled || !verifyCode || isLoginIn}
           style={{ margin: "auto" }}
           onPress={verifyEmailValidationCode}
-          title={"Verify"}
+          title={isLoginIn ? "Verifying..." : "Verify"}
         />
       </div>
     );

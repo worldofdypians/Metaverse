@@ -21,6 +21,8 @@ function SingUpBNB({
     loginError,
     setLoginValues,
     playerId,
+    signupUsername,
+    isLoginIn,
   } = useAuth();
 
   const [username, setUserName] = useState("");
@@ -53,12 +55,50 @@ function SingUpBNB({
   };
 
   async function verifyEmailValidationCode() {
-    await confirmSignUp(username, verifyCode)
-      .then(() => {
-        login();
+    const emailToVerify = username || signupUsername;
+    if (!emailToVerify || !verifyCode) {
+      setLoginValues((prev) => {
+        return {
+          ...prev,
+          loginError: "Username and verification code are required",
+        };
+      });
+      return;
+    }
+    await confirmSignUp({ username: emailToVerify, confirmationCode: verifyCode })
+      .then(async () => {
+        const emailForLogin = username || signupUsername;
+        if (emailForLogin && password) {
+          try {
+            await LoginGlobal(emailForLogin, password);
+            setLoginValues((prev) => ({
+              ...prev,
+              code: undefined,
+              signupUsername: undefined,
+            }));
+          } catch (error) {
+            setLoginValues((prev) => ({
+              ...prev,
+              code: undefined,
+              loginError: error?.message || "Login failed after verification",
+            }));
+          }
+        } else {
+          setLoginValues((prev) => ({
+            ...prev,
+            code: undefined,
+            loginError: "Please enter your password to complete login",
+          }));
+        }
       })
       .catch((e) => {
         console.log("failed with error", e);
+        setLoginValues((prev) => {
+          return {
+            ...prev,
+            loginError: e?.message,
+          };
+        });
       });
   }
 
@@ -71,7 +111,15 @@ function SingUpBNB({
       password,
     })
       .then((user) => {
-        login();
+     
+        setLoginValues((prev) => {
+          return {
+            ...prev,
+            code: "UserNotConfirmedException",
+            loginError: null,
+            signupUsername: username,
+          };
+        });
       })
       .catch((err) => {
         console.log("err?.message", err?.message);
@@ -96,6 +144,7 @@ function SingUpBNB({
           return {
             ...prev,
             loginError: err?.message,
+            code: undefined,
           };
         });
       });
@@ -167,10 +216,10 @@ function SingUpBNB({
         <div className="summaryseparator"></div>
 
         <Button
-          disabled={disabled}
+          disabled={disabled || !verifyCode || isLoginIn}
           style={{ margin: "auto" }}
           onPress={verifyEmailValidationCode}
-          title={"Verify"}
+          title={isLoginIn ? "Verifying..." : "Verify"}
           type={"primary2"}
         />
       </div>

@@ -56,24 +56,13 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 );
 
 function AuthBNB({
-  isConnected,
-  coinbase,
-  handleConnect,
-  isSuccess,
-  onWalletLinkComplete,
   type,
   onSuccessLogin,
+  onLinkWallet, data
 }) {
   const { isAuthenticated, loginError, setLoginValues, playerId, email } =
     useAuth();
 
-  const {
-    data,
-    refetch: refetchPlayer,
-    loading: loadingPlayer,
-  } = useQuery(GET_PLAYER, {
-    fetchPolicy: "network-only",
-  });
 
   const [value, setValue] = React.useState(1);
   const [playerCreation, setplayerCreation] = useState(false);
@@ -83,11 +72,6 @@ function AuthBNB({
   const [linkWallet, setLinkWallet] = useState(false);
   const [showVerify, setShowVerify] = useState(false);
   const [successLink, setsuccessLink] = useState(false);
-
-  const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
-    useMutation(GENERATE_NONCE);
-  const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
-    useMutation(VERIFY_WALLET);
 
   useEffect(() => {
     if (isAuthenticated && !playerId) {
@@ -126,17 +110,7 @@ function AuthBNB({
     }
   }, [data, playerId, isAuthenticated, isLogin]);
 
-  useEffect(() => {
-    if (dataNonce?.generateWalletNonce) {
-      signWalletPublicAddress();
-    }
-  }, [dataNonce]);
 
-  useEffect(() => {
-    if (isSuccess === true && isConnected) {
-      handleLinkWallet();
-    }
-  }, [isSuccess, isConnected]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -153,7 +127,7 @@ function AuthBNB({
   };
 
   const handleManageLoginStates = () => {
-    refetchPlayer();
+  
     if (
       isAuthenticated &&
       playerId &&
@@ -171,17 +145,6 @@ function AuthBNB({
     }
   };
 
-  const handleLinkWallet = async () => {
-    if (isConnected) {
-      await generateNonce({
-        variables: {
-          publicAddress: coinbase,
-        },
-      });
-    } else {
-      handleConnect();
-    }
-  };
 
   const handleFirstTask = async (wallet) => {
     // const result2 = await axios
@@ -224,26 +187,6 @@ function AuthBNB({
     }
   };
 
-  const signWalletPublicAddress = async () => {
-    try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner(coinbase);
-      const signature = await signer.signMessage(
-        `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-      );
-      verifyWallet({
-        variables: {
-          publicAddress: coinbase,
-          signature: signature,
-        },
-      }).then(() => {
-        onWalletLinkComplete();
-        // handleFirstTask(coinbase);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // if (isAuthenticated && !playerId) {
   //   return <Navigate to={"/player"} />;
@@ -336,10 +279,13 @@ function AuthBNB({
                   {playerCreation === true ? (
                     <PlayerCreationBNB
                       linkWallet={linkWallet}
-                      onLinkWallet={handleLinkWallet}
+                      onLinkWallet={onLinkWallet}
                       successLink={successLink}
                       onShowLinkWallet={() => {
                         setLinkWallet(true);
+                      }}
+                      onPlayerSuccessfulCreate={() => {
+                        onSuccessLogin();
                       }}
                     />
                   ) : playerCreation === false && forgotPassword === true ? (

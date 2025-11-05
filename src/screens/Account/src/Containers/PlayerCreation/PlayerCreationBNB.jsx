@@ -14,7 +14,7 @@ import {
 import classes from "./PlayerCreation.module.css";
 import { useNavigate } from "react-router-dom";   
 
-function PlayerCreationBNB({ onLinkWallet, linkWallet, successLink, onShowLinkWallet }) {
+function PlayerCreationBNB({ onLinkWallet, linkWallet, successLink, onShowLinkWallet, onPlayerSuccessfulCreate }) {
   const { getUpdatedUser } = useAuth();
 
   const [onCreatePlayer, { loading }] = useMutation(CREATE_PLAYER);
@@ -57,13 +57,16 @@ function PlayerCreationBNB({ onLinkWallet, linkWallet, successLink, onShowLinkWa
           password: password,
         },
       });
-      getUpdatedUser();
-     const timer = setTimeout(() => {
-        // navigate("/account");
+      // Update user auth data first
+      await getUpdatedUser();
+   
+        // onPlayerSuccessfulCreate();
+     
+      // Small delay to ensure state updates propagate
+      setTimeout(() => {
         setShowLinkWallet(true);
-        onShowLinkWallet()
-      }, 1000);
-      return () => clearTimeout(timer);
+        onShowLinkWallet();
+      }, 500);
     } catch (error) {
       setCreateError(getErrorMessage(error));
     }

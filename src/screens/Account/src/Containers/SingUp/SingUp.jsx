@@ -14,6 +14,8 @@ function SingUp() {
     code,
     loginError,
     setLoginValues,
+    signupUsername,
+    isLoginIn,
   } = useAuth();
 
   const [username, setUserName] = useState("");
@@ -22,24 +24,64 @@ function SingUp() {
   const [captchaValue, setCaptchaValue] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [verifyCode, setVerifyCode] = useState("");
+  const [isVerifying, setIsVerifying] = useState(false);
   const recaptchaRef = useRef(null);
 
   const handleCaptchaChange = (value) => {
     setCaptchaValue(value);
   };
 
-  const login = () => {
-    LoginGlobal(username, password);
-  };
 
   async function verifyEmailValidationCode() {
-    await confirmSignUp(username, verifyCode)
-      .then(() => {
-        login();
-      })
-      .catch((e) => {
-        console.log("failed with error", e);
+    const emailToVerify = username || signupUsername;
+    if (!emailToVerify || !verifyCode) {
+      setLoginValues((prev) => {
+        return {
+          ...prev,
+          loginError: "Username and verification code are required",
+        };
       });
+      return;
+    }
+    
+    setIsVerifying(true);
+    try {
+      await confirmSignUp({ username: emailToVerify, confirmationCode: verifyCode });
+
+      const emailForLogin = username || signupUsername;
+      if (emailForLogin && password) {
+        try {
+          await LoginGlobal(emailForLogin, password);
+          setLoginValues((prev) => ({
+            ...prev,
+            signupUsername: undefined, // Clear stored username
+          }));
+        } catch (error) {
+          setIsVerifying(false);
+          setLoginValues((prev) => ({
+            ...prev,
+            code: undefined,
+            loginError: error?.message || "Login failed after verification",
+          }));
+        }
+      } else {
+        setIsVerifying(false);
+        setLoginValues((prev) => ({
+          ...prev,
+          code: undefined,
+          loginError: "Please enter your password to complete login",
+        }));
+      }
+    } catch (e) {
+      console.log("failed with error", e);
+      setIsVerifying(false);
+      setLoginValues((prev) => {
+        return {
+          ...prev,
+          loginError: e?.message,
+        };
+      });
+    }
   }
 
   const signup = () => {
@@ -51,13 +93,21 @@ function SingUp() {
         password,
       })
         .then((user) => {
-          login();
+          setLoginValues((prev) => {
+            return {
+              ...prev,
+              code: "UserNotConfirmedException",
+              loginError: null,
+              signupUsername: username,
+            };
+          });
         })
         .catch((err) => {
           setLoginValues((prev) => {
             return {
               ...prev,
               loginError: err?.message,
+              code: undefined,
             };
           });
         });
@@ -83,27 +133,33 @@ function SingUp() {
     }
   }, [username, password]);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      setIsVerifying(false);
+    }
+  }, [isAuthenticated]);
+
   if (isAuthenticated) {
     return <Navigate to="/account" state={{ fromLogin: true }} />;
   }
 
-  if (code === "UserNotConfirmedException") {
+  if (code === "UserNotConfirmedException" || (isVerifying || isLoginIn)) {
     return (
       <div className={classes.container}>
         <Input
           style={{
             marginBottom: 24,
           }}
-          placeHolder="Verify"
+          placeHolder="Enter verification code"
           value={verifyCode}
           onChange={setVerifyCode}
         />
 
         <Button
-          disabled={disabled}
+          disabled={disabled || !verifyCode || isVerifying || isLoginIn}
           style={{ margin: "auto" }}
           onPress={verifyEmailValidationCode}
-          title={"Verify"}
+          title={isVerifying || isLoginIn ? "Verifying..." : "Verify"}
         />
       </div>
     );
