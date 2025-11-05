@@ -1053,7 +1053,7 @@ const BattlePopup = ({
         ) : (
           <></>
         )}
-        {showRewards && fightStep === 3 && (
+         {showRewards && fightStep === 3 && (
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -1067,16 +1067,16 @@ const BattlePopup = ({
             }}
             className="d-flex player-win-wrapper flex-column gap-2 align-items-center"
           >
-            <div className="fighter-win-rewards-2 d-flex  align-items-center justify-content-center gap-5 p-4">
-              <div className="d-flex fight-rewards-item-2 flex-column gap-2 align-items-center">
+            <div className="fighter-win-rewards-2 d-flex flex-column flex-lg-row  align-items-center justify-content-center gap-3 gap-lg-5 p-4">
+              <div className="d-flex fight-rewards-item-2 flex-row flex-lg-column gap-2 align-items-center">
                 <span className="fight-rewards-item-2-value">2,520</span>
                 <h6 className="fight-rewards-item-2-title mb-0">Points</h6>
               </div>
-              <div className="d-flex fight-rewards-item-2 flex-column gap-2 align-items-center">
+              <div className="d-flex fight-rewards-item-2 flex-row flex-lg-column gap-2 align-items-center">
                 <span className="fight-rewards-item-2-value">150</span>
                 <h6 className="fight-rewards-item-2-title mb-0">Stars</h6>
               </div>
-              <div className="d-flex fight-rewards-item-2 flex-column gap-2 align-items-center">
+              <div className="d-flex fight-rewards-item-2 flex-row flex-lg-column gap-2 align-items-center">
                 <span className="fight-rewards-item-2-value">$1.5</span>
                 <h6 className="fight-rewards-item-2-title mb-0">Rewards</h6>
               </div>
