@@ -233,33 +233,77 @@ const BattlePopup = ({
     }
   }
 
-  const audioRef = useRef(null);
+ const audioRef = useRef(null);
+  const audioInitializedRef = useRef(false);
 
   useEffect(() => {
-    // ✅ Create audio once
-    audioRef.current = new Audio(fightBgMusic);
-    audioRef.current.volume = 0.3;
-    audioRef.current.loop = true;
+
+    if (!audioInitializedRef.current) {
+      audioRef.current = new Audio(fightBgMusic);
+      audioRef.current.volume = 0.3;
+      audioRef.current.loop = true;
+      audioRef.current.preload = "auto";
+
+      audioRef.current.addEventListener("canplaythrough", () => {
+        console.log("Audio ready to play");
+      });
+      
+      audioRef.current.addEventListener("error", (e) => {
+        console.error("Audio error:", e);
+      });
+      
+      audioInitializedRef.current = true;
+    }
 
     return () => {
-      if (audioRef.current) {
+
+      if (audioRef.current && audioInitializedRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
       }
     };
-  }, [onClose]);
+  }, []);
 
   useEffect(() => {
     // 🔊 Play or stop when popup opens/closes
-          console.log(audioRef.current, isOpen, "audioref");
+    if (!audioRef.current || !audioInitializedRef.current) {
+      return;
+    }
 
-    if (isOpen && audioRef.current) {
-      audioRef.current.play().catch((err) => {
-        if (err.name !== "AbortError") console.warn(err);
-      });
-    } else if (!isOpen && audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+    const audio = audioRef.current;
+
+    if (isOpen) {
+   
+      const playAudio = async () => {
+        try {
+       
+          if (!audio.paused) {
+            return;
+          }
+      
+          if (audio.currentTime > 0) {
+            audio.currentTime = 0;
+          }
+          
+          await audio.play();
+          console.log("Audio playing successfully");
+        } catch (err) {
+       
+          if (err.name === "NotAllowedError" || err.name === "NotSupportedError") {
+            console.warn("Audio autoplay blocked by browser. User interaction required.");
+          } else if (err.name !== "AbortError") {
+            console.warn("Audio play failed:", err);
+          }
+        }
+      };
+      
+      playAudio();
+    } else {
+  
+      if (!audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
     }
   }, [isOpen]);
 
