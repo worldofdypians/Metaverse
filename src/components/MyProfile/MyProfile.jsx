@@ -574,10 +574,23 @@ const MyProfile = ({
                       isConnected &&
                       !address ? (
                       <button
-                        className="loginbtn-profile px-5 py-2"
+                        className="loginbtn-profile d-flex align-items-center gap-2 px-5 py-2"
                         onClick={onLinkWallet}
                       >
-                        Link Wallet
+                        {/* Link Wallet */}
+                        
+                        <img
+                          src={"https://cdn.worldofdypians.com/wod/sync.svg"}
+                          alt=""
+                          className={syncStatus === "loading" && "syncicon"}
+                        />{" "}
+                        {syncStatus === "initial"
+                          ? "Link Wallet"
+                          : syncStatus === "loading"
+                          ? "In Progress..."
+                          : syncStatus === "success"
+                          ? "Success"
+                          : "Error"}
                       </button>
                     ) : coinbase && email && !address && !username ? (
                       <NavLink
