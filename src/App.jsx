@@ -5359,11 +5359,6 @@ function AppRoutes() {
               path="/auth"
               element={
                 <Auth
-                  isConnected={isConnected}
-                  coinbase={coinbase}
-                  onNewsLetterClick={(value) => {
-                    setisCheckedNewsLetter(value);
-                  }}
                   onSuccessLogin={() => {
                     setloginListener(loginListener + 1);
                     refetchPlayer();
@@ -5379,23 +5374,13 @@ function AppRoutes() {
               path="/bnbchain-alliance-program"
               element={
                 <AuthBNB
-                  isConnected={isConnected}
-                  coinbase={coinbase}
-                  isSuccess={isBnbSuccess}
-                  onWalletLinkComplete={() => {
-                    setisBnbSuccess(false);
-                    refetchPlayer();
-                  }}
-                  handleConnect={() => {
-                    setisBnb(true);
-                    setWalletModal(true);
-                  }}
                   onLinkWallet={onSuccessLogin}
                   type="bnb"
                   onSuccessLogin={() => {
                     refetchPlayer();
                   }}
                   data={data}
+                  syncStatus={syncStatus}
                 />
               }
             />
@@ -5405,23 +5390,14 @@ function AppRoutes() {
               path="/wod-okxwallet"
               element={
                 <AuthBNB
-                  isConnected={isConnected}
-                  coinbase={coinbase}
-                  isSuccess={isBnbSuccess}
-                  onWalletLinkComplete={() => {
-                    setisBnbSuccess(false);
-                    refetchPlayer();
-                  }}
-                  handleConnect={() => {
-                    setisBnb(true);
-                    setWalletModal(true);
-                  }}
                   onSuccessLogin={() => {
                     refetchPlayer();
                   }}
                   onLinkWallet={onSuccessLogin}
                   type="okx"
                   data={data}
+                  syncStatus={syncStatus}
+
                 />
               }
             />

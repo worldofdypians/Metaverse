@@ -58,7 +58,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 function AuthBNB({
   type,
   onSuccessLogin,
-  onLinkWallet, data
+  onLinkWallet, data, syncStatus
 }) {
   const { isAuthenticated, loginError, setLoginValues, playerId, email } =
     useAuth();
@@ -218,16 +218,15 @@ function AuthBNB({
               </div>
             </div>
             <div className="col-12 col-md-12 col-lg-4 mt-0 px-0 px-lg-2">
-              <div className="d-flex flex-column gap-5 gap-lg-2 gap-md-2">
+              <div className="d-flex flex-column h-100 gap-5 gap-lg-2 gap-md-2">
                 <LoginCardBNB
                   // containerStyles={{
                   //   height: 500,
                   // }}
                   cardStyles={{
                     height:
-                      linkWallet === true || value === 0
-                        ? "100%"
-                        : "fit-content",
+                      "100%"
+                        
                   }}
                 >
                   {successLink === false && (
@@ -287,6 +286,7 @@ function AuthBNB({
                       onPlayerSuccessfulCreate={() => {
                         onSuccessLogin();
                       }}
+                      syncStatus={syncStatus}
                     />
                   ) : playerCreation === false && forgotPassword === true ? (
                     <ForgotPasswordBNB
