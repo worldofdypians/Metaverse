@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   LoginWrapper,
@@ -49,6 +49,19 @@ const ForgotPasswordBNB = ({ onSuccess }) => {
     setError("");
     setEmail(val);
   };
+
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (event.key === "Enter" && email && captchaValue && !isEmailSentSucces) {
+        handleEmail();
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [email, captchaValue, isEmailSentSucces]);
 
   if (isEmailSentSucces) {
     return (

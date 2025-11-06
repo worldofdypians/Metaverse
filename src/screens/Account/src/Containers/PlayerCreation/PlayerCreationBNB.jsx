@@ -84,6 +84,27 @@ function PlayerCreationBNB({
     }
   }, [creationState]);
 
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (
+        event.key === "Enter" &&
+        displayName &&
+        password &&
+        !loading &&
+        !showLinkWallet &&
+        !linkWallet &&
+        !successLink
+      ) {
+        _onCreatePlayer();
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [displayName, password, loading, showLinkWallet, linkWallet, successLink]);
+
   return (
     <div className="d-flex flex-column h-100">
       <div className={`d-flex flex-column gap-3 align-items-center h-100`}>

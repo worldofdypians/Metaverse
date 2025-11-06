@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Button.css"; 
+import "./Button.css";
 
 const Button = ({
   type,
@@ -18,14 +18,22 @@ const Button = ({
       {...rest}
     >
       {loading ? (
-        <div className="lds-dual-ring"></div>
+        <div
+          className={
+            type === "primary2"
+              ? "spinner-border spinner-border-sm text-light beast-button"
+              : "lds-dual-ring"
+          }
+        ></div>
       ) : (
         <h1
           className={type ? `${type}titleButton` : "titleButton"}
           style={textStyles}
         >
           {title}
-          {type === "primary2" && <img src={'https://cdn.worldofdypians.com/wod/arrow.svg'} alt="" />}
+          {type === "primary2" && (
+            <img src={"https://cdn.worldofdypians.com/wod/arrow.svg"} alt="" />
+          )}
         </h1>
       )}
     </div>

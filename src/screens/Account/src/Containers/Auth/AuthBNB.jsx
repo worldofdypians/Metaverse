@@ -220,13 +220,12 @@ function AuthBNB({
             <div className="col-12 col-md-12 col-lg-4 mt-0 px-0 px-lg-2">
               <div className="d-flex flex-column h-100 gap-5 gap-lg-2 gap-md-2">
                 <LoginCardBNB
-                  // containerStyles={{
-                  //   height: 500,
-                  // }}
+                  containerStyles={{
+                    height: "100%",
+                  }}
                   cardStyles={{
                     height:
                       "100%"
-                        
                   }}
                 >
                   {successLink === false && (

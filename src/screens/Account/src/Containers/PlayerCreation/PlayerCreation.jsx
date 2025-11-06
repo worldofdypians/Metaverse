@@ -79,6 +79,19 @@ function PlayerCreation({onPlayerSuccessfulCreate}) {
     }
   }, [creationState]);
 
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (event.key === "Enter" && displayName && password && !loading) {
+        _onCreatePlayer();
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [displayName, password, loading]);
+
   return (
     <LoginWrapper style={{ margin: "6rem 0rem" }}>
       <LoginCard>
