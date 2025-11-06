@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { confirmSignUp, signUp } from "@aws-amplify/auth"
+import { confirmSignUp, signUp } from "@aws-amplify/auth";
 import React, { useEffect, useState, useRef } from "react";
 import { Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
@@ -31,7 +31,6 @@ function SingUp() {
     setCaptchaValue(value);
   };
 
-
   async function verifyEmailValidationCode() {
     const emailToVerify = username || signupUsername;
     if (!emailToVerify || !verifyCode) {
@@ -43,10 +42,13 @@ function SingUp() {
       });
       return;
     }
-    
+
     setIsVerifying(true);
     try {
-      await confirmSignUp({ username: emailToVerify, confirmationCode: verifyCode });
+      await confirmSignUp({
+        username: emailToVerify,
+        confirmationCode: verifyCode,
+      });
 
       const emailForLogin = username || signupUsername;
       if (emailForLogin && password) {
@@ -139,11 +141,25 @@ function SingUp() {
     }
   }, [isAuthenticated]);
 
+
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (event.key === "Enter" && username && password && confirmPassword && !code && captchaValue) {
+        signup();
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [username, password, confirmPassword, code, captchaValue]);
+
   if (isAuthenticated) {
     return <Navigate to="/account" state={{ fromLogin: true }} />;
   }
 
-  if (code === "UserNotConfirmedException" || (isVerifying || isLoginIn)) {
+  if (code === "UserNotConfirmedException" || isVerifying || isLoginIn) {
     return (
       <div className={classes.container}>
         <Input

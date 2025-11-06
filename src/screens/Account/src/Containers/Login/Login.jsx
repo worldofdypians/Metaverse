@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { resendSignUpCode, confirmSignUp } from "@aws-amplify/auth"
+import { resendSignUpCode, confirmSignUp } from "@aws-amplify/auth";
 import React, { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
@@ -21,10 +21,13 @@ function Login({ onSuccessLogin }) {
   const [disabled, setDisabled] = useState(false);
 
   const login = async () => {
-    
-    await LoginGlobal(username, password).then(() => {
-      onSuccessLogin();
-    }).catch((e)=>{console.error(e)});
+    await LoginGlobal(username, password)
+      .then(() => {
+        onSuccessLogin();
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   const resendCode = async () => {
@@ -62,6 +65,20 @@ function Login({ onSuccessLogin }) {
       resendCode();
     }
   }, [code]);
+
+  // Handle Enter key press for login
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (event.key === "Enter" && username && password && !code) {
+        login();
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [username, password, code]);
 
   async function verifyEmailValidationCode() {
     if (!username || !verifyCode) {
