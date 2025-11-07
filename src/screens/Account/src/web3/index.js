@@ -7,7 +7,8 @@ import {
   LANDNFT_ABI,
   CAWSSTAKE_ABI,
   LANDSTAKING_ABI,
-  DYP_700_ABI,DYP_700V1_ABI,
+  DYP_700_ABI,
+  DYP_700V1_ABI,
   iDYP_3500_ABI,
 } from "./abis";
 import Web3 from "web3";
@@ -25,7 +26,7 @@ const coldBite_address = "0x6fDB783a9102961B9Ea62D40C69C067e93Ac170b";
 const furyBeast_address = "0xEceF913121D299f7D962A7887C11bf60F3338a63";
 const wingStorm_address = "0x5990a2e7c895A5A5F35787E81bC7BF5cFF085688";
 const scorpionKing_address = "0x6fC8de0936d45071aFF7918137a436148107574C";
-const stoneEye_address = "0x736F553A3eA9af11C5966A056064572c03737b5A";
+const stoneEye_address = "0x1b8112Fd61391E5Cf8971EC35988D47e4Ced5621";
 const goldenPass_address = "0x64D519666D67F95124C3ac755F731ad6e15786DF";
 const puzzleMadness_address = "0xE44E483486d38DADC77bBF968B55F39bBDACE80d";
 const landNft_address = "0xcd60d912655281908ee557ce1add61e983385a03";
@@ -68,10 +69,7 @@ export const token_abi = new cawsContractWeb3.eth.Contract(
   token_address
 );
 
-export const wod_token = new bscWeb3.eth.Contract(
-  TOKEN_ABI,
-  wod_token_address
-);
+export const wod_token = new bscWeb3.eth.Contract(TOKEN_ABI, wod_token_address);
 
 export const wod_token_abi = new cawsContractWeb3.eth.Contract(
   TOKEN_ABI,
@@ -89,10 +87,13 @@ export const token_abi_old = new cawsContractWeb3.eth.Contract(
 );
 
 export const idyptoken_abi = new cawsContractWeb3.eth.Contract(
-    TOKEN_ABI,
-    idyptoken_address
-  ); 
-export const wod_abi = new cawsContractWeb3.eth.Contract(WOD_ABI, dragonRuins_address);
+  TOKEN_ABI,
+  idyptoken_address
+);
+export const wod_abi = new cawsContractWeb3.eth.Contract(
+  WOD_ABI,
+  dragonRuins_address
+);
 export const landNft_contract = new caws_Contract.eth.Contract(
   LANDNFT_ABI,
   landNft_address
@@ -129,4 +130,3 @@ export const dyp700Address = dyp700_address;
 export const dyp700v1Address = dyp700v1_address;
 
 export const idyp3500Address = idyp3500_address;
-

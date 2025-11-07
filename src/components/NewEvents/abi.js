@@ -5,7 +5,7 @@ export const fury_beast_address = "0xEceF913121D299f7D962A7887C11bf60F3338a63";
 export const wing_storm_address = "0x5990a2e7c895A5A5F35787E81bC7BF5cFF085688";
 export const scorpion_king_address =
   "0x6fC8de0936d45071aFF7918137a436148107574C";
-export const stone_eye_address = "0x736F553A3eA9af11C5966A056064572c03737b5A";
+export const stone_eye_address = "0x1b8112Fd61391E5Cf8971EC35988D47e4Ced5621";
 export const golden_pass_address = "0x64D519666D67F95124C3ac755F731ad6e15786DF";
 export const puzzle_madness_address =
   "0xE44E483486d38DADC77bBF968B55F39bBDACE80d";
