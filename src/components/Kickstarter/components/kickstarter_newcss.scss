@@ -1024,6 +1024,9 @@
   .z-1 {
     z-index: 1;
   }
+  .z-2 {
+    z-index: 2;
+  }
 
   .z-5 {
     z-index: 5;
@@ -1321,8 +1324,8 @@
     height: 100%;
   }
 
-  .h-fit {
-    height: fit-content;
+    .h-fit {
+    height: fit-content !important;
   }
 
   .h-0 {
@@ -1606,7 +1609,7 @@
   }
 
   .w-fit {
-    width: fit-content;
+    width: fit-content!important;
   }
 
   .w-full {
@@ -3117,6 +3120,17 @@
 
   .bg-transparent {
     background-color: #0000;
+  }
+
+
+    .bg-white\/10 {
+    background-color: rgba(255, 255, 255, 0.10);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-white\/10 {
+      background-color: color-mix(in oklab, var(--color-white) 10%, transparent);
+    }
   }
 
   .bg-white\/90 {
@@ -6727,6 +6741,10 @@
     line-height: var(--tw-leading, var(--text-sm--line-height));
   }
 
+  .line-height-normal {
+    line-height: normal !important;
+  }
+
   .text-xl {
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
@@ -6989,6 +7007,10 @@
 
   .uppercase {
     text-transform: uppercase;
+  }
+
+  .capitalize {
+    text-transform: capitalize;
   }
 
   .tabular-nums {
