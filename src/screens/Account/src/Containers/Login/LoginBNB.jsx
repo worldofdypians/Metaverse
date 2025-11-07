@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { confirmSignUp } from "@aws-amplify/auth"
+import { confirmSignUp } from "@aws-amplify/auth";
 import React, { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./Login.module.css";
-
 
 function LoginBNB({
   onLoginTry,
@@ -50,12 +49,57 @@ function LoginBNB({
     }
   }, [username, password, verifyCode]);
 
-  async function verifyEmailValidationCode() {
-    await confirmSignUp(username, verifyCode)
-      .then(() => {
+  // Handle Enter key press for login
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (event.key === "Enter" && username && password && !code) {
         login();
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [username, password, code]);
+
+  async function verifyEmailValidationCode() {
+    if (!username || !verifyCode) {
+      setLoginValues((prev) => {
+        return {
+          ...prev,
+          loginError: "Username and verification code are required",
+        };
+      });
+      return;
+    }
+    await confirmSignUp({ username, confirmationCode: verifyCode })
+      .then(async () => {
+        // After successful verification, login the user
+        if (username && password) {
+          try {
+            await LoginGlobal(username, password);
+            setLoginValues((prev) => ({
+              ...prev,
+              code: undefined,
+            }));
+          } catch (error) {
+            setLoginValues((prev) => ({
+              ...prev,
+              code: undefined,
+              loginError: error?.message || "Login failed after verification",
+            }));
+          }
+        } else {
+          setLoginValues((prev) => ({
+            ...prev,
+            code: undefined,
+            loginError: "Please enter your password to complete login",
+          }));
+        }
       })
       .catch((e) => {
+        console.log("failed with error", e);
         setLoginValues((prev) => {
           return {
             ...prev,
@@ -74,34 +118,36 @@ function LoginBNB({
       <div className={classes.containerbnb}>
         <h6 className={classes.create_acc_bnb}>Verify Account</h6>
         <div className="d-flex flex-column gap-2">
-        <span className={classes.createplayertxt2}>
-          *The verification code required for your account has been successfully sent to the email address associated with your account. 
-        </span>
+          <span className={classes.createplayertxt2}>
+            *The verification code required for your account has been
+            successfully sent to the email address associated with your account.
+          </span>
 
-        <span className={classes.createplayertxt2}>
-        Please check your inbox, including the spam folder, and enter the code here to complete the verification process. The verification code you will receive is a 6-digit code.
-        </span>
-        
+          <span className={classes.createplayertxt2}>
+            Please check your inbox, including the spam folder, and enter the
+            code here to complete the verification process. The verification
+            code you will receive is a 6-digit code.
+          </span>
         </div>
         <div className="d-flex flex-column w-100 gap-1">
           <h6 className={classes.labelBNB}>Code*</h6>
-        <Input
-          style={{
-            marginBottom: 24,
-          }}
-          placeHolder="Verify"
-          value={verifyCode}
-          onChange={setVerifyCode}
-          type={"coingecko"}
-        />
+          <Input
+            style={{
+              marginBottom: 24,
+            }}
+            placeHolder="Verify"
+            value={verifyCode}
+            onChange={setVerifyCode}
+            type={"coingecko"}
+          />
         </div>
         <div className="summaryseparator"></div>
 
         <Button
-          disabled={disabled}
+          disabled={disabled || !verifyCode || isLoginIn}
           style={{ margin: "auto" }}
           onPress={verifyEmailValidationCode}
-          title={"Verify"}
+          title={isLoginIn ? "Verifying..." : "Verify"}
           type={"primary2"}
         />
       </div>
@@ -111,44 +157,45 @@ function LoginBNB({
   return (
     <div className={`${classes.containerbnb} h-auto`}>
       <div className="d-flex flex-column gap-3">
-      <h6 className={classes.create_acc_bnb}>Log in to your Game Account</h6>
-      <div className="d-flex flex-column w-100 gap-1">
-        <h6 className={classes.labelBNB}>Email*</h6>
-      <Input
-        placeHolder="Email"
-        value={username}
-        onChange={setUserName}
-        inputType="email"
-        type={"coingecko"}
-      />
+        <h6 className={classes.create_acc_bnb}>Log in to your Game Account</h6>
+        <div className="d-flex flex-column w-100 gap-1">
+          <h6 className={classes.labelBNB}>Email*</h6>
+          <Input
+            placeHolder="Email"
+            value={username}
+            onChange={setUserName}
+            inputType="email"
+            type={"coingecko"}
+          />
+        </div>
+        <div className="d-flex flex-column w-100 gap-1">
+          <h6 className={classes.labelBNB}>Password*</h6>
+          <Input
+            inputType="password"
+            placeHolder="Password"
+            value={password}
+            onChange={setPassword}
+            type={"coingecko"}
+          />
+        </div>
+        <div className="summaryseparator"></div>
+        <div className="d-flex flex-column gap-1">
+          <Button
+            disabled={disabled}
+            style={{ margin: "auto" }}
+            onPress={login}
+            loading={isLoginIn}
+            title={"Continue"}
+            type={"primary2"}
+          />
+          <div
+            className={`${classes.forgotPasswordText} m-auto `}
+            onClick={onForgetPassword}
+          >
+            <span className={classes.errorText2}>Forgot your password?</span>
+          </div>
+        </div>
       </div>
-      <div className="d-flex flex-column w-100 gap-1">
-        <h6 className={classes.labelBNB}>Password*</h6>
-      <Input
-        inputType="password"
-        placeHolder="Password"
-        value={password}
-        onChange={setPassword}
-        type={"coingecko"}
-      />
-      </div>
-      <div className="summaryseparator"></div>
-<div className="d-flex flex-column gap-1" >
-      <Button
-        disabled={disabled}
-        style={{ margin: "auto" }}
-        onPress={login}
-        // loading={isLoginIn}
-        title={"Continue"}
-        type={"primary2"}
-      />
-      <div
-        className={`${classes.forgotPasswordText} m-auto `}
-        onClick={onForgetPassword}
-      >
-        <span className={classes.errorText2}>Forgot your password?</span>
-      </div>
-      </div></div>
 
       <div className="d-flex align-items-center gap-2">
         <h6 className={classes.bottomGroup_graytxt}>

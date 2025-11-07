@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Input, Button, LoginCard, LoginWrapper } from "../../Components";
 import { useNavigate } from "react-router-dom";
 import classes from "./ResetPassword.module.css";
@@ -52,6 +52,25 @@ const ResetPassword = () => {
       }
     }
   };
+
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (
+        event.key === "Enter" &&
+        newPassword &&
+        confirmNewPassword &&
+        captchaValue &&
+        !isResetSuccess
+      ) {
+        handleNewPassword();
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [newPassword, confirmNewPassword, captchaValue, isResetSuccess]);
 
   if (isResetSuccess) {
     return (

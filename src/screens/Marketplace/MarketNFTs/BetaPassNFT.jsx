@@ -11,18 +11,7 @@ import { useParams } from "react-router-dom";
 import OutsideClickHandler from "react-outside-click-handler";
 // import axios from "axios";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
-// import SignUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
-// import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/PlayerCreationGecko";
 
-// import Countdown from "react-countdown";
-
-// const renderer = ({ days, hours, minutes }) => {
-//   return (
-//     <span className="livein-timer">
-//       {days}d : {hours}h : {minutes}m
-//     </span>
-//   );
-// };
 
 const BetaPassNFT = ({
   isConnected,
@@ -1013,32 +1002,7 @@ const BetaPassNFT = ({
                               </ul>
                             </div>
                           )} */}
-                      {/* {playerCreation === false &&
-                          !alreadyRegistered &&
-                          (mintTitle === "sei" ) && (
-                            <SignUpGecko
-                              onSuccessVerify={(value) => {
-                                setplayerCreation(value);
-                              }}
-                              onEmailVerify={(value) => {
-                                setEmailVerify(value);
-                              }}
-                              onShowVerify={(value) => {
-                                setShowVerify(value);
-                              }}
-                              onSuccessLogin={() => {
-                                setalreadyRegistered(true);
-                                refetchPlayer();
-                                // handleFirstTask(coinbase);
-                              }}
-                              mintTitle={selectedMint.cardTitle}
-                              chainId={chainId}
-                              activeTab={activeTab}
-                              isExistingUser={() => {
-                                setactiveTab("login");
-                              }}
-                            />
-                          )} */}
+                    
 
                       {/* {playerCreation === true &&
                           linkWallet === false &&

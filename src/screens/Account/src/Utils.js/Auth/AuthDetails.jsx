@@ -75,6 +75,7 @@ function AuthProvider({ children }) {
       setLoginValues((prev) => ({
         ...prev,
         isLoginIn: false,
+        code: undefined,
       }));
     } catch (error) {
       console.error("errorr", error);
@@ -182,7 +183,19 @@ function AuthProvider({ children }) {
         });
       } catch (error) {
         console.error("getAuthenticatedUser error:", error);
-        resetAuth();
+        // resetAuth();
+        setAuth({
+                    isAuthenticated: false,
+                    isLoading: false,
+                    user: '',
+                    picture: '',
+                    userAttributes: '',
+                    data_loading: '',
+                    tooltips: '',
+                    website_locked: '',
+                    roles: [],
+                    token: undefined,
+                })
       }
     }
   };
@@ -239,7 +252,19 @@ function AuthProvider({ children }) {
         isLoading: false,
       });
     } catch (error) {
-      resetAuth();
+      // resetAuth();
+      setAuth({
+                    isAuthenticated: false,
+                    isLoading: false,
+                    user: '',
+                    picture: '',
+                    userAttributes: '',
+                    data_loading: '',
+                    tooltips: '',
+                    website_locked: '',
+                    roles: [],
+                    token: undefined,
+                })
     }
   };
 

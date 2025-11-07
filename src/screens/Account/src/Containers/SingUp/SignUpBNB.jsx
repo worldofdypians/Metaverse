@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { confirmSignUp, resendSignUpCode, signUp } from "@aws-amplify/auth"
+import { confirmSignUp, resendSignUpCode, signUp } from "@aws-amplify/auth";
 import React, { useEffect, useState, useRef } from "react";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./SignUp.module.css";
 import ReCaptchaV2 from "react-google-recaptcha";
-
 
 function SingUpBNB({
   onVerifySuccess,
@@ -21,6 +20,8 @@ function SingUpBNB({
     loginError,
     setLoginValues,
     playerId,
+    signupUsername,
+    isLoginIn,
   } = useAuth();
 
   const [username, setUserName] = useState("");
@@ -32,10 +33,10 @@ function SingUpBNB({
   const [captchaValue, setCaptchaValue] = useState(null);
   const recaptchaRef = useRef(null);
 
-    const handleCaptchaChange = (value) => {
+  const handleCaptchaChange = (value) => {
     setCaptchaValue(value);
   };
-  
+
   const login = () => {
     LoginGlobal(username, password);
   };
@@ -53,52 +54,101 @@ function SingUpBNB({
   };
 
   async function verifyEmailValidationCode() {
-    await confirmSignUp(username, verifyCode)
-      .then(() => {
-        login();
+    const emailToVerify = username || signupUsername;
+    if (!emailToVerify || !verifyCode) {
+      setLoginValues((prev) => {
+        return {
+          ...prev,
+          loginError: "Username and verification code are required",
+        };
+      });
+      return;
+    }
+    await confirmSignUp({
+      username: emailToVerify,
+      confirmationCode: verifyCode,
+    })
+      .then(async () => {
+        const emailForLogin = username || signupUsername;
+        if (emailForLogin && password) {
+          try {
+            await LoginGlobal(emailForLogin, password);
+            setLoginValues((prev) => ({
+              ...prev,
+              code: undefined,
+              signupUsername: undefined,
+            }));
+          } catch (error) {
+            setLoginValues((prev) => ({
+              ...prev,
+              code: undefined,
+              loginError: error?.message || "Login failed after verification",
+            }));
+          }
+        } else {
+          setLoginValues((prev) => ({
+            ...prev,
+            code: undefined,
+            loginError: "Please enter your password to complete login",
+          }));
+        }
       })
       .catch((e) => {
         console.log("failed with error", e);
+        setLoginValues((prev) => {
+          return {
+            ...prev,
+            loginError: e?.message,
+          };
+        });
       });
   }
 
   const signup = () => {
-        if (!captchaValue) {
+    if (!captchaValue) {
       window.alertify.error("Please verify the reCAPTCHA");
     } else {
-    signUp({
-      username,
-      password,
-    })
-      .then((user) => {
-        login();
+      signUp({
+        username,
+        password,
       })
-      .catch((err) => {
-        console.log("err?.message", err?.message);
-        if (
-          err?.message?.includes(
-            "An account with the given email already exists."
-          )
-        ) {
+        .then((user) => {
+          setLoginValues((prev) => {
+            return {
+              ...prev,
+              code: "UserNotConfirmedException",
+              loginError: null,
+              signupUsername: username,
+            };
+          });
+        })
+        .catch((err) => {
+          console.log("err?.message", err?.message);
+          if (
+            err?.message?.includes(
+              "An account with the given email already exists."
+            )
+          ) {
+            setLoginValues((prev) => {
+              return {
+                ...prev,
+                loginError: err?.message,
+              };
+            });
+            const timer = setTimeout(() => {
+              setuserExists(true);
+              onUserExists();
+            }, 3000);
+            return () => clearTimeout(timer);
+          }
           setLoginValues((prev) => {
             return {
               ...prev,
               loginError: err?.message,
+              code: undefined,
             };
           });
-         const timer = setTimeout(() => {
-            setuserExists(true);
-            onUserExists();
-          }, 3000);
-          return () => clearTimeout(timer);
-        }
-        setLoginValues((prev) => {
-          return {
-            ...prev,
-            loginError: err?.message,
-          };
         });
-      });
     }
   };
 
@@ -127,6 +177,20 @@ function SingUpBNB({
     }
   }, [code, isLogin]);
 
+
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (event.key === "Enter" && username && password && confirmPassword && !code && captchaValue) {
+        signup();
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [username, password, confirmPassword, code, captchaValue]);
+
   //   if (isAuthenticated) {
   //     return <Navigate to="/account" state={{ fromLogin: true }} />;
   //   }
@@ -143,34 +207,36 @@ function SingUpBNB({
       <div className={classes.containerbnb}>
         <h6 className={classes.create_acc_bnb}>Verify Account</h6>
         <div className="d-flex flex-column gap-2">
-        <span className={classes.createplayertxt2}>
-          *The verification code required for your account has been successfully sent to the email address associated with your account. 
-        </span>
+          <span className={classes.createplayertxt2}>
+            *The verification code required for your account has been
+            successfully sent to the email address associated with your account.
+          </span>
 
-        <span className={classes.createplayertxt2}>
-        Please check your inbox, including the spam folder, and enter the code here to complete the verification process. The verification code you will receive is a 6-digit code.
-        </span>
-        
+          <span className={classes.createplayertxt2}>
+            Please check your inbox, including the spam folder, and enter the
+            code here to complete the verification process. The verification
+            code you will receive is a 6-digit code.
+          </span>
         </div>
         <div className="d-flex flex-column w-100 gap-1">
           <h6 className={classes.labelBNB}>Code*</h6>
-        <Input
-          style={{
-            marginBottom: 24,
-          }}
-          placeHolder="Verify"
-          value={verifyCode}
-          onChange={setVerifyCode}
-          type={"coingecko"}
-        />
+          <Input
+            style={{
+              marginBottom: 24,
+            }}
+            placeHolder="Verify"
+            value={verifyCode}
+            onChange={setVerifyCode}
+            type={"coingecko"}
+          />
         </div>
         <div className="summaryseparator"></div>
 
         <Button
-          disabled={disabled}
+          disabled={disabled || !verifyCode || isLoginIn}
           style={{ margin: "auto" }}
           onPress={verifyEmailValidationCode}
-          title={"Verify"}
+          title={isLoginIn ? "Verifying..." : "Verify"}
           type={"primary2"}
         />
       </div>
@@ -224,12 +290,12 @@ function SingUpBNB({
           type={"primary2"}
         />
         <ReCaptchaV2
-                sitekey="6LfFVMQrAAAAAGauKrn5cyQZRaXHMMlHMUz9IOnu"
-                style={{ display: "inline-block" }}
-                theme="dark"
-                ref={recaptchaRef}
-                onChange={handleCaptchaChange}
-              />
+          sitekey="6LfFVMQrAAAAAGauKrn5cyQZRaXHMMlHMUz9IOnu"
+          style={{ display: "inline-block" }}
+          theme="dark"
+          ref={recaptchaRef}
+          onChange={handleCaptchaChange}
+        />
       </div>
       <div className="d-flex align-items-center gap-2">
         <h6 className={classes.bottomGroup_graytxt}>

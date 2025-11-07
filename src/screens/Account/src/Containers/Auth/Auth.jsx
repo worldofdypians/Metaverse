@@ -47,7 +47,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   })
 );
 
-function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
+function Auth({ onSuccessLogin  }) {
   const { isAuthenticated, loginError, setLoginValues, playerId } = useAuth();
   const [checked, setIschecked] = useState(false);
 
