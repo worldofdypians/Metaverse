@@ -263,14 +263,14 @@ const AIQuestion = ({
       if (result.data.status === "Success") {
         setquestionRewards(result.data.reward);
         if (
-          result.data.rewards.find((item) => {
+          result.data.reward.find((item) => {
             return item.rewardType === "Money";
           }) !== undefined
         ) {
           const data = {
             eventType: "question",
             username: username,
-            rewardUSD: result.data.rewards.find((item) => {
+            rewardUSD: result.data.reward.find((item) => {
               return item.rewardType === "Money";
             }).reward,
             rarity: "rare",
@@ -278,14 +278,14 @@ const AIQuestion = ({
           onAddRewards(data);
         }
          if (
-          result.data.rewards.find((item) => {
+          result.data.reward.find((item) => {
             return item.rewardType === "Points";
           }) !== undefined
         ) {
           const data = {
             eventType: "question",
             username: username,
-            points: result.data.rewards.find((item) => {
+            points: result.data.reward.find((item) => {
               return item.rewardType === "Points";
             }).reward,
             rarity: "rare",

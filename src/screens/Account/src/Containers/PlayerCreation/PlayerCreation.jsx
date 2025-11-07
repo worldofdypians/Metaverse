@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client/react";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import { getErrorMessage } from "../../Utils.js/Helpers";
 import { CREATE_PLAYER } from "./PlayerCreation.schema";
+
 import {
   Input,
   LoginCard,
@@ -14,7 +15,7 @@ import {
 import classes from "./PlayerCreation.module.css";
 import { useNavigate } from "react-router-dom";
 
-function PlayerCreation() {
+function PlayerCreation({onPlayerSuccessfulCreate}) {
   const { getUpdatedUser } = useAuth();
 
   const [onCreatePlayer, { loading }] = useMutation(CREATE_PLAYER);
@@ -58,11 +59,14 @@ function PlayerCreation() {
           password: password,
         },
       });
-      getUpdatedUser();
-     const timer = setTimeout(() => {
+      // Update user auth data first
+      await getUpdatedUser();
+      // Refetch player data to ensure it's up to date
+      onPlayerSuccessfulCreate()
+      // Small delay to ensure state updates propagate
+      setTimeout(() => {
         navigate("/account");
-      }, 1000);
-      return () => clearTimeout(timer);
+      }, 500);
     } catch (error) {
       setCreateError(getErrorMessage(error));
     }
@@ -74,6 +78,19 @@ function PlayerCreation() {
       setCreateError("");
     }
   }, [creationState]);
+
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (event.key === "Enter" && displayName && password && !loading) {
+        _onCreatePlayer();
+      }
+    };
+
+    window.addEventListener("keydown", handleEnter);
+    return () => {
+      window.removeEventListener("keydown", handleEnter);
+    };
+  }, [displayName, password, loading]);
 
   return (
     <LoginWrapper style={{ margin: "6rem 0rem" }}>

@@ -264,7 +264,10 @@ const WhitelistContent = ({
                   {getFormattedNumber(wodBalance)}{" "}
                   {selectedRound?.id == "pool-dynamic" ||
                   selectedRound?.id == "pool2-dynamic" ||
-                  selectedRound?.id == "wod-dynamic"
+                  selectedRound?.id == "wod-dynamic"||
+                  selectedRound?.id == "cliff1-otc4"||
+                  selectedRound?.id == "cliff-otc"||
+                  selectedRound?.id == "cliff-otc2"
                     ? "USD"
                     : "WOD"}
                 </span>
@@ -283,7 +286,10 @@ const WhitelistContent = ({
                     Total{" "}
                     {selectedRound?.id == "pool-dynamic" ||
                     selectedRound?.id == "pool2-dynamic" ||
-                    selectedRound?.id == "wod-dynamic"
+                    selectedRound?.id == "wod-dynamic"||
+                  selectedRound?.id == "cliff1-otc4"||
+                  selectedRound?.id == "cliff-otc"||
+                  selectedRound?.id == "cliff-otc2"
                       ? "USD"
                       : "WOD"}
                   </span>
@@ -297,7 +303,10 @@ const WhitelistContent = ({
                 </div>
                 {selectedRound?.id !== "pool-dynamic" &&
                   selectedRound?.id !== "pool2-dynamic" &&
-                  selectedRound?.id !== "wod-dynamic" && (
+                  selectedRound?.id !== "wod-dynamic" &&
+                  selectedRound?.id !== "cliff1-otc4"&&
+                  selectedRound?.id !== "cliff-otc"&&
+                  selectedRound?.id !== "cliff-otc2" && (
                     <div className="d-flex flex-column">
                       <span className="whitelist-upper-txt">
                         {getFormattedNumber(
