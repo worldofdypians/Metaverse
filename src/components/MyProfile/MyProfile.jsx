@@ -101,6 +101,7 @@ const MyProfile = ({
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
   const [tooltip, setTooltip] = useState(false);
+  const [cooldown, setCooldown] = useState(null)
   let now = new Date().getTime();
   let now2 = new Date();
 
@@ -176,9 +177,19 @@ const MyProfile = ({
   };
 
 
+   const checkCooldown = async () => {
+      await axios
+        .get(`https://api.worldofdypians.com/auth/twitter/cooldown/${address}`)
+        .then((res) => {
+          console.log(res.data, "cooldown");
+         
+        });
+    };
+
 
   useEffect(() => {
     checkTwitter();
+    checkCooldown();
   }, [twitterLinkedParam, address]);
 
   useEffect(() => {
