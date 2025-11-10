@@ -1787,15 +1787,11 @@ const BattlePopup = ({
                         className={`player-img ${
                           selectedPlayer.id === item.id && "player-img-active"
                         } ${
-                          selectedPlayer.id === item.id &&
-                          fightInfo &&
-                          fightInfo?.win
+                         fightInfo && fightInfo.win && fightInfo.fighter.id === item.id
                             ? "player-img-win"
                             : ""
                         } ${
-                          selectedPlayer.id === item.id &&
-                          fightInfo &&
-                          !fightInfo?.win
+                         fightInfo && !fightInfo.win && fightInfo.fighter.id === item.id
                             ? "player-img-lose"
                             : ""
                         }`}
