@@ -454,19 +454,19 @@ function Dashboard({
       // Global Rankings
       globalMonthly:
         userDataStar?.statValue !== undefined && userDataStar?.statValue > 0
-          ? userDataStar.position + 1
+          ? userDataStar.position
           : "---",
       globalWeekly:
         userDataStarWeekly?.statValue !== undefined &&
         userDataStarWeekly?.statValue > 0
-          ? userDataStarWeekly.position + 1
+          ? userDataStarWeekly.position
           : "---",
       totalStars: userDataStar?.statValue || 0,
 
       // BNB Chain
       userRank:
         userData?.statValue !== undefined && userData?.statValue > 0
-          ? userData.position + 1
+          ? userData.position
           : "---",
       userBnbStars:
         (userData?.statValue === 0
@@ -482,7 +482,7 @@ function Dashboard({
       // Skale Chain
       userRankSkale:
         userDataSkale?.statValue !== undefined && userDataSkale?.statValue > 0
-          ? userDataSkale.position + 1
+          ? userDataSkale.position
           : "---",
       userSkaleStars:
         (userDataSkale?.statValue === 0
@@ -498,7 +498,7 @@ function Dashboard({
       // Core Chain
       userRankCore:
         userDataCore?.statValue !== undefined && userDataCore?.statValue > 0
-          ? userDataCore.position + 1
+          ? userDataCore.position
           : "---",
       userCoreStars:
         (userDataCore?.statValue === 0
@@ -515,7 +515,7 @@ function Dashboard({
       userRankViction:
         userDataViction?.statValue !== undefined &&
         userDataViction?.statValue > 0
-          ? userDataViction.position + 1
+          ? userDataViction.position
           : "---",
       userVictionStars:
         (userDataViction?.statValue === 0
@@ -532,7 +532,7 @@ function Dashboard({
       // Manta Chain
       userRankManta:
         userDataManta?.statValue !== undefined && userDataManta?.statValue > 0
-          ? userDataManta.position + 1
+          ? userDataManta.position
           : "---",
       userMantaStars:
         (userDataManta?.statValue === 0
@@ -548,7 +548,7 @@ function Dashboard({
       // Base Chain
       userRankBase:
         userDataBase?.statValue !== undefined && userDataBase?.statValue > 0
-          ? userDataBase.position + 1
+          ? userDataBase.position
           : "---",
       userBaseStars:
         (userDataBase?.statValue === 0
@@ -564,7 +564,7 @@ function Dashboard({
       // Taiko Chain
       userRankTaiko:
         userDataTaiko?.statValue !== undefined && userDataTaiko?.statValue > 0
-          ? userDataTaiko.position + 1
+          ? userDataTaiko.position
           : "---",
       userTaikoStars:
         (userDataTaiko?.statValue === 0
@@ -580,7 +580,7 @@ function Dashboard({
       // MAT Chain
       userRankMat:
         userDataMat?.statValue !== undefined && userDataMat?.statValue > 0
-          ? userDataMat.position + 1
+          ? userDataMat.position
           : "---",
       userMatStars:
         userDataMat?.statValue === 0
@@ -596,7 +596,7 @@ function Dashboard({
       // Sei Chain
       userRankSei:
         userDataSei?.statValue !== undefined && userDataSei?.statValue > 0
-          ? userDataSei.position + 1
+          ? userDataSei.position
           : "---",
       userSeiStars:
         userDataSei?.statValue === 0
@@ -612,7 +612,7 @@ function Dashboard({
       // Vanar Chain
       userRankVanar:
         userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
-          ? userDataVanar.position + 1
+          ? userDataVanar.position
           : "---",
       userVanarStars:
         (userDataVanar?.statValue === 0
@@ -628,7 +628,7 @@ function Dashboard({
       // Taraxa Chain
       userRankTaraxa:
         userDataTaraxa?.statValue !== undefined && userDataTaraxa?.statValue > 0
-          ? userDataTaraxa.position + 1
+          ? userDataTaraxa.position
           : "---",
       userTaraxaStars:
         userDataTaraxa?.statValue === 0
@@ -661,13 +661,16 @@ function Dashboard({
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
 
-
-  const updateRewardApis = async(data)=>{
-    const result = await axios.post('https://api.worldofdypians.com/api/post-event', data).catch((e)=>{console.error(e)})
-    if(result && result.status === 200) {
-      console.log(result)
+  const updateRewardApis = async (data) => {
+    const result = await axios
+      .post("https://api.worldofdypians.com/api/post-event", data)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      console.log(result);
     }
-  }
+  };
 
   const fetchUsersocialRewards = () => {
     const cachedUserSocialRewards = localStorage.getItem(
@@ -951,7 +954,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersCore = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardCoreDaily",
         StartPosition: 0,
@@ -1048,7 +1051,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersViction = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
@@ -1146,7 +1149,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersManta = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardMantaDaily",
         StartPosition: 0,
@@ -1244,7 +1247,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersSei = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardSeiDaily",
         StartPosition: 0,
@@ -1342,7 +1345,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersTaraxa = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardTaraxaDaily",
         StartPosition: 0,
@@ -1438,7 +1441,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersBase = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardBaseDaily",
         StartPosition: 0,
@@ -1535,7 +1538,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersVanar = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardVanarDaily",
         StartPosition: 0,
@@ -1634,7 +1637,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersTaiko = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
@@ -1733,7 +1736,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersMat = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardMatchainDaily",
         StartPosition: 0,
@@ -1830,7 +1833,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersSkale = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
         StartPosition: 0,
@@ -1927,7 +1930,7 @@ function Dashboard({
   };
 
   const fetchPreviousUserDataStar = async (version, userId) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "GlobalStarMonthlyLeaderboard",
         MaxResultsCount: 1,
@@ -2028,7 +2031,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersStar = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "GlobalStarMonthlyLeaderboard",
         StartPosition: 0,
@@ -2158,7 +2161,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinnersStarWeekly = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "GlobalStarWeeklyLeaderboard",
         StartPosition: 0,
@@ -2338,7 +2341,7 @@ function Dashboard({
   };
 
   const fetchPreviousWinners = async (version) => {
-    if (version != 0) {
+    if (version !== 0) {
       const data = {
         StatisticName: "DailyLeaderboard",
         StartPosition: 0,
@@ -2356,7 +2359,7 @@ function Dashboard({
   };
 
   // const fetchGenesisPreviousWinners = async (version) => {
-  //   if (version != 0) {
+  //   if (version !== 0) {
   //     const data = {
   //       StatisticName: "TheGreatCollection",
   //       StartPosition: 0,
@@ -3370,18 +3373,14 @@ function Dashboard({
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
               standardChestsArray.push(chestOrder[item]);
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
               premiumChestsArray.push(chestOrder[item]);
             }
@@ -3416,18 +3415,14 @@ function Dashboard({
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
               standardChestsArray.push(chestOrder[item]);
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
               premiumChestsArray.push(chestOrder[item]);
             }
@@ -3463,18 +3458,14 @@ function Dashboard({
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
               standardChestsArray.push(chestOrder[item]);
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
               premiumChestsArray.push(chestOrder[item]);
             }
@@ -3510,18 +3501,14 @@ function Dashboard({
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
               standardChestsArray.push(chestOrder[item]);
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
               premiumChestsArray.push(chestOrder[item]);
             }
@@ -3555,18 +3542,14 @@ function Dashboard({
         for (let item = 0; item < chestOrder.length; item++) {
           if (chestOrder[item].chestType === "Standard") {
             if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
-              }
+              openedChests.push(chestOrder[item]);
+              openedStandardChests.push(chestOrder[item]);
             }
             standardChestsArray.push(chestOrder[item]);
           } else if (chestOrder[item].chestType === "Premium") {
             if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
-              }
+              openedChests.push(chestOrder[item]);
+              openedPremiumChests.push(chestOrder[item]);
             }
             premiumChestsArray.push(chestOrder[item]);
           }
@@ -3607,18 +3590,14 @@ function Dashboard({
                 }
               }
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
               standardChestsArray.push(chestOrder[item]);
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
               premiumChestsArray.push(chestOrder[item]);
             }
@@ -3652,18 +3631,14 @@ function Dashboard({
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
               standardChestsArray.push(chestOrder[item]);
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
               premiumChestsArray.push(chestOrder[item]);
             }
@@ -3696,17 +3671,13 @@ function Dashboard({
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedStandardChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
               }
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
-                {
-                  openedChests.push(chestOrder[item]);
-                  openedPremiumChests.push(chestOrder[item]);
-                }
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
               }
             }
           }
@@ -3739,18 +3710,14 @@ function Dashboard({
         for (let item = 0; item < chestOrder.length; item++) {
           if (chestOrder[item].chestType === "Standard") {
             if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
-              }
+              openedChests.push(chestOrder[item]);
+              openedStandardChests.push(chestOrder[item]);
             }
             standardChestsArray.push(chestOrder[item]);
           } else if (chestOrder[item].chestType === "Premium") {
             if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
-              }
+              openedChests.push(chestOrder[item]);
+              openedPremiumChests.push(chestOrder[item]);
             }
             premiumChestsArray.push(chestOrder[item]);
           }
@@ -3783,18 +3750,14 @@ function Dashboard({
         for (let item = 0; item < chestOrder.length; item++) {
           if (chestOrder[item].chestType === "Standard") {
             if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
-              }
+              openedChests.push(chestOrder[item]);
+              openedStandardChests.push(chestOrder[item]);
             }
             standardChestsArray.push(chestOrder[item]);
           } else if (chestOrder[item].chestType === "Premium") {
             if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
-              }
+              openedChests.push(chestOrder[item]);
+              openedPremiumChests.push(chestOrder[item]);
             }
             premiumChestsArray.push(chestOrder[item]);
           }
@@ -3864,7 +3827,11 @@ function Dashboard({
 
       const todayObj = result.data.todayResult;
 
-      if (todayObj && todayObj.correct === true && todayObj.userIndex === todayObj.correctIndex) {
+      if (
+        todayObj &&
+        todayObj.correct === true &&
+        todayObj.userIndex === todayObj.correctIndex
+      ) {
         getAIQuestionRewardStatus(email);
       }
       if (isToday === true) {
@@ -4683,7 +4650,7 @@ function Dashboard({
           //   }}
           // >
           <NewDailyBonus
-          username={username}
+            username={username}
             openKickstarter={openKickstarter}
             isPremium={isPremium}
             bnbImages={bnbImages}
@@ -5358,7 +5325,9 @@ function Dashboard({
                     getAIQuestionRewardStatus(email);
                     getAIQuestionStatus(coinbase, email);
                   }}
-                  onAddRewards={(value)=>{updateRewardApis(value)}}
+                  onAddRewards={(value) => {
+                    updateRewardApis(value);
+                  }}
                   aiQuestionRewards={aiQuestionRewards}
                   aiQuestionObjectAnswered={aiQuestionObjectAnswered}
                   getAiStep={getAiStep}

@@ -7,12 +7,14 @@ import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import validate from "../RegisterModal/validateHelpInfo";
 
-
-
 import "./_joinbetamodal.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { Checkbox } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
+import { signMessage as signMessageWagmi } from "@wagmi/core";
+import { Hooks } from "@matchain/matchid-sdk-react";
+import { wagmiClient } from "../../wagmiConnectors";
+
 
 const StyledTextField = styled(TextField)(({}) => ({
   "& .MuiOutlinedInput-root": {
@@ -34,7 +36,10 @@ const JoinBetaModal = ({
   handleConnect,
   coinbase,
   showForms,
+  walletClient
 }) => {
+const { useWallet: useWalletMatchain } = Hooks;
+    const { signMessage } = useWalletMatchain();
   const options = [
     {
       name: "Metamask",
@@ -174,17 +179,33 @@ const JoinBetaModal = ({
     if (allErrors.email === undefined && allErrors.discord === undefined) {
       if (values.discord !== "" && values.email !== "") {
         setLoading(true);
-        let signature = "";
-        await window
-          .sign(window.config.beta_test, coinbase)
-          .then((data) => {
-            signature = data;
-            // checkInput(values.email, values.discord);
-          })
-          .catch((e) => {
-            setLoading(false);
-            console.error(e);
+        // let signature = "";
+        // await window
+        //   .sign(window.config.beta_test, coinbase)
+        //   .then((data) => {
+        //     signature = data;
+        //   })
+        //   .catch((e) => {
+        //     setLoading(false);
+        //     console.error(e);
+        //   });
+         let signature = "";
+        if (window.WALLET_TYPE === "matchId" && coinbase) {
+         
+          if (walletClient) {
+            signature = await signMessage({
+              message: window.config.beta_test,
+              account: coinbase,
+            }).catch((e) => {
+              console.log(e);
+            });
+          }
+        }
+        if (coinbase) {
+          signature = await signMessageWagmi(wagmiClient, {
+            message: window.config.beta_test,
           });
+        }
 
         const data = {
           signature: signature,
@@ -235,7 +256,7 @@ const JoinBetaModal = ({
             setLoading(false);
           }
         } catch (e) {
-          window.alertify.error("Something went wrong!" + e.responseText);
+          window.alertify.error("Something went wrong!" + e);
         } finally {
           setValues({ ...initialState });
         }
@@ -255,7 +276,7 @@ const JoinBetaModal = ({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width:
-      windowSize.width > 1600 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
+      windowSize.width ? windowSize.width > 1600 ? "30%" : windowSize.width > 786 ? "50%" : "90%" : "30%",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -359,9 +380,7 @@ const JoinBetaModal = ({
             </div>
             <div className="separator"></div>
             <div
-              className={
-                showOptions === false ? " m-auto" : "m-auto"
-              }
+              className={showOptions === false ? " m-auto" : "m-auto"}
               style={{
                 width: showOptions === false ? "fit-content" : "",
                 display: showForms === true ? "none" : "",
@@ -381,8 +400,11 @@ const JoinBetaModal = ({
                   }}
                 >
                   <img
-                    src={mouseOver === true ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
-                      : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'}
+                    src={
+                      mouseOver === true
+                        ? "https://cdn.worldofdypians.com/wod/wallet-black.svg"
+                        : "https://cdn.worldofdypians.com/wod/wallet-white.svg"
+                    }
                     alt=""
                   />
                   Connect Wallet
@@ -395,12 +417,14 @@ const JoinBetaModal = ({
                         <div
                           key={index}
                           className="optionwrapper"
-                          onClick={()=>{handleConnect(item.name.toLowerCase())}}
+                          onClick={() => {
+                            handleConnect(item.name.toLowerCase());
+                          }}
                         >
                           <div className="d-flex justify-content-between gap-2 align-items-center">
                             <p className="m-0 walletname">{item.name}</p>
                             <img
-                                       src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
+                              src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                               className="option-wallet"
                               alt=""
                             />
@@ -543,9 +567,8 @@ const JoinBetaModal = ({
                   </div>
                 </div> */}
 
-             
-              <div className="d-flex w-100 justify-content-center mt-2">
-              <button
+                <div className="d-flex w-100 justify-content-center mt-2">
+                  <button
                     className="action-btn px-5"
                     onClick={() => checkInput(values.email, values.discord)}
                   >
@@ -562,20 +585,30 @@ const JoinBetaModal = ({
                       "Success"
                     )}
                   </button>
-              </div>
                 </div>
+              </div>
             )}
           </div>
         )}
         {status === "Successfully joined" && (
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 text-center">
             <div className="d-flex justify-content-between gap-1 position-relative">
+              
               <h2 className="font-organetto register-grid-title px-0">
                 {"Successfully applied as"}{" "}
                 <mark className="font-organetto register-tag">
                   WOD Beta Tester
                 </mark>
               </h2>
+                <img
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
+                alt=""
+                className="close-x"
+                onClick={() => {
+                  onClose();
+                }}
+                style={{ bottom: "25px", right: "-25px", height: "50px" }}
+              />
               {/* <img
                 src={X}
                 alt=""
@@ -587,11 +620,14 @@ const JoinBetaModal = ({
               /> */}
             </div>
 
-            <img src={"https://cdn.worldofdypians.com/wod/successLogo.svg"} alt="" />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/successLogo.svg"}
+              alt=""
+            />
             <p className="text-white m-0">
               Congratulations, your World of Dypians Beta Tester application is
-              successful. Please visit the World of Dypians Discord Server for more
-              information.
+              successful. Please visit the World of Dypians Discord Server for
+              more information.
             </p>
             <div
               className={"linear-border m-auto"}
@@ -613,7 +649,10 @@ const JoinBetaModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/discord.svg"} alt="" />
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/discord.svg"}
+                  alt=""
+                />
                 Join Discord server
               </a>
             </div>
@@ -630,6 +669,15 @@ const JoinBetaModal = ({
                 {"Application has been"}{" "}
                 <mark className="font-organetto register-tag">received</mark>
               </h2>
+                <img
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
+                alt=""
+                className="close-x"
+                onClick={() => {
+                  onClose();
+                }}
+                style={{ bottom: "25px", right: "-25px", height: "50px" }}
+              />
               {/* <img
                 src={X}
                 alt=""
@@ -640,7 +688,10 @@ const JoinBetaModal = ({
                 style={{ right: "-25px", height: "50px" }}
               /> */}
             </div>
-            <img src={"https://cdn.worldofdypians.com/wod/alreadyjoinedLogo.svg"} alt="" />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/alreadyjoinedLogo.svg"}
+              alt=""
+            />
             <p className="text-white m-0">
               Your application as a World of Dypians Beta Tester has already
               been received. Please check back soon.
@@ -665,7 +716,10 @@ const JoinBetaModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/discord.svg"} alt="" />
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/discord.svg"}
+                  alt=""
+                />
                 Join Discord server
               </a>
             </div>
@@ -681,6 +735,15 @@ const JoinBetaModal = ({
                 {status}{" "}
                 <mark className="font-organetto register-tag">beta</mark>
               </h2>
+                <img
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
+                alt=""
+                className="close-x"
+                onClick={() => {
+                  onClose();
+                }}
+                style={{ bottom: "25px", right: "-25px", height: "50px" }}
+              />
               {/* <img
                 src={X}
                 alt=""
@@ -691,7 +754,10 @@ const JoinBetaModal = ({
                 style={{ right: "-25px", height: "50px" }}
               /> */}
             </div>
-            <img src={"https://cdn.worldofdypians.com/wod/waitlistLogo.svg"} alt="" />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/waitlistLogo.svg"}
+              alt=""
+            />
             <p className="text-white m-0">
               Thank you for your application as a World of Dypians Beta Tester.
               Unfortunately, all current reservations are full and your
@@ -717,7 +783,10 @@ const JoinBetaModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/discord.svg"} alt="" />
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/discord.svg"}
+                  alt=""
+                />
                 Join Discord server
               </a>
             </div>
@@ -733,6 +802,15 @@ const JoinBetaModal = ({
                 {"Application"}{" "}
                 <mark className="font-organetto register-tag">Error</mark>
               </h2>
+                <img
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
+                alt=""
+                className="close-x"
+                onClick={() => {
+                  onClose();
+                }}
+                style={{ bottom: "25px", right: "-25px", height: "50px" }}
+              />
               {/* <img
                 src={X}
                 alt=""
