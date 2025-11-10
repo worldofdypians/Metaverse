@@ -6008,6 +6008,7 @@ function AppRoutes() {
           handleConnect={handleConnection}
           coinbase={coinbase}
           showForms={isConnected}
+          walletClient={walletClient}
         />
       )}
       {(kickstarter || hashValue === "#royalty-chest") &&
