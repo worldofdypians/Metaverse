@@ -385,8 +385,9 @@ const GetPremiumPopup = ({
 
   const switchNetwork = async (hexChainId, chain) => {
     // Extract chainId from hex or use chain number directly
-    const chainId = typeof chain === 'number' ? chain : parseInt(hexChainId, 16);
-    
+    const chainId =
+      typeof chain === "number" ? chain : parseInt(hexChainId, 16);
+
     try {
       await switchNetworkWagmi(chainId, chain, {
         handleSwitchNetwork,
@@ -550,46 +551,6 @@ const GetPremiumPopup = ({
     ]);
 
     const [
-      discount,
-      discount_viction,
-      discount_vanar,
-      discount_taiko,
-      discount_mat,
-      discount_taraxa,
-    ] = await Promise.all([
-      readContract(wagmiClient, {
-        ...bnbSubscription,
-        functionName: "discountPercentageGlobal",
-        args: [],
-      }).catch(() => 0),
-      readContract(wagmiClient, {
-        ...victionSubscription,
-        functionName: "discountPercentageGlobal",
-        args: [],
-      }).catch(() => 0),
-      readContract(wagmiClient, {
-        ...vanarSubscription,
-        functionName: "discountPercentageGlobal",
-        args: [],
-      }).catch(() => 0),
-      readContract(wagmiClient, {
-        ...taikoSubscription,
-        functionName: "discountPercentageGlobal",
-        args: [],
-      }).catch(() => 0),
-      readContract(wagmiClient, {
-        ...matSubscription,
-        functionName: "discountPercentageGlobal",
-        args: [],
-      }).catch(() => 0),
-      readContract(wagmiClient, {
-        ...taraxaSubscription,
-        functionName: "discountPercentageGlobal",
-        args: [],
-      }).catch(() => 0),
-    ]);
-
-    const [
       nftObject,
       nftObject_viction,
       nftObject_vanar,
@@ -629,6 +590,34 @@ const GetPremiumPopup = ({
       }).catch(() => undefined),
     ]);
 
+    const extractDiscount = (data) => {
+      if (!data) return 0;
+      if (Array.isArray(data)) {
+        return extractDiscount(data[1]);
+      }
+      if (typeof data === "object") {
+        if ("discountPercentage" in data) {
+          return extractDiscount(data.discountPercentage);
+        }
+        return 0;
+      }
+      if (typeof data === "bigint" || typeof data === "number") {
+        return Number(data);
+      }
+      if (typeof data === "string") {
+        const parsed = parseInt(data, 10);
+        return Number.isNaN(parsed) ? 0 : parsed;
+      }
+      return 0;
+    };
+
+    const discount = extractDiscount(nftObject);
+    const discount_viction = extractDiscount(nftObject_viction);
+    const discount_vanar = extractDiscount(nftObject_vanar);
+    const discount_taiko = extractDiscount(nftObject_taiko);
+    const discount_mat = extractDiscount(nftObject_mat);
+    const discount_taraxa = extractDiscount(nftObject_taraxa);
+
     const getFirstTokenId = async (nft) =>
       readContract(wagmiClient, {
         ...nft,
@@ -640,10 +629,7 @@ const GetPremiumPopup = ({
       const tokenId = await getFirstTokenId(nftBnb);
       if (nftObject) {
         setnftDiscountObject(nftObject);
-        if (discount)
-          setdiscountPercentage(
-            Math.max(parseInt(discount), parseInt(nftObject.discountPercentage))
-          );
+        if (discount) setdiscountPercentage(parseInt(discount));
       }
       setnftPremium_tokenId(tokenId);
       setnftPremium_total(parseInt(result));
@@ -652,12 +638,7 @@ const GetPremiumPopup = ({
       if (nftObject_viction) {
         setnftDiscountObjectViction(nftObject_viction);
         if (discount_viction)
-          setdiscountPercentageViction(
-            Math.max(
-              parseInt(discount_viction),
-              parseInt(nftObject_viction.discountPercentage)
-            )
-          );
+          setdiscountPercentageViction(parseInt(discount_viction));
       }
       setnftPremium_tokenIdViction(tokenId);
       setnftPremium_totalViction(parseInt(result_viction));
@@ -666,12 +647,7 @@ const GetPremiumPopup = ({
       if (nftObject_vanar) {
         setnftDiscountObjectVanar(nftObject_vanar);
         if (discount_vanar)
-          setdiscountPercentageVanar(
-            Math.max(
-              parseInt(discount_vanar),
-              parseInt(nftObject_vanar.discountPercentage)
-            )
-          );
+          setdiscountPercentageVanar(parseInt(discount_vanar));
       }
       setnftPremium_tokenIdVanar(tokenId);
       setnftPremium_totalVanar(parseInt(result_vanar));
@@ -680,12 +656,7 @@ const GetPremiumPopup = ({
       if (nftObject_taiko) {
         setnftDiscountObjectTaiko(nftObject_taiko);
         if (discount_taiko)
-          setdiscountPercentageTaiko(
-            Math.max(
-              parseInt(discount_taiko),
-              parseInt(nftObject_taiko.discountPercentage)
-            )
-          );
+          setdiscountPercentageTaiko(parseInt(discount_taiko));
       }
       setnftPremium_tokenIdTaiko(tokenId);
       setnftPremium_totalTaiko(parseInt(result_taiko));
@@ -693,13 +664,7 @@ const GetPremiumPopup = ({
       const tokenId = await getFirstTokenId(nftMat);
       if (nftObject_mat) {
         setnftDiscountObjectMat(nftObject_mat);
-        if (discount_mat)
-          setdiscountPercentageMat(
-            Math.max(
-              parseInt(discount_mat),
-              parseInt(nftObject_mat.discountPercentage)
-            )
-          );
+        if (discount_mat) setdiscountPercentageMat(parseInt(discount_mat));
       }
       setnftPremium_tokenIdMat(tokenId);
       setnftPremium_totalMat(parseInt(result_mat));
@@ -708,12 +673,7 @@ const GetPremiumPopup = ({
       if (nftObject_taraxa) {
         setnftDiscountObjectTaraxa(nftObject_taraxa);
         if (discount_taraxa)
-          setdiscountPercentageTaraxa(
-            Math.max(
-              parseInt(discount_taraxa),
-              parseInt(nftObject_taraxa.discountPercentage)
-            )
-          );
+          setdiscountPercentageTaraxa(parseInt(discount_taraxa));
       }
       setnftPremium_tokenIdTaraxa(tokenId);
       setnftPremium_totalTaraxa(parseInt(result_taraxa));
@@ -962,7 +922,7 @@ const GetPremiumPopup = ({
   };
 
   // ==================== HELPER FUNCTIONS ====================
-  
+
   // Subscription address mapping for efficient lookups
   const getSubscribeAddressByChain = (chainId) => {
     const addressMap = {
@@ -986,16 +946,18 @@ const GetPremiumPopup = ({
 
   // Extract clean error message from transaction errors
   const extractErrorMessage = (error) => {
-    const fullMessage = error?.reason || error?.message || error?.shortMessage || "";
+    const fullMessage =
+      error?.reason || error?.message || error?.shortMessage || "";
     const match = fullMessage.match(/execution reverted: ([^"]+)/);
     return match ? match[1] : fullMessage || "Transaction failed";
   };
 
   // Unified error handler with timeout
   const handleTransactionError = (error, setters) => {
-    const { setloadspinner, setloadspinnerSub, setapproveStatus, setstatus } = setters;
+    const { setloadspinner, setloadspinnerSub, setapproveStatus, setstatus } =
+      setters;
     const cleanReason = extractErrorMessage(error);
-    
+
     if (setloadspinnerSub) setloadspinnerSub(false);
     if (setloadspinner) setloadspinner(false);
     setapproveStatus(setloadspinnerSub ? "failsubscribe" : "fail");
@@ -1087,13 +1049,18 @@ const GetPremiumPopup = ({
   };
 
   // ==================== MAIN FUNCTIONS ====================
-  
+
   const handleApprove = async (e) => {
     // e.preventDefault();
     const subscribeAddress = getSubscribeAddressByChain(chainId);
     const nftConfig = getNFTContractConfig(chainId);
-    const setters = { setloadspinner, setapproveStatus, setstatus, setisApproved };
-    
+    const setters = {
+      setloadspinner,
+      setapproveStatus,
+      setstatus,
+      setisApproved,
+    };
+
     setloadspinner(true);
 
     try {
@@ -1109,10 +1076,11 @@ const GetPremiumPopup = ({
 
           setloadspinner(false);
           setisApproved(true);
-          
+
           // Determine next status based on discount and token type
           if (nftConfig.discount < 100) {
-            const isNativeBNB = selectedSubscriptionToken.toLowerCase() === 
+            const isNativeBNB =
+              selectedSubscriptionToken.toLowerCase() ===
               "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase();
             setapproveStatus(isNativeBNB ? "deposit" : "approveAmount");
           } else {
@@ -1120,7 +1088,7 @@ const GetPremiumPopup = ({
           }
           return;
         }
-        
+
         // Handle token approval after NFT approval
         if (approveStatus === "approveAmount") {
           await writeOnChain({
@@ -1148,7 +1116,6 @@ const GetPremiumPopup = ({
       setloadspinner(false);
       setisApproved(true);
       setapproveStatus("deposit");
-      
     } catch (error) {
       handleTransactionError(error, setters);
     }
@@ -1240,17 +1207,22 @@ const GetPremiumPopup = ({
     }
   };
 
-
   const handleSubscribe = async (e) => {
     const nftConfig = getNFTContractConfig(chainId);
     const subscribeAddress = getSubscribeAddressByChain(chainId);
     const subscriptionAbiKey = getSubscriptionContractKey(chainId);
-    const setters = { setloadspinnerSub, setloadspinner, setapproveStatus, setstatus };
-    
+    const setters = {
+      setloadspinnerSub,
+      setloadspinner,
+      setapproveStatus,
+      setstatus,
+    };
+
     setloadspinnerSub(true);
 
     try {
-      const isNativeBNB = selectedSubscriptionToken.toLowerCase() === 
+      const isNativeBNB =
+        selectedSubscriptionToken.toLowerCase() ===
         "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase();
 
       let functionName, args, value;
@@ -1260,8 +1232,8 @@ const GetPremiumPopup = ({
         // Subscribe with NFT
         functionName = "subscribeNFT";
         args = [
-          nftConfig.discountObject.nftAddress,
-          nftConfig.tokenId,
+          nftConfig.address,
+          parseInt(nftConfig.tokenId),
           selectedSubscriptionToken,
           price,
         ];
@@ -1285,6 +1257,7 @@ const GetPremiumPopup = ({
         functionName,
         args,
         value,
+        account: coinbase
       });
 
       // Handle success
@@ -1299,7 +1272,6 @@ const GetPremiumPopup = ({
         setapproveStatus("initial");
         setstatus("");
       }, 5000);
-
     } catch (error) {
       handleTransactionError(error, setters);
     }
