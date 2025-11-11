@@ -450,12 +450,12 @@ function Dashboard({
       // Global Rankings
       globalMonthly:
         userDataStar?.statValue !== undefined && userDataStar?.statValue > 0
-          ? userDataStar.position
+          ? userDataStar.position+ 1
           : "---",
       globalWeekly:
         userDataStarWeekly?.statValue !== undefined &&
         userDataStarWeekly?.statValue > 0
-          ? userDataStarWeekly.position
+          ? userDataStarWeekly.position+ 1
           : "---",
       totalStars: userDataStar?.statValue || 0,
 
