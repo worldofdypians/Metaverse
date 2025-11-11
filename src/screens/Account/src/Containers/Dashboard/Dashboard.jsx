@@ -59,6 +59,8 @@ import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
 import { useUser } from "../../../../../redux/hooks/useWallet";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserProgress } from "../../../../../redux/slices/userSlice";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
+
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -938,6 +940,32 @@ function Dashboard({
     }
   };
 
+  const LEADERBOARD_CACHE_MS = 60 * 1000;
+
+  const isQueryFresh = (query) =>
+    Boolean(query?.data && query?.dataUpdatedAt) &&
+    Date.now() - query.dataUpdatedAt < LEADERBOARD_CACHE_MS;
+
+  const fetchQueryData = async (query, { force = false } = {}) => {
+    if (!query) {
+      return { data: null, fromCache: false, error: null };
+    }
+
+    if (!force && isQueryFresh(query)) {
+      return { data: query.data, fromCache: true, error: null };
+    }
+
+    const result = await query.refetch({ throwOnError: false });
+    if (!result?.data) {
+      if (query?.data) {
+        return { data: query.data, fromCache: true, error: result?.error ?? null };
+      }
+      return { data: null, fromCache: false, error: result?.error ?? null };
+    }
+
+    return { data: result.data, fromCache: false, error: result.error ?? null };
+  };
+
   const fillRecordsCore = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsCore(placeholderplayerData);
@@ -949,8 +977,21 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersCore = async (version) => {
-    if (version !== 0) {
+  const previousWinnersCoreVersionRef = useRef(null);
+  const previousWinnersCoreFetchedVersionRef = useRef(null);
+
+  const previousWinnersCoreQuery = useReactQuery({
+    queryKey: ["previousWinnersCore"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersCoreVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardCoreDaily",
         StartPosition: 0,
@@ -961,77 +1002,122 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      setPrevDataCore(result.data.data.leaderboard);
-    } else {
-      setPrevDataCore(placeholderplayerData);
-    }
-  };
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsCore = async () => {
-    if (dailyRecordsCore.length > 0) return;
-    setloadingCore(true);
-
-    const data = {
-      StatisticName: "LeaderboardCoreDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsCoreQuery = useReactQuery({
+    queryKey: ["dailyRecordsCore"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardCoreDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersCore(parseInt(result.data.data.version));
-      setDailyRecordsCore(result.data.data.leaderboard);
-      fillRecordsCore(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerCore(true);
-          fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerCore(false);
-          fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingCore(false);
-      fillRecordsCore([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingCore(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerCore = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardCoreDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerCoreQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerCore", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardCoreDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
+      return result.data.data.leaderboard || [];
+    },
+  });
 
-      var testArray = result.data.data.leaderboard;
+  const fetchPreviousWinnersCore = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataCore(placeholderplayerData);
+      return;
+    }
+    previousWinnersCoreVersionRef.current = version;
+    const force = forceRefresh || previousWinnersCoreFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(previousWinnersCoreQuery, {
+      force,
+    });
+    if ((error && !fromCache) || !data) {
+      setPrevDataCore(placeholderplayerData);
+      return;
+    }
+    setPrevDataCore(data);
+    previousWinnersCoreFetchedVersionRef.current = version;
+  };
 
-      const userPosition = testArray[0].position;
-      setUserDataCore(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerCore(false);
-      } else {
-        setActivePlayerCore(true);
+  const fetchDailyRecordsAroundPlayerCore = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerCoreQuery,
+      {
+        force: forceRefresh,
       }
+    );
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerCore(false);
+      return;
+    }
+    const [userRecord] = data;
+    setUserDataCore(userRecord);
+    setActivePlayerCore((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+  };
+
+  const fetchDailyRecordsCore = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsCoreQuery);
+    if (!useCache) {
+      setloadingCore(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(dailyRecordsCoreQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsCore([]);
+      setPrevDataCore(placeholderplayerData);
+      setloadingCore(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsCore(leaderboard);
+    fillRecordsCore(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersCore(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerCore(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingCore(false);
+      }, 1000);
+    } else {
+      setloadingCore(false);
     }
   };
 
@@ -1046,90 +1132,154 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersViction = async (version) => {
-    if (version !== 0) {
+  const previousWinnersVictionVersionRef = useRef(null);
+  const previousWinnersVictionFetchedVersionRef = useRef(null);
+
+  const previousWinnersVictionQuery = useReactQuery({
+    queryKey: ["previousWinnersViction"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersVictionVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsViction([]);
-        });
-      setPrevDataViction(result.data.data.leaderboard);
-    } else {
-      setPrevDataViction(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsViction = async () => {
-    if (dailyRecordsViction.length > 0) return;
-    setloadingViction(true);
-
-    const data = {
-      StatisticName: "LeaderboardVictionDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsVictionQuery = useReactQuery({
+    queryKey: ["dailyRecordsViction"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardVictionDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersViction(parseInt(result.data.data.version));
-      setDailyRecordsViction(result.data.data.leaderboard);
-      fillRecordsViction(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerViction(true);
-          fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerViction(false);
-          fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingViction(false);
-      fillRecordsViction([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingViction(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerViction = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardVictionDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerVictionQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerViction", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardVictionDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
+      return result.data.data.leaderboard || [];
+    },
+  });
 
-      const userPosition = testArray[0].position;
-      setUserDataViction(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerViction(false);
-      } else {
-        setActivePlayerViction(true);
+  const fetchPreviousWinnersViction = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataViction(placeholderplayerData);
+      return;
+    }
+    previousWinnersVictionVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersVictionFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersVictionQuery,
+      {
+        force,
       }
+    );
+    if ((error && !fromCache) || !data) {
+      setPrevDataViction(placeholderplayerData);
+      return;
+    }
+    setPrevDataViction(data);
+    previousWinnersVictionFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecordsAroundPlayerViction = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerVictionQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerViction(false);
+      return;
+    }
+    const [userRecord] = data;
+    setUserDataViction(userRecord);
+    setActivePlayerViction((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+  };
+
+  const fetchDailyRecordsViction = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsVictionQuery);
+    if (!useCache) {
+      setloadingViction(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsVictionQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsViction([]);
+      setPrevDataViction(placeholderplayerData);
+      setloadingViction(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsViction(leaderboard);
+    fillRecordsViction(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersViction(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerViction(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingViction(false);
+      }, 1000);
+    } else {
+      setloadingViction(false);
     }
   };
 
@@ -1144,90 +1294,151 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersManta = async (version) => {
-    if (version !== 0) {
+  const previousWinnersMantaVersionRef = useRef(null);
+  const previousWinnersMantaFetchedVersionRef = useRef(null);
+
+  const previousWinnersMantaQuery = useReactQuery({
+    queryKey: ["previousWinnersManta"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersMantaVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardMantaDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsManta([]);
-        });
-      setPrevDataManta(result.data.data.leaderboard);
-    } else {
-      setPrevDataManta(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsManta = async () => {
-    if (dailyRecordsManta.length > 0) return;
-    setloadingManta(true);
-
-    const data = {
-      StatisticName: "LeaderboardMantaDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsMantaQuery = useReactQuery({
+    queryKey: ["dailyRecordsManta"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardMantaDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersManta(parseInt(result.data.data.version));
-      setDailyRecordsManta(result.data.data.leaderboard);
-      fillRecordsManta(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerManta(true);
-          fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerManta(false);
-          fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingManta(false);
-      fillRecordsManta([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingManta(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerManta = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardMantaDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerMantaQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerManta", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardMantaDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
+      return result.data.data.leaderboard || [];
+    },
+  });
 
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataManta(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerManta(false);
-      } else {
-        setActivePlayerManta(true);
+  const fetchPreviousWinnersManta = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataManta(placeholderplayerData);
+      return;
+    }
+    previousWinnersMantaVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersMantaFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersMantaQuery,
+      {
+        force,
       }
+    );
+    if ((error && !fromCache) || !data) {
+      setPrevDataManta(placeholderplayerData);
+      return;
+    }
+    setPrevDataManta(data);
+    previousWinnersMantaFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecordsAroundPlayerManta = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerMantaQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerManta(false);
+      return;
+    }
+    const [userRecord] = data;
+    setUserDataManta(userRecord);
+    setActivePlayerManta((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+  };
+
+  const fetchDailyRecordsManta = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsMantaQuery);
+    if (!useCache) {
+      setloadingManta(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(dailyRecordsMantaQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsManta([]);
+      setPrevDataManta(placeholderplayerData);
+      setloadingManta(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsManta(leaderboard);
+    fillRecordsManta(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersManta(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerManta(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingManta(false);
+      }, 1000);
+    } else {
+      setloadingManta(false);
     }
   };
 
@@ -1242,89 +1453,148 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersSei = async (version) => {
-    if (version !== 0) {
+  const previousWinnersSeiVersionRef = useRef(null);
+  const previousWinnersSeiFetchedVersionRef = useRef(null);
+
+  const previousWinnersSeiQuery = useReactQuery({
+    queryKey: ["previousWinnersSei"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersSeiVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardSeiDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsSei([]);
-        });
-      setPrevDataSei(result.data.data.leaderboard);
-    } else {
-      setPrevDataSei(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsSei = async () => {
-    if (dailyRecordsSei.length > 0) return;
-    setloadingSei(true);
-
-    const data = {
-      StatisticName: "LeaderboardSeiDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsSeiQuery = useReactQuery({
+    queryKey: ["dailyRecordsSei"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardSeiDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersSei(parseInt(result.data.data.version));
-      setDailyRecordsSei(result.data.data.leaderboard);
-      fillRecordsSei(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerSei(true);
-          fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerSei(false);
-          fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingSei(false);
-      fillRecordsSei([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingSei(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerSei = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardSeiDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerSeiQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerSei", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardSeiDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataSei(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerSei(false);
-      } else {
-        setActivePlayerSei(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersSei = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataSei(placeholderplayerData);
+      return;
+    }
+    previousWinnersSeiVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersSeiFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(previousWinnersSeiQuery, {
+      force,
+    });
+    if ((error && !fromCache) || !data) {
+      setPrevDataSei(placeholderplayerData);
+      return;
+    }
+    setPrevDataSei(data);
+    previousWinnersSeiFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecordsAroundPlayerSei = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerSeiQuery,
+      {
+        force: forceRefresh,
       }
+    );
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerSei(false);
+      return;
+    }
+    const [userRecord] = data;
+    setUserDataSei(userRecord);
+    setActivePlayerSei((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+  };
+
+  const fetchDailyRecordsSei = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsSeiQuery);
+    if (!useCache) {
+      setloadingSei(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(dailyRecordsSeiQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsSei([]);
+      setPrevDataSei(placeholderplayerData);
+      setloadingSei(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsSei(leaderboard);
+    fillRecordsSei(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersSei(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerSei(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingSei(false);
+      }, 1000);
+    } else {
+      setloadingSei(false);
     }
   };
 
@@ -1340,88 +1610,153 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersTaraxa = async (version) => {
-    if (version !== 0) {
+  const previousWinnersTaraxaVersionRef = useRef(null);
+  const previousWinnersTaraxaFetchedVersionRef = useRef(null);
+
+  const previousWinnersTaraxaQuery = useReactQuery({
+    queryKey: ["previousWinnersTaraxa"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersTaraxaVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardTaraxaDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsTaraxa([]);
-        });
-      setPrevDataTaraxa(result.data.data.leaderboard);
-    } else {
-      setPrevDataTaraxa(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsTaraxa = async () => {
-    if (dailyRecordsTaraxa.length > 0) return;
-    setLoadingTaraxa(true);
-
-    const data = {
-      StatisticName: "LeaderboardTaraxaDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsTaraxaQuery = useReactQuery({
+    queryKey: ["dailyRecordsTaraxa"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardTaraxaDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersTaraxa(parseInt(result.data.data.version));
-      setDailyRecordsTaraxa(result.data.data.leaderboard);
-      fillRecordsTaraxa(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerTaraxa(true);
-          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerTaraxa(false);
-          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setLoadingTaraxa(false);
-      fillRecordsTaraxa([]);
-    } finally {
-      setTimeout(() => {
-        setLoadingTaraxa(false);
-      }, 1000);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerTaraxa = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardTaraxaDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerTaraxaQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerTaraxa", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardTaraxaDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataTaraxa(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerTaraxa(false);
-      } else {
-        setActivePlayerTaraxa(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersTaraxa = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataTaraxa(placeholderplayerData);
+      return;
+    }
+    previousWinnersTaraxaVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersTaraxaFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersTaraxaQuery,
+      {
+        force,
       }
+    );
+    if ((error && !fromCache) || !data) {
+      setPrevDataTaraxa(placeholderplayerData);
+      return;
+    }
+    setPrevDataTaraxa(data);
+    previousWinnersTaraxaFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecordsAroundPlayerTaraxa = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerTaraxaQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerTaraxa(false);
+      return;
+    }
+    const [userRecord] = data;
+    setUserDataTaraxa(userRecord);
+    setActivePlayerTaraxa(
+      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+    );
+  };
+
+  const fetchDailyRecordsTaraxa = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsTaraxaQuery);
+    if (!useCache) {
+      setLoadingTaraxa(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(dailyRecordsTaraxaQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsTaraxa([]);
+      setPrevDataTaraxa(placeholderplayerData);
+      setLoadingTaraxa(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsTaraxa(leaderboard);
+    fillRecordsTaraxa(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersTaraxa(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerTaraxa(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setLoadingTaraxa(false);
+      }, 1000);
+    } else {
+      setLoadingTaraxa(false);
     }
   };
 
@@ -1436,89 +1771,148 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersBase = async (version) => {
-    if (version !== 0) {
+  const previousWinnersBaseVersionRef = useRef(null);
+  const previousWinnersBaseFetchedVersionRef = useRef(null);
+
+  const previousWinnersBaseQuery = useReactQuery({
+    queryKey: ["previousWinnersBase"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersBaseVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardBaseDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsBase([]);
-        });
-      setPrevDataBase(result.data.data.leaderboard);
-    } else {
-      setPrevDataBase(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsBase = async () => {
-    if (dailyRecordsBase.length > 0) return;
-    setloadingBase(true);
-
-    const data = {
-      StatisticName: "LeaderboardBaseDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsBaseQuery = useReactQuery({
+    queryKey: ["dailyRecordsBase"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardBaseDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersBase(parseInt(result.data.data.version));
-      setDailyRecordsBase(result.data.data.leaderboard);
-      fillRecordsBase(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerBase(true);
-          fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerBase(false);
-          fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingBase(false);
-      fillRecordsBase([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingBase(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerBase = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardBaseDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerBaseQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerBase", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardBaseDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataBase(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerBase(false);
-      } else {
-        setActivePlayerBase(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersBase = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataBase(placeholderplayerData);
+      return;
+    }
+    previousWinnersBaseVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersBaseFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(previousWinnersBaseQuery, {
+      force,
+    });
+    if ((error && !fromCache) || !data) {
+      setPrevDataBase(placeholderplayerData);
+      return;
+    }
+    setPrevDataBase(data);
+    previousWinnersBaseFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecordsAroundPlayerBase = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerBaseQuery,
+      {
+        force: forceRefresh,
       }
+    );
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerBase(false);
+      return;
+    }
+    const [userRecord] = data;
+    setUserDataBase(userRecord);
+    setActivePlayerBase((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+  };
+
+  const fetchDailyRecordsBase = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsBaseQuery);
+    if (!useCache) {
+      setloadingBase(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(dailyRecordsBaseQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsBase([]);
+      setPrevDataBase(placeholderplayerData);
+      setloadingBase(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsBase(leaderboard);
+    fillRecordsBase(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersBase(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerBase(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingBase(false);
+      }, 1000);
+    } else {
+      setloadingBase(false);
     }
   };
 
@@ -1533,91 +1927,153 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersVanar = async (version) => {
-    if (version !== 0) {
+  const previousWinnersVanarVersionRef = useRef(null);
+  const previousWinnersVanarFetchedVersionRef = useRef(null);
+
+  const previousWinnersVanarQuery = useReactQuery({
+    queryKey: ["previousWinnersVanar"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersVanarVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardVanarDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsVanar([]);
-        });
-      setPrevDataVanar(result.data.data.leaderboard);
-    } else {
-      setPrevDataVanar(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsVanar = async () => {
-    if (dailyRecordsVanar.length > 0) return;
-    setLoadingVanar(true);
-
-    const data = {
-      StatisticName: "LeaderboardVanarDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsVanarQuery = useReactQuery({
+    queryKey: ["dailyRecordsVanar"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardVanarDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersVanar(parseInt(result.data.data.version));
-      setDailyRecordsVanar(result.data.data.leaderboard);
-      fillRecordsVanar(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerVanar(true);
-          fetchDailyRecordsAroundPlayerVanar(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerVanar(false);
-          fetchDailyRecordsAroundPlayerVanar(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setLoadingVanar(false);
-      fillRecordsVanar([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setLoadingVanar(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerVanar = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardVanarDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerVanarQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerVanar", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardVanarDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
+      return result.data.data.leaderboard || [];
+    },
+  });
 
-      const userPosition = testArray[0].position;
-
-      setUserDataVanar(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerVanar(false);
-      } else {
-        setActivePlayerVanar(true);
+  const fetchPreviousWinnersVanar = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataVanar(placeholderplayerData);
+      return;
+    }
+    previousWinnersVanarVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersVanarFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersVanarQuery,
+      {
+        force,
       }
+    );
+    if ((error && !fromCache) || !data) {
+      setPrevDataVanar(placeholderplayerData);
+      return;
+    }
+    setPrevDataVanar(data);
+    previousWinnersVanarFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecordsAroundPlayerVanar = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerVanarQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerVanar(false);
+      return;
+    }
+
+    const [userRecord] = data;
+    setUserDataVanar(userRecord);
+    setActivePlayerVanar((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+  };
+
+  const fetchDailyRecordsVanar = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsVanarQuery);
+    if (!useCache) {
+      setLoadingVanar(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(dailyRecordsVanarQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsVanar([]);
+      setPrevDataVanar(placeholderplayerData);
+      setLoadingVanar(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsVanar(leaderboard);
+    fillRecordsVanar(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersVanar(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerVanar(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setLoadingVanar(false);
+      }, 1000);
+    } else {
+      setLoadingVanar(false);
     }
   };
 
@@ -1632,91 +2088,151 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersTaiko = async (version) => {
-    if (version !== 0) {
+  const previousWinnersTaikoVersionRef = useRef(null);
+  const previousWinnersTaikoFetchedVersionRef = useRef(null);
+
+  const previousWinnersTaikoQuery = useReactQuery({
+    queryKey: ["previousWinnersTaiko"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersTaikoVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsTaiko([]);
-        });
-      setPrevDataTaiko(result.data.data.leaderboard);
-    } else {
-      setPrevDataTaiko(placeholderplayerData);
-    }
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-    // setdailyplayerData(result.data.data.leaderboard);
-  };
-
-  const fetchDailyRecordsTaiko = async () => {
-    if (dailyRecordsTaiko.length > 0) return;
-    setloadingTaiko(true);
-
-    const data = {
-      StatisticName: "LeaderboardTaikoDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsTaikoQuery = useReactQuery({
+    queryKey: ["dailyRecordsTaiko"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardTaikoDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersTaiko(parseInt(result.data.data.version));
-      setDailyRecordsTaiko(result.data.data.leaderboard);
-      fillRecordsTaiko(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerTaiko(true);
-          fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerTaiko(false);
-          fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingTaiko(false);
-      fillRecordsTaiko([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingTaiko(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardTaikoDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerTaikoQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerTaiko", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardTaikoDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataTaiko(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerTaiko(false);
-      } else {
-        setActivePlayerTaiko(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersTaiko = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataTaiko(placeholderplayerData);
+      return;
+    }
+    previousWinnersTaikoVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersTaikoFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersTaikoQuery,
+      {
+        force,
       }
+    );
+    if ((error && !fromCache) || !data) {
+      setPrevDataTaiko(placeholderplayerData);
+      return;
+    }
+    setPrevDataTaiko(data);
+    previousWinnersTaikoFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecordsAroundPlayerTaiko = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerTaikoQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerTaiko(false);
+      return;
+    }
+    const [userRecord] = data;
+    setUserDataTaiko(userRecord);
+    setActivePlayerTaiko((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+  };
+
+  const fetchDailyRecordsTaiko = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsTaikoQuery);
+    if (!useCache) {
+      setloadingTaiko(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(dailyRecordsTaikoQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsTaiko([]);
+      setPrevDataTaiko(placeholderplayerData);
+      setloadingTaiko(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsTaiko(leaderboard);
+    fillRecordsTaiko(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersTaiko(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerTaiko(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingTaiko(false);
+      }, 1000);
+    } else {
+      setloadingTaiko(false);
     }
   };
 
@@ -1731,89 +2247,148 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersMat = async (version) => {
-    if (version !== 0) {
+  const previousWinnersMatVersionRef = useRef(null);
+  const previousWinnersMatFetchedVersionRef = useRef(null);
+
+  const previousWinnersMatQuery = useReactQuery({
+    queryKey: ["previousWinnersMat"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersMatVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardMatchainDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsMat([]);
-        });
-      setPrevDataMat(result.data.data.leaderboard);
-    } else {
-      setPrevDataMat(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsMat = async () => {
-    if (dailyRecordsMat.length > 0) return;
-    setloadingMat(true);
-
-    const data = {
-      StatisticName: "LeaderboardMatchainDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsMatQuery = useReactQuery({
+    queryKey: ["dailyRecordsMat"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardMatchainDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersMat(parseInt(result.data.data.version));
-      setDailyRecordsMat(result.data.data.leaderboard);
-      fillRecordsMat(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerMat(true);
-          fetchDailyRecordsAroundPlayerMat(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerMat(false);
-          fetchDailyRecordsAroundPlayerMat(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingMat(false);
-      fillRecordsMat([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingMat(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerMat = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardMatchainDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerMatQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerMat", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardMatchainDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataMat(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerMat(false);
-      } else {
-        setActivePlayerMat(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersMat = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataMat(placeholderplayerData);
+      return;
+    }
+    previousWinnersMatVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersMatFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(previousWinnersMatQuery, {
+      force,
+    });
+    if ((error && !fromCache) || !data) {
+      setPrevDataMat(placeholderplayerData);
+      return;
+    }
+    setPrevDataMat(data);
+    previousWinnersMatFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecordsAroundPlayerMat = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerMatQuery,
+      {
+        force: forceRefresh,
       }
+    );
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerMat(false);
+      return;
+    }
+    const [userRecord] = data;
+    setUserDataMat(userRecord);
+    setActivePlayerMat((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+  };
+
+  const fetchDailyRecordsMat = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsMatQuery);
+    if (!useCache) {
+      setloadingMat(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(dailyRecordsMatQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsMat([]);
+      setPrevDataMat(placeholderplayerData);
+      setloadingMat(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsMat(leaderboard);
+    fillRecordsMat(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersMat(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerMat(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingMat(false);
+      }, 1000);
+    } else {
+      setloadingMat(false);
     }
   };
 
@@ -1828,89 +2403,151 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersSkale = async (version) => {
-    if (version !== 0) {
+  const previousWinnersSkaleVersionRef = useRef(null);
+  const previousWinnersSkaleFetchedVersionRef = useRef(null);
+
+  const previousWinnersSkaleQuery = useReactQuery({
+    queryKey: ["previousWinnersSkale"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersSkaleVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsSkale([]);
-        });
-      setPrevDataSkale(result.data.data.leaderboard);
-    } else {
-      setPrevDataSkale(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsSkale = async () => {
-    if (dailyRecordsSkale.length > 0) return;
-    setloadingSkale(true);
-
-    const data = {
-      StatisticName: "LeaderboardSkaleDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsSkaleQuery = useReactQuery({
+    queryKey: ["dailyRecordsSkale"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardSkaleDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersSkale(parseInt(result.data.data.version));
-      setDailyRecordsSkale(result.data.data.leaderboard);
-      fillRecordsSkale(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerSkale(true);
-          fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerSkale(false);
-          fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingSkale(false);
-      fillRecordsSkale([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingSkale(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerSkale = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardSkaleDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerSkaleQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerSkale", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardSkaleDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataSkale(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerSkale(false);
-      } else {
-        setActivePlayerSkale(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersSkale = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataSkale(placeholderplayerData);
+      return;
+    }
+    previousWinnersSkaleVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersSkaleFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersSkaleQuery,
+      {
+        force,
       }
+    );
+    if ((error && !fromCache) || !data) {
+      setPrevDataSkale(placeholderplayerData);
+      return;
+    }
+    setPrevDataSkale(data);
+    previousWinnersSkaleFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecordsAroundPlayerSkale = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerSkaleQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+    if ((error && !fromCache) || !data?.length) {
+      setActivePlayerSkale(false);
+      return;
+    }
+    const [userRecord] = data;
+    setUserDataSkale(userRecord);
+    setActivePlayerSkale((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+  };
+
+  const fetchDailyRecordsSkale = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsSkaleQuery);
+    if (!useCache) {
+      setloadingSkale(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(dailyRecordsSkaleQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsSkale([]);
+      setPrevDataSkale(placeholderplayerData);
+      setloadingSkale(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsSkale(leaderboard);
+    fillRecordsSkale(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersSkale(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      await fetchDailyRecordsAroundPlayerSkale(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingSkale(false);
+      }, 1000);
+    } else {
+      setloadingSkale(false);
     }
   };
 
@@ -1924,6 +2561,78 @@ function Dashboard({
       setStarRecords(finalData);
     }
   };
+
+  const previousWinnersStarVersionRef = useRef(null);
+  const previousWinnersStarFetchedVersionRef = useRef(null);
+
+  const previousWinnersStarQuery = useReactQuery({
+    queryKey: ["previousWinnersStar"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersStarVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
+
+  const recordsStarQuery = useReactQuery({
+    queryKey: ["recordsStar"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+      return result.data.data;
+    },
+  });
+
+  const recordsAroundPlayerStarQuery = useReactQuery({
+    queryKey: ["recordsAroundPlayerStar", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      return result.data.data;
+    },
+  });
 
   const fetchPreviousUserDataStar = async (version, userId) => {
     if (version !== 0) {
@@ -1967,81 +2676,86 @@ function Dashboard({
     }
   };
 
-  const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
-    const data = {
-      StatisticName: "GlobalStarMonthlyLeaderboard",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      fetchPreviousUserDataStar(parseInt(result.data.data.version), userId);
-      var testArray = result.data.data.leaderboard;
-      if (testArray.length > 0) {
-        const userPosition = testArray[0].position;
-        // setuserCollectedStars(testArray[0].statValue);
-        if (goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) +
-                  Number(monthlyExtraStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition]) +
-                  Number(monthlyExtraStarPrizes[userPosition])
-              : 0
-          );
-        } else if (!goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        }
+  const fetchDailyRecordsAroundPlayerStar = async (
+    forceRefresh = false,
+    leaderboardData = starRecords
+  ) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      recordsAroundPlayerStarQuery,
+      {
+        force: forceRefresh,
       }
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
+    );
 
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerStar(true);
-          setUserDataStar([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerStar(false);
-          setUserDataStar(...testArray);
-        }
-      } else if (testArray.length > 0) {
-        setActivePlayerStar(false);
-        setUserDataStar(...testArray);
-      }
+    const aroundData = data?.leaderboard || [];
+    const version = data?.version;
+
+    if ((error && !fromCache) || aroundData.length === 0) {
+      setActivePlayerStar(false);
+      return;
     }
+
+    if (version) {
+      fetchPreviousUserDataStar(parseInt(version, 10), userId);
+    }
+
+    const [userRecord] = aroundData;
+    if (!userRecord) {
+      setActivePlayerStar(false);
+      return;
+    }
+
+    const userPosition = userRecord.position ?? Number.MAX_SAFE_INTEGER;
+    setUserDataStar(userRecord);
+
+    if (goldenPassRemainingTime) {
+      setDataAmountStar(
+        userRecord.statValue !== 0
+          ? userPosition > 100
+            ? 0
+            : userPosition === 100
+            ? Number(monthlyStarPrizes[99]) + Number(monthlyExtraStarPrizes[99])
+            : Number(monthlyStarPrizes[userPosition]) +
+              Number(monthlyExtraStarPrizes[userPosition])
+          : 0
+      );
+    } else {
+      setDataAmountStar(
+        userRecord.statValue !== 0
+          ? userPosition > 100
+            ? 0
+            : userPosition === 100
+            ? Number(monthlyStarPrizes[99])
+            : Number(monthlyStarPrizes[userPosition])
+          : 0
+      );
+    }
+
+    const isUserInLeaderboard = Array.isArray(leaderboardData)
+      ? leaderboardData.some((item) => item?.displayName === username)
+      : false;
+
+    setActivePlayerStar(isUserInLeaderboard && userPosition <= 99);
   };
 
-  const fetchPreviousWinnersStar = async (version) => {
-    if (version !== 0) {
-      const data = {
-        StatisticName: "GlobalStarMonthlyLeaderboard",
-        StartPosition: 0,
-        MaxResultsCount: 100,
-        Version: version - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
-      );
-      setPrevDataStar(result.data.data.leaderboard);
-    } else {
+  const fetchPreviousWinnersStar = async (version, forceRefresh = false) => {
+    if (version === 0) {
       setPrevDataStar(placeholderplayerData);
+      return;
     }
+    previousWinnersStarVersionRef.current = version;
+    const force =
+      forceRefresh || previousWinnersStarFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(previousWinnersStarQuery, {
+      force,
+    });
+    if ((error && !fromCache) || !data) {
+      setPrevDataStar(placeholderplayerData);
+      return;
+    }
+    setPrevDataStar(data);
+    previousWinnersStarFetchedVersionRef.current = version;
   };
 
   const fetchExplorerHunt = async () => {
@@ -2076,72 +2790,75 @@ function Dashboard({
     }
   };
 
-  const fetchRecordsStar = async () => {
-    if (starRecords.length > 0) return;
-    setloadingStarMonthly(true);
+  const fetchRecordsStar = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(recordsStarQuery);
+    if (!useCache) {
+      setloadingStarMonthly(true);
+    }
 
-    const data = {
-      StatisticName: "GlobalStarMonthlyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
+    const { data, error, fromCache } = await fetchQueryData(recordsStarQuery, {
+      force: forceRefresh,
+    });
 
-    try {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
-        data
+    if ((error && !fromCache) || !data) {
+      fillRecordsStar([]);
+      setPrevDataStar(placeholderplayerData);
+      setloadingStarMonthly(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setStarRecords(leaderboard);
+    fillRecordsStar(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersStar(Number.isNaN(version) ? 0 : version, forceRefresh);
+
+    if (userId && username) {
+      const testArray = leaderboard.filter(
+        (item) => item.displayName === username
       );
 
-      fetchPreviousWinnersStar(parseInt(result.data.data.version));
-      setStarRecords(result.data.data.leaderboard);
-      fillRecordsStar(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerStar(true);
-          const userPosition = testArray[0].position;
-          // setuserCollectedStars(testArray[0].statValue);
-          setUserDataStar(...testArray);
-          if (goldenPassRemainingTime) {
-            setDataAmountStar(
-              testArray[0].statValue !== 0
-                ? userPosition > 100
-                  ? 0
-                  : userPosition === 100
-                  ? Number(monthlyStarPrizes[99]) +
-                    Number(monthlyExtraStarPrizes[99])
-                  : Number(monthlyStarPrizes[userPosition]) +
-                    Number(monthlyExtraStarPrizes[userPosition])
-                : 0
-            );
-          } else if (!goldenPassRemainingTime) {
-            setDataAmountStar(
-              testArray[0].statValue !== 0
-                ? userPosition > 100
-                  ? 0
-                  : userPosition === 100
-                  ? Number(monthlyStarPrizes[99])
-                  : Number(monthlyStarPrizes[userPosition])
-                : 0
-            );
-          }
-        } else if (testArray.length === 0) {
-          setActivePlayerStar(false);
-          fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
+      if (testArray.length > 0) {
+        setActivePlayerStar(true);
+        const userRecord = testArray[0];
+        const userPosition = userRecord.position;
+        setUserDataStar(userRecord);
+        if (goldenPassRemainingTime) {
+          setDataAmountStar(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99]) +
+                  Number(monthlyExtraStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition]) +
+                  Number(monthlyExtraStarPrizes[userPosition])
+              : 0
+          );
+        } else {
+          setDataAmountStar(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
         }
+      } else {
+        setActivePlayerStar(false);
+        await fetchDailyRecordsAroundPlayerStar(forceRefresh, leaderboard);
       }
-    } catch (error) {
-      console.error(error);
-      setloadingStarMonthly(false);
-      fillRecordsStar([]);
-    } finally {
-      const timer = setTimeout(() => {
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
         setloadingStarMonthly(false);
       }, 1000);
-      return () => clearTimeout(timer);
+    } else {
+      setloadingStarMonthly(false);
     }
   };
 
@@ -2156,8 +2873,21 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersStarWeekly = async (version) => {
-    if (version !== 0) {
+  const previousWinnersStarWeeklyVersionRef = useRef(null);
+  const previousWinnersStarWeeklyFetchedVersionRef = useRef(null);
+
+  const previousWinnersStarWeeklyQuery = useReactQuery({
+    queryKey: ["previousWinnersStarWeekly"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersStarWeeklyVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "GlobalStarWeeklyLeaderboard",
         StartPosition: 0,
@@ -2168,101 +2898,121 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      setPrevDataStarWeekly(result.data.data.leaderboard);
-    } else {
-      setPrevDataStarWeekly(placeholderplayerData);
-    }
-  };
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchRecordsStarWeekly = async () => {
-    if (starRecordsWeekly.length > 0) return;
-    setloadingStarWeekly(true);
-
-    const data = {
-      StatisticName: "GlobalStarWeeklyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const recordsStarWeeklyQuery = useReactQuery({
+    queryKey: ["recordsStarWeekly"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "GlobalStarWeeklyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersStarWeekly(parseInt(result.data.data.version));
-      setStarRecordsWeekly(result.data.data.leaderboard);
-      fillRecordsStarWeekly(result.data.data.leaderboard);
-
-      if (userId && username && result.data.data.leaderboard) {
-        if (userId && username) {
-          var testArray = result.data.data.leaderboard.filter(
-            (item) => item.displayName === username
-          );
-          if (testArray.length > 0) {
-            setActivePlayerStarWeekly(true);
-            const userPosition = testArray[0].position;
-            // setuserCollectedStarsWeekly(testArray[0].statValue);
-            setUserDataStarWeekly(...testArray);
-            if (goldenPassRemainingTime) {
-              setDataAmountStarWeekly(
-                testArray[0].statValue !== 0
-                  ? userPosition > 100
-                    ? 0
-                    : userPosition === 100
-                    ? Number(weeklyStarPrizes[99]) +
-                      Number(weeklyExtraStarPrizes[99])
-                    : Number(weeklyStarPrizes[userPosition]) +
-                      Number(weeklyExtraStarPrizes[userPosition])
-                  : 0
-              );
-            } else if (!goldenPassRemainingTime) {
-              setDataAmountStarWeekly(
-                testArray[0].statValue !== 0
-                  ? userPosition > 100
-                    ? 0
-                    : userPosition === 100
-                    ? Number(weeklyStarPrizes[99])
-                    : Number(weeklyStarPrizes[userPosition])
-                  : 0
-              );
-            }
-          } else if (testArray.length === 0) {
-            setActivePlayerStarWeekly(false);
-            fetchWeeklyRecordsAroundPlayerStar(result.data.data.leaderboard);
-          }
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingStarWeekly(false);
-      fillRecordsStarWeekly([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingStarWeekly(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchWeeklyRecordsAroundPlayerStar = async (itemData) => {
-    const data = {
-      StatisticName: "GlobalStarWeeklyLeaderboard",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const recordsAroundPlayerStarWeeklyQuery = useReactQuery({
+    queryKey: ["recordsAroundPlayerStarWeekly", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "GlobalStarWeeklyLeaderboard",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
+      return result.data.data;
+    },
+  });
+
+  const fetchPreviousWinnersStarWeekly = async (
+    version,
+    forceRefresh = false
+  ) => {
+    if (version === 0) {
+      setPrevDataStarWeekly(placeholderplayerData);
+      return;
+    }
+    previousWinnersStarWeeklyVersionRef.current = version;
+    const force =
+      forceRefresh ||
+      previousWinnersStarWeeklyFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersStarWeeklyQuery,
+      {
+        force,
+      }
+    );
+    if ((error && !fromCache) || !data) {
+      setPrevDataStarWeekly(placeholderplayerData);
+      return;
+    }
+    setPrevDataStarWeekly(data);
+    previousWinnersStarWeeklyFetchedVersionRef.current = version;
+  };
+
+  const fetchRecordsStarWeekly = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(recordsStarWeeklyQuery);
+    if (!useCache) {
+      setloadingStarWeekly(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      recordsStarWeeklyQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsStarWeekly([]);
+      setPrevDataStarWeekly(placeholderplayerData);
+      setloadingStarWeekly(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setStarRecordsWeekly(leaderboard);
+    fillRecordsStarWeekly(leaderboard);
+
+    const version = parseInt(data?.version, 10);
+    await fetchPreviousWinnersStarWeekly(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId && username && leaderboard) {
+      const testArray = leaderboard.filter(
+        (item) => item.displayName === username
+      );
       if (testArray.length > 0) {
-        const userPosition = testArray[0].position;
-        // setuserCollectedStarsWeekly(testArray[0].statValue);
+        setActivePlayerStarWeekly(true);
+        const userRecord = testArray[0];
+        const userPosition = userRecord.position;
+        setUserDataStarWeekly(userRecord);
         if (goldenPassRemainingTime) {
           setDataAmountStarWeekly(
-            testArray[0].statValue !== 0
+            userRecord.statValue !== 0
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
@@ -2272,9 +3022,9 @@ function Dashboard({
                   Number(weeklyExtraStarPrizes[userPosition])
               : 0
           );
-        } else if (!goldenPassRemainingTime) {
+        } else {
           setDataAmountStarWeekly(
-            testArray[0].statValue !== 0
+            userRecord.statValue !== 0
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
@@ -2283,24 +3033,78 @@ function Dashboard({
               : 0
           );
         }
-      }
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerStarWeekly(true);
-          setUserDataStarWeekly([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerStarWeekly(false);
-          setUserDataStarWeekly(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      } else {
         setActivePlayerStarWeekly(false);
-        setUserDataStarWeekly(...testArray);
+        await fetchWeeklyRecordsAroundPlayerStar(forceRefresh, leaderboard);
       }
     }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingStarWeekly(false);
+      }, 1000);
+    } else {
+      setloadingStarWeekly(false);
+    }
+  };
+
+  const fetchWeeklyRecordsAroundPlayerStar = async (
+    forceRefresh = false,
+    leaderboardData = starRecordsWeekly
+  ) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      recordsAroundPlayerStarWeeklyQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    const aroundData = data?.leaderboard || [];
+
+    if ((error && !fromCache) || aroundData.length === 0) {
+      setActivePlayerStarWeekly(false);
+      return;
+    }
+
+    const [userRecord] = aroundData;
+    if (!userRecord) {
+      setActivePlayerStarWeekly(false);
+      return;
+    }
+
+    const userPosition = userRecord.position ?? Number.MAX_SAFE_INTEGER;
+    setUserDataStarWeekly(userRecord);
+
+    if (goldenPassRemainingTime) {
+      setDataAmountStarWeekly(
+        userRecord.statValue !== 0
+          ? userPosition > 100
+            ? 0
+            : userPosition === 100
+            ? Number(weeklyStarPrizes[99]) +
+              Number(weeklyExtraStarPrizes[99])
+            : Number(weeklyStarPrizes[userPosition]) +
+              Number(weeklyExtraStarPrizes[userPosition])
+          : 0
+      );
+    } else {
+      setDataAmountStarWeekly(
+        userRecord.statValue !== 0
+          ? userPosition > 100
+            ? 0
+            : userPosition === 100
+            ? Number(weeklyStarPrizes[99])
+            : Number(weeklyStarPrizes[userPosition])
+          : 0
+      );
+    }
+
+    const isUserInLeaderboard = Array.isArray(leaderboardData)
+      ? leaderboardData.some((item) => item?.displayName === username)
+      : false;
+
+    setActivePlayerStarWeekly(isUserInLeaderboard && userPosition <= 99);
   };
 
   const fillRecordsDaily = (itemData) => {
@@ -2325,17 +3129,6 @@ function Dashboard({
     }
   };
 
-  const fillPreviousRecordsGenesis = (itemData) => {
-    if (itemData.length === 0) {
-      setpreviousgenesisData(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setpreviousgenesisData(finalData);
-    }
-  };
-
   const fetchPreviousWinners = async (version) => {
     if (version !== 0) {
       const data = {
@@ -2353,23 +3146,6 @@ function Dashboard({
       setdailyplayerData(result.data.data.leaderboard);
     }
   };
-
-  // const fetchGenesisPreviousWinners = async (version) => {
-  //   if (version !== 0) {
-  //     const data = {
-  //       StatisticName: "TheGreatCollection",
-  //       StartPosition: 0,
-  //       MaxResultsCount: 10,
-  //       Version: version - 1,
-  //     };
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
-  //       data
-  //     );
-
-  //     setpreviousgenesisData(result.data.data.leaderboard);
-  //   }
-  // };
 
   const fetchDailyRecords = async () => {
     if (dailyrecords.length > 0) return;
@@ -2431,6 +3207,23 @@ function Dashboard({
 
     // fetchGenesisPreviousWinners(parseInt(result2.data.data.version));
   };
+  // const fetchGenesisPreviousWinners = async (version) => {
+  //   if (version !== 0) {
+  //     const data = {
+  //       StatisticName: "TheGreatCollection",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 10,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data
+  //     );
+
+  //     setpreviousgenesisData(result.data.data.leaderboard);
+  //   }
+  // };
+
 
   useEffect(() => {
     if (!email) {
@@ -2948,8 +3741,8 @@ function Dashboard({
       fetchDailyRecordsAroundPlayerCore([]);
       fetchDailyRecordsAroundPlayerViction([]);
       fetchDailyRecordsAroundPlayerSkale([]);
-      fetchDailyRecordsAroundPlayerStar([]);
-      fetchWeeklyRecordsAroundPlayerStar([]);
+      fetchDailyRecordsAroundPlayerStar(false, []);
+      fetchWeeklyRecordsAroundPlayerStar(false, []);
       fetchDailyRecordsAroundPlayerTaraxa([]);
     }
   };
@@ -4401,8 +5194,8 @@ function Dashboard({
     if (effectRan2.current) return;
     if (userId && username) {
       fetchGenesisAroundPlayer(userId, username);
-      fetchDailyRecordsAroundPlayerStar([]);
-      fetchWeeklyRecordsAroundPlayerStar([]);
+      fetchDailyRecordsAroundPlayerStar(false, []);
+      fetchWeeklyRecordsAroundPlayerStar(false, []);
       effectRan2.current = true;
     }
   }, [userId, username, goldenPassRemainingTime]);
@@ -4410,17 +5203,17 @@ function Dashboard({
   useEffect(() => {
     if (effectRan.current) return;
     if (userId !== undefined && userId !== null) {
-      fetchDailyRecordsAroundPlayer([]);
-      fetchDailyRecordsAroundPlayerBase([]);
-      fetchDailyRecordsAroundPlayerCore([]);
-      fetchDailyRecordsAroundPlayerManta([]);
-      fetchDailyRecordsAroundPlayerSei([]);
-      fetchDailyRecordsAroundPlayerTaiko([]);
-      fetchDailyRecordsAroundPlayerVanar([]);
-      fetchDailyRecordsAroundPlayerMat([]);
-      fetchDailyRecordsAroundPlayerViction([]);
-      fetchDailyRecordsAroundPlayerSkale([]);
-      fetchDailyRecordsAroundPlayerTaraxa([]);
+      fetchDailyRecordsAroundPlayer(false, []);
+      fetchDailyRecordsAroundPlayerBase(false, []);
+      fetchDailyRecordsAroundPlayerCore(false, []);
+      fetchDailyRecordsAroundPlayerManta(false, []);
+      fetchDailyRecordsAroundPlayerSei(false, []);
+      fetchDailyRecordsAroundPlayerTaiko(false, []);
+      fetchDailyRecordsAroundPlayerVanar(false, []);
+      fetchDailyRecordsAroundPlayerMat(false, []);
+      fetchDailyRecordsAroundPlayerViction(false, []);
+      fetchDailyRecordsAroundPlayerSkale(false, []);
+      fetchDailyRecordsAroundPlayerTaraxa(false, []);
       effectRan.current = true;
     }
   }, [userId]);

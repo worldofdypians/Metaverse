@@ -17,7 +17,7 @@ import { ApolloProvider } from "@apollo/client/react";
 import client from "./screens/Account/src/apolloConfig";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import { createSyncStoragePersister  } from "@tanstack/query-sync-storage-persister";
+import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { Amplify } from "aws-amplify";
 import awsExports from "./screens/Account/src/aws-exports";
 // Auth + MatchID
@@ -32,11 +32,11 @@ import reportWebVitals from "./reportWebVitals";
 import "./app.scss";
 Amplify.configure(awsExports);
 // ✅ React Query + Persist setup
+
 const queryClient = new QueryClient();
-const persister = createSyncStoragePersister ({
+const persister = createSyncStoragePersister({
   storage: window.localStorage,
 });
-
 
 // ✅ React root
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -45,21 +45,26 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <ApolloProvider client={client}>
           <QueryClientProvider client={queryClient}>
-            <PersistQueryClientProvider
-              client={queryClient}
-              persistOptions={{ persister }}
-              hydrateOptions={{ defaultOptions: { queries: { retry: false } } }} // <-- required in v5
-            >
-              {/* <Hydrate state={undefined}> */}
-                <AuthProvider>
-                  <WagmiProvider config={wagmiClient}>
-                    <MatchProvider appid="ipgjm4nszcr36mcz" wallet={{ type: "UserPasscode" }}>
-                      <App />
-                    </MatchProvider>
-                  </WagmiProvider>
-                </AuthProvider>
-              {/* </Hydrate> */}
-            </PersistQueryClientProvider>
+            {/* <Hydrate state={undefined}> */}
+            <AuthProvider>
+              <WagmiProvider config={wagmiClient}>
+                <PersistQueryClientProvider
+                  client={queryClient}
+                  persistOptions={{ persister }}
+                  hydrateOptions={{
+                    defaultOptions: { queries: { retry: false } },
+                  }} // <-- required in v5
+                >
+                  <MatchProvider
+                    appid="ipgjm4nszcr36mcz"
+                    wallet={{ type: "UserPasscode" }}
+                  >
+                    <App />
+                  </MatchProvider>
+                </PersistQueryClientProvider>
+              </WagmiProvider>
+            </AuthProvider>
+            {/* </Hydrate> */}
           </QueryClientProvider>
         </ApolloProvider>
       </BrowserRouter>
