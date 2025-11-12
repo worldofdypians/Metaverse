@@ -1259,7 +1259,8 @@ const MyProfile = ({
                       className="special-rewards-title capitalize font-unzialish"
                       style={{ color: "#FFF", width: "fit-content" }}
                     >
-                      Arena of Rage
+                      {/* Arena of Rage */}
+                      Single Strike
                     </h6>
                     {/* <h6
                       className="special-rewards-title capitalize font-unzialish"

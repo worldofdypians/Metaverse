@@ -154,44 +154,44 @@ const BattlePopup = ({
         },
       ],
     },
-    {
-      id: "opbnb",
-      name: "opBNB",
-      symbol: "BNB",
-      logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
-      desc: "An optimized layer-2 solution that delivers lower fees and higher throughput to unlock the full potential of the BNB Chain",
-      color: "from-blue-400 to-purple-600",
-      gradientFrom: "#F59E0B",
-      gradientTo: "#1a1024ff",
-      hex: "0xcc",
-      chainId: 204,
-      socials: [
-        {
-          Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-          label: "Twitter",
-          color: "#1DA1F2",
-          link: "https://x.com/BNBChain",
-        },
-        {
-          Icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
-          label: "Telegram",
-          color: "#0088CC",
-          link: "https://t.me/bnbchain",
-        },
-        {
-          Icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
-          label: "Discord",
-          color: "#5865F2",
-          link: "https://discord.com/invite/bnbchain",
-        },
-        {
-          Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
-          label: "Website",
-          color: "#059669",
-          link: "https://opbnb.bnbchain.org/en",
-        },
-      ],
-    },
+    // {
+    //   id: "opbnb",
+    //   name: "opBNB",
+    //   symbol: "BNB",
+    //   logo: "https://cdn.worldofdypians.com/wod/opbnbChain.png",
+    //   desc: "An optimized layer-2 solution that delivers lower fees and higher throughput to unlock the full potential of the BNB Chain",
+    //   color: "from-blue-400 to-purple-600",
+    //   gradientFrom: "#F59E0B",
+    //   gradientTo: "#1a1024ff",
+    //   hex: "0xcc",
+    //   chainId: 204,
+    //   socials: [
+    //     {
+    //       Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
+    //       label: "Twitter",
+    //       color: "#1DA1F2",
+    //       link: "https://x.com/BNBChain",
+    //     },
+    //     {
+    //       Icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
+    //       label: "Telegram",
+    //       color: "#0088CC",
+    //       link: "https://t.me/bnbchain",
+    //     },
+    //     {
+    //       Icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
+    //       label: "Discord",
+    //       color: "#5865F2",
+    //       link: "https://discord.com/invite/bnbchain",
+    //     },
+    //     {
+    //       Icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
+    //       label: "Website",
+    //       color: "#059669",
+    //       link: "https://opbnb.bnbchain.org/en",
+    //     },
+    //   ],
+    // },
   ];
   const btnRef = useRef(null);
   const [showContent, setShowContent] = useState(false);
