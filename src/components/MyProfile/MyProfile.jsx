@@ -93,7 +93,8 @@ const MyProfile = ({
   onDailyQuestionClick,
   openKickstarter,
   onOpenBooster,
-  totalTreasureHuntUsd,isPremium
+  totalTreasureHuntUsd,
+  isPremium,
 }) => {
   // Get user progress data from Redux store
   const userProgress = useSelector((state) => state.user.userProgress);
@@ -101,7 +102,7 @@ const MyProfile = ({
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
   const [tooltip, setTooltip] = useState(false);
-  const [cooldown, setCooldown] = useState(null)
+  const [cooldown, setCooldown] = useState(null);
   let now = new Date().getTime();
   let now2 = new Date();
 
@@ -141,13 +142,18 @@ const MyProfile = ({
   const [twitterTasks, setTwitterTasks] = useState([]);
   const [popup, setPopup] = useState(false);
   const [connectPopup, setConnectPopup] = useState(false);
+  const [twitterCooldown, setTwitterCooldown] = useState({});
+  const [taskCount, setTaskCount] = useState(0);
 
   const checkTwitter = async () => {
     await axios
       .get(`https://api.worldofdypians.com/api/website-account/${address}`)
       .then((res) => {
         console.log(res.data, "twitterData");
-
+        const incompleteCount = res.data.twitterTasks.filter(
+          (t) => t.completed === false && t.verified === false
+        ).length;
+        setTaskCount(incompleteCount);
         const grouped = Object.values(
           res?.data.twitterTasks.reduce((acc, item) => {
             if (!acc[item.tweetId]) {
@@ -176,16 +182,14 @@ const MyProfile = ({
       });
   };
 
-
-   const checkCooldown = async () => {
-      await axios
-        .get(`https://api.worldofdypians.com/auth/twitter/cooldown/${address}`)
-        .then((res) => {
-          console.log(res.data, "cooldown");
-         
-        });
-    };
-
+  const checkCooldown = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/auth/twitter/cooldown/${address}`)
+      .then((res) => {
+        console.log(res.data, "cooldown");
+        setTwitterCooldown(res.data);
+      });
+  };
 
   useEffect(() => {
     checkTwitter();
@@ -600,7 +604,6 @@ const MyProfile = ({
                                 Portfolio
                               </h6>
                             </div>
-                           
                           </div>
                         </div>
                       </div>
@@ -643,7 +646,6 @@ const MyProfile = ({
                         onClick={onLinkWallet}
                       >
                         {/* Link Wallet */}
-                        
                         <img
                           src={"https://cdn.worldofdypians.com/wod/sync.svg"}
                           alt=""
@@ -819,12 +821,17 @@ const MyProfile = ({
                       className={"daily-progress-value-golden"}
                       style={{
                         border:
-                          !isPremium || !userProgress.primeStars ? "1px solid gray" : "",
+                          !isPremium || !userProgress.primeStars
+                            ? "1px solid gray"
+                            : "",
                       }}
                     >
                       <span
                         style={{
-                          color: !isPremium || !userProgress.primeStars ? "gray" : "",
+                          color:
+                            !isPremium || !userProgress.primeStars
+                              ? "gray"
+                              : "",
                         }}
                       >
                         +50 Stars
@@ -1868,6 +1875,7 @@ const MyProfile = ({
       {popup && (
         <OutsideClickHandler onOutsideClick={() => setPopup(false)}>
           <TwitterRewards
+          taskCount={taskCount}
             tasks={twitterTasks}
             onClose={() => setPopup(false)}
             address={address}
@@ -1877,7 +1885,6 @@ const MyProfile = ({
             coinbase={coinbase}
             email={email}
             onConnectWallet={onConnectWallet}
-
           />
         </OutsideClickHandler>
       )}
@@ -1885,6 +1892,7 @@ const MyProfile = ({
         <OutsideClickHandler onOutsideClick={() => setConnectPopup(false)}>
           <ConnectTwitterPopup
             onClose={() => setConnectPopup(false)}
+            twitterCooldown={twitterCooldown}
             address={address}
             isConnected={isConnected}
             coinbase={coinbase}

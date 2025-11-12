@@ -21,9 +21,8 @@
   line-height: normal;
 }
 
-
-.twitter-empty-message{
-    color: #fff;
+.twitter-empty-message {
+  color: #fff;
   font-family: "Montserrat";
   font-size: 18px;
   font-style: normal;
@@ -49,9 +48,8 @@
   transition: all 0.25s;
 }
 
-.connect-twitter-btn:hover{
-    background-position: 100% 0 !important;
-  
+.connect-twitter-btn:hover {
+  background-position: 100% 0 !important;
 }
 
 .twitter-popup-desc {
@@ -171,23 +169,24 @@
   justify-content: center;
 }
 
-
 .unlink-twitter-button {
-   background: linear-gradient(
-    270deg,
-    #8B0000,
-    #B71C1C
-  );
-width: 115px;
-  border-radius: 8px;
+  border-radius: 10px;
+  border: 1px solid #2a2454;
+  background: #1a1640;
   transition: all 0.25s;
   cursor: pointer;
-   color: #fff;
+  color: #fff;
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+}
+
+.unlink-twitter-button:hover {
+  border: 1px solid #ff6467;
+  color: #ff6467;
+  box-shadow: 0px 0px 5px #ff6467;
 }
 
 .twitter-action-text {
@@ -200,7 +199,6 @@ width: 115px;
 }
 
 .twitter-action-btn-disabled {
-  pointer-events: none;
   opacity: 0.7;
   background: rgba(23, 133, 242, 0.6);
   border-radius: 8px;
@@ -235,24 +233,24 @@ width: 115px;
   min-height: 30px;
 }
 
-.stars-completed{
+.stars-completed {
   background: rgba(23, 133, 242, 0.6) !important;
   border: 1px solid #1785f2 !important;
-  span{
+  span {
     color: #fff !important;
   }
 }
 
-.twitter-task-failed{
+.twitter-task-failed {
   border-radius: 6px;
   border: 1px solid rgb(255, 0, 0);
   background: rgba(255, 0, 0, 0.25);
-      width: fit-content;
-    position: absolute;
-    right: 15px;
-    bottom: 15px;
+  width: fit-content;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
 
-  span{
+  span {
     color: #fff !important;
     font-size: 12px;
     @media screen and (max-width: 786px) {
@@ -326,6 +324,81 @@ width: 115px;
 
 .task-opacity {
   opacity: 1 !important;
+}
+
+.available-rewards-wrapper {
+  border-radius: 10px;
+  border: 0.909px solid #2a2454;
+  background: linear-gradient(180deg, #1a1640 0%, #0f0d28 100%);
+  width: 110px;
+}
+
+.available-rewards-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+}
+
+.available-rewards-value {
+  font-family: Arial;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 142.857% */
+}
+
+.check-task-btn {
+  border-radius: 10px;
+  background: linear-gradient(180deg, #1e90ff 0%, #06c 100%);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    color: #FFF;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
+}
+
+.task-icon-holder {
+  border-radius: 10px;
+  border: 1px solid #2a2454;
+  background: #1a1640;
+  position: relative;
+}
+
+
+.task-check-success{
+  border-radius: 50%;
+  background: #1E90FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: -5px;
+  top: -5px;
+}
+
+.task-check-fail{
+  border-radius: 50%;
+  background: #FB2C36;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  color: #FFF;
+font-family: Arial;
+font-size: 10px;
+font-style: normal;
+font-weight: 700;
+line-height: 10px; /* 100% */
 }
 
 // a39990
