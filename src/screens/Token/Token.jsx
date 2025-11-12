@@ -7,6 +7,7 @@ import Utility from "./Utility/Utility";
 import Investors from "./Investors/Investors";
 import WodBuilders from "../Home/WodBuilders/WodBuilders";
 import InGameEconomy from "./InGameEconomy";
+import WodCard from "./WodCard/WodCard";
 
 const Token = ({wodPrice}) => {
 
@@ -27,6 +28,7 @@ const Token = ({wodPrice}) => {
     <div className="container-fluid token-wrapper px-0">
       <div className="d-flex flex-column"> 
         <MainHero scrollInto={scrollToView}/>
+        <WodCard/>
         <TokenUtility />
         <Tokenomics wodPrice={wodPrice}/>
         <InGameEconomy />
