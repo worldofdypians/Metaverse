@@ -603,31 +603,7 @@ const BattlePopup = ({
     }
   };
 
-  const resolveChestContract = (cid) => {
-    try {
-      switch (cid) {
-        case 204:
-          return {
-            address: window.config.daily_bonus_address,
-            abi: window.DAILY_BONUS_ABI,
-            chainText: "opbnb",
-          };
-
-        case 56:
-          return {
-            address: window.config.daily_bonus_bnb_address,
-            abi: window.DAILY_BONUS_BNB_ABI,
-            chainText: "bnb",
-          };
-
-        default:
-          return null;
-      }
-    } catch (e) {
-      console.error(e);
-      return null;
-    }
-  };
+  
   const chestIndex = 1;
 
   const handleOpenChest = async () => {
@@ -635,7 +611,11 @@ const BattlePopup = ({
     const video = videoRef2.current;
 
     try {
-      const contractConfig = resolveChestContract(chainId);
+      const contractConfig =  {
+            address: window.config.single_strike_address,
+            abi: window.SINGLE_STRIKE_ABI,
+            chainText: "bnb",
+          };
       if (!contractConfig)
         throw new Error("Unsupported chain for chest contract.");
 
