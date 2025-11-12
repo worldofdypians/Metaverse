@@ -61,7 +61,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserProgress } from "../../../../../redux/slices/userSlice";
 import { useQuery as useReactQuery } from "@tanstack/react-query";
 
-
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#fff",
@@ -153,6 +152,8 @@ function Dashboard({
   const { setUserNFTs } = useUser();
   const dispatch = useDispatch();
   const { eventId } = useParams();
+
+  const hasUserId = userId !== undefined && userId !== null;
 
   // Get isPremium and primeStars from Redux store
   const primeStars = useSelector((state) => state.user.userProgress.primeStars);
@@ -452,12 +453,12 @@ function Dashboard({
       // Global Rankings
       globalMonthly:
         userDataStar?.statValue !== undefined && userDataStar?.statValue > 0
-          ? userDataStar.position+ 1
+          ? userDataStar.position + 1
           : "---",
       globalWeekly:
         userDataStarWeekly?.statValue !== undefined &&
         userDataStarWeekly?.statValue > 0
-          ? userDataStarWeekly.position+ 1
+          ? userDataStarWeekly.position + 1
           : "---",
       totalStars: userDataStar?.statValue || 0,
 
@@ -958,7 +959,11 @@ function Dashboard({
     const result = await query.refetch({ throwOnError: false });
     if (!result?.data) {
       if (query?.data) {
-        return { data: query.data, fromCache: true, error: result?.error ?? null };
+        return {
+          data: query.data,
+          fromCache: true,
+          error: result?.error ?? null,
+        };
       }
       return { data: null, fromCache: false, error: result?.error ?? null };
     }
@@ -984,7 +989,7 @@ function Dashboard({
     queryKey: ["previousWinnersCore"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -1010,7 +1015,7 @@ function Dashboard({
     queryKey: ["dailyRecordsCore"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1031,7 +1036,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerCore", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -1055,10 +1060,14 @@ function Dashboard({
       return;
     }
     previousWinnersCoreVersionRef.current = version;
-    const force = forceRefresh || previousWinnersCoreFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(previousWinnersCoreQuery, {
-      force,
-    });
+    const force =
+      forceRefresh || previousWinnersCoreFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersCoreQuery,
+      {
+        force,
+      }
+    );
     if ((error && !fromCache) || !data) {
       setPrevDataCore(placeholderplayerData);
       return;
@@ -1081,7 +1090,9 @@ function Dashboard({
     }
     const [userRecord] = data;
     setUserDataCore(userRecord);
-    setActivePlayerCore((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+    setActivePlayerCore(
+      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+    );
   };
 
   const fetchDailyRecordsCore = async (forceRefresh = false) => {
@@ -1090,9 +1101,12 @@ function Dashboard({
       setloadingCore(true);
     }
 
-    const { data, error, fromCache } = await fetchQueryData(dailyRecordsCoreQuery, {
-      force: forceRefresh,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsCoreQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
     if ((error && !fromCache) || !data) {
       fillRecordsCore([]);
@@ -1106,7 +1120,10 @@ function Dashboard({
     fillRecordsCore(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersCore(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersCore(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerCore(forceRefresh);
@@ -1139,7 +1156,7 @@ function Dashboard({
     queryKey: ["previousWinnersViction"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -1165,7 +1182,7 @@ function Dashboard({
     queryKey: ["dailyRecordsViction"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1186,7 +1203,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerViction", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -1211,7 +1228,8 @@ function Dashboard({
     }
     previousWinnersVictionVersionRef.current = version;
     const force =
-      forceRefresh || previousWinnersVictionFetchedVersionRef.current !== version;
+      forceRefresh ||
+      previousWinnersVictionFetchedVersionRef.current !== version;
     const { data, error, fromCache } = await fetchQueryData(
       previousWinnersVictionQuery,
       {
@@ -1240,7 +1258,9 @@ function Dashboard({
     }
     const [userRecord] = data;
     setUserDataViction(userRecord);
-    setActivePlayerViction((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+    setActivePlayerViction(
+      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+    );
   };
 
   const fetchDailyRecordsViction = async (forceRefresh = false) => {
@@ -1268,7 +1288,10 @@ function Dashboard({
     fillRecordsViction(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersViction(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersViction(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerViction(forceRefresh);
@@ -1301,7 +1324,7 @@ function Dashboard({
     queryKey: ["previousWinnersManta"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -1327,7 +1350,7 @@ function Dashboard({
     queryKey: ["dailyRecordsManta"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1348,7 +1371,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerManta", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -1402,7 +1425,9 @@ function Dashboard({
     }
     const [userRecord] = data;
     setUserDataManta(userRecord);
-    setActivePlayerManta((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+    setActivePlayerManta(
+      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+    );
   };
 
   const fetchDailyRecordsManta = async (forceRefresh = false) => {
@@ -1411,9 +1436,12 @@ function Dashboard({
       setloadingManta(true);
     }
 
-    const { data, error, fromCache } = await fetchQueryData(dailyRecordsMantaQuery, {
-      force: forceRefresh,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsMantaQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
     if ((error && !fromCache) || !data) {
       fillRecordsManta([]);
@@ -1427,7 +1455,10 @@ function Dashboard({
     fillRecordsManta(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersManta(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersManta(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerManta(forceRefresh);
@@ -1460,7 +1491,7 @@ function Dashboard({
     queryKey: ["previousWinnersSei"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -1486,7 +1517,7 @@ function Dashboard({
     queryKey: ["dailyRecordsSei"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1507,7 +1538,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerSei", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -1533,9 +1564,12 @@ function Dashboard({
     previousWinnersSeiVersionRef.current = version;
     const force =
       forceRefresh || previousWinnersSeiFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(previousWinnersSeiQuery, {
-      force,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersSeiQuery,
+      {
+        force,
+      }
+    );
     if ((error && !fromCache) || !data) {
       setPrevDataSei(placeholderplayerData);
       return;
@@ -1567,9 +1601,12 @@ function Dashboard({
       setloadingSei(true);
     }
 
-    const { data, error, fromCache } = await fetchQueryData(dailyRecordsSeiQuery, {
-      force: forceRefresh,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsSeiQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
     if ((error && !fromCache) || !data) {
       fillRecordsSei([]);
@@ -1583,7 +1620,10 @@ function Dashboard({
     fillRecordsSei(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersSei(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersSei(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerSei(forceRefresh);
@@ -1617,7 +1657,7 @@ function Dashboard({
     queryKey: ["previousWinnersTaraxa"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -1643,7 +1683,7 @@ function Dashboard({
     queryKey: ["dailyRecordsTaraxa"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1664,7 +1704,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerTaraxa", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -1689,7 +1729,8 @@ function Dashboard({
     }
     previousWinnersTaraxaVersionRef.current = version;
     const force =
-      forceRefresh || previousWinnersTaraxaFetchedVersionRef.current !== version;
+      forceRefresh ||
+      previousWinnersTaraxaFetchedVersionRef.current !== version;
     const { data, error, fromCache } = await fetchQueryData(
       previousWinnersTaraxaQuery,
       {
@@ -1729,9 +1770,12 @@ function Dashboard({
       setLoadingTaraxa(true);
     }
 
-    const { data, error, fromCache } = await fetchQueryData(dailyRecordsTaraxaQuery, {
-      force: forceRefresh,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsTaraxaQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
     if ((error && !fromCache) || !data) {
       fillRecordsTaraxa([]);
@@ -1745,7 +1789,10 @@ function Dashboard({
     fillRecordsTaraxa(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersTaraxa(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersTaraxa(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerTaraxa(forceRefresh);
@@ -1778,7 +1825,7 @@ function Dashboard({
     queryKey: ["previousWinnersBase"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -1804,7 +1851,7 @@ function Dashboard({
     queryKey: ["dailyRecordsBase"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1825,7 +1872,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerBase", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -1851,9 +1898,12 @@ function Dashboard({
     previousWinnersBaseVersionRef.current = version;
     const force =
       forceRefresh || previousWinnersBaseFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(previousWinnersBaseQuery, {
-      force,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersBaseQuery,
+      {
+        force,
+      }
+    );
     if ((error && !fromCache) || !data) {
       setPrevDataBase(placeholderplayerData);
       return;
@@ -1876,7 +1926,9 @@ function Dashboard({
     }
     const [userRecord] = data;
     setUserDataBase(userRecord);
-    setActivePlayerBase((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+    setActivePlayerBase(
+      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+    );
   };
 
   const fetchDailyRecordsBase = async (forceRefresh = false) => {
@@ -1885,9 +1937,12 @@ function Dashboard({
       setloadingBase(true);
     }
 
-    const { data, error, fromCache } = await fetchQueryData(dailyRecordsBaseQuery, {
-      force: forceRefresh,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsBaseQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
     if ((error && !fromCache) || !data) {
       fillRecordsBase([]);
@@ -1901,7 +1956,10 @@ function Dashboard({
     fillRecordsBase(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersBase(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersBase(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerBase(forceRefresh);
@@ -1934,7 +1992,7 @@ function Dashboard({
     queryKey: ["previousWinnersVanar"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -1960,7 +2018,7 @@ function Dashboard({
     queryKey: ["dailyRecordsVanar"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1981,7 +2039,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerVanar", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2037,7 +2095,9 @@ function Dashboard({
 
     const [userRecord] = data;
     setUserDataVanar(userRecord);
-    setActivePlayerVanar((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+    setActivePlayerVanar(
+      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+    );
   };
 
   const fetchDailyRecordsVanar = async (forceRefresh = false) => {
@@ -2046,9 +2106,12 @@ function Dashboard({
       setLoadingVanar(true);
     }
 
-    const { data, error, fromCache } = await fetchQueryData(dailyRecordsVanarQuery, {
-      force: forceRefresh,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsVanarQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
     if ((error && !fromCache) || !data) {
       fillRecordsVanar([]);
@@ -2062,7 +2125,10 @@ function Dashboard({
     fillRecordsVanar(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersVanar(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersVanar(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerVanar(forceRefresh);
@@ -2095,7 +2161,7 @@ function Dashboard({
     queryKey: ["previousWinnersTaiko"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -2121,7 +2187,7 @@ function Dashboard({
     queryKey: ["dailyRecordsTaiko"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -2142,7 +2208,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerTaiko", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2196,7 +2262,9 @@ function Dashboard({
     }
     const [userRecord] = data;
     setUserDataTaiko(userRecord);
-    setActivePlayerTaiko((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+    setActivePlayerTaiko(
+      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+    );
   };
 
   const fetchDailyRecordsTaiko = async (forceRefresh = false) => {
@@ -2205,9 +2273,12 @@ function Dashboard({
       setloadingTaiko(true);
     }
 
-    const { data, error, fromCache } = await fetchQueryData(dailyRecordsTaikoQuery, {
-      force: forceRefresh,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsTaikoQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
     if ((error && !fromCache) || !data) {
       fillRecordsTaiko([]);
@@ -2221,7 +2292,10 @@ function Dashboard({
     fillRecordsTaiko(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersTaiko(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersTaiko(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerTaiko(forceRefresh);
@@ -2254,7 +2328,7 @@ function Dashboard({
     queryKey: ["previousWinnersMat"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -2280,7 +2354,7 @@ function Dashboard({
     queryKey: ["dailyRecordsMat"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -2301,7 +2375,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerMat", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2327,9 +2401,12 @@ function Dashboard({
     previousWinnersMatVersionRef.current = version;
     const force =
       forceRefresh || previousWinnersMatFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(previousWinnersMatQuery, {
-      force,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersMatQuery,
+      {
+        force,
+      }
+    );
     if ((error && !fromCache) || !data) {
       setPrevDataMat(placeholderplayerData);
       return;
@@ -2361,9 +2438,12 @@ function Dashboard({
       setloadingMat(true);
     }
 
-    const { data, error, fromCache } = await fetchQueryData(dailyRecordsMatQuery, {
-      force: forceRefresh,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsMatQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
     if ((error && !fromCache) || !data) {
       fillRecordsMat([]);
@@ -2377,7 +2457,10 @@ function Dashboard({
     fillRecordsMat(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersMat(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersMat(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerMat(forceRefresh);
@@ -2410,7 +2493,7 @@ function Dashboard({
     queryKey: ["previousWinnersSkale"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -2436,7 +2519,7 @@ function Dashboard({
     queryKey: ["dailyRecordsSkale"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -2457,7 +2540,7 @@ function Dashboard({
     queryKey: ["dailyRecordsAroundPlayerSkale", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2511,7 +2594,9 @@ function Dashboard({
     }
     const [userRecord] = data;
     setUserDataSkale(userRecord);
-    setActivePlayerSkale((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+    setActivePlayerSkale(
+      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+    );
   };
 
   const fetchDailyRecordsSkale = async (forceRefresh = false) => {
@@ -2520,9 +2605,12 @@ function Dashboard({
       setloadingSkale(true);
     }
 
-    const { data, error, fromCache } = await fetchQueryData(dailyRecordsSkaleQuery, {
-      force: forceRefresh,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsSkaleQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
     if ((error && !fromCache) || !data) {
       fillRecordsSkale([]);
@@ -2536,7 +2624,10 @@ function Dashboard({
     fillRecordsSkale(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersSkale(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersSkale(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       await fetchDailyRecordsAroundPlayerSkale(forceRefresh);
@@ -2569,7 +2660,7 @@ function Dashboard({
     queryKey: ["previousWinnersStar"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -2595,7 +2686,7 @@ function Dashboard({
     queryKey: ["recordsStar"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -2616,7 +2707,7 @@ function Dashboard({
     queryKey: ["recordsAroundPlayerStar", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2634,46 +2725,43 @@ function Dashboard({
     },
   });
 
-  const fetchPreviousUserDataStar = async (version, userId) => {
-    if (version !== 0) {
-      const data = {
-        StatisticName: "GlobalStarMonthlyLeaderboard",
-        MaxResultsCount: 1,
-        Version: version - 1,
-        PlayerId: userId,
-      };
-      // const data2 = {
-      //   StatisticName: "GlobalStarMonthlyLeaderboard",
-      //   MaxResultsCount: 1,
-      //   Version: version - 2,
-      //   PlayerId: userId,
-      // };
-      const result = await axios
-        .post(
-          `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
-          data
-        )
-        .catch((e) => {
-          console.error(e);
-        });
-      // const result2 = await axios
-      //   .post(
-      //     `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
-      //     data2
-      //   )
-      //   .catch((e) => {
-      //     console.error(e);
-      //   });
-      if (result) {
-        setUserPreviousDataStar(...result.data.data.leaderboard);
-      }
-      // if (result2) {
-      //   setUserPreviousDataStar2(...result2.data.data.leaderboard);
-      // }
-    } else {
+  const fetchPreviousUserDataStar = async (
+    version,
+    userIdParam,
+    forceRefresh = false
+  ) => {
+    if (version === 0 || !userIdParam) {
       setUserPreviousDataStar([]);
       setUserPreviousDataStar2([]);
+      return;
     }
+
+    previousUserDataStarVersionRef.current = version;
+    previousUserDataStarUserRef.current = userIdParam;
+    const shouldForce =
+      forceRefresh || previousUserDataStarFetchedVersionRef.current !== version;
+
+    const { data, error, fromCache } = await fetchQueryData(
+      previousUserDataStarQuery,
+      { force: shouldForce }
+    );
+
+    if ((error && !fromCache) || !data) {
+      setUserPreviousDataStar([]);
+      setUserPreviousDataStar2([]);
+      return;
+    }
+
+    const [previousEntry] = data;
+    if (!previousEntry) {
+      setUserPreviousDataStar([]);
+      setUserPreviousDataStar2([]);
+      return;
+    }
+
+    setUserPreviousDataStar(previousEntry);
+    setUserPreviousDataStar2([]);
+    previousUserDataStarFetchedVersionRef.current = version;
   };
 
   const fetchDailyRecordsAroundPlayerStar = async (
@@ -2747,9 +2835,12 @@ function Dashboard({
     previousWinnersStarVersionRef.current = version;
     const force =
       forceRefresh || previousWinnersStarFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(previousWinnersStarQuery, {
-      force,
-    });
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersStarQuery,
+      {
+        force,
+      }
+    );
     if ((error && !fromCache) || !data) {
       setPrevDataStar(placeholderplayerData);
       return;
@@ -2758,36 +2849,35 @@ function Dashboard({
     previousWinnersStarFetchedVersionRef.current = version;
   };
 
-  const fetchExplorerHunt = async () => {
-    if (userId) {
-      const data = {
-        StatisticName: "ExploreHuntEventKillCollection",
-        StartPosition: 0,
-        MaxResultsCount: 1,
-        PlayerId: userId,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      setexplorerHuntData(result.data.data.leaderboard);
+  const fetchExplorerHunt = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(explorerHuntQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      setexplorerHuntData([]);
+      return;
     }
+
+    setexplorerHuntData(data);
   };
 
-  const fetchGreatCollection = async () => {
-    if (userId) {
-      const data = {
-        StatisticName: "TheGreatCollection",
-        StartPosition: 0,
-        MaxResultsCount: 1,
-        PlayerId: userId,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      setgreatCollectionData(result.data.data.leaderboard);
+  const fetchGreatCollection = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      greatCollectionQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      setgreatCollectionData([]);
+      return;
     }
+
+    setgreatCollectionData(data);
   };
 
   const fetchRecordsStar = async (forceRefresh = false) => {
@@ -2812,7 +2902,10 @@ function Dashboard({
     fillRecordsStar(leaderboard);
 
     const version = parseInt(data?.version, 10);
-    await fetchPreviousWinnersStar(Number.isNaN(version) ? 0 : version, forceRefresh);
+    await fetchPreviousWinnersStar(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
 
     if (userId && username) {
       const testArray = leaderboard.filter(
@@ -2880,7 +2973,7 @@ function Dashboard({
     queryKey: ["previousWinnersStarWeekly"],
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     queryFn: async () => {
@@ -2906,7 +2999,7 @@ function Dashboard({
     queryKey: ["recordsStarWeekly"],
     enabled: true,
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -2927,7 +3020,7 @@ function Dashboard({
     queryKey: ["recordsAroundPlayerStarWeekly", userId],
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
-    gcTime: 5 * LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
     refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -3082,8 +3175,7 @@ function Dashboard({
           ? userPosition > 100
             ? 0
             : userPosition === 100
-            ? Number(weeklyStarPrizes[99]) +
-              Number(weeklyExtraStarPrizes[99])
+            ? Number(weeklyStarPrizes[99]) + Number(weeklyExtraStarPrizes[99])
             : Number(weeklyStarPrizes[userPosition]) +
               Number(weeklyExtraStarPrizes[userPosition])
           : 0
@@ -3129,8 +3221,21 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinners = async (version) => {
-    if (version !== 0) {
+  const previousWinnersDailyVersionRef = useRef(null);
+  const previousWinnersDailyFetchedVersionRef = useRef(null);
+
+  const previousWinnersDailyQuery = useReactQuery({
+    queryKey: ["previousWinnersDaily"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousWinnersDailyVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "DailyLeaderboard",
         StartPosition: 0,
@@ -3141,71 +3246,236 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      fillRecordsDaily(result.data.data.leaderboard);
+      return result.data.data.leaderboard ?? [];
+    },
+  });
 
-      setdailyplayerData(result.data.data.leaderboard);
-    }
-  };
-
-  const fetchDailyRecords = async () => {
-    if (dailyrecords.length > 0) return;
-    setloadingBnb(true);
-
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsQuery = useReactQuery({
+    queryKey: ["dailyRecords"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "DailyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      setRecords(result.data.data.leaderboard);
-      fillRecords(result.data.data.leaderboard);
-      fetchPreviousWinners(parseInt(result.data.data.version));
+  const dailyRecordsAroundPlayerQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayer", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "DailyLeaderboard",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      return result.data.data?.leaderboard ?? [];
+    },
+  });
+
+  const genesisRecordsQuery = useReactQuery({
+    queryKey: ["genesisRecords"],
+    enabled: true,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "TheGreatCollection",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+      return result.data.data;
+    },
+  });
+
+  const greatCollectionQuery = useReactQuery({
+    queryKey: ["greatCollection", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "TheGreatCollection",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      return result.data.data?.leaderboard ?? [];
+    },
+  });
+
+  const explorerHuntQuery = useReactQuery({
+    queryKey: ["explorerHunt", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "ExploreHuntEventKillCollection",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      return result.data.data?.leaderboard ?? [];
+    },
+  });
+
+  const previousUserDataStarVersionRef = useRef(null);
+  const previousUserDataStarFetchedVersionRef = useRef(null);
+  const previousUserDataStarUserRef = useRef(null);
+
+  const previousUserDataStarQuery = useReactQuery({
+    queryKey: ["previousUserDataStar", userId],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousUserDataStarVersionRef.current;
+      const targetUserId = previousUserDataStarUserRef.current;
+      if (!version || version === 0 || !targetUserId) {
+        return [];
+      }
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        MaxResultsCount: 1,
+        Version: version - 1,
+        PlayerId: targetUserId,
+      };
+      const result = await axios.post(
+        `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
+        data
+      );
+      return result.data?.data?.leaderboard ?? [];
+    },
+  });
+
+  const fetchPreviousWinners = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      fillRecordsDaily([]);
+      setdailyplayerData([]);
+      return;
+    }
+    previousWinnersDailyVersionRef.current = version;
+    const shouldForce =
+      forceRefresh || previousWinnersDailyFetchedVersionRef.current !== version;
+    const { data, error, fromCache } = await fetchQueryData(
+      previousWinnersDailyQuery,
+      { force: shouldForce }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsDaily([]);
+      setdailyplayerData([]);
+      return;
+    }
+
+    fillRecordsDaily(data);
+    setdailyplayerData(data);
+    previousWinnersDailyFetchedVersionRef.current = version;
+  };
+
+  const fetchDailyRecords = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsQuery);
+    if (!useCache) {
+      setloadingBnb(true);
+    }
+
+    try {
+      const { data, error, fromCache } = await fetchQueryData(
+        dailyRecordsQuery,
+        {
+          force: forceRefresh,
+        }
+      );
+
+      if ((error && !fromCache) || !data) {
+        fillRecords([]);
+        setRecords([]);
+        return;
+      }
+
+      const leaderboard = data?.leaderboard ?? [];
+      setRecords(leaderboard);
+      fillRecords(leaderboard);
+
+      const version = Number.parseInt(data?.version, 10);
+      await fetchPreviousWinners(
+        Number.isNaN(version) ? 0 : version,
+        forceRefresh
+      );
 
       if (userId && username) {
-        const testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        setActivePlayer(testArray.length > 0);
-        fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
+        await fetchDailyRecordsAroundPlayer(forceRefresh, leaderboard);
       }
     } catch (error) {
       console.error(error);
-      setloadingBnb(false);
       fillRecords([]);
     } finally {
-      const timer = setTimeout(() => {
-        setloadingBnb(false);
-      }, 1000);
-      return () => clearTimeout(timer);
+      setloadingBnb(false);
     }
   };
 
-  const fetchGenesisRecords = async () => {
-    const data2 = {
-      StatisticName: "TheGreatCollection",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
+  const fetchGenesisRecords = async (forceRefresh = false) => {
+    const { data, error, fromCache } = await fetchQueryData(
+      genesisRecordsQuery,
+      {
+        force: forceRefresh,
+      }
+    );
 
-    const result2 = await axios
-      .post(`${backendApi}/auth/GetLeaderboard`, data2)
-      .catch((err) => {
-        console.log(err);
-      });
-
-    if (result2) {
-      setpreviousGenesisVersion(result2.data.data.version);
-      setgenesisData(result2.data.data.leaderboard);
-      fillRecordsGenesis(result2.data.data.leaderboard);
+    if ((error && !fromCache) || !data) {
+      fillRecordsGenesis([]);
+      setgenesisData([]);
+      setpreviousGenesisVersion(0);
+      return;
     }
 
-    // fetchGenesisPreviousWinners(parseInt(result2.data.data.version));
+    const leaderboard = data?.leaderboard ?? [];
+    setpreviousGenesisVersion(data?.version ?? 0);
+    setgenesisData(leaderboard);
+    fillRecordsGenesis(leaderboard);
   };
   // const fetchGenesisPreviousWinners = async (version) => {
   //   if (version !== 0) {
@@ -3223,7 +3493,6 @@ function Dashboard({
   //     setpreviousgenesisData(result.data.data.leaderboard);
   //   }
   // };
-
 
   useEffect(() => {
     if (!email) {
@@ -3731,19 +4000,22 @@ function Dashboard({
         fetchDailyRecordsSkale();
       }
     } else if (chain === "all") {
-      fetchDailyRecordsAroundPlayer([]);
-      fetchDailyRecordsAroundPlayerTaiko([]);
-      fetchDailyRecordsAroundPlayerVanar([]);
-      fetchDailyRecordsAroundPlayerMat([]);
-      fetchDailyRecordsAroundPlayerSei([]);
-      fetchDailyRecordsAroundPlayerManta([]);
-      fetchDailyRecordsAroundPlayerBase([]);
-      fetchDailyRecordsAroundPlayerCore([]);
-      fetchDailyRecordsAroundPlayerViction([]);
-      fetchDailyRecordsAroundPlayerSkale([]);
-      fetchDailyRecordsAroundPlayerStar(false, []);
-      fetchWeeklyRecordsAroundPlayerStar(false, []);
-      fetchDailyRecordsAroundPlayerTaraxa([]);
+      if (!hasUserId) {
+        return;
+      }
+      fetchDailyRecordsAroundPlayer(false, dailyrecords);
+      fetchDailyRecordsAroundPlayerTaiko(false);
+      fetchDailyRecordsAroundPlayerVanar(false);
+      fetchDailyRecordsAroundPlayerMat(false);
+      fetchDailyRecordsAroundPlayerSei(false);
+      fetchDailyRecordsAroundPlayerManta(false);
+      fetchDailyRecordsAroundPlayerBase(false);
+      fetchDailyRecordsAroundPlayerCore(false);
+      fetchDailyRecordsAroundPlayerViction(false);
+      fetchDailyRecordsAroundPlayerSkale(false);
+      fetchDailyRecordsAroundPlayerStar(false, starRecords);
+      fetchWeeklyRecordsAroundPlayerStar(false, starRecordsWeekly);
+      fetchDailyRecordsAroundPlayerTaraxa(false);
     }
   };
 
@@ -3984,45 +4256,101 @@ function Dashboard({
     }
   };
 
-  const fetchGenesisAroundPlayer = async (userId, userName) => {
-    const data = {
-      StatisticName: "GenesisLandRewards",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === userName
-    );
-
-    setGenesisRank2(testArray[0].statValue);
-  };
-
-  const fetchDailyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const genesisAroundPlayerQuery = useReactQuery({
+    queryKey: ["genesisAroundPlayer", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "GenesisLandRewards",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      // setRecordsAroundPlayer(result.data.data.leaderboard);
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserData(...testArray);
-      if (userPosition > 99) {
-        setActivePlayer(false);
-      } else {
-        setActivePlayer(true);
-      }
+      return result.data?.data?.leaderboard ?? [];
+    },
+  });
+
+  const fetchGenesisAroundPlayer = async (forceRefresh = false) => {
+    if (!userId || !username) {
+      setGenesisRank2(0);
+      return;
     }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      genesisAroundPlayerQuery,
+      { force: forceRefresh }
+    );
+
+    const aroundData = Array.isArray(data) ? data : [];
+
+    if ((error && !fromCache) || aroundData.length === 0) {
+      setGenesisRank2(0);
+      return;
+    }
+
+    const matchingEntry =
+      aroundData.find((item) => item?.displayName === username) ||
+      aroundData[0];
+
+    setGenesisRank2(matchingEntry?.statValue ?? 0);
+  };
+
+  const fetchDailyRecordsAroundPlayer = async (
+    forceRefresh = false,
+    leaderboardData = dailyrecords
+  ) => {
+    if (!userId) {
+      setActivePlayer(false);
+      setUserData({});
+      return;
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsAroundPlayerQuery,
+      { force: forceRefresh }
+    );
+
+    const aroundData = Array.isArray(data) ? data : [];
+
+    if ((error && !fromCache) || aroundData.length === 0) {
+      const fallbackRecord = Array.isArray(leaderboardData)
+        ? leaderboardData.find((entry) => entry?.displayName === username)
+        : undefined;
+
+      if (fallbackRecord) {
+        setUserData(fallbackRecord);
+        setActivePlayer(
+          (fallbackRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+        return;
+      }
+
+      setActivePlayer(false);
+      return;
+    }
+
+    const [userRecord] = aroundData;
+    if (!userRecord) {
+      setActivePlayer(false);
+      return;
+    }
+
+    setUserData(userRecord);
+
+    const userPosition = userRecord?.position ?? Number.MAX_SAFE_INTEGER;
+    const isUserInLeaderboard = Array.isArray(leaderboardData)
+      ? leaderboardData.some((entry) => entry?.displayName === username)
+      : true;
+
+    setActivePlayer(isUserInLeaderboard && userPosition <= 99);
   };
 
   const getOpenedChestPerWallet = async () => {
@@ -5193,7 +5521,7 @@ function Dashboard({
   useEffect(() => {
     if (effectRan2.current) return;
     if (userId && username) {
-      fetchGenesisAroundPlayer(userId, username);
+      fetchGenesisAroundPlayer(false);
       fetchDailyRecordsAroundPlayerStar(false, []);
       fetchWeeklyRecordsAroundPlayerStar(false, []);
       effectRan2.current = true;

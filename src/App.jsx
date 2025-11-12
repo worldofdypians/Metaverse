@@ -106,6 +106,7 @@ import {
 } from "./redux/slices/walletSlice";
 import { wagmiClient } from "./wagmiConnectors.js";
 import { CandlelightCursor } from "./components/FestiveElements/CandleLightCursor.jsx";
+import { fetchStarMonthlyLeaderboard } from "./services/leaderboardApi";
 
 const Marketplace = React.lazy(() =>
   import("./screens/Marketplace/Marketplace")
@@ -221,7 +222,7 @@ const useSharedData = () => {
     queryKey: ["nfts"],
     queryFn: fetchAllNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes (renamed from cacheTime)
+    cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -241,7 +242,7 @@ const useSharedDataListedNfts = () => {
     queryKey: ["recentListedNFTS"],
     queryFn: fetchListedNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -290,7 +291,7 @@ const useSharedDataLatest20BoughtNFTs = () => {
     queryKey: ["latestBoughtNFTs"],
     queryFn: fetchLatest20BoughtNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -310,7 +311,7 @@ const useSharedDataCawsNfts = () => {
     queryKey: ["cawsnfts"],
     queryFn: fetchAllCawsNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -330,7 +331,7 @@ const useSharedDataWodNfts = () => {
     queryKey: ["wodnfts"],
     queryFn: fetchAllWodNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -350,7 +351,7 @@ const useSharedDataTimepieceNfts = () => {
     queryKey: ["timepiecenfts"],
     queryFn: fetchAllTimepieceNFTs,
     staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -368,8 +369,8 @@ const useSharedListedNtsAsc = () => {
   return useReactQuery({
     queryKey: ["payment_priceType"],
     queryFn: getListedNtsAsc,
-    // staleTime: 5 * 60 * 1000,
-    // cacheTime: 6 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -386,8 +387,8 @@ const useSharedDataListedByUser = (wallet) => {
   return useReactQuery({
     queryKey: ["seller", wallet],
     queryFn: () => getAllnftsListed(wallet),
-    // staleTime: 5 * 60 * 1000,
-    // cacheTime: 6 * 60 * 1000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!wallet,
@@ -987,9 +988,6 @@ function AppRoutes() {
     },
   ];
 
-  const backendApi =
-    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
-
   const fillRecordsStar = (itemData) => {
     if (itemData.length === 0) {
       setStarRecords(placeholderplayerData);
@@ -999,18 +997,6 @@ function AppRoutes() {
       const finalData = [...testArray, ...placeholderArray];
       setStarRecords(finalData);
     }
-  };
-
-  const fetchRecordsStar = async () => {
-    const data = {
-      StatisticName: "GlobalStarMonthlyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-
-    // setStarRecords(result.data.data.leaderboard);
-    fillRecordsStar(result.data.data.leaderboard);
   };
 
   const treasureHuntEvents = [
@@ -4641,7 +4627,26 @@ function AppRoutes() {
     fetchTotalWodHolders();
     getTotalSupply();
     fetchBSCCoinPrice();
-    fetchRecordsStar();
+    let isMounted = true;
+    const loadStarRecords = async () => {
+      try {
+        const leaderboard = await fetchStarMonthlyLeaderboard();
+        if (!isMounted) {
+          return;
+        }
+        fillRecordsStar(leaderboard);
+      } catch (error) {
+        console.error("Failed to load star leaderboard", error);
+        if (isMounted) {
+          fillRecordsStar([]);
+        }
+      }
+    };
+
+    loadStarRecords();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -5397,7 +5402,6 @@ function AppRoutes() {
                   type="okx"
                   data={data}
                   syncStatus={syncStatus}
-
                 />
               }
             />

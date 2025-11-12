@@ -2,7 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-// import { Hydrate } from "@tanstack/react-query";
+import { createRoot } from "react-dom/client";
 
 // Wagmi + Wallet
 import { WagmiProvider } from "wagmi";
@@ -33,39 +33,42 @@ import "./app.scss";
 Amplify.configure(awsExports);
 // ✅ React Query + Persist setup
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 6 * 60 * 1000,
+    },
+  },
+});
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
 });
-
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
 // ✅ React root
-ReactDOM.createRoot(document.getElementById("root")).render(
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <ApolloProvider client={client}>
-          <QueryClientProvider client={queryClient}>
-            {/* <Hydrate state={undefined}> */}
+          {/* <Hydrate state={undefined}> */}
+          <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{ persister }}
+          >
             <AuthProvider>
               <WagmiProvider config={wagmiClient}>
-                <PersistQueryClientProvider
-                  client={queryClient}
-                  persistOptions={{ persister }}
-                  hydrateOptions={{
-                    defaultOptions: { queries: { retry: false } },
-                  }} // <-- required in v5
+                <MatchProvider
+                  appid="ipgjm4nszcr36mcz"
+                  wallet={{ type: "UserPasscode" }}
                 >
-                  <MatchProvider
-                    appid="ipgjm4nszcr36mcz"
-                    wallet={{ type: "UserPasscode" }}
-                  >
-                    <App />
-                  </MatchProvider>
-                </PersistQueryClientProvider>
+                  <App />
+                </MatchProvider>
               </WagmiProvider>
             </AuthProvider>
-            {/* </Hydrate> */}
-          </QueryClientProvider>
+          </PersistQueryClientProvider>{" "}
+          {/* </Hydrate> */}
         </ApolloProvider>
       </BrowserRouter>
     </Provider>
