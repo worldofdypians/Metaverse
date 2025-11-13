@@ -52,6 +52,8 @@ const WhitelistContent = ({
     useState(false);
   const [timerFinishedOTCCliff, settimerFinishedOTCCliff] = useState(false);
   const [timerFinishedOTC1Cliff4, settimerFinishedOTC1Cliff4] = useState(false);
+  const [timerFinishedRoundOtcVesting, settimerFinishedRoundOtcVesting] =
+    useState(false);
 
   const [timerFinishedOTCCliff2, settimerFinishedOTCCliff2] = useState(false);
 
@@ -121,6 +123,13 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTC1Cliff4(true);
+        }
+      } else if (selectedRound.id == "roundotc-vesting") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedRoundOtcVesting(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedRoundOtcVesting(true);
         }
       } else if (selectedRound.id == "cliff-otc2") {
         if (today.getTime() > cliffTime) {
@@ -264,10 +273,11 @@ const WhitelistContent = ({
                   {getFormattedNumber(wodBalance)}{" "}
                   {selectedRound?.id == "pool-dynamic" ||
                   selectedRound?.id == "pool2-dynamic" ||
-                  selectedRound?.id == "wod-dynamic"||
-                  selectedRound?.id == "cliff1-otc4"||
-                  selectedRound?.id == "cliff-otc"||
-                  selectedRound?.id == "cliff-otc2"
+                  selectedRound?.id == "wod-dynamic" ||
+                  selectedRound?.id == "cliff1-otc4" ||
+                  selectedRound?.id == "cliff-otc" ||
+                  selectedRound?.id == "cliff-otc2" ||
+                  selectedRound?.id == "roundotc-vesting"
                     ? "USD"
                     : "WOD"}
                 </span>
@@ -286,10 +296,11 @@ const WhitelistContent = ({
                     Total{" "}
                     {selectedRound?.id == "pool-dynamic" ||
                     selectedRound?.id == "pool2-dynamic" ||
-                    selectedRound?.id == "wod-dynamic"||
-                  selectedRound?.id == "cliff1-otc4"||
-                  selectedRound?.id == "cliff-otc"||
-                  selectedRound?.id == "cliff-otc2"
+                    selectedRound?.id == "wod-dynamic" ||
+                    selectedRound?.id == "cliff1-otc4" ||
+                    selectedRound?.id == "cliff-otc" ||
+                    selectedRound?.id == "cliff-otc2" ||
+                  selectedRound?.id == "roundotc-vesting"
                       ? "USD"
                       : "WOD"}
                   </span>
@@ -304,9 +315,10 @@ const WhitelistContent = ({
                 {selectedRound?.id !== "pool-dynamic" &&
                   selectedRound?.id !== "pool2-dynamic" &&
                   selectedRound?.id !== "wod-dynamic" &&
-                  selectedRound?.id !== "cliff1-otc4"&&
-                  selectedRound?.id !== "cliff-otc"&&
-                  selectedRound?.id !== "cliff-otc2" && (
+                  selectedRound?.id !== "cliff1-otc4" &&
+                  selectedRound?.id !== "cliff-otc" &&
+                  selectedRound?.id !== "cliff-otc2" &&
+                  selectedRound?.id !== "roundotc-vesting" && (
                     <div className="d-flex flex-column">
                       <span className="whitelist-upper-txt">
                         {getFormattedNumber(
@@ -393,17 +405,28 @@ const WhitelistContent = ({
                         }}
                       />
                     ) : userClaimedTokens &&
-                    Number(userClaimedTokens) > 0 &&
-                    selectedRound?.id === "cliff1-otc4" ? (
-                    <Countdown
-                      date={Number(cliffTime)}
-                      renderer={renderer2}
-                      onComplete={() => {
-                        settimerFinishedOTC1Cliff4(true);
-                        onTimerFinished(true);
-                      }}
-                    />
-                  ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "cliff1-otc4" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTC1Cliff4(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ): userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "roundotc-vesting" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedRoundOtcVesting(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
                       Number(userClaimedTokens) > 0 &&
                       selectedRound?.id === "cliff-otc2" ? (
                       <Countdown
@@ -784,7 +807,7 @@ const WhitelistContent = ({
                 </button>
               )}
 
-{isConnected &&
+            {isConnected &&
               chainId === 56 &&
               selectedRound?.id === "cliff1-otc4" && (
                 <button
@@ -828,6 +851,49 @@ const WhitelistContent = ({
                 </button>
               )}
 
+               {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "roundotc-vesting" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedRoundOtcVesting === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedRoundOtcVesting === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
 
             {isConnected &&
               chainId === 56 &&
