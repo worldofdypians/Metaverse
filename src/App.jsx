@@ -998,7 +998,7 @@ function AppRoutes() {
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setStarRecords(finalData);
-    }
+    } else setStarRecords(itemData);
   };
 
   const fetchRecordsStar = async () => {
@@ -5188,6 +5188,29 @@ function AppRoutes() {
 
             <Route
               exact
+              path="/roundotc-vesting"
+              element={
+                <Whitelist
+                  isEOA={isEOA}
+                  chainId={networkId}
+                  isConnected={isConnected}
+                  handleConnection={() => {
+                    setWalletId("connect");
+                    setWalletModal(true);
+                  }}
+                  coinbase={coinbase}
+                  type="roundotc-vesting"
+                  network_matchain={chain}
+                  walletClient={walletClient}
+                  publicClient={publicClient}
+                  wagmiWalletClient={wagmiWalletClient}
+                  wagmiPublicClient={wagmiPublicClient}
+                />
+              }
+            />
+
+            <Route
+              exact
               path="/cliff-otc2"
               element={
                 <Whitelist
@@ -5397,7 +5420,6 @@ function AppRoutes() {
                   type="okx"
                   data={data}
                   syncStatus={syncStatus}
-
                 />
               }
             />

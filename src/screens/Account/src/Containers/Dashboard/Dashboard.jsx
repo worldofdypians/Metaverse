@@ -4773,7 +4773,7 @@ function Dashboard({
             <div
               className="popup-wrapper leaderboard-popup popup-active p-3"
               id="leaderboard"
-              style={{ width: "50%", pointerEvents: "auto" }}
+              style={{ width: "55%", pointerEvents: "auto" }}
             >
               <div className="d-flex align-items-center justify-content-between">
                 <h2
