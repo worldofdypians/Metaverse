@@ -169,6 +169,18 @@
   justify-content: center;
 }
 
+.twitter-action-btn-disabled {
+  pointer-events: none;
+  opacity: 0.7;
+  background: rgba(23, 133, 242, 0.6);
+  border-radius: 8px;
+  border: 1px solid #1785f2;
+
+  .twitter-action-text {
+    color: #1785f2;
+  }
+}
+
 .unlink-twitter-button {
   border-radius: 10px;
   border: 1px solid #2a2454;
@@ -198,16 +210,7 @@
   line-height: normal;
 }
 
-.twitter-action-btn-disabled {
-  opacity: 0.7;
-  background: rgba(23, 133, 242, 0.6);
-  border-radius: 8px;
-  border: 1px solid #1785f2;
 
-  .twitter-action-text {
-    color: #1785f2;
-  }
-}
 
 .icon-color {
   color: #fff !important;
@@ -354,11 +357,11 @@
   background: linear-gradient(180deg, #1e90ff 0%, #06c 100%);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    color: #FFF;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 20px; /* 142.857% */
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
 }
 
 .task-icon-holder {
@@ -368,10 +371,9 @@ line-height: 20px; /* 142.857% */
   position: relative;
 }
 
-
-.task-check-success{
+.task-check-success {
   border-radius: 50%;
-  background: #1E90FF;
+  background: #1e90ff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -382,9 +384,9 @@ line-height: 20px; /* 142.857% */
   top: -5px;
 }
 
-.task-check-fail{
+.task-check-fail {
   border-radius: 50%;
-  background: #FB2C36;
+  background: #fb2c36;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -393,12 +395,28 @@ line-height: 20px; /* 142.857% */
   position: absolute;
   right: -5px;
   top: -5px;
-  color: #FFF;
-font-family: Arial;
-font-size: 10px;
-font-style: normal;
-font-weight: 700;
-line-height: 10px; /* 100% */
+  color: #fff;
+  font-family: Arial;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 10px; /* 100% */
+}
+
+
+
+
+.tweet-title-holder{
+  border-radius: 10px;
+  position: relative;
+border: 1px solid #2A2454;
+background: #0F0D28;
+transition: all .25s;
+}
+
+.tweet-title-holder:hover{
+background: #1a1640;
+border: 1px solid #1e90ff66;
 }
 
 // a39990
