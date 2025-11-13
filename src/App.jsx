@@ -998,7 +998,7 @@ function AppRoutes() {
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setStarRecords(finalData);
-    }
+    } else setStarRecords(itemData);
   };
 
   const fetchRecordsStar = async () => {
@@ -5186,7 +5186,7 @@ function AppRoutes() {
               }
             />
 
-              <Route
+            <Route
               exact
               path="/roundotc-vesting"
               element={
@@ -5420,7 +5420,6 @@ function AppRoutes() {
                   type="okx"
                   data={data}
                   syncStatus={syncStatus}
-
                 />
               }
             />
