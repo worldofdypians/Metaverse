@@ -88,7 +88,7 @@ const GlobalLeaderboard = ({
           <div className="position-absolute" style={{ top: 8, right: 8 }}>
             <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
               <div className="d-flex align-items-center gap-2 position-relative">
-                <span className="d-flex align-items-center gap-2 text-white">
+                <span className="d-flex align-items-center gap-2 text-white text-sm">
                   <RefreshIcon />
                   Updates every 5 minutes
                 </span>

@@ -730,6 +730,7 @@ function Dashboard({
   //leaderboard calls
 
   const dataFetchedRef = useRef(false);
+  const dataFetchedRef2 = useRef(false);
 
   const [allBnbData, setAllBnbData] = useState([]);
   const [allSkaleData, setAllSkaleData] = useState([]);
@@ -941,7 +942,7 @@ function Dashboard({
     }
   };
 
-  const LEADERBOARD_CACHE_MS = 60 * 1000;
+  const LEADERBOARD_CACHE_MS = 5 * 60 * 1000;
 
   const isQueryFresh = (query) =>
     Boolean(query?.data && query?.dataUpdatedAt) &&
@@ -954,6 +955,31 @@ function Dashboard({
 
     if (!force && isQueryFresh(query)) {
       return { data: query.data, fromCache: true, error: null };
+    }
+
+    // If query is enabled and already fetching, wait for the existing fetch
+    // instead of triggering a duplicate refetch
+    // React Query deduplicates requests with the same queryKey, but refetch()
+    // can bypass that, so we check here first
+    if (query.isFetching || query.isLoading) {
+      // Wait for the query to finish by polling its status
+      // This prevents duplicate API calls when queries are auto-enabled
+      let attempts = 0;
+      const maxAttempts = 100; // ~10 seconds max wait (100 * 100ms)
+      while ((query.isFetching || query.isLoading) && attempts < maxAttempts) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        attempts++;
+      }
+
+      // After waiting, return the data if available
+      if (query.data) {
+        return {
+          data: query.data,
+          fromCache: false,
+          error: query.error ?? null,
+        };
+      }
+      // If still no data after waiting, fall through to refetch below
     }
 
     const result = await query.refetch({ throwOnError: false });
@@ -1194,9 +1220,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId) {
-      await fetchDailyRecordsAroundPlayerCore(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerCore(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -1431,9 +1457,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId) {
-      await fetchDailyRecordsAroundPlayerViction(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerViction(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -1667,9 +1693,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId) {
-      await fetchDailyRecordsAroundPlayerManta(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerManta(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -1903,9 +1929,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId) {
-      await fetchDailyRecordsAroundPlayerSei(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerSei(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -4196,7 +4222,7 @@ function Dashboard({
 
   const greatCollectionQuery = useReactQuery({
     queryKey: ["greatCollection", userId],
-    enabled: Boolean(userId),
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
@@ -4219,7 +4245,7 @@ function Dashboard({
 
   const explorerHuntQuery = useReactQuery({
     queryKey: ["explorerHunt", userId],
-    enabled: Boolean(userId),
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
@@ -4454,12 +4480,13 @@ function Dashboard({
   }, [email]);
 
   useEffect(() => {
-    if (username !== undefined && userId !== undefined) {
-      fetchGenesisRecords();
-      fetchGreatCollection();
-      fetchExplorerHunt();
-    }
-  }, [username, userId]);
+    if (dataFetchedRef2.current) return;
+
+    fetchGenesisRecords();
+    fetchGreatCollection();
+    fetchExplorerHunt();
+    dataFetchedRef2.current = true;
+  }, [userId]);
 
   useEffect(() => {
     if (
@@ -5178,7 +5205,7 @@ function Dashboard({
 
   const genesisAroundPlayerQuery = useReactQuery({
     queryKey: ["genesisAroundPlayer", userId],
-    enabled: Boolean(userId),
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
@@ -6313,10 +6340,10 @@ function Dashboard({
 
     window.scrollTo(0, 0);
 
-    fetchGenesisRecords();
+    // fetchGenesisRecords();
 
-    fetchGreatCollection();
-    fetchExplorerHunt();
+    // fetchGreatCollection();
+    // fetchExplorerHunt();
   }, []);
 
   useEffect(() => {
