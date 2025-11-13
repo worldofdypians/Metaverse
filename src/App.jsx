@@ -1,5 +1,5 @@
 // App.jsx
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState, useRef, Suspense } from "react";
 import { useMemoryOptimization } from "./hooks/useMemoryOptimization";
 import MemoryMonitor from "./components/MemoryMonitor/MemoryMonitor";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -652,6 +652,8 @@ function AppRoutes() {
 
   const [allStarData, setAllStarData] = useState({});
   const [starRecords, setStarRecords] = useState([]);
+  const loadStarRecordsFetchingPromiseRef = useRef(null);
+  const loadStarRecordsFetchedRef = useRef(false);
 
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
 
@@ -996,7 +998,7 @@ function AppRoutes() {
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setStarRecords(finalData);
-    }
+    } else setStarRecords(itemData);
   };
 
   const treasureHuntEvents = [
@@ -4628,24 +4630,62 @@ function AppRoutes() {
     getTotalSupply();
     fetchBSCCoinPrice();
     let isMounted = true;
+
     const loadStarRecords = async () => {
-      try {
-        const leaderboard = await fetchStarMonthlyLeaderboard();
-        if (!isMounted) {
-          return;
-        }
-        fillRecordsStar(leaderboard);
-      } catch (error) {
-        console.error("Failed to load star leaderboard", error);
-        if (isMounted) {
-          fillRecordsStar([]);
+      // Check if we already have the data loaded
+      if (loadStarRecordsFetchedRef.current) {
+        return;
+      }
+
+      // If there's already a fetch in progress, wait for it
+      if (loadStarRecordsFetchingPromiseRef.current) {
+        try {
+          await loadStarRecordsFetchingPromiseRef.current;
+          // After waiting, check if component is still mounted
+          if (!isMounted) {
+            return;
+          }
+          // If data was already loaded, return early
+          if (loadStarRecordsFetchedRef.current) {
+            return;
+          }
+        } catch (error) {
+          // If the previous fetch failed, continue with a new fetch
+          console.error("Previous fetch failed, retrying:", error);
         }
       }
+
+      // Start a new fetch
+      const fetchPromise = (async () => {
+        try {
+          const leaderboard = await fetchStarMonthlyLeaderboard();
+          if (!isMounted) {
+            return;
+          }
+          fillRecordsStar(leaderboard);
+          loadStarRecordsFetchedRef.current = true;
+        } catch (error) {
+          console.error("Failed to load star leaderboard", error);
+          if (isMounted) {
+            fillRecordsStar([]);
+          }
+        } finally {
+          // Clear the promise ref if this is still the current fetch
+          if (loadStarRecordsFetchingPromiseRef.current === fetchPromise) {
+            loadStarRecordsFetchingPromiseRef.current = null;
+          }
+        }
+      })();
+
+      loadStarRecordsFetchingPromiseRef.current = fetchPromise;
+      await fetchPromise;
     };
 
     loadStarRecords();
     return () => {
       isMounted = false;
+      // Clear the promise ref on unmount
+      loadStarRecordsFetchingPromiseRef.current = null;
     };
   }, []);
 

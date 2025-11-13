@@ -984,6 +984,8 @@ function Dashboard({
 
   const previousWinnersCoreVersionRef = useRef(null);
   const previousWinnersCoreFetchedVersionRef = useRef(null);
+  const previousWinnersCoreFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef = useRef(null);
 
   const previousWinnersCoreQuery = useReactQuery({
     queryKey: ["previousWinnersCore"],
@@ -1013,11 +1015,11 @@ function Dashboard({
 
   const dailyRecordsCoreQuery = useReactQuery({
     queryKey: ["dailyRecordsCore"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardCoreDaily",
@@ -1038,7 +1040,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -1059,40 +1061,107 @@ function Dashboard({
       setPrevDataCore(placeholderplayerData);
       return;
     }
-    previousWinnersCoreVersionRef.current = version;
-    const force =
-      forceRefresh || previousWinnersCoreFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersCoreQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataCore(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersCoreFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataCore(data);
-    previousWinnersCoreFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersCoreFetchingPromiseRef.current &&
+      previousWinnersCoreVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersCoreFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersCoreFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersCoreVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersCoreQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataCore(placeholderplayerData);
+          return;
+        }
+        setPrevDataCore(data);
+        previousWinnersCoreFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersCoreFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersCoreFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersCoreFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerCore = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerCoreQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerCore(false);
-      return;
     }
-    const [userRecord] = data;
-    setUserDataCore(userRecord);
-    setActivePlayerCore(
-      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-    );
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerCoreQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerCore(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataCore(userRecord);
+        setActivePlayerCore(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsCore = async (forceRefresh = false) => {
@@ -1125,7 +1194,7 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
+    if (userId) {
       await fetchDailyRecordsAroundPlayerCore(forceRefresh);
     }
 
@@ -1151,6 +1220,8 @@ function Dashboard({
 
   const previousWinnersVictionVersionRef = useRef(null);
   const previousWinnersVictionFetchedVersionRef = useRef(null);
+  const previousWinnersVictionFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef = useRef(null);
 
   const previousWinnersVictionQuery = useReactQuery({
     queryKey: ["previousWinnersViction"],
@@ -1180,11 +1251,11 @@ function Dashboard({
 
   const dailyRecordsVictionQuery = useReactQuery({
     queryKey: ["dailyRecordsViction"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardVictionDaily",
@@ -1205,7 +1276,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -1226,41 +1297,108 @@ function Dashboard({
       setPrevDataViction(placeholderplayerData);
       return;
     }
-    previousWinnersVictionVersionRef.current = version;
-    const force =
-      forceRefresh ||
-      previousWinnersVictionFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersVictionQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataViction(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersVictionFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataViction(data);
-    previousWinnersVictionFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersVictionFetchingPromiseRef.current &&
+      previousWinnersVictionVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersVictionFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersVictionFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersVictionVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersVictionQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataViction(placeholderplayerData);
+          return;
+        }
+        setPrevDataViction(data);
+        previousWinnersVictionFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersVictionFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersVictionFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersVictionFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerViction = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerVictionQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerViction(false);
-      return;
     }
-    const [userRecord] = data;
-    setUserDataViction(userRecord);
-    setActivePlayerViction(
-      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-    );
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerVictionQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerViction(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataViction(userRecord);
+        setActivePlayerViction(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current =
+      fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsViction = async (forceRefresh = false) => {
@@ -1293,7 +1431,7 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
+    if (userId) {
       await fetchDailyRecordsAroundPlayerViction(forceRefresh);
     }
 
@@ -1319,6 +1457,8 @@ function Dashboard({
 
   const previousWinnersMantaVersionRef = useRef(null);
   const previousWinnersMantaFetchedVersionRef = useRef(null);
+  const previousWinnersMantaFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef = useRef(null);
 
   const previousWinnersMantaQuery = useReactQuery({
     queryKey: ["previousWinnersManta"],
@@ -1348,11 +1488,11 @@ function Dashboard({
 
   const dailyRecordsMantaQuery = useReactQuery({
     queryKey: ["dailyRecordsManta"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardMantaDaily",
@@ -1373,7 +1513,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -1394,40 +1534,107 @@ function Dashboard({
       setPrevDataManta(placeholderplayerData);
       return;
     }
-    previousWinnersMantaVersionRef.current = version;
-    const force =
-      forceRefresh || previousWinnersMantaFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersMantaQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataManta(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersMantaFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataManta(data);
-    previousWinnersMantaFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersMantaFetchingPromiseRef.current &&
+      previousWinnersMantaVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersMantaFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersMantaFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersMantaVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersMantaQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataManta(placeholderplayerData);
+          return;
+        }
+        setPrevDataManta(data);
+        previousWinnersMantaFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersMantaFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersMantaFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersMantaFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerManta = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerMantaQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerManta(false);
-      return;
     }
-    const [userRecord] = data;
-    setUserDataManta(userRecord);
-    setActivePlayerManta(
-      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-    );
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerMantaQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerManta(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataManta(userRecord);
+        setActivePlayerManta(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsManta = async (forceRefresh = false) => {
@@ -1460,7 +1667,7 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
+    if (userId) {
       await fetchDailyRecordsAroundPlayerManta(forceRefresh);
     }
 
@@ -1486,6 +1693,8 @@ function Dashboard({
 
   const previousWinnersSeiVersionRef = useRef(null);
   const previousWinnersSeiFetchedVersionRef = useRef(null);
+  const previousWinnersSeiFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef = useRef(null);
 
   const previousWinnersSeiQuery = useReactQuery({
     queryKey: ["previousWinnersSei"],
@@ -1515,11 +1724,11 @@ function Dashboard({
 
   const dailyRecordsSeiQuery = useReactQuery({
     queryKey: ["dailyRecordsSei"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardSeiDaily",
@@ -1540,7 +1749,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -1561,38 +1770,107 @@ function Dashboard({
       setPrevDataSei(placeholderplayerData);
       return;
     }
-    previousWinnersSeiVersionRef.current = version;
-    const force =
-      forceRefresh || previousWinnersSeiFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersSeiQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataSei(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersSeiFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataSei(data);
-    previousWinnersSeiFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersSeiFetchingPromiseRef.current &&
+      previousWinnersSeiVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersSeiFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersSeiFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersSeiVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersSeiQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataSei(placeholderplayerData);
+          return;
+        }
+        setPrevDataSei(data);
+        previousWinnersSeiFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersSeiFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersSeiFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersSeiFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerSei = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerSeiQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerSei(false);
-      return;
     }
-    const [userRecord] = data;
-    setUserDataSei(userRecord);
-    setActivePlayerSei((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerSeiQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerSei(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataSei(userRecord);
+        setActivePlayerSei(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsSei = async (forceRefresh = false) => {
@@ -1625,7 +1903,7 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
+    if (userId) {
       await fetchDailyRecordsAroundPlayerSei(forceRefresh);
     }
 
@@ -1652,6 +1930,8 @@ function Dashboard({
 
   const previousWinnersTaraxaVersionRef = useRef(null);
   const previousWinnersTaraxaFetchedVersionRef = useRef(null);
+  const previousWinnersTaraxaFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef = useRef(null);
 
   const previousWinnersTaraxaQuery = useReactQuery({
     queryKey: ["previousWinnersTaraxa"],
@@ -1681,11 +1961,11 @@ function Dashboard({
 
   const dailyRecordsTaraxaQuery = useReactQuery({
     queryKey: ["dailyRecordsTaraxa"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardTaraxaDaily",
@@ -1706,7 +1986,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -1727,41 +2007,108 @@ function Dashboard({
       setPrevDataTaraxa(placeholderplayerData);
       return;
     }
-    previousWinnersTaraxaVersionRef.current = version;
-    const force =
-      forceRefresh ||
-      previousWinnersTaraxaFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersTaraxaQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataTaraxa(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersTaraxaFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataTaraxa(data);
-    previousWinnersTaraxaFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersTaraxaFetchingPromiseRef.current &&
+      previousWinnersTaraxaVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersTaraxaFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersTaraxaFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersTaraxaVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersTaraxaQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataTaraxa(placeholderplayerData);
+          return;
+        }
+        setPrevDataTaraxa(data);
+        previousWinnersTaraxaFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersTaraxaFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersTaraxaFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersTaraxaFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerTaraxa = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerTaraxaQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerTaraxa(false);
-      return;
     }
-    const [userRecord] = data;
-    setUserDataTaraxa(userRecord);
-    setActivePlayerTaraxa(
-      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-    );
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerTaraxaQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerTaraxa(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataTaraxa(userRecord);
+        setActivePlayerTaraxa(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current =
+      fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsTaraxa = async (forceRefresh = false) => {
@@ -1794,9 +2141,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
-      await fetchDailyRecordsAroundPlayerTaraxa(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerTaraxa(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -1820,6 +2167,8 @@ function Dashboard({
 
   const previousWinnersBaseVersionRef = useRef(null);
   const previousWinnersBaseFetchedVersionRef = useRef(null);
+  const previousWinnersBaseFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef = useRef(null);
 
   const previousWinnersBaseQuery = useReactQuery({
     queryKey: ["previousWinnersBase"],
@@ -1849,11 +2198,11 @@ function Dashboard({
 
   const dailyRecordsBaseQuery = useReactQuery({
     queryKey: ["dailyRecordsBase"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardBaseDaily",
@@ -1874,7 +2223,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -1895,40 +2244,107 @@ function Dashboard({
       setPrevDataBase(placeholderplayerData);
       return;
     }
-    previousWinnersBaseVersionRef.current = version;
-    const force =
-      forceRefresh || previousWinnersBaseFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersBaseQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataBase(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersBaseFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataBase(data);
-    previousWinnersBaseFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersBaseFetchingPromiseRef.current &&
+      previousWinnersBaseVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersBaseFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersBaseFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersBaseVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersBaseQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataBase(placeholderplayerData);
+          return;
+        }
+        setPrevDataBase(data);
+        previousWinnersBaseFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersBaseFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersBaseFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersBaseFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerBase = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerBaseQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerBase(false);
-      return;
     }
-    const [userRecord] = data;
-    setUserDataBase(userRecord);
-    setActivePlayerBase(
-      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-    );
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerBaseQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerBase(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataBase(userRecord);
+        setActivePlayerBase(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsBase = async (forceRefresh = false) => {
@@ -1961,9 +2377,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
-      await fetchDailyRecordsAroundPlayerBase(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerBase(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -1987,6 +2403,8 @@ function Dashboard({
 
   const previousWinnersVanarVersionRef = useRef(null);
   const previousWinnersVanarFetchedVersionRef = useRef(null);
+  const previousWinnersVanarFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef = useRef(null);
 
   const previousWinnersVanarQuery = useReactQuery({
     queryKey: ["previousWinnersVanar"],
@@ -2016,11 +2434,11 @@ function Dashboard({
 
   const dailyRecordsVanarQuery = useReactQuery({
     queryKey: ["dailyRecordsVanar"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardVanarDaily",
@@ -2041,7 +2459,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -2062,42 +2480,109 @@ function Dashboard({
       setPrevDataVanar(placeholderplayerData);
       return;
     }
-    previousWinnersVanarVersionRef.current = version;
-    const force =
-      forceRefresh || previousWinnersVanarFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersVanarQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataVanar(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersVanarFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataVanar(data);
-    previousWinnersVanarFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersVanarFetchingPromiseRef.current &&
+      previousWinnersVanarVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersVanarFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersVanarFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersVanarVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersVanarQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataVanar(placeholderplayerData);
+          return;
+        }
+        setPrevDataVanar(data);
+        previousWinnersVanarFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersVanarFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersVanarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersVanarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerVanar = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerVanarQuery,
-      {
-        force: forceRefresh,
-      }
-    );
 
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerVanar(false);
-      return;
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
     }
 
-    const [userRecord] = data;
-    setUserDataVanar(userRecord);
-    setActivePlayerVanar(
-      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-    );
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerVanarQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerVanar(false);
+          return;
+        }
+
+        const [userRecord] = data;
+        setUserDataVanar(userRecord);
+        setActivePlayerVanar(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsVanar = async (forceRefresh = false) => {
@@ -2130,9 +2615,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
-      await fetchDailyRecordsAroundPlayerVanar(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerVanar(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -2156,6 +2641,8 @@ function Dashboard({
 
   const previousWinnersTaikoVersionRef = useRef(null);
   const previousWinnersTaikoFetchedVersionRef = useRef(null);
+  const previousWinnersTaikoFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef = useRef(null);
 
   const previousWinnersTaikoQuery = useReactQuery({
     queryKey: ["previousWinnersTaiko"],
@@ -2185,11 +2672,11 @@ function Dashboard({
 
   const dailyRecordsTaikoQuery = useReactQuery({
     queryKey: ["dailyRecordsTaiko"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
@@ -2210,7 +2697,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -2231,40 +2718,107 @@ function Dashboard({
       setPrevDataTaiko(placeholderplayerData);
       return;
     }
-    previousWinnersTaikoVersionRef.current = version;
-    const force =
-      forceRefresh || previousWinnersTaikoFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersTaikoQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataTaiko(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersTaikoFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataTaiko(data);
-    previousWinnersTaikoFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersTaikoFetchingPromiseRef.current &&
+      previousWinnersTaikoVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersTaikoFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersTaikoFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersTaikoVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersTaikoQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataTaiko(placeholderplayerData);
+          return;
+        }
+        setPrevDataTaiko(data);
+        previousWinnersTaikoFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersTaikoFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersTaikoFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersTaikoFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerTaiko = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerTaikoQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerTaiko(false);
-      return;
     }
-    const [userRecord] = data;
-    setUserDataTaiko(userRecord);
-    setActivePlayerTaiko(
-      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-    );
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerTaikoQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerTaiko(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataTaiko(userRecord);
+        setActivePlayerTaiko(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsTaiko = async (forceRefresh = false) => {
@@ -2297,9 +2851,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
-      await fetchDailyRecordsAroundPlayerTaiko(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerTaiko(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -2323,6 +2877,8 @@ function Dashboard({
 
   const previousWinnersMatVersionRef = useRef(null);
   const previousWinnersMatFetchedVersionRef = useRef(null);
+  const previousWinnersMatFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerMatFetchingPromiseRef = useRef(null);
 
   const previousWinnersMatQuery = useReactQuery({
     queryKey: ["previousWinnersMat"],
@@ -2352,11 +2908,11 @@ function Dashboard({
 
   const dailyRecordsMatQuery = useReactQuery({
     queryKey: ["dailyRecordsMat"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardMatchainDaily",
@@ -2377,7 +2933,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -2398,38 +2954,107 @@ function Dashboard({
       setPrevDataMat(placeholderplayerData);
       return;
     }
-    previousWinnersMatVersionRef.current = version;
-    const force =
-      forceRefresh || previousWinnersMatFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersMatQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataMat(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersMatFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataMat(data);
-    previousWinnersMatFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersMatFetchingPromiseRef.current &&
+      previousWinnersMatVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersMatFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersMatFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersMatVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersMatQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataMat(placeholderplayerData);
+          return;
+        }
+        setPrevDataMat(data);
+        previousWinnersMatFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersMatFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersMatFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersMatFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerMat = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerMatQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerMat(false);
-      return;
     }
-    const [userRecord] = data;
-    setUserDataMat(userRecord);
-    setActivePlayerMat((userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99);
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerMatQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerMat(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataMat(userRecord);
+        setActivePlayerMat(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsMat = async (forceRefresh = false) => {
@@ -2462,9 +3087,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
-      await fetchDailyRecordsAroundPlayerMat(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerMat(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -2488,6 +3113,8 @@ function Dashboard({
 
   const previousWinnersSkaleVersionRef = useRef(null);
   const previousWinnersSkaleFetchedVersionRef = useRef(null);
+  const previousWinnersSkaleFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef = useRef(null);
 
   const previousWinnersSkaleQuery = useReactQuery({
     queryKey: ["previousWinnersSkale"],
@@ -2517,11 +3144,11 @@ function Dashboard({
 
   const dailyRecordsSkaleQuery = useReactQuery({
     queryKey: ["dailyRecordsSkale"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
@@ -2542,7 +3169,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -2563,40 +3190,107 @@ function Dashboard({
       setPrevDataSkale(placeholderplayerData);
       return;
     }
-    previousWinnersSkaleVersionRef.current = version;
-    const force =
-      forceRefresh || previousWinnersSkaleFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersSkaleQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataSkale(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersSkaleFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataSkale(data);
-    previousWinnersSkaleFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersSkaleFetchingPromiseRef.current &&
+      previousWinnersSkaleVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersSkaleFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersSkaleFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersSkaleVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersSkaleQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataSkale(placeholderplayerData);
+          return;
+        }
+        setPrevDataSkale(data);
+        previousWinnersSkaleFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersSkaleFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersSkaleFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersSkaleFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerSkale = async (forceRefresh = false) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerSkaleQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-    if ((error && !fromCache) || !data?.length) {
-      setActivePlayerSkale(false);
-      return;
     }
-    const [userRecord] = data;
-    setUserDataSkale(userRecord);
-    setActivePlayerSkale(
-      (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-    );
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerSkaleQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerSkale(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataSkale(userRecord);
+        setActivePlayerSkale(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsSkale = async (forceRefresh = false) => {
@@ -2629,9 +3323,9 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
-      await fetchDailyRecordsAroundPlayerSkale(forceRefresh);
-    }
+    // if (userId) {
+    //   await fetchDailyRecordsAroundPlayerSkale(forceRefresh);
+    // }
 
     if (!useCache) {
       setTimeout(() => {
@@ -2655,6 +3349,9 @@ function Dashboard({
 
   const previousWinnersStarVersionRef = useRef(null);
   const previousWinnersStarFetchedVersionRef = useRef(null);
+  const previousWinnersStarFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerStarFetchingPromiseRef = useRef(null);
+  const fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef = useRef(null);
 
   const previousWinnersStarQuery = useReactQuery({
     queryKey: ["previousWinnersStar"],
@@ -2684,11 +3381,11 @@ function Dashboard({
 
   const recordsStarQuery = useReactQuery({
     queryKey: ["recordsStar"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "GlobalStarMonthlyLeaderboard",
@@ -2709,7 +3406,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -2736,32 +3433,74 @@ function Dashboard({
       return;
     }
 
+    // Check if we already have the data for this version and userId
+    if (
+      !forceRefresh &&
+      previousUserDataStarFetchedVersionRef.current === version &&
+      previousUserDataStarUserRef.current === userIdParam
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version and userId, wait for it
+    if (
+      previousUserDataStarFetchingPromiseRef.current &&
+      previousUserDataStarVersionRef.current === version &&
+      previousUserDataStarUserRef.current === userIdParam
+    ) {
+      try {
+        await previousUserDataStarFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (
+          previousUserDataStarFetchedVersionRef.current === version &&
+          previousUserDataStarUserRef.current === userIdParam
+        ) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
     previousUserDataStarVersionRef.current = version;
     previousUserDataStarUserRef.current = userIdParam;
-    const shouldForce =
-      forceRefresh || previousUserDataStarFetchedVersionRef.current !== version;
 
-    const { data, error, fromCache } = await fetchQueryData(
-      previousUserDataStarQuery,
-      { force: shouldForce }
-    );
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousUserDataStarQuery,
+          { force: shouldForce }
+        );
 
-    if ((error && !fromCache) || !data) {
-      setUserPreviousDataStar([]);
-      setUserPreviousDataStar2([]);
-      return;
-    }
+        if ((error && !fromCache) || !data) {
+          setUserPreviousDataStar([]);
+          setUserPreviousDataStar2([]);
+          return;
+        }
 
-    const [previousEntry] = data;
-    if (!previousEntry) {
-      setUserPreviousDataStar([]);
-      setUserPreviousDataStar2([]);
-      return;
-    }
+        const [previousEntry] = data;
+        if (!previousEntry) {
+          setUserPreviousDataStar([]);
+          setUserPreviousDataStar2([]);
+          return;
+        }
 
-    setUserPreviousDataStar(previousEntry);
-    setUserPreviousDataStar2([]);
-    previousUserDataStarFetchedVersionRef.current = version;
+        setUserPreviousDataStar(previousEntry);
+        setUserPreviousDataStar2([]);
+        previousUserDataStarFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousUserDataStarFetchingPromiseRef.current === fetchPromise) {
+          previousUserDataStarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousUserDataStarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayerStar = async (
@@ -2769,62 +3508,91 @@ function Dashboard({
     leaderboardData = starRecords
   ) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      recordsAroundPlayerStarQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-
-    const aroundData = data?.leaderboard || [];
-    const version = data?.version;
-
-    if ((error && !fromCache) || aroundData.length === 0) {
-      setActivePlayerStar(false);
-      return;
     }
 
-    if (version) {
-      fetchPreviousUserDataStar(parseInt(version, 10), userId);
-    }
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          recordsAroundPlayerStarQuery,
+          {
+            force: forceRefresh,
+          }
+        );
 
-    const [userRecord] = aroundData;
-    if (!userRecord) {
-      setActivePlayerStar(false);
-      return;
-    }
+        const aroundData = data?.leaderboard || [];
+        const version = data?.version;
 
-    const userPosition = userRecord.position ?? Number.MAX_SAFE_INTEGER;
-    setUserDataStar(userRecord);
+        if ((error && !fromCache) || aroundData.length === 0) {
+          setActivePlayerStar(false);
+          return;
+        }
 
-    if (goldenPassRemainingTime) {
-      setDataAmountStar(
-        userRecord.statValue !== 0
-          ? userPosition > 100
-            ? 0
-            : userPosition === 100
-            ? Number(monthlyStarPrizes[99]) + Number(monthlyExtraStarPrizes[99])
-            : Number(monthlyStarPrizes[userPosition]) +
-              Number(monthlyExtraStarPrizes[userPosition])
-          : 0
-      );
-    } else {
-      setDataAmountStar(
-        userRecord.statValue !== 0
-          ? userPosition > 100
-            ? 0
-            : userPosition === 100
-            ? Number(monthlyStarPrizes[99])
-            : Number(monthlyStarPrizes[userPosition])
-          : 0
-      );
-    }
+        if (version) {
+          fetchPreviousUserDataStar(parseInt(version, 10), userId);
+        }
 
-    const isUserInLeaderboard = Array.isArray(leaderboardData)
-      ? leaderboardData.some((item) => item?.displayName === username)
-      : false;
+        const [userRecord] = aroundData;
+        if (!userRecord) {
+          setActivePlayerStar(false);
+          return;
+        }
 
-    setActivePlayerStar(isUserInLeaderboard && userPosition <= 99);
+        const userPosition = userRecord.position ?? Number.MAX_SAFE_INTEGER;
+        setUserDataStar(userRecord);
+
+        if (goldenPassRemainingTime) {
+          setDataAmountStar(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99]) +
+                  Number(monthlyExtraStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition]) +
+                  Number(monthlyExtraStarPrizes[userPosition])
+              : 0
+          );
+        } else {
+          setDataAmountStar(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
+        }
+
+        const isUserInLeaderboard = Array.isArray(leaderboardData)
+          ? leaderboardData.some((item) => item?.displayName === username)
+          : false;
+
+        setActivePlayerStar(isUserInLeaderboard && userPosition <= 99);
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchPreviousWinnersStar = async (version, forceRefresh = false) => {
@@ -2832,21 +3600,60 @@ function Dashboard({
       setPrevDataStar(placeholderplayerData);
       return;
     }
-    previousWinnersStarVersionRef.current = version;
-    const force =
-      forceRefresh || previousWinnersStarFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersStarQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataStar(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersStarFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataStar(data);
-    previousWinnersStarFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersStarFetchingPromiseRef.current &&
+      previousWinnersStarVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersStarFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersStarFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersStarVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersStarQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataStar(placeholderplayerData);
+          return;
+        }
+        setPrevDataStar(data);
+        previousWinnersStarFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersStarFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersStarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersStarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchExplorerHunt = async (forceRefresh = false) => {
@@ -2907,7 +3714,7 @@ function Dashboard({
       forceRefresh
     );
 
-    if (userId && username) {
+    if (userId) {
       const testArray = leaderboard.filter(
         (item) => item.displayName === username
       );
@@ -2968,6 +3775,7 @@ function Dashboard({
 
   const previousWinnersStarWeeklyVersionRef = useRef(null);
   const previousWinnersStarWeeklyFetchedVersionRef = useRef(null);
+  const previousWinnersStarWeeklyFetchingPromiseRef = useRef(null);
 
   const previousWinnersStarWeeklyQuery = useReactQuery({
     queryKey: ["previousWinnersStarWeekly"],
@@ -2997,11 +3805,11 @@ function Dashboard({
 
   const recordsStarWeeklyQuery = useReactQuery({
     queryKey: ["recordsStarWeekly"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: LEADERBOARD_CACHE_MS,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "GlobalStarWeeklyLeaderboard",
@@ -3022,7 +3830,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -3046,22 +3854,62 @@ function Dashboard({
       setPrevDataStarWeekly(placeholderplayerData);
       return;
     }
-    previousWinnersStarWeeklyVersionRef.current = version;
-    const force =
-      forceRefresh ||
-      previousWinnersStarWeeklyFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersStarWeeklyQuery,
-      {
-        force,
-      }
-    );
-    if ((error && !fromCache) || !data) {
-      setPrevDataStarWeekly(placeholderplayerData);
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersStarWeeklyFetchedVersionRef.current === version
+    ) {
       return;
     }
-    setPrevDataStarWeekly(data);
-    previousWinnersStarWeeklyFetchedVersionRef.current = version;
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersStarWeeklyFetchingPromiseRef.current &&
+      previousWinnersStarWeeklyVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersStarWeeklyFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersStarWeeklyFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersStarWeeklyVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersStarWeeklyQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataStarWeekly(placeholderplayerData);
+          return;
+        }
+        setPrevDataStarWeekly(data);
+        previousWinnersStarWeeklyFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          previousWinnersStarWeeklyFetchingPromiseRef.current === fetchPromise
+        ) {
+          previousWinnersStarWeeklyFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersStarWeeklyFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchRecordsStarWeekly = async (forceRefresh = false) => {
@@ -3146,57 +3994,86 @@ function Dashboard({
     leaderboardData = starRecordsWeekly
   ) => {
     if (!userId) return;
-    const { data, error, fromCache } = await fetchQueryData(
-      recordsAroundPlayerStarWeeklyQuery,
-      {
-        force: forceRefresh,
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current) {
+      try {
+        await fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-    );
-
-    const aroundData = data?.leaderboard || [];
-
-    if ((error && !fromCache) || aroundData.length === 0) {
-      setActivePlayerStarWeekly(false);
-      return;
     }
 
-    const [userRecord] = aroundData;
-    if (!userRecord) {
-      setActivePlayerStarWeekly(false);
-      return;
-    }
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          recordsAroundPlayerStarWeeklyQuery,
+          {
+            force: forceRefresh,
+          }
+        );
 
-    const userPosition = userRecord.position ?? Number.MAX_SAFE_INTEGER;
-    setUserDataStarWeekly(userRecord);
+        const aroundData = data?.leaderboard || [];
 
-    if (goldenPassRemainingTime) {
-      setDataAmountStarWeekly(
-        userRecord.statValue !== 0
-          ? userPosition > 100
-            ? 0
-            : userPosition === 100
-            ? Number(weeklyStarPrizes[99]) + Number(weeklyExtraStarPrizes[99])
-            : Number(weeklyStarPrizes[userPosition]) +
-              Number(weeklyExtraStarPrizes[userPosition])
-          : 0
-      );
-    } else {
-      setDataAmountStarWeekly(
-        userRecord.statValue !== 0
-          ? userPosition > 100
-            ? 0
-            : userPosition === 100
-            ? Number(weeklyStarPrizes[99])
-            : Number(weeklyStarPrizes[userPosition])
-          : 0
-      );
-    }
+        if ((error && !fromCache) || aroundData.length === 0) {
+          setActivePlayerStarWeekly(false);
+          return;
+        }
 
-    const isUserInLeaderboard = Array.isArray(leaderboardData)
-      ? leaderboardData.some((item) => item?.displayName === username)
-      : false;
+        const [userRecord] = aroundData;
+        if (!userRecord) {
+          setActivePlayerStarWeekly(false);
+          return;
+        }
 
-    setActivePlayerStarWeekly(isUserInLeaderboard && userPosition <= 99);
+        const userPosition = userRecord.position ?? Number.MAX_SAFE_INTEGER;
+        setUserDataStarWeekly(userRecord);
+
+        if (goldenPassRemainingTime) {
+          setDataAmountStarWeekly(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(weeklyStarPrizes[99]) +
+                  Number(weeklyExtraStarPrizes[99])
+                : Number(weeklyStarPrizes[userPosition]) +
+                  Number(weeklyExtraStarPrizes[userPosition])
+              : 0
+          );
+        } else {
+          setDataAmountStarWeekly(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(weeklyStarPrizes[99])
+                : Number(weeklyStarPrizes[userPosition])
+              : 0
+          );
+        }
+
+        const isUserInLeaderboard = Array.isArray(leaderboardData)
+          ? leaderboardData.some((item) => item?.displayName === username)
+          : false;
+
+        setActivePlayerStarWeekly(isUserInLeaderboard && userPosition <= 99);
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fillRecordsDaily = (itemData) => {
@@ -3223,6 +4100,9 @@ function Dashboard({
 
   const previousWinnersDailyVersionRef = useRef(null);
   const previousWinnersDailyFetchedVersionRef = useRef(null);
+  const previousWinnersDailyFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerFetchingPromiseRef = useRef(null);
+  const fetchGenesisAroundPlayerFetchingPromiseRef = useRef(null);
 
   const previousWinnersDailyQuery = useReactQuery({
     queryKey: ["previousWinnersDaily"],
@@ -3252,11 +4132,11 @@ function Dashboard({
 
   const dailyRecordsQuery = useReactQuery({
     queryKey: ["dailyRecords"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
       const data = {
         StatisticName: "DailyLeaderboard",
@@ -3277,7 +4157,7 @@ function Dashboard({
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
-    refetchInterval: userId ? LEADERBOARD_CACHE_MS : false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
       if (!userId) return [];
       const data = {
@@ -3295,7 +4175,7 @@ function Dashboard({
 
   const genesisRecordsQuery = useReactQuery({
     queryKey: ["genesisRecords"],
-    enabled: true,
+    enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
     refetchOnWindowFocus: false,
@@ -3363,6 +4243,7 @@ function Dashboard({
   const previousUserDataStarVersionRef = useRef(null);
   const previousUserDataStarFetchedVersionRef = useRef(null);
   const previousUserDataStarUserRef = useRef(null);
+  const previousUserDataStarFetchingPromiseRef = useRef(null);
 
   const previousUserDataStarQuery = useReactQuery({
     queryKey: ["previousUserDataStar", userId],
@@ -3397,23 +4278,62 @@ function Dashboard({
       setdailyplayerData([]);
       return;
     }
-    previousWinnersDailyVersionRef.current = version;
-    const shouldForce =
-      forceRefresh || previousWinnersDailyFetchedVersionRef.current !== version;
-    const { data, error, fromCache } = await fetchQueryData(
-      previousWinnersDailyQuery,
-      { force: shouldForce }
-    );
 
-    if ((error && !fromCache) || !data) {
-      fillRecordsDaily([]);
-      setdailyplayerData([]);
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersDailyFetchedVersionRef.current === version
+    ) {
       return;
     }
 
-    fillRecordsDaily(data);
-    setdailyplayerData(data);
-    previousWinnersDailyFetchedVersionRef.current = version;
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersDailyFetchingPromiseRef.current &&
+      previousWinnersDailyVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersDailyFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersDailyFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersDailyVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersDailyQuery,
+          { force: shouldForce }
+        );
+
+        if ((error && !fromCache) || !data) {
+          fillRecordsDaily([]);
+          setdailyplayerData([]);
+          return;
+        }
+
+        fillRecordsDaily(data);
+        setdailyplayerData(data);
+        previousWinnersDailyFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersDailyFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersDailyFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersDailyFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecords = async (forceRefresh = false) => {
@@ -3446,9 +4366,9 @@ function Dashboard({
         forceRefresh
       );
 
-      if (userId && username) {
-        await fetchDailyRecordsAroundPlayer(forceRefresh, leaderboard);
-      }
+      // if (userId) {
+      //   await fetchDailyRecordsAroundPlayer(forceRefresh, leaderboard);
+      // }
     } catch (error) {
       console.error(error);
       fillRecords([]);
@@ -3539,7 +4459,7 @@ function Dashboard({
       fetchGreatCollection();
       fetchExplorerHunt();
     }
-  }, [username, userId, goldenPassRemainingTime]);
+  }, [username, userId]);
 
   useEffect(() => {
     if (
@@ -4279,28 +5199,54 @@ function Dashboard({
   });
 
   const fetchGenesisAroundPlayer = async (forceRefresh = false) => {
-    if (!userId || !username) {
+    if (!userId) {
       setGenesisRank2(0);
       return;
     }
 
-    const { data, error, fromCache } = await fetchQueryData(
-      genesisAroundPlayerQuery,
-      { force: forceRefresh }
-    );
-
-    const aroundData = Array.isArray(data) ? data : [];
-
-    if ((error && !fromCache) || aroundData.length === 0) {
-      setGenesisRank2(0);
-      return;
+    // If there's already a fetch in progress, wait for it
+    if (fetchGenesisAroundPlayerFetchingPromiseRef.current) {
+      try {
+        await fetchGenesisAroundPlayerFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
     }
 
-    const matchingEntry =
-      aroundData.find((item) => item?.displayName === username) ||
-      aroundData[0];
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          genesisAroundPlayerQuery,
+          { force: forceRefresh }
+        );
 
-    setGenesisRank2(matchingEntry?.statValue ?? 0);
+        const aroundData = Array.isArray(data) ? data : [];
+
+        if ((error && !fromCache) || aroundData.length === 0) {
+          setGenesisRank2(0);
+          return;
+        }
+
+        const matchingEntry =
+          aroundData.find((item) => item?.displayName === username) ||
+          aroundData[0];
+
+        setGenesisRank2(matchingEntry?.statValue ?? 0);
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchGenesisAroundPlayerFetchingPromiseRef.current === fetchPromise
+        ) {
+          fetchGenesisAroundPlayerFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchGenesisAroundPlayerFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fetchDailyRecordsAroundPlayer = async (
@@ -4313,44 +5259,71 @@ function Dashboard({
       return;
     }
 
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsAroundPlayerQuery,
-      { force: forceRefresh }
-    );
-
-    const aroundData = Array.isArray(data) ? data : [];
-
-    if ((error && !fromCache) || aroundData.length === 0) {
-      const fallbackRecord = Array.isArray(leaderboardData)
-        ? leaderboardData.find((entry) => entry?.displayName === username)
-        : undefined;
-
-      if (fallbackRecord) {
-        setUserData(fallbackRecord);
-        setActivePlayer(
-          (fallbackRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-        );
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerFetchingPromiseRef.current;
         return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
-
-      setActivePlayer(false);
-      return;
     }
 
-    const [userRecord] = aroundData;
-    if (!userRecord) {
-      setActivePlayer(false);
-      return;
-    }
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerQuery,
+          { force: forceRefresh }
+        );
 
-    setUserData(userRecord);
+        const aroundData = Array.isArray(data) ? data : [];
 
-    const userPosition = userRecord?.position ?? Number.MAX_SAFE_INTEGER;
-    const isUserInLeaderboard = Array.isArray(leaderboardData)
-      ? leaderboardData.some((entry) => entry?.displayName === username)
-      : true;
+        if ((error && !fromCache) || aroundData.length === 0) {
+          const fallbackRecord = Array.isArray(leaderboardData)
+            ? leaderboardData.find((entry) => entry?.displayName === username)
+            : undefined;
 
-    setActivePlayer(isUserInLeaderboard && userPosition <= 99);
+          if (fallbackRecord) {
+            setUserData(fallbackRecord);
+            setActivePlayer(
+              (fallbackRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+            );
+            return;
+          }
+
+          setActivePlayer(false);
+          return;
+        }
+
+        const [userRecord] = aroundData;
+        if (!userRecord) {
+          setActivePlayer(false);
+          return;
+        }
+
+        setUserData(userRecord);
+
+        const userPosition = userRecord?.position ?? Number.MAX_SAFE_INTEGER;
+        const isUserInLeaderboard = Array.isArray(leaderboardData)
+          ? leaderboardData.some((entry) => entry?.displayName === username)
+          : true;
+
+        setActivePlayer(isUserInLeaderboard && userPosition <= 99);
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const getOpenedChestPerWallet = async () => {
@@ -5520,13 +6493,13 @@ function Dashboard({
 
   useEffect(() => {
     if (effectRan2.current) return;
-    if (userId && username) {
+    if (userId !== undefined && userId !== null) {
       fetchGenesisAroundPlayer(false);
       fetchDailyRecordsAroundPlayerStar(false, []);
       fetchWeeklyRecordsAroundPlayerStar(false, []);
       effectRan2.current = true;
     }
-  }, [userId, username, goldenPassRemainingTime]);
+  }, [userId, goldenPassRemainingTime]);
 
   useEffect(() => {
     if (effectRan.current) return;

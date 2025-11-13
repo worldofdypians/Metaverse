@@ -102,40 +102,46 @@ const AmplifyExperience = () => {
                 >
                   <td className="game-table-text py-3 ps-3">{item.title}</td>
                   <td>
-                    {item.free ? (
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/amplifyCheck.svg"
-                        }
-                        alt=""
-                      />
-                    ) : (
-                      <></>
-                    )}
+                    <div className="d-flex align-items-center justify-content-center">
+                      {item.free ? (
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/amplifyCheck.svg"
+                          }
+                          alt=""
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </div>
                   </td>
                   <td>
-                    {item.betaPass ? (
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/amplifyCheck.svg"
-                        }
-                        alt=""
-                      />
-                    ) : (
-                      <></>
-                    )}
+                    <div className="d-flex align-items-center justify-content-center">
+                      {item.betaPass ? (
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/amplifyCheck.svg"
+                          }
+                          alt=""
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </div>
                   </td>
                   <td>
-                    {item.premium ? (
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/amplifyCheck.svg"
-                        }
-                        alt=""
-                      />
-                    ) : (
-                      <></>
-                    )}
+                    <div className="d-flex align-items-center justify-content-center">
+                      {item.premium ? (
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/amplifyCheck.svg"
+                          }
+                          alt=""
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
