@@ -7341,7 +7341,6 @@ function Dashboard({
                 setbattlePopup(false);
                 handleConnect();
               }}
-              openedRoyaltyChest={[]}
             />
           </div>
         )}

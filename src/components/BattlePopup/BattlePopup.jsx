@@ -18,9 +18,11 @@ import {
   writeContract as wagmiWriteContract,
   waitForTransactionReceipt as wagmiWaitForTransactionReceipt,
   switchChain as wagmiSwitchChain,
+  readContract as wagmiReadContract,
   getAccount,
 } from "@wagmi/core";
 import { wagmiClient } from "../../wagmiConnectors";
+import { bsc } from "wagmi/chains";
 
 const renderer = ({ hours, minutes }) => {
   return (
@@ -77,7 +79,6 @@ const BattlePopup = ({
   isOpen,
   walletClient,
   publicClient,
-  openedRoyaltyChest,
   closePopup,
   setClosePopup,
 }) => {
@@ -85,6 +86,69 @@ const BattlePopup = ({
   const videoRef2 = useRef(null);
   const videoRef3 = useRef(null);
   const windowSize = useWindowSize();
+  const MIN_APPROVAL = 5000000000000000000n; // 5 WOD with 18 decimals
+  const MAX_APPROVE_AMOUNT = 500000000000000000000000n; // 500,000 * 1e18
+
+  const readOnChain = async ({ address, abi, functionName, args = [] }) => {
+    try {
+      if (window.WALLET_TYPE === "matchId" && publicClient) {
+        return await publicClient.readContract({
+          address,
+          abi,
+          functionName,
+          args,
+        });
+      }
+      return await wagmiReadContract(wagmiClient, {
+        address,
+        abi,
+        functionName,
+        args,
+        chainId: bsc.id,
+      });
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
+
+  const writeOnChain = async ({ address, abi, functionName, args = [] }) => {
+    try {
+      if (window.WALLET_TYPE === "matchId" && walletClient && publicClient) {
+        const hash = await walletClient.writeContract({
+          address,
+          abi,
+          functionName,
+          args,
+        });
+        await publicClient.waitForTransactionReceipt({ hash });
+        return hash;
+      }
+
+      const account = getAccount(wagmiClient);
+      if (account?.chainId && chainId && account.chainId !== chainId) {
+        try {
+          await wagmiSwitchChain(wagmiClient, { chainId });
+        } catch (e) {
+          console.error("switchChain failed or not supported", e);
+        }
+      }
+
+      const hash = await wagmiWriteContract(wagmiClient, {
+        address,
+        abi,
+        functionName,
+        args,
+        account: account?.address,
+        chainId,
+      });
+      await wagmiWaitForTransactionReceipt(wagmiClient, { hash });
+      return hash;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
 
   let now = new Date().getTime();
   const midnightTime = new Date(now).setUTCHours(24, 30, 0, 0);
@@ -194,17 +258,14 @@ const BattlePopup = ({
     // },
   ];
   const btnRef = useRef(null);
-  const [showContent, setShowContent] = useState(false);
+  const [showContent, setShowContent] = useState(true);
   const [step, setStep] = useState(1);
   const [fightStep, setFightStep] = useState(1);
-  const [chestOpened, setChestOpened] = useState(false);
   const [selectedChain, setSelectedChain] = useState("");
   const [hoveredChain, setHoveredChain] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [disable, setDisable] = useState(false);
   const [socials, setSocials] = useState(chains[0].socials);
   const [count, setCount] = useState(0);
-  const [ischestOpen, setIsChestOpen] = useState(false);
   const [rewards, setRewards] = useState([]);
   const [mute, setMute] = useState(false);
   const [selectedPlayer, setselectedPlayer] = useState(fighters[0]);
@@ -233,11 +294,10 @@ const BattlePopup = ({
     }
   }
 
- const audioRef = useRef(null);
+  const audioRef = useRef(null);
   const audioInitializedRef = useRef(false);
 
   useEffect(() => {
-
     if (!audioInitializedRef.current) {
       audioRef.current = new Audio(fightBgMusic);
       audioRef.current.volume = 0.3;
@@ -247,16 +307,15 @@ const BattlePopup = ({
       audioRef.current.addEventListener("canplaythrough", () => {
         console.log("Audio ready to play");
       });
-      
+
       audioRef.current.addEventListener("error", (e) => {
         console.error("Audio error:", e);
       });
-      
+
       audioInitializedRef.current = true;
     }
 
     return () => {
-
       if (audioRef.current && audioInitializedRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
@@ -273,98 +332,40 @@ const BattlePopup = ({
     const audio = audioRef.current;
 
     if (isOpen) {
-   
       const playAudio = async () => {
         try {
-       
           if (!audio.paused) {
             return;
           }
-      
+
           if (audio.currentTime > 0) {
             audio.currentTime = 0;
           }
-          
+
           await audio.play();
           console.log("Audio playing successfully");
         } catch (err) {
-       
-          if (err.name === "NotAllowedError" || err.name === "NotSupportedError") {
-            console.warn("Audio autoplay blocked by browser. User interaction required.");
+          if (
+            err.name === "NotAllowedError" ||
+            err.name === "NotSupportedError"
+          ) {
+            console.warn(
+              "Audio autoplay blocked by browser. User interaction required."
+            );
           } else if (err.name !== "AbortError") {
             console.warn("Audio play failed:", err);
           }
         }
       };
-      
+
       playAudio();
     } else {
-  
       if (!audio.paused) {
         audio.pause();
         audio.currentTime = 0;
       }
     }
   }, [isOpen]);
-
-  const handleStartFight = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      const randomBit = Math.round(Math.random());
-      console.log(randomBit, "random");
-
-      setFightType(randomBit === 0 ? "LOSE" : "WIN");
-      setFightStep(2);
-
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-
-      // Step 2 lasts 4.3s
-      setTimeout(() => {
-        setFightStep(3);
-
-        // Step 3 lasts 25.5s
-        setTimeout(() => {
-          setClosePopup(false);
-          setFightStep(1);
-          console.log(audioRef.current, "audioref");
-
-          if (audioRef.current) {
-            audioRef.current.play().catch((err) => {
-              if (err.name !== "AbortError")
-                console.warn("Audio play failed:", err);
-            });
-          }
-          setDummyCount(1);
-        }, 26500);
-
-        // 🎁 Save data + show rewards
-        setTimeout(() => {
-          const newFightInfo = {
-            id: "Points",
-            name: "POINTS",
-            icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-            count: "20K",
-            color: "from-blue-400 to-purple-500",
-            rarity: "COMMON",
-            tier: "TIER II",
-            fighter: selectedPlayer,
-            win: randomBit !== 0,
-          };
-          localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
-          setFightInfo(newFightInfo); // Update state to trigger re-render
-
-          if (randomBit !== 0) {
-            setShowRewards(true);
-          }
-        }, 21500);
-      }, 4300);
-    }, 2500);
-  };
 
   useEffect(() => {
     if (fightInfo) {
@@ -377,249 +378,18 @@ const BattlePopup = ({
   // Attach listener
   window.addEventListener("keydown", handleEsc);
 
-  const getUserRewardsByChest = async (
-    userEmail,
-    txHash,
-    chestId,
-    chainText
-  ) => {
-    const userData = {
-      transactionHash: txHash,
-      emailAddress: userEmail,
-    };
-
-    const userData_bnb = {
-      transactionHash: txHash,
-      emailAddress: userEmail,
-      chainId: chainText,
-    };
-
-    if (chainText) {
-      const result = await axios
-        .post(
-          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          userData_bnb
-        )
-        .catch((e) => {
-          if (e.response.status === 400) {
-            const timer = setTimeout(() => {
-              getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
-            }, 2000);
-          } else {
-            setLoading(false);
-            setIsChestOpen(false);
-            window.alertify.error(e?.message);
-            console.error(e);
-          }
-        });
-      if (result && result.status === 200) {
-        // if (chainText === "opbnb" || chainText === "bnb") {
-        //   handleSecondTask(coinbase);
-        // }
-        setTimeout(() => {
-          setRewards(result.data.rewards);
-        }, 3600);
-
-        setIsChestOpen(true);
-        setLoading(false);
-      }
-    } else {
-      const result = await axios
-        .post(
-          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          userData
-        )
-        .catch((e) => {
-          if (e.response.status === 400) {
-            const timer = setTimeout(() => {
-              getUserRewardsByChest2(userEmail, txHash, chestId, chainText);
-            }, 2000);
-          } else {
-            setLoading(false);
-            setIsChestOpen(false);
-            window.alertify.error(e?.message);
-            console.error(e);
-          }
-        });
-      if (result && result.status === 200) {
-        console.log(result.data);
-        setTimeout(() => {
-          setRewards(result.data.rewards);
-        }, 3600);
-
-        setIsChestOpen(true);
-        setLoading(false);
-      }
-    }
-  };
-  const getUserRewardsByChest2 = async (
-    userEmail,
-    txHash,
-    chestId,
-    chainText
-  ) => {
-    const userData = {
-      transactionHash: txHash,
-      emailAddress: userEmail,
-    };
-
-    const userData_bnb = {
-      transactionHash: txHash,
-      emailAddress: userEmail,
-      chainId: chainText,
-    };
-
-    if (chainText) {
-      const result = await axios
-        .post(
-          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          userData_bnb
-        )
-        .catch((e) => {
-          setLoading(false);
-
-          setIsChestOpen(false);
-          window.alertify.error(e?.message);
-        });
-      if (result && result.status === 200) {
-        setTimeout(() => {
-          setRewards(result.data.rewards);
-        }, 3600);
-
-        setIsChestOpen(true);
-
-        setLoading(false);
-      }
-    } else {
-      const result = await axios
-        .post(
-          "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          userData
-        )
-        .catch((e) => {
-          setLoading(false);
-
-          setIsChestOpen(false);
-          window.alertify.error(e?.message);
-        });
-      if (result && result.status === 200) {
-        // if (chainText === "opbnb" || chainText === "bnb") {
-        //   handleSecondTask(coinbase);
-        // }
-        setTimeout(() => {
-          setRewards(result.data.rewards);
-        }, 3600);
-
-        setIsChestOpen(true);
-        setLoading(false);
-      }
-    }
-  };
-
-  let countRoyal = 1;
-  const handleCheckIfTxExists = async (
-    email,
-    txHash,
-    chestIndex,
-    chainText
-  ) => {
-    const video =
-      // chainText === "taiko" ? videoRef2Taiko.current :
-      videoRef2.current;
-    if (window.WALLET_TYPE !== "matchId") {
-      const txResult = getTransaction(wagmiClient, {
-        hash: txHash,
-      });
-
-      console.log(txResult);
-
-      if (txResult) {
-        getUserRewardsByChest(email, txHash, chestIndex, chainText);
-        setLoading(false);
-        setChestOpened(true);
-        setStep(2);
-
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
-          setTimeout(() => {
-            video.pause();
-            setStep(3);
-            onClaimRewards();
-          }, 8000);
-        }
-      } else {
-        if (countRoyal < 10) {
-          const timer = setTimeout(
-            () => {
-              handleCheckIfTxExists(txHash);
-            },
-            countRoyal === 9 ? 5000 : 2000
-          );
-          return () => clearTimeout(timer);
-        } else {
-          window.alertify.error("Something went wrong.");
-          setLoading(false);
-        }
-      }
-      countRoyal = countRoyal + 1;
-    } else if (window.WALLET_TYPE === "matchId") {
-      console.log(txHash);
-      const txResult_matchain = await publicClient
-        .getTransaction({ hash: txHash })
-        .catch((e) => {
-          console.error(e);
-        });
-      console.log(txResult_matchain, txHash);
-
-      if (txResult_matchain) {
-        getUserRewardsByChest(email, txHash, chestIndex, chainText);
-        setLoading(false);
-        setChestOpened(true);
-        setStep(2);
-
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
-          setTimeout(() => {
-            video.pause();
-            setStep(3);
-            onClaimRewards();
-          }, 8000);
-        }
-      } else {
-        if (countRoyal < 10) {
-          const timer = setTimeout(
-            () => {
-              handleCheckIfTxExists(txHash);
-            },
-            countRoyal === 9 ? 5000 : 2000
-          );
-          return () => clearTimeout(timer);
-        } else {
-          window.alertify.error("Something went wrong.");
-          setLoading(false);
-        }
-      }
-      countRoyal = countRoyal + 1;
-    }
-  };
-
-  
-  const chestIndex = 1;
-
-  const handleOpenChest = async () => {
+  const handleStrike = async () => {
     setLoading(true);
-    const video = videoRef2.current;
-
     try {
-      const contractConfig =  {
-            address: window.config.single_strike_address,
-            abi: window.SINGLE_STRIKE_ABI,
-            chainText: "bnb",
-          };
+      const contractConfig = {
+        address: window.config.single_strike_address,
+        abi: window.SINGLE_STRIKE_ABI,
+        chainText: "bnb",
+      };
       if (!contractConfig)
         throw new Error("Unsupported chain for chest contract.");
 
-      const functionName = "openChest";
+      const functionName = "strike";
 
       // If user is on MatchID wallet, use provided viem walletClient/publicClient
       if (window.WALLET_TYPE === "matchId" && walletClient && publicClient) {
@@ -631,24 +401,71 @@ const BattlePopup = ({
         });
 
         await publicClient.waitForTransactionReceipt({ hash: txHash });
-        getUserRewardsByChest(
-          email,
-          txHash,
-          chestIndex - 1,
-          contractConfig.chainText
-        );
+        // onClaimRewards(email, txHash, contractConfig.chainText);
         setLoading(false);
-        setChestOpened(true);
         setStep(2);
+        setTimeout(() => {
+          setLoading(false);
+          const randomBit = Math.round(Math.random());
+          console.log(randomBit, "random");
 
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
+          setFightType(randomBit === 0 ? "LOSE" : "WIN");
+          setFightStep(2);
+
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+          }
+
+          // Step 2 lasts 4.3s
           setTimeout(() => {
-            video.pause();
-            setStep(3);
-            onClaimRewards();
-          }, 8000);
-        }
+            setFightStep(3);
+
+            // Step 3 lasts 25.5s
+            setTimeout(() => {
+              setClosePopup(false);
+              setFightStep(1);
+              console.log(audioRef.current, "audioref");
+
+              if (audioRef.current) {
+                audioRef.current.play().catch((err) => {
+                  if (err.name !== "AbortError")
+                    console.warn("Audio play failed:", err);
+                });
+              }
+              setDummyCount(1);
+            }, 26500);
+
+            // 🎁 Save data + show rewards
+            setTimeout(() => {
+              const newFightInfo = {
+                id: "Points",
+                name: "POINTS",
+                icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+                count: "20K",
+                color: "from-blue-400 to-purple-500",
+                rarity: "COMMON",
+                tier: "TIER II",
+                fighter: selectedPlayer,
+                win: randomBit !== 0,
+              };
+              localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
+              setFightInfo(newFightInfo); // Update state to trigger re-render
+
+              if (randomBit !== 0) {
+                setShowRewards(true);
+              }
+            }, 21500);
+          }, 4300);
+        }, 2500);
+        //   if (video) {
+        //     video.play().catch((err) => console.error("Play failed:", err));
+        //     setTimeout(() => {
+        //       video.pause();
+        //       setStep(3);
+        //       onClaimRewards();
+        //     }, 8000);
+        //   }
 
         return;
       }
@@ -690,24 +507,73 @@ const BattlePopup = ({
       console.log("Transaction confirmed in block:", receipt.blockNumber);
 
       if (receipt) {
-        getUserRewardsByChest(
-          email,
-          txHash,
-          chestIndex - 1,
-          contractConfig.chainText
-        );
+        // onClaimRewards(email, txHash, contractConfig.chainText);
         setLoading(false);
-        setChestOpened(true);
         setStep(2);
 
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
+        setTimeout(() => {
+          setLoading(false);
+          const randomBit = Math.round(Math.random());
+          console.log(randomBit, "random");
+
+          setFightType(randomBit === 0 ? "LOSE" : "WIN");
+          setFightStep(2);
+
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+          }
+
+          // Step 2 lasts 4.3s
           setTimeout(() => {
-            video.pause();
-            setStep(3);
-            onClaimRewards();
-          }, 8000);
-        }
+            setFightStep(3);
+
+            // Step 3 lasts 25.5s
+            setTimeout(() => {
+              setClosePopup(false);
+              setFightStep(1);
+              console.log(audioRef.current, "audioref");
+
+              if (audioRef.current) {
+                audioRef.current.play().catch((err) => {
+                  if (err.name !== "AbortError")
+                    console.warn("Audio play failed:", err);
+                });
+              }
+              setDummyCount(1);
+            }, 26500);
+
+            // 🎁 Save data + show rewards
+            setTimeout(() => {
+              const newFightInfo = {
+                id: "Points",
+                name: "POINTS",
+                icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+                count: "20K",
+                color: "from-blue-400 to-purple-500",
+                rarity: "COMMON",
+                tier: "TIER II",
+                fighter: selectedPlayer,
+                win: randomBit !== 0,
+              };
+              localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
+              setFightInfo(newFightInfo); // Update state to trigger re-render
+
+              if (randomBit !== 0) {
+                setShowRewards(true);
+              }
+            }, 21500);
+          }, 4300);
+        }, 2500);
+
+        //   if (video) {
+        //     video.play().catch((err) => console.error("Play failed:", err));
+        //     setTimeout(() => {
+        //       video.pause();
+        //       setStep(3);
+        //       onClaimRewards();
+        //     }, 8000);
+        //   }
       }
 
       return;
@@ -720,6 +586,44 @@ const BattlePopup = ({
       window.alertify.error(unifiedError?.message);
       setLoading(false);
     }
+  };
+
+  const handleApprove = async () => {
+    try {
+      setLoading(true);
+
+      await writeOnChain({
+        address: window.config.wod_token_address,
+        abi: window.TOKEN_ABI,
+        functionName: "approve",
+        args: [window.config.single_strike_address, MAX_APPROVE_AMOUNT],
+      });
+
+      setTimeout(() => {
+        handleStrike();
+      }, 1500);
+    } catch (e) {
+      window.alertify.error(e?.message);
+      setLoading(false);
+      console.error(e);
+    }
+  };
+
+  const checkStates = async () => {
+    const allowance = await readOnChain({
+      address: window.config.wod_token_address,
+      abi: window.TOKEN_ABI,
+      functionName: "allowance",
+      args: [coinbase, window.config.single_strike_address],
+    }).catch(() => 0n);
+
+    if (BigInt(allowance) === 0n || BigInt(allowance) < MIN_APPROVAL) {
+      handleApprove();
+    } else handleStrike();
+  };
+  const handleStartFight = () => {
+    setLoading(true);
+    checkStates();
   };
 
   const getRewardGradient = (category) => {
@@ -796,82 +700,9 @@ const BattlePopup = ({
   }, [count]);
 
   useEffect(() => {
-    const video = videoRef1.current;
-    var time;
-
-    if (
-      openedRoyaltyChest &&
-      openedRoyaltyChest.isOpened === true &&
-      (selectedChain === "opbnb" || selectedChain === "bnb")
-    ) {
-      time = 0;
-    }
-
-    if (
-      openedRoyaltyChest &&
-      openedRoyaltyChest.isOpened === true &&
-      (selectedChain === "opbnb" || selectedChain === "bnb") &&
-      isOpen
-    ) {
-      if (openedRoyaltyChest && openedRoyaltyChest.isOpened === true) {
-        time = 0;
-      } else {
-        time = 3600;
-      }
-
-      setChestOpened(true);
-      setStep(3);
-      const video = videoRef2.current;
-      if (video) {
-        video.play().catch((err) => console.error("Play failed:", err));
-        setTimeout(() => {
-          video.pause();
-          setStep(3);
-        }, 8000);
-      }
-
-      setTimeout(() => {
-        setRewards(openedRoyaltyChest.rewards);
-      }, time);
-      setTimeout(() => {
-        setShowContent(true);
-      }, time);
-    } else if (
-      (openedRoyaltyChest.length === 0 ||
-        (openedRoyaltyChest && openedRoyaltyChest.isOpened === false)) &&
-      (selectedChain === "opbnb" || selectedChain === "bnb") &&
-      isOpen
-    ) {
-      setStep(1);
-      setRewards([]);
-      setChestOpened(false);
-
-      setTimeout(() => {
-        setShowContent(true);
-      }, time);
-      const timeout1 = setTimeout(() => {
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
-
-          const pauseTimeout = setTimeout(() => {
-            video.pause();
-          }, 6200);
-
-          return () => clearTimeout(pauseTimeout);
-        }
-      }, 1500);
-
-      return () => clearTimeout(timeout1);
-    }
-  }, [openedRoyaltyChest, selectedChain, isOpen]);
-
-  useEffect(() => {
     if (chainId === 56) {
       setSelectedChain("bnb");
       setSocials(chains[0].socials);
-    } else if (chainId === 204) {
-      setSelectedChain("opbnb");
-      setSocials(chains[1].socials);
     } else {
       setSelectedChain("bnb");
       setSocials(chains[0].socials);
@@ -879,6 +710,7 @@ const BattlePopup = ({
   }, [chainId]);
 
   if (!isOpen) return null;
+
   return (
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column align-items-center">
@@ -1077,7 +909,7 @@ const BattlePopup = ({
         ) : (
           <></>
         )}
-         {showRewards && fightStep === 3 && (
+        {showRewards && fightStep === 3 && (
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -1338,284 +1170,6 @@ const BattlePopup = ({
                             )}
                           </button>
                         </motion.div>{" "}
-                        <div
-                          style={{
-                            width: "2px",
-                            height: "40px",
-                            background:
-                              "linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.4) 25%, rgba(147, 197, 253, 0.8) 50%, rgba(59, 130, 246, 0.4) 75%, transparent 100%)",
-                            alignSelf: "center",
-                            borderRadius: "2px",
-                            boxShadow: "0 0 8px rgba(59, 130, 246, 0.4)",
-                            flexShrink: 0,
-                          }}
-                          className="d-none d-lg-flex"
-                        />
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0, rotate: -90 }}
-                          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                          transition={{
-                            delay: 1 * 0.08,
-                            type: "spring",
-                            stiffness: 150,
-                          }}
-                        >
-                          <button
-                            // disabled={disable}
-                            onClick={() => {
-                              setSelectedChain(chains[1].id);
-                              setSocials(chains[1].socials);
-                              switchNetwork(chains[1].hex, chains[1].chainId);
-                            }}
-                            onMouseEnter={() => setHoveredChain(chains[1].id)}
-                            onMouseLeave={() => setHoveredChain(null)}
-                            className="btn p-2 position-relative overflow-hidden border-0 rounded "
-                            style={{
-                              // width: "32px",
-                              height: "32px",
-                              background:
-                                selectedChain === chains[1].id
-                                  ? "linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(14, 25, 48, 0.8) 100%)"
-                                  : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
-                              backdropFilter: "blur(10px)",
-                              WebkitBackdropFilter: "blur(10px)",
-                              border:
-                                selectedChain === chains[1].id
-                                  ? "1px solid rgba(59, 130, 246, 0.4)"
-                                  : "1px solid rgba(59, 130, 246, 0.2)",
-                              // transform:
-                              //   selectedChain === chains[1].id
-                              //     ? "scale(1.1)"
-                              //     : "scale(1)",
-                              transition: "all 0.3s ease",
-                            }}
-                            aria-label={`Select ${chains[1].name}`}
-                          >
-                            <motion.div
-                              className="position-absolute top-0 start-0 w-100 h-100"
-                              style={getChainGradient(chains[1])}
-                              animate={{
-                                opacity:
-                                  selectedChain === chains[1].id
-                                    ? 0.3
-                                    : hoveredChain === chains[1].id
-                                    ? 0.2
-                                    : 0.1,
-                                scale:
-                                  selectedChain === chains[1].id
-                                    ? [1, 1.1, 1]
-                                    : 1,
-                              }}
-                              transition={{
-                                duration:
-                                  selectedChain === chains[1].id ? 2 : 0.3,
-                                repeat:
-                                  selectedChain === chains[1].id ? Infinity : 0,
-                              }}
-                            />
-
-                            <div className="d-flex align-items-center gap-1">
-                              <motion.span
-                                className="position-relative d-flex align-items-center gap-1"
-                                style={{ fontSize: "14px", zIndex: 10 }}
-                                animate={{
-                                  scale:
-                                    selectedChain === chains[1].id
-                                      ? [1, 1.2, 1]
-                                      : 1,
-                                  rotate:
-                                    hoveredChain === chains[1].id
-                                      ? [0, 5, -5, 0]
-                                      : 0,
-                                }}
-                                transition={{
-                                  duration:
-                                    selectedChain === chains[1].id ? 1 : 0.5,
-                                  repeat:
-                                    selectedChain === chains[1].id
-                                      ? Infinity
-                                      : 0,
-                                }}
-                              >
-                                <img
-                                  src={chains[1].logo}
-                                  width={16}
-                                  height={16}
-                                  alt=""
-                                />
-                              </motion.span>
-                              <motion.div
-                                style={{
-                                  color: "#fff",
-                                  fontSize: "0.9rem",
-                                  letterSpacing: "0.025em",
-                                  zIndex: 1,
-                                }}
-                              >
-                                {chains[1]?.name}
-                              </motion.div>
-                            </div>
-
-                            {selectedChain === chains[1].id && (
-                              <motion.div
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
-                                style={{
-                                  width: "12px",
-                                  height: "12px",
-                                  background:
-                                    "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
-                                  marginTop: "-2px",
-                                  marginRight: "-2px",
-                                }}
-                              >
-                                <motion.div
-                                  className="rounded-circle bg-white"
-                                  style={{ width: "4px", height: "4px" }}
-                                  animate={{ scale: [1, 1.3, 1] }}
-                                  transition={{ duration: 1, repeat: Infinity }}
-                                />
-                              </motion.div>
-                            )}
-                          </button>
-                        </motion.div>
-                      </div>
-                      <div className="d-flex flex-column gap-1 w-100">
-                        {chains.slice(2, chains.length).map((chain, index) => (
-                          <motion.div
-                            key={chain.id}
-                            initial={{ opacity: 0, scale: 0, rotate: -90 }}
-                            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                            transition={{
-                              delay: index * 0.08,
-                              type: "spring",
-                              stiffness: 150,
-                            }}
-                            style={{ width: "100%" }}
-                          >
-                            <button
-                              // disabled={disable}
-                              onClick={() => {
-                                setSelectedChain(chain.id);
-                                setSocials(chain.socials);
-                                switchNetwork(chain.hex, chain.chainId);
-                              }}
-                              onMouseEnter={() => setHoveredChain(chain.id)}
-                              onMouseLeave={() => setHoveredChain(null)}
-                              className="btn p-2 position-relative overflow-hidden border-0 rounded font-unzialish"
-                              style={{
-                                width: "100%",
-                                height: "32px",
-                                background:
-                                  selectedChain === chain.id
-                                    ? "linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(236, 72, 153, 0.145) 50%, rgba(14, 25, 48, 0.8) 100%)"
-                                    : "linear-gradient(135deg, rgba(14, 25, 48, 0.4) 0%, rgba(10, 18, 36, 0.2) 100%)",
-                                backdropFilter: "blur(10px)",
-                                WebkitBackdropFilter: "blur(10px)",
-                                border:
-                                  selectedChain === chain.id
-                                    ? "1px solid rgba(59, 130, 246, 0.4)"
-                                    : "1px solid rgba(59, 130, 246, 0.2)",
-                                // transform:
-                                //   selectedChain === chain.id
-                                //     ? "scale(1.1)"
-                                //     : "scale(1)",
-                                transition: "all 0.3s ease",
-                              }}
-                              aria-label={`Select ${chain.name}`}
-                            >
-                              <motion.div
-                                className="position-absolute top-0 start-0 w-100 h-100"
-                                style={getChainGradient(chain)}
-                                animate={{
-                                  opacity:
-                                    selectedChain === chain.id
-                                      ? 0.3
-                                      : hoveredChain === chain.id
-                                      ? 0.2
-                                      : 0.1,
-                                  scale:
-                                    selectedChain === chain.id
-                                      ? [1, 1.1, 1]
-                                      : 1,
-                                }}
-                                transition={{
-                                  duration:
-                                    selectedChain === chain.id ? 2 : 0.3,
-                                  repeat:
-                                    selectedChain === chain.id ? Infinity : 0,
-                                }}
-                              />
-
-                              <div className="d-flex align-items-center gap-1">
-                                <motion.span
-                                  className="position-relative d-flex align-items-center gap-1"
-                                  style={{ fontSize: "14px", zIndex: 10 }}
-                                  animate={{
-                                    scale:
-                                      selectedChain === chain.id
-                                        ? [1, 1.2, 1]
-                                        : 1,
-                                    rotate:
-                                      hoveredChain === chain.id
-                                        ? [0, 5, -5, 0]
-                                        : 0,
-                                  }}
-                                  transition={{
-                                    duration:
-                                      selectedChain === chain.id ? 1 : 0.5,
-                                    repeat:
-                                      selectedChain === chain.id ? Infinity : 0,
-                                  }}
-                                >
-                                  <img
-                                    src={chain.logo}
-                                    width={16}
-                                    height={16}
-                                    alt=""
-                                  />
-                                </motion.span>
-                                <motion.div
-                                  style={{
-                                    color: "#fff",
-                                    fontSize: "0.9rem",
-                                    letterSpacing: "0.025em",
-                                    zIndex: 1,
-                                  }}
-                                >
-                                  {chain?.name}
-                                </motion.div>
-                              </div>
-
-                              {selectedChain === chain.id && (
-                                <motion.div
-                                  initial={{ opacity: 0, scale: 0 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  className="position-absolute top-0 end-0 rounded-circle d-flex align-items-center justify-content-center"
-                                  style={{
-                                    width: "12px",
-                                    height: "12px",
-                                    background:
-                                      "linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8))",
-                                    marginTop: "-2px",
-                                    marginRight: "-2px",
-                                  }}
-                                >
-                                  <motion.div
-                                    className="rounded-circle bg-white"
-                                    style={{ width: "4px", height: "4px" }}
-                                    animate={{ scale: [1, 1.3, 1] }}
-                                    transition={{
-                                      duration: 1,
-                                      repeat: Infinity,
-                                    }}
-                                  />
-                                </motion.div>
-                              )}
-                            </button>
-                          </motion.div>
-                        ))}
                       </div>
                     </div>
                   </motion.div>
@@ -1712,7 +1266,7 @@ const BattlePopup = ({
                   {isConnected &&
                     coinbase &&
                     email &&
-                    (chainId === 204 || chainId === 56) &&
+                    chainId === 56 &&
                     fightInfo && (
                       <button
                         className="fantasy-btn font-abaddon text-white d-flex align-items-center justify-content-center gap-2"
@@ -1733,7 +1287,7 @@ const BattlePopup = ({
                   {isConnected &&
                     coinbase &&
                     email &&
-                    (chainId === 204 || chainId === 56) &&
+                    chainId === 56 &&
                     !fightInfo && (
                       <button
                         className="fantasy-btn font-abaddon text-white"
@@ -1767,11 +1321,15 @@ const BattlePopup = ({
                         className={`player-img ${
                           selectedPlayer.id === item.id && "player-img-active"
                         } ${
-                         fightInfo && fightInfo.win && fightInfo.fighter.id === item.id
+                          fightInfo &&
+                          fightInfo.win &&
+                          fightInfo.fighter.id === item.id
                             ? "player-img-win"
                             : ""
                         } ${
-                         fightInfo && !fightInfo.win && fightInfo.fighter.id === item.id
+                          fightInfo &&
+                          !fightInfo.win &&
+                          fightInfo.fighter.id === item.id
                             ? "player-img-lose"
                             : ""
                         }`}
