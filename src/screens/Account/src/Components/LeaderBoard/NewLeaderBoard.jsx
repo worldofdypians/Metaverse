@@ -180,7 +180,7 @@ const NewLeaderBoard = ({
   // useEffect(() => {
   //   setAllData(allBnbData);
   // }, []);
-
+  console.log(allVictionData);
   return (
     <>
       <div
@@ -840,7 +840,7 @@ const NewLeaderBoard = ({
                             <div className="position-relative">
                               <span className="d-flex align-items-center text-sm position-absolute p-2 gap-2 text-white">
                                 <RefreshIcon fontSize="small" />
-                                Updates every 5 minutes
+                                Updates every 1 min
                               </span>
                               <span className="top100-text">
                                 {" "}
