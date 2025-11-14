@@ -944,6 +944,40 @@ function Dashboard({
 
   const LEADERBOARD_CACHE_MS = 5 * 60 * 1000;
 
+  // Calculate milliseconds until 00:30 UTC
+  const getMillisecondsUntil0030UTC = () => {
+    const now = new Date();
+    
+    // Create target time for 00:30 UTC today
+    const targetToday = new Date(Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate(),
+      0, // hour
+      30, // minute
+      0, // second
+      0 // millisecond
+    ));
+    
+    // If current time is before 00:30 UTC today, use today's target
+    // Otherwise, use tomorrow's 00:30 UTC
+    if (now.getTime() < targetToday.getTime()) {
+      return targetToday.getTime() - now.getTime();
+    } else {
+      // Calculate until 00:30 UTC tomorrow
+      const targetTomorrow = new Date(Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate() + 1,
+        0, // hour
+        30, // minute
+        0, // second
+        0 // millisecond
+      ));
+      return targetTomorrow.getTime() - now.getTime();
+    }
+  };
+
   const isQueryFresh = (query) =>
     Boolean(query?.data && query?.dataUpdatedAt) &&
     Date.now() - query.dataUpdatedAt < LEADERBOARD_CACHE_MS;
@@ -1016,10 +1050,11 @@ function Dashboard({
   const previousWinnersCoreQuery = useReactQuery({
     queryKey: ["previousWinnersCore"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersCoreVersionRef.current;
       if (!version || version === 0) {
@@ -1108,8 +1143,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -1214,15 +1250,15 @@ function Dashboard({
     setDailyRecordsCore(leaderboard);
     fillRecordsCore(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersCore(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerCore(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerCore(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -1252,10 +1288,11 @@ function Dashboard({
   const previousWinnersVictionQuery = useReactQuery({
     queryKey: ["previousWinnersViction"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersVictionVersionRef.current;
       if (!version || version === 0) {
@@ -1344,8 +1381,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -1451,15 +1489,15 @@ function Dashboard({
     setDailyRecordsViction(leaderboard);
     fillRecordsViction(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersViction(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerViction(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerViction(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -1489,10 +1527,11 @@ function Dashboard({
   const previousWinnersMantaQuery = useReactQuery({
     queryKey: ["previousWinnersManta"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersMantaVersionRef.current;
       if (!version || version === 0) {
@@ -1581,8 +1620,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -1687,15 +1727,15 @@ function Dashboard({
     setDailyRecordsManta(leaderboard);
     fillRecordsManta(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersManta(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerManta(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerManta(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -1725,10 +1765,11 @@ function Dashboard({
   const previousWinnersSeiQuery = useReactQuery({
     queryKey: ["previousWinnersSei"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersSeiVersionRef.current;
       if (!version || version === 0) {
@@ -1817,8 +1858,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -1923,15 +1965,15 @@ function Dashboard({
     setDailyRecordsSei(leaderboard);
     fillRecordsSei(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersSei(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerSei(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerSei(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -1962,10 +2004,11 @@ function Dashboard({
   const previousWinnersTaraxaQuery = useReactQuery({
     queryKey: ["previousWinnersTaraxa"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersTaraxaVersionRef.current;
       if (!version || version === 0) {
@@ -2054,8 +2097,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -2161,15 +2205,15 @@ function Dashboard({
     setDailyRecordsTaraxa(leaderboard);
     fillRecordsTaraxa(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersTaraxa(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerTaraxa(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerTaraxa(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -2199,10 +2243,11 @@ function Dashboard({
   const previousWinnersBaseQuery = useReactQuery({
     queryKey: ["previousWinnersBase"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersBaseVersionRef.current;
       if (!version || version === 0) {
@@ -2291,8 +2336,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -2397,15 +2443,15 @@ function Dashboard({
     setDailyRecordsBase(leaderboard);
     fillRecordsBase(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersBase(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerBase(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerBase(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -2435,10 +2481,11 @@ function Dashboard({
   const previousWinnersVanarQuery = useReactQuery({
     queryKey: ["previousWinnersVanar"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersVanarVersionRef.current;
       if (!version || version === 0) {
@@ -2527,8 +2574,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -2635,15 +2683,15 @@ function Dashboard({
     setDailyRecordsVanar(leaderboard);
     fillRecordsVanar(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersVanar(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerVanar(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerVanar(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -2673,10 +2721,11 @@ function Dashboard({
   const previousWinnersTaikoQuery = useReactQuery({
     queryKey: ["previousWinnersTaiko"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersTaikoVersionRef.current;
       if (!version || version === 0) {
@@ -2765,8 +2814,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -2871,15 +2921,15 @@ function Dashboard({
     setDailyRecordsTaiko(leaderboard);
     fillRecordsTaiko(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersTaiko(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerTaiko(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerTaiko(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -2909,10 +2959,11 @@ function Dashboard({
   const previousWinnersMatQuery = useReactQuery({
     queryKey: ["previousWinnersMat"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersMatVersionRef.current;
       if (!version || version === 0) {
@@ -3001,8 +3052,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -3107,15 +3159,15 @@ function Dashboard({
     setDailyRecordsMat(leaderboard);
     fillRecordsMat(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersMat(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerMat(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerMat(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -3145,10 +3197,11 @@ function Dashboard({
   const previousWinnersSkaleQuery = useReactQuery({
     queryKey: ["previousWinnersSkale"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersSkaleVersionRef.current;
       if (!version || version === 0) {
@@ -3237,8 +3290,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -3343,15 +3397,15 @@ function Dashboard({
     setDailyRecordsSkale(leaderboard);
     fillRecordsSkale(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersSkale(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
     );
 
-    // if (userId) {
-    //   await fetchDailyRecordsAroundPlayerSkale(forceRefresh);
-    // }
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerSkale(forceRefresh);
+    }
 
     if (!useCache) {
       setTimeout(() => {
@@ -3382,10 +3436,11 @@ function Dashboard({
   const previousWinnersStarQuery = useReactQuery({
     queryKey: ["previousWinnersStar"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersStarVersionRef.current;
       if (!version || version === 0) {
@@ -3647,8 +3702,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -3734,7 +3790,7 @@ function Dashboard({
     setStarRecords(leaderboard);
     fillRecordsStar(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersStar(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
@@ -3806,10 +3862,11 @@ function Dashboard({
   const previousWinnersStarWeeklyQuery = useReactQuery({
     queryKey: ["previousWinnersStarWeekly"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersStarWeeklyVersionRef.current;
       if (!version || version === 0) {
@@ -3901,8 +3958,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -3962,7 +4020,7 @@ function Dashboard({
     setStarRecordsWeekly(leaderboard);
     fillRecordsStarWeekly(leaderboard);
 
-    const version = parseInt(data?.version, 10);
+    const version = parseInt(data?.version);
     await fetchPreviousWinnersStarWeekly(
       Number.isNaN(version) ? 0 : version,
       forceRefresh
@@ -4133,10 +4191,11 @@ function Dashboard({
   const previousWinnersDailyQuery = useReactQuery({
     queryKey: ["previousWinnersDaily"],
     enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    retry: false,
     queryFn: async () => {
       const version = previousWinnersDailyVersionRef.current;
       if (!version || version === 0) {
@@ -4325,8 +4384,9 @@ function Dashboard({
           return;
         }
       } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
     }
 
@@ -4392,9 +4452,9 @@ function Dashboard({
         forceRefresh
       );
 
-      // if (userId) {
-      //   await fetchDailyRecordsAroundPlayer(forceRefresh, leaderboard);
-      // }
+      if (userId) {
+        await fetchDailyRecordsAroundPlayer(forceRefresh, leaderboard);
+      }
     } catch (error) {
       console.error(error);
       fillRecords([]);
