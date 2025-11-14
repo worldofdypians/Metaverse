@@ -180,7 +180,7 @@ const NewLeaderBoard = ({
   // useEffect(() => {
   //   setAllData(allBnbData);
   // }, []);
-  console.log(allVictionData);
+
   return (
     <>
       <div

@@ -1486,7 +1486,7 @@ function Dashboard({
         force: forceRefresh,
       }
     );
-    console.log(error, fromCache, data);
+
     if ((error && !fromCache) || !data) {
       fillRecordsViction([]);
       setPrevDataViction(placeholderplayerData);
