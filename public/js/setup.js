@@ -165,7 +165,7 @@ window.config = {
   subscription_mat_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
   subscription_sei_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
   subscription_taraxa_address: "0xdbE31B4f2a5921Ec2d0d739E3c9bcA985C5A18b0",
-  native_bnb_address: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+  native_bnb_address: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
   // default_gasprice_gwei: 60,
   default_gas_amount: 1200000,
 
@@ -194,14 +194,13 @@ window.config = {
   otcpool2dynamic_address: "0x96718b893aef64c8ff19df30c920aa6b4669984a", //30%
   otcwoddynamic_address: "0xf0a43b4549792f6116564a4253cb685d983e90fd", //50%
   otccliff_address: "0x14ad9288a2607ed872364b2a34506242c49ae741", //30%
-  otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220", 
-  otc1cliff4_address: "0xd3875933818828fefaC0A3cf9C5E45D64B48401C", 
-
+  otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220",
+  otc1cliff4_address: "0xd3875933818828fefaC0A3cf9C5E45D64B48401C",
+  roundotc_vesting_address: "0x2a743e768fb02efb66afb9b0236dded09468d5ba",
 
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
   kol2_address: "0xc653D1AA94FD6A09056FC6de475305B4f5Fbe0C6",
-  
 
   advisors_address: "0x255b1C2e3f2FF180d45f1e055224d97b23079513",
   ido_address: "0x9f149D2d422a12Ba34bee11473863625B9793B66",
