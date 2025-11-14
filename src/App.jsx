@@ -221,8 +221,9 @@ const useSharedData = () => {
   return useReactQuery({
     queryKey: ["nfts"],
     queryFn: fetchAllNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 6 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -241,8 +242,9 @@ const useSharedDataListedNfts = () => {
   return useReactQuery({
     queryKey: ["recentListedNFTS"],
     queryFn: fetchListedNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 6 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -290,8 +292,9 @@ const useSharedDataLatest20BoughtNFTs = () => {
   return useReactQuery({
     queryKey: ["latestBoughtNFTs"],
     queryFn: fetchLatest20BoughtNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 6 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -310,8 +313,9 @@ const useSharedDataCawsNfts = () => {
   return useReactQuery({
     queryKey: ["cawsnfts"],
     queryFn: fetchAllCawsNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 6 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -330,8 +334,9 @@ const useSharedDataWodNfts = () => {
   return useReactQuery({
     queryKey: ["wodnfts"],
     queryFn: fetchAllWodNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 6 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -350,8 +355,9 @@ const useSharedDataTimepieceNfts = () => {
   return useReactQuery({
     queryKey: ["timepiecenfts"],
     queryFn: fetchAllTimepieceNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 6 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -369,8 +375,9 @@ const useSharedListedNtsAsc = () => {
   return useReactQuery({
     queryKey: ["payment_priceType"],
     queryFn: getListedNtsAsc,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 6 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -387,8 +394,9 @@ const useSharedDataListedByUser = (wallet) => {
   return useReactQuery({
     queryKey: ["seller", wallet],
     queryFn: () => getAllnftsListed(wallet),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 6 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!wallet,

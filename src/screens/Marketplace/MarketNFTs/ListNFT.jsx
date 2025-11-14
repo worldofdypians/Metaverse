@@ -45,8 +45,9 @@ const useSharedDataCurrentNft = (nftId, nftAddress) => {
   return useReactQuery({
     queryKey: ["nftData", nftId, nftAddress],
     queryFn: () => fetchCurrentNft(nftId, nftAddress),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 10 * 60 * 1000, // 10 minutes
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!nftId && !!nftAddress,
@@ -107,8 +108,9 @@ const useSharedDataLatest20BoughtNFTS = (nftId, nftAddress) => {
   return useReactQuery({
     queryKey: ["nftAddress_tokenId", nftId, nftAddress],
     queryFn: () => getLatest20BoughtNFTS(nftId, nftAddress),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 10 * 60 * 1000, // 10 minutes
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!nftId && !!nftAddress,
