@@ -3562,7 +3562,7 @@ function AppRoutes() {
   };
   const handleConnectionMatchId = async (method) => {
     await loginMatchain(method).then(() => {
-      // localStorage.setItem("logout", "false");
+      
       setWalletModal(false);
       console.log("Logged in with method:", method);
       window.WALLET_TYPE = "matchId";

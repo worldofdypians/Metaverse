@@ -56,6 +56,8 @@ import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
 import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
+import BattlePopup from "../../../../../components/BattlePopup/BattlePopup";
+import CloseBattlePopup from "../../../../../components/BattlePopup/CloseBattlePopup";
 import { useUser } from "../../../../../redux/hooks/useWallet";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserProgress } from "../../../../../redux/slices/userSlice";
@@ -297,10 +299,12 @@ function Dashboard({
   const [loading, setLoading] = useState(false);
   const [showDailyQuestion, setShowDailyQuestion] = useState(false);
   const [booster, setBooster] = useState(false);
+  const [battlePopup, setbattlePopup] = useState(false);
 
   const [tooltip, setTooltip] = useState(false);
 
   const [closePopup, setClosePopup] = useState(false);
+  const [closeBattle, setcloseBattle] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -6548,8 +6552,6 @@ function Dashboard({
     booster,
   ]);
 
-  const logoutItem = localStorage.getItem("logout");
-
   useEffect(() => {
     if (email && userWallet) {
       getAllSkaleChests(email);
@@ -6691,9 +6693,12 @@ function Dashboard({
           <>
             <MyProfile
               onOpenBooster={() => setBooster(true)}
+              openBattlePopup={() => {
+                setbattlePopup(true);
+              }}
+              // battleCompleted={false}
               openKickstarter={openKickstarter}
               aiQuestionCompleted={aiQuestionCompleted}
-              greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               isgoldenPassActive={goldenPassRemainingTime}
               userActiveEvents={userTreasureHuntStats.userEvents}
@@ -7310,6 +7315,37 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
+        {(battlePopup || hashValue === "#arena-of-rage") && (
+          <div className={`package-popup-wrapper2 `}>
+            <BattlePopup
+              closePopup={closeBattle}
+              setClosePopup={setcloseBattle}
+              publicClient={publicClient}
+              walletClient={walletClient}
+              onClose={() => {
+                setbattlePopup(false);
+                html.classList.remove("hidescroll");
+                window.location.hash = "";
+              }}
+              isOpen={battlePopup || hashValue === "#arena-of-rage"}
+              coinbase={coinbase}
+              chainId={chainId}
+              handleSwitchNetwork={handleSwitchNetwork}
+              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+              network_matchain={network_matchain}
+              isConnected={isConnected}
+              email={email}
+              address={userWallet}
+              onConnectWallet={() => {
+                setbattlePopup(false);
+                handleConnect();
+              }}
+              openedRoyaltyChest={[]}
+            />
+          </div>
+        )}
+
         {(showDailyQuestion || hashValue === "#daily-question") && (
           // <OutsideClickHandler
           //   onOutsideClick={() => setShowDailyQuestion(false)}
@@ -7547,6 +7583,7 @@ function Dashboard({
           <OutsideClickHandler onOutsideClick={() => setClosePopup(false)}>
             <ClosePopup
               onClose={() => {
+                setbattlePopup(false);
                 setSuspenseSound(true);
                 setShowDailyQuestion(false);
                 suspenseMusicRef.current?.pause();
@@ -7559,6 +7596,18 @@ function Dashboard({
               }}
               setClosePopup={setClosePopup}
             />
+          </OutsideClickHandler>
+        )}
+        {closeBattle && (
+          <OutsideClickHandler onOutsideClick={() => setcloseBattle(false)}>
+            <div className="package-popup-wrapper2">
+              <CloseBattlePopup
+                onClose={() => {
+                  setbattlePopup(false);
+                }}
+                setClosePopup={setcloseBattle}
+              />
+            </div>
           </OutsideClickHandler>
         )}
         {(portfolio || hashValue === "#portfolio") && (
