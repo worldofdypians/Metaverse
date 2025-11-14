@@ -947,33 +947,37 @@ function Dashboard({
   // Calculate milliseconds until 00:30 UTC
   const getMillisecondsUntil0030UTC = () => {
     const now = new Date();
-    
+
     // Create target time for 00:30 UTC today
-    const targetToday = new Date(Date.UTC(
-      now.getUTCFullYear(),
-      now.getUTCMonth(),
-      now.getUTCDate(),
-      0, // hour
-      30, // minute
-      0, // second
-      0 // millisecond
-    ));
-    
+    const targetToday = new Date(
+      Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        0, // hour
+        30, // minute
+        0, // second
+        0 // millisecond
+      )
+    );
+
     // If current time is before 00:30 UTC today, use today's target
     // Otherwise, use tomorrow's 00:30 UTC
     if (now.getTime() < targetToday.getTime()) {
       return targetToday.getTime() - now.getTime();
     } else {
       // Calculate until 00:30 UTC tomorrow
-      const targetTomorrow = new Date(Date.UTC(
-        now.getUTCFullYear(),
-        now.getUTCMonth(),
-        now.getUTCDate() + 1,
-        0, // hour
-        30, // minute
-        0, // second
-        0 // millisecond
-      ));
+      const targetTomorrow = new Date(
+        Date.UTC(
+          now.getUTCFullYear(),
+          now.getUTCMonth(),
+          now.getUTCDate() + 1,
+          0, // hour
+          30, // minute
+          0, // second
+          0 // millisecond
+        )
+      );
       return targetTomorrow.getTime() - now.getTime();
     }
   };
@@ -1079,6 +1083,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1100,6 +1105,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -1317,6 +1323,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1338,6 +1345,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -1556,6 +1564,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1577,6 +1586,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -1794,6 +1804,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -1815,6 +1826,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2033,6 +2045,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -2054,6 +2067,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2272,6 +2286,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -2293,6 +2308,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2510,6 +2526,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -2531,6 +2548,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2750,6 +2768,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -2771,6 +2790,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -2988,6 +3008,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -3009,6 +3030,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -3226,6 +3248,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -3247,6 +3270,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
@@ -4220,6 +4244,7 @@ function Dashboard({
     enabled: false,
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //LEADERBOARD_CACHE_MS,
     queryFn: async () => {
@@ -4241,6 +4266,7 @@ function Dashboard({
     enabled: Boolean(userId),
     staleTime: LEADERBOARD_CACHE_MS,
     cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
     refetchOnWindowFocus: false,
     refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
     queryFn: async () => {
