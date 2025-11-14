@@ -98,10 +98,9 @@ window.config = {
   daily_bonus_mat_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_sei_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_vanar_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
-
   daily_question_bnb_address: "0xE7DA7750f4604cdcA598726bF6631A9A463A8Ba9",
   daily_question_opbnb_address: "0xfcCEC27EeAe7B2497A430459A1b3D3E7B5F96087",
-
+  single_strike_address: "0xe851e377C676C43d04dd4AEd4808BcC00642Bd41",
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
 
   weth_address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7", // LOWERCASE! avax
@@ -194,11 +193,11 @@ window.config = {
   otccliff_address: "0x14ad9288a2607ed872364b2a34506242c49ae741", //30%
   otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220",
   otc1cliff4_address: "0xd3875933818828fefaC0A3cf9C5E45D64B48401C",
-
+  roundotc_vesting_address: "0x2a743e768fb02efb66afb9b0236dded09468d5ba",
+  
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
   kol2_address: "0xc653D1AA94FD6A09056FC6de475305B4f5Fbe0C6",
-  single_strike_address: "0xe851e377C676C43d04dd4AEd4808BcC00642Bd41",
 
   advisors_address: "0x255b1C2e3f2FF180d45f1e055224d97b23079513",
   ido_address: "0x9f149D2d422a12Ba34bee11473863625B9793B66",

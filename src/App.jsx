@@ -1,5 +1,5 @@
 // App.jsx
-import React, { useEffect, useState, Suspense } from "react";
+import React, { useEffect, useState, useRef, Suspense } from "react";
 import { useMemoryOptimization } from "./hooks/useMemoryOptimization";
 import MemoryMonitor from "./components/MemoryMonitor/MemoryMonitor";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -106,6 +106,7 @@ import {
 } from "./redux/slices/walletSlice";
 import { wagmiClient } from "./wagmiConnectors.js";
 import { CandlelightCursor } from "./components/FestiveElements/CandleLightCursor.jsx";
+import { fetchStarMonthlyLeaderboard } from "./services/leaderboardApi";
 
 const Marketplace = React.lazy(() =>
   import("./screens/Marketplace/Marketplace")
@@ -220,8 +221,9 @@ const useSharedData = () => {
   return useReactQuery({
     queryKey: ["nfts"],
     queryFn: fetchAllNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes (renamed from cacheTime)
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -240,8 +242,9 @@ const useSharedDataListedNfts = () => {
   return useReactQuery({
     queryKey: ["recentListedNFTS"],
     queryFn: fetchListedNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -289,8 +292,9 @@ const useSharedDataLatest20BoughtNFTs = () => {
   return useReactQuery({
     queryKey: ["latestBoughtNFTs"],
     queryFn: fetchLatest20BoughtNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -309,8 +313,9 @@ const useSharedDataCawsNfts = () => {
   return useReactQuery({
     queryKey: ["cawsnfts"],
     queryFn: fetchAllCawsNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -329,8 +334,9 @@ const useSharedDataWodNfts = () => {
   return useReactQuery({
     queryKey: ["wodnfts"],
     queryFn: fetchAllWodNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -349,8 +355,9 @@ const useSharedDataTimepieceNfts = () => {
   return useReactQuery({
     queryKey: ["timepiecenfts"],
     queryFn: fetchAllTimepieceNFTs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    // staleTime: 5 * 60 * 1000, // 5 minutes
+    // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -368,8 +375,9 @@ const useSharedListedNtsAsc = () => {
   return useReactQuery({
     queryKey: ["payment_priceType"],
     queryFn: getListedNtsAsc,
-    // staleTime: 5 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
     // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
@@ -386,8 +394,9 @@ const useSharedDataListedByUser = (wallet) => {
   return useReactQuery({
     queryKey: ["seller", wallet],
     queryFn: () => getAllnftsListed(wallet),
-    // staleTime: 5 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
     // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!wallet,
@@ -651,6 +660,8 @@ function AppRoutes() {
 
   const [allStarData, setAllStarData] = useState({});
   const [starRecords, setStarRecords] = useState([]);
+  const loadStarRecordsFetchingPromiseRef = useRef(null);
+  const loadStarRecordsFetchedRef = useRef(false);
 
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
 
@@ -987,9 +998,6 @@ function AppRoutes() {
     },
   ];
 
-  const backendApi =
-    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
-
   const fillRecordsStar = (itemData) => {
     if (itemData.length === 0) {
       setStarRecords(placeholderplayerData);
@@ -998,19 +1006,7 @@ function AppRoutes() {
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setStarRecords(finalData);
-    }
-  };
-
-  const fetchRecordsStar = async () => {
-    const data = {
-      StatisticName: "GlobalStarMonthlyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-
-    // setStarRecords(result.data.data.leaderboard);
-    fillRecordsStar(result.data.data.leaderboard);
+    } else setStarRecords(itemData);
   };
 
   const treasureHuntEvents = [
@@ -4641,7 +4637,64 @@ function AppRoutes() {
     fetchTotalWodHolders();
     getTotalSupply();
     fetchBSCCoinPrice();
-    fetchRecordsStar();
+    let isMounted = true;
+
+    const loadStarRecords = async () => {
+      // Check if we already have the data loaded
+      if (loadStarRecordsFetchedRef.current) {
+        return;
+      }
+
+      // If there's already a fetch in progress, wait for it
+      if (loadStarRecordsFetchingPromiseRef.current) {
+        try {
+          await loadStarRecordsFetchingPromiseRef.current;
+          // After waiting, check if component is still mounted
+          if (!isMounted) {
+            return;
+          }
+          // If data was already loaded, return early
+          if (loadStarRecordsFetchedRef.current) {
+            return;
+          }
+        } catch (error) {
+          // If the previous fetch failed, continue with a new fetch
+          console.error("Previous fetch failed, retrying:", error);
+        }
+      }
+
+      // Start a new fetch
+      const fetchPromise = (async () => {
+        try {
+          const leaderboard = await fetchStarMonthlyLeaderboard();
+          if (!isMounted) {
+            return;
+          }
+          fillRecordsStar(leaderboard);
+          loadStarRecordsFetchedRef.current = true;
+        } catch (error) {
+          console.error("Failed to load star leaderboard", error);
+          if (isMounted) {
+            fillRecordsStar([]);
+          }
+        } finally {
+          // Clear the promise ref if this is still the current fetch
+          if (loadStarRecordsFetchingPromiseRef.current === fetchPromise) {
+            loadStarRecordsFetchingPromiseRef.current = null;
+          }
+        }
+      })();
+
+      loadStarRecordsFetchingPromiseRef.current = fetchPromise;
+      await fetchPromise;
+    };
+
+    loadStarRecords();
+    return () => {
+      isMounted = false;
+      // Clear the promise ref on unmount
+      loadStarRecordsFetchingPromiseRef.current = null;
+    };
   }, []);
 
   useEffect(() => {
@@ -5188,6 +5241,29 @@ function AppRoutes() {
 
             <Route
               exact
+              path="/roundotc-vesting"
+              element={
+                <Whitelist
+                  isEOA={isEOA}
+                  chainId={networkId}
+                  isConnected={isConnected}
+                  handleConnection={() => {
+                    setWalletId("connect");
+                    setWalletModal(true);
+                  }}
+                  coinbase={coinbase}
+                  type="roundotc-vesting"
+                  network_matchain={chain}
+                  walletClient={walletClient}
+                  publicClient={publicClient}
+                  wagmiWalletClient={wagmiWalletClient}
+                  wagmiPublicClient={wagmiPublicClient}
+                />
+              }
+            />
+
+            <Route
+              exact
               path="/cliff-otc2"
               element={
                 <Whitelist
@@ -5397,7 +5473,6 @@ function AppRoutes() {
                   type="okx"
                   data={data}
                   syncStatus={syncStatus}
-
                 />
               }
             />
