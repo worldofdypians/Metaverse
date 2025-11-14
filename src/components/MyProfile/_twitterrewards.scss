@@ -1,7 +1,26 @@
 .twitter-popup {
-  background: #0f1239 !important;
-  width: 50% !important;
+  // background: #0f1239 !important;
+  width: 70% !important;
   min-height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://cdn.worldofdypians.com/wod/twitterBackground.svg') !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 1500px) {
+    width: 80% !important; 
+  }
+  @media screen and (max-width: 1200px) {
+    width: 100% !important; 
+  }
+}
+
+.twitter-item-width{
+  width: 75%;
+   @media screen and (max-width: 786px) {
+    width: 100% !important; 
+  }
 }
 
 .connect-twitter-popup {
@@ -62,10 +81,10 @@
 }
 
 .twitter-task-item {
-  background: linear-gradient(135deg, #0a0a2a, #141444, #1f1f55) !important;
+  border-radius: 10px;
   border: 1px solid #2a2454;
+  background: linear-gradient(180deg, #1a1640 0%, #0f0d28 100%);
   transition: all 0.25s ease;
-  border-radius: 12px;
 }
 
 .twitter-username {
@@ -102,11 +121,11 @@
 }
 
 .twitter-tasks-container {
-  max-height: 410px;
+  height: 410px;
   overflow-y: scroll;
 
   @media screen and (max-width: 786px) {
-    max-height: 285px;
+    height: 285px;
   }
 }
 
@@ -115,8 +134,9 @@
 }
 
 .twitter-tab-container-1 {
-  background: linear-gradient(135deg, #0a0a2a, #141444, #1f1f55) !important;
+  border-radius: 14px;
   border: 1px solid #2a2454;
+  background: linear-gradient(180deg, #1a1640 0%, #0f0d28 100%);
   transition: all 0.25s ease;
 }
 
@@ -147,7 +167,8 @@
 .task-tab-bg {
   position: absolute;
   border-radius: 12px;
-  background: blue;
+  border: 0.909px solid rgba(0, 0, 0, 0);
+  background: linear-gradient(180deg, #1e90ff 0%, #06c 100%);
   transition: all 0.25s ease-in-out;
   z-index: 0;
   height: 100%;
@@ -187,7 +208,7 @@
   background: #1a1640;
   transition: all 0.25s;
   cursor: pointer;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.80);
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
@@ -210,8 +231,6 @@
   line-height: normal;
 }
 
-
-
 .icon-color {
   color: #fff !important;
 }
@@ -230,15 +249,9 @@
 }
 
 .star-amount-container {
-  background: #433729;
-  border-radius: 8px;
-  border: 1px solid #ffd700;
-  min-height: 30px;
 }
 
 .stars-completed {
-  background: rgba(23, 133, 242, 0.6) !important;
-  border: 1px solid #1785f2 !important;
   span {
     color: #fff !important;
   }
@@ -403,20 +416,92 @@
   line-height: 10px; /* 100% */
 }
 
-
-
-
-.tweet-title-holder{
+.tweet-title-holder {
   border-radius: 10px;
   position: relative;
-border: 1px solid #2A2454;
-background: #0F0D28;
-transition: all .25s;
+  border: 1px solid #2a2454;
+  background: #0f0d28;
+  transition: all 0.25s;
 }
 
-.tweet-title-holder:hover{
-background: #1a1640;
-border: 1px solid #1e90ff66;
+.tweet-title-holder:hover {
+  background: #1a1640;
+  border: 1px solid #1e90ff66;
+}
+
+.disconnect-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  border-radius: 10px;
+  border: 1.818px solid #2a2454;
+  background: linear-gradient(180deg, #1a1640 0%, #0f0d28 100%);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  // background: #121235;
+  // border-radius: 12px;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  width: 25%;
+  pointer-events: auto !important;
+}
+
+.disconnect-icon-holder {
+  border-radius: 14px;
+  border: 0.909px solid rgba(255, 215, 0, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.2) 0%,
+    rgba(255, 165, 0, 0.2) 100%
+  );
+}
+
+.disconnect-title {
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px; /* 155.556% */
+}
+
+.disconnect-desc {
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  font-family: Arial;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22.75px; /* 162.5% */
+}
+
+.cancel-btn {
+  border-radius: 8px;
+  border: 0.909px solid #2a2454;
+  background: #1a1640;
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+}
+
+.disconnect-btn {
+  border-radius: 8px;
+  border: 0.909px solid rgba(251, 44, 54, 0.4);
+  background: rgba(251, 44, 54, 0.3);
+  color: #ffa2a2;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+}
+
+.pointer-none {
+  pointer-events: none !important;
 }
 
 // a39990

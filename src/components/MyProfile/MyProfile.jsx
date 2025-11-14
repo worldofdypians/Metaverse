@@ -145,6 +145,9 @@ const MyProfile = ({
   const [twitterCooldown, setTwitterCooldown] = useState({});
   const [taskCount, setTaskCount] = useState(0);
 
+
+  const taskLength = localStorage.getItem("taskLength")
+
   const checkTwitter = async () => {
     await axios
       .get(`https://api.worldofdypians.com/api/website-account/${address}`)
@@ -1873,7 +1876,6 @@ const MyProfile = ({
         </div>
       </div>
       {popup && (
-        <OutsideClickHandler onOutsideClick={() => setPopup(false)}>
           <TwitterRewards
           taskCount={taskCount}
             tasks={twitterTasks}
@@ -1886,7 +1888,6 @@ const MyProfile = ({
             email={email}
             onConnectWallet={onConnectWallet}
           />
-        </OutsideClickHandler>
       )}
       {connectPopup && (
         <OutsideClickHandler onOutsideClick={() => setConnectPopup(false)}>
