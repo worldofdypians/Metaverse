@@ -19,7 +19,11 @@ import { parseEther, formatEther } from "viem";
 import { switchNetworkWagmi } from "../../../utils/wagmiSwitchChain";
 import MakeOffer from "./MakeOffer";
 import { useQuery as useReactQuery } from "@tanstack/react-query";
-import { useMarketplace, useNFTApprovalStatus, useGetAllOffers } from "../../../hooks/useMarketplace";
+import {
+  useMarketplace,
+  useNFTApprovalStatus,
+  useGetAllOffers,
+} from "../../../hooks/useMarketplace";
 import { readContract } from "@wagmi/core";
 import { wagmiClient } from "../../../wagmiConnectors";
 
@@ -42,8 +46,9 @@ const useSharedDataCurrentNft = (nftId, nftAddress) => {
   return useReactQuery({
     queryKey: ["nftData", nftId, nftAddress],
     queryFn: () => fetchCurrentNft(nftId, nftAddress),
-    // staleTime: 5 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
     // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!nftId && !!nftAddress,
@@ -105,8 +110,9 @@ const useSharedDataLatest20BoughtNFTS = (nftId, nftAddress) => {
   return useReactQuery({
     queryKey: ["nftAddress_tokenId", nftId, nftAddress],
     queryFn: () => getLatest20BoughtNFTS(nftId, nftAddress),
-    // staleTime: 5 * 60 * 1000,
+    // staleTime: 5 * 60 * 1000, // 5 minutes
     // cacheTime: 6 * 60 * 1000,
+    staleTime: 0,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!nftId && !!nftAddress,
@@ -124,7 +130,7 @@ const SingleNft = ({
   handleRefreshListing,
   favorites,
   handleSwitchChainGateWallet,
-  handleSwitchChainBinanceWallet, 
+  handleSwitchChainBinanceWallet,
   userWallet,
   ethTokenData,
   authToken,
@@ -160,11 +166,8 @@ const SingleNft = ({
     location.state?.type ? location.state?.type : false
   );
 
-
-
   const [IsListed, setIsListed] = useState(false);
   const [offerData, setofferData] = useState([]);
-
 
   const [buyloading, setbuyLoading] = useState(false); //buy
   const [sellLoading, setsellLoading] = useState(false); //sell
@@ -202,9 +205,6 @@ const SingleNft = ({
   const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
   const [myOffers, setmyOffers] = useState([]);
 
-  
-
-
   const override = {
     display: "block",
     margin: "auto",
@@ -213,8 +213,9 @@ const SingleNft = ({
 
   const switchNetwork = async (hexChainId, chain) => {
     // Extract chainId from hex or use chain number directly
-    const chainId = typeof chain === 'number' ? chain : parseInt(hexChainId, 16);
-    
+    const chainId =
+      typeof chain === "number" ? chain : parseInt(hexChainId, 16);
+
     try {
       await switchNetworkWagmi(chainId, chain, {
         handleSwitchNetwork: handleSwitchChain,
@@ -784,9 +785,9 @@ const SingleNft = ({
   // Check if NFT is approved using wagmi
   const getNFTAddressForType = (type) => {
     const typeMap = {
-      'caws': window.config.nft_caws_address,
-      'land': window.config.nft_land_address,
-      'timepiece': window.config.nft_timepiece_address,
+      caws: window.config.nft_caws_address,
+      land: window.config.nft_land_address,
+      timepiece: window.config.nft_timepiece_address,
     };
     return typeMap[type] || window.config.nft_caws_address;
   };
@@ -974,7 +975,7 @@ const SingleNft = ({
       setsellStatus("sell");
       setPurchaseStatus("Listing NFT in progress...");
       setPurchaseColor("#00FECF");
-      
+
       try {
         // Use wagmi for all wallets
         const hash = await listNFTContract(
@@ -987,7 +988,7 @@ const SingleNft = ({
 
         // Wait for transaction
         const receipt = await window.ethereum.request({
-          method: 'eth_getTransactionReceipt',
+          method: "eth_getTransactionReceipt",
           params: [hash],
         });
 
@@ -1029,7 +1030,7 @@ const SingleNft = ({
       setsellStatus("approve");
       setPurchaseStatus("Approving NFT for listing in progress..");
       setPurchaseColor("#00FECF");
-      
+
       try {
         // Use wagmi for approval - works for all wallets
         const hash = await approveNFTContract(nftAddress);
@@ -1140,7 +1141,7 @@ const SingleNft = ({
     setbuyLoading(true);
     setbuyStatus("buy");
     setPurchaseStatus("Buying NFT in progress..");
-    
+
     try {
       // Use wagmi for all wallets - works with MetaMask, Binance, Coinbase, etc.
       const hash = await buyNFTContract(
@@ -1198,10 +1199,10 @@ const SingleNft = ({
     setPurchaseColor("#00FECF");
     setPurchaseStatus("Unlisting your nft...");
     console.log("cancelling");
-    
+
     try {
       const price_address = "0x0000000000000000000000000000000000000000";
-      
+
       // Use wagmi for all wallets
       const hash = await cancelListingContract(
         nftAddress,
@@ -1215,7 +1216,7 @@ const SingleNft = ({
       setcancelStatus("success");
       setPurchaseColor("#00FECF");
       setPurchaseStatus("Nft successfully unlisted");
-      
+
       setTimeout(() => {
         setcancelStatus("");
         setPurchaseColor("#00FECF");
@@ -1226,7 +1227,7 @@ const SingleNft = ({
       setcancelStatus("failed");
       setPurchaseColor("#FF6232");
       setPurchaseStatus(e?.message || "Unlisting failed");
-      
+
       setTimeout(() => {
         setcancelStatus("");
         setPurchaseColor("");
@@ -1249,7 +1250,7 @@ const SingleNft = ({
 
     try {
       const price_address = "0x0000000000000000000000000000000000000000";
-      
+
       // Use wagmi for all wallets
       const hash = await updateListingContract(
         nftAddress,
@@ -1274,7 +1275,7 @@ const SingleNft = ({
       setPurchaseStatus("Price updated successfully.");
       setupdateLoading(false);
       setupdateStatus("success");
-      
+
       setTimeout(() => {
         setPurchaseColor("#00FECF");
         setPurchaseStatus("");
@@ -1285,7 +1286,7 @@ const SingleNft = ({
       setPurchaseStatus(e?.message || "Update failed");
       setupdateLoading(false);
       setupdateStatus("failed");
-      
+
       setTimeout(() => {
         setPurchaseColor("#00FECF");
         setPurchaseStatus("");
@@ -1382,10 +1383,10 @@ const SingleNft = ({
 
     if (price > 0) {
       setOfferStatus("loading");
-      
+
       try {
         const price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"; // WETH address
-        
+
         // Use wagmi for all wallets
         const hash = await makeOfferContract(
           nftAddress,
@@ -1420,7 +1421,7 @@ const SingleNft = ({
 
     setOfferdeleteStatus("loadingdelete");
     console.log(nftAddress, nftId, offerIndex);
-    
+
     try {
       // Use wagmi for all wallets
       const hash = await cancelOfferContract(nftAddress, nftId, offerIndex);
@@ -1446,10 +1447,10 @@ const SingleNft = ({
     }
 
     setOfferupdateStatus("loadingupdate");
-    
+
     try {
       const price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"; // WETH address
-      
+
       // Use wagmi for all wallets
       const hash = await updateOfferContract(
         nftAddress,
@@ -1482,7 +1483,7 @@ const SingleNft = ({
 
     setOfferacceptStatus("loading");
     console.log(nftAddress, nftId, offerIndex);
-    
+
     try {
       // Use wagmi for all wallets
       const hash = await acceptOfferContract(nftAddress, nftId, offerIndex);
@@ -1873,8 +1874,7 @@ const SingleNft = ({
       userWallet &&
       coinbase &&
       email &&
-      coinbase.toLowerCase() !==
-        userWallet?.toLowerCase()
+      coinbase.toLowerCase() !== userWallet?.toLowerCase()
     ) {
       setPurchaseColor("#FF6232");
     }
@@ -3459,8 +3459,7 @@ const SingleNft = ({
                   userWallet &&
                   email &&
                   coinbase &&
-                  coinbase.toLowerCase() !==
-                    userWallet?.toLowerCase()
+                  coinbase.toLowerCase() !== userWallet?.toLowerCase()
                     ? "By interacting with the NFTs I understand that I am not using the wallet associated to my game profile"
                     : purchaseStatus}
                 </span>
@@ -3928,8 +3927,7 @@ const SingleNft = ({
                                 <td className="saleprice">
                                   $
                                   {getFormattedNumber(
-                                     ethTokenData * (item.offer[0] / 1e18)
-                                      ,
+                                    ethTokenData * (item.offer[0] / 1e18),
                                     item.offer.payment.priceType === "0" ? 3 : 0
                                   )}
                                 </td>
@@ -4105,7 +4103,6 @@ const SingleNft = ({
           nftAddr={nftAddress}
           nftId={nftId}
           ethTokenData={ethTokenData}
-          
           handleMakeOffer={handleMakeOffer}
           handleDeleteOffer={handleDeleteOffer}
           handleUpdateOffer={handleUpdateOffer}

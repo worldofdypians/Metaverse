@@ -7,6 +7,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink, useLocation } from "react-router-dom";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 import { CircularProgress } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -87,6 +88,10 @@ const GlobalLeaderboard = ({
           <div className="position-absolute" style={{ top: 8, right: 8 }}>
             <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
               <div className="d-flex align-items-center gap-2 position-relative">
+                <span className="d-flex align-items-center gap-2 text-white text-sm">
+                  <RefreshIcon />
+                  Updates every 5 minutes
+                </span>
                 <span
                   className={`text-white ${screen !== "dash" && "invisible"} `}
                   style={{ fontSize: 14 }}

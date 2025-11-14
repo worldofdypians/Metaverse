@@ -59,6 +59,7 @@ import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
 import { useUser } from "../../../../../redux/hooks/useWallet";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserProgress } from "../../../../../redux/slices/userSlice";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -151,6 +152,8 @@ function Dashboard({
   const { setUserNFTs } = useUser();
   const dispatch = useDispatch();
   const { eventId } = useParams();
+
+  const hasUserId = userId !== undefined && userId !== null;
 
   // Get isPremium and primeStars from Redux store
   const primeStars = useSelector((state) => state.user.userProgress.primeStars);
@@ -450,12 +453,12 @@ function Dashboard({
       // Global Rankings
       globalMonthly:
         userDataStar?.statValue !== undefined && userDataStar?.statValue > 0
-          ? userDataStar.position+ 1
+          ? userDataStar.position + 1
           : "---",
       globalWeekly:
         userDataStarWeekly?.statValue !== undefined &&
         userDataStarWeekly?.statValue > 0
-          ? userDataStarWeekly.position+ 1
+          ? userDataStarWeekly.position + 1
           : "---",
       totalStars: userDataStar?.statValue || 0,
 
@@ -727,6 +730,7 @@ function Dashboard({
   //leaderboard calls
 
   const dataFetchedRef = useRef(false);
+  const dataFetchedRef2 = useRef(false);
 
   const [allBnbData, setAllBnbData] = useState([]);
   const [allSkaleData, setAllSkaleData] = useState([]);
@@ -938,6 +942,99 @@ function Dashboard({
     }
   };
 
+  const LEADERBOARD_CACHE_MS = 5 * 60 * 1000;
+
+  // Calculate milliseconds until 00:30 UTC
+  const getMillisecondsUntil0030UTC = () => {
+    const now = new Date();
+
+    // Create target time for 00:30 UTC today
+    const targetToday = new Date(
+      Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        0, // hour
+        30, // minute
+        0, // second
+        0 // millisecond
+      )
+    );
+
+    // If current time is before 00:30 UTC today, use today's target
+    // Otherwise, use tomorrow's 00:30 UTC
+    if (now.getTime() < targetToday.getTime()) {
+      return targetToday.getTime() - now.getTime();
+    } else {
+      // Calculate until 00:30 UTC tomorrow
+      const targetTomorrow = new Date(
+        Date.UTC(
+          now.getUTCFullYear(),
+          now.getUTCMonth(),
+          now.getUTCDate() + 1,
+          0, // hour
+          30, // minute
+          0, // second
+          0 // millisecond
+        )
+      );
+      return targetTomorrow.getTime() - now.getTime();
+    }
+  };
+
+  const isQueryFresh = (query) =>
+    Boolean(query?.data && query?.dataUpdatedAt) &&
+    Date.now() - query.dataUpdatedAt < LEADERBOARD_CACHE_MS;
+
+  const fetchQueryData = async (query, { force = false } = {}) => {
+    if (!query) {
+      return { data: null, fromCache: false, error: null };
+    }
+
+    if (!force && isQueryFresh(query)) {
+      return { data: query.data, fromCache: true, error: null };
+    }
+
+    // If query is enabled and already fetching, wait for the existing fetch
+    // instead of triggering a duplicate refetch
+    // React Query deduplicates requests with the same queryKey, but refetch()
+    // can bypass that, so we check here first
+    if (query.isFetching || query.isLoading) {
+      // Wait for the query to finish by polling its status
+      // This prevents duplicate API calls when queries are auto-enabled
+      let attempts = 0;
+      const maxAttempts = 100; // ~10 seconds max wait (100 * 100ms)
+      while ((query.isFetching || query.isLoading) && attempts < maxAttempts) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        attempts++;
+      }
+
+      // After waiting, return the data if available
+      if (query.data) {
+        return {
+          data: query.data,
+          fromCache: false,
+          error: query.error ?? null,
+        };
+      }
+      // If still no data after waiting, fall through to refetch below
+    }
+
+    const result = await query.refetch({ throwOnError: false });
+    if (!result?.data) {
+      if (query?.data) {
+        return {
+          data: query.data,
+          fromCache: true,
+          error: result?.error ?? null,
+        };
+      }
+      return { data: null, fromCache: false, error: result?.error ?? null };
+    }
+
+    return { data: result.data, fromCache: false, error: result.error ?? null };
+  };
+
   const fillRecordsCore = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsCore(placeholderplayerData);
@@ -949,8 +1046,24 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersCore = async (version) => {
-    if (version !== 0) {
+  const previousWinnersCoreVersionRef = useRef(null);
+  const previousWinnersCoreFetchedVersionRef = useRef(null);
+  const previousWinnersCoreFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef = useRef(null);
+
+  const previousWinnersCoreQuery = useReactQuery({
+    queryKey: ["previousWinnersCore"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersCoreVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardCoreDaily",
         StartPosition: 0,
@@ -961,77 +1074,204 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      setPrevDataCore(result.data.data.leaderboard);
-    } else {
-      setPrevDataCore(placeholderplayerData);
-    }
-  };
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsCore = async () => {
-    if (dailyRecordsCore.length > 0) return;
-    setloadingCore(true);
-
-    const data = {
-      StatisticName: "LeaderboardCoreDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsCoreQuery = useReactQuery({
+    queryKey: ["dailyRecordsCore"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardCoreDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersCore(parseInt(result.data.data.version));
-      setDailyRecordsCore(result.data.data.leaderboard);
-      fillRecordsCore(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerCore(true);
-          fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerCore(false);
-          fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingCore(false);
-      fillRecordsCore([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingCore(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerCore = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardCoreDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerCoreQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerCore", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardCoreDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
+      return result.data.data.leaderboard || [];
+    },
+  });
 
-      var testArray = result.data.data.leaderboard;
+  const fetchPreviousWinnersCore = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataCore(placeholderplayerData);
+      return;
+    }
 
-      const userPosition = testArray[0].position;
-      setUserDataCore(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerCore(false);
-      } else {
-        setActivePlayerCore(true);
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersCoreFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersCoreFetchingPromiseRef.current &&
+      previousWinnersCoreVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersCoreFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersCoreFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersCoreVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersCoreQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataCore(placeholderplayerData);
+          return;
+        }
+        setPrevDataCore(data);
+        previousWinnersCoreFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersCoreFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersCoreFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersCoreFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerCore = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerCoreQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerCore(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataCore(userRecord);
+        setActivePlayerCore(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerCoreFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsCore = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsCoreQuery);
+    if (!useCache) {
+      setloadingCore(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsCoreQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsCore([]);
+      setPrevDataCore(placeholderplayerData);
+      setloadingCore(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsCore(leaderboard);
+    fillRecordsCore(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersCore(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerCore(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingCore(false);
+      }, 1000);
+    } else {
+      setloadingCore(false);
     }
   };
 
@@ -1046,90 +1286,233 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersViction = async (version) => {
-    if (version !== 0) {
+  const previousWinnersVictionVersionRef = useRef(null);
+  const previousWinnersVictionFetchedVersionRef = useRef(null);
+  const previousWinnersVictionFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef = useRef(null);
+
+  const previousWinnersVictionQuery = useReactQuery({
+    queryKey: ["previousWinnersViction"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersVictionVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsViction([]);
-        });
-      setPrevDataViction(result.data.data.leaderboard);
-    } else {
-      setPrevDataViction(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsViction = async () => {
-    if (dailyRecordsViction.length > 0) return;
-    setloadingViction(true);
-
-    const data = {
-      StatisticName: "LeaderboardVictionDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsVictionQuery = useReactQuery({
+    queryKey: ["dailyRecordsViction"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardVictionDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersViction(parseInt(result.data.data.version));
-      setDailyRecordsViction(result.data.data.leaderboard);
-      fillRecordsViction(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerViction(true);
-          fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerViction(false);
-          fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingViction(false);
-      fillRecordsViction([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingViction(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerViction = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardVictionDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerVictionQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerViction", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardVictionDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
+      return result.data.data.leaderboard || [];
+    },
+  });
 
-      const userPosition = testArray[0].position;
-      setUserDataViction(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerViction(false);
-      } else {
-        setActivePlayerViction(true);
+  const fetchPreviousWinnersViction = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataViction(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersVictionFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersVictionFetchingPromiseRef.current &&
+      previousWinnersVictionVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersVictionFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersVictionFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersVictionVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersVictionQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataViction(placeholderplayerData);
+          return;
+        }
+        setPrevDataViction(data);
+        previousWinnersVictionFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersVictionFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersVictionFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersVictionFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerViction = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerVictionQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerViction(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataViction(userRecord);
+        setActivePlayerViction(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerVictionFetchingPromiseRef.current =
+      fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsViction = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsVictionQuery);
+    if (!useCache) {
+      setloadingViction(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsVictionQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsViction([]);
+      setPrevDataViction(placeholderplayerData);
+      setloadingViction(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsViction(leaderboard);
+    fillRecordsViction(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersViction(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerViction(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingViction(false);
+      }, 1000);
+    } else {
+      setloadingViction(false);
     }
   };
 
@@ -1144,90 +1527,232 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersManta = async (version) => {
-    if (version !== 0) {
+  const previousWinnersMantaVersionRef = useRef(null);
+  const previousWinnersMantaFetchedVersionRef = useRef(null);
+  const previousWinnersMantaFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef = useRef(null);
+
+  const previousWinnersMantaQuery = useReactQuery({
+    queryKey: ["previousWinnersManta"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersMantaVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardMantaDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsManta([]);
-        });
-      setPrevDataManta(result.data.data.leaderboard);
-    } else {
-      setPrevDataManta(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsManta = async () => {
-    if (dailyRecordsManta.length > 0) return;
-    setloadingManta(true);
-
-    const data = {
-      StatisticName: "LeaderboardMantaDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsMantaQuery = useReactQuery({
+    queryKey: ["dailyRecordsManta"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardMantaDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersManta(parseInt(result.data.data.version));
-      setDailyRecordsManta(result.data.data.leaderboard);
-      fillRecordsManta(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerManta(true);
-          fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerManta(false);
-          fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingManta(false);
-      fillRecordsManta([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingManta(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerManta = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardMantaDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerMantaQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerManta", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardMantaDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
+      return result.data.data.leaderboard || [];
+    },
+  });
 
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataManta(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerManta(false);
-      } else {
-        setActivePlayerManta(true);
+  const fetchPreviousWinnersManta = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataManta(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersMantaFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersMantaFetchingPromiseRef.current &&
+      previousWinnersMantaVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersMantaFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersMantaFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersMantaVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersMantaQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataManta(placeholderplayerData);
+          return;
+        }
+        setPrevDataManta(data);
+        previousWinnersMantaFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersMantaFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersMantaFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersMantaFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerManta = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerMantaQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerManta(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataManta(userRecord);
+        setActivePlayerManta(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerMantaFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsManta = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsMantaQuery);
+    if (!useCache) {
+      setloadingManta(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsMantaQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsManta([]);
+      setPrevDataManta(placeholderplayerData);
+      setloadingManta(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsManta(leaderboard);
+    fillRecordsManta(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersManta(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerManta(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingManta(false);
+      }, 1000);
+    } else {
+      setloadingManta(false);
     }
   };
 
@@ -1242,89 +1767,232 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersSei = async (version) => {
-    if (version !== 0) {
+  const previousWinnersSeiVersionRef = useRef(null);
+  const previousWinnersSeiFetchedVersionRef = useRef(null);
+  const previousWinnersSeiFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef = useRef(null);
+
+  const previousWinnersSeiQuery = useReactQuery({
+    queryKey: ["previousWinnersSei"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersSeiVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardSeiDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsSei([]);
-        });
-      setPrevDataSei(result.data.data.leaderboard);
-    } else {
-      setPrevDataSei(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsSei = async () => {
-    if (dailyRecordsSei.length > 0) return;
-    setloadingSei(true);
-
-    const data = {
-      StatisticName: "LeaderboardSeiDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsSeiQuery = useReactQuery({
+    queryKey: ["dailyRecordsSei"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardSeiDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersSei(parseInt(result.data.data.version));
-      setDailyRecordsSei(result.data.data.leaderboard);
-      fillRecordsSei(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerSei(true);
-          fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerSei(false);
-          fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingSei(false);
-      fillRecordsSei([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingSei(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerSei = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardSeiDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerSeiQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerSei", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardSeiDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataSei(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerSei(false);
-      } else {
-        setActivePlayerSei(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersSei = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataSei(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersSeiFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersSeiFetchingPromiseRef.current &&
+      previousWinnersSeiVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersSeiFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersSeiFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersSeiVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersSeiQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataSei(placeholderplayerData);
+          return;
+        }
+        setPrevDataSei(data);
+        previousWinnersSeiFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersSeiFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersSeiFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersSeiFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerSei = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerSeiQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerSei(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataSei(userRecord);
+        setActivePlayerSei(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerSeiFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsSei = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsSeiQuery);
+    if (!useCache) {
+      setloadingSei(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsSeiQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsSei([]);
+      setPrevDataSei(placeholderplayerData);
+      setloadingSei(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsSei(leaderboard);
+    fillRecordsSei(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersSei(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerSei(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingSei(false);
+      }, 1000);
+    } else {
+      setloadingSei(false);
     }
   };
 
@@ -1340,88 +2008,233 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersTaraxa = async (version) => {
-    if (version !== 0) {
+  const previousWinnersTaraxaVersionRef = useRef(null);
+  const previousWinnersTaraxaFetchedVersionRef = useRef(null);
+  const previousWinnersTaraxaFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef = useRef(null);
+
+  const previousWinnersTaraxaQuery = useReactQuery({
+    queryKey: ["previousWinnersTaraxa"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersTaraxaVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardTaraxaDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsTaraxa([]);
-        });
-      setPrevDataTaraxa(result.data.data.leaderboard);
-    } else {
-      setPrevDataTaraxa(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsTaraxa = async () => {
-    if (dailyRecordsTaraxa.length > 0) return;
-    setLoadingTaraxa(true);
-
-    const data = {
-      StatisticName: "LeaderboardTaraxaDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsTaraxaQuery = useReactQuery({
+    queryKey: ["dailyRecordsTaraxa"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardTaraxaDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersTaraxa(parseInt(result.data.data.version));
-      setDailyRecordsTaraxa(result.data.data.leaderboard);
-      fillRecordsTaraxa(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerTaraxa(true);
-          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerTaraxa(false);
-          fetchDailyRecordsAroundPlayerTaraxa(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setLoadingTaraxa(false);
-      fillRecordsTaraxa([]);
-    } finally {
-      setTimeout(() => {
-        setLoadingTaraxa(false);
-      }, 1000);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerTaraxa = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardTaraxaDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerTaraxaQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerTaraxa", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardTaraxaDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataTaraxa(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerTaraxa(false);
-      } else {
-        setActivePlayerTaraxa(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersTaraxa = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataTaraxa(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersTaraxaFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersTaraxaFetchingPromiseRef.current &&
+      previousWinnersTaraxaVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersTaraxaFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersTaraxaFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersTaraxaVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersTaraxaQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataTaraxa(placeholderplayerData);
+          return;
+        }
+        setPrevDataTaraxa(data);
+        previousWinnersTaraxaFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersTaraxaFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersTaraxaFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersTaraxaFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerTaraxa = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerTaraxaQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerTaraxa(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataTaraxa(userRecord);
+        setActivePlayerTaraxa(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current =
+      fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsTaraxa = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsTaraxaQuery);
+    if (!useCache) {
+      setLoadingTaraxa(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsTaraxaQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsTaraxa([]);
+      setPrevDataTaraxa(placeholderplayerData);
+      setLoadingTaraxa(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsTaraxa(leaderboard);
+    fillRecordsTaraxa(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersTaraxa(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerTaraxa(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setLoadingTaraxa(false);
+      }, 1000);
+    } else {
+      setLoadingTaraxa(false);
     }
   };
 
@@ -1436,89 +2249,232 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersBase = async (version) => {
-    if (version !== 0) {
+  const previousWinnersBaseVersionRef = useRef(null);
+  const previousWinnersBaseFetchedVersionRef = useRef(null);
+  const previousWinnersBaseFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef = useRef(null);
+
+  const previousWinnersBaseQuery = useReactQuery({
+    queryKey: ["previousWinnersBase"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersBaseVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardBaseDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsBase([]);
-        });
-      setPrevDataBase(result.data.data.leaderboard);
-    } else {
-      setPrevDataBase(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsBase = async () => {
-    if (dailyRecordsBase.length > 0) return;
-    setloadingBase(true);
-
-    const data = {
-      StatisticName: "LeaderboardBaseDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsBaseQuery = useReactQuery({
+    queryKey: ["dailyRecordsBase"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardBaseDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersBase(parseInt(result.data.data.version));
-      setDailyRecordsBase(result.data.data.leaderboard);
-      fillRecordsBase(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerBase(true);
-          fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerBase(false);
-          fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingBase(false);
-      fillRecordsBase([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingBase(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerBase = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardBaseDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerBaseQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerBase", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardBaseDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataBase(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerBase(false);
-      } else {
-        setActivePlayerBase(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersBase = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataBase(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersBaseFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersBaseFetchingPromiseRef.current &&
+      previousWinnersBaseVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersBaseFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersBaseFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersBaseVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersBaseQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataBase(placeholderplayerData);
+          return;
+        }
+        setPrevDataBase(data);
+        previousWinnersBaseFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersBaseFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersBaseFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersBaseFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerBase = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerBaseQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerBase(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataBase(userRecord);
+        setActivePlayerBase(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerBaseFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsBase = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsBaseQuery);
+    if (!useCache) {
+      setloadingBase(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsBaseQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsBase([]);
+      setPrevDataBase(placeholderplayerData);
+      setloadingBase(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsBase(leaderboard);
+    fillRecordsBase(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersBase(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerBase(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingBase(false);
+      }, 1000);
+    } else {
+      setloadingBase(false);
     }
   };
 
@@ -1533,91 +2489,234 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersVanar = async (version) => {
-    if (version !== 0) {
+  const previousWinnersVanarVersionRef = useRef(null);
+  const previousWinnersVanarFetchedVersionRef = useRef(null);
+  const previousWinnersVanarFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef = useRef(null);
+
+  const previousWinnersVanarQuery = useReactQuery({
+    queryKey: ["previousWinnersVanar"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersVanarVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardVanarDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsVanar([]);
-        });
-      setPrevDataVanar(result.data.data.leaderboard);
-    } else {
-      setPrevDataVanar(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsVanar = async () => {
-    if (dailyRecordsVanar.length > 0) return;
-    setLoadingVanar(true);
-
-    const data = {
-      StatisticName: "LeaderboardVanarDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsVanarQuery = useReactQuery({
+    queryKey: ["dailyRecordsVanar"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardVanarDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersVanar(parseInt(result.data.data.version));
-      setDailyRecordsVanar(result.data.data.leaderboard);
-      fillRecordsVanar(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerVanar(true);
-          fetchDailyRecordsAroundPlayerVanar(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerVanar(false);
-          fetchDailyRecordsAroundPlayerVanar(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setLoadingVanar(false);
-      fillRecordsVanar([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setLoadingVanar(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerVanar = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardVanarDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerVanarQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerVanar", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardVanarDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
+      return result.data.data.leaderboard || [];
+    },
+  });
 
-      const userPosition = testArray[0].position;
+  const fetchPreviousWinnersVanar = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataVanar(placeholderplayerData);
+      return;
+    }
 
-      setUserDataVanar(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerVanar(false);
-      } else {
-        setActivePlayerVanar(true);
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersVanarFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersVanarFetchingPromiseRef.current &&
+      previousWinnersVanarVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersVanarFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersVanarFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersVanarVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersVanarQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataVanar(placeholderplayerData);
+          return;
+        }
+        setPrevDataVanar(data);
+        previousWinnersVanarFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersVanarFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersVanarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersVanarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerVanar = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerVanarQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerVanar(false);
+          return;
+        }
+
+        const [userRecord] = data;
+        setUserDataVanar(userRecord);
+        setActivePlayerVanar(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerVanarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsVanar = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsVanarQuery);
+    if (!useCache) {
+      setLoadingVanar(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsVanarQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsVanar([]);
+      setPrevDataVanar(placeholderplayerData);
+      setLoadingVanar(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsVanar(leaderboard);
+    fillRecordsVanar(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersVanar(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerVanar(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setLoadingVanar(false);
+      }, 1000);
+    } else {
+      setLoadingVanar(false);
     }
   };
 
@@ -1632,91 +2731,232 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersTaiko = async (version) => {
-    if (version !== 0) {
+  const previousWinnersTaikoVersionRef = useRef(null);
+  const previousWinnersTaikoFetchedVersionRef = useRef(null);
+  const previousWinnersTaikoFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef = useRef(null);
+
+  const previousWinnersTaikoQuery = useReactQuery({
+    queryKey: ["previousWinnersTaiko"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersTaikoVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsTaiko([]);
-        });
-      setPrevDataTaiko(result.data.data.leaderboard);
-    } else {
-      setPrevDataTaiko(placeholderplayerData);
-    }
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-    // setdailyplayerData(result.data.data.leaderboard);
-  };
-
-  const fetchDailyRecordsTaiko = async () => {
-    if (dailyRecordsTaiko.length > 0) return;
-    setloadingTaiko(true);
-
-    const data = {
-      StatisticName: "LeaderboardTaikoDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsTaikoQuery = useReactQuery({
+    queryKey: ["dailyRecordsTaiko"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardTaikoDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersTaiko(parseInt(result.data.data.version));
-      setDailyRecordsTaiko(result.data.data.leaderboard);
-      fillRecordsTaiko(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerTaiko(true);
-          fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerTaiko(false);
-          fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingTaiko(false);
-      fillRecordsTaiko([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingTaiko(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardTaikoDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerTaikoQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerTaiko", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardTaikoDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataTaiko(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerTaiko(false);
-      } else {
-        setActivePlayerTaiko(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersTaiko = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataTaiko(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersTaikoFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersTaikoFetchingPromiseRef.current &&
+      previousWinnersTaikoVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersTaikoFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersTaikoFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersTaikoVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersTaikoQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataTaiko(placeholderplayerData);
+          return;
+        }
+        setPrevDataTaiko(data);
+        previousWinnersTaikoFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersTaikoFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersTaikoFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersTaikoFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerTaiko = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerTaikoQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerTaiko(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataTaiko(userRecord);
+        setActivePlayerTaiko(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerTaikoFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsTaiko = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsTaikoQuery);
+    if (!useCache) {
+      setloadingTaiko(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsTaikoQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsTaiko([]);
+      setPrevDataTaiko(placeholderplayerData);
+      setloadingTaiko(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsTaiko(leaderboard);
+    fillRecordsTaiko(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersTaiko(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerTaiko(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingTaiko(false);
+      }, 1000);
+    } else {
+      setloadingTaiko(false);
     }
   };
 
@@ -1731,89 +2971,232 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersMat = async (version) => {
-    if (version !== 0) {
+  const previousWinnersMatVersionRef = useRef(null);
+  const previousWinnersMatFetchedVersionRef = useRef(null);
+  const previousWinnersMatFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerMatFetchingPromiseRef = useRef(null);
+
+  const previousWinnersMatQuery = useReactQuery({
+    queryKey: ["previousWinnersMat"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersMatVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardMatchainDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsMat([]);
-        });
-      setPrevDataMat(result.data.data.leaderboard);
-    } else {
-      setPrevDataMat(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsMat = async () => {
-    if (dailyRecordsMat.length > 0) return;
-    setloadingMat(true);
-
-    const data = {
-      StatisticName: "LeaderboardMatchainDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsMatQuery = useReactQuery({
+    queryKey: ["dailyRecordsMat"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardMatchainDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersMat(parseInt(result.data.data.version));
-      setDailyRecordsMat(result.data.data.leaderboard);
-      fillRecordsMat(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerMat(true);
-          fetchDailyRecordsAroundPlayerMat(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerMat(false);
-          fetchDailyRecordsAroundPlayerMat(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingMat(false);
-      fillRecordsMat([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingMat(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerMat = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardMatchainDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerMatQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerMat", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardMatchainDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataMat(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerMat(false);
-      } else {
-        setActivePlayerMat(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersMat = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataMat(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersMatFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersMatFetchingPromiseRef.current &&
+      previousWinnersMatVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersMatFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersMatFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersMatVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersMatQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataMat(placeholderplayerData);
+          return;
+        }
+        setPrevDataMat(data);
+        previousWinnersMatFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersMatFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersMatFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersMatFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerMat = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerMatQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerMat(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataMat(userRecord);
+        setActivePlayerMat(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsMat = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsMatQuery);
+    if (!useCache) {
+      setloadingMat(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsMatQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsMat([]);
+      setPrevDataMat(placeholderplayerData);
+      setloadingMat(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsMat(leaderboard);
+    fillRecordsMat(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersMat(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerMat(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingMat(false);
+      }, 1000);
+    } else {
+      setloadingMat(false);
     }
   };
 
@@ -1828,89 +3211,232 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersSkale = async (version) => {
-    if (version !== 0) {
+  const previousWinnersSkaleVersionRef = useRef(null);
+  const previousWinnersSkaleFetchedVersionRef = useRef(null);
+  const previousWinnersSkaleFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef = useRef(null);
+
+  const previousWinnersSkaleQuery = useReactQuery({
+    queryKey: ["previousWinnersSkale"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersSkaleVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
       };
-      const result = await axios
-        .post(`${backendApi}/auth/GetLeaderboard?Version=-1`, data)
-        .catch((error) => {
-          console.error(error);
-          fillRecordsSkale([]);
-        });
-      setPrevDataSkale(result.data.data.leaderboard);
-    } else {
-      setPrevDataSkale(placeholderplayerData);
-    }
-  };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchDailyRecordsSkale = async () => {
-    if (dailyRecordsSkale.length > 0) return;
-    setloadingSkale(true);
-
-    const data = {
-      StatisticName: "LeaderboardSkaleDaily",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const dailyRecordsSkaleQuery = useReactQuery({
+    queryKey: ["dailyRecordsSkale"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "LeaderboardSkaleDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersSkale(parseInt(result.data.data.version));
-      setDailyRecordsSkale(result.data.data.leaderboard);
-      fillRecordsSkale(result.data.data.leaderboard);
-
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        if (testArray.length > 0) {
-          setActivePlayerSkale(true);
-          fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-        } else if (testArray.length === 0) {
-          setActivePlayerSkale(false);
-          fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingSkale(false);
-      fillRecordsSkale([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingSkale(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerSkale = async (itemData) => {
-    const data = {
-      StatisticName: "LeaderboardSkaleDaily",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const dailyRecordsAroundPlayerSkaleQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayerSkale", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "LeaderboardSkaleDaily",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserDataSkale(...testArray);
-      if (userPosition > 99) {
-        setActivePlayerSkale(false);
-      } else {
-        setActivePlayerSkale(true);
+      return result.data.data.leaderboard || [];
+    },
+  });
+
+  const fetchPreviousWinnersSkale = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataSkale(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersSkaleFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersSkaleFetchingPromiseRef.current &&
+      previousWinnersSkaleVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersSkaleFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersSkaleFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
       }
+    }
+
+    // Start a new fetch
+    previousWinnersSkaleVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersSkaleQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataSkale(placeholderplayerData);
+          return;
+        }
+        setPrevDataSkale(data);
+        previousWinnersSkaleFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersSkaleFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersSkaleFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersSkaleFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerSkale = async (forceRefresh = false) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerSkaleQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+        if ((error && !fromCache) || !data?.length) {
+          setActivePlayerSkale(false);
+          return;
+        }
+        const [userRecord] = data;
+        setUserDataSkale(userRecord);
+        setActivePlayerSkale(
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+        );
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerSkaleFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsSkale = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsSkaleQuery);
+    if (!useCache) {
+      setloadingSkale(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      dailyRecordsSkaleQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsSkale([]);
+      setPrevDataSkale(placeholderplayerData);
+      setloadingSkale(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setDailyRecordsSkale(leaderboard);
+    fillRecordsSkale(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersSkale(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      await fetchDailyRecordsAroundPlayerSkale(forceRefresh);
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingSkale(false);
+      }, 1000);
+    } else {
+      setloadingSkale(false);
     }
   };
 
@@ -1925,109 +3451,25 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousUserDataStar = async (version, userId) => {
-    if (version !== 0) {
-      const data = {
-        StatisticName: "GlobalStarMonthlyLeaderboard",
-        MaxResultsCount: 1,
-        Version: version - 1,
-        PlayerId: userId,
-      };
-      // const data2 = {
-      //   StatisticName: "GlobalStarMonthlyLeaderboard",
-      //   MaxResultsCount: 1,
-      //   Version: version - 2,
-      //   PlayerId: userId,
-      // };
-      const result = await axios
-        .post(
-          `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
-          data
-        )
-        .catch((e) => {
-          console.error(e);
-        });
-      // const result2 = await axios
-      //   .post(
-      //     `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
-      //     data2
-      //   )
-      //   .catch((e) => {
-      //     console.error(e);
-      //   });
-      if (result) {
-        setUserPreviousDataStar(...result.data.data.leaderboard);
-      }
-      // if (result2) {
-      //   setUserPreviousDataStar2(...result2.data.data.leaderboard);
-      // }
-    } else {
-      setUserPreviousDataStar([]);
-      setUserPreviousDataStar2([]);
-    }
-  };
+  const previousWinnersStarVersionRef = useRef(null);
+  const previousWinnersStarFetchedVersionRef = useRef(null);
+  const previousWinnersStarFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerStarFetchingPromiseRef = useRef(null);
+  const fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef = useRef(null);
 
-  const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
-    const data = {
-      StatisticName: "GlobalStarMonthlyLeaderboard",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      fetchPreviousUserDataStar(parseInt(result.data.data.version), userId);
-      var testArray = result.data.data.leaderboard;
-      if (testArray.length > 0) {
-        const userPosition = testArray[0].position;
-        // setuserCollectedStars(testArray[0].statValue);
-        if (goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) +
-                  Number(monthlyExtraStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition]) +
-                  Number(monthlyExtraStarPrizes[userPosition])
-              : 0
-          );
-        } else if (!goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        }
+  const previousWinnersStarQuery = useReactQuery({
+    queryKey: ["previousWinnersStar"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersStarVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
       }
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerStar(true);
-          setUserDataStar([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerStar(false);
-          setUserDataStar(...testArray);
-        }
-      } else if (testArray.length > 0) {
-        setActivePlayerStar(false);
-        setUserDataStar(...testArray);
-      }
-    }
-  };
-
-  const fetchPreviousWinnersStar = async (version) => {
-    if (version !== 0) {
       const data = {
         StatisticName: "GlobalStarMonthlyLeaderboard",
         StartPosition: 0,
@@ -2038,110 +3480,391 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      setPrevDataStar(result.data.data.leaderboard);
-    } else {
-      setPrevDataStar(placeholderplayerData);
-    }
-  };
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchExplorerHunt = async () => {
-    if (userId) {
+  const recordsStarQuery = useReactQuery({
+    queryKey: ["recordsStar"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
       const data = {
-        StatisticName: "ExploreHuntEventKillCollection",
+        StatisticName: "GlobalStarMonthlyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: 1,
-        PlayerId: userId,
+        MaxResultsCount: 100,
       };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      setexplorerHuntData(result.data.data.leaderboard);
-    }
-  };
-
-  const fetchGreatCollection = async () => {
-    if (userId) {
-      const data = {
-        StatisticName: "TheGreatCollection",
-        StartPosition: 0,
-        MaxResultsCount: 1,
-        PlayerId: userId,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      setgreatCollectionData(result.data.data.leaderboard);
-    }
-  };
-
-  const fetchRecordsStar = async () => {
-    if (starRecords.length > 0) return;
-    setloadingStarMonthly(true);
-
-    const data = {
-      StatisticName: "GlobalStarMonthlyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersStar(parseInt(result.data.data.version));
-      setStarRecords(result.data.data.leaderboard);
-      fillRecordsStar(result.data.data.leaderboard);
+  const recordsAroundPlayerStarQuery = useReactQuery({
+    queryKey: ["recordsAroundPlayerStar", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      return result.data.data;
+    },
+  });
 
-      if (userId && username) {
-        var testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
+  const fetchPreviousUserDataStar = async (
+    version,
+    userIdParam,
+    forceRefresh = false
+  ) => {
+    if (version === 0 || !userIdParam) {
+      setUserPreviousDataStar([]);
+      setUserPreviousDataStar2([]);
+      return;
+    }
+
+    // Check if we already have the data for this version and userId
+    if (
+      !forceRefresh &&
+      previousUserDataStarFetchedVersionRef.current === version &&
+      previousUserDataStarUserRef.current === userIdParam
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version and userId, wait for it
+    if (
+      previousUserDataStarFetchingPromiseRef.current &&
+      previousUserDataStarVersionRef.current === version &&
+      previousUserDataStarUserRef.current === userIdParam
+    ) {
+      try {
+        await previousUserDataStarFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (
+          previousUserDataStarFetchedVersionRef.current === version &&
+          previousUserDataStarUserRef.current === userIdParam
+        ) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    previousUserDataStarVersionRef.current = version;
+    previousUserDataStarUserRef.current = userIdParam;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousUserDataStarQuery,
+          { force: shouldForce }
         );
-        if (testArray.length > 0) {
-          setActivePlayerStar(true);
-          const userPosition = testArray[0].position;
-          // setuserCollectedStars(testArray[0].statValue);
-          setUserDataStar(...testArray);
-          if (goldenPassRemainingTime) {
-            setDataAmountStar(
-              testArray[0].statValue !== 0
-                ? userPosition > 100
-                  ? 0
-                  : userPosition === 100
-                  ? Number(monthlyStarPrizes[99]) +
-                    Number(monthlyExtraStarPrizes[99])
-                  : Number(monthlyStarPrizes[userPosition]) +
-                    Number(monthlyExtraStarPrizes[userPosition])
-                : 0
-            );
-          } else if (!goldenPassRemainingTime) {
-            setDataAmountStar(
-              testArray[0].statValue !== 0
-                ? userPosition > 100
-                  ? 0
-                  : userPosition === 100
-                  ? Number(monthlyStarPrizes[99])
-                  : Number(monthlyStarPrizes[userPosition])
-                : 0
-            );
-          }
-        } else if (testArray.length === 0) {
-          setActivePlayerStar(false);
-          fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
+
+        if ((error && !fromCache) || !data) {
+          setUserPreviousDataStar([]);
+          setUserPreviousDataStar2([]);
+          return;
+        }
+
+        const [previousEntry] = data;
+        if (!previousEntry) {
+          setUserPreviousDataStar([]);
+          setUserPreviousDataStar2([]);
+          return;
+        }
+
+        setUserPreviousDataStar(previousEntry);
+        setUserPreviousDataStar2([]);
+        previousUserDataStarFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousUserDataStarFetchingPromiseRef.current === fetchPromise) {
+          previousUserDataStarFetchingPromiseRef.current = null;
         }
       }
-    } catch (error) {
-      console.error(error);
-      setloadingStarMonthly(false);
+    })();
+
+    previousUserDataStarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayerStar = async (
+    forceRefresh = false,
+    leaderboardData = starRecords
+  ) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          recordsAroundPlayerStarQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+
+        const aroundData = data?.leaderboard || [];
+        const version = data?.version;
+
+        if ((error && !fromCache) || aroundData.length === 0) {
+          setActivePlayerStar(false);
+          return;
+        }
+
+        if (version) {
+          fetchPreviousUserDataStar(parseInt(version, 10), userId);
+        }
+
+        const [userRecord] = aroundData;
+        if (!userRecord) {
+          setActivePlayerStar(false);
+          return;
+        }
+
+        const userPosition = userRecord.position ?? Number.MAX_SAFE_INTEGER;
+        setUserDataStar(userRecord);
+
+        if (goldenPassRemainingTime) {
+          setDataAmountStar(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99]) +
+                  Number(monthlyExtraStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition]) +
+                  Number(monthlyExtraStarPrizes[userPosition])
+              : 0
+          );
+        } else {
+          setDataAmountStar(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
+        }
+
+        const isUserInLeaderboard = Array.isArray(leaderboardData)
+          ? leaderboardData.some((item) => item?.displayName === username)
+          : false;
+
+        setActivePlayerStar(isUserInLeaderboard && userPosition <= 99);
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerStarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchPreviousWinnersStar = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      setPrevDataStar(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersStarFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersStarFetchingPromiseRef.current &&
+      previousWinnersStarVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersStarFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersStarFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersStarVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersStarQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataStar(placeholderplayerData);
+          return;
+        }
+        setPrevDataStar(data);
+        previousWinnersStarFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersStarFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersStarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersStarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchExplorerHunt = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(explorerHuntQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
+      setexplorerHuntData([]);
+      return;
+    }
+
+    setexplorerHuntData(data);
+  };
+
+  const fetchGreatCollection = async (forceRefresh = false) => {
+    if (!userId) return;
+    const { data, error, fromCache } = await fetchQueryData(
+      greatCollectionQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      setgreatCollectionData([]);
+      return;
+    }
+
+    setgreatCollectionData(data);
+  };
+
+  const fetchRecordsStar = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(recordsStarQuery);
+    if (!useCache) {
+      setloadingStarMonthly(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(recordsStarQuery, {
+      force: forceRefresh,
+    });
+
+    if ((error && !fromCache) || !data) {
       fillRecordsStar([]);
-    } finally {
-      const timer = setTimeout(() => {
+      setPrevDataStar(placeholderplayerData);
+      setloadingStarMonthly(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setStarRecords(leaderboard);
+    fillRecordsStar(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersStar(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId) {
+      const testArray = leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      if (testArray.length > 0) {
+        setActivePlayerStar(true);
+        const userRecord = testArray[0];
+        const userPosition = userRecord.position;
+        setUserDataStar(userRecord);
+        if (goldenPassRemainingTime) {
+          setDataAmountStar(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99]) +
+                  Number(monthlyExtraStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition]) +
+                  Number(monthlyExtraStarPrizes[userPosition])
+              : 0
+          );
+        } else {
+          setDataAmountStar(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
+        }
+      } else {
+        setActivePlayerStar(false);
+        await fetchDailyRecordsAroundPlayerStar(forceRefresh, leaderboard);
+      }
+    }
+
+    if (!useCache) {
+      setTimeout(() => {
         setloadingStarMonthly(false);
       }, 1000);
-      return () => clearTimeout(timer);
+    } else {
+      setloadingStarMonthly(false);
     }
   };
 
@@ -2156,8 +3879,23 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinnersStarWeekly = async (version) => {
-    if (version !== 0) {
+  const previousWinnersStarWeeklyVersionRef = useRef(null);
+  const previousWinnersStarWeeklyFetchedVersionRef = useRef(null);
+  const previousWinnersStarWeeklyFetchingPromiseRef = useRef(null);
+
+  const previousWinnersStarWeeklyQuery = useReactQuery({
+    queryKey: ["previousWinnersStarWeekly"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersStarWeeklyVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "GlobalStarWeeklyLeaderboard",
         StartPosition: 0,
@@ -2168,101 +3906,162 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      setPrevDataStarWeekly(result.data.data.leaderboard);
-    } else {
-      setPrevDataStarWeekly(placeholderplayerData);
-    }
-  };
+      return result.data.data.leaderboard;
+    },
+  });
 
-  const fetchRecordsStarWeekly = async () => {
-    if (starRecordsWeekly.length > 0) return;
-    setloadingStarWeekly(true);
-
-    const data = {
-      StatisticName: "GlobalStarWeeklyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
+  const recordsStarWeeklyQuery = useReactQuery({
+    queryKey: ["recordsStarWeekly"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "GlobalStarWeeklyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
         data
       );
+      return result.data.data;
+    },
+  });
 
-      fetchPreviousWinnersStarWeekly(parseInt(result.data.data.version));
-      setStarRecordsWeekly(result.data.data.leaderboard);
-      fillRecordsStarWeekly(result.data.data.leaderboard);
-
-      if (userId && username && result.data.data.leaderboard) {
-        if (userId && username) {
-          var testArray = result.data.data.leaderboard.filter(
-            (item) => item.displayName === username
-          );
-          if (testArray.length > 0) {
-            setActivePlayerStarWeekly(true);
-            const userPosition = testArray[0].position;
-            // setuserCollectedStarsWeekly(testArray[0].statValue);
-            setUserDataStarWeekly(...testArray);
-            if (goldenPassRemainingTime) {
-              setDataAmountStarWeekly(
-                testArray[0].statValue !== 0
-                  ? userPosition > 100
-                    ? 0
-                    : userPosition === 100
-                    ? Number(weeklyStarPrizes[99]) +
-                      Number(weeklyExtraStarPrizes[99])
-                    : Number(weeklyStarPrizes[userPosition]) +
-                      Number(weeklyExtraStarPrizes[userPosition])
-                  : 0
-              );
-            } else if (!goldenPassRemainingTime) {
-              setDataAmountStarWeekly(
-                testArray[0].statValue !== 0
-                  ? userPosition > 100
-                    ? 0
-                    : userPosition === 100
-                    ? Number(weeklyStarPrizes[99])
-                    : Number(weeklyStarPrizes[userPosition])
-                  : 0
-              );
-            }
-          } else if (testArray.length === 0) {
-            setActivePlayerStarWeekly(false);
-            fetchWeeklyRecordsAroundPlayerStar(result.data.data.leaderboard);
-          }
-        }
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingStarWeekly(false);
-      fillRecordsStarWeekly([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingStarWeekly(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchWeeklyRecordsAroundPlayerStar = async (itemData) => {
-    const data = {
-      StatisticName: "GlobalStarWeeklyLeaderboard",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const recordsAroundPlayerStarWeeklyQuery = useReactQuery({
+    queryKey: ["recordsAroundPlayerStarWeekly", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "GlobalStarWeeklyLeaderboard",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      var testArray = result.data.data.leaderboard;
+      return result.data.data;
+    },
+  });
+
+  const fetchPreviousWinnersStarWeekly = async (
+    version,
+    forceRefresh = false
+  ) => {
+    if (version === 0) {
+      setPrevDataStarWeekly(placeholderplayerData);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersStarWeeklyFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersStarWeeklyFetchingPromiseRef.current &&
+      previousWinnersStarWeeklyVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersStarWeeklyFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersStarWeeklyFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersStarWeeklyVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersStarWeeklyQuery,
+          {
+            force: shouldForce,
+          }
+        );
+        if ((error && !fromCache) || !data) {
+          setPrevDataStarWeekly(placeholderplayerData);
+          return;
+        }
+        setPrevDataStarWeekly(data);
+        previousWinnersStarWeeklyFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          previousWinnersStarWeeklyFetchingPromiseRef.current === fetchPromise
+        ) {
+          previousWinnersStarWeeklyFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersStarWeeklyFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchRecordsStarWeekly = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(recordsStarWeeklyQuery);
+    if (!useCache) {
+      setloadingStarWeekly(true);
+    }
+
+    const { data, error, fromCache } = await fetchQueryData(
+      recordsStarWeeklyQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsStarWeekly([]);
+      setPrevDataStarWeekly(placeholderplayerData);
+      setloadingStarWeekly(false);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setStarRecordsWeekly(leaderboard);
+    fillRecordsStarWeekly(leaderboard);
+
+    const version = parseInt(data?.version);
+    await fetchPreviousWinnersStarWeekly(
+      Number.isNaN(version) ? 0 : version,
+      forceRefresh
+    );
+
+    if (userId && username && leaderboard) {
+      const testArray = leaderboard.filter(
+        (item) => item.displayName === username
+      );
       if (testArray.length > 0) {
-        const userPosition = testArray[0].position;
-        // setuserCollectedStarsWeekly(testArray[0].statValue);
+        setActivePlayerStarWeekly(true);
+        const userRecord = testArray[0];
+        const userPosition = userRecord.position;
+        setUserDataStarWeekly(userRecord);
         if (goldenPassRemainingTime) {
           setDataAmountStarWeekly(
-            testArray[0].statValue !== 0
+            userRecord.statValue !== 0
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
@@ -2272,9 +4071,9 @@ function Dashboard({
                   Number(weeklyExtraStarPrizes[userPosition])
               : 0
           );
-        } else if (!goldenPassRemainingTime) {
+        } else {
           setDataAmountStarWeekly(
-            testArray[0].statValue !== 0
+            userRecord.statValue !== 0
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
@@ -2283,24 +4082,106 @@ function Dashboard({
               : 0
           );
         }
-      }
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerStarWeekly(true);
-          setUserDataStarWeekly([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerStarWeekly(false);
-          setUserDataStarWeekly(...testArray);
-        }
-      } else if (testArray.length > 0) {
+      } else {
         setActivePlayerStarWeekly(false);
-        setUserDataStarWeekly(...testArray);
+        await fetchWeeklyRecordsAroundPlayerStar(forceRefresh, leaderboard);
       }
     }
+
+    if (!useCache) {
+      setTimeout(() => {
+        setloadingStarWeekly(false);
+      }, 1000);
+    } else {
+      setloadingStarWeekly(false);
+    }
+  };
+
+  const fetchWeeklyRecordsAroundPlayerStar = async (
+    forceRefresh = false,
+    leaderboardData = starRecordsWeekly
+  ) => {
+    if (!userId) return;
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current) {
+      try {
+        await fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          recordsAroundPlayerStarWeeklyQuery,
+          {
+            force: forceRefresh,
+          }
+        );
+
+        const aroundData = data?.leaderboard || [];
+
+        if ((error && !fromCache) || aroundData.length === 0) {
+          setActivePlayerStarWeekly(false);
+          return;
+        }
+
+        const [userRecord] = aroundData;
+        if (!userRecord) {
+          setActivePlayerStarWeekly(false);
+          return;
+        }
+
+        const userPosition = userRecord.position ?? Number.MAX_SAFE_INTEGER;
+        setUserDataStarWeekly(userRecord);
+
+        if (goldenPassRemainingTime) {
+          setDataAmountStarWeekly(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(weeklyStarPrizes[99]) +
+                  Number(weeklyExtraStarPrizes[99])
+                : Number(weeklyStarPrizes[userPosition]) +
+                  Number(weeklyExtraStarPrizes[userPosition])
+              : 0
+          );
+        } else {
+          setDataAmountStarWeekly(
+            userRecord.statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(weeklyStarPrizes[99])
+                : Number(weeklyStarPrizes[userPosition])
+              : 0
+          );
+        }
+
+        const isUserInLeaderboard = Array.isArray(leaderboardData)
+          ? leaderboardData.some((item) => item?.displayName === username)
+          : false;
+
+        setActivePlayerStarWeekly(isUserInLeaderboard && userPosition <= 99);
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchWeeklyRecordsAroundPlayerStarFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const fillRecordsDaily = (itemData) => {
@@ -2325,19 +4206,25 @@ function Dashboard({
     }
   };
 
-  const fillPreviousRecordsGenesis = (itemData) => {
-    if (itemData.length === 0) {
-      setpreviousgenesisData(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setpreviousgenesisData(finalData);
-    }
-  };
+  const previousWinnersDailyVersionRef = useRef(null);
+  const previousWinnersDailyFetchedVersionRef = useRef(null);
+  const previousWinnersDailyFetchingPromiseRef = useRef(null);
+  const fetchDailyRecordsAroundPlayerFetchingPromiseRef = useRef(null);
+  const fetchGenesisAroundPlayerFetchingPromiseRef = useRef(null);
 
-  const fetchPreviousWinners = async (version) => {
-    if (version !== 0) {
+  const previousWinnersDailyQuery = useReactQuery({
+    queryKey: ["previousWinnersDaily"],
+    enabled: false,
+    staleTime: getMillisecondsUntil0030UTC(),
+    cacheTime: getMillisecondsUntil0030UTC(),
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    retry: false,
+    queryFn: async () => {
+      const version = previousWinnersDailyVersionRef.current;
+      if (!version || version === 0) {
+        return placeholderplayerData;
+      }
       const data = {
         StatisticName: "DailyLeaderboard",
         StartPosition: 0,
@@ -2348,12 +4235,280 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      fillRecordsDaily(result.data.data.leaderboard);
+      return result.data.data.leaderboard ?? [];
+    },
+  });
 
-      setdailyplayerData(result.data.data.leaderboard);
+  const dailyRecordsQuery = useReactQuery({
+    queryKey: ["dailyRecords"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //LEADERBOARD_CACHE_MS,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "DailyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+      return result.data.data;
+    },
+  });
+
+  const dailyRecordsAroundPlayerQuery = useReactQuery({
+    queryKey: ["dailyRecordsAroundPlayer", userId],
+    enabled: Boolean(userId),
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "DailyLeaderboard",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      return result.data.data?.leaderboard ?? [];
+    },
+  });
+
+  const genesisRecordsQuery = useReactQuery({
+    queryKey: ["genesisRecords"],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const data = {
+        StatisticName: "TheGreatCollection",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard`,
+        data
+      );
+      return result.data.data;
+    },
+  });
+
+  const greatCollectionQuery = useReactQuery({
+    queryKey: ["greatCollection", userId],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "TheGreatCollection",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      return result.data.data?.leaderboard ?? [];
+    },
+  });
+
+  const explorerHuntQuery = useReactQuery({
+    queryKey: ["explorerHunt", userId],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "ExploreHuntEventKillCollection",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      return result.data.data?.leaderboard ?? [];
+    },
+  });
+
+  const previousUserDataStarVersionRef = useRef(null);
+  const previousUserDataStarFetchedVersionRef = useRef(null);
+  const previousUserDataStarUserRef = useRef(null);
+  const previousUserDataStarFetchingPromiseRef = useRef(null);
+
+  const previousUserDataStarQuery = useReactQuery({
+    queryKey: ["previousUserDataStar", userId],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      const version = previousUserDataStarVersionRef.current;
+      const targetUserId = previousUserDataStarUserRef.current;
+      if (!version || version === 0 || !targetUserId) {
+        return [];
+      }
+      const data = {
+        StatisticName: "GlobalStarMonthlyLeaderboard",
+        MaxResultsCount: 1,
+        Version: version - 1,
+        PlayerId: targetUserId,
+      };
+      const result = await axios.post(
+        `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
+        data
+      );
+      return result.data?.data?.leaderboard ?? [];
+    },
+  });
+
+  const fetchPreviousWinners = async (version, forceRefresh = false) => {
+    if (version === 0) {
+      fillRecordsDaily([]);
+      setdailyplayerData([]);
+      return;
+    }
+
+    // Check if we already have the data for this version
+    if (
+      !forceRefresh &&
+      previousWinnersDailyFetchedVersionRef.current === version
+    ) {
+      return;
+    }
+
+    // If there's already a fetch in progress for the same version, wait for it
+    if (
+      previousWinnersDailyFetchingPromiseRef.current &&
+      previousWinnersDailyVersionRef.current === version
+    ) {
+      try {
+        await previousWinnersDailyFetchingPromiseRef.current;
+        // After waiting, check if the version was fetched
+        if (previousWinnersDailyFetchedVersionRef.current === version) {
+          return;
+        }
+      } catch (error) {
+        // If the previous fetch failed, just stop there
+        console.error("Previous fetch failed, stopping:", error);
+        return;
+      }
+    }
+
+    // Start a new fetch
+    previousWinnersDailyVersionRef.current = version;
+
+    const fetchPromise = (async () => {
+      try {
+        const shouldForce = forceRefresh;
+        const { data, error, fromCache } = await fetchQueryData(
+          previousWinnersDailyQuery,
+          { force: shouldForce }
+        );
+
+        if ((error && !fromCache) || !data) {
+          fillRecordsDaily([]);
+          setdailyplayerData([]);
+          return;
+        }
+
+        fillRecordsDaily(data);
+        setdailyplayerData(data);
+        previousWinnersDailyFetchedVersionRef.current = version;
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (previousWinnersDailyFetchingPromiseRef.current === fetchPromise) {
+          previousWinnersDailyFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    previousWinnersDailyFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecords = async (forceRefresh = false) => {
+    const useCache = !forceRefresh && isQueryFresh(dailyRecordsQuery);
+    if (!useCache) {
+      setloadingBnb(true);
+    }
+
+    try {
+      const { data, error, fromCache } = await fetchQueryData(
+        dailyRecordsQuery,
+        {
+          force: forceRefresh,
+        }
+      );
+
+      if ((error && !fromCache) || !data) {
+        fillRecords([]);
+        setRecords([]);
+        return;
+      }
+
+      const leaderboard = data?.leaderboard ?? [];
+      setRecords(leaderboard);
+      fillRecords(leaderboard);
+
+      const version = Number.parseInt(data?.version, 10);
+      await fetchPreviousWinners(
+        Number.isNaN(version) ? 0 : version,
+        forceRefresh
+      );
+
+      if (userId) {
+        await fetchDailyRecordsAroundPlayer(forceRefresh, leaderboard);
+      }
+    } catch (error) {
+      console.error(error);
+      fillRecords([]);
+    } finally {
+      setloadingBnb(false);
     }
   };
 
+  const fetchGenesisRecords = async (forceRefresh = false) => {
+    const { data, error, fromCache } = await fetchQueryData(
+      genesisRecordsQuery,
+      {
+        force: forceRefresh,
+      }
+    );
+
+    if ((error && !fromCache) || !data) {
+      fillRecordsGenesis([]);
+      setgenesisData([]);
+      setpreviousGenesisVersion(0);
+      return;
+    }
+
+    const leaderboard = data?.leaderboard ?? [];
+    setpreviousGenesisVersion(data?.version ?? 0);
+    setgenesisData(leaderboard);
+    fillRecordsGenesis(leaderboard);
+  };
   // const fetchGenesisPreviousWinners = async (version) => {
   //   if (version !== 0) {
   //     const data = {
@@ -2370,67 +4525,6 @@ function Dashboard({
   //     setpreviousgenesisData(result.data.data.leaderboard);
   //   }
   // };
-
-  const fetchDailyRecords = async () => {
-    if (dailyrecords.length > 0) return;
-    setloadingBnb(true);
-
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    try {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
-        data
-      );
-
-      setRecords(result.data.data.leaderboard);
-      fillRecords(result.data.data.leaderboard);
-      fetchPreviousWinners(parseInt(result.data.data.version));
-
-      if (userId && username) {
-        const testArray = result.data.data.leaderboard.filter(
-          (item) => item.displayName === username
-        );
-        setActivePlayer(testArray.length > 0);
-        fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
-      }
-    } catch (error) {
-      console.error(error);
-      setloadingBnb(false);
-      fillRecords([]);
-    } finally {
-      const timer = setTimeout(() => {
-        setloadingBnb(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  };
-
-  const fetchGenesisRecords = async () => {
-    const data2 = {
-      StatisticName: "TheGreatCollection",
-      StartPosition: 0,
-      MaxResultsCount: 100,
-    };
-
-    const result2 = await axios
-      .post(`${backendApi}/auth/GetLeaderboard`, data2)
-      .catch((err) => {
-        console.log(err);
-      });
-
-    if (result2) {
-      setpreviousGenesisVersion(result2.data.data.version);
-      setgenesisData(result2.data.data.leaderboard);
-      fillRecordsGenesis(result2.data.data.leaderboard);
-    }
-
-    // fetchGenesisPreviousWinners(parseInt(result2.data.data.version));
-  };
 
   useEffect(() => {
     if (!email) {
@@ -2472,12 +4566,13 @@ function Dashboard({
   }, [email]);
 
   useEffect(() => {
-    if (username !== undefined && userId !== undefined) {
-      fetchGenesisRecords();
-      fetchGreatCollection();
-      fetchExplorerHunt();
-    }
-  }, [username, userId, goldenPassRemainingTime]);
+    if (dataFetchedRef2.current) return;
+
+    fetchGenesisRecords();
+    fetchGreatCollection();
+    fetchExplorerHunt();
+    dataFetchedRef2.current = true;
+  }, [userId]);
 
   useEffect(() => {
     if (
@@ -2938,19 +5033,22 @@ function Dashboard({
         fetchDailyRecordsSkale();
       }
     } else if (chain === "all") {
-      fetchDailyRecordsAroundPlayer([]);
-      fetchDailyRecordsAroundPlayerTaiko([]);
-      fetchDailyRecordsAroundPlayerVanar([]);
-      fetchDailyRecordsAroundPlayerMat([]);
-      fetchDailyRecordsAroundPlayerSei([]);
-      fetchDailyRecordsAroundPlayerManta([]);
-      fetchDailyRecordsAroundPlayerBase([]);
-      fetchDailyRecordsAroundPlayerCore([]);
-      fetchDailyRecordsAroundPlayerViction([]);
-      fetchDailyRecordsAroundPlayerSkale([]);
-      fetchDailyRecordsAroundPlayerStar([]);
-      fetchWeeklyRecordsAroundPlayerStar([]);
-      fetchDailyRecordsAroundPlayerTaraxa([]);
+      if (!hasUserId) {
+        return;
+      }
+      fetchDailyRecordsAroundPlayer(false, dailyrecords);
+      fetchDailyRecordsAroundPlayerTaiko(false);
+      fetchDailyRecordsAroundPlayerVanar(false);
+      fetchDailyRecordsAroundPlayerMat(false);
+      fetchDailyRecordsAroundPlayerSei(false);
+      fetchDailyRecordsAroundPlayerManta(false);
+      fetchDailyRecordsAroundPlayerBase(false);
+      fetchDailyRecordsAroundPlayerCore(false);
+      fetchDailyRecordsAroundPlayerViction(false);
+      fetchDailyRecordsAroundPlayerSkale(false);
+      fetchDailyRecordsAroundPlayerStar(false, starRecords);
+      fetchWeeklyRecordsAroundPlayerStar(false, starRecordsWeekly);
+      fetchDailyRecordsAroundPlayerTaraxa(false);
     }
   };
 
@@ -3191,45 +5289,154 @@ function Dashboard({
     }
   };
 
-  const fetchGenesisAroundPlayer = async (userId, userName) => {
-    const data = {
-      StatisticName: "GenesisLandRewards",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === userName
-    );
-
-    setGenesisRank2(testArray[0].statValue);
-  };
-
-  const fetchDailyRecordsAroundPlayer = async (itemData) => {
-    const data = {
-      StatisticName: "DailyLeaderboard",
-      MaxResultsCount: 1,
-      PlayerId: userId,
-    };
-    if (userId) {
+  const genesisAroundPlayerQuery = useReactQuery({
+    queryKey: ["genesisAroundPlayer", userId],
+    enabled: false,
+    staleTime: LEADERBOARD_CACHE_MS,
+    cacheTime: 5 * LEADERBOARD_CACHE_MS,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    queryFn: async () => {
+      if (!userId) return [];
+      const data = {
+        StatisticName: "GenesisLandRewards",
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
         data
       );
-      // setRecordsAroundPlayer(result.data.data.leaderboard);
-      var testArray = result.data.data.leaderboard;
-      const userPosition = testArray[0].position;
-      setUserData(...testArray);
-      if (userPosition > 99) {
-        setActivePlayer(false);
-      } else {
-        setActivePlayer(true);
+      return result.data?.data?.leaderboard ?? [];
+    },
+  });
+
+  const fetchGenesisAroundPlayer = async (forceRefresh = false) => {
+    if (!userId) {
+      setGenesisRank2(0);
+      return;
+    }
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchGenesisAroundPlayerFetchingPromiseRef.current) {
+      try {
+        await fetchGenesisAroundPlayerFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
       }
     }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          genesisAroundPlayerQuery,
+          { force: forceRefresh }
+        );
+
+        const aroundData = Array.isArray(data) ? data : [];
+
+        if ((error && !fromCache) || aroundData.length === 0) {
+          setGenesisRank2(0);
+          return;
+        }
+
+        const matchingEntry =
+          aroundData.find((item) => item?.displayName === username) ||
+          aroundData[0];
+
+        setGenesisRank2(matchingEntry?.statValue ?? 0);
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchGenesisAroundPlayerFetchingPromiseRef.current === fetchPromise
+        ) {
+          fetchGenesisAroundPlayerFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchGenesisAroundPlayerFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
+  };
+
+  const fetchDailyRecordsAroundPlayer = async (
+    forceRefresh = false,
+    leaderboardData = dailyrecords
+  ) => {
+    if (!userId) {
+      setActivePlayer(false);
+      setUserData({});
+      return;
+    }
+
+    // If there's already a fetch in progress, wait for it
+    if (fetchDailyRecordsAroundPlayerFetchingPromiseRef.current) {
+      try {
+        await fetchDailyRecordsAroundPlayerFetchingPromiseRef.current;
+        return;
+      } catch (error) {
+        // If the previous fetch failed, continue with a new fetch
+        console.error("Previous fetch failed, retrying:", error);
+      }
+    }
+
+    // Start a new fetch
+    const fetchPromise = (async () => {
+      try {
+        const { data, error, fromCache } = await fetchQueryData(
+          dailyRecordsAroundPlayerQuery,
+          { force: forceRefresh }
+        );
+
+        const aroundData = Array.isArray(data) ? data : [];
+
+        if ((error && !fromCache) || aroundData.length === 0) {
+          const fallbackRecord = Array.isArray(leaderboardData)
+            ? leaderboardData.find((entry) => entry?.displayName === username)
+            : undefined;
+
+          if (fallbackRecord) {
+            setUserData(fallbackRecord);
+            setActivePlayer(
+              (fallbackRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+            );
+            return;
+          }
+
+          setActivePlayer(false);
+          return;
+        }
+
+        const [userRecord] = aroundData;
+        if (!userRecord) {
+          setActivePlayer(false);
+          return;
+        }
+
+        setUserData(userRecord);
+
+        const userPosition = userRecord?.position ?? Number.MAX_SAFE_INTEGER;
+        const isUserInLeaderboard = Array.isArray(leaderboardData)
+          ? leaderboardData.some((entry) => entry?.displayName === username)
+          : true;
+
+        setActivePlayer(isUserInLeaderboard && userPosition <= 99);
+      } finally {
+        // Clear the promise ref if this is still the current fetch
+        if (
+          fetchDailyRecordsAroundPlayerFetchingPromiseRef.current ===
+          fetchPromise
+        ) {
+          fetchDailyRecordsAroundPlayerFetchingPromiseRef.current = null;
+        }
+      }
+    })();
+
+    fetchDailyRecordsAroundPlayerFetchingPromiseRef.current = fetchPromise;
+    await fetchPromise;
   };
 
   const getOpenedChestPerWallet = async () => {
@@ -4219,10 +6426,10 @@ function Dashboard({
 
     window.scrollTo(0, 0);
 
-    fetchGenesisRecords();
+    // fetchGenesisRecords();
 
-    fetchGreatCollection();
-    fetchExplorerHunt();
+    // fetchGreatCollection();
+    // fetchExplorerHunt();
   }, []);
 
   useEffect(() => {
@@ -4399,28 +6606,28 @@ function Dashboard({
 
   useEffect(() => {
     if (effectRan2.current) return;
-    if (userId && username) {
-      fetchGenesisAroundPlayer(userId, username);
-      fetchDailyRecordsAroundPlayerStar([]);
-      fetchWeeklyRecordsAroundPlayerStar([]);
+    if (userId !== undefined && userId !== null) {
+      fetchGenesisAroundPlayer(false);
+      fetchDailyRecordsAroundPlayerStar(false, []);
+      fetchWeeklyRecordsAroundPlayerStar(false, []);
       effectRan2.current = true;
     }
-  }, [userId, username, goldenPassRemainingTime]);
+  }, [userId, goldenPassRemainingTime]);
 
   useEffect(() => {
     if (effectRan.current) return;
     if (userId !== undefined && userId !== null) {
-      fetchDailyRecordsAroundPlayer([]);
-      fetchDailyRecordsAroundPlayerBase([]);
-      fetchDailyRecordsAroundPlayerCore([]);
-      fetchDailyRecordsAroundPlayerManta([]);
-      fetchDailyRecordsAroundPlayerSei([]);
-      fetchDailyRecordsAroundPlayerTaiko([]);
-      fetchDailyRecordsAroundPlayerVanar([]);
-      fetchDailyRecordsAroundPlayerMat([]);
-      fetchDailyRecordsAroundPlayerViction([]);
-      fetchDailyRecordsAroundPlayerSkale([]);
-      fetchDailyRecordsAroundPlayerTaraxa([]);
+      fetchDailyRecordsAroundPlayer(false, []);
+      fetchDailyRecordsAroundPlayerBase(false, []);
+      fetchDailyRecordsAroundPlayerCore(false, []);
+      fetchDailyRecordsAroundPlayerManta(false, []);
+      fetchDailyRecordsAroundPlayerSei(false, []);
+      fetchDailyRecordsAroundPlayerTaiko(false, []);
+      fetchDailyRecordsAroundPlayerVanar(false, []);
+      fetchDailyRecordsAroundPlayerMat(false, []);
+      fetchDailyRecordsAroundPlayerViction(false, []);
+      fetchDailyRecordsAroundPlayerSkale(false, []);
+      fetchDailyRecordsAroundPlayerTaraxa(false, []);
       effectRan.current = true;
     }
   }, [userId]);

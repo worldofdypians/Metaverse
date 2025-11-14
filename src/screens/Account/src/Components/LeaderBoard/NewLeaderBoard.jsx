@@ -9,7 +9,7 @@ import Switch from "@mui/material/Switch";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import "./_leaderboard.scss";
 import ComingSoon from "./ComingSoon";
-
+import RefreshIcon from "@mui/icons-material/Refresh";
 const renderer = ({ hours, minutes, seconds }) => {
   return (
     <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
@@ -838,6 +838,10 @@ const NewLeaderBoard = ({
                               </div>
                             </div> */}
                             <div className="position-relative">
+                              <span className="d-flex align-items-center text-sm position-absolute p-2 gap-2 text-white">
+                                <RefreshIcon fontSize="small" />
+                                Updates every 5 minutes
+                              </span>
                               <span className="top100-text">
                                 {" "}
                                 <OutsideClickHandler
