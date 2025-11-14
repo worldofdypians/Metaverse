@@ -942,7 +942,7 @@ function Dashboard({
     }
   };
 
-  const LEADERBOARD_CACHE_MS = 5 * 60 * 1000;
+  const LEADERBOARD_CACHE_MS = 60 * 1000;
 
   // Calculate milliseconds until 00:30 UTC
   const getMillisecondsUntil0030UTC = () => {
@@ -1002,12 +1002,13 @@ function Dashboard({
     if (query.isFetching || query.isLoading) {
       // Wait for the query to finish by polling its status
       // This prevents duplicate API calls when queries are auto-enabled
-      let attempts = 0;
-      const maxAttempts = 100; // ~10 seconds max wait (100 * 100ms)
-      while ((query.isFetching || query.isLoading) && attempts < maxAttempts) {
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        attempts++;
-      }
+      // let attempts = 0;
+      // const maxAttempts = 50; // ~5 seconds max wait (50 * 100ms)
+      // while ((query.isFetching || query.isLoading)) {
+        // console.log("attemptsattempts", attempts, query);
+        // await new Promise((resolve) => setTimeout(resolve, 100));
+        // attempts++;
+      // }
 
       // After waiting, return the data if available
       if (query.data) {
@@ -4978,60 +4979,60 @@ function Dashboard({
   };
   const handleFetchRecordsStars = (type) => {
     if (type === "weekly") {
-      if (starRecordsWeekly.length === 0) {
-        fetchRecordsStarWeekly();
-      }
+      // if (starRecordsWeekly.length === 0) {
+      fetchRecordsStarWeekly();
+      // }
     } else if (type === "monthly") {
-      if (starRecords.length === 0) {
-        fetchRecordsStar();
-      }
+      // if (starRecords.length === 0) {
+      fetchRecordsStar();
+      // }
     }
   };
   const handleFetchRecords = async (chain) => {
     if (chain === "bnb") {
-      if (dailyrecords.length === 0) {
-        fetchDailyRecords();
-      }
+      // if (dailyrecords.length === 0) {
+      fetchDailyRecords();
+      // }
     } else if (chain === "taiko") {
-      if (dailyRecordsTaiko.length === 0) {
-        fetchDailyRecordsTaiko();
-      }
+      // if (dailyRecordsTaiko.length === 0) {
+      fetchDailyRecordsTaiko();
+      // }
     } else if (chain === "vanar") {
-      if (dailyRecordsVanar.length === 0) {
-        fetchDailyRecordsVanar();
-      }
+      // if (dailyRecordsVanar.length === 0) {
+      fetchDailyRecordsVanar();
+      // }
     } else if (chain === "matchain") {
-      if (dailyRecordsMat.length === 0) {
-        fetchDailyRecordsMat();
-      }
+      // if (dailyRecordsMat.length === 0) {
+      fetchDailyRecordsMat();
+      // }
     } else if (chain === "sei") {
-      if (dailyRecordsSei.length === 0) {
-        fetchDailyRecordsSei();
-      }
+      // if (dailyRecordsSei.length === 0) {
+      fetchDailyRecordsSei();
+      // }
     } else if (chain === "taraxa") {
-      if (dailyRecordsTaraxa.length === 0) {
-        fetchDailyRecordsTaraxa();
-      }
+      // if (dailyRecordsTaraxa.length === 0) {
+      fetchDailyRecordsTaraxa();
+      // }
     } else if (chain === "manta") {
-      if (dailyRecordsManta.length === 0) {
-        fetchDailyRecordsManta();
-      }
+      // if (dailyRecordsManta.length === 0) {
+      fetchDailyRecordsManta();
+      // }
     } else if (chain === "base") {
-      if (dailyRecordsBase.length === 0) {
-        fetchDailyRecordsBase();
-      }
+      // if (dailyRecordsBase.length === 0) {
+      fetchDailyRecordsBase();
+      // }
     } else if (chain === "core") {
-      if (dailyRecordsCore.length === 0) {
-        fetchDailyRecordsCore();
-      }
+      // if (dailyRecordsCore.length === 0) {
+      fetchDailyRecordsCore();
+      // }
     } else if (chain === "viction") {
-      if (dailyRecordsViction.length === 0) {
-        fetchDailyRecordsViction();
-      }
+      // if (dailyRecordsViction.length === 0) {
+      fetchDailyRecordsViction();
+      // }
     } else if (chain === "skale") {
-      if (dailyRecordsSkale.length === 0) {
-        fetchDailyRecordsSkale();
-      }
+      // if (dailyRecordsSkale.length === 0) {
+      fetchDailyRecordsSkale();
+      // }
     } else if (chain === "all") {
       if (!hasUserId) {
         return;
