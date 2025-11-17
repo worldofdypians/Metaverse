@@ -231,14 +231,29 @@ const Kickstarter = ({
   const chestIndex = royalChestIndex + 1;
   // const chestIndexTaiko = royalChestIndexTaiko + 1;
 
+  const updateRewardApis = async (data) => {
+    const result = await axios
+      .post("https://api.worldofdypians.com/api/post-event", data)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      console.log(result);
+    }
+  };
 
-    const updateRewardApis = async(data)=>{
-      const result = await axios.post('https://api.worldofdypians.com/api/post-event', data).catch((e)=>{console.error(e)})
-      if(result && result.status === 200) {
-        console.log(result)
+  const handleThirdTask = async (wallet) => {
+    if (wallet) {
+      const result2 = await axios
+        .get(`https://api.worldofdypians.com/api/dappbay/task3/${wallet}`)
+        .catch((e) => {
+          console.error(e);
+        });
+      if (result2 && result2.status === 200) {
+        console.log(result2);
       }
     }
-  
+  };
 
   const getUserRewardsByChest = async (
     userEmail,
@@ -278,14 +293,14 @@ const Kickstarter = ({
           }
         });
       if (result && result.status === 200) {
-        // if (chainText === "opbnb" || chainText === "bnb") {
-        //   handleSecondTask(coinbase);
-        // }
+        if (chainText === "opbnb" || chainText === "bnb") {
+          handleThirdTask(coinbase);
+        }
         setTimeout(() => {
           setRewards(result.data.rewards);
         }, 3600);
 
-         if (
+        if (
           result.data.rewards.find((item) => {
             return item.rewardType === "Money";
           }) !== undefined
@@ -300,9 +315,9 @@ const Kickstarter = ({
           };
           updateRewardApis(data);
         }
-         if (
+        if (
           result.data.rewards.find((item) => {
-            return item.rewardType === "Points" && item.reward >=18000;
+            return item.rewardType === "Points" && item.reward >= 18000;
           }) !== undefined
         ) {
           const data = {
@@ -315,8 +330,6 @@ const Kickstarter = ({
           };
           updateRewardApis(data);
         }
-
-
 
         setIsChestOpen(true);
         setLoading(false);
@@ -387,8 +400,7 @@ const Kickstarter = ({
           setRewards(result.data.rewards);
         }, 3600);
 
-        
-         if (
+        if (
           result.data.reward.find((item) => {
             return item.rewardType === "Money";
           }) !== undefined
@@ -403,9 +415,9 @@ const Kickstarter = ({
           };
           updateRewardApis(data);
         }
-         if (
+        if (
           result.data.reward.find((item) => {
-            return item.rewardType === "Points"&& item.reward >=18000;
+            return item.rewardType === "Points" && item.reward >= 18000;
           }) !== undefined
         ) {
           const data = {
@@ -436,9 +448,9 @@ const Kickstarter = ({
           window.alertify.error(e?.message);
         });
       if (result && result.status === 200) {
-        // if (chainText === "opbnb" || chainText === "bnb") {
-        //   handleSecondTask(coinbase);
-        // }
+        if (chainText === "opbnb" || chainText === "bnb") {
+          handleThirdTask(coinbase);
+        }
         console.log(result.data);
         setTimeout(() => {
           setRewards(result.data.rewards);
@@ -458,8 +470,8 @@ const Kickstarter = ({
     chainText
   ) => {
     const video =
-        // chainText === "taiko" ? videoRef2Taiko.current :
-        videoRef2.current;
+      // chainText === "taiko" ? videoRef2Taiko.current :
+      videoRef2.current;
     if (window.WALLET_TYPE !== "matchId") {
       const txResult = getTransaction(wagmiClient, {
         hash: txHash,
@@ -562,8 +574,6 @@ const Kickstarter = ({
       return null;
     }
   };
-
-
 
   const handleOpenChest = async () => {
     setLoading(true);
@@ -671,7 +681,7 @@ const Kickstarter = ({
       console.error(
         "Unified wagmi/viem flow failed, falling back",
         unifiedError
-      ); 
+      );
       window.alertify.error(unifiedError?.message);
       setLoading(false);
     }
@@ -693,8 +703,9 @@ const Kickstarter = ({
 
   const switchNetwork = async (hexChainId, chain) => {
     // Extract chainId from hex or use chain number directly
-    const chainId = typeof chain === 'number' ? chain : parseInt(hexChainId, 16);
-    
+    const chainId =
+      typeof chain === "number" ? chain : parseInt(hexChainId, 16);
+
     try {
       await switchNetworkWagmi(chainId, chain, {
         handleSwitchNetwork,

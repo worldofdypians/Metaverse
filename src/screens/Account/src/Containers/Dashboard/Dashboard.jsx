@@ -945,7 +945,7 @@ function Dashboard({
   const LEADERBOARD_CACHE_MS = 60 * 1000;
 
   // Calculate milliseconds until 00:30 UTC
-  const getMillisecondsUntil0030UTC = () => {
+  const getMillisecondsUntil0000UTC = () => {
     const now = new Date();
 
     // Create target time for 00:30 UTC today
@@ -955,7 +955,7 @@ function Dashboard({
         now.getUTCMonth(),
         now.getUTCDate(),
         0, // hour
-        30, // minute
+        0, // minute
         0, // second
         0 // millisecond
       )
@@ -973,7 +973,7 @@ function Dashboard({
           now.getUTCMonth(),
           now.getUTCDate() + 1,
           0, // hour
-          30, // minute
+          0, // minute
           0, // second
           0 // millisecond
         )
@@ -1055,8 +1055,8 @@ function Dashboard({
   const previousWinnersCoreQuery = useReactQuery({
     queryKey: ["previousWinnersCore"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -1295,8 +1295,8 @@ function Dashboard({
   const previousWinnersVictionQuery = useReactQuery({
     queryKey: ["previousWinnersViction"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -1536,8 +1536,8 @@ function Dashboard({
   const previousWinnersMantaQuery = useReactQuery({
     queryKey: ["previousWinnersManta"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -1776,8 +1776,8 @@ function Dashboard({
   const previousWinnersSeiQuery = useReactQuery({
     queryKey: ["previousWinnersSei"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -2017,8 +2017,8 @@ function Dashboard({
   const previousWinnersTaraxaQuery = useReactQuery({
     queryKey: ["previousWinnersTaraxa"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -2258,8 +2258,8 @@ function Dashboard({
   const previousWinnersBaseQuery = useReactQuery({
     queryKey: ["previousWinnersBase"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -2498,8 +2498,8 @@ function Dashboard({
   const previousWinnersVanarQuery = useReactQuery({
     queryKey: ["previousWinnersVanar"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -2740,8 +2740,8 @@ function Dashboard({
   const previousWinnersTaikoQuery = useReactQuery({
     queryKey: ["previousWinnersTaiko"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -2980,8 +2980,8 @@ function Dashboard({
   const previousWinnersMatQuery = useReactQuery({
     queryKey: ["previousWinnersMat"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -3220,8 +3220,8 @@ function Dashboard({
   const previousWinnersSkaleQuery = useReactQuery({
     queryKey: ["previousWinnersSkale"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -3461,8 +3461,8 @@ function Dashboard({
   const previousWinnersStarQuery = useReactQuery({
     queryKey: ["previousWinnersStar"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -3887,8 +3887,8 @@ function Dashboard({
   const previousWinnersStarWeeklyQuery = useReactQuery({
     queryKey: ["previousWinnersStarWeekly"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
@@ -4216,8 +4216,8 @@ function Dashboard({
   const previousWinnersDailyQuery = useReactQuery({
     queryKey: ["previousWinnersDaily"],
     enabled: false,
-    staleTime: getMillisecondsUntil0030UTC(),
-    cacheTime: getMillisecondsUntil0030UTC(),
+    staleTime: getMillisecondsUntil0000UTC(),
+    cacheTime: getMillisecondsUntil0000UTC(),
     refetchOnWindowFocus: false,
     refetchInterval: false,
     retry: false,
