@@ -690,20 +690,7 @@ const GetPremiumPopup = ({
       setnftPremium_totalMat(0);
       setnftPremium_tokenIdTaraxa(0);
       setnftPremium_totalTaraxa(0);
-
-      if (discount) {
-        setdiscountPercentage(parseInt(discount));
-      } else if (discount_viction) {
-        setdiscountPercentageViction(parseInt(discount_viction));
-      } else if (discount_vanar) {
-        setdiscountPercentageVanar(parseInt(discount_vanar));
-      } else if (discount_taiko) {
-        setdiscountPercentageTaiko(parseInt(discount_taiko));
-      } else if (discount_mat) {
-        setdiscountPercentageMat(parseInt(discount_mat));
-      } else if (discount_taraxa) {
-        setdiscountPercentageTaraxa(parseInt(discount_taraxa));
-      }
+ 
     }
   };
 
