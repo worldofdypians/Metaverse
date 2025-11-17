@@ -55,14 +55,9 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   })
 );
 
-function AuthBNB({
-  type,
-  onSuccessLogin,
-  onLinkWallet, data, syncStatus
-}) {
+function AuthBNB({ type, onSuccessLogin, onLinkWallet, data, syncStatus }) {
   const { isAuthenticated, loginError, setLoginValues, playerId, email } =
     useAuth();
-
 
   const [value, setValue] = React.useState(1);
   const [playerCreation, setplayerCreation] = useState(false);
@@ -105,12 +100,10 @@ function AuthBNB({
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      // handleFirstTask(data.getPlayer.wallet.publicAddress);
+      handleFirstTask(data.getPlayer.wallet.publicAddress);
       navigate("/account");
     }
   }, [data, playerId, isAuthenticated, isLogin]);
-
-
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -126,38 +119,10 @@ function AuthBNB({
     });
   };
 
-  const handleManageLoginStates = () => {
-  
-    if (
-      isAuthenticated &&
-      playerId &&
-      data &&
-      data.getPlayer &&
-      data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress
-    ) {
-      // handleFirstTask(data.getPlayer.wallet.publicAddress);
-      navigate("/account");
-    } else if (isAuthenticated && !playerId) {
-      setplayerCreation(true);
-    }
-  };
-
-
   const handleFirstTask = async (wallet) => {
-    // const result2 = await axios
+    const result2 = await axios
 
-    //   .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
-
-    //   .catch((e) => {
-    //     console.error(e);
-    //   });
-
-    const result3 = await axios
-
-      .get(`https://api.worldofdypians.com/api/okx/${wallet}`)
+      .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
 
       .catch((e) => {
         console.error(e);
@@ -174,10 +139,10 @@ function AuthBNB({
     if (
       // result2 &&
       // result2.status === 200 &&
-      result3 &&
-      result3.status === 200
+      result2 &&
+      result2.status === 200
     ) {
-      console.log(result3);
+      console.log(result2);
       setsuccessLink(true);
       const timer = setTimeout(() => {
         // window.location.reload();
@@ -187,6 +152,23 @@ function AuthBNB({
     }
   };
 
+  const handleManageLoginStates = () => {
+    if (
+      isAuthenticated &&
+      playerId &&
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress
+    ) {
+      handleFirstTask(data.getPlayer.wallet.publicAddress);
+      navigate("/account");
+    } else if (isAuthenticated && !playerId) {
+      setplayerCreation(true);
+    }
+  };
 
   // if (isAuthenticated && !playerId) {
   //   return <Navigate to={"/player"} />;
@@ -224,8 +206,7 @@ function AuthBNB({
                     height: "100%",
                   }}
                   cardStyles={{
-                    height:
-                      "100%"
+                    height: "100%",
                   }}
                 >
                   {successLink === false && (
@@ -308,7 +289,7 @@ function AuthBNB({
                             }}
                             onSuccessLogin={() => {
                               handleManageLoginStates();
-                              // handleFirstTask(coinbase);
+
                               onSuccessLogin();
                             }}
                             handleGoToSignup={() => {

@@ -889,6 +889,32 @@ function AppRoutes() {
     }
   };
 
+  const handleFirstTask = async (wallet) => {
+    if (wallet) {
+      const result2 = await axios
+        .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
+        .catch((e) => {
+          console.error(e);
+        });
+      if (result2 && result2.status === 200) {
+        console.log(result2);
+      }
+    }
+  };
+
+  const handleSecondTask = async (wallet) => {
+    if (wallet) {
+      const result2 = await axios
+        .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+        .catch((e) => {
+          console.error(e);
+        });
+      if (result2 && result2.status === 200) {
+        console.log(result2);
+      }
+    }
+  };
+
   const { user, setUserStats, setUserNFTs } = useUser();
   const { useUserInfo, useWallet: useWalletMatchain } = Hooks;
   const {
@@ -4538,6 +4564,7 @@ function AppRoutes() {
               signatureData,
               `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
             );
+            handleSecondTask(coinbase);
           }
         }
       }
@@ -4575,6 +4602,7 @@ function AppRoutes() {
 
       refreshSubscription(userAddress);
       handleManageLogin(signature, message);
+      handleSecondTask(coinbase);
 
       setsyncStatus("success");
       setTimeout(() => {
@@ -4702,6 +4730,13 @@ function AppRoutes() {
     getWodBalance(coinbase);
     checkIfEOA(coinbase);
   }, [coinbase]);
+  useEffect(() => {
+    if (coinbase) {
+      handleFirstTask(coinbase);
+    } else if (userWallet) {
+      handleFirstTask(userWallet);
+    }
+  }, [coinbase, userWallet]);
 
   useEffect(() => {
     if (isConnected && coinbase) {
@@ -5438,6 +5473,7 @@ function AppRoutes() {
                   onSuccessLogin={() => {
                     setloginListener(loginListener + 1);
                     refetchPlayer();
+                    handleSecondTask(userWallet);
                   }}
                 />
               }
