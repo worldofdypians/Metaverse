@@ -24,16 +24,16 @@ const NewChallenges = ({
     return Number.isInteger(num) || num.toFixed(2) == num.toString();
   }
   let adjustedDay = isAfterCutoff
-  ? currentDate === 0
-  ? 7
-  : currentDate
-  : utcHours === 0
-  ? currentDate === 0
-    ? 6
-    : currentDate - 1
-  : currentDate === 0
-  ? 7
-  : currentDate;
+    ? currentDate === 0
+      ? 7
+      : currentDate
+    : utcHours === 0
+    ? currentDate === 0
+      ? 6
+      : currentDate - 1
+    : currentDate === 0
+    ? 7
+    : currentDate;
 
   const getMonday = (date) => {
     const day = date.getUTCDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
@@ -158,7 +158,8 @@ const NewChallenges = ({
     },
     {
       image: "https://cdn.worldofdypians.com/wod/dailyBonusPrimeCard.png",
-      popupImage: "https://cdn.worldofdypians.com/wod/dailyBonusPrimePopup.webp",
+      popupImage:
+        "https://cdn.worldofdypians.com/wod/dailyBonusPrimePopup.webp",
       desc: "Upgrade to prime access and unlock up to 20 daily bonus chests for even greater benefits and exclusive rewards.",
       title: "Daily Bonus Prime",
       popupDesc:
@@ -200,7 +201,7 @@ const NewChallenges = ({
       image: "https://cdn.worldofdypians.com/wod/starsCard.png",
       popupImage: "https://cdn.worldofdypians.com/wod/starsPopup.webp",
       desc: "Collect stars from different game activities to boost your global rank and earn amazing rewards.",
-      title: "Daily Bonus",
+      title: "Stars",
       popupDesc:
         "Stars are the cornerstone of leaderboard progression in the World of Dypians. Earn Stars through various in-game activities, including daily challenges, special events, and milestone achievements. Stars directly impact your rankings on chain-specific and global leaderboards, unlocking exclusive rewards and solidifying your place in the community.",
       workList: [
@@ -215,6 +216,43 @@ const NewChallenges = ({
         "Participate in special events and missions for bonus opportunities.",
       ],
       link: "/account#dailybonus",
+    },
+    {
+      image: "https://cdn.worldofdypians.com/wod/dailyQuesitonCard.webp",
+      popupImage:
+        "https://cdn.worldofdypians.com/wod/dailyQuestionPopupimg.webp",
+      desc: "Put your BNB Chain knowledge to the test with a fresh challenge every day. A simple and fun way to stay engaged.",
+      title: "Question of the Day",
+      popupDesc:
+        "Put your BNB Chain knowledge to the test with a fresh daily challenge designed to keep you engaged and reward your curiosity. Each correct answer grants valuable rewards, helping you climb rankings and unlock additional opportunities every single day.",
+      workList: [
+        "Available once per day on both BNB and opBNB.",
+        "Sign a transaction to reveal your daily question.",
+        "You have 20 seconds to choose the correct answer.",
+        "Prizes include leaderboard points, Stars, or direct rewards.",
+      ],
+      // tips: [],
+      link: "/account#daily-question",
+    },
+    {
+      image: "https://cdn.worldofdypians.com/wod/royaltyChestCard.webp",
+      popupImage:
+        "https://cdn.worldofdypians.com/wod/royaltyChestPopupimg.webp",
+      desc: "Unlock a prestigious Royalty Chest once per day to claim premium treasures fit for a king.",
+      title: "Royalty Chest",
+      popupDesc:
+        "Unlock a luxurious daily chest filled with high-value treasures, available as part of Daily Bonus. Each Royalty Chest delivers premium rewards that help you progress faster and stay ahead in the competition.",
+      workList: [
+        "Open one Royalty Chest every day.",
+        "Complete the required transaction to open the chest.",
+        "Prizes include leaderboard points, Stars, or direct rewards.",
+      ],
+      // tips: [
+      //   "Maximize your engagement across multiple chains to boost your global leaderboard rank.",
+      //   "Focus on daily tasks to ensure a consistent flow of Stars.",
+      //   "Participate in special events and missions for bonus opportunities.",
+      // ],
+      link: "/account#royalty-chest",
     },
   ];
 
@@ -436,7 +474,8 @@ const NewChallenges = ({
     },
     {
       image: "https://cdn.worldofdypians.com/wod/greatCollectionCard.png",
-      popupImage: "https://cdn.worldofdypians.com/wod/greatCollectionPopup.webp",
+      popupImage:
+        "https://cdn.worldofdypians.com/wod/greatCollectionPopup.webp",
       desc: "Defend your world by taking on invading explorers who are here to gather information. Fight to protect the secrets of the land and earn rewards.",
       title: "The Great Collection",
       popupDesc:
@@ -454,7 +493,6 @@ const NewChallenges = ({
       link: "/account/challenges/great-collection",
     },
   ];
- 
 
   return (
     <>

@@ -2721,7 +2721,7 @@ const NewEvents = ({
     workList: [
       "Hold Genesis Land NFT to access the event.",
       "Earn 30,000-80,000 points added to the BNB Chain leaderboard.",
-      "Receive rewards ranging from $20 to $7,000 ",
+      // "Receive rewards ranging from $20 to $7,000 ",
       "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:30 UTC).",
     ],
     tips: [
