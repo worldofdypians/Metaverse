@@ -37,7 +37,7 @@ const rewardCategories = [
   {
     id: "Points",
     name: "POINTS",
-    icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+    icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp",
     count: "20K",
     color: "from-blue-400 to-purple-500",
     rarity: "COMMON",
@@ -55,7 +55,7 @@ const rewardCategories = [
   {
     id: "Rewards",
     name: "REWARDS",
-    icon: "https://cdn.worldofdypians.com/wod/ai-points-reward-active.webp",
+    icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
     count: "$200",
     color: "from-purple-500 to-pink-500",
     rarity: "EPIC",
