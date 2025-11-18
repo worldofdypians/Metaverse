@@ -504,6 +504,25 @@
   pointer-events: none !important;
 }
 
+.new-post-tag{
+border-radius: 8px;
+background: linear-gradient(180deg, #FFD700 0%, #FFC700 50%, #FA0 100%);
+box-shadow: 0 10px 15px -3px rgba(255, 215, 0, 0.50), 0 4px 6px -4px rgba(255, 215, 0, 0.50);
+position: absolute;
+left: 0px;
+top: 0px;
+z-index: 1;
+}
+
+.new-post-text{
+color: #562E05;
+font-family: Arial;
+font-size: 11px;
+font-style: normal;
+font-weight: 700;
+line-height: 16.5px; /* 150% */
+}
+
 // a39990
 
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */

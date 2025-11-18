@@ -145,8 +145,7 @@ const MyProfile = ({
   const [twitterCooldown, setTwitterCooldown] = useState({});
   const [taskCount, setTaskCount] = useState(0);
 
-
-  const taskLength = localStorage.getItem("taskLength")
+  const taskLength = JSON.parse(localStorage.getItem("taskLength"));
 
   const checkTwitter = async () => {
     await axios
@@ -166,6 +165,7 @@ const MyProfile = ({
                 tasks: [],
               };
             }
+
             acc[item.tweetId].tasks.push({
               task: item.task,
               completed: item.completed,
@@ -175,6 +175,17 @@ const MyProfile = ({
             return acc;
           }, {})
         );
+
+       const oldTasks = grouped.map((t) => {
+        return t.tweetId
+       })
+
+       console.log(oldTasks,"oldtasks");
+       
+
+        if (!taskLength || Number(taskLength.length) === Number(grouped.length)) {
+          localStorage.setItem("taskLength", JSON.stringify(oldTasks));
+        }
 
         setTwitter(res?.data);
         setTwitterTasks(grouped);
@@ -1509,7 +1520,7 @@ const MyProfile = ({
                     style={{ height: "60px" }}
                     onClick={() => setPopup(true)}
                   >
-                    <div className="d-flex align-items-center gap-2">
+                    <div className="d-flex align-items-start gap-2">
                       <div className="d-flex flex-column justify-content-between h-100 mb-0">
                         <div className="d-flex flex-column">
                           <span
@@ -1527,6 +1538,11 @@ const MyProfile = ({
                           </span>
                         </div>
                       </div>
+                      {Number(twitterTasks.length) !== Number(taskLength.length) &&
+                      <div className="task-length-wrapper d-flex align-items-center justify-content-center">
+                        <span className="task-length-text">{twitterTasks.length - taskLength.length} New</span>
+                      </div>
+                      }
                     </div>
 
                     <button
@@ -1876,18 +1892,21 @@ const MyProfile = ({
         </div>
       </div>
       {popup && (
-          <TwitterRewards
+        <TwitterRewards
           taskCount={taskCount}
-            tasks={twitterTasks}
-            onClose={() => setPopup(false)}
-            address={address}
-            checkTwitter={checkTwitter}
-            username={twitter.twitterUsername}
-            isConnected={isConnected}
-            coinbase={coinbase}
-            email={email}
-            onConnectWallet={onConnectWallet}
-          />
+          tasks={twitterTasks}
+          onClose={() => {
+            localStorage.setItem("taskLength", JSON.stringify(twitterTasks));
+            setPopup(false);
+          }}
+          address={address}
+          checkTwitter={checkTwitter}
+          username={twitter.twitterUsername}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          email={email}
+          onConnectWallet={onConnectWallet}
+        />
       )}
       {connectPopup && (
         <OutsideClickHandler onOutsideClick={() => setConnectPopup(false)}>

@@ -26,6 +26,7 @@ const TwitterRewards = ({
     (item) => !item.tasks.every((t) => t.completed && t.verified)
   );
 
+
   const [tab, setTab] = useState("available");
   const [loading, setLoading] = useState(false);
   const [popup, setPopup] = useState(false);
@@ -251,6 +252,7 @@ const TwitterRewards = ({
                               index={index}
                               address={address}
                               checkTwitter={checkTwitter}
+                              currentLength={available.length}
                             />
                           ))}
                         </>

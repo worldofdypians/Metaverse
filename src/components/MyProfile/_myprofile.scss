@@ -1328,3 +1328,18 @@
   }
 }
 
+.task-length-wrapper{
+border-radius: 12px;
+border: 0.5px solid #FFE5C8;
+background: linear-gradient(270deg, #F34F09 0%, #F36B09 100%);
+padding: 2px 5px;
+}
+
+.task-length-text{
+color: #FFE5C8;
+text-align: center;
+font-size: 10px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}

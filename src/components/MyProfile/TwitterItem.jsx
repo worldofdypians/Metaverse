@@ -13,6 +13,11 @@ const TwitterItem = ({ item, index, address, checkTwitter }) => {
   const [repostChecked, setRepostChecked] = useState(false);
   const [commentChecked, setCommentChecked] = useState(false);
 
+  const taskLength = JSON.parse(localStorage.getItem("taskLength"))
+
+  
+
+
   const windowSize = useWindowSize();
 
   const checkTask = async (tweetId, taskType) => {
@@ -71,6 +76,11 @@ const TwitterItem = ({ item, index, address, checkTwitter }) => {
       className="twitter-task-item d-flex flex-column flex-lg-row align-items-center justify-content-between  w-100  p-2 position-relative"
       key={index}
     >
+      {!taskLength?.includes(item.tweetId) && 
+      <div className="new-post-tag d-flex p-2 align-items-center justify-content-center">
+        <span className="new-post-text">NEW</span>
+      </div>
+      }
       <div className="d-flex flex-column gap-3 twitter-item-width">
         <a
           href={`https://x.com/worldofdypians/status/${item.tweetId}`}
