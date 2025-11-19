@@ -62,6 +62,7 @@ import { useUser } from "../../../../../redux/hooks/useWallet";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserProgress } from "../../../../../redux/slices/userSlice";
 import { useQuery as useReactQuery } from "@tanstack/react-query";
+import { fighters } from "../../../../../components/BattlePopup/battleInfo";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -437,6 +438,7 @@ function Dashboard({
   const [showEventPopup, setshowEventPopup] = useState(false);
   const [aiStep, setAiStep] = useState(0);
   const [battleFightResult, setBattleFightResult] = useState([]);
+  const [fightInfo, setFightInfo] = useState(null);
 
   const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
 
@@ -913,7 +915,7 @@ function Dashboard({
     (sum, value) => sum + value,
     0
   );
- 
+
   const claimedMoneyReward = aiQuestionRewards.find(
     (item) => item.rewardType === "Money" && item.status === "Claimed"
   );
@@ -988,31 +990,6 @@ function Dashboard({
         )
       );
       return targetTomorrow.getTime() - now.getTime();
-    }
-  };
-
-  const isPast0030UTC = () => {
-    const now = new Date();
-    const targetToday = new Date(
-      Date.UTC(
-        now.getUTCFullYear(),
-        now.getUTCMonth(),
-        now.getUTCDate(),
-        0, // hour
-        30, // minute
-        0, // second
-        0 // millisecond
-      )
-    );
-    return now.getTime() >= targetToday.getTime();
-  };
-
-  const removeFightInfoIfPast0030UTC = () => {
-    if (
-      isPast0030UTC() &&
-      battleFightResult.message === "You have not fought today"
-    ) {
-      localStorage.removeItem("fightInfo");
     }
   };
 
@@ -6181,6 +6158,10 @@ function Dashboard({
     if (result && result.status === 200) {
       setBattleFightResult(result.data);
 
+      const fighter = fighters.find((item) => {
+        return item.id === result.data.character;
+      });
+
       setTimeout(() => {
         const newFightInfo = {
           id: "Points",
@@ -6190,17 +6171,10 @@ function Dashboard({
           color: "from-blue-400 to-purple-500",
           rarity: "COMMON",
           tier: "TIER II",
-          fighter: {
-            id: "viking",
-            name: "Viking",
-            class: "warrior",
-            thumb: "http://cdn.worldofdypians.com/wod/vikingFighter.png",
-            videoLoop:
-              "https://cdn.worldofdypians.com/wod/battleVideos/vikingLOOP.mp4",
-          },
+          fighter: fighter,
           win: result.data.victory,
         };
-        localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
+        setFightInfo(newFightInfo);
       }, 1000);
     }
   };
@@ -6530,34 +6504,9 @@ function Dashboard({
       handleGetFightResults(email, "bnb");
     } else {
       setBattleFightResult([]);
-      localStorage.removeItem("fightInfo");
+      setFightInfo(null);
     }
   }, [email]);
-
-  useEffect(() => {
-    // Check immediately if it's past 00:30 UTC
-    removeFightInfoIfPast0030UTC();
-
-    // Set up a periodic check (every minute) to handle all cases
-    // This ensures removal even if user checks at 8am or later
-    const intervalId = setInterval(() => {
-      removeFightInfoIfPast0030UTC();
-    }, 60000); // Check every minute
-
-    // Calculate time until next 00:30 UTC
-    const msUntil0030 = getMillisecondsUntil0030UTC();
-
-    // Set timeout to remove fightInfo exactly at 00:30 UTC (only if condition is met)
-    const timeoutId = setTimeout(() => {
-      removeFightInfoIfPast0030UTC();
-    }, msUntil0030);
-
-    // Cleanup on unmount
-    return () => {
-      clearTimeout(timeoutId);
-      clearInterval(intervalId);
-    };
-  }, [battleFightResult]);
 
   useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
@@ -6854,6 +6803,7 @@ function Dashboard({
               openSpecialRewards={() => setSpecialRewardsPopup(true)}
               isConnected={isConnected}
               onConnectWallet={handleConnect}
+              fightInfo={fightInfo}
               liveRewards={
                 Number(userSocialRewardsCached) +
                 Number(genesisRank2) +
@@ -7394,7 +7344,7 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {(battlePopup || hashValue === "#arena-of-rage") && (
+        {(battlePopup || hashValue === "#single-strike") && (
           <div className={`package-popup-wrapper2 `}>
             <BattlePopup
               closePopup={closeBattle}
@@ -7424,6 +7374,8 @@ function Dashboard({
                 handleGetFightResults(userEmail, chainTxt);
               }}
               battleFightResults={battleFightResult}
+              fightInfo={fightInfo}
+              onFightInfoUpdate={setFightInfo}
             />
           </div>
         )}

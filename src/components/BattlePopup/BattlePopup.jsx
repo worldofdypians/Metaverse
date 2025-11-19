@@ -82,6 +82,8 @@ const BattlePopup = ({
   closePopup,
   setClosePopup,
   battleFightResults,
+  fightInfo,
+  onFightInfoUpdate,
 }) => {
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
@@ -265,16 +267,6 @@ const BattlePopup = ({
   const [tempfighter, setTempfighter] = useState(fighters[0]);
   const [dummyCount, setDummyCount] = useState(0);
 
-  const [fightInfo, setFightInfo] = useState(() => {
-    try {
-      // Just read from localStorage - Dashboard.jsx handles conditional removal
-      const stored = localStorage.getItem("fightInfo");
-      return stored ? JSON.parse(stored) : null;
-    } catch (e) {
-      return null;
-    }
-  });
-
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
       if (fightStep === 1) {
@@ -366,38 +358,6 @@ const BattlePopup = ({
     }
   }, [fightInfo]);
 
-  // Sync fightInfo state with localStorage changes (Dashboard.jsx handles conditional removal)
-  useEffect(() => {
-    const checkFightInfo = () => {
-      const stored = localStorage.getItem("fightInfo");
-      if (!stored) {
-        setFightInfo(null);
-      } else {
-        try {
-          const parsed = JSON.parse(stored);
-          setFightInfo(parsed);
-        } catch (e) {
-          setFightInfo(null);
-        }
-      }
-    };
-
-    // Check immediately
-    checkFightInfo();
-
-    // Listen for storage events (when Dashboard.jsx removes fightInfo)
-    window.addEventListener("storage", checkFightInfo);
-
-    // Also check periodically in case localStorage is modified directly
-    const intervalId = setInterval(checkFightInfo, 60000); // Check every minute
-
-    // Cleanup on unmount
-    return () => {
-      clearInterval(intervalId);
-      window.removeEventListener("storage", checkFightInfo);
-    };
-  }, []);
-
   // Attach listener
   window.addEventListener("keydown", handleEsc);
 
@@ -475,8 +435,9 @@ const BattlePopup = ({
               fighter: selectedPlayer,
               win: result.data.victory,
             };
-            localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
-            setFightInfo(newFightInfo); // Update state to trigger re-render
+            if (onFightInfoUpdate) {
+              onFightInfoUpdate(newFightInfo);
+            }
 
             if (result.data.victory) {
               setShowRewards(true);
@@ -557,8 +518,9 @@ const BattlePopup = ({
               fighter: selectedPlayer,
               win: randomBit !== 0,
             };
-            localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
-            setFightInfo(newFightInfo); // Update state to trigger re-render
+            if (onFightInfoUpdate) {
+              onFightInfoUpdate(newFightInfo);
+            }
 
             if (randomBit !== 0) {
               setShowRewards(true);

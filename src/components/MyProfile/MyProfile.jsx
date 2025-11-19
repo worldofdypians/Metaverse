@@ -94,6 +94,7 @@ const MyProfile = ({
   openBattlePopup,
   totalTreasureHuntUsd,
   isPremium,
+  fightInfo,
 }) => {
   // Get user progress data from Redux store
   const userProgress = useSelector((state) => state.user.userProgress);
@@ -303,8 +304,7 @@ const MyProfile = ({
     ],
   };
 
-  // Just read from localStorage - Dashboard.jsx handles conditional removal
-  const battleCompleted = localStorage.getItem("fightInfo");
+  const battleCompleted = fightInfo;
 
   useEffect(() => {
     if (canBuy && email) {
