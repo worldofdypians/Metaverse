@@ -436,6 +436,7 @@ function Dashboard({
   const [selectedEvent, setselectedEvent] = useState([]);
   const [showEventPopup, setshowEventPopup] = useState(false);
   const [aiStep, setAiStep] = useState(0);
+  const [battleFightResult, setBattleFightResult] = useState([]);
 
   const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
 
@@ -912,9 +913,13 @@ function Dashboard({
     (sum, value) => sum + value,
     0
   );
-
+ 
   const claimedMoneyReward = aiQuestionRewards.find(
     (item) => item.rewardType === "Money" && item.status === "Claimed"
+  );
+
+  const claimedMoneyFight = battleFightResult.rewards?.find(
+    (item) => item.rewardType === "money"
   );
 
   const useWarnOnRefresh = (shouldWarn) => {
@@ -983,6 +988,31 @@ function Dashboard({
         )
       );
       return targetTomorrow.getTime() - now.getTime();
+    }
+  };
+
+  const isPast0030UTC = () => {
+    const now = new Date();
+    const targetToday = new Date(
+      Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        0, // hour
+        30, // minute
+        0, // second
+        0 // millisecond
+      )
+    );
+    return now.getTime() >= targetToday.getTime();
+  };
+
+  const removeFightInfoIfPast0030UTC = () => {
+    if (
+      isPast0030UTC() &&
+      battleFightResult.message === "You have not fought today"
+    ) {
+      localStorage.removeItem("fightInfo");
     }
   };
 
@@ -6136,30 +6166,44 @@ function Dashboard({
     }
   }
 
-  const getUserRewardData = async (addr) => {
+  const handleGetFightResults = async (email, chain) => {
     const result = await axios
-      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      })
+      .post(
+        `https://worldofdypiansdailybonus.azurewebsites.net/api/GetFightOfTheDayResult?code=7X5t65iOoiMTYlCnKyoMwBHAGmJOr9NoN3lhXk0RRkgTAzFudoavxg==`,
+        {
+          email: email,
+          chainId: chain,
+        }
+      )
       .catch((e) => {
         console.error(e);
       });
-
     if (result && result.status === 200) {
-      if (result.data && result.data.rewards && result.data.rewards === 0) {
-        setuserSocialRewards(0);
-        localStorage.setItem("cacheduserSocialRewards", 0);
-      } else if (result.data && !result.data.rewards) {
-        let amount = 0;
-        for (let i = 0; i < result.data.length; i++) {
-          amount += result.data[i].amount;
-        }
-        localStorage.setItem("cacheduserSocialRewards", amount);
-        setuserSocialRewards(amount);
-      }
+      setBattleFightResult(result.data);
+
+      setTimeout(() => {
+        const newFightInfo = {
+          id: "Points",
+          name: "POINTS",
+          icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+          count: "20K",
+          color: "from-blue-400 to-purple-500",
+          rarity: "COMMON",
+          tier: "TIER II",
+          fighter: {
+            id: "viking",
+            name: "Viking",
+            class: "warrior",
+            thumb: "http://cdn.worldofdypians.com/wod/vikingFighter.png",
+            videoLoop:
+              "https://cdn.worldofdypians.com/wod/battleVideos/vikingLOOP.mp4",
+          },
+          win: result.data.victory,
+        };
+        localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
+      }, 1000);
     }
   };
-
   const scrollToElement = () => {
     const element = document.getElementById(eventId);
     if (element && element !== "golden-pass") {
@@ -6482,6 +6526,40 @@ function Dashboard({
   }, [userWallet, email]);
 
   useEffect(() => {
+    if (email) {
+      handleGetFightResults(email, "bnb");
+    } else {
+      setBattleFightResult([]);
+      localStorage.removeItem("fightInfo");
+    }
+  }, [email]);
+
+  useEffect(() => {
+    // Check immediately if it's past 00:30 UTC
+    removeFightInfoIfPast0030UTC();
+
+    // Set up a periodic check (every minute) to handle all cases
+    // This ensures removal even if user checks at 8am or later
+    const intervalId = setInterval(() => {
+      removeFightInfoIfPast0030UTC();
+    }, 60000); // Check every minute
+
+    // Calculate time until next 00:30 UTC
+    const msUntil0030 = getMillisecondsUntil0030UTC();
+
+    // Set timeout to remove fightInfo exactly at 00:30 UTC (only if condition is met)
+    const timeoutId = setTimeout(() => {
+      removeFightInfoIfPast0030UTC();
+    }, msUntil0030);
+
+    // Cleanup on unmount
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    };
+  }, [battleFightResult]);
+
+  useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
       fetchUserFavorites(userWallet ? userWallet : coinbase);
     }
@@ -6783,7 +6861,8 @@ function Dashboard({
                 Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
-                (claimedMoneyReward ? Number(claimedMoneyReward.reward) : 0)
+                (claimedMoneyReward ? Number(claimedMoneyReward.reward) : 0) +
+                (claimedMoneyFight ? Number(claimedMoneyFight.reward) : 0)
                 // Number(mantaEarnUsd) +
                 // Number(seiEarnUsd) +
 
@@ -7341,6 +7420,10 @@ function Dashboard({
                 setbattlePopup(false);
                 handleConnect();
               }}
+              onClaimRewards={(userEmail, chainTxt) => {
+                handleGetFightResults(userEmail, chainTxt);
+              }}
+              battleFightResults={battleFightResult}
             />
           </div>
         )}

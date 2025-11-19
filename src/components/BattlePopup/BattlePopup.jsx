@@ -81,6 +81,7 @@ const BattlePopup = ({
   publicClient,
   closePopup,
   setClosePopup,
+  battleFightResults,
 }) => {
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
@@ -88,7 +89,7 @@ const BattlePopup = ({
   const windowSize = useWindowSize();
   const MIN_APPROVAL = 5000000000000000000n; // 5 WOD with 18 decimals
   const MAX_APPROVE_AMOUNT = 500000000000000000000000n; // 500,000 * 1e18
-
+  
   const readOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
       if (window.WALLET_TYPE === "matchId" && publicClient) {
@@ -152,18 +153,6 @@ const BattlePopup = ({
 
   let now = new Date().getTime();
   const midnightTime = new Date(now).setUTCHours(24, 30, 0, 0);
-  // const fighters = [
-  //   "caws",
-  //   "futuristicFemale",
-  //   "futuristicMale",
-  //   "mageFemale",
-  //   "matrix",
-  //   "miner",
-  //   "ninjaFemale",
-  //   "ninja",
-  //   "slayer",
-  //   "viking",
-  // ];
 
   const glassyContainerStyle = {
     background:
@@ -275,8 +264,10 @@ const BattlePopup = ({
   const [showPrizes, setShowPrizes] = useState(false);
   const [tempfighter, setTempfighter] = useState(fighters[0]);
   const [dummyCount, setDummyCount] = useState(0);
+
   const [fightInfo, setFightInfo] = useState(() => {
     try {
+      // Just read from localStorage - Dashboard.jsx handles conditional removal
       const stored = localStorage.getItem("fightInfo");
       return stored ? JSON.parse(stored) : null;
     } catch (e) {
@@ -375,8 +366,213 @@ const BattlePopup = ({
     }
   }, [fightInfo]);
 
+  // Sync fightInfo state with localStorage changes (Dashboard.jsx handles conditional removal)
+  useEffect(() => {
+    const checkFightInfo = () => {
+      const stored = localStorage.getItem("fightInfo");
+      if (!stored) {
+        setFightInfo(null);
+      } else {
+        try {
+          const parsed = JSON.parse(stored);
+          setFightInfo(parsed);
+        } catch (e) {
+          setFightInfo(null);
+        }
+      }
+    };
+
+    // Check immediately
+    checkFightInfo();
+
+    // Listen for storage events (when Dashboard.jsx removes fightInfo)
+    window.addEventListener("storage", checkFightInfo);
+
+    // Also check periodically in case localStorage is modified directly
+    const intervalId = setInterval(checkFightInfo, 60000); // Check every minute
+
+    // Cleanup on unmount
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener("storage", checkFightInfo);
+    };
+  }, []);
+
   // Attach listener
   window.addEventListener("keydown", handleEsc);
+
+  const getUserRewards = async (userEmail, txHash, chestId, character) => {
+    const userData_bnb = {
+      email: userEmail,
+      transactionHash: txHash,
+      chainId: chestId,
+      character: character,
+    };
+
+    const result = await axios
+      .post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/FightOfTheDay?code=hr_pNQLryfbN54Xmc8l2JeycDYBCeePgfsqkJCdMTsSyAzFue2nU_w==",
+        userData_bnb
+      )
+      .catch((e) => {
+        if (e.response.status === 400) {
+          const timer = setTimeout(() => {
+            getUserRewards2(userEmail, txHash, chestId, character);
+          }, 1000);
+          return () => clearTimeout(timer);
+        } else {
+          setLoading(false);
+
+          window.alertify.error(e?.message);
+          console.error(e);
+        }
+      });
+    if (result && result.status === 200) {
+      console.log(result.data.rewards);
+      setLoading(false);
+      setStep(2);
+      onClaimRewards(email, "bnb");
+
+      setTimeout(() => {
+        setLoading(false);
+
+        setFightType(result.data.victory === true ? "WIN" : "LOSE");
+        setFightStep(2);
+
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
+        }
+
+        // Step 2 lasts 4.3s
+        setTimeout(() => {
+          setFightStep(3);
+
+          // Step 3 lasts 25.5s
+          setTimeout(() => {
+            setClosePopup(false);
+            setFightStep(1); 
+
+            if (audioRef.current) {
+              audioRef.current.play().catch((err) => {
+                if (err.name !== "AbortError")
+                  console.warn("Audio play failed:", err);
+              });
+            }
+            setDummyCount(1);
+          }, 26500);
+
+          // 🎁 Save data + show rewards
+          setTimeout(() => {
+            const newFightInfo = {
+              id: "Points",
+              name: "POINTS",
+              icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+              count: "20K",
+              color: "from-blue-400 to-purple-500",
+              rarity: "COMMON",
+              tier: "TIER II",
+              fighter: selectedPlayer,
+              win: result.data.victory,
+            };
+            localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
+            setFightInfo(newFightInfo); // Update state to trigger re-render
+
+            if (result.data.victory) {
+              setShowRewards(true);
+            }
+          }, 21500);
+        }, 4300);
+      }, 2500);
+      setTimeout(() => {
+        setRewards(result.data.rewards);
+      }, 3600);
+
+      setLoading(false);
+    }
+  };
+  const getUserRewards2 = async (userEmail, txHash, chestId, character) => {
+    const userData_bnb = {
+      email: userEmail,
+      transactionHash: txHash,
+      chainId: chestId,
+      character: character,
+    };
+
+    const result = await axios
+      .post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/FightOfTheDay?code=hr_pNQLryfbN54Xmc8l2JeycDYBCeePgfsqkJCdMTsSyAzFue2nU_w==",
+        userData_bnb
+      )
+      .catch((e) => {
+        setLoading(false);
+        window.alertify.error(e?.message);
+      });
+    if (result && result.status === 200) {
+      console.log(result.data);
+      onClaimRewards(email, "bnb");
+      setLoading(false);
+      setStep(2);
+      setTimeout(() => {
+        setLoading(false);
+        const randomBit = Math.round(Math.random());
+        console.log(randomBit, "random");
+
+        setFightType(randomBit === 0 ? "LOSE" : "WIN");
+        setFightStep(2);
+
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
+        }
+
+        // Step 2 lasts 4.3s
+        setTimeout(() => {
+          setFightStep(3);
+
+          // Step 3 lasts 25.5s
+          setTimeout(() => {
+            setClosePopup(false);
+            setFightStep(1); 
+
+            if (audioRef.current) {
+              audioRef.current.play().catch((err) => {
+                if (err.name !== "AbortError")
+                  console.warn("Audio play failed:", err);
+              });
+            }
+            setDummyCount(1);
+          }, 26500);
+
+          // 🎁 Save data + show rewards
+          setTimeout(() => {
+            const newFightInfo = {
+              id: "Points",
+              name: "POINTS",
+              icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+              count: "20K",
+              color: "from-blue-400 to-purple-500",
+              rarity: "COMMON",
+              tier: "TIER II",
+              fighter: selectedPlayer,
+              win: randomBit !== 0,
+            };
+            localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
+            setFightInfo(newFightInfo); // Update state to trigger re-render
+
+            if (randomBit !== 0) {
+              setShowRewards(true);
+            }
+          }, 21500);
+        }, 4300);
+      }, 2500);
+      setTimeout(() => {
+        setRewards(result.data.rewards);
+      }, 3600);
+
+      setLoading(false);
+    }
+  };
 
   const handleStrike = async () => {
     setLoading(true);
@@ -402,62 +598,7 @@ const BattlePopup = ({
 
         await publicClient.waitForTransactionReceipt({ hash: txHash });
         // onClaimRewards(email, txHash, contractConfig.chainText);
-        setLoading(false);
-        setStep(2);
-        setTimeout(() => {
-          setLoading(false);
-          const randomBit = Math.round(Math.random());
-          console.log(randomBit, "random");
-
-          setFightType(randomBit === 0 ? "LOSE" : "WIN");
-          setFightStep(2);
-
-          if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-          }
-
-          // Step 2 lasts 4.3s
-          setTimeout(() => {
-            setFightStep(3);
-
-            // Step 3 lasts 25.5s
-            setTimeout(() => {
-              setClosePopup(false);
-              setFightStep(1);
-              console.log(audioRef.current, "audioref");
-
-              if (audioRef.current) {
-                audioRef.current.play().catch((err) => {
-                  if (err.name !== "AbortError")
-                    console.warn("Audio play failed:", err);
-                });
-              }
-              setDummyCount(1);
-            }, 26500);
-
-            // 🎁 Save data + show rewards
-            setTimeout(() => {
-              const newFightInfo = {
-                id: "Points",
-                name: "POINTS",
-                icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-                count: "20K",
-                color: "from-blue-400 to-purple-500",
-                rarity: "COMMON",
-                tier: "TIER II",
-                fighter: selectedPlayer,
-                win: randomBit !== 0,
-              };
-              localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
-              setFightInfo(newFightInfo); // Update state to trigger re-render
-
-              if (randomBit !== 0) {
-                setShowRewards(true);
-              }
-            }, 21500);
-          }, 4300);
-        }, 2500);
+        getUserRewards(email, txHash, "bnb", selectedPlayer.id);
         //   if (video) {
         //     video.play().catch((err) => console.error("Play failed:", err));
         //     setTimeout(() => {
@@ -507,65 +648,8 @@ const BattlePopup = ({
       console.log("Transaction confirmed in block:", receipt.blockNumber);
 
       if (receipt) {
+        getUserRewards(email, txHash, "bnb", selectedPlayer.id);
         // onClaimRewards(email, txHash, contractConfig.chainText);
-        setLoading(false);
-        setStep(2);
-
-        setTimeout(() => {
-          setLoading(false);
-          const randomBit = Math.round(Math.random());
-          console.log(randomBit, "random");
-
-          setFightType(randomBit === 0 ? "LOSE" : "WIN");
-          setFightStep(2);
-
-          if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-          }
-
-          // Step 2 lasts 4.3s
-          setTimeout(() => {
-            setFightStep(3);
-
-            // Step 3 lasts 25.5s
-            setTimeout(() => {
-              setClosePopup(false);
-              setFightStep(1);
-              console.log(audioRef.current, "audioref");
-
-              if (audioRef.current) {
-                audioRef.current.play().catch((err) => {
-                  if (err.name !== "AbortError")
-                    console.warn("Audio play failed:", err);
-                });
-              }
-              setDummyCount(1);
-            }, 26500);
-
-            // 🎁 Save data + show rewards
-            setTimeout(() => {
-              const newFightInfo = {
-                id: "Points",
-                name: "POINTS",
-                icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-                count: "20K",
-                color: "from-blue-400 to-purple-500",
-                rarity: "COMMON",
-                tier: "TIER II",
-                fighter: selectedPlayer,
-                win: randomBit !== 0,
-              };
-              localStorage.setItem("fightInfo", JSON.stringify(newFightInfo));
-              setFightInfo(newFightInfo); // Update state to trigger re-render
-
-              if (randomBit !== 0) {
-                setShowRewards(true);
-              }
-            }, 21500);
-          }, 4300);
-        }, 2500);
-
         //   if (video) {
         //     video.play().catch((err) => console.error("Play failed:", err));
         //     setTimeout(() => {
@@ -807,22 +891,30 @@ const BattlePopup = ({
                             Winner
                           </h6>
                           <div className="fighter-win-rewards d-flex align-items-center gap-3 p-2">
-                            <div className="d-flex align-items-end gap-1">
-                              <span className="fighter-win-rewards-amount">
-                                2,520
-                              </span>
-                              <span className="fighter-win-rewards-type">
-                                Points
-                              </span>
-                            </div>
-                            <div className="d-flex align-items-end gap-1">
-                              <span className="fighter-win-rewards-amount">
-                                134
-                              </span>
-                              <span className="fighter-win-rewards-type">
-                                Stars
-                              </span>
-                            </div>
+                            {battleFightResults &&
+                              battleFightResults.rewards?.length > 0 &&
+                              battleFightResults.rewards.map(
+                                (reward, index) => {
+                                  return (
+                                    <div
+                                      className="d-flex align-items-end gap-1"
+                                      key={index}
+                                    >
+                                      <span className="fighter-win-rewards-amount">
+                                        {getFormattedNumber(
+                                          reward.reward,
+                                          reward.rewardType === "money" ? 2 : 0
+                                        )}
+                                      </span>
+                                      <span className="fighter-win-rewards-type text-capitalize">
+                                        {reward.rewardType === "money"
+                                          ? "$"
+                                          : reward.rewardType}
+                                      </span>
+                                    </div>
+                                  );
+                                }
+                              )}
                           </div>
                         </div>
                       )}
@@ -924,18 +1016,28 @@ const BattlePopup = ({
             className="d-flex player-win-wrapper flex-column gap-2 align-items-center"
           >
             <div className="fighter-win-rewards-2 d-flex flex-column flex-lg-row  align-items-center justify-content-center gap-3 gap-lg-5 p-4">
-              <div className="d-flex fight-rewards-item-2 flex-row flex-lg-column gap-2 align-items-center">
-                <span className="fight-rewards-item-2-value">2,520</span>
-                <h6 className="fight-rewards-item-2-title mb-0">Points</h6>
-              </div>
-              <div className="d-flex fight-rewards-item-2 flex-row flex-lg-column gap-2 align-items-center">
-                <span className="fight-rewards-item-2-value">150</span>
-                <h6 className="fight-rewards-item-2-title mb-0">Stars</h6>
-              </div>
-              <div className="d-flex fight-rewards-item-2 flex-row flex-lg-column gap-2 align-items-center">
-                <span className="fight-rewards-item-2-value">$1.5</span>
-                <h6 className="fight-rewards-item-2-title mb-0">Rewards</h6>
-              </div>
+              {battleFightResults &&
+                battleFightResults.rewards?.length > 0 &&
+                battleFightResults.rewards.map((reward, index) => {
+                  return (
+                    <div
+                      className="d-flex fight-rewards-item-2 flex-row flex-lg-column gap-2 align-items-center"
+                      key={index}
+                    >
+                      <span className="fight-rewards-item-2-value">
+                        {getFormattedNumber(
+                          reward.reward,
+                          reward.rewardType === "money" ? 2 : 0
+                        )}
+                      </span>
+                      <h6 className="fight-rewards-item-2-title mb-0 text-capitalize">
+                        {reward.rewardType === "money"
+                          ? "$"
+                          : reward.rewardType}
+                      </h6>
+                    </div>
+                  );
+                })}
             </div>
           </motion.div>
         )}
