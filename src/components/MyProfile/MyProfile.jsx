@@ -181,13 +181,14 @@ const MyProfile = ({
           return t.tweetId;
         });
 
-        console.log(oldTasks, taskLength, "oldtasks");
 
-        const missingCount = oldTasks.filter(
+       if(taskLength){
+         const missingCount = oldTasks.filter(
           (item) => !taskLength.includes(item)
         ).length;
 
         setNewTaskLength(missingCount);
+       }
 
         if (
           !taskLength ||
