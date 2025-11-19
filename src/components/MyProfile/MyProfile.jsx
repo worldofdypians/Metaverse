@@ -176,18 +176,27 @@ const MyProfile = ({
           }, {})
         );
 
-       const oldTasks = grouped.map((t) => {
-        return t.tweetId
-       })
+        const oldTasks = grouped.map((t) => {
+          return t.tweetId;
+        });
 
-       console.log(oldTasks, taskLength,"oldtasks");
+        console.log(oldTasks, taskLength, "oldtasks");
 
-       const missingCount = oldTasks.filter(item => !taskLength.includes(item)).length;
+        const missingCount = oldTasks.filter(
+          (item) => !taskLength.includes(item)
+        ).length;
 
-setNewTaskLength(missingCount);
-       
+        setNewTaskLength(missingCount);
 
-        if (!taskLength || Number(taskLength.length) === Number(grouped.length)) {
+        if (
+          !taskLength ||
+          Number(taskLength.length) ===
+            Number(
+              grouped.map((t) => {
+                return t.tweetId;
+              }).length
+            )
+        ) {
           localStorage.setItem("taskLength", JSON.stringify(oldTasks));
         }
 
@@ -1542,11 +1551,13 @@ setNewTaskLength(missingCount);
                           </span>
                         </div>
                       </div>
-                      {newTaskLength > 0 &&
-                      <div className="task-length-wrapper d-flex align-items-center justify-content-center">
-                        <span className="task-length-text">{newTaskLength} New</span>
-                      </div>
-                      }
+                      {newTaskLength > 0 && (
+                        <div className="task-length-wrapper d-flex align-items-center justify-content-center">
+                          <span className="task-length-text">
+                            {newTaskLength} New
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     <button
@@ -1900,7 +1911,14 @@ setNewTaskLength(missingCount);
           taskCount={taskCount}
           tasks={twitterTasks}
           onClose={() => {
-            localStorage.setItem("taskLength", JSON.stringify(twitterTasks));
+            localStorage.setItem(
+              "taskLength",
+              JSON.stringify(
+                twitterTasks.map((t) => {
+                  return t.tweetId;
+                })
+              )
+            );
             setPopup(false);
           }}
           address={address}
@@ -1921,7 +1939,10 @@ setNewTaskLength(missingCount);
             isConnected={isConnected}
             coinbase={coinbase}
             email={email}
-            onConnectWallet={onConnectWallet}
+            onConnectWallet={() => {
+              onConnectWallet();
+              checkTwitter();
+            }}
           />
         </OutsideClickHandler>
       )}
