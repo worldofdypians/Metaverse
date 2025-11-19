@@ -144,7 +144,7 @@ const MyProfile = ({
   const [connectPopup, setConnectPopup] = useState(false);
   const [twitterCooldown, setTwitterCooldown] = useState({});
   const [taskCount, setTaskCount] = useState(0);
-
+  const [newTaskLength, setNewTaskLength] = useState(0);
   const taskLength = JSON.parse(localStorage.getItem("taskLength"));
 
   const checkTwitter = async () => {
@@ -180,7 +180,11 @@ const MyProfile = ({
         return t.tweetId
        })
 
-       console.log(oldTasks,"oldtasks");
+       console.log(oldTasks, taskLength,"oldtasks");
+
+       const missingCount = oldTasks.filter(item => !taskLength.includes(item)).length;
+
+setNewTaskLength(missingCount);
        
 
         if (!taskLength || Number(taskLength.length) === Number(grouped.length)) {
@@ -1538,9 +1542,9 @@ const MyProfile = ({
                           </span>
                         </div>
                       </div>
-                      {Number(twitterTasks.length) !== Number(taskLength.length) &&
+                      {newTaskLength > 0 &&
                       <div className="task-length-wrapper d-flex align-items-center justify-content-center">
-                        <span className="task-length-text">{twitterTasks.length - taskLength.length} New</span>
+                        <span className="task-length-text">{newTaskLength} New</span>
                       </div>
                       }
                     </div>
