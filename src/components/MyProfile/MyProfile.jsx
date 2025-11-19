@@ -138,7 +138,7 @@ const MyProfile = ({
   // Will be "true", "false", or null if it doesn't exist
   const twitterLinkedParam = queryParams.get("twitterLinked");
 
-  const [twitter, setTwitter] = useState(null);
+  const [twitter, setTwitter] = useState();
   const [twitterTasks, setTwitterTasks] = useState([]);
   const [popup, setPopup] = useState(false);
   const [connectPopup, setConnectPopup] = useState(false);
@@ -152,6 +152,7 @@ const MyProfile = ({
       .get(`https://api.worldofdypians.com/api/website-account/${address}`)
       .then((res) => {
         console.log(res.data, "twitterData");
+        setTwitter(res.data);
         const incompleteCount = res.data.twitterTasks.filter(
           (t) => t.completed === false && t.verified === false
         ).length;
@@ -200,7 +201,7 @@ const MyProfile = ({
           localStorage.setItem("taskLength", JSON.stringify(oldTasks));
         }
 
-        setTwitter(res?.data);
+        
         setTwitterTasks(grouped);
         console.log(grouped, "grouped");
       })
@@ -219,8 +220,10 @@ const MyProfile = ({
   };
 
   useEffect(() => {
-    checkTwitter();
-    checkCooldown();
+    if (address) {
+      checkTwitter();
+      checkCooldown();
+    }
   }, [twitterLinkedParam, address]);
 
   useEffect(() => {
@@ -1526,7 +1529,7 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              {twitter?.twitterUsername ? (
+              {twitter && twitter.twitterUsername ? (
                 <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                   <div
                     className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
