@@ -1,25 +1,26 @@
 .twitter-popup {
   // background: #0f1239 !important;
-  width: 70% !important;
+  width: 55% !important;
   min-height: 700px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('https://cdn.worldofdypians.com/wod/twitterBackground.svg') !important;
-  background-size: cover;
+  background-image: url("https://cdn.worldofdypians.com/wod/twitterBackground.svg") !important;
+  background-size: 100%;
   background-repeat: no-repeat;
   @media screen and (max-width: 1500px) {
-    width: 80% !important; 
+    width: 80% !important;
   }
   @media screen and (max-width: 1200px) {
-    width: 100% !important; 
+    width: 100% !important;
+    justify-content: start;
   }
 }
 
-.twitter-item-width{
-  width: 75%;
-   @media screen and (max-width: 786px) {
-    width: 100% !important; 
+.twitter-item-width {
+  width: 80%;
+  @media screen and (max-width: 786px) {
+    width: 100% !important;
   }
 }
 
@@ -121,8 +122,8 @@
 }
 
 .twitter-tasks-container {
-  height: 410px;
-  overflow-y: scroll;
+  height: 540px;
+  // overflow-y: scroll;
 
   @media screen and (max-width: 786px) {
     height: 285px;
@@ -188,6 +189,15 @@
   min-width: 120px;
   display: flex;
   justify-content: center;
+
+  @media screen and (max-width: 786px) {
+    min-width: 105px;
+  }
+  justify-content: center;
+
+  @media screen and (max-width: 380px) {
+    min-width: 90px;
+  }
 }
 
 .twitter-action-btn-disabled {
@@ -208,7 +218,7 @@
   background: #1a1640;
   transition: all 0.25s;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.80);
+  color: rgba(255, 255, 255, 0.8);
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
@@ -248,8 +258,7 @@
   }
 }
 
-.star-amount-container {
-}
+
 
 .stars-completed {
   span {
@@ -346,7 +355,7 @@
   border-radius: 10px;
   border: 0.909px solid #2a2454;
   background: linear-gradient(180deg, #1a1640 0%, #0f0d28 100%);
-  width: 110px;
+  width: 150px;
 }
 
 .available-rewards-text {
@@ -504,23 +513,50 @@
   pointer-events: none !important;
 }
 
-.new-post-tag{
-border-radius: 8px;
-background: linear-gradient(180deg, #FFD700 0%, #FFC700 50%, #FA0 100%);
-box-shadow: 0 10px 15px -3px rgba(255, 215, 0, 0.50), 0 4px 6px -4px rgba(255, 215, 0, 0.50);
-position: absolute;
-left: 0px;
-top: 0px;
-z-index: 1;
+.new-post-tag {
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffd700 0%, #ffc700 50%, #fa0 100%);
+  box-shadow: 0 10px 15px -3px rgba(255, 215, 0, 0.5),
+    0 4px 6px -4px rgba(255, 215, 0, 0.5);
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 1;
 }
 
-.new-post-text{
-color: #562E05;
-font-family: Arial;
-font-size: 11px;
-font-style: normal;
-font-weight: 700;
-line-height: 16.5px; /* 150% */
+.new-post-text {
+  color: #562e05;
+  font-family: Arial;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16.5px; /* 150% */
+}
+
+.page-button {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: #1a1640;
+  border-radius: 8px;
+  border: 1px solid #2a2454;
+}
+
+.disabled-page-button {
+  opacity: 0.6;
+}
+
+.active-page-button {
+  border: 1px solid rgba(0, 0, 0, 0) !important;
+    background: linear-gradient(180deg, #1e90ff 0%, #06c 100%) !important;
 }
 
 // a39990

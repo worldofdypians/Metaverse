@@ -1923,6 +1923,7 @@ const MyProfile = ({
                 })
               )
             );
+            checkTwitter();
             setPopup(false);
           }}
           address={address}
