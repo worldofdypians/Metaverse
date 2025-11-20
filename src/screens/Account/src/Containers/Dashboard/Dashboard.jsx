@@ -6156,26 +6156,31 @@ function Dashboard({
         console.error(e);
       });
     if (result && result.status === 200) {
-      setBattleFightResult(result.data);
+      if (result.data.message === "You have not fought today") {
+        setBattleFightResult([]);
+        setFightInfo(null);
+      } else {
+        setBattleFightResult(result.data);
 
-      const fighter = fighters.find((item) => {
-        return item.id === result.data.character;
-      });
+        const fighter = fighters.find((item) => {
+          return item.id === result.data.character;
+        });
 
-      setTimeout(() => {
-        const newFightInfo = {
-          id: "Points",
-          name: "POINTS",
-          icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
-          count: "20K",
-          color: "from-blue-400 to-purple-500",
-          rarity: "COMMON",
-          tier: "TIER II",
-          fighter: fighter,
-          win: result.data.victory,
-        };
-        setFightInfo(newFightInfo);
-      }, 1000);
+        setTimeout(() => {
+          const newFightInfo = {
+            id: "Points",
+            name: "POINTS",
+            icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+            count: "20K",
+            color: "from-blue-400 to-purple-500",
+            rarity: "COMMON",
+            tier: "TIER II",
+            fighter: fighter,
+            win: result.data.victory,
+          };
+          setFightInfo(newFightInfo);
+        }, 1000);
+      }
     }
   };
   const scrollToElement = () => {

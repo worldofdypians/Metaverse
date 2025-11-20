@@ -91,7 +91,7 @@ const BattlePopup = ({
   const windowSize = useWindowSize();
   const MIN_APPROVAL = 5000000000000000000n; // 5 WOD with 18 decimals
   const MAX_APPROVE_AMOUNT = 500000000000000000000000n; // 500,000 * 1e18
-  
+
   const readOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
       if (window.WALLET_TYPE === "matchId" && publicClient) {
@@ -250,7 +250,6 @@ const BattlePopup = ({
   ];
   const btnRef = useRef(null);
   const [showContent, setShowContent] = useState(true);
-  const [step, setStep] = useState(1);
   const [fightStep, setFightStep] = useState(1);
   const [selectedChain, setSelectedChain] = useState("");
   const [hoveredChain, setHoveredChain] = useState(null);
@@ -388,11 +387,6 @@ const BattlePopup = ({
         }
       });
     if (result && result.status === 200) {
-      console.log(result.data.rewards);
-      setLoading(false);
-      setStep(2);
-      onClaimRewards(email, "bnb");
-
       setTimeout(() => {
         setLoading(false);
 
@@ -411,7 +405,7 @@ const BattlePopup = ({
           // Step 3 lasts 25.5s
           setTimeout(() => {
             setClosePopup(false);
-            setFightStep(1); 
+            setFightStep(1);
 
             if (audioRef.current) {
               audioRef.current.play().catch((err) => {
@@ -444,8 +438,9 @@ const BattlePopup = ({
             }
           }, 21500);
         }, 4300);
-      }, 2500);
+      }, 1500);
       setTimeout(() => {
+        onClaimRewards(email, "bnb");
         setRewards(result.data.rewards);
       }, 3600);
 
@@ -471,9 +466,8 @@ const BattlePopup = ({
       });
     if (result && result.status === 200) {
       console.log(result.data);
-      onClaimRewards(email, "bnb");
       setLoading(false);
-      setStep(2);
+
       setTimeout(() => {
         setLoading(false);
         const randomBit = Math.round(Math.random());
@@ -494,7 +488,7 @@ const BattlePopup = ({
           // Step 3 lasts 25.5s
           setTimeout(() => {
             setClosePopup(false);
-            setFightStep(1); 
+            setFightStep(1);
 
             if (audioRef.current) {
               audioRef.current.play().catch((err) => {
@@ -527,8 +521,9 @@ const BattlePopup = ({
             }
           }, 21500);
         }, 4300);
-      }, 2500);
+      }, 1500);
       setTimeout(() => {
+        onClaimRewards(email, "bnb");
         setRewards(result.data.rewards);
       }, 3600);
 
@@ -565,7 +560,7 @@ const BattlePopup = ({
         //     video.play().catch((err) => console.error("Play failed:", err));
         //     setTimeout(() => {
         //       video.pause();
-        //       setStep(3);
+        //
         //       onClaimRewards();
         //     }, 8000);
         //   }
@@ -616,7 +611,7 @@ const BattlePopup = ({
         //     video.play().catch((err) => console.error("Play failed:", err));
         //     setTimeout(() => {
         //       video.pause();
-        //       setStep(3);
+        //
         //       onClaimRewards();
         //     }, 8000);
         //   }
@@ -862,6 +857,11 @@ const BattlePopup = ({
                                       className="d-flex align-items-end gap-1"
                                       key={index}
                                     >
+                                      {reward.rewardType === "money" && (
+                                        <span className="fighter-win-rewards-type text-capitalize">
+                                          $
+                                        </span>
+                                      )}
                                       <span className="fighter-win-rewards-amount">
                                         {getFormattedNumber(
                                           reward.reward,
@@ -869,9 +869,8 @@ const BattlePopup = ({
                                         )}
                                       </span>
                                       <span className="fighter-win-rewards-type text-capitalize">
-                                        {reward.rewardType === "money"
-                                          ? "$"
-                                          : reward.rewardType}
+                                        {reward.rewardType !== "money" &&
+                                          reward.rewardType}
                                       </span>
                                     </div>
                                   );
@@ -986,6 +985,11 @@ const BattlePopup = ({
                       className="d-flex fight-rewards-item-2 flex-row flex-lg-column gap-2 align-items-center"
                       key={index}
                     >
+                      {reward.rewardType === "money" && (
+                        <span className="fight-rewards-item-2-title mb-0 text-capitalize">
+                          $
+                        </span>
+                      )}
                       <span className="fight-rewards-item-2-value">
                         {getFormattedNumber(
                           reward.reward,
@@ -993,9 +997,7 @@ const BattlePopup = ({
                         )}
                       </span>
                       <h6 className="fight-rewards-item-2-title mb-0 text-capitalize">
-                        {reward.rewardType === "money"
-                          ? "$"
-                          : reward.rewardType}
+                        {reward.rewardType !== "money" && reward.rewardType}
                       </h6>
                     </div>
                   );
@@ -1005,68 +1007,6 @@ const BattlePopup = ({
         )}
         {showContent && (
           <>
-            {rewards && rewards.length > 0 && (
-              <motion.div
-                key={rewardCategories[0].id}
-                initial={{ opacity: 0, scale: 0, y: 30 }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  y: 0,
-                }}
-                transition={{
-                  delay: 0.1 + 0 * 0.1,
-                  type: "spring",
-                  stiffness: 120,
-                }}
-                // whileHover={{ scale: 1.02, y: -2, x: 3 }}
-                className="selected-kick-reward overflow-hidden col-12 col-xxl-4"
-              >
-                {/* Gaming-style tier indicator */}
-
-                {/* Animated scan line for active rewards */}
-
-                <div className="text-center">
-                  <motion.span
-                    className="d-block selected-kick-count"
-                    animate={{
-                      scale: [1, 1.1, 1],
-
-                      color: [
-                        "rgba(255, 255, 255, 1)",
-                        "rgba(132, 183, 247, 1)",
-                        "rgba(255, 255, 255, 1)",
-                      ],
-                    }}
-                    transition={{
-                      duration: 0.8,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    {/* {getFormattedNumber(rewards?.reward, 0)}{" "}
-                    {rewards?.rewardType} */}
-                    {rewards &&
-                      rewards.length > 0 &&
-                      rewards.map((obj, index) => {
-                        return (
-                          <span key={index}>
-                            {obj.rewardType === "Money" && "$"}
-                            {obj.rewardType === "Stars" ||
-                            obj.rewardType === "Money"
-                              ? obj.reward
-                              : getFormattedNumber(obj.reward, 0)}{" "}
-                            {obj.rewardType !== "Money" && obj.rewardType}
-                            {rewards.length > 1 &&
-                              index < rewards.length - 1 &&
-                              " + "}
-                          </span>
-                        );
-                      })}
-                  </motion.span>
-                </div>
-              </motion.div>
-            )}
             {fightStep === 1 && (
               <div className="d-flex flex-column gap-2 position-absolute fighter-chains-wrapper">
                 <motion.div
