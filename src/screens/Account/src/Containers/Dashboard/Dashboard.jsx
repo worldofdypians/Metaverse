@@ -7361,7 +7361,7 @@ function Dashboard({
                 html.classList.remove("hidescroll");
                 window.location.hash = "";
               }}
-              isOpen={battlePopup || hashValue === "#arena-of-rage"}
+              isOpen={battlePopup || hashValue === "#single-strike"}
               coinbase={coinbase}
               chainId={chainId}
               handleSwitchNetwork={handleSwitchNetwork}

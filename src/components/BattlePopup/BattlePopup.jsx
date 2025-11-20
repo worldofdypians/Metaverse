@@ -254,9 +254,9 @@ const BattlePopup = ({
   const [selectedChain, setSelectedChain] = useState("");
   const [hoveredChain, setHoveredChain] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [socials, setSocials] = useState(chains[0].socials);
+  // const [socials, setSocials] = useState(chains[0].socials);
   const [count, setCount] = useState(0);
-  const [rewards, setRewards] = useState([]);
+
   const [mute, setMute] = useState(false);
   const [selectedPlayer, setselectedPlayer] = useState(fighters[0]);
   const [fightType, setFightType] = useState(null);
@@ -264,7 +264,7 @@ const BattlePopup = ({
   const [disableButtons, setDisableButtons] = useState(false);
   const [showPrizes, setShowPrizes] = useState(false);
   const [tempfighter, setTempfighter] = useState(fighters[0]);
-  const [dummyCount, setDummyCount] = useState(0);
+
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -413,7 +413,7 @@ const BattlePopup = ({
                   console.warn("Audio play failed:", err);
               });
             }
-            setDummyCount(1);
+         
           }, 26500);
 
           // 🎁 Save data + show rewards
@@ -441,7 +441,6 @@ const BattlePopup = ({
       }, 1500);
       setTimeout(() => {
         onClaimRewards(email, "bnb");
-        setRewards(result.data.rewards);
       }, 3600);
 
       setLoading(false);
@@ -496,7 +495,7 @@ const BattlePopup = ({
                   console.warn("Audio play failed:", err);
               });
             }
-            setDummyCount(1);
+          
           }, 26500);
 
           // 🎁 Save data + show rewards
@@ -524,7 +523,6 @@ const BattlePopup = ({
       }, 1500);
       setTimeout(() => {
         onClaimRewards(email, "bnb");
-        setRewards(result.data.rewards);
       }, 3600);
 
       setLoading(false);
@@ -743,10 +741,10 @@ const BattlePopup = ({
   useEffect(() => {
     if (chainId === 56) {
       setSelectedChain("bnb");
-      setSocials(chains[0].socials);
+      // setSocials(chains[0].socials);
     } else {
       setSelectedChain("bnb");
-      setSocials(chains[0].socials);
+      // setSocials(chains[0].socials);
     }
   }, [chainId]);
 
@@ -1058,7 +1056,7 @@ const BattlePopup = ({
                             // disabled={disable}
                             onClick={() => {
                               setSelectedChain(chains[0].id);
-                              setSocials(chains[0].socials);
+                              // setSocials(chains[0].socials);
                               switchNetwork(chains[0].hex, chains[0].chainId);
                             }}
                             onMouseEnter={() => setHoveredChain(chains[0].id)}
