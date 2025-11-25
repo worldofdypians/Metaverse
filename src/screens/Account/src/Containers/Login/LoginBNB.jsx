@@ -5,6 +5,9 @@ import { Link, Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./Login.module.css";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 
 function LoginBNB({
   onLoginTry,
@@ -24,6 +27,7 @@ function LoginBNB({
   const [password, setPassword] = useState("");
   const [verifyCode, setVerifyCode] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const login = async () => {
     onLoginTry();
@@ -170,13 +174,26 @@ function LoginBNB({
         </div>
         <div className="d-flex flex-column w-100 gap-1">
           <h6 className={classes.labelBNB}>Password*</h6>
+      <div className="position-relative">
+
           <Input
-            inputType="password"
+            inputType={showPassword ? "text" : "password"}
             placeHolder="Password"
             value={password}
             onChange={setPassword}
             type={"coingecko"}
           />
+          <div
+        style={{
+          position: "absolute",
+          right: 10,
+          top: 7,
+          cursor: "pointer",
+        }}
+        onClick={() => setShowPassword((prev) => !prev)}
+      >
+        {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+      </div></div>
         </div>
         <div className="summaryseparator"></div>
         <div className="d-flex flex-column gap-1">

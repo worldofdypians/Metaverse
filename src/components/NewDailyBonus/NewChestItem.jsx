@@ -122,7 +122,7 @@ const NewChestItem = ({
         }
          if (
           result.data.rewards.find((item) => {
-            return item.rewardType === "Points" && item.reward >= 4000;
+            return item.rewardType === "Points" && item.reward >= 7950;
           }) !== undefined
         ) {
           const data = {
@@ -242,7 +242,7 @@ const NewChestItem = ({
         }
          if (
           result.data.rewards.find((item) => {
-            return item.rewardType === "Points" && item.reward >= 4000;;
+            return item.rewardType === "Points" && item.reward >= 7950;;
           }) !== undefined
         ) {
           const data = {

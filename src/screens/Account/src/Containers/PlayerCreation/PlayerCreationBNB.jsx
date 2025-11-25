@@ -13,6 +13,8 @@ import {
 } from "../../Components";
 import classes from "./PlayerCreation.module.css";
 import { useNavigate } from "react-router-dom";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function PlayerCreationBNB({
   onLinkWallet,
@@ -31,6 +33,7 @@ function PlayerCreationBNB({
     displayName: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const setPassword = (val) => {
     setCreationState((prev) => ({
@@ -154,13 +157,13 @@ function PlayerCreationBNB({
                             ? "Success"
                             : "Error"}
                         </span>
-                     
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/arrowRight.svg"
-                        }
-                        alt=""
-                      /> </div>
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                          }
+                          alt=""
+                        />{" "}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -192,14 +195,31 @@ function PlayerCreationBNB({
                 </div>
                 <div className="d-flex flex-column w-100 gap-1">
                   <h6 className={classes.labelBNB}>Password*</h6>
-                  <Input
-                    name="player-password"
-                    inputType="password"
-                    placeHolder="Password"
-                    value={password}
-                    onChange={setPassword}
-                    type={"coingecko"}
-                  />
+                  <div className="position-relative">
+                    <Input
+                      name="player-password"
+                      inputType={showPassword ? "text" : "password"}
+                      placeHolder="Password"
+                      value={password}
+                      onChange={setPassword}
+                      type={"coingecko"}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        right: 10,
+                        top: 7,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword ? (
+                        <VisibilityOffIcon style={{color: 'wheat'}}/>
+                      ) : (
+                        <RemoveRedEyeIcon style={{color: 'wheat'}}/>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 <div className="summaryseparator"></div>
               </div>

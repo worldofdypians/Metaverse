@@ -5,6 +5,8 @@ import { Link, Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./Login.module.css";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 function Login({ onSuccessLogin }) {
   const {
@@ -19,6 +21,7 @@ function Login({ onSuccessLogin }) {
   const [password, setPassword] = useState("");
   const [verifyCode, setVerifyCode] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const login = async () => {
     await LoginGlobal(username, password)
@@ -164,15 +167,27 @@ function Login({ onSuccessLogin }) {
         onChange={setUserName}
         inputType="email"
       />
+      <div className="position-relative">
       <Input
         style={{
           marginBottom: 48,
         }}
-        inputType="password"
+        inputType={showPassword ? "text" : "password"}
         placeHolder="Password"
         value={password}
         onChange={setPassword}
       />
+      <div
+        style={{
+          position: "absolute",
+          right: 10,
+          top: 18,
+          cursor: "pointer",
+        }}
+        onClick={() => setShowPassword((prev) => !prev)}
+      >
+        {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}} />}
+      </div></div>
       <Button
         disabled={disabled}
         style={{ margin: "auto" }}
