@@ -419,10 +419,7 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
       name: "Biconomy",
       icon: "biconomy.png",
     },
-    {
-      name: "BTCC",
-      icon: "btcc.svg",
-    },
+
     {
       name: "SwissBorg",
       icon: "swissborg.svg",

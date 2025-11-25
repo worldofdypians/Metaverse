@@ -970,11 +970,7 @@ const Portfolio = ({
       href: "https://www.biconomy.com/exchange/WOD_USDT",
       img: "https://cdn.worldofdypians.com/wod/biconomy.png",
     },
-    {
-      name: "BTCC",
-      href: "https://www.btcc.com/en-US/spot/WODUSDT",
-      img: "https://cdn.worldofdypians.com/wod/btcc.svg",
-    },
+
     {
       name: "SwissBorg",
       href: "https://swissborg.com/crypto-market/coins/world-of-dypians",
