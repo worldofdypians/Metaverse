@@ -10,9 +10,9 @@ import Countdown from "react-countdown";
 import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
 import useWindowSize from "../../hooks/useWindowSize";
 import axios from "axios";
-import TwitterRewards from "./TwitterRewards";
-import ConnectTwitterPopup from "./ConnectTwitterPopup";
 import { useSelector } from "react-redux";
+import TwitterRewards from "./TwitterRewards/TwitterRewards";
+import ConnectTwitterPopup from "./TwitterRewards/ConnectTwitterPopup";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -163,6 +163,8 @@ const MyProfile = ({
               acc[item.tweetId] = {
                 tweetId: item.tweetId,
                 assignedAt: item.assignedAt,
+                tweetCreatedAt: item.tweetCreatedAt,
+                tweetDescription: item.tweetDescription,
                 tasks: [],
               };
             }
@@ -1530,7 +1532,6 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              {twitter && twitter.twitterUsername ? (
                 <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                   <div
                     className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
@@ -1550,8 +1551,11 @@ const MyProfile = ({
                             className="user-rank-text-2"
                             style={{ color: "#3B5896" }}
                           >
-                            {/* ${getFormattedNumber(specialRewards)} Rewards */}
-                            @{twitter.twitterUsername}
+                           {twitter && twitter.twitterUsername ?
+                          ` @${twitter.twitterUsername}` 
+                          : "Connect Your Account"
+                          }
+                          
                           </span>
                         </div>
                       </div>
@@ -1574,44 +1578,7 @@ const MyProfile = ({
                     </button>
                   </div>
                 </div>
-              ) : (
-                <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
-                  <div
-                    className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
-                    style={{ height: "60px" }}
-                    onClick={() => setConnectPopup(true)}
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <div className="d-flex flex-column justify-content-between h-100 mb-0">
-                        <div className="d-flex flex-column">
-                          <span
-                            className="user-blue-rank-2"
-                            style={{ color: "#9e3c7a" }}
-                          >
-                            X Rewards
-                          </span>
-                          <span
-                            className="user-rank-text-2"
-                            style={{ color: "#3B5896" }}
-                          >
-                            {/* ${getFormattedNumber(specialRewards)} Rewards */}
-                            Connect Your Account
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      className="activate-btn2 px-3 py-1"
-                      style={{
-                        background: "#9E3C7A",
-                      }}
-                    >
-                      Connect
-                    </button>
-                  </div>
-                </div>
-              )}
+             
               {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
@@ -1923,16 +1890,17 @@ const MyProfile = ({
                 })
               )
             );
-            checkTwitter();
+            setNewTaskLength(0);
             setPopup(false);
           }}
           address={address}
           checkTwitter={checkTwitter}
-          username={twitter.twitterUsername}
+          username={twitter?.twitterUsername}
           isConnected={isConnected}
           coinbase={coinbase}
           email={email}
           onConnectWallet={onConnectWallet}
+          twitter={twitter}
         />
       )}
       {connectPopup && (

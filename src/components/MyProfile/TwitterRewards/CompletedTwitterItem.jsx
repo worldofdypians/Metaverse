@@ -1,6 +1,18 @@
 import React from "react";
 
 const CompletedTwitterItem = ({ item, index }) => {
+
+
+  const timestamp = item.tweetCreatedAt;
+  const date = new Date(timestamp);
+
+  // Get hours & minutes (UTC because timestamp ends with Z)
+  const hours = String(date.getUTCHours()).padStart(2, "0");
+  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+
+  const formattedHour = `${hours}:${minutes}`;
+
+
   return (
     <a
       href={`https://x.com/worldofdypians/status/${item.tweetId}`}
@@ -25,20 +37,26 @@ const CompletedTwitterItem = ({ item, index }) => {
           <path d="M20 6 9 17l-5-5"></path>
         </svg>
       </div>
-      <div className="d-flex align-items-center gap-2">
-        <img
-          src="https://cdn.worldofdypians.com/wod/wodToken.svg"
-          width={32}
-          height={32}
-          alt=""
-        />
-        <div className="d-flex flex-column gap-1">
-          <span className="twitter-username">@worldofdypians</span>
-          <span className="twitter-post">
-            Exciting news! New adventures await in World of Dypians. Join our
-            community! 🎮✨
-          </span>
-        </div>
+      <div className="d-flex flex-column gap-3 twitter-item-width">
+        <a
+          href={`https://x.com/worldofdypians/status/${item.tweetId}`}
+          target="_blank"
+          className="tweet-title-holder p-3 d-flex align-items-center gap-2"
+        >
+          <img
+            src="https://cdn.worldofdypians.com/wod/wodToken.svg"
+            width={32}
+            height={32}
+            alt=""
+          />
+          <div
+            target="_blank"
+            className="overall-link d-flex flex-column gap-1"
+          >
+          <span className="twitter-post">{item.tweetDescription.length > 100 ? item.tweetDescription.slice(0,100) + "..." : item.tweetDescription}</span>
+            <span className="twitter-post">{formattedHour}</span>
+          </div>
+        </a>
       </div>
       <div className="d-flex align-items-center gap-1">
         <span className="task-completed-text">Task Completed</span>

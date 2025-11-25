@@ -4,7 +4,9 @@ import axios from "axios";
 import "./_twitterrewards.scss";
 import CompletedTwitterItem from "./CompletedTwitterItem";
 import { NavLink } from "react-router-dom";
-import { useCountUp } from "../../hooks/useCountup";
+import useWindowSize from "../../../hooks/useWindowSize";
+import { useCountUp } from "../../../hooks/useCountup";
+import BlurredTwitterItem from "./BluredTwitterItem";
 
 const TwitterRewards = ({
   tasks,
@@ -17,7 +19,10 @@ const TwitterRewards = ({
   email,
   onConnectWallet,
   taskCount,
+  twitter,
 }) => {
+  const windowSize = useWindowSize();
+
   const completed = tasks.filter((item) =>
     item.tasks.every((t) => t.completed && t.verified)
   );
@@ -31,6 +36,7 @@ const TwitterRewards = ({
   const [popup, setPopup] = useState(false);
 
   const [page, setPage] = useState(1);
+  const [completedPage, setCompletedPage] = useState(1);
   const postsPerPage = 3;
   const { value, add } = useCountUp(0, 600); // duration 600ms
 
@@ -43,12 +49,23 @@ const TwitterRewards = ({
     return reversed.slice(start, start + postsPerPage);
   }, [reversed, page]);
 
+  const paginatedComplete = useMemo(() => {
+    const start = (completedPage - 1) * postsPerPage;
+    return completed.slice(start, start + postsPerPage);
+  }, [completed, completedPage]);
+
   const totalPages = Math.ceil(available.length / postsPerPage);
+
+  const totalCompletedPages = Math.ceil(completed.length / postsPerPage);
 
   // Handle page change
   const goToPage = (num) => {
     if (num < 1 || num > totalPages) return;
     setPage(num);
+  };
+  const goToCompletedPage = (num) => {
+    if (num < 1 || num > totalCompletedPages) return;
+    setCompletedPage(num);
   };
 
   const handleDisconnect = async () => {
@@ -118,45 +135,88 @@ const TwitterRewards = ({
                     </defs>
                   </svg>
 
-                  <div className="d-flex flex-column">
-                    <span
-                      className="text-[#1E90FF] font-medium"
-                      style={{ fontWeight: "600" }}
-                    >
-                      @{username}
-                    </span>
-                    <span
-                      className="mb-1"
-                      style={{ color: "#a29993", fontSize: "13px" }}
-                    >
-                      X Connected
-                    </span>
-                  </div>
+                  {twitter && twitter.twitterUsername ? (
+                    <div className="d-flex flex-column">
+                      <span
+                        className="text-[#1E90FF] font-medium"
+                        style={{ fontWeight: "600" }}
+                      >
+                        @{username}
+                      </span>
+                      <span
+                        className="mb-1"
+                        style={{ color: "#a29993", fontSize: "13px" }}
+                      >
+                        X Connected
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="d-flex flex-column">
+                      <span
+                        className="text-[#1E90FF] font-medium"
+                        style={{ fontWeight: "600" }}
+                      >
+                        X Account
+                      </span>
+                      <span
+                        className="mb-1"
+                        style={{ color: "#a29993", fontSize: "13px" }}
+                      >
+                        Not Connected
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <button
-                  className="unlink-twitter-button d-flex align-items-center gap-1 px-3 py-2"
-                  onClick={() => setPopup(true)}
-                  // onClick={handleDisconnect}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-log-out w-4 h-4 mr-1"
-                    aria-hidden="true"
+                {!isConnected && coinbase && !email ? (
+                  <NavLink
+                    to={`/auth`}
+                    onClick={onClose}
+                    className="connect-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2 "
                   >
-                    <path d="m16 17 5-5-5-5"></path>
-                    <path d="M21 12H9"></path>
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                  </svg>
-                  Disconnect
-                </button>
+                    Log In
+                  </NavLink>
+                ) : !isConnected && !coinbase ? (
+                  <button
+                    onClick={onConnectWallet}
+                    className="connect-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
+                    style={{ width: "fit-content" }}
+                  >
+                    Connect Wallet
+                  </button>
+                ) : twitter && twitter.twitterUsername ? (
+                  <button
+                    className="unlink-twitter-button d-flex align-items-center gap-1 px-3 py-2"
+                    onClick={() => setPopup(true)}
+                    // onClick={handleDisconnect}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-log-out w-4 h-4 mr-1"
+                      aria-hidden="true"
+                    >
+                      <path d="m16 17 5-5-5-5"></path>
+                      <path d="M21 12H9"></path>
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    </svg>
+                    Disconnect
+                  </button>
+                ) : (
+                  <a
+                    href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
+                    className="connect-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
+                    style={{ width: "fit-content", cursor: "pointer" }}
+                  >
+                    Connect
+                  </a>
+                )}
               </div>
             </div>
             <div className="col-12 col-md-6">
@@ -370,93 +430,211 @@ const TwitterRewards = ({
                 </span>
               </div>
             </div>
-            <div className="mt-3 d-flex flex-column gap-2 twitter-tasks-container t">
-              {!isConnected && coinbase && !email ? (
-                <NavLink
-                  to={`/auth`}
-                  onClick={onClose}
-                  className="connect-twitter-btn d-flex align-items-center justify-content-center p-2 gap-2 mt-5"
-                >
-                  Log In
-                </NavLink>
-              ) : !isConnected && !coinbase ? (
-                <button
-                  onClick={onConnectWallet}
-                  className="connect-twitter-btn d-flex align-items-center justify-content-center p-2 gap-2 mt-5"
-                >
-                  Connect Wallet
-                </button>
-              ) : (
-                <>
-                  {tab === "available" ? (
-                    <div className="d-flex flex-column align-items-center justify-content-between h-100">
-                      {paginatedItems.map((item, index) => (
-                        <TwitterItem
-                          key={(page - 1) * postsPerPage + index}
-                          add={add}
-                          item={item}
-                          index={index}
-                          address={address}
-                          checkTwitter={checkTwitter}
-                          currentLength={available.length}
-                        />
-                      ))}
+            {twitter && twitter.twitterUsername ? (
+              <div className="mt-3 d-flex flex-column gap-2 twitter-tasks-container">
+                {!isConnected && coinbase && !email ? (
+                  <div className="d-flex w-100 h-100 justify-content-center align-items-center">
+                    <NavLink
+                      to={`/auth`}
+                      onClick={onClose}
+                      className="connect-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2 "
+                    >
+                      Log In
+                    </NavLink>
+                  </div>
+                ) : !isConnected && !coinbase ? (
+                  <div className="d-flex align-items-center justify-content-center h-100 w-100">
+                    <button
+                      onClick={onConnectWallet}
+                      className="connect-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
+                      style={{ width: "fit-content" }}
+                    >
+                      Connect Wallet
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    {tab === "available" ? (
+                      <>
+                        {available.length > 0 ? (
+                          <>
+                            {windowSize.width > 786 ? (
+                              <div className="d-flex align-items-center flex-column justify-content-between h-100">
+                                <div className="d-flex flex-column align-items-center gap-3 w-100">
+                                  {paginatedItems.map((item, index) => (
+                                    <TwitterItem
+                                      key={(page - 1) * postsPerPage + index}
+                                      add={add}
+                                      item={item}
+                                      index={index}
+                                      address={address}
+                                      checkTwitter={checkTwitter}
+                                      currentLength={available.length}
+                                    />
+                                  ))}
 
-                      {/* Custom Pagination */}
-                      <div className="d-flex justify-content-center mt-1 gap-2">
-                        <button
-                          className={`page-button ${
-                            page === 1 && "disabled-page-button"
-                          } `}
-                          onClick={() => goToPage(page - 1)}
-                          disabled={page === 1}
-                        >
-                          {"<"}
-                        </button>
+                                  {/* Custom Pagination */}
+                                </div>
+                                <div className="d-flex justify-content-center mt-1 gap-2">
+                                  <button
+                                    className={`page-button ${
+                                      page === 1 && "disabled-page-button"
+                                    } `}
+                                    onClick={() => goToPage(page - 1)}
+                                    disabled={page === 1}
+                                  >
+                                    {"<"}
+                                  </button>
 
-                        {Array.from({ length: totalPages }, (_, i) => (
-                          <button
-                            className={`page-button ${
-                              page === i + 1 && "active-page-button"
-                            }`}
-                            key={i + 1}
-                            onClick={() => goToPage(i + 1)}
-                          >
-                            {i + 1}
-                          </button>
-                        ))}
+                                  {Array.from(
+                                    { length: totalPages },
+                                    (_, i) => (
+                                      <button
+                                        className={`page-button ${
+                                          page === i + 1 && "active-page-button"
+                                        }`}
+                                        key={i + 1}
+                                        onClick={() => goToPage(i + 1)}
+                                      >
+                                        {i + 1}
+                                      </button>
+                                    )
+                                  )}
 
-                        <button
-                          className={`page-button ${
-                            page === totalPages && "disabled-page-button"
-                          } `}
-                          onClick={() => goToPage(page + 1)}
-                          disabled={page === totalPages}
-                        >
-                          {">"}
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      {completed.length > 0 ? (
-                        <>
-                          {completed.map((item, index) => (
-                            <CompletedTwitterItem item={item} index={index} />
-                          ))}
-                        </>
-                      ) : (
-                        <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
-                          <h6 className="twitter-empty-message mb-0">
-                            You have not completed any tasks yet.
-                          </h6>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
-            </div>
+                                  <button
+                                    className={`page-button ${
+                                      page === totalPages &&
+                                      "disabled-page-button"
+                                    } `}
+                                    onClick={() => goToPage(page + 1)}
+                                    disabled={page === totalPages}
+                                  >
+                                    {">"}
+                                  </button>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="d-flex align-items-center flex-column gap-3 w-100 h-100">
+                                {available.reverse().map((item, index) => (
+                                  <TwitterItem
+                                    key={index}
+                                    add={add}
+                                    item={item}
+                                    index={index}
+                                    address={address}
+                                    checkTwitter={checkTwitter}
+                                    currentLength={available.length}
+                                  />
+                                ))}
+
+                                {/* Custom Pagination */}
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
+                            <h6 className="twitter-empty-message mb-0">
+                              There are no tasks available. Check back soon.
+                            </h6>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {completed.length > 0 ? (
+                          <>
+                            {windowSize.width > 786 ? (
+                              <div className="d-flex align-items-center flex-column justify-content-between h-100">
+                                <div className="d-flex flex-column align-items-center gap-3 w-100">
+                                  {paginatedComplete.map((item, index) => (
+                                    <CompletedTwitterItem
+                                      item={item}
+                                      index={index}
+                                    />
+                                  ))}
+
+                                  {/* Custom Pagination */}
+                                </div>
+                                <div className="d-flex justify-content-center mt-1 gap-2">
+                                  <button
+                                    className={`page-button ${
+                                      completedPage === 1 &&
+                                      "disabled-page-button"
+                                    } `}
+                                    onClick={() =>
+                                      goToCompletedPage(completedPage - 1)
+                                    }
+                                    disabled={completedPage === 1}
+                                  >
+                                    {"<"}
+                                  </button>
+
+                                  {Array.from(
+                                    { length: totalCompletedPages },
+                                    (_, i) => (
+                                      <button
+                                        className={`page-button ${
+                                          completedPage === i + 1 &&
+                                          "active-page-button"
+                                        }`}
+                                        key={i + 1}
+                                        onClick={() => goToCompletedPage(i + 1)}
+                                      >
+                                        {i + 1}
+                                      </button>
+                                    )
+                                  )}
+
+                                  <button
+                                    className={`page-button ${
+                                      completedPage === totalCompletedPages &&
+                                      "disabled-page-button"
+                                    } `}
+                                    onClick={() =>
+                                      goToCompletedPage(completedPage + 1)
+                                    }
+                                    disabled={
+                                      completedPage === totalCompletedPages
+                                    }
+                                  >
+                                    {">"}
+                                  </button>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="d-flex align-items-center flex-column gap-3 w-100 h-100">
+                                {completed.map((item, index) => (
+                                  <CompletedTwitterItem
+                                    item={item}
+                                    index={index}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
+                            <h6 className="twitter-empty-message mb-0">
+                              You have not completed any tasks yet.
+                            </h6>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            ) : (
+              <div className="mt-3 d-flex flex-column gap-2 twitter-tasks-container">
+                <div className="d-flex align-items-center flex-column justify-content-between h-100">
+                  <div className="d-flex flex-column align-items-center gap-3 w-100">
+                    <BlurredTwitterItem />
+                    <BlurredTwitterItem />
+                    <BlurredTwitterItem />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
