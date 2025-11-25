@@ -62,7 +62,7 @@ const CawsDetails = ({
     const address = coinbase;
     const stakeApr50 = await window.config.nftstaking_address50;
 
-    if (address !== null && window.WALLET_TYPE !== "matchId") {
+    if (address !== null) {
       const result = await window.nft
         .checkapproveStake(address, stakeApr50)
         .then((data) => {
@@ -148,7 +148,7 @@ const CawsDetails = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+    if (window.WALLET_TYPE !== "binance") {
       let myStakes = await getStakesIds();
       let staking_contract = await window.getContractNFT("NFTSTAKING");
       // setclaimAllStatus("Claiming all rewards, please wait...");
@@ -202,9 +202,7 @@ const CawsDetails = ({
           setclaimStatus("initial");
         }, 5000);
       }
-    } else if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    }
+    }  
   };
 
   const convertEthToUsd = async () => {
@@ -253,7 +251,7 @@ const CawsDetails = ({
   };
 
   const handleUnstakeAll = async () => {
-    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+    if (window.WALLET_TYPE !== "binance") {
       let myStakes = await getStakesIds();
       let stake_contract = await window.getContractNFT("NFTSTAKING");
       // setunstakeAllStatus("Unstaking all please wait...");
@@ -288,13 +286,11 @@ const CawsDetails = ({
       if (txReceipt) {
         window.alertify.message("*Unstaked successfully");
       }
-    } else if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
     }
   };
 
   const handleEthPool = async () => {
-    if (window.WALLET_TYPE !== "matchId") {
+    
       await switchNetworkWagmi(parseInt("0x1", 16), null, { coinbase })
         .then(() => {
           handleSwitchNetwork("1");
@@ -302,9 +298,7 @@ const CawsDetails = ({
         .catch((e) => {
           console.log(e);
         });
-    } else if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    }
+     
   };
 
   const totalStakedNft = async () => {
@@ -327,13 +321,13 @@ const CawsDetails = ({
   };
 
   useEffect(() => {
-    if (window.WALLET_TYPE !== "matchId") {
+    
       totalStakedNft();
-    }
-  }, [window.WALLET_TYPE]);
+    
+  }, []);
 
   useEffect(() => {
-    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+    if (isConnected && chainId === "1") {
       myNft().then();
       myStakes().then();
       checkApproval().then();

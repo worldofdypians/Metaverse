@@ -62,8 +62,7 @@ const Kickstarter = ({
   address,
   handleSwitchNetwork,
   isOpen,
-  walletClient,
-  publicClient,
+
   onClaimRewards,
   openedRoyaltyChest,
   // royalChestIndexTaiko,
@@ -508,45 +507,7 @@ const Kickstarter = ({
         }
       }
       countRoyal = countRoyal + 1;
-    } else if (window.WALLET_TYPE === "matchId") {
-      console.log(txHash);
-      const txResult_matchain = await publicClient
-        .getTransaction({ hash: txHash })
-        .catch((e) => {
-          console.error(e);
-        });
-      console.log(txResult_matchain, txHash);
-
-      if (txResult_matchain) {
-        getUserRewardsByChest(email, txHash, chestIndex, chainText);
-        setLoading(false);
-        setChestOpened(true);
-        setStep(2);
-
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
-          setTimeout(() => {
-            video.pause();
-            setStep(3);
-            onClaimRewards();
-          }, 8000);
-        }
-      } else {
-        if (countRoyal < 10) {
-          const timer = setTimeout(
-            () => {
-              handleCheckIfTxExists(txHash);
-            },
-            countRoyal === 9 ? 5000 : 2000
-          );
-          return () => clearTimeout(timer);
-        } else {
-          window.alertify.error("Something went wrong.");
-          setLoading(false);
-        }
-      }
-      countRoyal = countRoyal + 1;
-    }
+    }  
   };
 
   const resolveChestContract = (cid) => {
@@ -587,37 +548,7 @@ const Kickstarter = ({
       const functionName = "openChest";
 
       // If user is on MatchID wallet, use provided viem walletClient/publicClient
-      if (window.WALLET_TYPE === "matchId" && walletClient && publicClient) {
-        const txHash = await walletClient.writeContract({
-          address: contractConfig.address,
-          abi: contractConfig.abi,
-          functionName,
-          args: [],
-        });
-
-        await publicClient.waitForTransactionReceipt({ hash: txHash });
-        getUserRewardsByChest(
-          email,
-          txHash,
-          chestIndex - 1,
-          contractConfig.chainText
-        );
-        setLoading(false);
-        setChestOpened(true);
-        setStep(2);
-
-        if (video) {
-          video.play().catch((err) => console.error("Play failed:", err));
-          setTimeout(() => {
-            video.pause();
-            setStep(3);
-            onClaimRewards();
-          }, 8000);
-        }
-
-        return;
-      }
-
+  
       // Default: use wagmi connected wallet via viem
       const account = getAccount(wagmiClient);
 

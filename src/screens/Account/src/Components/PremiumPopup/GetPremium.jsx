@@ -27,9 +27,7 @@ const GetPremiumPopup = ({
   authToken,
   isPremium,
   isConnected,
-  walletClient,
-  publicClient,
-  network_matchain,
+
 }) => {
   const { statusPrime, txHash, createPremiumOrder, QRComponent } =
     useBinancePayPremium();
@@ -48,7 +46,7 @@ const GetPremiumPopup = ({
   const activeConnectorName =
     wagmiAccount?.connector?.name?.toLowerCase?.() || "";
   const isBinanceWallet = activeConnectorName.includes("binance");
-  const isMatchIdWallet = Boolean(walletClient && publicClient);
+  
 
   // Unified on-chain helpers using wagmi/viem only
   const readOnChain = async ({
@@ -59,14 +57,7 @@ const GetPremiumPopup = ({
     chain,
   }) => {
     const targetChainId = chain ?? chainId;
-    if (isMatchIdWallet && publicClient) {
-      return await publicClient.readContract({
-        address,
-        abi,
-        functionName,
-        args,
-      });
-    }
+  
     return await readContract(wagmiClient, {
       address,
       abi,
@@ -83,17 +74,7 @@ const GetPremiumPopup = ({
     args = [],
     value,
   }) => {
-    if (isMatchIdWallet && walletClient && publicClient) {
-      const hash = await walletClient.writeContract({
-        address,
-        abi,
-        functionName,
-        args,
-        value,
-      });
-      await publicClient.waitForTransactionReceipt({ hash });
-      return hash;
-    }
+   
     const hash = await writeContract(wagmiClient, {
       address,
       abi,
@@ -393,7 +374,6 @@ const GetPremiumPopup = ({
         handleSwitchNetwork,
         handleSwitchChainGateWallet,
         handleSwitchChainBinanceWallet,
-        network_matchain,
         coinbase,
       });
     } catch (error) {
@@ -412,9 +392,11 @@ const GetPremiumPopup = ({
         setchainState("base");
       } else if (chainId === 56) {
         setchainState("bnb");
-      } else if (chainId === 698) {
-        setchainState("mat");
-      } else if (chainId === 204) {
+      } 
+      // else if (chainId === 698) {
+      //   setchainState("mat");
+      // } 
+      else if (chainId === 204) {
         setchainState("opbnb");
       } else if (chainId === 1030) {
         setchainState("conflux");
@@ -434,9 +416,11 @@ const GetPremiumPopup = ({
         setchainState("sei");
       } else if (chainId === 2040) {
         setchainState("vanar");
-      } else if (chainId === 841) {
-        setchainState("taraxa");
-      } else {
+      }
+      //  else if (chainId === 841) {
+      //   setchainState("taraxa");
+      // } 
+      else {
         setchainState("");
       }
     }

@@ -768,7 +768,7 @@ const SingleNft = ({
   };
 
   const isApprovedBuy = async (tokenType, amount) => {
-    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+    if (window.WALLET_TYPE !== "binance") {
       const result = await window
         .isApprovedBuy(tokenType, amount)
         .catch((e) => {
@@ -804,9 +804,7 @@ const SingleNft = ({
   const isNFTApproved = useNFTApprovalStatus(nftAddressForApproval, coinbase);
 
   async function isApprovedNFT(nft, type, coinbase) {
-    if (window.WALLET_TYPE === "matchId") {
-      return false;
-    }
+     
     // Return the wagmi hook result
     return isNFTApproved;
   }
@@ -944,19 +942,13 @@ const SingleNft = ({
   // const isNFTApproved = useNFTApprovalStatus(nftAddressForApproval, coinbase);
 
   async function isApprovedNFT(nft, type, coinbase) {
-    if (window.WALLET_TYPE === "matchId") {
-      return false;
-    }
+     
     // Return the wagmi hook result
     return isNFTApproved;
   }
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
-
+     
     const isApproved = await isApprovedNFT(
       nftId,
       nftAddress === window.config.nft_caws_address
@@ -1131,10 +1123,7 @@ const SingleNft = ({
   };
 
   async function handleBuy(nft) {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
+     
 
     console.log("buying", nft.price);
     setPurchaseColor("#00FECF");
@@ -1189,11 +1178,7 @@ const SingleNft = ({
   }
 
   const cancelNFT = async (nftAddress, tokenId, type, tokenType) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
-
+     
     setcancelLoading(true);
     setcancelStatus("cancel");
     setPurchaseColor("#00FECF");
@@ -1237,10 +1222,7 @@ const SingleNft = ({
   };
 
   async function updateListing(nft, price, priceType, type, tokenType) {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
+    
 
     setPurchaseColor("#00FECF");
     setPurchaseStatus("Price is being updated...");
@@ -1376,11 +1358,7 @@ const SingleNft = ({
   };
 
   const handleMakeOffer = async (price, pricetype, tokenType) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
-
+     
     if (price > 0) {
       setOfferStatus("loading");
 
@@ -1414,10 +1392,7 @@ const SingleNft = ({
   };
 
   const handleDeleteOffer = async (offerIndex) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
+    
 
     setOfferdeleteStatus("loadingdelete");
     console.log(nftAddress, nftId, offerIndex);
@@ -1441,11 +1416,7 @@ const SingleNft = ({
   };
 
   const handleUpdateOffer = async (price, pricetype, offerIndex, tokenType) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
-
+    
     setOfferupdateStatus("loadingupdate");
 
     try {
@@ -1476,11 +1447,7 @@ const SingleNft = ({
   };
 
   const handleAcceptOffer = async (offerIndex) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
-
+     
     setOfferacceptStatus("loading");
     console.log(nftAddress, nftId, offerIndex);
 
@@ -1843,10 +1810,10 @@ const SingleNft = ({
   }, [nftId, nftAddress, owner, currentNft]);
 
   useEffect(() => {
-    if (window.WALLET_TYPE !== "matchId" && offers && offers.length > 0) {
+    if ( offers && offers.length > 0) {
       getOffer();
     }
-  }, [coinbase, nftCount, window.WALLET_TYPE, offers]);
+  }, [coinbase, nftCount, offers]);
 
   useEffect(() => {
     if (type === "caws" || type === "timepiece" || type === "land") {

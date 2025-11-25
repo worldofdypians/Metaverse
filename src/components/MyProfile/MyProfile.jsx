@@ -107,7 +107,7 @@ const MyProfile = ({
   });
 
   const midnight = new Date(now).setUTCHours(24, 30, 0, 0);
-  const chestPercentage = (totalClaimedChests / 220) * 100;
+  const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
   const utcHours = now2.getUTCHours();
   const utcMinutes = now2.getUTCMinutes();
@@ -779,8 +779,8 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsstd < 110
-                          ? allClaimedChestsstd + "/110"
+                        {allClaimedChestsstd < 90
+                          ? allClaimedChestsstd + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -798,8 +798,8 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsPremium < 110
-                          ? allClaimedChestsPremium + "/110"
+                        {allClaimedChestsPremium < 90
+                          ? allClaimedChestsPremium + "/90"
                           : "Completed"}
                       </span>
                     </div>

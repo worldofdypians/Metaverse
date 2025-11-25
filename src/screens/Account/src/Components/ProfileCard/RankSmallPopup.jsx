@@ -40,14 +40,14 @@ const RankSmallPopup = ({
       score: userProgress.userVanarScore,
       stars: userProgress.userVanarStars
     },
-    {
-      id: 'taraxa',
-      name: 'Taraxa',
-      icon: 'https://cdn.worldofdypians.com/wod/taraxa.svg',
-      rank: userProgress.userRankTaraxa,
-      score: userProgress.userTaraxaScore,
-      stars: userProgress.userTaraxaStars
-    },
+    // {
+    //   id: 'taraxa',
+    //   name: 'Taraxa',
+    //   icon: 'https://cdn.worldofdypians.com/wod/taraxa.svg',
+    //   rank: userProgress.userRankTaraxa,
+    //   score: userProgress.userTaraxaScore,
+    //   stars: userProgress.userTaraxaStars
+    // },
     {
       id: 'taiko',
       name: 'Taiko',
@@ -104,14 +104,14 @@ const RankSmallPopup = ({
       score: userProgress.userVictionScore,
       stars: userProgress.userVictionStars
     },
-    {
-      id: 'mat',
-      name: 'MAT',
-      icon: 'https://cdn.worldofdypians.com/wod/matchainIcon.svg',
-      rank: userProgress.userRankMat,
-      score: userProgress.userMatScore,
-      stars: userProgress.userMatStars
-    }
+    // {
+    //   id: 'mat',
+    //   name: 'MAT',
+    //   icon: 'https://cdn.worldofdypians.com/wod/matchainIcon.svg',
+    //   rank: userProgress.userRankMat,
+    //   score: userProgress.userMatScore,
+    //   stars: userProgress.userMatStars
+    // }
   ];
   
   return (

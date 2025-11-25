@@ -46,9 +46,6 @@ const Whitelist = ({
   coinbase,
   handleSwitchNetwork,
   type,
-  network_matchain,
-  walletClient,
-  publicClient,
   wagmiWalletClient,
   wagmiPublicClient,
 }) => {
@@ -250,9 +247,9 @@ const Whitelist = ({
   const [selectedRound, setselectedRound] = useState();
 
   // Determine which clients to use based on wallet type
-  const isMatchIdWallet = window.WALLET_TYPE === "matchId";
-  const activePublicClient = isMatchIdWallet ? publicClient : wagmiPublicClient;
-  const activeWalletClient = isMatchIdWallet ? walletClient : wagmiWalletClient;
+  
+  const activePublicClient =  wagmiPublicClient;
+  const activeWalletClient =  wagmiWalletClient;
 
   const getInfo = async () => {
     if (!activePublicClient || !coinbase) return;
@@ -1983,9 +1980,7 @@ const Whitelist = ({
   };
 
   const handleEthPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      network_matchain?.showChangeNetwork();
-    } else {
+ 
       await switchNetworkWagmi(parseInt("0x38", 16), null, { coinbase })
         .then(() => {
           handleSwitchNetwork("56");
@@ -1993,7 +1988,7 @@ const Whitelist = ({
         .catch((e) => {
           console.log(e);
         });
-    }
+   
   };
 
   useEffect(() => {

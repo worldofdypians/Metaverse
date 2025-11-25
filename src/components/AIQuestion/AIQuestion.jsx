@@ -19,8 +19,6 @@ const AIQuestion = ({
   onClose,
   email,
   handleBnbPool,
-  walletClient,
-  publicClient,
   address,
   username,
   suspenseMusicRef,
@@ -214,18 +212,7 @@ const AIQuestion = ({
         await waitForTransactionReceipt(wagmiClient, { hash });
       } catch (err) {
         // Fallback for MatchID (or if no active wagmi connector)
-        if (walletClient && publicClient) {
-          const hash = await walletClient.writeContract({
-            address: contractAddress,
-            abi: window.DAILY_QUESTION_ABI,
-            functionName: "openDailyQuestion",
-            args: [],
-          });
-          txHash = hash;
-          await publicClient.waitForTransactionReceipt({ hash });
-        } else {
-          throw err;
-        }
+         
       }
 
       if (txHash) {

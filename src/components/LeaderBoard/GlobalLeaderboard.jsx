@@ -129,7 +129,7 @@ const GlobalLeaderboard = ({
                   <br />
                   <br />
                   Participate in Daily Chain Leaderboards from BNB Chain, Skale,
-                  Core, Manta, Base, Matchain, Sei, Vanar, Taiko, Taraxa and
+                  Core, Manta, Base, Sei, Vanar, Taiko and
                   Viction to earn STARS that will boost your global ranking.
                   <br />
                   <br />
@@ -826,11 +826,7 @@ const GlobalLeaderboard = ({
                 style={{ width: 20, height: 20 }}
                 alt=""
               />
-              <img
-                src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
-                style={{ width: 20, height: 20 }}
-                alt=""
-              />
+             
             </div>
 
             <img

@@ -46,7 +46,7 @@ import {
   weeklyStarPrizes,
   weeklyExtraStarPrizes,
   seiStars,
-  taraxaStars,
+  // taraxaStars,
   matStars,
   vanarStars,
   coreStars,
@@ -131,9 +131,7 @@ function Dashboard({
   wodBalance,
   isTokenExpired,
   listedNFTS,
-  walletClient,
-  publicClient,
-  network_matchain,
+
   syncStatus,
   openKickstarter,
   royaltyCount,
@@ -325,8 +323,8 @@ function Dashboard({
   const [openedTaikoChests, setOpenedTaikoChests] = useState([]);
   const [openedVanarChests, setOpenedVanarChests] = useState([]);
   const [openedBaseChests, setOpenedBaseChests] = useState([]);
-  const [openedMatChests, setOpenedMatChests] = useState([]);
-  const [openedTaraxaChests, setOpenedTaraxaChests] = useState([]);
+  // const [openedMatChests, setOpenedMatChests] = useState([]);
+  // const [openedTaraxaChests, setOpenedTaraxaChests] = useState([]);
 
   const [leaderboard, setLeaderboard] = useState(false);
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
@@ -361,8 +359,8 @@ function Dashboard({
   const [claimedMantaChests, setclaimedMantaChests] = useState(0);
   const [claimedTaikoChests, setclaimedTaikoChests] = useState(0);
   const [claimedVanarChests, setclaimedVanarChests] = useState(0);
-  const [claimedMatChests, setclaimedMatChests] = useState(0);
-  const [claimedTaraxaChests, setclaimedTaraxaChests] = useState(0);
+  // const [claimedMatChests, setclaimedMatChests] = useState(0);
+  // const [claimedTaraxaChests, setclaimedTaraxaChests] = useState(0);
 
   const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
     useState(0);
@@ -370,9 +368,9 @@ function Dashboard({
   const [claimedMantaPremiumChests, setclaimedMantaPremiumChests] = useState(0);
   const [claimedTaikoPremiumChests, setclaimedTaikoPremiumChests] = useState(0);
   const [claimedVanarPremiumChests, setclaimedVanarPremiumChests] = useState(0);
-  const [claimedMatPremiumChests, setclaimedMatPremiumChests] = useState(0);
-  const [claimedTaraxaPremiumChests, setclaimedTaraxaPremiumChests] =
-    useState(0);
+  // const [claimedMatPremiumChests, setclaimedMatPremiumChests] = useState(0);
+  // const [claimedTaraxaPremiumChests, setclaimedTaraxaPremiumChests] =
+  //   useState(0);
 
   const [userSocialRewards, setuserSocialRewards] = useState(0);
 
@@ -387,8 +385,8 @@ function Dashboard({
   const [allSeiChests, setallSeiChests] = useState([]);
   const [allMantaChests, setallMantaChests] = useState([]);
   const [allBaseChests, setallBaseChests] = useState([]);
-  const [allMatChests, setallMatChests] = useState([]);
-  const [allTaraxaChests, setallTaraxaChests] = useState([]);
+  // const [allMatChests, setallMatChests] = useState([]);
+  // const [allTaraxaChests, setallTaraxaChests] = useState([]);
 
   const [countdown, setcountdown] = useState();
   const [countdown3500, setcountdown3500] = useState();
@@ -403,9 +401,9 @@ function Dashboard({
   const [taikocount, settaikocount] = useState(0);
   const [vanarcount, setVanarcount] = useState(0);
   const [basecount, setbasecount] = useState(0);
-  const [matcount, setmatcount] = useState(0);
+  // const [matcount, setmatcount] = useState(0);
   const [seicount, setseicount] = useState(0);
-  const [taraxacount, settaraxacount] = useState(0);
+  // const [taraxacount, settaraxacount] = useState(0);
 
   const [genesisRank2, setGenesisRank2] = useState(0);
 
@@ -421,8 +419,8 @@ function Dashboard({
   const [taikoImages] = useState(shuffle(chestImagesTaiko));
   const [mantaImages] = useState(shuffle(chestImagesViction));
   const [baseImages] = useState(shuffle(chestImagesBase));
-  const [matImages] = useState(shuffle(chestImagesMat));
-  const [taraxaImages] = useState(shuffle(chestImagesMat));
+  // const [matImages] = useState(shuffle(chestImagesMat));
+  // const [taraxaImages] = useState(shuffle(chestImagesMat));
 
   const [seiImages] = useState(shuffle(chestImagesSei));
 
@@ -577,20 +575,20 @@ function Dashboard({
           : 0,
 
       // MAT Chain
-      userRankMat:
-        userDataMat?.statValue !== undefined && userDataMat?.statValue > 0
-          ? userDataMat.position
-          : "---",
-      userMatStars:
-        userDataMat?.statValue === 0
-          ? 0
-          : userDataMat?.position > 100
-          ? 0
-          : matStars[userDataMat?.position],
-      userMatScore:
-        userDataMat?.statValue !== undefined && userDataMat?.statValue > 0
-          ? userDataMat?.statValue
-          : 0,
+      // userRankMat:
+      //   userDataMat?.statValue !== undefined && userDataMat?.statValue > 0
+      //     ? userDataMat.position
+      //     : "---",
+      // userMatStars:
+      //   userDataMat?.statValue === 0
+      //     ? 0
+      //     : userDataMat?.position > 100
+      //     ? 0
+      //     : matStars[userDataMat?.position],
+      // userMatScore:
+      //   userDataMat?.statValue !== undefined && userDataMat?.statValue > 0
+      //     ? userDataMat?.statValue
+      //     : 0,
 
       // Sei Chain
       userRankSei:
@@ -625,20 +623,20 @@ function Dashboard({
           : 0,
 
       // Taraxa Chain
-      userRankTaraxa:
-        userDataTaraxa?.statValue !== undefined && userDataTaraxa?.statValue > 0
-          ? userDataTaraxa.position
-          : "---",
-      userTaraxaStars:
-        userDataTaraxa?.statValue === 0
-          ? 0
-          : userDataTaraxa?.position > 100
-          ? 0
-          : taraxaStars[userDataTaraxa?.position],
-      userTaraxaScore:
-        userDataTaraxa?.statValue !== undefined && userDataTaraxa?.statValue > 0
-          ? userDataTaraxa?.statValue
-          : 0,
+      // userRankTaraxa:
+      //   userDataTaraxa?.statValue !== undefined && userDataTaraxa?.statValue > 0
+      //     ? userDataTaraxa.position
+      //     : "---",
+      // userTaraxaStars:
+      //   userDataTaraxa?.statValue === 0
+      //     ? 0
+      //     : userDataTaraxa?.position > 100
+      //     ? 0
+      //     : taraxaStars[userDataTaraxa?.position],
+      // userTaraxaScore:
+      //   userDataTaraxa?.statValue !== undefined && userDataTaraxa?.statValue > 0
+      //     ? userDataTaraxa?.statValue
+      //     : 0,
 
       // Prime Status
       // primeStars: primeStars,
@@ -740,9 +738,9 @@ function Dashboard({
   const [allMantaData, setAllMantaData] = useState([]);
   const [allTaikoData, setAllTaikoData] = useState([]);
   const [allBaseData, setAllBaseData] = useState([]);
-  const [allMatData, setAllMatData] = useState([]);
+  // const [allMatData, setAllMatData] = useState([]);
   const [allSeiData, setAllSeiData] = useState([]);
-  const [allTaraxaData, setAllTaraxaData] = useState([]);
+  // const [allTaraxaData, setAllTaraxaData] = useState([]);
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [activePlayerCore, setActivePlayerCore] = useState(false);
@@ -761,7 +759,7 @@ function Dashboard({
   const [prevDataSkale, setPrevDataSkale] = useState([]);
 
   const [loadingBnb, setloadingBnb] = useState(false);
-  const [loadingMat, setloadingMat] = useState(false);
+  // const [loadingMat, setloadingMat] = useState(false);
   const [loadingSkale, setloadingSkale] = useState(false);
   const [loadingCore, setloadingCore] = useState(false);
   const [loadingViction, setloadingViction] = useState(false);
@@ -822,15 +820,15 @@ function Dashboard({
 
   const [prevDataSei, setPrevDataSei] = useState([]);
 
-  const [dailyRecordsTaraxa, setDailyRecordsTaraxa] = useState([]);
+  // const [dailyRecordsTaraxa, setDailyRecordsTaraxa] = useState([]);
 
-  const [activePlayerTaraxa, setActivePlayerTaraxa] = useState(false);
+  // const [activePlayerTaraxa, setActivePlayerTaraxa] = useState(false);
 
-  const [userDataTaraxa, setUserDataTaraxa] = useState({});
+  // const [userDataTaraxa, setUserDataTaraxa] = useState({});
 
-  const [prevDataTaraxa, setPrevDataTaraxa] = useState([]);
+  // const [prevDataTaraxa, setPrevDataTaraxa] = useState([]);
 
-  const [loadingTaraxa, setLoadingTaraxa] = useState(false);
+  // const [loadingTaraxa, setLoadingTaraxa] = useState(false);
 
   const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
 
@@ -844,11 +842,11 @@ function Dashboard({
 
   const [prevDataTaiko, setPrevDataTaiko] = useState([]);
 
-  const [dailyRecordsMat, setDailyRecordsMat] = useState([]);
-  const [activePlayerMat, setActivePlayerMat] = useState(false);
-  const [userDataMat, setUserDataMat] = useState({});
+  // const [dailyRecordsMat, setDailyRecordsMat] = useState([]);
+  // const [activePlayerMat, setActivePlayerMat] = useState(false);
+  // const [userDataMat, setUserDataMat] = useState({});
 
-  const [prevDataMat, setPrevDataMat] = useState([]);
+  // const [prevDataMat, setPrevDataMat] = useState([]);
 
   const [dailyrecords, setRecords] = useState([]);
   const [dailyRecordsVanar, setDailyRecordsVanar] = useState([]);
@@ -875,8 +873,8 @@ function Dashboard({
     manta: 0,
     base: 0,
     taiko: 0,
-    taraxa: 0,
-    mat: 0,
+    // taraxa: 0,
+    // mat: 0,
   });
   const [beastSiegeStatus, setBeastSiegeStatus] = useState({
     dragon: false,
@@ -1005,9 +1003,9 @@ function Dashboard({
       // let attempts = 0;
       // const maxAttempts = 50; // ~5 seconds max wait (50 * 100ms)
       // while ((query.isFetching || query.isLoading)) {
-        // console.log("attemptsattempts", attempts, query);
-        // await new Promise((resolve) => setTimeout(resolve, 100));
-        // attempts++;
+      // console.log("attemptsattempts", attempts, query);
+      // await new Promise((resolve) => setTimeout(resolve, 100));
+      // attempts++;
       // }
 
       // After waiting, return the data if available
@@ -1998,246 +1996,246 @@ function Dashboard({
   };
 
   //TARAXA
-  const fillRecordsTaraxa = (itemData) => {
-    if (itemData.length === 0) {
-      setDailyRecordsTaraxa(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setDailyRecordsTaraxa(finalData);
-    }
-  };
+  // const fillRecordsTaraxa = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setDailyRecordsTaraxa(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setDailyRecordsTaraxa(finalData);
+  //   }
+  // };
 
-  const previousWinnersTaraxaVersionRef = useRef(null);
-  const previousWinnersTaraxaFetchedVersionRef = useRef(null);
-  const previousWinnersTaraxaFetchingPromiseRef = useRef(null);
-  const fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef = useRef(null);
+  // const previousWinnersTaraxaVersionRef = useRef(null);
+  // const previousWinnersTaraxaFetchedVersionRef = useRef(null);
+  // const previousWinnersTaraxaFetchingPromiseRef = useRef(null);
+  // const fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef = useRef(null);
 
-  const previousWinnersTaraxaQuery = useReactQuery({
-    queryKey: ["previousWinnersTaraxa"],
-    enabled: false,
-    staleTime: getMillisecondsUntil0000UTC(),
-    cacheTime: getMillisecondsUntil0000UTC(),
-    refetchOnWindowFocus: false,
-    refetchInterval: false,
-    retry: false,
-    queryFn: async () => {
-      const version = previousWinnersTaraxaVersionRef.current;
-      if (!version || version === 0) {
-        return placeholderplayerData;
-      }
-      const data = {
-        StatisticName: "LeaderboardTaraxaDaily",
-        StartPosition: 0,
-        MaxResultsCount: 100,
-        Version: version - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
-      );
-      return result.data.data.leaderboard;
-    },
-  });
+  // const previousWinnersTaraxaQuery = useReactQuery({
+  //   queryKey: ["previousWinnersTaraxa"],
+  //   enabled: false,
+  //   staleTime: getMillisecondsUntil0000UTC(),
+  //   cacheTime: getMillisecondsUntil0000UTC(),
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: false,
+  //   retry: false,
+  //   queryFn: async () => {
+  //     const version = previousWinnersTaraxaVersionRef.current;
+  //     if (!version || version === 0) {
+  //       return placeholderplayerData;
+  //     }
+  //     const data = {
+  //       StatisticName: "LeaderboardTaraxaDaily",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 100,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data
+  //     );
+  //     return result.data.data.leaderboard;
+  //   },
+  // });
 
-  const dailyRecordsTaraxaQuery = useReactQuery({
-    queryKey: ["dailyRecordsTaraxa"],
-    enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
-    retry: false,
-    refetchOnWindowFocus: false,
-    refetchInterval: false, //LEADERBOARD_CACHE_MS,
-    queryFn: async () => {
-      const data = {
-        StatisticName: "LeaderboardTaraxaDaily",
-        StartPosition: 0,
-        MaxResultsCount: 100,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
-        data
-      );
-      return result.data.data;
-    },
-  });
+  // const dailyRecordsTaraxaQuery = useReactQuery({
+  //   queryKey: ["dailyRecordsTaraxa"],
+  //   enabled: false,
+  //   staleTime: LEADERBOARD_CACHE_MS,
+  //   cacheTime: 5 * LEADERBOARD_CACHE_MS,
+  //   retry: false,
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: false, //LEADERBOARD_CACHE_MS,
+  //   queryFn: async () => {
+  //     const data = {
+  //       StatisticName: "LeaderboardTaraxaDaily",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 100,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard`,
+  //       data
+  //     );
+  //     return result.data.data;
+  //   },
+  // });
 
-  const dailyRecordsAroundPlayerTaraxaQuery = useReactQuery({
-    queryKey: ["dailyRecordsAroundPlayerTaraxa", userId],
-    enabled: Boolean(userId),
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
-    retry: false,
-    refetchOnWindowFocus: false,
-    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
-    queryFn: async () => {
-      if (!userId) return [];
-      const data = {
-        StatisticName: "LeaderboardTaraxaDaily",
-        MaxResultsCount: 1,
-        PlayerId: userId,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      return result.data.data.leaderboard || [];
-    },
-  });
+  // const dailyRecordsAroundPlayerTaraxaQuery = useReactQuery({
+  //   queryKey: ["dailyRecordsAroundPlayerTaraxa", userId],
+  //   enabled: Boolean(userId),
+  //   staleTime: LEADERBOARD_CACHE_MS,
+  //   cacheTime: 5 * LEADERBOARD_CACHE_MS,
+  //   retry: false,
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+  //   queryFn: async () => {
+  //     if (!userId) return [];
+  //     const data = {
+  //       StatisticName: "LeaderboardTaraxaDaily",
+  //       MaxResultsCount: 1,
+  //       PlayerId: userId,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //       data
+  //     );
+  //     return result.data.data.leaderboard || [];
+  //   },
+  // });
 
-  const fetchPreviousWinnersTaraxa = async (version, forceRefresh = false) => {
-    if (version === 0) {
-      setPrevDataTaraxa(placeholderplayerData);
-      return;
-    }
+  // const fetchPreviousWinnersTaraxa = async (version, forceRefresh = false) => {
+  //   if (version === 0) {
+  //     setPrevDataTaraxa(placeholderplayerData);
+  //     return;
+  //   }
 
-    // Check if we already have the data for this version
-    if (
-      !forceRefresh &&
-      previousWinnersTaraxaFetchedVersionRef.current === version
-    ) {
-      return;
-    }
+  //   // Check if we already have the data for this version
+  //   if (
+  //     !forceRefresh &&
+  //     previousWinnersTaraxaFetchedVersionRef.current === version
+  //   ) {
+  //     return;
+  //   }
 
-    // If there's already a fetch in progress for the same version, wait for it
-    if (
-      previousWinnersTaraxaFetchingPromiseRef.current &&
-      previousWinnersTaraxaVersionRef.current === version
-    ) {
-      try {
-        await previousWinnersTaraxaFetchingPromiseRef.current;
-        // After waiting, check if the version was fetched
-        if (previousWinnersTaraxaFetchedVersionRef.current === version) {
-          return;
-        }
-      } catch (error) {
-        // If the previous fetch failed, just stop there
-        console.error("Previous fetch failed, stopping:", error);
-        return;
-      }
-    }
+  //   // If there's already a fetch in progress for the same version, wait for it
+  //   if (
+  //     previousWinnersTaraxaFetchingPromiseRef.current &&
+  //     previousWinnersTaraxaVersionRef.current === version
+  //   ) {
+  //     try {
+  //       await previousWinnersTaraxaFetchingPromiseRef.current;
+  //       // After waiting, check if the version was fetched
+  //       if (previousWinnersTaraxaFetchedVersionRef.current === version) {
+  //         return;
+  //       }
+  //     } catch (error) {
+  //       // If the previous fetch failed, just stop there
+  //       console.error("Previous fetch failed, stopping:", error);
+  //       return;
+  //     }
+  //   }
 
-    // Start a new fetch
-    previousWinnersTaraxaVersionRef.current = version;
+  //   // Start a new fetch
+  //   previousWinnersTaraxaVersionRef.current = version;
 
-    const fetchPromise = (async () => {
-      try {
-        const shouldForce = forceRefresh;
-        const { data, error, fromCache } = await fetchQueryData(
-          previousWinnersTaraxaQuery,
-          {
-            force: shouldForce,
-          }
-        );
-        if ((error && !fromCache) || !data) {
-          setPrevDataTaraxa(placeholderplayerData);
-          return;
-        }
-        setPrevDataTaraxa(data);
-        previousWinnersTaraxaFetchedVersionRef.current = version;
-      } finally {
-        // Clear the promise ref if this is still the current fetch
-        if (previousWinnersTaraxaFetchingPromiseRef.current === fetchPromise) {
-          previousWinnersTaraxaFetchingPromiseRef.current = null;
-        }
-      }
-    })();
+  //   const fetchPromise = (async () => {
+  //     try {
+  //       const shouldForce = forceRefresh;
+  //       const { data, error, fromCache } = await fetchQueryData(
+  //         previousWinnersTaraxaQuery,
+  //         {
+  //           force: shouldForce,
+  //         }
+  //       );
+  //       if ((error && !fromCache) || !data) {
+  //         setPrevDataTaraxa(placeholderplayerData);
+  //         return;
+  //       }
+  //       setPrevDataTaraxa(data);
+  //       previousWinnersTaraxaFetchedVersionRef.current = version;
+  //     } finally {
+  //       // Clear the promise ref if this is still the current fetch
+  //       if (previousWinnersTaraxaFetchingPromiseRef.current === fetchPromise) {
+  //         previousWinnersTaraxaFetchingPromiseRef.current = null;
+  //       }
+  //     }
+  //   })();
 
-    previousWinnersTaraxaFetchingPromiseRef.current = fetchPromise;
-    await fetchPromise;
-  };
+  //   previousWinnersTaraxaFetchingPromiseRef.current = fetchPromise;
+  //   await fetchPromise;
+  // };
 
-  const fetchDailyRecordsAroundPlayerTaraxa = async (forceRefresh = false) => {
-    if (!userId) return;
+  // const fetchDailyRecordsAroundPlayerTaraxa = async (forceRefresh = false) => {
+  //   if (!userId) return;
 
-    // If there's already a fetch in progress, wait for it
-    if (fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current) {
-      try {
-        await fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current;
-        return;
-      } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
-      }
-    }
+  //   // If there's already a fetch in progress, wait for it
+  //   if (fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current) {
+  //     try {
+  //       await fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current;
+  //       return;
+  //     } catch (error) {
+  //       // If the previous fetch failed, continue with a new fetch
+  //       console.error("Previous fetch failed, retrying:", error);
+  //     }
+  //   }
 
-    // Start a new fetch
-    const fetchPromise = (async () => {
-      try {
-        const { data, error, fromCache } = await fetchQueryData(
-          dailyRecordsAroundPlayerTaraxaQuery,
-          {
-            force: forceRefresh,
-          }
-        );
-        if ((error && !fromCache) || !data?.length) {
-          setActivePlayerTaraxa(false);
-          return;
-        }
-        const [userRecord] = data;
-        setUserDataTaraxa(userRecord);
-        setActivePlayerTaraxa(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-        );
-      } finally {
-        // Clear the promise ref if this is still the current fetch
-        if (
-          fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current ===
-          fetchPromise
-        ) {
-          fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current = null;
-        }
-      }
-    })();
+  //   // Start a new fetch
+  //   const fetchPromise = (async () => {
+  //     try {
+  //       const { data, error, fromCache } = await fetchQueryData(
+  //         dailyRecordsAroundPlayerTaraxaQuery,
+  //         {
+  //           force: forceRefresh,
+  //         }
+  //       );
+  //       if ((error && !fromCache) || !data?.length) {
+  //         setActivePlayerTaraxa(false);
+  //         return;
+  //       }
+  //       const [userRecord] = data;
+  //       setUserDataTaraxa(userRecord);
+  //       setActivePlayerTaraxa(
+  //         (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+  //       );
+  //     } finally {
+  //       // Clear the promise ref if this is still the current fetch
+  //       if (
+  //         fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current ===
+  //         fetchPromise
+  //       ) {
+  //         fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current = null;
+  //       }
+  //     }
+  //   })();
 
-    fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current =
-      fetchPromise;
-    await fetchPromise;
-  };
+  //   fetchDailyRecordsAroundPlayerTaraxaFetchingPromiseRef.current =
+  //     fetchPromise;
+  //   await fetchPromise;
+  // };
 
-  const fetchDailyRecordsTaraxa = async (forceRefresh = false) => {
-    const useCache = !forceRefresh && isQueryFresh(dailyRecordsTaraxaQuery);
-    if (!useCache) {
-      setLoadingTaraxa(true);
-    }
+  // const fetchDailyRecordsTaraxa = async (forceRefresh = false) => {
+  //   const useCache = !forceRefresh && isQueryFresh(dailyRecordsTaraxaQuery);
+  //   if (!useCache) {
+  //     setLoadingTaraxa(true);
+  //   }
 
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsTaraxaQuery,
-      {
-        force: forceRefresh,
-      }
-    );
+  //   const { data, error, fromCache } = await fetchQueryData(
+  //     dailyRecordsTaraxaQuery,
+  //     {
+  //       force: forceRefresh,
+  //     }
+  //   );
 
-    if ((error && !fromCache) || !data) {
-      fillRecordsTaraxa([]);
-      setPrevDataTaraxa(placeholderplayerData);
-      setLoadingTaraxa(false);
-      return;
-    }
+  //   if ((error && !fromCache) || !data) {
+  //     fillRecordsTaraxa([]);
+  //     setPrevDataTaraxa(placeholderplayerData);
+  //     setLoadingTaraxa(false);
+  //     return;
+  //   }
 
-    const leaderboard = data?.leaderboard ?? [];
-    setDailyRecordsTaraxa(leaderboard);
-    fillRecordsTaraxa(leaderboard);
+  //   const leaderboard = data?.leaderboard ?? [];
+  //   setDailyRecordsTaraxa(leaderboard);
+  //   fillRecordsTaraxa(leaderboard);
 
-    const version = parseInt(data?.version);
-    await fetchPreviousWinnersTaraxa(
-      Number.isNaN(version) ? 0 : version,
-      forceRefresh
-    );
+  //   const version = parseInt(data?.version);
+  //   await fetchPreviousWinnersTaraxa(
+  //     Number.isNaN(version) ? 0 : version,
+  //     forceRefresh
+  //   );
 
-    if (userId) {
-      await fetchDailyRecordsAroundPlayerTaraxa(forceRefresh);
-    }
+  //   if (userId) {
+  //     await fetchDailyRecordsAroundPlayerTaraxa(forceRefresh);
+  //   }
 
-    if (!useCache) {
-      setTimeout(() => {
-        setLoadingTaraxa(false);
-      }, 1000);
-    } else {
-      setLoadingTaraxa(false);
-    }
-  };
+  //   if (!useCache) {
+  //     setTimeout(() => {
+  //       setLoadingTaraxa(false);
+  //     }, 1000);
+  //   } else {
+  //     setLoadingTaraxa(false);
+  //   }
+  // };
 
   const fillRecordsBase = (itemData) => {
     if (itemData.length === 0) {
@@ -2961,245 +2959,245 @@ function Dashboard({
     }
   };
 
-  const fillRecordsMat = (itemData) => {
-    if (itemData.length === 0) {
-      setDailyRecordsMat(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setDailyRecordsMat(finalData);
-    }
-  };
+  // const fillRecordsMat = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setDailyRecordsMat(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setDailyRecordsMat(finalData);
+  //   }
+  // };
 
-  const previousWinnersMatVersionRef = useRef(null);
-  const previousWinnersMatFetchedVersionRef = useRef(null);
-  const previousWinnersMatFetchingPromiseRef = useRef(null);
-  const fetchDailyRecordsAroundPlayerMatFetchingPromiseRef = useRef(null);
+  // const previousWinnersMatVersionRef = useRef(null);
+  // const previousWinnersMatFetchedVersionRef = useRef(null);
+  // const previousWinnersMatFetchingPromiseRef = useRef(null);
+  // const fetchDailyRecordsAroundPlayerMatFetchingPromiseRef = useRef(null);
 
-  const previousWinnersMatQuery = useReactQuery({
-    queryKey: ["previousWinnersMat"],
-    enabled: false,
-    staleTime: getMillisecondsUntil0000UTC(),
-    cacheTime: getMillisecondsUntil0000UTC(),
-    refetchOnWindowFocus: false,
-    refetchInterval: false,
-    retry: false,
-    queryFn: async () => {
-      const version = previousWinnersMatVersionRef.current;
-      if (!version || version === 0) {
-        return placeholderplayerData;
-      }
-      const data = {
-        StatisticName: "LeaderboardMatchainDaily",
-        StartPosition: 0,
-        MaxResultsCount: 100,
-        Version: version - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
-      );
-      return result.data.data.leaderboard;
-    },
-  });
+  // const previousWinnersMatQuery = useReactQuery({
+  //   queryKey: ["previousWinnersMat"],
+  //   enabled: false,
+  //   staleTime: getMillisecondsUntil0000UTC(),
+  //   cacheTime: getMillisecondsUntil0000UTC(),
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: false,
+  //   retry: false,
+  //   queryFn: async () => {
+  //     const version = previousWinnersMatVersionRef.current;
+  //     if (!version || version === 0) {
+  //       return placeholderplayerData;
+  //     }
+  //     const data = {
+  //       StatisticName: "LeaderboardMatchainDaily",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 100,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data
+  //     );
+  //     return result.data.data.leaderboard;
+  //   },
+  // });
 
-  const dailyRecordsMatQuery = useReactQuery({
-    queryKey: ["dailyRecordsMat"],
-    enabled: false,
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
-    retry: false,
-    refetchOnWindowFocus: false,
-    refetchInterval: false, //LEADERBOARD_CACHE_MS,
-    queryFn: async () => {
-      const data = {
-        StatisticName: "LeaderboardMatchainDaily",
-        StartPosition: 0,
-        MaxResultsCount: 100,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard`,
-        data
-      );
-      return result.data.data;
-    },
-  });
+  // const dailyRecordsMatQuery = useReactQuery({
+  //   queryKey: ["dailyRecordsMat"],
+  //   enabled: false,
+  //   staleTime: LEADERBOARD_CACHE_MS,
+  //   cacheTime: 5 * LEADERBOARD_CACHE_MS,
+  //   retry: false,
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: false, //LEADERBOARD_CACHE_MS,
+  //   queryFn: async () => {
+  //     const data = {
+  //       StatisticName: "LeaderboardMatchainDaily",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 100,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard`,
+  //       data
+  //     );
+  //     return result.data.data;
+  //   },
+  // });
 
-  const dailyRecordsAroundPlayerMatQuery = useReactQuery({
-    queryKey: ["dailyRecordsAroundPlayerMat", userId],
-    enabled: Boolean(userId),
-    staleTime: LEADERBOARD_CACHE_MS,
-    cacheTime: 5 * LEADERBOARD_CACHE_MS,
-    retry: false,
-    refetchOnWindowFocus: false,
-    refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
-    queryFn: async () => {
-      if (!userId) return [];
-      const data = {
-        StatisticName: "LeaderboardMatchainDaily",
-        MaxResultsCount: 1,
-        PlayerId: userId,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      return result.data.data.leaderboard || [];
-    },
-  });
+  // const dailyRecordsAroundPlayerMatQuery = useReactQuery({
+  //   queryKey: ["dailyRecordsAroundPlayerMat", userId],
+  //   enabled: Boolean(userId),
+  //   staleTime: LEADERBOARD_CACHE_MS,
+  //   cacheTime: 5 * LEADERBOARD_CACHE_MS,
+  //   retry: false,
+  //   refetchOnWindowFocus: false,
+  //   refetchInterval: false, //userId ? LEADERBOARD_CACHE_MS : false,
+  //   queryFn: async () => {
+  //     if (!userId) return [];
+  //     const data = {
+  //       StatisticName: "LeaderboardMatchainDaily",
+  //       MaxResultsCount: 1,
+  //       PlayerId: userId,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //       data
+  //     );
+  //     return result.data.data.leaderboard || [];
+  //   },
+  // });
 
-  const fetchPreviousWinnersMat = async (version, forceRefresh = false) => {
-    if (version === 0) {
-      setPrevDataMat(placeholderplayerData);
-      return;
-    }
+  // const fetchPreviousWinnersMat = async (version, forceRefresh = false) => {
+  //   if (version === 0) {
+  //     setPrevDataMat(placeholderplayerData);
+  //     return;
+  //   }
 
-    // Check if we already have the data for this version
-    if (
-      !forceRefresh &&
-      previousWinnersMatFetchedVersionRef.current === version
-    ) {
-      return;
-    }
+  //   // Check if we already have the data for this version
+  //   if (
+  //     !forceRefresh &&
+  //     previousWinnersMatFetchedVersionRef.current === version
+  //   ) {
+  //     return;
+  //   }
 
-    // If there's already a fetch in progress for the same version, wait for it
-    if (
-      previousWinnersMatFetchingPromiseRef.current &&
-      previousWinnersMatVersionRef.current === version
-    ) {
-      try {
-        await previousWinnersMatFetchingPromiseRef.current;
-        // After waiting, check if the version was fetched
-        if (previousWinnersMatFetchedVersionRef.current === version) {
-          return;
-        }
-      } catch (error) {
-        // If the previous fetch failed, just stop there
-        console.error("Previous fetch failed, stopping:", error);
-        return;
-      }
-    }
+  //   // If there's already a fetch in progress for the same version, wait for it
+  //   if (
+  //     previousWinnersMatFetchingPromiseRef.current &&
+  //     previousWinnersMatVersionRef.current === version
+  //   ) {
+  //     try {
+  //       await previousWinnersMatFetchingPromiseRef.current;
+  //       // After waiting, check if the version was fetched
+  //       if (previousWinnersMatFetchedVersionRef.current === version) {
+  //         return;
+  //       }
+  //     } catch (error) {
+  //       // If the previous fetch failed, just stop there
+  //       console.error("Previous fetch failed, stopping:", error);
+  //       return;
+  //     }
+  //   }
 
-    // Start a new fetch
-    previousWinnersMatVersionRef.current = version;
+  //   // Start a new fetch
+  //   previousWinnersMatVersionRef.current = version;
 
-    const fetchPromise = (async () => {
-      try {
-        const shouldForce = forceRefresh;
-        const { data, error, fromCache } = await fetchQueryData(
-          previousWinnersMatQuery,
-          {
-            force: shouldForce,
-          }
-        );
-        if ((error && !fromCache) || !data) {
-          setPrevDataMat(placeholderplayerData);
-          return;
-        }
-        setPrevDataMat(data);
-        previousWinnersMatFetchedVersionRef.current = version;
-      } finally {
-        // Clear the promise ref if this is still the current fetch
-        if (previousWinnersMatFetchingPromiseRef.current === fetchPromise) {
-          previousWinnersMatFetchingPromiseRef.current = null;
-        }
-      }
-    })();
+  //   const fetchPromise = (async () => {
+  //     try {
+  //       const shouldForce = forceRefresh;
+  //       const { data, error, fromCache } = await fetchQueryData(
+  //         previousWinnersMatQuery,
+  //         {
+  //           force: shouldForce,
+  //         }
+  //       );
+  //       if ((error && !fromCache) || !data) {
+  //         setPrevDataMat(placeholderplayerData);
+  //         return;
+  //       }
+  //       setPrevDataMat(data);
+  //       previousWinnersMatFetchedVersionRef.current = version;
+  //     } finally {
+  //       // Clear the promise ref if this is still the current fetch
+  //       if (previousWinnersMatFetchingPromiseRef.current === fetchPromise) {
+  //         previousWinnersMatFetchingPromiseRef.current = null;
+  //       }
+  //     }
+  //   })();
 
-    previousWinnersMatFetchingPromiseRef.current = fetchPromise;
-    await fetchPromise;
-  };
+  //   previousWinnersMatFetchingPromiseRef.current = fetchPromise;
+  //   await fetchPromise;
+  // };
 
-  const fetchDailyRecordsAroundPlayerMat = async (forceRefresh = false) => {
-    if (!userId) return;
+  // const fetchDailyRecordsAroundPlayerMat = async (forceRefresh = false) => {
+  //   if (!userId) return;
 
-    // If there's already a fetch in progress, wait for it
-    if (fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current) {
-      try {
-        await fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current;
-        return;
-      } catch (error) {
-        // If the previous fetch failed, continue with a new fetch
-        console.error("Previous fetch failed, retrying:", error);
-      }
-    }
+  //   // If there's already a fetch in progress, wait for it
+  //   if (fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current) {
+  //     try {
+  //       await fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current;
+  //       return;
+  //     } catch (error) {
+  //       // If the previous fetch failed, continue with a new fetch
+  //       console.error("Previous fetch failed, retrying:", error);
+  //     }
+  //   }
 
-    // Start a new fetch
-    const fetchPromise = (async () => {
-      try {
-        const { data, error, fromCache } = await fetchQueryData(
-          dailyRecordsAroundPlayerMatQuery,
-          {
-            force: forceRefresh,
-          }
-        );
-        if ((error && !fromCache) || !data?.length) {
-          setActivePlayerMat(false);
-          return;
-        }
-        const [userRecord] = data;
-        setUserDataMat(userRecord);
-        setActivePlayerMat(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
-        );
-      } finally {
-        // Clear the promise ref if this is still the current fetch
-        if (
-          fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current ===
-          fetchPromise
-        ) {
-          fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current = null;
-        }
-      }
-    })();
+  //   // Start a new fetch
+  //   const fetchPromise = (async () => {
+  //     try {
+  //       const { data, error, fromCache } = await fetchQueryData(
+  //         dailyRecordsAroundPlayerMatQuery,
+  //         {
+  //           force: forceRefresh,
+  //         }
+  //       );
+  //       if ((error && !fromCache) || !data?.length) {
+  //         setActivePlayerMat(false);
+  //         return;
+  //       }
+  //       const [userRecord] = data;
+  //       setUserDataMat(userRecord);
+  //       setActivePlayerMat(
+  //         (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+  //       );
+  //     } finally {
+  //       // Clear the promise ref if this is still the current fetch
+  //       if (
+  //         fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current ===
+  //         fetchPromise
+  //       ) {
+  //         fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current = null;
+  //       }
+  //     }
+  //   })();
 
-    fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current = fetchPromise;
-    await fetchPromise;
-  };
+  //   fetchDailyRecordsAroundPlayerMatFetchingPromiseRef.current = fetchPromise;
+  //   await fetchPromise;
+  // };
 
-  const fetchDailyRecordsMat = async (forceRefresh = false) => {
-    const useCache = !forceRefresh && isQueryFresh(dailyRecordsMatQuery);
-    if (!useCache) {
-      setloadingMat(true);
-    }
+  // const fetchDailyRecordsMat = async (forceRefresh = false) => {
+  //   const useCache = !forceRefresh && isQueryFresh(dailyRecordsMatQuery);
+  //   if (!useCache) {
+  //     setloadingMat(true);
+  //   }
 
-    const { data, error, fromCache } = await fetchQueryData(
-      dailyRecordsMatQuery,
-      {
-        force: forceRefresh,
-      }
-    );
+  //   const { data, error, fromCache } = await fetchQueryData(
+  //     dailyRecordsMatQuery,
+  //     {
+  //       force: forceRefresh,
+  //     }
+  //   );
 
-    if ((error && !fromCache) || !data) {
-      fillRecordsMat([]);
-      setPrevDataMat(placeholderplayerData);
-      setloadingMat(false);
-      return;
-    }
+  //   if ((error && !fromCache) || !data) {
+  //     fillRecordsMat([]);
+  //     setPrevDataMat(placeholderplayerData);
+  //     setloadingMat(false);
+  //     return;
+  //   }
 
-    const leaderboard = data?.leaderboard ?? [];
-    setDailyRecordsMat(leaderboard);
-    fillRecordsMat(leaderboard);
+  //   const leaderboard = data?.leaderboard ?? [];
+  //   setDailyRecordsMat(leaderboard);
+  //   fillRecordsMat(leaderboard);
 
-    const version = parseInt(data?.version);
-    await fetchPreviousWinnersMat(
-      Number.isNaN(version) ? 0 : version,
-      forceRefresh
-    );
+  //   const version = parseInt(data?.version);
+  //   await fetchPreviousWinnersMat(
+  //     Number.isNaN(version) ? 0 : version,
+  //     forceRefresh
+  //   );
 
-    if (userId) {
-      await fetchDailyRecordsAroundPlayerMat(forceRefresh);
-    }
+  //   if (userId) {
+  //     await fetchDailyRecordsAroundPlayerMat(forceRefresh);
+  //   }
 
-    if (!useCache) {
-      setTimeout(() => {
-        setloadingMat(false);
-      }, 1000);
-    } else {
-      setloadingMat(false);
-    }
-  };
+  //   if (!useCache) {
+  //     setTimeout(() => {
+  //       setloadingMat(false);
+  //     }, 1000);
+  //   } else {
+  //     setloadingMat(false);
+  //   }
+  // };
 
   const fillRecordsSkale = (itemData) => {
     if (itemData.length === 0) {
@@ -4535,13 +4533,13 @@ function Dashboard({
       setclaimedCoreChests(0);
       setclaimedVictionPremiumChests(0);
       setclaimedVictionChests(0);
-      setclaimedMatChests(0);
+      // setclaimedMatChests(0);
 
       setallChests([]);
       setallSkaleChests([]);
       setallCoreChests([]);
       setallVictionChests([]);
-      setallMatChests([]);
+      // setallMatChests([]);
 
       setOpenedChests([]);
       setOpenedCoreChests([]);
@@ -4550,9 +4548,9 @@ function Dashboard({
       setclaimedSkaleChests(0);
       setclaimedSkalePremiumChests(0);
 
-      setOpenedMatChests([]);
-      setclaimedMatChests(0);
-      setclaimedMatPremiumChests(0);
+      // setOpenedMatChests([]);
+      // setclaimedMatChests(0);
+      // setclaimedMatPremiumChests(0);
       setaiQuestionRewards([]);
       setAiQuestionCompleted(false);
       setAiQuestionObjectAnswered({
@@ -4625,11 +4623,11 @@ function Dashboard({
     }
   }, [vanarcount]);
 
-  useEffect(() => {
-    if (matcount !== 0) {
-      getAllMatChests(email);
-    }
-  }, [matcount]);
+  // useEffect(() => {
+  //   if (matcount !== 0) {
+  //     getAllMatChests(email);
+  //   }
+  // }, [matcount]);
 
   useEffect(() => {
     if (seicount !== 0) {
@@ -4637,11 +4635,11 @@ function Dashboard({
     }
   }, [seicount]);
 
-  useEffect(() => {
-    if (taraxacount !== 0) {
-      getAllTaraxaChests(email);
-    }
-  }, [taraxacount]);
+  // useEffect(() => {
+  //   if (taraxacount !== 0) {
+  //     getAllTaraxaChests(email);
+  //   }
+  // }, [taraxacount]);
 
   useEffect(() => {
     setAllStarData({
@@ -4683,10 +4681,10 @@ function Dashboard({
       activePlayerSkale,
       activePlayerViction,
       activePlayerTaiko,
-      activePlayerMat,
+      // activePlayerMat,
       activePlayerSei,
       activePlayerVanar,
-      activePlayerTaraxa,
+      // activePlayerTaraxa,
     ];
 
     const allFalse = playerActiveArray.every((v) => v === false);
@@ -4720,10 +4718,10 @@ function Dashboard({
     activePlayerSkale,
     activePlayerViction,
     activePlayerTaiko,
-    activePlayerMat,
+    // activePlayerMat,
     activePlayerSei,
     activePlayerVanar,
-    activePlayerTaraxa,
+    // activePlayerTaraxa,
   ]);
 
   useEffect(() => {
@@ -4873,28 +4871,28 @@ function Dashboard({
       },
     ]);
   }, [dailyRecordsSei, prevDataSei, userDataSei, activePlayerSei, loadingSei]);
-  useEffect(() => {
-    setAllTaraxaData([
-      {
-        title: "DAILY",
-        reset: "Daily (00:00 UTC)",
-        type: "stars",
-        rewards: taraxaStars,
-        previous_rewards: taraxaStars,
-        activeData: dailyRecordsTaraxa,
-        previousData: prevDataTaraxa,
-        player_data: userDataTaraxa,
-        is_active: activePlayerTaraxa,
-        loading: loadingTaraxa,
-      },
-    ]);
-  }, [
-    dailyRecordsTaraxa,
-    prevDataTaraxa,
-    userDataTaraxa,
-    activePlayerTaraxa,
-    loadingTaraxa,
-  ]);
+  // useEffect(() => {
+  //   setAllTaraxaData([
+  //     {
+  //       title: "DAILY",
+  //       reset: "Daily (00:00 UTC)",
+  //       type: "stars",
+  //       rewards: taraxaStars,
+  //       previous_rewards: taraxaStars,
+  //       activeData: dailyRecordsTaraxa,
+  //       previousData: prevDataTaraxa,
+  //       player_data: userDataTaraxa,
+  //       is_active: activePlayerTaraxa,
+  //       loading: loadingTaraxa,
+  //     },
+  //   ]);
+  // }, [
+  //   dailyRecordsTaraxa,
+  //   prevDataTaraxa,
+  //   userDataTaraxa,
+  //   activePlayerTaraxa,
+  //   loadingTaraxa,
+  // ]);
 
   useEffect(() => {
     setAllBaseData([
@@ -4942,27 +4940,27 @@ function Dashboard({
     loadingTaiko,
   ]);
 
-  useEffect(() => {
-    setAllMatData([
-      {
-        title: "DAILY",
-        reset: "Daily (00:00 UTC)",
-        type: "stars",
-        rewards: matStars,
-        previous_rewards: matStars,
-        activeData: dailyRecordsMat,
-        previousData: prevDataMat,
-        player_data: userDataMat,
-        is_active: activePlayerMat,
-        loading: loadingMat,
-      },
-    ]);
-  }, [dailyRecordsMat, prevDataMat, userDataMat, activePlayerMat, loadingMat]);
+  // useEffect(() => {
+  //   setAllMatData([
+  //     {
+  //       title: "DAILY",
+  //       reset: "Daily (00:00 UTC)",
+  //       type: "stars",
+  //       rewards: matStars,
+  //       previous_rewards: matStars,
+  //       activeData: dailyRecordsMat,
+  //       previousData: prevDataMat,
+  //       player_data: userDataMat,
+  //       is_active: activePlayerMat,
+  //       loading: loadingMat,
+  //     },
+  //   ]);
+  // }, [dailyRecordsMat, prevDataMat, userDataMat, activePlayerMat, loadingMat]);
 
   const handleResetRecords = () => {
     setRecords([]);
     setDailyRecordsTaiko([]);
-    setDailyRecordsMat([]);
+    // setDailyRecordsMat([]);
     setDailyRecordsSei([]);
     setDailyRecordsManta([]);
     setDailyRecordsBase([]);
@@ -4970,7 +4968,7 @@ function Dashboard({
     setDailyRecordsViction([]);
     setDailyRecordsSkale([]);
     setDailyRecordsVanar([]);
-    setDailyRecordsTaraxa([]);
+    // setDailyRecordsTaraxa([]);
   };
 
   const handleResetRecordsStars = () => {
@@ -5001,19 +4999,23 @@ function Dashboard({
       // if (dailyRecordsVanar.length === 0) {
       fetchDailyRecordsVanar();
       // }
-    } else if (chain === "matchain") {
+    } 
+    // else if (chain === "matchain") {
       // if (dailyRecordsMat.length === 0) {
-      fetchDailyRecordsMat();
+      // fetchDailyRecordsMat();
       // }
-    } else if (chain === "sei") {
+    // }
+     else if (chain === "sei") {
       // if (dailyRecordsSei.length === 0) {
       fetchDailyRecordsSei();
       // }
-    } else if (chain === "taraxa") {
+    } 
+    // else if (chain === "taraxa") {
       // if (dailyRecordsTaraxa.length === 0) {
-      fetchDailyRecordsTaraxa();
+      // fetchDailyRecordsTaraxa();
       // }
-    } else if (chain === "manta") {
+    // } 
+    else if (chain === "manta") {
       // if (dailyRecordsManta.length === 0) {
       fetchDailyRecordsManta();
       // }
@@ -5040,7 +5042,7 @@ function Dashboard({
       fetchDailyRecordsAroundPlayer(false, dailyrecords);
       fetchDailyRecordsAroundPlayerTaiko(false);
       fetchDailyRecordsAroundPlayerVanar(false);
-      fetchDailyRecordsAroundPlayerMat(false);
+      // fetchDailyRecordsAroundPlayerMat(false);
       fetchDailyRecordsAroundPlayerSei(false);
       fetchDailyRecordsAroundPlayerManta(false);
       fetchDailyRecordsAroundPlayerBase(false);
@@ -5049,7 +5051,7 @@ function Dashboard({
       fetchDailyRecordsAroundPlayerSkale(false);
       fetchDailyRecordsAroundPlayerStar(false, starRecords);
       fetchWeeklyRecordsAroundPlayerStar(false, starRecordsWeekly);
-      fetchDailyRecordsAroundPlayerTaraxa(false);
+      // fetchDailyRecordsAroundPlayerTaraxa(false);
     }
   };
 
@@ -5452,9 +5454,9 @@ function Dashboard({
           claimedBaseChests + claimedBasePremiumChests < 20 ||
           claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
           claimedVanarChests + claimedVanarPremiumChests < 20 ||
-          claimedMatChests + claimedMatPremiumChests < 20 ||
-          claimedSeiChests + claimedSeiPremiumChests < 20 ||
-          claimedTaraxaChests + claimedTaraxaPremiumChests < 20
+          // claimedMatChests + claimedMatPremiumChests < 20 ||
+          claimedSeiChests + claimedSeiPremiumChests < 20 
+          // claimedTaraxaChests + claimedTaraxaPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
@@ -5466,9 +5468,9 @@ function Dashboard({
           claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
           claimedVanarChests + claimedVanarPremiumChests === 20 &&
-          claimedMatChests + claimedMatPremiumChests === 20 &&
-          claimedSeiChests + claimedSeiPremiumChests === 20 &&
-          claimedTaraxaChests + claimedTaraxaPremiumChests === 20
+          // claimedMatChests + claimedMatPremiumChests === 20 &&
+          claimedSeiChests + claimedSeiPremiumChests === 20 
+          // claimedTaraxaChests + claimedTaraxaPremiumChests === 20
         ) {
           setCanBuy(false);
         }
@@ -5482,9 +5484,9 @@ function Dashboard({
           claimedBaseChests < 10 ||
           claimedTaikoChests < 10 ||
           claimedVanarChests < 10 ||
-          claimedMatChests < 10 ||
-          claimedSeiChests < 10 ||
-          claimedTaraxaChests < 10
+          // claimedMatChests < 10 ||
+          claimedSeiChests < 10 
+          // claimedTaraxaChests < 10
         ) {
           setCanBuy(true);
         } else if (
@@ -5496,9 +5498,9 @@ function Dashboard({
           claimedBaseChests === 10 &&
           claimedTaikoChests === 10 &&
           claimedVanarChests === 10 &&
-          claimedMatChests === 10 &&
-          claimedSeiChests === 10 &&
-          claimedTaraxaChests === 10
+          // claimedMatChests === 10 &&
+          claimedSeiChests === 10 
+          // claimedTaraxaChests === 10
         ) {
           setCanBuy(false);
         }
@@ -5856,43 +5858,43 @@ function Dashboard({
     }
   };
 
-  const getAllMatChests = async (userEmail) => {
-    if (userEmail) {
-      const emailData = { emailAddress: userEmail, chainId: "matchain" };
+  // const getAllMatChests = async (userEmail) => {
+  //   if (userEmail) {
+  //     const emailData = { emailAddress: userEmail, chainId: "matchain" };
 
-      const result = await axios.post(
-        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData
-      );
-      if (result.status === 200 && result.data) {
-        const chestOrder = result.data.chestOrder;
+  //     const result = await axios.post(
+  //       "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+  //       emailData
+  //     );
+  //     if (result.status === 200 && result.data) {
+  //       const chestOrder = result.data.chestOrder;
 
-        let openedChests = [];
-        let openedStandardChests = [];
-        let openedPremiumChests = [];
+  //       let openedChests = [];
+  //       let openedStandardChests = [];
+  //       let openedPremiumChests = [];
 
-        if (chestOrder.length > 0) {
-          for (let item = 0; item < chestOrder.length; item++) {
-            if (chestOrder[item].chestType === "Standard") {
-              if (chestOrder[item].isOpened === true) {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
-              }
-            } else if (chestOrder[item].chestType === "Premium") {
-              if (chestOrder[item].isOpened === true) {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
-              }
-            }
-          }
-          setOpenedMatChests(openedChests);
-          setclaimedMatChests(openedStandardChests.length);
-          setclaimedMatPremiumChests(openedPremiumChests.length);
-          setallMatChests(chestOrder);
-        }
-      }
-    }
-  };
+  //       if (chestOrder.length > 0) {
+  //         for (let item = 0; item < chestOrder.length; item++) {
+  //           if (chestOrder[item].chestType === "Standard") {
+  //             if (chestOrder[item].isOpened === true) {
+  //               openedChests.push(chestOrder[item]);
+  //               openedStandardChests.push(chestOrder[item]);
+  //             }
+  //           } else if (chestOrder[item].chestType === "Premium") {
+  //             if (chestOrder[item].isOpened === true) {
+  //               openedChests.push(chestOrder[item]);
+  //               openedPremiumChests.push(chestOrder[item]);
+  //             }
+  //           }
+  //         }
+  //         setOpenedMatChests(openedChests);
+  //         setclaimedMatChests(openedStandardChests.length);
+  //         setclaimedMatPremiumChests(openedPremiumChests.length);
+  //         setallMatChests(chestOrder);
+  //       }
+  //     }
+  //   }
+  // };
 
   const getAllSeiChests = async (userEmail) => {
     const emailData = { emailAddress: userEmail, chainId: "sei" };
@@ -5934,46 +5936,46 @@ function Dashboard({
       }
     }
   };
-  const getAllTaraxaChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail, chainId: "taraxa" };
+  // const getAllTaraxaChests = async (userEmail) => {
+  //   const emailData = { emailAddress: userEmail, chainId: "taraxa" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+  //   const result = await axios.post(
+  //     "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+  //     emailData
+  //   );
+  //   if (result.status === 200 && result.data) {
+  //     const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+  //     let standardChestsArray = [];
+  //     let premiumChestsArray = [];
+  //     let openedChests = [];
+  //     let openedStandardChests = [];
+  //     let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              openedChests.push(chestOrder[item]);
-              openedStandardChests.push(chestOrder[item]);
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              openedChests.push(chestOrder[item]);
-              openedPremiumChests.push(chestOrder[item]);
-            }
-            premiumChestsArray.push(chestOrder[item]);
-          }
-        }
-        setOpenedTaraxaChests(openedChests);
+  //     if (chestOrder.length > 0) {
+  //       for (let item = 0; item < chestOrder.length; item++) {
+  //         if (chestOrder[item].chestType === "Standard") {
+  //           if (chestOrder[item].isOpened === true) {
+  //             openedChests.push(chestOrder[item]);
+  //             openedStandardChests.push(chestOrder[item]);
+  //           }
+  //           standardChestsArray.push(chestOrder[item]);
+  //         } else if (chestOrder[item].chestType === "Premium") {
+  //           if (chestOrder[item].isOpened === true) {
+  //             openedChests.push(chestOrder[item]);
+  //             openedPremiumChests.push(chestOrder[item]);
+  //           }
+  //           premiumChestsArray.push(chestOrder[item]);
+  //         }
+  //       }
+  //       setOpenedTaraxaChests(openedChests);
 
-        setclaimedTaraxaChests(openedStandardChests.length);
-        setclaimedTaraxaPremiumChests(openedPremiumChests.length);
-        setallTaraxaChests(chestOrder);
-      }
-    }
-  };
+  //       setclaimedTaraxaChests(openedStandardChests.length);
+  //       setclaimedTaraxaPremiumChests(openedPremiumChests.length);
+  //       setallTaraxaChests(chestOrder);
+  //     }
+  //   }
+  // };
 
   const getAIQuestionRewardStatus = async (email) => {
     const data = {
@@ -6095,7 +6097,6 @@ function Dashboard({
         handleSwitchNetwork,
         handleSwitchChainGateWallet,
         handleSwitchChainBinanceWallet,
-        network_matchain,
         coinbase,
       });
     } catch (error) {
@@ -6189,9 +6190,9 @@ function Dashboard({
       base: 0,
       taiko: 0,
       vanar: 0,
-      mat: 0,
+      // mat: 0,
       sei: 0,
-      taraxa: 0,
+      // taraxa: 0,
     };
 
     if (openedChests && openedChests.length > 0) {
@@ -6345,24 +6346,24 @@ function Dashboard({
       });
     }
 
-    if (openedMatChests && openedMatChests.length > 0) {
-      openedMatChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                temp.mat += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
+    // if (openedMatChests && openedMatChests.length > 0) {
+    //   openedMatChests.forEach((chest) => {
+    //     if (chest.isOpened === true) {
+    //       if (chest.rewards.length > 1) {
+    //         chest.rewards.forEach((innerChest) => {
+    //           if (
+    //             innerChest.rewardType === "Money" &&
+    //             innerChest.status !== "Unclaimed" &&
+    //             innerChest.status !== "Unclaimable" &&
+    //             innerChest.status === "Claimed"
+    //           ) {
+    //             temp.mat += Number(innerChest.reward);
+    //           }
+    //         });
+    //       }
+    //     }
+    //   });
+    // }
 
     if (openedSeiChests && openedSeiChests.length > 0) {
       openedSeiChests.forEach((chest) => {
@@ -6382,24 +6383,24 @@ function Dashboard({
         }
       });
     }
-    if (openedTaraxaChests && openedTaraxaChests.length > 0) {
-      openedTaraxaChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                temp.taraxa += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
+    // if (openedTaraxaChests && openedTaraxaChests.length > 0) {
+    //   openedTaraxaChests.forEach((chest) => {
+    //     if (chest.isOpened === true) {
+    //       if (chest.rewards.length > 1) {
+    //         chest.rewards.forEach((innerChest) => {
+    //           if (
+    //             innerChest.rewardType === "Money" &&
+    //             innerChest.status !== "Unclaimed" &&
+    //             innerChest.status !== "Unclaimable" &&
+    //             innerChest.status === "Claimed"
+    //           ) {
+    //             temp.taraxa += Number(innerChest.reward);
+    //           }
+    //         });
+    //       }
+    //     }
+    //   });
+    // }
 
     // Update state only when values actually changed
     setTreasureRewardMoney((prev) => {
@@ -6412,9 +6413,9 @@ function Dashboard({
         prev.base === temp.base &&
         prev.taiko === temp.taiko &&
         prev.vanar === temp.vanar &&
-        prev.mat === temp.mat &&
-        prev.sei === temp.sei &&
-        prev.taraxa === temp.taraxa;
+        // prev.mat === temp.mat &&
+        prev.sei === temp.sei 
+        // prev.taraxa === temp.taraxa;
       return equal ? prev : temp;
     });
   };
@@ -6461,14 +6462,14 @@ function Dashboard({
     claimedMantaPremiumChests,
     claimedSeiChests,
     claimedSeiPremiumChests,
-    claimedTaraxaChests,
-    claimedTaraxaPremiumChests,
+    // claimedTaraxaChests,
+    // claimedTaraxaPremiumChests,
     claimedTaikoChests,
     claimedTaikoPremiumChests,
     claimedVanarChests,
     claimedVanarPremiumChests,
-    claimedMatChests,
-    claimedMatPremiumChests,
+    // claimedMatChests,
+    // claimedMatPremiumChests,
   ]);
 
   useEffect(() => {
@@ -6494,10 +6495,10 @@ function Dashboard({
       userDataManta ||
       userDataBase ||
       userDataTaiko ||
-      userDataMat ||
+      // userDataMat ||
       userDataSei ||
       userDataVanar ||
-      userDataTaraxa ||
+      // userDataTaraxa ||
       userDataStar
     ) {
       updateUserProgressInRedux();
@@ -6510,10 +6511,10 @@ function Dashboard({
     userDataManta,
     userDataBase,
     userDataTaiko,
-    userDataMat,
+    // userDataMat,
     userDataSei,
     userDataVanar,
-    userDataTaraxa,
+    // userDataTaraxa,
     userDataStar,
     userDataStarWeekly,
     isPremium,
@@ -6562,9 +6563,9 @@ function Dashboard({
       getAllBaseChests(email);
       getAllTaikoChests(email);
       getAllVanarChests(email);
-      getAllMatChests(email);
+      // getAllMatChests(email);
       getAllSeiChests(email);
-      getAllTaraxaChests(email);
+      // getAllTaraxaChests(email);
     }
   }, [email, userWallet]);
 
@@ -6594,7 +6595,7 @@ function Dashboard({
     openedChests,
     userWallet,
     openedCoreChests,
-    openedMatChests,
+    // openedMatChests,
     openedVictionChests,
     openedSkaleChests,
     openedMantaChests,
@@ -6602,7 +6603,7 @@ function Dashboard({
     openedBaseChests,
     openedTaikoChests,
     openedVanarChests,
-    openedTaraxaChests,
+    // openedTaraxaChests,
   ]);
 
   useEffect(() => {
@@ -6625,10 +6626,10 @@ function Dashboard({
       fetchDailyRecordsAroundPlayerSei(false, []);
       fetchDailyRecordsAroundPlayerTaiko(false, []);
       fetchDailyRecordsAroundPlayerVanar(false, []);
-      fetchDailyRecordsAroundPlayerMat(false, []);
+      // fetchDailyRecordsAroundPlayerMat(false, []);
       fetchDailyRecordsAroundPlayerViction(false, []);
       fetchDailyRecordsAroundPlayerSkale(false, []);
-      fetchDailyRecordsAroundPlayerTaraxa(false, []);
+      // fetchDailyRecordsAroundPlayerTaraxa(false, []);
       effectRan.current = true;
     }
   }, [userId]);
@@ -6717,11 +6718,11 @@ function Dashboard({
                 openedCoreChests.length +
                 openedMantaChests.length +
                 openedSeiChests.length +
-                openedTaraxaChests.length +
+                // openedTaraxaChests.length +
                 openedSkaleChests.length +
                 openedTaikoChests.length +
                 openedVanarChests.length +
-                openedMatChests.length +
+                // openedMatChests.length +
                 openedVictionChests.length
               }
               allClaimedChestsPremium={
@@ -6729,8 +6730,8 @@ function Dashboard({
                 claimedCorePremiumChests +
                 claimedMantaPremiumChests +
                 claimedSeiPremiumChests +
-                claimedTaraxaPremiumChests +
-                claimedMatPremiumChests +
+                // claimedTaraxaPremiumChests +
+                // claimedMatPremiumChests +
                 claimedTaikoPremiumChests +
                 claimedVanarPremiumChests +
                 claimedVictionPremiumChests +
@@ -6742,8 +6743,8 @@ function Dashboard({
                 claimedCoreChests +
                 claimedMantaChests +
                 claimedSeiChests +
-                claimedTaraxaChests +
-                claimedMatChests +
+                // claimedTaraxaChests +
+                // claimedMatChests +
                 claimedTaikoChests +
                 claimedVanarChests +
                 claimedVictionChests +
@@ -6821,9 +6822,6 @@ function Dashboard({
               isConnected={isConnected}
               setBeastSiegeStatus={setBeastSiegeStatus}
               genesisUsd={genesisRank2}
-              walletClient={walletClient}
-              publicClient={publicClient}
-              network_matchain={network_matchain}
             />
           </>
         ) : location.pathname === "/account/prime" ? (
@@ -6839,9 +6837,6 @@ function Dashboard({
               onSuccessDeposit();
             }}
             isConnected={isConnected}
-            walletClient={walletClient}
-            publicClient={publicClient}
-            network_matchain={network_matchain}
           />
         ) : (
           <></>
@@ -6863,8 +6858,8 @@ function Dashboard({
             mantaImages={mantaImages}
             baseImages={baseImages}
             taikoImages={taikoImages}
-            matImages={matImages}
-            taraxaImages={taraxaImages}
+            // matImages={matImages}
+            // taraxaImages={taraxaImages}
             coreImages={coreImages}
             chainId={chainId}
             ethTokenData={ethTokenData}
@@ -6895,12 +6890,12 @@ function Dashboard({
             claimedTaikoPremiumChests={claimedTaikoPremiumChests}
             claimedVanarChests={claimedVanarChests}
             claimedVanarPremiumChests={claimedVanarPremiumChests}
-            claimedMatChests={claimedMatChests}
-            claimedMatPremiumChests={claimedMatPremiumChests}
+            // claimedMatChests={claimedMatChests}
+            // claimedMatPremiumChests={claimedMatPremiumChests}
             claimedSeiChests={claimedSeiChests}
             claimedSeiPremiumChests={claimedSeiPremiumChests}
-            claimedTaraxaChests={claimedTaraxaChests}
-            claimedTaraxaPremiumChests={claimedTaraxaPremiumChests}
+            // claimedTaraxaChests={claimedTaraxaChests}
+            // claimedTaraxaPremiumChests={claimedTaraxaPremiumChests}
             email={email}
             openedChests={openedChests}
             openedSkaleChests={openedSkaleChests}
@@ -6910,9 +6905,9 @@ function Dashboard({
             openedBaseChests={openedBaseChests}
             openedTaikoChests={openedTaikoChests}
             openedVanarChests={openedVanarChests}
-            openedMatChests={openedMatChests}
+            // openedMatChests={openedMatChests}
             openedSeiChests={openedSeiChests}
-            openedTaraxaChests={openedTaraxaChests}
+            // openedTaraxaChests={openedTaraxaChests}
             address={userWallet}
             allChests={allChests}
             allSkaleChests={allSkaleChests}
@@ -6922,9 +6917,9 @@ function Dashboard({
             allBaseChests={allBaseChests}
             allTaikoChests={allTaikoChests}
             allVanarChests={allVanarChests}
-            allMatChests={allMatChests}
+            // allMatChests={allMatChests}
             allSeiChests={allSeiChests}
-            allTaraxaChests={allTaraxaChests}
+            // allTaraxaChests={allTaraxaChests}
             onChestClaimed={() => {
               setCount(count + 1);
             }}
@@ -6949,23 +6944,20 @@ function Dashboard({
             onTaikoChestClaimed={() => {
               settaikocount(taikocount + 1);
             }}
-            onMatChestClaimed={() => {
-              setmatcount(matcount + 1);
-            }}
+            // onMatChestClaimed={() => {
+            //   setmatcount(matcount + 1);
+            // }}
             onSeiChestClaimed={() => {
               setseicount(seicount + 1);
             }}
-            onTaraxaChestClaimed={() => {
-              settaraxacount(taraxacount + 1);
-            }}
+            // onTaraxaChestClaimed={() => {
+            //   settaraxacount(taraxacount + 1);
+            // }}
             dummypremiumChests={dummypremiumChests}
             // premiumTxHash={premiumTxHash}
             // selectedChainforPremium={selectedChainforPremium}
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}
-            walletClient={walletClient}
-            publicClient={publicClient}
-            network_matchain={network_matchain}
           />
           // </OutsideClickHandler>
         )}
@@ -7017,9 +7009,9 @@ function Dashboard({
                 allMantaData={allMantaData}
                 allBaseData={allBaseData}
                 allTaikoData={allTaikoData}
-                allMatData={allMatData}
+                // allMatData={allMatData}
                 allSeiData={allSeiData}
-                allTaraxaData={allTaraxaData}
+                // allTaraxaData={allTaraxaData}
                 allVanarData={allVanarData}
                 dailyplayerData={dailyplayerData}
                 genesisData={genesisData}
@@ -7247,8 +7239,6 @@ function Dashboard({
             coinbase={coinbase}
             chainId={chainId}
             wallet={userWallet}
-            walletClient={walletClient}
-            publicClient={publicClient}
             isEOA={isEOA}
             onSuccessDeposit={() => {
               handleRefreshCountdown700(coinbase);
@@ -7535,8 +7525,6 @@ function Dashboard({
                     switchNetwork(hex, dec);
                   }}
                   email={email}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                 />
               </div>
             </div>

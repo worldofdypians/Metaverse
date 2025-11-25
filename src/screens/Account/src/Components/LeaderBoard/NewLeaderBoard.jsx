@@ -87,8 +87,8 @@ const NewLeaderBoard = ({
   allMantaData,
   allBaseData,
   allTaikoData,
-  allMatData,
-  allTaraxaData,
+  // allMatData,
+  // allTaraxaData,
   onPremiumClick,
   onGoldenpassClick,
   allSeiData,
@@ -138,9 +138,9 @@ const NewLeaderBoard = ({
     if (allMantaData && allMantaData.length > 0 && optionText2 === "manta") {
       setAllData(allMantaData);
     }
-    if (allMatData && allMatData.length > 0 && optionText2 === "matchain") {
-      setAllData(allMatData);
-    }
+    // if (allMatData && allMatData.length > 0 && optionText2 === "matchain") {
+    //   setAllData(allMatData);
+    // }
     if (allSeiData && allSeiData.length > 0 && optionText2 === "sei") {
       setAllData(allSeiData);
     }
@@ -153,9 +153,9 @@ const NewLeaderBoard = ({
     if (allVanarData && allVanarData.length > 0 && optionText2 === "vanar") {
       setAllData(allVanarData);
     }
-    if (allTaraxaData && allTaraxaData.length > 0 && optionText2 === "taraxa") {
-      setAllData(allTaraxaData);
-    }
+    // if (allTaraxaData && allTaraxaData.length > 0 && optionText2 === "taraxa") {
+    //   setAllData(allTaraxaData);
+    // }
     if (
       allVictionData &&
       allVictionData.length > 0 &&
@@ -168,13 +168,13 @@ const NewLeaderBoard = ({
     allBaseData,
     allCoreData,
     allMantaData,
-    allMatData,
+    // allMatData,
     allSeiData,
     allSkaleData,
     allTaikoData,
     allVictionData,
     allVanarData,
-    allTaraxaData,
+    // allTaraxaData,
   ]);
 
   // useEffect(() => {
@@ -285,7 +285,7 @@ const NewLeaderBoard = ({
                           ? "Vanar"
                           : ""}
                       </button>
-                      <button
+                      {/* <button
                         onMouseEnter={() => handleMouseEnter("taraxa")}
                         onMouseLeave={handleMouseLeave}
                         className={` 
@@ -323,7 +323,7 @@ const NewLeaderBoard = ({
                           : windowSize.width < 786 && optionText2 === "taraxa"
                           ? "Taraxa"
                           : ""}
-                      </button>
+                      </button> */}
                       <button
                         onMouseEnter={() => handleMouseEnter("taiko")}
                         onMouseLeave={handleMouseLeave}
@@ -589,7 +589,7 @@ const NewLeaderBoard = ({
                           ? "Viction"
                           : ""}
                       </button>
-                      <button
+                      {/* <button
                         onMouseEnter={() => handleMouseEnter("matchain")}
                         onMouseLeave={handleMouseLeave}
                         className={`
@@ -626,7 +626,7 @@ const NewLeaderBoard = ({
                           : windowSize.width < 786 && optionText2 === "matchain"
                           ? "Matchain"
                           : ""}
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -1098,8 +1098,7 @@ const NewLeaderBoard = ({
                                                           index + 1 <= 85
                                                         ? "https://cdn.worldofdypians.com/wod/playerAvatar15.png"
                                                         : "https://cdn.worldofdypians.com/wod/playerAvatar16.png"
-                                                      : optionText2 ===
-                                                          "matchain" ||
+                                                      : 
                                                         optionText2 === "sei"
                                                       ? index + 1 <= 10
                                                         ? `https://cdn.worldofdypians.com/wod/globalRank${

@@ -25,7 +25,7 @@ const ChainPopup = ({
         <div className="d-flex flex-column position-relative gap-2">
           <hr className="header-divider my-0" />
           <div className="header-chain-grid">
-            {window.WALLET_TYPE !== "matchId" && (
+           
               <Dropdown.Item
                 onClick={() => onSwitchNetwork("0x1", 1)}
                 className={activeChain === "eth" ? "active-chain-btn" : ""}
@@ -38,7 +38,7 @@ const ChainPopup = ({
                 />
                 Ethereum
               </Dropdown.Item>
-            )}
+            
 
             <Dropdown.Item
               onClick={() => {
@@ -54,7 +54,7 @@ const ChainPopup = ({
               />
               BNB Chain
             </Dropdown.Item>
-            {window.WALLET_TYPE !== "matchId" && !isPremium && (
+            
               <Dropdown.Item
                 onClick={() => onSwitchNetwork("0xcc", 204)}
                 className={activeChain === "opbnb" ? "active-chain-btn" : ""}
@@ -67,24 +67,10 @@ const ChainPopup = ({
                 />
                 opBNB Chain
               </Dropdown.Item>
-            )}
-            {window.WALLET_TYPE !== "binance" &&
-              !window.ethereum?.isBinance && (
-                <Dropdown.Item
-                  onClick={() => onSwitchNetwork("0x2ba", 698)}
-                  className={activeChain === "mat" ? "active-chain-btn" : ""}
-                >
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/matchainIcon.svg"}
-                    width={20}
-                    height={20}
-                    alt=""
-                  />
-                  Matchain
-                </Dropdown.Item>
-              )}
+            
+          
 
-            {window.WALLET_TYPE !== "matchId" && (
+           
               <Dropdown.Item
                 onClick={() => onSwitchNetwork("0xa9", 169)}
                 className={activeChain === "manta" ? "active-chain-btn" : ""}
@@ -97,10 +83,9 @@ const ChainPopup = ({
                 />
                 Manta
               </Dropdown.Item>
-            )}
+            
             {window.WALLET_TYPE !== "binance" &&
-              !window.ethereum?.isBinance &&
-              window.WALLET_TYPE !== "matchId" && (
+              !window.ethereum?.isBinance  && (
                 <Dropdown.Item
                   onClick={() => onSwitchNetwork("0x28c58", 167000)}
                   className={activeChain === "taiko" ? "active-chain-btn" : ""}
@@ -116,8 +101,7 @@ const ChainPopup = ({
               )}
 
             {window.WALLET_TYPE !== "binance" &&
-              !window.ethereum?.isBinance &&
-              window.WALLET_TYPE !== "matchId" && (
+              !window.ethereum?.isBinance && (
                 <Dropdown.Item
                   onClick={() => onSwitchNetwork("0x45c", 1116)}
                   className={activeChain === "core" ? "active-chain-btn" : ""}
@@ -131,7 +115,7 @@ const ChainPopup = ({
                   CORE
                 </Dropdown.Item>
               )}
-            {window.WALLET_TYPE !== "matchId" && (
+          
               <Dropdown.Item
                 onClick={() => onSwitchNetwork("0x2105", 8453)}
                 className={activeChain === "base" ? "active-chain-btn" : ""}
@@ -144,9 +128,8 @@ const ChainPopup = ({
                 />
                 Base
               </Dropdown.Item>
-            )}
-            {window.WALLET_TYPE !== "matchId" &&
-              window.WALLET_TYPE !== "binance" &&
+             
+            {window.WALLET_TYPE !== "binance" &&
               !window.ethereum?.isBinance && (
                 <Dropdown.Item
                   onClick={() => onSwitchNetwork("0x531", 1329)}
@@ -162,8 +145,7 @@ const ChainPopup = ({
                 </Dropdown.Item>
               )}
 
-            {window.WALLET_TYPE !== "matchId" &&
-              window.WALLET_TYPE !== "binance" &&
+            {window.WALLET_TYPE !== "binance" &&
               !window.ethereum?.isBinance && (
                 <Dropdown.Item
                   onClick={() => onSwitchNetwork("0x58", 88)}
@@ -180,7 +162,7 @@ const ChainPopup = ({
                   Viction
                 </Dropdown.Item>
               )}
-            {window.WALLET_TYPE !== "matchId" && (
+             
               <Dropdown.Item
                 onClick={() => onSwitchNetwork("0xa86a", 43114)}
                 className={activeChain === "avax" ? "active-chain-btn" : ""}
@@ -193,8 +175,8 @@ const ChainPopup = ({
                 />
                 Avalanche
               </Dropdown.Item>
-            )}
-            {window.WALLET_TYPE !== "matchId" &&
+            
+            {
               window.WALLET_TYPE !== "binance" &&
               !window.ethereum?.isBinance && (
                 <Dropdown.Item
@@ -210,7 +192,7 @@ const ChainPopup = ({
                   SKALE
                 </Dropdown.Item>
               )}
-            {window.WALLET_TYPE !== "matchId" &&
+            {
               window.WALLET_TYPE !== "binance" &&
               !isPremium &&
               !window.ethereum?.isBinance && (
@@ -241,7 +223,7 @@ const ChainPopup = ({
               />
               Conflux
             </Dropdown.Item>
-            {window.WALLET_TYPE !== "matchId" &&
+            {
               window.WALLET_TYPE !== "binance" &&
               !window.ethereum?.isBinance && (
                 <Dropdown.Item
@@ -257,22 +239,7 @@ const ChainPopup = ({
                   Vanar
                 </Dropdown.Item>
               )}
-            {window.WALLET_TYPE !== "matchId" &&
-              window.WALLET_TYPE !== "binance" &&
-              !window.ethereum?.isBinance && (
-                <Dropdown.Item
-                  onClick={() => onSwitchNetwork("0x349", 841)}
-                  className={activeChain === "taraxa" ? "active-chain-btn" : ""}
-                >
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
-                    alt=""
-                    width={20}
-                    height={20}
-                  />
-                  Taraxa
-                </Dropdown.Item>
-              )}
+             
           </div>
         </div>
         {!isMobile && (
