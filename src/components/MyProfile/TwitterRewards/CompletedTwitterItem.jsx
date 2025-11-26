@@ -14,9 +14,8 @@ const CompletedTwitterItem = ({ item, index }) => {
 
 
   return (
-    <a
-      href={`https://x.com/worldofdypians/status/${item.tweetId}`}
-      target="_blank"
+    <div
+     
       className="twitter-task-item d-flex flex-column gap-3 w-100  p-2 position-relative"
       key={index}
     >
@@ -62,10 +61,10 @@ const CompletedTwitterItem = ({ item, index }) => {
         <span className="task-completed-text">Task Completed</span>
         <div className="gray-dot"></div>
         <span className="task-completed-text">
-          {new Date(item.assignedAt).toLocaleDateString("en-GB")}
+          {new Date(item.tweetCreatedAt).toLocaleDateString("en-GB")}
         </span>
       </div>
-    </a>
+    </div>
   );
 };
 

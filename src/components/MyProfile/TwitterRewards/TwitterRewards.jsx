@@ -7,6 +7,19 @@ import { NavLink } from "react-router-dom";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { useCountUp } from "../../../hooks/useCountup";
 import BlurredTwitterItem from "./BluredTwitterItem";
+import Countdown from "react-countdown";
+
+const renderer = ({ hours, minutes, completed }) => {
+  if (completed) {
+    return <span className="unlink-twitter-text mb-0">00:00</span>;
+  }
+
+  return (
+    <span className="unlink-twitter-text mb-0">
+      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
+    </span>
+  );
+};
 
 const TwitterRewards = ({
   tasks,
@@ -20,6 +33,7 @@ const TwitterRewards = ({
   onConnectWallet,
   taskCount,
   twitter,
+  twitterCooldown,
 }) => {
   const windowSize = useWindowSize();
 
@@ -81,6 +95,8 @@ const TwitterRewards = ({
         onClose();
       });
   };
+
+  console.log(twitterCooldown.remainingHours, "hours");
 
   return (
     <>
@@ -209,13 +225,27 @@ const TwitterRewards = ({
                     Disconnect
                   </button>
                 ) : (
-                  <a
-                    href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
-                    className="connect-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
-                    style={{ width: "fit-content", cursor: "pointer" }}
-                  >
-                    Connect
-                  </a>
+                  <>
+                    {twitterCooldown.remainingHours === 0 ? (
+                      <a
+                        href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
+                        className="connect-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
+                        style={{ width: "fit-content", cursor: "pointer" }}
+                      >
+                        Connect
+                      </a>
+                    ) : (
+                      <button
+                        className="unlink-twitter-button d-flex align-items-center gap-1 px-3 py-2"
+                        disabled
+                      >
+                        <Countdown
+                          date={twitterCooldown.remainingHours}
+                          renderer={renderer}
+                        />
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             </div>

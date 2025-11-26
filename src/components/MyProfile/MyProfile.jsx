@@ -1901,6 +1901,7 @@ const MyProfile = ({
           email={email}
           onConnectWallet={onConnectWallet}
           twitter={twitter}
+                twitterCooldown={twitterCooldown}
         />
       )}
       {connectPopup && (
