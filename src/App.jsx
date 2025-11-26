@@ -4270,9 +4270,9 @@ function AppRoutes() {
       setUserNFTs({ myTaikoNfts: NFTS ?? [] })
     );
 
-    getMyNFTS(wallet, "mat").then((NFTS) =>
-      setUserNFTs({ myMatNfts: NFTS ?? [] })
-    );
+    // getMyNFTS(wallet, "mat").then((NFTS) =>
+    //   setUserNFTs({ myMatNfts: NFTS ?? [] })
+    // );
 
     getMyNFTS(wallet, "cookie3").then((NFTS) =>
       setUserNFTs({ myCookieNfts: NFTS ?? [] })
@@ -4324,10 +4324,7 @@ function AppRoutes() {
         window.config.daily_bonus_base_address
       );
 
-      const daily_bonus_contract_mat = new window.matWeb3.eth.Contract(
-        window.DAILY_BONUS_MAT_ABI,
-        window.config.daily_bonus_mat_address
-      );
+  
 
       if (addr) {
         const isPremium_bnb = await daily_bonus_contract_bnb.methods
@@ -4402,21 +4399,10 @@ function AppRoutes() {
                         });
                     if (isPremium_base === true) {
                       dispatch(setUserProgress({ isPremium: true }));
-                    } else {
-                      const isPremium_mat =
-                        await daily_bonus_contract_mat.methods
-                          .isPremiumUser(addr)
-                          .call()
-                          .catch((e) => {
-                            console.error(e);
-                            return false;
-                          });
-                      if (isPremium_mat === true) {
-                        dispatch(setUserProgress({ isPremium: true }));
-                      } else {
+                    }  else {
                         dispatch(setUserProgress({ isPremium: false }));
                       }
-                    }
+                    
                   }
                 }
               }

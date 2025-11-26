@@ -60,7 +60,7 @@ const LoyaltyProgram = ({
     viction: { title: "Viction", value: "viction", checked: false },
     vanar: { title: "Vanar", value: "vanar", checked: false },
     sei: { title: "Sei", value: "sei", checked: false },
-    taraxa: { title: "Taraxa", value: "taraxa", checked: false },
+    // taraxa: { title: "Taraxa", value: "taraxa", checked: false },
   });
   const [reqChains, setReqChains] = useState([]);
   const selectedCount = Object.values(chains).filter(
