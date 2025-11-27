@@ -163,7 +163,8 @@ const chainAreas = [
         [-0.06697474384951874, 0.08613646030426027],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Daily Bonus",
         image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
@@ -174,8 +175,6 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
@@ -1692,7 +1691,8 @@ const chainAreas = [
         [-0.06781159248324645, 0.0844627618789673],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Daily Bonus",
         image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
@@ -1709,7 +1709,6 @@ const chainAreas = [
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [],
     socials: [
       {
         link: "https://x.com/taraxa_project",
