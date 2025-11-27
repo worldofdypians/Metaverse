@@ -50,6 +50,10 @@ import {
   matStars,
   vanarStars,
   coreStars,
+  previous_baseStars,
+  previous_vanarStars,
+  previous_skaleStars,
+  previous_taikoStars,
 } from "./stars";
 import { bannedEmails, placeholderplayerData, dummyPremiums } from "./data";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
@@ -502,7 +506,7 @@ function Dashboard({
           ? 0
           : userDataCore?.position > 100
           ? 0
-          : coreStars[userDataCore?.position]) ?? 0,
+          : seiStars[userDataCore?.position]) ?? 0,
       userCoreScore:
         userDataCore?.statValue !== undefined && userDataCore?.statValue > 0
           ? userDataCore?.statValue
@@ -519,7 +523,7 @@ function Dashboard({
           ? 0
           : userDataViction?.position > 100
           ? 0
-          : matStars[userDataViction?.position]) ?? 0,
+          : skaleStars[userDataViction?.position]) ?? 0,
       userVictionScore:
         userDataViction?.statValue !== undefined &&
         userDataViction?.statValue > 0
@@ -536,7 +540,7 @@ function Dashboard({
           ? 0
           : userDataManta?.position > 100
           ? 0
-          : baseStars[userDataManta?.position]) ?? 0,
+          : skaleStars[userDataManta?.position]) ?? 0,
       userMantaScore:
         userDataManta?.statValue !== undefined && userDataManta?.statValue > 0
           ? userDataManta?.statValue
@@ -600,7 +604,7 @@ function Dashboard({
           ? 0
           : userDataSei?.position > 100
           ? 0
-          : seiStars[userDataSei?.position],
+          : taikoStars[userDataSei?.position],
       userSeiScore:
         userDataSei?.statValue !== undefined && userDataSei?.statValue > 0
           ? userDataSei?.statValue
@@ -4747,7 +4751,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: vanarStars,
-        previous_rewards: vanarStars,
+        previous_rewards: previous_vanarStars,
         activeData: dailyRecordsVanar,
         previousData: prevDataVanar,
         player_data: userDataVanar,
@@ -4770,7 +4774,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards: skaleStars,
+        previous_rewards: previous_skaleStars,
         activeData: dailyRecordsSkale,
         previousData: prevDataSkale,
         player_data: userDataSkale,
@@ -4792,7 +4796,7 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: coreStars,
+        rewards: seiStars,
         previous_rewards: coreStars,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,
@@ -4815,7 +4819,7 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: matStars,
+        rewards: skaleStars,
         previous_rewards: matStars,
         activeData: dailyRecordsViction,
         previousData: prevDataViction,
@@ -4838,8 +4842,8 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: baseStars,
-        previous_rewards: baseStars,
+        rewards: skaleStars,
+        previous_rewards: previous_baseStars,
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
@@ -4861,7 +4865,7 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: seiStars,
+        rewards: taikoStars,
         previous_rewards: seiStars,
         activeData: dailyRecordsSei,
         previousData: prevDataSei,
@@ -4901,7 +4905,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards: baseStars,
+        previous_rewards: previous_baseStars,
         activeData: dailyRecordsBase,
         previousData: prevDataBase,
         player_data: userDataBase,
@@ -4924,7 +4928,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        previous_rewards: taikoStars,
+        previous_rewards: previous_taikoStars,
         activeData: dailyRecordsTaiko,
         previousData: prevDataTaiko,
         player_data: userDataTaiko,

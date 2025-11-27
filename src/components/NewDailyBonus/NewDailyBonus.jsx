@@ -3298,6 +3298,442 @@ username,
                             </div>
                           </div>
                         </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "base" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
+                            }
+                            className={`chain-img ${
+                              chain === "base" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "base" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("base");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 8453
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBasePool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/base.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Base
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(basePercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "core" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/coreBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "core" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "core" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("core");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">CORE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 1116
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleCorePool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/core.svg"
+                                  }
+                                  style={{ width: 20, height: 20 }}
+                                  alt=""
+                                />{" "}
+                                CORE
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    corePercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(corePercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon2.png"
+                            }
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 1329
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                SEI
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(seiPercentage)}%{/* Coming Soon */}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                         <div
+                          className={`position-relative chain-item ${
+                            chain === "taiko" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "taiko" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "taiko" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("taiko");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              BNB CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 167000
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleTaikoPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taiko
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(taikoPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "vanar" && "chain-item-active"
@@ -3527,333 +3963,10 @@ username,
                             </div>
                           </div>
                         </div> */}
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "taiko" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "taiko" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "taiko" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("taiko");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">
-                              BNB CHAIN
-                            </h6> */}
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 167000
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleTaikoPool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Taiko
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(taikoPercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                       
 
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "core" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/coreBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "core" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "core" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("core");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">CORE</h6> */}
-                            <div
-                              className=" d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={`${
-                                  chainId === 1116
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleCorePool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/core.svg"
-                                  }
-                                  style={{ width: 20, height: 20 }}
-                                  alt=""
-                                />{" "}
-                                CORE
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    corePercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    corePercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    corePercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    corePercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    corePercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(corePercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "sei" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon2.png"
-                            }
-                            className={`chain-img ${
-                              chain === "sei" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "sei" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("sei");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 1329
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleSeiPool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/seiLogo.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                SEI
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    seiPercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(seiPercentage)}%{/* Coming Soon */}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                      
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "manta" && "chain-item-active"
@@ -3961,218 +4074,9 @@ username,
                             </div>
                           </div>
                         </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "base" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
-                            }
-                            className={`chain-img ${
-                              chain === "base" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "base" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("base");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 8453
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleBasePool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/base.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Base
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(basePercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                       
 
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "viction" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/victionBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "viction" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "viction" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("viction");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 88
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleVictionPool}
-                            >
-                              {" "}
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/viction.svg"
-                                }
-                                width={20}
-                                height={20}
-                                alt=""
-                              />{" "}
-                              VICTION
-                            </button>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(victionPercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                       
                         <div
                           className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
@@ -4278,6 +4182,110 @@ username,
                               </div>
                               <span className="percentage-span">
                                 {parseInt(skalePercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div> 
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "viction" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/victionBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "viction" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "viction" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("viction");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 88
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleVictionPool}
+                            >
+                              {" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/viction.svg"
+                                }
+                                width={20}
+                                height={20}
+                                alt=""
+                              />{" "}
+                              VICTION
+                            </button>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(victionPercentage)}%
                               </span>
                             </div>
                           </div>
@@ -4483,6 +4491,216 @@ username,
                         </div>
                         <div
                           className={`position-relative chain-item ${
+                            chain === "base" && "chain-item-active"
+                          }`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
+                            }
+                            className={`chain-img ${
+                              chain === "base" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "base" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("base");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              Manta CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 8453
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBasePool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/base.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Base
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "core" && "chain-item-active"
+                          }  w-auto`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/coreBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "core" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "core" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("core");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">CORE</h6> */}
+                            <div
+                              className=" d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={`${
+                                  chainId === 1116
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleCorePool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/core.svg"
+                                  }
+                                  style={{ width: 20, height: 20 }}
+                                  alt=""
+                                />{" "}
+                                CORE
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon2.png"
+                            }
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 1329
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                SEI
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "taiko" && "chain-item-active"
+                          } w-auto`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "taiko" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "taiko" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("taiko");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              Manta CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 169
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleTaikoPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taiko
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`position-relative chain-item ${
                             chain === "vanar" && "chain-item-active"
                           }`}
                         >
@@ -4594,161 +4812,9 @@ username,
                             </div>
                           </div>
                         </div> */}
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "taiko" && "chain-item-active"
-                          } w-auto`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "taiko" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "taiko" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("taiko");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">
-                              Manta CHAIN
-                            </h6> */}
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 169
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleTaikoPool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Taiko
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "core" && "chain-item-active"
-                          }  w-auto`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/coreBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "core" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "core" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("core");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">CORE</h6> */}
-                            <div
-                              className=" d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={`${
-                                  chainId === 1116
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleCorePool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/core.svg"
-                                  }
-                                  style={{ width: 20, height: 20 }}
-                                  alt=""
-                                />{" "}
-                                CORE
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "sei" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon2.png"
-                            }
-                            className={`chain-img ${
-                              chain === "sei" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "sei" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("sei");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 1329
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleSeiPool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/seiLogo.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                SEI
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+                      
+
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "manta" && "chain-item-active"
@@ -4802,106 +4868,7 @@ username,
                             </div>
                           </div>
                         </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "base" && "chain-item-active"
-                          }`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
-                            }
-                            className={`chain-img ${
-                              chain === "base" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "base" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center justify-content-between`}
-                            onClick={() => {
-                              setChain("base");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">
-                              Manta CHAIN
-                            </h6> */}
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 8453
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleBasePool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/base.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Base
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "viction" && "chain-item-active"
-                          } w-auto`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/victionBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "viction" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "viction" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("viction");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 88
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleVictionPool}
-                            >
-                              {" "}
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/viction.svg"
-                                }
-                                style={{ width: 20, height: 20 }}
-                                alt=""
-                              />{" "}
-                              VICTION
-                            </button>
-                          </div>
-                        </div>
-                        <div
+                         <div
                           className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
                           } w-auto`}
@@ -4952,6 +4919,53 @@ username,
                             </div>
                           </div>
                         </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "viction" && "chain-item-active"
+                          } w-auto`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/victionBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "viction" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "viction" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("viction");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 88
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleVictionPool}
+                            >
+                              {" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/viction.svg"
+                                }
+                                style={{ width: 20, height: 20 }}
+                                alt=""
+                              />{" "}
+                              VICTION
+                            </button>
+                          </div>
+                        </div>
+                      
                         {/* <div
                           className={`position-relative chain-item ${
                             chain === "matchain" && "chain-item-active"
