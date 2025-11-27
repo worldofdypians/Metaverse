@@ -33,28 +33,12 @@ const RankSmallPopup = ({
       stars: userProgress.userBnbStars
     },
     {
-      id: 'vanar',
-      name: 'Vanar',
-      icon: 'https://cdn.worldofdypians.com/wod/vanar.svg',
-      rank: userProgress.userRankVanar,
-      score: userProgress.userVanarScore,
-      stars: userProgress.userVanarStars
-    },
-    // {
-    //   id: 'taraxa',
-    //   name: 'Taraxa',
-    //   icon: 'https://cdn.worldofdypians.com/wod/taraxa.svg',
-    //   rank: userProgress.userRankTaraxa,
-    //   score: userProgress.userTaraxaScore,
-    //   stars: userProgress.userTaraxaStars
-    // },
-    {
-      id: 'taiko',
-      name: 'Taiko',
-      icon: 'https://cdn.worldofdypians.com/wod/taiko.svg',
-      rank: userProgress.userRankTaiko,
-      score: userProgress.userTaikoScore,
-      stars: userProgress.userTaikoStars
+      id: 'base',
+      name: 'Base',
+      icon: 'https://cdn.worldofdypians.com/wod/base.svg',
+      rank: userProgress.userRankBase,
+      score: userProgress.userBaseScore,
+      stars: userProgress.userBaseStars
     },
     {
       id: 'core',
@@ -73,6 +57,31 @@ const RankSmallPopup = ({
       stars: userProgress.userSeiStars
     },
     {
+      id: 'taiko',
+      name: 'Taiko',
+      icon: 'https://cdn.worldofdypians.com/wod/taiko.svg',
+      rank: userProgress.userRankTaiko,
+      score: userProgress.userTaikoScore,
+      stars: userProgress.userTaikoStars
+    },
+    {
+      id: 'vanar',
+      name: 'Vanar',
+      icon: 'https://cdn.worldofdypians.com/wod/vanar.svg',
+      rank: userProgress.userRankVanar,
+      score: userProgress.userVanarScore,
+      stars: userProgress.userVanarStars
+    },
+    // {
+    //   id: 'taraxa',
+    //   name: 'Taraxa',
+    //   icon: 'https://cdn.worldofdypians.com/wod/taraxa.svg',
+    //   rank: userProgress.userRankTaraxa,
+    //   score: userProgress.userTaraxaScore,
+    //   stars: userProgress.userTaraxaStars
+    // },
+
+    {
       id: 'manta',
       name: 'Manta',
       icon: 'https://cdn.worldofdypians.com/wod/manta.png',
@@ -80,14 +89,7 @@ const RankSmallPopup = ({
       score: userProgress.userMantaScore,
       stars: userProgress.userMantaStars
     },
-    {
-      id: 'base',
-      name: 'Base',
-      icon: 'https://cdn.worldofdypians.com/wod/base.svg',
-      rank: userProgress.userRankBase,
-      score: userProgress.userBaseScore,
-      stars: userProgress.userBaseStars
-    },
+ 
     {
       id: 'skale',
       name: 'Skale',
