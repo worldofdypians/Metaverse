@@ -101,12 +101,24 @@
 }
 
 .twitter-post {
+  color: #fff;
+  font-family: "Montserrat";
+  text-shadow: 0px 4px 4px rgba(240, 218, 247, 0.25);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.twitter-post-date {
   color: #d3d5d7;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .twitter-task-item:hover {
@@ -537,9 +549,8 @@
   box-shadow: 0 5px 15px 0px rgba(255, 215, 0, 0.5),
     0 4px 6px -4px rgba(255, 215, 0, 0.5);
   position: absolute;
-  right: 5px;
   top: 0px;
-  bottom: 5px;
+  left: 0;
   margin: auto;
   height: fit-content;
   z-index: 1;

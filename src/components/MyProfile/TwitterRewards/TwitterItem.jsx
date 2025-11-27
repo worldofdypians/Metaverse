@@ -15,8 +15,6 @@ const TwitterItem = ({ item, index, address, checkTwitter, add }) => {
 
   const taskLength = JSON.parse(localStorage.getItem("taskLength"));
 
-
-
   const timestamp = item.tweetCreatedAt;
   const date = new Date(timestamp);
 
@@ -25,7 +23,6 @@ const TwitterItem = ({ item, index, address, checkTwitter, add }) => {
   const minutes = String(date.getUTCMinutes()).padStart(2, "0");
 
   const formattedHour = `${hours}:${minutes}`;
-
 
   const checkTask = async (tweetId, taskType) => {
     axios
@@ -91,18 +88,18 @@ const TwitterItem = ({ item, index, address, checkTwitter, add }) => {
       className="twitter-task-item d-flex flex-column flex-lg-row align-items-center justify-content-between  w-100  p-2 position-relative"
       key={index}
     >
-    
+      {!taskLength?.includes(item.tweetId) && (
+        <div className="new-post-tag d-flex px-2 py-1 align-items-center justify-content-center">
+          <span className="new-post-text">NEW</span>
+        </div>
+      )}
+
       <div className="d-flex flex-column gap-3 twitter-item-width">
         <a
           href={`https://x.com/worldofdypians/status/${item.tweetId}`}
           target="_blank"
           className="tweet-title-holder p-3 d-flex align-items-center gap-2 position-relative"
         >
-            {!taskLength?.includes(item.tweetId) && (
-        <div className="new-post-tag d-flex p-2 align-items-center justify-content-center">
-          <span className="new-post-text">NEW</span>
-        </div>
-      )}
           <img
             src="https://cdn.worldofdypians.com/wod/wodToken.svg"
             width={32}
@@ -111,10 +108,16 @@ const TwitterItem = ({ item, index, address, checkTwitter, add }) => {
           />
           <div
             target="_blank"
-            className="overall-link d-flex flex-column gap-1"
+            className="overall-link d-flex flex-column gap-1 w-100"
           >
-            <span className="twitter-post">{item.tweetDescription.length > 120 ? item.tweetDescription.slice(0,120) + "..." : item.tweetDescription}</span>
-            <span className="twitter-post">{formattedHour}</span>
+            <span className="twitter-post">
+              {item.tweetDescription.length > 120
+                ? item.tweetDescription.slice(0, 120) + "..."
+                : item.tweetDescription}
+            </span>
+            <div className="d-flex w-100 justify-content-end">
+              <span className="twitter-post-date">{formattedHour}</span>
+            </div>
           </div>
         </a>
       </div>

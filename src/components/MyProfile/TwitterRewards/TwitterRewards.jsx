@@ -8,6 +8,22 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import { useCountUp } from "../../../hooks/useCountup";
 import BlurredTwitterItem from "./BluredTwitterItem";
 import Countdown from "react-countdown";
+import { styled, Tooltip, tooltipClasses } from "@mui/material";
+
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    minWidth: "90px !important",
+    fontSize: "12px",
+  },
+}));
+
+
 
 const renderer = ({ hours, minutes, completed }) => {
   if (completed) {
@@ -224,6 +240,9 @@ const TwitterRewards = ({
                     </svg>
                     Disconnect
                   </button>
+
+                  
+                   
                 ) : (
                   <>
                     {twitterCooldown.remainingHours === 0 ? (
@@ -235,15 +254,24 @@ const TwitterRewards = ({
                         Connect
                       </a>
                     ) : (
-                      <button
-                        className="unlink-twitter-button d-flex align-items-center gap-1 px-3 py-2"
+                   <HtmlTooltip
+                              placement="top"
+                              title={
+                                <span className="unlink-twitter-text mb-0">You can link your account after the cooldown ends</span>
+                              }
+                            >
+                             <button
+                        className="unlink-twitter-button d-flex align-items-center justify-content-center gap-1 px-3 py-2"
+                        style={{width: "150px"}}
                         disabled
                       >
                         <Countdown
                           date={twitterCooldown.remainingHours}
                           renderer={renderer}
                         />
+
                       </button>
+                            </HtmlTooltip>
                     )}
                   </>
                 )}
