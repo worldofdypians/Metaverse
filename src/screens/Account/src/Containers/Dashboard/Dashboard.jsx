@@ -506,7 +506,7 @@ function Dashboard({
           ? 0
           : userDataCore?.position > 100
           ? 0
-          : seiStars[userDataCore?.position]) ?? 0,
+          : taikoStars[userDataCore?.position]) ?? 0,
       userCoreScore:
         userDataCore?.statValue !== undefined && userDataCore?.statValue > 0
           ? userDataCore?.statValue
@@ -4796,7 +4796,7 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: seiStars,
+        rewards: taikoStars,
         previous_rewards: coreStars,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,

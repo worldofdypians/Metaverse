@@ -796,11 +796,11 @@ const GlobalLeaderboard = ({
                 style={{ width: 20, height: 20 }}
                 alt=""
               />
-              <img
+              {/* <img
                 src={"https://cdn.worldofdypians.com/wod/matchainIcon.svg"}
                 style={{ width: 20, height: 20 }}
                 alt=""
-              />
+              /> */}
               <img
                 src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
                 style={{ width: 20, height: 20 }}
