@@ -25,7 +25,7 @@ import {
   OTC1CLIFF4_ABI,
   OTCCLIFF2_ABI,
   ROUNDOTC_VESTING_ABI,
-  DYPIANSVESTING_ABI
+  DYPIANSVESTING_ABI,
 } from "./abis";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
 import WhitelistContent from "./WhitelistContent/WhitelistContent";
@@ -118,12 +118,10 @@ const Whitelist = ({
   const [userVestedTokensRoundOtcVesting, setuserVestedTokensRoundOtcVesting] =
     useState(0);
 
-    const [pendingTokensDypiansVesting, setpendingTokensDypiansVesting] =
+  const [pendingTokensDypiansVesting, setpendingTokensDypiansVesting] =
     useState(0);
-  const [
-    userClaimedTokensDypiansVesting,
-    setuserClaimedTokensDypiansVesting,
-  ] = useState(0);
+  const [userClaimedTokensDypiansVesting, setuserClaimedTokensDypiansVesting] =
+    useState(0);
   const [userVestedTokensDypiansVesting, setuserVestedTokensDypiansVesting] =
     useState(0);
 
@@ -218,11 +216,11 @@ const Whitelist = ({
   const [claimStatusRoundOtcVesting, setclaimStatusRoundOtcVesting] =
     useState("initial");
 
-    const [canClaimDypiansVesting, setcanClaimDypiansVesting] = useState(false);
-    const [claimLoadingDypiansVesting, setclaimLoadingDypiansVesting] =
-      useState(false);
-    const [claimStatusDypiansVesting, setclaimStatusDypiansVesting] =
-      useState("initial");
+  const [canClaimDypiansVesting, setcanClaimDypiansVesting] = useState(false);
+  const [claimLoadingDypiansVesting, setclaimLoadingDypiansVesting] =
+    useState(false);
+  const [claimStatusDypiansVesting, setclaimStatusDypiansVesting] =
+    useState("initial");
 
   const [canClaimOTCCliff2, setcanClaimOTCCliff2] = useState(false);
   const [claimLoadingOTCCliff2, setclaimLoadingOTCCliff2] = useState(false);
@@ -388,7 +386,6 @@ const Whitelist = ({
       );
       setcanClaimRoundOtcVesting(Number(availableTGE_RoundOtcVesting) === 1);
 
-
       const availableTGE_DypiansVesting = await readContractData(
         activePublicClient,
         window.config.dypiansvesting_address,
@@ -397,7 +394,6 @@ const Whitelist = ({
         [coinbase]
       );
       setcanClaimDypiansVesting(Number(availableTGE_DypiansVesting) === 1);
-
 
       const availableTGE_OTCCliff2 = await readContractData(
         activePublicClient,
@@ -594,9 +590,6 @@ const Whitelist = ({
         tokensToClaimAmountRoundOtcVesting_formatted
       );
 
-
-
-
       const tokensToClaimAmountDypiansVesting = await readContractData(
         activePublicClient,
         window.config.dypiansvesting_address,
@@ -613,10 +606,6 @@ const Whitelist = ({
       setpendingTokensDypiansVesting(
         tokensToClaimAmountDypiansVesting_formatted
       );
-
-
-
-
 
       const tokensToClaimAmountOTCCliff2 = await readContractData(
         activePublicClient,
@@ -1268,12 +1257,11 @@ const Whitelist = ({
       setcliffTimeOtcSpecial4(Number(lastClaimedTimeOTCSpecial4) * 1000);
       setcliffTimeOtcCliff(Number(lastClaimedTimeOTCCliff) * 1000);
       setcliffTimeOtc1Cliff4(Number(lastClaimedTimeOTC1Cliff4) * 1000);
+
       setcliffTimeRoundOtcVesting(
         Number(lastClaimedTimeRoundOtcVesting) * 1000
       );
-      setcliffTimeDypiansVesting(
-        Number(lastClaimedTimeDypiansVesting) * 1000
-      );
+      setcliffTimeDypiansVesting(Number(lastClaimedTimeDypiansVesting) * 1000);
       setcliffTimeOtcCliff2(Number(lastClaimedTimeOTCCliff2) * 1000);
 
       setcliffTimeOtcPoolBonus(Number(lastClaimedTimeOTCPoolBonus) * 1000);
