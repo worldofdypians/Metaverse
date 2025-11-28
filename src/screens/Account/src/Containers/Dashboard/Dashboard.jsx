@@ -154,6 +154,8 @@ function Dashboard({
   const { setUserNFTs } = useUser();
   const dispatch = useDispatch();
   const { eventId } = useParams();
+  const cutoff = new Date(Date.UTC(2025, 11, 2, 0, 30));
+  const now = new Date();
 
   const hasUserId = userId !== undefined && userId !== null;
 
@@ -4751,7 +4753,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: vanarStars,
-        previous_rewards: previous_vanarStars,
+        previous_rewards: now <= cutoff ? previous_vanarStars : vanarStars,
         activeData: dailyRecordsVanar,
         previousData: prevDataVanar,
         player_data: userDataVanar,
@@ -4774,7 +4776,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards: previous_skaleStars,
+        previous_rewards: now <= cutoff ? previous_skaleStars : skaleStars,
         activeData: dailyRecordsSkale,
         previousData: prevDataSkale,
         player_data: userDataSkale,
@@ -4797,7 +4799,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        previous_rewards: coreStars,
+        previous_rewards: now <= cutoff ? coreStars : taikoStars,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,
         player_data: userDataCore,
@@ -4820,7 +4822,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards: matStars,
+        previous_rewards: now <= cutoff ? matStars : skaleStars,
         activeData: dailyRecordsViction,
         previousData: prevDataViction,
         player_data: userDataViction,
@@ -4843,7 +4845,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards: previous_baseStars,
+        previous_rewards: now <= cutoff ? previous_baseStars : skaleStars,
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
@@ -4866,7 +4868,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        previous_rewards: seiStars,
+        previous_rewards: now <= cutoff ? seiStars : taikoStars,
         activeData: dailyRecordsSei,
         previousData: prevDataSei,
         player_data: userDataSei,
@@ -4905,7 +4907,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards: previous_baseStars,
+        previous_rewards: now <= cutoff ? previous_baseStars : baseStars,
         activeData: dailyRecordsBase,
         previousData: prevDataBase,
         player_data: userDataBase,
@@ -4928,7 +4930,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        previous_rewards: previous_taikoStars,
+        previous_rewards: now <= cutoff ? previous_taikoStars : taikoStars,
         activeData: dailyRecordsTaiko,
         previousData: prevDataTaiko,
         player_data: userDataTaiko,
@@ -5003,22 +5005,22 @@ function Dashboard({
       // if (dailyRecordsVanar.length === 0) {
       fetchDailyRecordsVanar();
       // }
-    } 
+    }
     // else if (chain === "matchain") {
-      // if (dailyRecordsMat.length === 0) {
-      // fetchDailyRecordsMat();
-      // }
+    // if (dailyRecordsMat.length === 0) {
+    // fetchDailyRecordsMat();
     // }
-     else if (chain === "sei") {
+    // }
+    else if (chain === "sei") {
       // if (dailyRecordsSei.length === 0) {
       fetchDailyRecordsSei();
       // }
-    } 
+    }
     // else if (chain === "taraxa") {
-      // if (dailyRecordsTaraxa.length === 0) {
-      // fetchDailyRecordsTaraxa();
-      // }
-    // } 
+    // if (dailyRecordsTaraxa.length === 0) {
+    // fetchDailyRecordsTaraxa();
+    // }
+    // }
     else if (chain === "manta") {
       // if (dailyRecordsManta.length === 0) {
       fetchDailyRecordsManta();
@@ -5459,7 +5461,7 @@ function Dashboard({
           claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
           claimedVanarChests + claimedVanarPremiumChests < 20 ||
           // claimedMatChests + claimedMatPremiumChests < 20 ||
-          claimedSeiChests + claimedSeiPremiumChests < 20 
+          claimedSeiChests + claimedSeiPremiumChests < 20
           // claimedTaraxaChests + claimedTaraxaPremiumChests < 20
         ) {
           setCanBuy(true);
@@ -5473,7 +5475,7 @@ function Dashboard({
           claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
           claimedVanarChests + claimedVanarPremiumChests === 20 &&
           // claimedMatChests + claimedMatPremiumChests === 20 &&
-          claimedSeiChests + claimedSeiPremiumChests === 20 
+          claimedSeiChests + claimedSeiPremiumChests === 20
           // claimedTaraxaChests + claimedTaraxaPremiumChests === 20
         ) {
           setCanBuy(false);
@@ -5489,7 +5491,7 @@ function Dashboard({
           claimedTaikoChests < 10 ||
           claimedVanarChests < 10 ||
           // claimedMatChests < 10 ||
-          claimedSeiChests < 10 
+          claimedSeiChests < 10
           // claimedTaraxaChests < 10
         ) {
           setCanBuy(true);
@@ -5503,7 +5505,7 @@ function Dashboard({
           claimedTaikoChests === 10 &&
           claimedVanarChests === 10 &&
           // claimedMatChests === 10 &&
-          claimedSeiChests === 10 
+          claimedSeiChests === 10
           // claimedTaraxaChests === 10
         ) {
           setCanBuy(false);
@@ -6418,8 +6420,8 @@ function Dashboard({
         prev.taiko === temp.taiko &&
         prev.vanar === temp.vanar &&
         // prev.mat === temp.mat &&
-        prev.sei === temp.sei 
-        // prev.taraxa === temp.taraxa;
+        prev.sei === temp.sei;
+      // prev.taraxa === temp.taraxa;
       return equal ? prev : temp;
     });
   };

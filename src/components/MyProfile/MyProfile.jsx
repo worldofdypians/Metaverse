@@ -1015,7 +1015,7 @@ const MyProfile = ({
                               color: "#fff",
                             }}
                           >
-                            220 Chests
+                            180 Chests
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-1">
@@ -1028,7 +1028,7 @@ const MyProfile = ({
                               color: "#fff",
                             }}
                           >
-                            12 Chains
+                            10 Chains
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-1">
