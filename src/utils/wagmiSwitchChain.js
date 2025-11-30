@@ -53,22 +53,11 @@ export const switchNetworkWagmi = async (chainId, chain, options = {}) => {
     handleSwitchNetwork,
     handleSwitchChainGateWallet,
     handleSwitchChainBinanceWallet,
-    network_matchain,
     coinbase,
   } = options;
 
   // Handle MatchId wallet
-  if (window.WALLET_TYPE === "matchId") {
-    if (network_matchain?.showChangeNetwork) {
-      network_matchain.showChangeNetwork();
-      return;
-    } else {
-      if (window.alertify) {
-        window.alertify.error("Please connect to another EVM wallet.");
-      }
-      return;
-    }
-  }
+ 
 
   // Get wagmi chain object
   const wagmiChain = getChainById(chainId);
@@ -91,8 +80,7 @@ export const switchNetworkWagmi = async (chainId, chain, options = {}) => {
   // Handle GateWallet (special case - may need direct ethereum requests)
   if (
     window.gatewallet &&
-    window.WALLET_TYPE !== "binance" &&
-    window.WALLET_TYPE !== "matchId"
+    window.WALLET_TYPE !== "binance"
   ) {
     if (handleSwitchChainGateWallet) {
       handleSwitchChainGateWallet(chain);

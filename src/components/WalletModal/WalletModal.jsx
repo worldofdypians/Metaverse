@@ -36,13 +36,13 @@ const WALLET_OPTIONS = [
     walletType: "trust",
   },
   // More Wallets
-  {
-    name: "MatchID",
-    icon: "https://cdn.worldofdypians.com/wod/matchID-wallet.png",
-    type: "more",
-    customHandler: "handleConnectionMatchId",
-    walletType: "matchId",
-  },
+  // {
+  //   name: "MatchID",
+  //   icon: "https://cdn.worldofdypians.com/wod/matchID-wallet.png",
+  //   type: "more",
+  //   customHandler: "handleConnectionMatchId",
+  //   walletType: "matchId",
+  // },
   {
     name: "Immutable Passport",
     icon: "https://cdn.worldofdypians.com/wod/immutableConnect.svg",
@@ -79,8 +79,7 @@ const WALLET_OPTIONS = [
 const WalletModal = ({
   handleClose,
   show,
-  handleConnectionPassport,
-  handleConnectionMatchId,
+  handleConnectionPassport, 
 }) => {
   const { isLoading, pendingConnector, error } = useConnect();
   // const chainId = useChainId();
@@ -109,8 +108,7 @@ const WalletModal = ({
     if (option.customHandler) {
       if (option.customHandler === "handleConnectionPassport")
         return handleConnectionPassport();
-      if (option.customHandler === "handleConnectionMatchId")
-        return handleConnectionMatchId("evm");
+     
       return;
     }
     

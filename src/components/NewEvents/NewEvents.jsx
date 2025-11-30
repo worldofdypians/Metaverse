@@ -105,8 +105,7 @@ const NewEvents = ({
   onConnectWallet,
   wodBalance,
   genesisUsd,
-  walletClient,
-  publicClient,
+
 }) => {
   // ----------------------
   // Unified wagmi/viem helpers
@@ -116,14 +115,7 @@ const NewEvents = ({
 
   const readOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-      if (window.WALLET_TYPE === "matchId" && publicClient) {
-        return await publicClient.readContract({
-          address,
-          abi,
-          functionName,
-          args,
-        });
-      }
+     
       return await wagmiReadContract(wagmiClient, {
         address,
         abi,
@@ -139,16 +131,7 @@ const NewEvents = ({
 
   const writeOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-      if (window.WALLET_TYPE === "matchId" && walletClient && publicClient) {
-        const hash = await walletClient.writeContract({
-          address,
-          abi,
-          functionName,
-          args,
-        });
-        await publicClient.waitForTransactionReceipt({ hash });
-        return hash;
-      }
+ 
 
       const account = getAccount(wagmiClient);
       if (account?.chainId && chainId && account.chainId !== chainId) {

@@ -1,7 +1,7 @@
 import { createConfig, http } from "wagmi";
 import {
   mainnet,
-  matchain,
+  // matchain,
   opBNB,
   bsc,
   manta,
@@ -15,7 +15,7 @@ import {
   immutableZkEvm,
   confluxESpace,
   vanar,
-  taraxa,
+  // taraxa,
 } from "wagmi/chains";
 import {
   metaMask,
@@ -30,7 +30,7 @@ const binanceConnector = getWagmiConnectorV2();
 export const wagmiClient = createConfig({
   chains: [
     mainnet,
-    matchain,
+    // matchain,
     opBNB,
     bsc,
     manta,
@@ -44,7 +44,7 @@ export const wagmiClient = createConfig({
     immutableZkEvm,
     confluxESpace,
     vanar,
-    taraxa,
+    // taraxa,
   ],
   autoConnect: true,
   connectors: [
@@ -57,7 +57,7 @@ export const wagmiClient = createConfig({
   transports: {
     [bsc.id]: http(),
     [mainnet.id]: http(),
-    [matchain.id]: http(),
+    // [matchain.id]: http(),
     [opBNB.id]: http(),
     [manta.id]: http(),
     [taiko.id]: http(),
@@ -70,6 +70,6 @@ export const wagmiClient = createConfig({
     [immutableZkEvm.id]: http(),
     [confluxESpace.id]: http(),
     [vanar.id]: http(),
-    [taraxa.id]: http(),
+    // [taraxa.id]: http(),
   },
 });

@@ -132,9 +132,7 @@ const BnbDailyBonus = ({
   onMatChestClaimed,
   allMatChests,
   onConnectWallet,
-  walletClient,
-  publicClient,
-  network_matchain,
+ 
 }) => {
   const html = document.querySelector("html");
 
@@ -700,9 +698,7 @@ const BnbDailyBonus = ({
   };
 
   const handleOpBnbPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    } else {
+   
       if (window.ethereum) {
         if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
           await handleSwitchNetworkhook("0xcc")
@@ -722,7 +718,7 @@ const BnbDailyBonus = ({
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    }
+    
   };
 
   const handleClaimUsdPremium = async () => {
@@ -773,9 +769,7 @@ const BnbDailyBonus = ({
   }, [premiumTxHash, selectedChainforPremium]);
 
   const handleBnbPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      network_matchain?.showChangeNetwork();
-    } else {
+ 
       if (window.ethereum) {
         if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
           await handleSwitchNetworkhook("0x38")
@@ -795,12 +789,10 @@ const BnbDailyBonus = ({
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    }
+    
   };
   const handleMantaPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    } else {
+   
       if (window.ethereum) {
         if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
           await handleSwitchNetworkhook("0xa9")
@@ -820,13 +812,11 @@ const BnbDailyBonus = ({
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    }
+    
   };
 
   const handleBasePool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    } else {
+  
       if (window.ethereum) {
         if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
           await handleSwitchNetworkhook("0x2105")
@@ -846,13 +836,11 @@ const BnbDailyBonus = ({
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    }
+    
   };
 
   const handleTaikoPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    } else {
+   
       if (window.WALLET_TYPE !== "binance") {
         if (window.ethereum) {
           if (!window.gatewallet) {
@@ -876,13 +864,11 @@ const BnbDailyBonus = ({
           "This network is not available on Binance Wallet"
         );
       }
-    }
+    
   };
 
   const handleMatPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      network_matchain?.showChangeNetwork();
-    } else if (window.WALLET_TYPE !== "binance") {
+     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
           await handleSwitchNetworkhook("0x2ba")
@@ -906,9 +892,7 @@ const BnbDailyBonus = ({
   };
 
   const handleSkalePool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    } else {
+   
       if (window.ethereum) {
         if (
           !window.gatewallet &&
@@ -943,13 +927,11 @@ const BnbDailyBonus = ({
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    }
+    
   };
 
   const handleCorePool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    } else {
+    
       if (window.WALLET_TYPE !== "binance") {
         if (window.ethereum) {
           if (!window.gatewallet) {
@@ -973,12 +955,10 @@ const BnbDailyBonus = ({
           "This network is not available on Binance Wallet"
         );
       }
-    }
+     
   };
   const handleVictionPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    } else {
+  
       if (window.WALLET_TYPE !== "binance") {
         if (window.ethereum) {
           if (!window.gatewallet) {
@@ -1002,13 +982,11 @@ const BnbDailyBonus = ({
           "This network is not available on Binance Wallet"
         );
       }
-    }
+    
   };
 
   const handleSeiPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    } else {
+ 
       if (window.ethereum) {
         if (!window.gatewallet) {
           await handleSwitchNetworkhook("0x531")
@@ -1022,7 +1000,7 @@ const BnbDailyBonus = ({
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    }
+    
   };
 
   const filterCawsNfts = () => {
@@ -3223,8 +3201,8 @@ const BnbDailyBonus = ({
                           ? allChests && allChests.length > 0
                             ? allChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3268,13 +3246,13 @@ const BnbDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  binanceW3WProvider={binanceW3WProvider}
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3322,15 +3300,15 @@ const BnbDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  binanceW3WProvider={binanceW3WProvider}
+                                  
                                 />
                               ))
                           : chain === "core"
                           ? allCoreChests && allCoreChests.length > 0
                             ? allCoreChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3374,13 +3352,13 @@ const BnbDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  binanceW3WProvider={binanceW3WProvider}
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3428,15 +3406,15 @@ const BnbDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  binanceW3WProvider={binanceW3WProvider}
+                                  
                                 />
                               ))
                           : chain === "manta"
                           ? allMantaChests && allMantaChests.length > 0
                             ? allMantaChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3480,13 +3458,13 @@ const BnbDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  binanceW3WProvider={binanceW3WProvider}
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3534,15 +3512,15 @@ const BnbDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  binanceW3WProvider={binanceW3WProvider}
+                                  
                                 />
                               ))
                           : chain === "base"
                           ? allBaseChests && allBaseChests.length > 0
                             ? allBaseChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3590,8 +3568,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3645,8 +3623,8 @@ const BnbDailyBonus = ({
                           ? allTaikoChests && allTaikoChests.length > 0
                             ? allTaikoChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3694,8 +3672,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3749,8 +3727,8 @@ const BnbDailyBonus = ({
                           ? allMatChests && allMatChests.length > 0
                             ? allMatChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3798,8 +3776,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3853,8 +3831,8 @@ const BnbDailyBonus = ({
                           ? allSeiChests && allSeiChests.length > 0
                             ? allSeiChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3902,8 +3880,8 @@ const BnbDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3957,8 +3935,8 @@ const BnbDailyBonus = ({
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -4002,13 +3980,13 @@ const BnbDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  binanceW3WProvider={binanceW3WProvider}
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -4056,7 +4034,7 @@ const BnbDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  binanceW3WProvider={binanceW3WProvider}
+                                  
                                 />
                               ))
                           : chain === "skale" &&
@@ -4064,8 +4042,8 @@ const BnbDailyBonus = ({
                             allSkaleChests.length > 0
                           ? allSkaleChests.map((item, index) => (
                               <NewChestItem
-                                walletClient={walletClient}
-                                publicClient={publicClient}
+                                
+                                
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
@@ -4108,13 +4086,13 @@ const BnbDailyBonus = ({
                                 dummypremiumChests={
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
-                                binanceW3WProvider={binanceW3WProvider}
+                                
                               />
                             ))
                           : window.range(0, 19).map((item, index) => (
                               <NewChestItem
-                                walletClient={walletClient}
-                                publicClient={publicClient}
+                                
+                                
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
@@ -4161,7 +4139,7 @@ const BnbDailyBonus = ({
                                 dummypremiumChests={
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
-                                binanceW3WProvider={binanceW3WProvider}
+                                
                               />
                             ))}
                       </div>
@@ -6814,7 +6792,7 @@ const BnbDailyBonus = ({
           chain={chain}
           chainId={chainId}
           coinbase={coinbase}
-          binanceW3WProvider={binanceW3WProvider}
+          
           email={email}
           onSuccessPurchase={() => {
             onSkaleChestClaimed();

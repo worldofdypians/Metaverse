@@ -16,104 +16,103 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const RankSmallPopup = ({
-  onClose,
-  onPrimeClick,
-}) => {
+const RankSmallPopup = ({ onClose, onPrimeClick }) => {
   // Get user progress data from Redux store
-  const userProgress = useSelector(state => state.user.userProgress);
+  const userProgress = useSelector((state) => state.user.userProgress);
   // Define all chains with their data
   const chains = [
     {
-      id: 'bnb',
-      name: 'BNB',
-      icon: 'https://cdn.worldofdypians.com/wod/bnbIcon.svg',
+      id: "bnb",
+      name: "BNB",
+      icon: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
       rank: userProgress.userRank,
       score: userProgress.userBnbScore,
-      stars: userProgress.userBnbStars
+      stars: userProgress.userBnbStars,
     },
     {
-      id: 'vanar',
-      name: 'Vanar',
-      icon: 'https://cdn.worldofdypians.com/wod/vanar.svg',
-      rank: userProgress.userRankVanar,
-      score: userProgress.userVanarScore,
-      stars: userProgress.userVanarStars
-    },
-    {
-      id: 'taraxa',
-      name: 'Taraxa',
-      icon: 'https://cdn.worldofdypians.com/wod/taraxa.svg',
-      rank: userProgress.userRankTaraxa,
-      score: userProgress.userTaraxaScore,
-      stars: userProgress.userTaraxaStars
-    },
-    {
-      id: 'taiko',
-      name: 'Taiko',
-      icon: 'https://cdn.worldofdypians.com/wod/taiko.svg',
-      rank: userProgress.userRankTaiko,
-      score: userProgress.userTaikoScore,
-      stars: userProgress.userTaikoStars
-    },
-    {
-      id: 'core',
-      name: 'Core',
-      icon: 'https://cdn.worldofdypians.com/wod/core.svg',
-      rank: userProgress.userRankCore,
-      score: userProgress.userCoreScore,
-      stars: userProgress.userCoreStars
-    },
-    {
-      id: 'sei',
-      name: 'Sei',
-      icon: 'https://cdn.worldofdypians.com/wod/seiLogo.svg',
-      rank: userProgress.userRankSei,
-      score: userProgress.userSeiScore,
-      stars: userProgress.userSeiStars
-    },
-    {
-      id: 'manta',
-      name: 'Manta',
-      icon: 'https://cdn.worldofdypians.com/wod/manta.png',
-      rank: userProgress.userRankManta,
-      score: userProgress.userMantaScore,
-      stars: userProgress.userMantaStars
-    },
-    {
-      id: 'base',
-      name: 'Base',
-      icon: 'https://cdn.worldofdypians.com/wod/base.svg',
+      id: "base",
+      name: "Base",
+      icon: "https://cdn.worldofdypians.com/wod/base.svg",
       rank: userProgress.userRankBase,
       score: userProgress.userBaseScore,
-      stars: userProgress.userBaseStars
+      stars: userProgress.userBaseStars,
     },
     {
-      id: 'skale',
-      name: 'Skale',
-      icon: 'https://cdn.worldofdypians.com/wod/skaleIcon.svg',
+      id: "core",
+      name: "Core",
+      icon: "https://cdn.worldofdypians.com/wod/core.svg",
+      rank: userProgress.userRankCore,
+      score: userProgress.userCoreScore,
+      stars: userProgress.userCoreStars,
+    },
+    {
+      id: "sei",
+      name: "Sei",
+      icon: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
+      rank: userProgress.userRankSei,
+      score: userProgress.userSeiScore,
+      stars: userProgress.userSeiStars,
+    },
+    {
+      id: "taiko",
+      name: "Taiko",
+      icon: "https://cdn.worldofdypians.com/wod/taiko.svg",
+      rank: userProgress.userRankTaiko,
+      score: userProgress.userTaikoScore,
+      stars: userProgress.userTaikoStars,
+    },
+    {
+      id: "vanar",
+      name: "Vanar",
+      icon: "https://cdn.worldofdypians.com/wod/vanar.svg",
+      rank: userProgress.userRankVanar,
+      score: userProgress.userVanarScore,
+      stars: userProgress.userVanarStars,
+    },
+    // {
+    //   id: 'taraxa',
+    //   name: 'Taraxa',
+    //   icon: 'https://cdn.worldofdypians.com/wod/taraxa.svg',
+    //   rank: userProgress.userRankTaraxa,
+    //   score: userProgress.userTaraxaScore,
+    //   stars: userProgress.userTaraxaStars
+    // },
+
+    {
+      id: "manta",
+      name: "Manta",
+      icon: "https://cdn.worldofdypians.com/wod/manta.png",
+      rank: userProgress.userRankManta,
+      score: userProgress.userMantaScore,
+      stars: userProgress.userMantaStars,
+    },
+
+    {
+      id: "skale",
+      name: "Skale",
+      icon: "https://cdn.worldofdypians.com/wod/skaleIcon.svg",
       rank: userProgress.userRankSkale,
       score: userProgress.userSkaleScore,
-      stars: userProgress.userSkaleStars
+      stars: userProgress.userSkaleStars,
     },
     {
-      id: 'viction',
-      name: 'Viction',
-      icon: 'https://cdn.worldofdypians.com/wod/viction.svg',
+      id: "viction",
+      name: "Viction",
+      icon: "https://cdn.worldofdypians.com/wod/viction.svg",
       rank: userProgress.userRankViction,
       score: userProgress.userVictionScore,
-      stars: userProgress.userVictionStars
+      stars: userProgress.userVictionStars,
     },
-    {
-      id: 'mat',
-      name: 'MAT',
-      icon: 'https://cdn.worldofdypians.com/wod/matchainIcon.svg',
-      rank: userProgress.userRankMat,
-      score: userProgress.userMatScore,
-      stars: userProgress.userMatStars
-    }
+    // {
+    //   id: 'mat',
+    //   name: 'MAT',
+    //   icon: 'https://cdn.worldofdypians.com/wod/matchainIcon.svg',
+    //   rank: userProgress.userRankMat,
+    //   score: userProgress.userMatScore,
+    //   stars: userProgress.userMatStars
+    // }
   ];
-  
+
   return (
     <div className="package-popup-wrapper">
       <div className="package-popup my-progress-popup p-4">
@@ -136,11 +135,15 @@ const RankSmallPopup = ({
           <div className="d-flex w-100 justify-content-center gap-2 gap-lg-4 align-items-center rank-chain-stats">
             <div className="rank-chain-status-grid w-100 px-0 px-lg-3">
               <div className="stats-container-4 d-flex flex-column align-items-center justify-content-center">
-                <span className="stats-value">#{userProgress.globalMonthly}</span>
+                <span className="stats-value">
+                  #{getFormattedNumber(userProgress.globalMonthly, 0)}
+                </span>
                 <span className="stats-desc">Global Monthly</span>
               </div>
               <div className="stats-container-4 d-flex flex-column align-items-center justify-content-center">
-                <span className="stats-value">#{userProgress.globalWeekly}</span>
+                <span className="stats-value">
+                  #{getFormattedNumber(userProgress.globalWeekly, 0)}
+                </span>
                 <span className="stats-desc">Global Weekly</span>
               </div>
               <div className="stats-container-4 d-flex flex-column align-items-center justify-content-center">
@@ -165,7 +168,10 @@ const RankSmallPopup = ({
             </div>
             <div className="rank-chain-status-grid w-100">
               {chains.map((chain) => (
-                <div key={chain.id} className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
+                <div
+                  key={chain.id}
+                  className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2"
+                >
                   <img
                     src={chain.icon}
                     width={30}
@@ -231,7 +237,10 @@ const RankSmallPopup = ({
                 <div className="p-2 starscontentwrapper">
                   <span
                     className="startext"
-                    style={{ color: userProgress.primeStars === true ? "#ffd37e" : "gray" }}
+                    style={{
+                      color:
+                        userProgress.primeStars === true ? "#ffd37e" : "gray",
+                    }}
                   >
                     {/* {primeStars === true ? "+ 50 Stars" : "In Progress"} */}
                     +50 Stars

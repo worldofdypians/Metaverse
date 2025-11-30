@@ -564,9 +564,7 @@ const MarketMint = ({
       console.error("Network switch error:", error);
       
       // Show specific error for MatchId wallet if provided
-      if (window.WALLET_TYPE === "matchId" && matchIdError && window.alertify) {
-        window.alertify.error(matchIdError);
-      }
+       
       // Show specific error for Binance wallet if network not supported
       if (
         (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) &&

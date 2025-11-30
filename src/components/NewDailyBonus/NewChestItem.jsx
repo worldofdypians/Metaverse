@@ -35,8 +35,7 @@ const NewChestItem = ({
   setClaimingChest,
   image,
   coinbase,
-  walletClient,
-  publicClient,
+
   openKickstarter,
   closeDaily,username
 }) => {
@@ -350,40 +349,7 @@ const NewChestItem = ({
         }
       }
       count = count + 1;
-    } else if (window.WALLET_TYPE === "matchId") {
-      console.log(txHash);
-      const txResult_matchain = await publicClient
-        .getTransaction({ hash: txHash })
-        .catch((e) => {
-          console.error(e);
-        });
-      console.log(txResult_matchain, txHash);
-
-      if (txResult_matchain) {
-        getUserRewardsByChest(email, txHash, chestIndex, chainText);
-      } else {
-        if (count < 10) {
-          const timer = setTimeout(
-            () => {
-              handleCheckIfTxExists(txHash);
-            },
-            count === 9 ? 5000 : 2000
-          );
-          return () => clearTimeout(timer);
-        } else {
-          window.alertify.error("Something went wrong.");
-          onChestStatus("error");
-          onLoadingChest(false);
-          setLoading(false);
-          setClaimingChest(false);
-          const timer = setTimeout(() => {
-            onChestStatus("initial");
-          }, 3000);
-          return () => clearTimeout(timer);
-        }
-      }
-      count = count + 1;
-    }
+    }  
   };
 
   const handleThirdTask = async (wallet) => {
@@ -444,24 +410,24 @@ const NewChestItem = ({
             abi: window.DAILY_BONUS_TAIKO_ABI,
             chainText: "taiko",
           };
-        case 841:
-          return {
-            address: window.config.daily_bonus_taraxa_address,
-            abi: window.DAILY_BONUS_TARAXA_ABI,
-            chainText: "taraxa",
-          };
+        // case 841:
+        //   return {
+        //     address: window.config.daily_bonus_taraxa_address,
+        //     abi: window.DAILY_BONUS_TARAXA_ABI,
+        //     chainText: "taraxa",
+        //   };
         case 1329:
           return {
             address: window.config.daily_bonus_sei_address,
             abi: window.DAILY_BONUS_SEI_ABI,
             chainText: "sei",
           };
-        case 698:
-          return {
-            address: window.config.daily_bonus_mat_address,
-            abi: window.DAILY_BONUS_MAT_ABI,
-            chainText: "matchain",
-          };
+        // case 698:
+        //   return {
+        //     address: window.config.daily_bonus_mat_address,
+        //     abi: window.DAILY_BONUS_MAT_ABI,
+        //     chainText: "matchain",
+        //   };
         case 56:
           return {
             address: window.config.daily_bonus_bnb_address,
@@ -500,24 +466,7 @@ const NewChestItem = ({
           ? "openPremiumChest"
           : "openChest";
 
-      // If user is on MatchID wallet, use provided viem walletClient/publicClient
-      if (window.WALLET_TYPE === "matchId" && walletClient && publicClient) {
-        const txHash = await walletClient.writeContract({
-          address: contractConfig.address,
-          abi: contractConfig.abi,
-          functionName,
-          args: [],
-        });
-
-        await publicClient.waitForTransactionReceipt({ hash: txHash });
-        getUserRewardsByChest(
-          email,
-          txHash,
-          chestIndex - 1,
-          contractConfig.chainText
-        );
-        return;
-      }
+     
 
       // Default: use wagmi connected wallet via viem
       const account = getAccount(wagmiClient);

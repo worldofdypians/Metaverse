@@ -36,7 +36,6 @@ const JoinBetaModal = ({
   handleConnect,
   coinbase,
   showForms,
-  walletClient
 }) => {
 const { useWallet: useWalletMatchain } = Hooks;
     const { signMessage } = useWalletMatchain();
@@ -190,17 +189,7 @@ const { useWallet: useWalletMatchain } = Hooks;
         //     console.error(e);
         //   });
          let signature = "";
-        if (window.WALLET_TYPE === "matchId" && coinbase) {
-         
-          if (walletClient) {
-            signature = await signMessage({
-              message: window.config.beta_test,
-              account: coinbase,
-            }).catch((e) => {
-              console.log(e);
-            });
-          }
-        }
+       
         if (coinbase) {
           signature = await signMessageWagmi(wagmiClient, {
             message: window.config.beta_test,
