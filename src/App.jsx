@@ -4324,8 +4324,6 @@ function AppRoutes() {
         window.config.daily_bonus_base_address
       );
 
-  
-
       if (addr) {
         const isPremium_bnb = await daily_bonus_contract_bnb.methods
           .isPremiumUser(addr)
@@ -4399,10 +4397,9 @@ function AppRoutes() {
                         });
                     if (isPremium_base === true) {
                       dispatch(setUserProgress({ isPremium: true }));
-                    }  else {
-                        dispatch(setUserProgress({ isPremium: false }));
-                      }
-                    
+                    } else {
+                      dispatch(setUserProgress({ isPremium: false }));
+                    }
                   }
                 }
               }
@@ -5064,9 +5061,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="dypians-vesting"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
