@@ -59,7 +59,7 @@ const LandDetailsPremium = ({
     const address = coinbase;
     const stakeAdr = window.config.nft_land_premiumstake_address;
 
-    if (address !== null && window.WALLET_TYPE !== "matchId") {
+    if (address !== null) {
       const result = await window.landnft
         .checkapproveStake(address, stakeAdr)
         .then((data) => {
@@ -166,12 +166,7 @@ const LandDetailsPremium = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      setclaimLoading(false);
-      return;
-    }
-
+     
     try {
       let myStakes = await getStakesIds();
 
@@ -253,7 +248,7 @@ const LandDetailsPremium = ({
   };
 
   const handleEthPool = async () => {
-    if (window.WALLET_TYPE !== "matchId") {
+     
       await switchNetworkWagmi(parseInt("0x1", 16), null, { coinbase })
         .then(() => {
           handleSwitchNetwork("1");
@@ -261,9 +256,7 @@ const LandDetailsPremium = ({
         .catch((e) => {
           console.log(e);
         });
-    } else if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    }
+    
   };
 
   const handleNavigateToPlans = () => {
@@ -306,26 +299,26 @@ const LandDetailsPremium = ({
   };
 
   useEffect(() => {
-    if (window.WALLET_TYPE !== "matchId") {
+    
       totalStakedNft();
-    }
-  }, [count, newStakes, window.WALLET_TYPE]);
+    
+  }, [count, newStakes]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+    if (isConnected && chainId === "1") {
       myNft();
       myStakes();
       checkApproval();
       handleClaimAll();
     }
-  }, [isConnected, chainId, count, newStakes, window.WALLET_TYPE]);
+  }, [isConnected, chainId, count, newStakes]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+    if (isConnected && chainId === "1") {
       checkApproval();
       calculateCountdown();
     }
-  }, [isConnected, chainId, count2, window.WALLET_TYPE]);
+  }, [isConnected, chainId, count2]);
 
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);

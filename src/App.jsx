@@ -12,7 +12,7 @@ import {
   useNavigate,
   Navigate,
 } from "react-router-dom";
-import "@matchain/matchid-sdk-react/index.css";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useUser, useWallet } from "./redux/hooks/useWallet.js";
 import { setUserProgress } from "./redux/slices/userSlice";
@@ -35,7 +35,7 @@ import {
   writeContract as wagmiWriteContract,
   waitForTransactionReceipt as wagmiWaitForTransactionReceipt,
 } from "@wagmi/core";
-import { Hooks } from "@matchain/matchid-sdk-react";
+
 import { monthlyStarPrizes } from "./screens/Account/src/Containers/Dashboard/stars.js";
 import { useAuth } from "./screens/Account/src/Utils.js/Auth/AuthDetails.jsx";
 import { markers } from "./screens/Map/mapdata/markers.jsx";
@@ -89,7 +89,7 @@ import {
 // Styles
 import "./app.scss";
 import { betaPasses } from "./constants/constants.js";
-import { useMatchChain } from "@matchain/matchid-sdk-react/hooks";
+
 // @imtbl/sdk is dynamically imported within handlers to reduce bundle size
 import getListedNFTS from "./actions/Marketplace";
 import {
@@ -407,10 +407,8 @@ const useSharedDataListedByUser = (wallet) => {
 
 function WalletSync() {
   const dispatch = useDispatch();
-  const chain = useMatchChain();
+
   const { setWalletType, setWalletModal } = useWallet();
-  const { useUserInfo } = Hooks;
-  const { address: matchainAddress } = useUserInfo();
 
   // Watch account changes with cleanup
   useEffect(() => {
@@ -501,18 +499,6 @@ function WalletSync() {
     // Cleanup watcher on unmount
     return () => unwatch();
   }, [dispatch, setWalletType, setWalletModal]);
-
-  // Handle MatchID wallet separately (not managed by wagmi)
-  useEffect(() => {
-    if (matchainAddress) {
-      console.log("✅ MatchID wallet detected:", matchainAddress);
-      window.WALLET_TYPE = "matchId";
-      setWalletType("matchId");
-      dispatch(setChainId(chain.chainId));
-      dispatch(setAddress(matchainAddress));
-      dispatch(setIsConnected(true));
-    }
-  }, [matchainAddress, chain.chainId, dispatch, setWalletType]);
 
   // Handle window.ethereum events for account/chain changes (backwards compatibility)
   useEffect(() => {
@@ -694,7 +680,6 @@ function AppRoutes() {
   const username = data?.getPlayer?.displayName;
   const userWallet = data?.getPlayer?.wallet?.publicAddress;
   const authToken = localStorage.getItem("authToken");
-  const chain = useMatchChain();
 
   const { wallet, setWalletModal, setWalletType, setWalletId } = useWallet();
   // const { disconnect } = useDisconnect();
@@ -916,22 +901,6 @@ function AppRoutes() {
   };
 
   const { user, setUserStats, setUserNFTs } = useUser();
-  const { useUserInfo, useWallet: useWalletMatchain } = Hooks;
-  const {
-    address: matchainAddress,
-    login: loginMatchain,
-    logout: logoutMatchain,
-  } = useUserInfo();
-  const { signMessage, createWalletClient } = useWalletMatchain();
-  const walletClient = createWalletClient({
-    chain: chain?.chain,
-    transport: http(`${chain?.chain?.rpcUrls?.default?.http[0]}`),
-  });
-
-  const publicClient = createPublicClient({
-    chain: chain?.chain,
-    transport: http(`${chain?.chain?.rpcUrls?.default?.http[0]}`),
-  });
 
   // Wagmi clients for non-MatchID wallets
   const wagmiWalletClient = createWalletClientWagmi({
@@ -1500,7 +1469,7 @@ function AppRoutes() {
     {
       title: "Taraxa",
       logo: "https://cdn.worldofdypians.com/wod/taraxa.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "TARA",
       rewardAmount: "$20,000",
       location: [-0.06917415368919773, 0.08433401584625246],
@@ -1521,7 +1490,7 @@ function AppRoutes() {
         chain: "Taraxa",
         linkState: "taraxa",
         rewards: "TARA",
-        status: "Live",
+        status: "Expired",
         id: "event30",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TARA Rewards",
@@ -2673,16 +2642,16 @@ function AppRoutes() {
         console.log(e);
       });
   };
-  const fetchTaraxaPrice = async () => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/price/taraxa`)
-      .then((obj) => {
-        setTaraxaPrice(obj.data.price);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const fetchTaraxaPrice = async () => {
+  //   await axios
+  //     .get(`https://api.worldofdypians.com/api/price/taraxa`)
+  //     .then((obj) => {
+  //       setTaraxaPrice(obj.data.price);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
   const fetchCookiePrice = async () => {
     await axios
@@ -2746,7 +2715,7 @@ function AppRoutes() {
     fetchSeiPrice();
     fetchMantaPrice();
     fetchTaikoPrice();
-    fetchTaraxaPrice();
+    // fetchTaraxaPrice();
     fetchCookiePrice();
     fetchCorePrice();
     fetchCFXPrice();
@@ -2849,10 +2818,6 @@ function AppRoutes() {
   };
 
   const handleTimepieceMint = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify?.error("Please connect to another EVM wallet.");
-      return;
-    }
     if (!isConnected || !coinbase) {
       setWalletId("connect");
       setWalletModal(true);
@@ -3586,17 +3551,17 @@ function AppRoutes() {
       setWalletType(option.walletType);
     }
   };
-  const handleConnectionMatchId = async (method) => {
-    await loginMatchain(method).then(() => {
-      // localStorage.setItem("logout", "false");
-      setWalletModal(false);
-      console.log("Logged in with method:", method);
-      window.WALLET_TYPE = "matchId";
+  // const handleConnectionMatchId = async (method) => {
+  //   await loginMatchain(method).then(() => {
+  //     // localStorage.setItem("logout", "false");
+  //     setWalletModal(false);
+  //     console.log("Logged in with method:", method);
+  //     window.WALLET_TYPE = "matchId";
 
-      dispatch(setAddress(matchainAddress));
-      dispatch(setIsConnected(true));
-    });
-  };
+  //     dispatch(setAddress(matchainAddress));
+  //     dispatch(setIsConnected(true));
+  //   });
+  // };
 
   const handleSync = async () => {
     setsyncStatus("loading");
@@ -3889,7 +3854,7 @@ function AppRoutes() {
             setUserStats({
               taraxaPoints: pointsTaraxa,
               taraxaEarnUsd: userEarnedusd,
-              taraxaEarnToken: userEarnedusd / taraxaPrice,
+              taraxaEarnToken: 0,
             });
           }
 
@@ -4203,9 +4168,6 @@ function AppRoutes() {
     await disconnect(wagmiClient, {
       connector,
     });
-    if (window.WALLET_TYPE === "matchId") {
-      await logoutMatchain();
-    }
 
     console.log(error);
     // disconnect(wagmiClient)
@@ -4308,9 +4270,9 @@ function AppRoutes() {
       setUserNFTs({ myTaikoNfts: NFTS ?? [] })
     );
 
-    getMyNFTS(wallet, "mat").then((NFTS) =>
-      setUserNFTs({ myMatNfts: NFTS ?? [] })
-    );
+    // getMyNFTS(wallet, "mat").then((NFTS) =>
+    //   setUserNFTs({ myMatNfts: NFTS ?? [] })
+    // );
 
     getMyNFTS(wallet, "cookie3").then((NFTS) =>
       setUserNFTs({ myCookieNfts: NFTS ?? [] })
@@ -4360,11 +4322,6 @@ function AppRoutes() {
       const daily_bonus_contract_base = new window.baseWeb3.eth.Contract(
         window.DAILY_BONUS_BASE_ABI,
         window.config.daily_bonus_base_address
-      );
-
-      const daily_bonus_contract_mat = new window.matWeb3.eth.Contract(
-        window.DAILY_BONUS_MAT_ABI,
-        window.config.daily_bonus_mat_address
       );
 
       if (addr) {
@@ -4441,19 +4398,7 @@ function AppRoutes() {
                     if (isPremium_base === true) {
                       dispatch(setUserProgress({ isPremium: true }));
                     } else {
-                      const isPremium_mat =
-                        await daily_bonus_contract_mat.methods
-                          .isPremiumUser(addr)
-                          .call()
-                          .catch((e) => {
-                            console.error(e);
-                            return false;
-                          });
-                      if (isPremium_mat === true) {
-                        dispatch(setUserProgress({ isPremium: true }));
-                      } else {
-                        dispatch(setUserProgress({ isPremium: false }));
-                      }
+                      dispatch(setUserProgress({ isPremium: false }));
                     }
                   }
                 }
@@ -4533,41 +4478,7 @@ function AppRoutes() {
 
       let userAddress = coinbase;
       let signature = "";
-      if (window.WALLET_TYPE === "matchId" && userAddress) {
-        let signatureData = "";
-        if (walletClient) {
-          setshowSync(false);
-          const res = await signMessage({
-            message: `Signing one-time nonce: ${nonce}`,
-            account: userAddress,
-          }).catch((e) => {
-            console.log(e);
-            setsyncStatus("error");
-            const timer = setTimeout(() => {
-              setsyncStatus("initial");
-              setshowSync(false);
-            }, 3000);
-            return () => clearTimeout(timer);
-          });
 
-          if (res) {
-            signatureData = res;
-
-            verifyWallet({
-              variables: {
-                publicAddress: userAddress,
-                signature: signatureData,
-              },
-            });
-
-            handleManageLogin(
-              signatureData,
-              `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-            );
-            handleSecondTask(coinbase);
-          }
-        }
-      }
       if (isConnected && userAddress) {
         signature = await signMessageWagmi(wagmiClient, { message: message });
         //  await signMessageAsync({ message, account: userAddress });
@@ -4643,7 +4554,7 @@ function AppRoutes() {
     if (dataNonce?.generateWalletNonce) {
       signWalletPublicAddress();
     }
-  }, [dataNonce, matchainAddress]);
+  }, [dataNonce]);
 
   useEffect(() => {
     if (
@@ -4864,7 +4775,6 @@ function AppRoutes() {
           onSyncClick={() => {
             setshowSync(true);
           }}
-          network_matchain={chain}
         />
         <MobileNavbar
           isConnected={isConnected}
@@ -4889,7 +4799,6 @@ function AppRoutes() {
           handleSwitchChainGateWallet={handleSwitchNetwork}
           handleSwitchChainBinanceWallet={handleSwitchNetwork}
           username={username}
-          network_matchain={chain}
         />
 
         <Suspense
@@ -5003,9 +4912,6 @@ function AppRoutes() {
                   chainId={networkId}
                   handleSwitchNetwork={handleSwitchNetwork}
                   checkPremiumOryn={checkPremiumOryn}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
-                  network_matchain={chain}
                 />
               }
             />
@@ -5035,9 +4941,6 @@ function AppRoutes() {
                     setWalletModal(true);
                   }}
                   coinbase={coinbase}
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5058,9 +4961,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="pool"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5081,9 +4981,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="pool2"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5104,9 +5001,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="pool-bonus"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5127,9 +5021,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="pool-dynamic"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5150,9 +5041,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="pool2-dynamic"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5173,9 +5061,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="dypians-vesting"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5196,9 +5081,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="wod-dynamic"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5219,9 +5101,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="special-otc"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5242,9 +5121,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="special-otc-4"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5265,9 +5141,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="cliff-otc"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5288,9 +5161,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="cliff1-otc4"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5311,9 +5181,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="roundotc-vesting"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5334,9 +5201,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="cliff-otc2"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5357,9 +5221,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   type="bonus-otc"
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5380,9 +5241,6 @@ function AppRoutes() {
                   }}
                   coinbase={coinbase}
                   handleSwitchNetwork={handleSwitchNetwork}
-                  network_matchain={chain}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
                   wagmiWalletClient={wagmiWalletClient}
                   wagmiPublicClient={wagmiPublicClient}
                 />
@@ -5472,7 +5330,7 @@ function AppRoutes() {
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 
                 
-                network_matchain={chain}
+                
               />
             }
           />*/}
@@ -5612,9 +5470,6 @@ function AppRoutes() {
                     isTokenExpired(authToken);
                   }}
                   listedNFTS={allListedByUser}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
-                  network_matchain={chain}
                 />
               }
             />
@@ -5681,9 +5536,6 @@ function AppRoutes() {
                     isTokenExpired(authToken);
                   }}
                   listedNFTS={allListedByUser}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
-                  network_matchain={chain}
                 />
               }
             />
@@ -5766,7 +5618,6 @@ function AppRoutes() {
                   timepieceMetadata={timepieceMetadata}
                   nftCreated={totalTimepieceCreated}
                   totalCreated={totalTimepieceCreated}
-                  network_matchain={chain}
                 />
               }
             />
@@ -5941,9 +5792,6 @@ function AppRoutes() {
                     isTokenExpired(authToken);
                   }}
                   listedNFTS={allListedByUser}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
-                  network_matchain={chain}
                 />
               }
             />
@@ -5993,9 +5841,6 @@ function AppRoutes() {
                   onSuccessfulStake={() => {
                     setstakeCount(stakeCount + 1);
                   }}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
-                  network_matchain={chain}
                   handleSwitchChainGateWallet={handleSwitchNetwork}
                   handleSwitchChainBinanceWallet={handleSwitchNetwork}
                   bnbUSDPrice={bnbUSDPrice}
@@ -6016,9 +5861,6 @@ function AppRoutes() {
                   handleSwitchChainGateWallet={handleSwitchNetwork}
                   handleSwitchChainBinanceWallet={handleSwitchNetwork}
                   handleConnection={() => setWalletModal(true)}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
-                  network_matchain={chain}
                 />
               }
             />
@@ -6049,9 +5891,6 @@ function AppRoutes() {
                   refreshBalance={() => {
                     setcountBalance(countBalance + 1);
                   }}
-                  walletClient={walletClient}
-                  publicClient={publicClient}
-                  network_matchain={chain}
                 />
               }
             />
@@ -6116,7 +5955,6 @@ function AppRoutes() {
           //   handleConnectWallet();
           // }}
           handleConnectionPassport={handleConnectPassport}
-          handleConnectionMatchId={handleConnectionMatchId}
         />
       )}
 
@@ -6142,7 +5980,6 @@ function AppRoutes() {
           handleConnect={handleConnection}
           coinbase={coinbase}
           showForms={isConnected}
-          walletClient={walletClient}
         />
       )}
       {(kickstarter || hashValue === "#royalty-chest") &&
@@ -6150,9 +5987,8 @@ function AppRoutes() {
           <Kickstarter
             royalChestIndex={royalChestIndex}
             // royalChestIndexTaiko={royalChestIndexTaiko}
-            publicClient={publicClient}
+
             onClaimRewards={() => setRoyaltyCount(royaltyCount + 1)}
-            walletClient={walletClient}
             onClose={() => {
               setKickstarter(false);
               html.classList.remove("hidescroll");

@@ -53,9 +53,7 @@ const OrynPopup = ({
   ];
 
   const handleEthPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      network_matchain?.showChangeNetwork();
-    } else {
+  
       await switchNetworkWagmi(parseInt("0x38", 16), null, { coinbase })
         .then(() => {
           handleSwitchNetwork(56);
@@ -63,7 +61,7 @@ const OrynPopup = ({
         .catch((e) => {
           console.log(e);
         });
-    }
+     
   };
 
   const [timer, setTimer] = useState(false);

@@ -58,9 +58,7 @@ const MobileNavbar = ({
         setchainState("base");
       } else if (chainId === 56) {
         setchainState("bnb");
-      } else if (chainId === 698) {
-        setchainState("mat");
-      } else if (chainId === 204) {
+      }  else if (chainId === 204) {
         setchainState("opbnb");
       } else if (chainId === 1030) {
         setchainState("conflux");
@@ -80,8 +78,6 @@ const MobileNavbar = ({
         setchainState("sei");
       } else if (chainId === 2040) {
         setchainState("vanar");
-      } else if (chainId === 841) {
-        setchainState("taraxa");
       } else {
         setchainState("");
       }
@@ -212,14 +208,12 @@ const MobileNavbar = ({
                           ? "https://cdn.worldofdypians.com/wod/manta.png"
                           : chainState === "taiko"
                           ? "https://cdn.worldofdypians.com/wod/taiko.svg"
-                          : chainState === "mat"
-                          ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                         
                           : chainState === "sei"
                           ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                           : chainState === "vanar"
                           ? "https://cdn.worldofdypians.com/wod/vanar.svg"
-                          : chainState === "taraxa"
-                          ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                           
                           : "https://cdn.worldofdypians.com/wod/error.svg"
                       }
                       alt=""
@@ -265,166 +259,7 @@ const MobileNavbar = ({
                   </span>
                 }
               >
-                {/* {window.WALLET_TYPE !== "matchId" && (
-                  <Dropdown.Item onClick={() => switchNetwork("0x1", 1)}>
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/eth.svg"}
-                      alt=""
-                      className="chain-logo"
-                    />
-                    Ethereum
-                  </Dropdown.Item>
-                )}
-                <Dropdown.Item onClick={() => switchNetwork("0x38", 56)}>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
-                    alt=""
-                    className="chain-logo"
-                  />
-                  BNB Chain
-                </Dropdown.Item>
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <Dropdown.Item onClick={() => switchNetwork("0x2ba", 698)}>
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
-                        }
-                        alt=""
-                        className="chain-logo"
-                      />
-                      Matchain
-                    </Dropdown.Item>
-                  )}
-                {window.WALLET_TYPE !== "matchId" &&
-                  window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <Dropdown.Item onClick={() => switchNetwork("0x531", 1329)}>
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
-                        alt=""
-                        className="chain-logo"
-                      />
-                      SEI
-                    </Dropdown.Item>
-                  )}
-                {window.WALLET_TYPE !== "matchId" && (
-                  <Dropdown.Item onClick={() => switchNetwork("0xa9", 169)}>
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/manta.png"}
-                      alt=""
-                    />
-                    Manta
-                  </Dropdown.Item>
-                )}
-                {window.WALLET_TYPE !== "matchId" && (
-                  <Dropdown.Item onClick={() => switchNetwork("0xcc", 204)}>
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
-                      alt=""
-                      className="chain-logo"
-                    />
-                    opBNB Chain
-                  </Dropdown.Item>
-                )}
-                {window.WALLET_TYPE !== "matchId" &&
-                  window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <Dropdown.Item
-                      onClick={() => switchNetwork("0x28c58", 167000)}
-                    >
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
-                        className="chain-logo"
-                        alt=""
-                      />
-                      Taiko
-                    </Dropdown.Item>
-                  )}
-
-                {window.WALLET_TYPE !== "matchId" &&
-                  window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/core.svg"}
-                        className="chain-logo"
-                        alt=""
-                      />
-                      CORE
-                    </Dropdown.Item>
-                  )}
-                {window.WALLET_TYPE !== "matchId" &&
-                  window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <Dropdown.Item
-                      onClick={() => switchNetwork("0x585eb4b1", 1482601649)}
-                    >
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
-                        alt=""
-                        className="chain-logo"
-                      />
-                      SKALE
-                    </Dropdown.Item>
-                  )}
-                {window.WALLET_TYPE !== "matchId" && (
-                  <Dropdown.Item onClick={() => switchNetwork("0x406", 1030)}>
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/confluxIcon.svg"}
-                      alt=""
-                      className="chain-logo"
-                    />
-                    Conflux
-                  </Dropdown.Item>
-                )}
-                {window.WALLET_TYPE !== "matchId" &&
-                  window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <Dropdown.Item
-                      onClick={() => switchNetwork("0x343b", 13371)}
-                    >
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/immutable.svg"}
-                        className="chain-logo"
-                        alt=""
-                      />
-                      Immutable
-                    </Dropdown.Item>
-                  )}
-                {window.WALLET_TYPE !== "matchId" && (
-                  <Dropdown.Item onClick={() => switchNetwork("0x2105", 8453)}>
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/base.svg"}
-                      alt=""
-                      className="chain-logo"
-                    />
-                    Base
-                  </Dropdown.Item>
-                )}
-                
-                {window.WALLET_TYPE !== "matchId" &&
-                  window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/viction.svg"}
-                        className="chain-logo"
-                        alt=""
-                      />
-                      Viction
-                    </Dropdown.Item>
-                  )}
-                {window.WALLET_TYPE !== "matchId" && (
-                  <Dropdown.Item onClick={() => switchNetwork("0xa86a", 43114)}>
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/avaxIcon.svg"}
-                      alt=""
-                      className="chain-logo"
-                    />
-                    Avalanche
-                  </Dropdown.Item>
-                )} */}
+                 
               </DropdownButton>
             </>
           )}

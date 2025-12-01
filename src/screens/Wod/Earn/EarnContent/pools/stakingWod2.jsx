@@ -60,9 +60,7 @@ const StakeWodDetails2 = ({
   isConnected,
   start_date,
   onSuccessfulStake,
-  walletClient,
-  publicClient,
-  network_matchain,
+ 
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   bnbUSDPrice,
@@ -186,114 +184,7 @@ const StakeWodDetails2 = ({
   // const [quotaTooltip, setQuotaTooltip] = useState(false);
   // const [maxDepositTooltip, setMaxDepositTooltip] = useState(false);
 
-  const refreshBalanceMatchId = async () => {
-    try {
-      let _bal;
-      if (chainId === "56" && coinbase && isConnected) {
-        _bal = await publicClient.readContract({
-          abi: window.TOKEN_ABI,
-          address: reward_token_wod._address,
-          functionName: "balanceOf",
-          args: [coinbase],
-          chainId: 56,
-        });
-      }
-
-      if (staking && coinbase !== undefined && coinbase !== null) {
-        let _pDivs = refreshBalanceQuery(
-          coinbase,
-          staking,
-          "getTotalPendingDivs",
-          publicClient
-        );
-
-        let _stakingTime = refreshBalanceQuery(
-          coinbase,
-          staking,
-          "stakingTime",
-          publicClient
-        );
-        let _dTokens = refreshBalanceQuery(
-          coinbase,
-          staking,
-          "depositedTokens",
-          publicClient
-        );
-        let _lClaimTime = refreshBalanceQuery(
-          coinbase,
-          staking,
-          "lastClaimedTime",
-          publicClient
-        );
-        let _rFeeEarned = refreshBalanceQuery(
-          coinbase,
-          staking,
-          "totalReferralFeeEarned",
-          publicClient
-        );
-        let _cliffTime = refreshBalanceQuery(
-          undefined,
-          staking,
-          "LOCKUP_TIME",
-          publicClient
-        );
-
-        let _tvl = await publicClient.readContract({
-          abi: window.TOKEN_ABI,
-          address: reward_token_wod._address,
-          functionName: "balanceOf",
-          args: [staking._address],
-          chainId: 56,
-        });
-
-        let [
-          token_balance,
-          pendingDivs,
-          stakingTime,
-          depositedTokens,
-          lastClaimedTime,
-          tvl,
-          referralFeeEarned,
-          clifftime,
-        ] = await Promise.all([
-          _bal,
-          _pDivs,
-          _stakingTime,
-          _dTokens,
-          _lClaimTime,
-          _tvl,
-          _rFeeEarned,
-          _cliffTime,
-        ]);
-
-        let balance_formatted = new BigNumber(token_balance ?? 0)
-          .div(1e18)
-          .toString(10);
-        settoken_balance(balance_formatted);
-
-        let divs_formatted = new BigNumber(pendingDivs).div(1e18).toFixed(6);
-        setpendingDivs(divs_formatted);
-
-        setcliffTime(Number(clifftime));
-        setstakingTime(Number(stakingTime));
-
-        let depositedTokens_formatted = new BigNumber(depositedTokens)
-          .div(1e18)
-          .toString(10);
-
-        setdepositedTokens(depositedTokens_formatted);
-
-        setlastClaimedTime(lastClaimedTime);
-
-        let tvl_formatted = new BigNumber(tvl).div(1e18).toFixed(6);
-        settvl(tvl_formatted);
-
-        setreferralFeeEarned(referralFeeEarned);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+ 
   const showPopup = () => {
     setpopup(true);
   };
@@ -303,9 +194,7 @@ const StakeWodDetails2 = ({
   };
 
   const refreshBalance = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      refreshBalanceMatchId();
-    } else {
+    
       try {
         let _bal;
         if (chainId === "56" && coinbase && isConnected) {
@@ -422,7 +311,7 @@ const StakeWodDetails2 = ({
       } catch (e) {
         console.error(e);
       }
-    }
+   
   };
 
   useEffect(() => {
@@ -433,7 +322,7 @@ const StakeWodDetails2 = ({
       }
       getApprovedAmount();
     }
-  }, [publicClient, coinbase, staking, isConnected, chainId]);
+  }, [ coinbase, staking, isConnected, chainId]);
 
   useEffect(() => {
     setdepositAmount("");
@@ -447,28 +336,7 @@ const StakeWodDetails2 = ({
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
 
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: reward_token_wod._address,
-            abi: window.TOKEN_ABI,
-            functionName: "approve",
-            args: [staking._address, amount],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            setdepositLoading(false);
-            setdepositStatus("deposit");
-            refreshBalance();
-            getApprovedAmount();
-          }
-        }
-      } else {
+    
         const hash = await writeContract(wagmiClient, {
           address: reward_token_wod._address,
           abi: window.TOKEN_ABI,
@@ -486,7 +354,7 @@ const StakeWodDetails2 = ({
           refreshBalance();
           getApprovedAmount();
         }
-      }
+     
     } catch (e) {
       console.error("Error approving:", e);
       setdepositLoading(false);
@@ -523,33 +391,7 @@ const StakeWodDetails2 = ({
       amount = new BigNumber(amount).times(1e18).toFixed(0);
       let referrer = window.config.ZERO_ADDRESS;
 
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: staking._address,
-            abi: window.CONSTANT_STAKING_WOD_ABI,
-            functionName: "stake",
-            args: [amount, referrer],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            setdepositLoading(false);
-            setdepositStatus("success");
-            refreshBalance();
-            getApprovedAmount();
-            onSuccessfulStake();
-            setTimeout(() => {
-              setdepositStatus("initial");
-              setdepositAmount("");
-            }, 5000);
-          }
-        }
-      } else {
+      
         const hash = await writeContract(wagmiClient, {
           address: staking._address,
           abi: window.CONSTANT_STAKING_WOD_ABI,
@@ -572,7 +414,7 @@ const StakeWodDetails2 = ({
             refreshBalance();
           }, 5000);
         }
-      }
+      
     } catch (e) {
       console.error("Error staking:", e);
       setdepositLoading(false);
@@ -592,32 +434,7 @@ const StakeWodDetails2 = ({
     try {
       let amount = new BigNumber(withdrawAmount).times(1e18).toFixed(0);
 
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: staking._address,
-            abi: window.CONSTANT_STAKING_WOD_ABI,
-            functionName: "unstake",
-            args: [amount],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            setwithdrawLoading(false);
-            setwithdrawStatus("success");
-            refreshBalance();
-            onSuccessfulStake();
-            setTimeout(() => {
-              setwithdrawStatus("initial");
-              setwithdrawAmount("");
-            }, 5000);
-          }
-        }
-      } else {
+    
         const hash = await writeContract(wagmiClient, {
           address: staking._address,
           abi: window.CONSTANT_STAKING_WOD_ABI,
@@ -639,7 +456,7 @@ const StakeWodDetails2 = ({
             setwithdrawAmount("");
           }, 5000);
         }
-      }
+    
     } catch (e) {
       console.error("Error withdrawing:", e);
       setwithdrawLoading(false);
@@ -657,31 +474,7 @@ const StakeWodDetails2 = ({
     setclaimLoading(true);
 
     try {
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: staking._address,
-            abi: window.CONSTANT_STAKING_WOD_ABI,
-            functionName: "claim",
-            args: [],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            setclaimStatus("success");
-            setclaimLoading(false);
-            setpendingDivs(getFormattedNumber(0, 6));
-            refreshBalance();
-            setTimeout(() => {
-              setclaimStatus("initial");
-            }, 5000);
-          }
-        }
-      } else {
+   
         const hash = await writeContract(wagmiClient, {
           address: staking._address,
           abi: window.CONSTANT_STAKING_WOD_ABI,
@@ -702,7 +495,7 @@ const StakeWodDetails2 = ({
             setclaimStatus("initial");
           }, 5000);
         }
-      }
+     
     } catch (e) {
       console.error("Error claiming rewards:", e);
       setclaimStatus("failed");
@@ -723,21 +516,7 @@ const StakeWodDetails2 = ({
 
   const handleSetMaxWithdraw = async (e) => {
     // e.preventDefault();
-    if (window.WALLET_TYPE === "matchId") {
-      let amount;
-      await refreshBalanceQuery(
-        coinbase,
-        staking,
-        "depositedTokens",
-        publicClient
-      ).then((data) => {
-        amount = data;
-      });
-      let depositedTokens_formatted = new BigNumber(amount)
-        .div(1e18)
-        .toString(10);
-      setwithdrawAmount(depositedTokens_formatted);
-    } else {
+    
       let amount;
       await staking.depositedTokens(coinbase).then((data) => {
         amount = data;
@@ -747,7 +526,7 @@ const StakeWodDetails2 = ({
         .div(1e18)
         .toString(10);
       setwithdrawAmount(depositedTokens_formatted);
-    }
+    
   };
 
   const getApproxReturn = (depositAmount) => {
@@ -777,17 +556,7 @@ const StakeWodDetails2 = ({
       try {
         let result;
         
-        if (window.WALLET_TYPE === "matchId") {
-          if (publicClient) {
-            result = await publicClient.readContract({
-              abi: window.TOKEN_ABI,
-              address: reward_token_wod._address,
-              functionName: "allowance",
-              args: [coinbase, staking._address],
-              chainId: 56,
-            });
-          }
-        } else {
+         
           result = await readContract(wagmiClient, {
             address: reward_token_wod._address,
             abi: window.TOKEN_ABI,
@@ -795,7 +564,7 @@ const StakeWodDetails2 = ({
             args: [coinbase, staking._address],
             chainId: 56,
           });
-        }
+        
 
         let result_formatted = new BigNumber(result || 0).div(1e18).toFixed(6);
         setapprovedAmount(result_formatted);
@@ -811,31 +580,7 @@ const StakeWodDetails2 = ({
     setreInvestLoading(true);
 
     try {
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: staking._address,
-            abi: window.CONSTANT_STAKING_WOD_ABI,
-            functionName: "reInvest",
-            args: [],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            setreInvestStatus("success");
-            setreInvestLoading(false);
-            setpendingDivs(getFormattedNumber(0, 6));
-            refreshBalance();
-            setTimeout(() => {
-              setreInvestStatus("initial");
-            }, 10000);
-          }
-        }
-      } else {
+     
         const hash = await writeContract(wagmiClient, {
           address: staking._address,
           abi: window.CONSTANT_STAKING_WOD_ABI,
@@ -856,7 +601,7 @@ const StakeWodDetails2 = ({
             setreInvestStatus("initial");
           }, 10000);
         }
-      }
+       
     } catch (e) {
       console.error("Error reinvesting:", e);
       setreInvestStatus("failed");
@@ -882,17 +627,12 @@ const StakeWodDetails2 = ({
         handleSwitchNetwork,
         handleSwitchChainGateWallet,
         handleSwitchChainBinanceWallet,
-        network_matchain,
         coinbase,
       });
     } catch (error) {
       // Error handling is done in switchNetworkWagmi
       console.error("Network switch error:", error);
-      
-      // Show specific error for MatchId wallet if provided
-      if (window.WALLET_TYPE === "matchId" && matchIdError && window.alertify) {
-        window.alertify.error(matchIdError);
-      }
+       
       // Show specific error for Binance wallet if network not supported
       if (
         (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) &&
@@ -941,17 +681,7 @@ const StakeWodDetails2 = ({
     try {
       let result;
       
-      if (window.WALLET_TYPE === "matchId") {
-        if (publicClient) {
-          result = await publicClient.readContract({
-            abi: window.TOKEN_ABI,
-            address: reward_token_wod._address,
-            functionName: "allowance",
-            args: [coinbase, staking._address],
-            chainId: 56,
-          });
-        }
-      } else {
+    
         result = await readContract(wagmiClient, {
           address: reward_token_wod._address,
           abi: window.TOKEN_ABI,
@@ -959,7 +689,7 @@ const StakeWodDetails2 = ({
           args: [coinbase, staking._address],
           chainId: 56,
         });
-      }
+     
 
       let result_formatted = new BigNumber(result || 0).div(1e18).toFixed(6);
 

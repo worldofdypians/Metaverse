@@ -132,9 +132,7 @@ const MatchainDailyBonus = ({
   onMatChestClaimed,
   allMatChests,
   onConnectWallet,
-  walletClient,
-  publicClient,
-  network_matchain,
+
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -782,9 +780,7 @@ const MatchainDailyBonus = ({
   }, [premiumTxHash, selectedChainforPremium]);
 
   const handleMatPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      network_matchain?.showChangeNetwork();
-    } else if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
           await handleSwitchNetworkhook("0x2ba")
@@ -2843,8 +2839,8 @@ const MatchainDailyBonus = ({
                           ? allChests && allChests.length > 0
                             ? allChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -2893,8 +2889,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -2949,8 +2945,8 @@ const MatchainDailyBonus = ({
                           ? allCoreChests && allCoreChests.length > 0
                             ? allCoreChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -2999,8 +2995,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3055,8 +3051,8 @@ const MatchainDailyBonus = ({
                           ? allMantaChests && allMantaChests.length > 0
                             ? allMantaChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3105,8 +3101,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3161,8 +3157,8 @@ const MatchainDailyBonus = ({
                           ? allBaseChests && allBaseChests.length > 0
                             ? allBaseChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3210,8 +3206,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3265,8 +3261,8 @@ const MatchainDailyBonus = ({
                           ? allTaikoChests && allTaikoChests.length > 0
                             ? allTaikoChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3314,8 +3310,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3369,8 +3365,8 @@ const MatchainDailyBonus = ({
                           ? allMatChests && allMatChests.length > 0
                             ? allMatChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3418,8 +3414,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3473,8 +3469,8 @@ const MatchainDailyBonus = ({
                           ? allSeiChests && allSeiChests.length > 0
                             ? allSeiChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3522,8 +3518,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3577,8 +3573,8 @@ const MatchainDailyBonus = ({
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3627,8 +3623,8 @@ const MatchainDailyBonus = ({
                               ))
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
@@ -3684,8 +3680,8 @@ const MatchainDailyBonus = ({
                             allSkaleChests.length > 0
                           ? allSkaleChests.map((item, index) => (
                               <NewChestItem
-                                walletClient={walletClient}
-                                publicClient={publicClient}
+                                
+                                
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
@@ -3733,8 +3729,8 @@ const MatchainDailyBonus = ({
                             ))
                           : window.range(0, 19).map((item, index) => (
                               <NewChestItem
-                                walletClient={walletClient}
-                                publicClient={publicClient}
+                                
+                                
                                 coinbase={coinbase}
                                 claimingChest={claimingChest}
                                 setClaimingChest={setClaimingChest}
