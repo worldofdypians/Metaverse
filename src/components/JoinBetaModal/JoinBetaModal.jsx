@@ -12,7 +12,7 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import { Checkbox } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
 import { signMessage as signMessageWagmi } from "@wagmi/core";
-import { Hooks } from "@matchain/matchid-sdk-react";
+
 import { wagmiClient } from "../../wagmiConnectors";
 
 
@@ -37,8 +37,7 @@ const JoinBetaModal = ({
   coinbase,
   showForms,
 }) => {
-const { useWallet: useWalletMatchain } = Hooks;
-    const { signMessage } = useWalletMatchain();
+
   const options = [
     {
       name: "Metamask",

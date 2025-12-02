@@ -80,7 +80,7 @@ const BoosterPopup = ({
   userPreviousDataStar,
   userPreviousDataStar2,
 }) => {
-  const nextSelectionDate = new Date("2025-12-13T14:00:00.000+02:00");
+
 
   const [isWinner, setIsWinner] = useState(false);
   const [showPreviousMonth, setShowPreviousMonth] = useState(false);
