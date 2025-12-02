@@ -71,9 +71,9 @@ const Investors = ({ page }) => {
       link: "https://www.easy2stake.com/",
     },
     {
-      title: "Matchain",
-      logo: "matchainBackers.svg",
-      link: "https://www.matchain.io/",
+      title: "SEI",
+      logo: "seiFull.svg",
+      link: "https://www.sei.io/",
     },
   ];
 

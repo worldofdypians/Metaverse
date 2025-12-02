@@ -12,7 +12,7 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import { Checkbox } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
 import { signMessage as signMessageWagmi } from "@wagmi/core";
-import { Hooks } from "@matchain/matchid-sdk-react";
+
 import { wagmiClient } from "../../wagmiConnectors";
 
 
@@ -36,10 +36,8 @@ const JoinBetaModal = ({
   handleConnect,
   coinbase,
   showForms,
-  walletClient
 }) => {
-const { useWallet: useWalletMatchain } = Hooks;
-    const { signMessage } = useWalletMatchain();
+
   const options = [
     {
       name: "Metamask",
@@ -190,17 +188,7 @@ const { useWallet: useWalletMatchain } = Hooks;
         //     console.error(e);
         //   });
          let signature = "";
-        if (window.WALLET_TYPE === "matchId" && coinbase) {
-         
-          if (walletClient) {
-            signature = await signMessage({
-              message: window.config.beta_test,
-              account: coinbase,
-            }).catch((e) => {
-              console.log(e);
-            });
-          }
-        }
+       
         if (coinbase) {
           signature = await signMessageWagmi(wagmiClient, {
             message: window.config.beta_test,

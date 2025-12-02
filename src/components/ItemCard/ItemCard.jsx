@@ -143,7 +143,7 @@ const ItemCard = ({
   };
 
   const handleBuyState = async (nft) => {
-    if (chainId === 1 && window.WALLET_TYPE !== "matchId") {
+    if (chainId === 1 ) {
       const tokenType = "eth";
 
       const isApproved = isApprovedBuy(tokenType, nft.price);
@@ -176,9 +176,7 @@ const ItemCard = ({
           }
         }
       }
-    } else if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    } else {
+    }  else {
       window.alertify.error(
         "Invalid network! Switch into Ethereum Network to purchase NFTs"
       );

@@ -22,7 +22,6 @@ import { Amplify } from "aws-amplify";
 import awsExports from "./screens/Account/src/aws-exports";
 // Auth + MatchID
 import AuthProvider from "./screens/Account/src/Utils.js/Auth/AuthDetails.jsx";
-import { MatchProvider } from "@matchain/matchid-sdk-react";
 
 // App
 import App from "./App.jsx";
@@ -54,23 +53,16 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <ApolloProvider client={client}>
-          {/* <Hydrate state={undefined}> */}
           <PersistQueryClientProvider
             client={queryClient}
             persistOptions={{ persister }}
           >
             <AuthProvider>
               <WagmiProvider config={wagmiClient}>
-                <MatchProvider
-                  appid="ipgjm4nszcr36mcz"
-                  wallet={{ type: "UserPasscode" }}
-                >
-                  <App />
-                </MatchProvider>
+                <App />
               </WagmiProvider>
             </AuthProvider>
-          </PersistQueryClientProvider>{" "}
-          {/* </Hydrate> */}
+          </PersistQueryClientProvider>
         </ApolloProvider>
       </BrowserRouter>
     </Provider>

@@ -85,60 +85,70 @@ const GlobalLeaderboard = ({
         style={{ background: "none" }}
       >
         <div className="global-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3 position-relative">
-          <div className="position-absolute" style={{ top: 8, right: 8 }}>
-            <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
-              <div className="d-flex align-items-center gap-2 position-relative">
-                <span className="d-flex align-items-center gap-2 text-white text-sm">
-                  <RefreshIcon />
-                  Updates every 5 minutes
-                </span>
-                <span
-                  className={`text-white ${screen !== "dash" && "invisible"} `}
-                  style={{ fontSize: 14 }}
-                >
-                  (Top 100)
-                </span>
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/tooltip.svg"}
-                  alt=""
-                  className="tooltip-icon"
-                  style={{ cursor: "pointer", width: "20px", height: "20px" }}
-                  onClick={() => setTooltip(!tooltip)}
-                />
-                <div
-                  className={`tooltip-wrapper p-3 ${
-                    tooltip && "tooltip-active"
-                  }`}
-                  style={{ width: 350, right: "20%" }}
-                >
-                  <p className="tooltip-content">
-                    Discover the Global Leaderboard in World of Dypians—a
-                    feature for global competition and rewards.
-                    <br />
-                    <br />
-                    Participate in Daily Chain Leaderboards from BNB Chain,
-                    Skale, Core, Manta, Base, Matchain, Sei, Vanar, Taiko,
-                    Taraxa and Viction to earn STARS that will boost your global
-                    ranking.
-                    <br />
-                    <br />
-                    Prime Users earn extra STARS from Daily Leaderboards,
-                    improving competitiveness and progression.
-                    <br />
-                    <br />
-                    Golden Pass Bundle owners earn extra rewards based on their
-                    global leaderboard ranking.
-                    <br />
-                    <br />
-                    The leaderboard resets weekly and monthly, offering new
-                    chances to climb and show your skills.
-                    <br />
-                    <br />
-                    <b>Leaderboard Update Time: Daily (00:00 UTC)</b>
-                  </p>
+          <div
+            className="position-absolute w-100 px-2 d-flex"
+            style={{ top: 8, left: 0 }}
+          >
+            <div
+              className={`d-flex align-items-center gap-2 ${
+                screen !== "dash"
+                  ? "justify-content-end"
+                  : "justify-content-between"
+              } position-relative w-100 `}
+            >
+              <span className="d-flex align-items-center gap-2 text-white text-sm">
+                <RefreshIcon fontSize="small" />
+                Updates every 1 min
+              </span>
+              <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
+                <div className="d-flex align-items-center gap-2">
+                  <span
+                    className={`text-white ${
+                      screen !== "dash" && "invisible"
+                    } `}
+                    style={{ fontSize: 14 }}
+                  >
+                    (Top 100)
+                  </span>
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/tooltip.svg"}
+                    alt=""
+                    className="tooltip-icon"
+                    style={{ cursor: "pointer", width: "20px", height: "20px" }}
+                    onClick={() => setTooltip(!tooltip)}
+                  />
                 </div>
+              </OutsideClickHandler>
+              <div
+                className={`tooltip-wrapper p-3 ${tooltip && "tooltip-active"}`}
+                style={{ width: 350, right: "0" }}
+              >
+                <p className="tooltip-content">
+                  Discover the Global Leaderboard in World of Dypians—a feature
+                  for global competition and rewards.
+                  <br />
+                  <br />
+                  Participate in Daily Chain Leaderboards from BNB Chain, Skale,
+                  Core, Manta, Base, Sei, Vanar, Taiko and
+                  Viction to earn STARS that will boost your global ranking.
+                  <br />
+                  <br />
+                  Prime Users earn extra STARS from Daily Leaderboards,
+                  improving competitiveness and progression.
+                  <br />
+                  <br />
+                  Golden Pass Bundle owners earn extra rewards based on their
+                  global leaderboard ranking.
+                  <br />
+                  <br />
+                  The leaderboard resets weekly and monthly, offering new
+                  chances to climb and show your skills.
+                  <br />
+                  <br />
+                  <b>Leaderboard Update Time: Daily (00:00 UTC)</b>
+                </p>
               </div>
-            </OutsideClickHandler>
+            </div>
           </div>
           {screen !== "dash" && (
             <div className="d-flex flex-column">
@@ -786,11 +796,11 @@ const GlobalLeaderboard = ({
                 style={{ width: 20, height: 20 }}
                 alt=""
               />
-              <img
+              {/* <img
                 src={"https://cdn.worldofdypians.com/wod/matchainIcon.svg"}
                 style={{ width: 20, height: 20 }}
                 alt=""
-              />
+              /> */}
               <img
                 src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
                 style={{ width: 20, height: 20 }}
@@ -816,11 +826,7 @@ const GlobalLeaderboard = ({
                 style={{ width: 20, height: 20 }}
                 alt=""
               />
-              <img
-                src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
-                style={{ width: 20, height: 20 }}
-                alt=""
-              />
+             
             </div>
 
             <img

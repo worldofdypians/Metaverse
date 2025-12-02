@@ -19,9 +19,6 @@ const GovernanceInner = ({
   handleSwitchChainBinanceWallet,
   refreshBalance,
   wodBalance,
-  walletClient,
-  publicClient,
-  network_matchain,
 }) => {
   const { proposalId } = useParams();
   const [currentProposal, setCurrentProposal] = useState([]);
@@ -94,7 +91,6 @@ const GovernanceInner = ({
         handleSwitchNetwork,
         handleSwitchChainGateWallet,
         handleSwitchChainBinanceWallet,
-        network_matchain,
         coinbase,
       });
     } catch (error) {
@@ -153,27 +149,8 @@ const GovernanceInner = ({
       const { BigNumber, reward_token_wod } = window;
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
-
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: reward_token_wod._address,
-            abi: window.TOKEN_ABI,
-            functionName: "approve",
-            args: [window.config.governance_address, amount],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            setdepositLoading(false);
-            setdepositStatus("deposit");
-          }
-        }
-      } else {
+ 
+   
         const hash = await writeContract(wagmiClient, {
           address: reward_token_wod._address,
           abi: window.TOKEN_ABI,
@@ -189,7 +166,7 @@ const GovernanceInner = ({
           setdepositLoading(false);
           setdepositStatus("deposit");
         }
-      }
+   
     } catch (e) {
       console.error("Error approving:", e);
       setdepositLoading(false);
@@ -207,16 +184,7 @@ const GovernanceInner = ({
       const { BigNumber, reward_token_wod } = window;
       let result;
 
-      if (window.WALLET_TYPE === "matchId") {
-        if (publicClient) {
-          result = await publicClient.readContract({
-            abi: window.TOKEN_ABI,
-            address: reward_token_wod._address,
-            functionName: "allowance",
-            args: [coinbase, window.config.governance_address],
-          });
-        }
-      } else {
+      
         result = await readContract(wagmiClient, {
           address: reward_token_wod._address,
           abi: window.TOKEN_ABI,
@@ -224,7 +192,7 @@ const GovernanceInner = ({
           args: [coinbase, window.config.governance_address],
           chainId: 56,
         });
-      }
+     
 
       let result_formatted = new BigNumber(result || 0).div(1e18).toFixed(6);
 
@@ -250,27 +218,8 @@ const GovernanceInner = ({
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
 
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: window.config.governance_address,
-            abi: window.GOVERNANCE_ABI,
-            functionName: "addVotes",
-            args: [proposalId, option, amount],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            setdepositLoading(false);
-            setdepositStatus("success");
-            getuserInfo();
-          }
-        }
-      } else {
+      
+     
         const hash = await writeContract(wagmiClient, {
           address: window.config.governance_address,
           abi: window.GOVERNANCE_ABI,
@@ -287,7 +236,7 @@ const GovernanceInner = ({
           setdepositStatus("success");
           getuserInfo();
         }
-      }
+      
     } catch (e) {
       console.error("Error adding vote:", e);
       setdepositLoading(false);
@@ -308,27 +257,8 @@ const GovernanceInner = ({
       let amount = withdrawAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
 
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: window.config.governance_address,
-            abi: window.GOVERNANCE_ABI,
-            functionName: "removeVotes",
-            args: [proposalId, amount],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            setwithdrawLoading(false);
-            setwithdrawStatus("success");
-            getuserInfo();
-          }
-        }
-      } else {
+      
+      
         const hash = await writeContract(wagmiClient, {
           address: window.config.governance_address,
           abi: window.GOVERNANCE_ABI,
@@ -345,7 +275,7 @@ const GovernanceInner = ({
           setwithdrawStatus("success");
           getuserInfo();
         }
-      }
+      
     } catch (e) {
       console.error("Error removing vote:", e);
       setwithdrawLoading(false);
@@ -361,25 +291,8 @@ const GovernanceInner = ({
 
   const handleClaim = async () => {
     try {
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: window.config.governance_address,
-            abi: window.GOVERNANCE_ABI,
-            functionName: "withdrawAllTokens",
-            args: [],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            refreshBalance();
-          }
-        }
-      } else {
+      
+    
         const hash = await writeContract(wagmiClient, {
           address: window.config.governance_address,
           abi: window.GOVERNANCE_ABI,
@@ -394,7 +307,7 @@ const GovernanceInner = ({
         if (receipt) {
           refreshBalance();
         }
-      }
+      
     } catch (e) {
       console.error("Error claiming tokens:", e);
       window.alertify.error(e?.message || e?.shortMessage || "Claim failed");

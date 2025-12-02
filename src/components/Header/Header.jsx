@@ -93,8 +93,6 @@ const Header = ({
         setchainState("base");
       } else if (chainId === 56) {
         setchainState("bnb");
-      } else if (chainId === 698) {
-        setchainState("mat");
       } else if (chainId === 204) {
         setchainState("opbnb");
       } else if (chainId === 1030) {
@@ -115,9 +113,7 @@ const Header = ({
         setchainState("sei");
       } else if (chainId === 2040) {
         setchainState("vanar");
-      } else if (chainId === 841) {
-        setchainState("taraxa");
-      } else {
+      }  else {
         setchainState("");
       }
     }
@@ -1360,14 +1356,12 @@ const Header = ({
                                       ? "https://cdn.worldofdypians.com/wod/manta.png"
                                       : chainState === "taiko"
                                       ? "https://cdn.worldofdypians.com/wod/taiko.svg"
-                                      : chainState === "mat"
-                                      ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                                      
                                       : chainState === "sei"
                                       ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                                       : chainState === "vanar"
                                       ? "https://cdn.worldofdypians.com/wod/vanar.svg"
-                                      : chainState === "taraxa"
-                                      ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                                    
                                       : "https://cdn.worldofdypians.com/wod/error.svg"
                                   }
                                   width={20}
@@ -1384,309 +1378,7 @@ const Header = ({
                             </span>
                           }
                         ></DropdownButton>
-
-                        {/* <div
-                        className={`header-dropdown p-4 d-flex flex-column gap-2 ${
-                          dropdown.chains === "chains"
-                            ? "header-dropdown-active"
-                            : ""
-                        }`}
-                        style={{ left: "0", top: "62px", width: "315px" }}
-                      >
-                        <div className="d-flex flex-column position-relative gap-2">
-                          <div
-                            className="triangle"
-                            style={{ top: "-38px" }}
-                          ></div>
-                          <span className="select-gray-txt ">
-                            SELECT A NETWORK
-                          </span>
-                          <hr className="header-divider my-0" />
-                          <div className="header-chain-grid">
-                            {window.WALLET_TYPE !== "matchId" && (
-                              <Dropdown.Item
-                                onClick={() => switchNetwork("0x1", 1)}
-                              >
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/eth.svg"
-                                  }
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                />
-                                Ethereum
-                              </Dropdown.Item>
-                            )}
-
-                            <Dropdown.Item
-                              onClick={() => {
-                                switchNetwork("0x38", 56);
-                              }}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                                }
-                                alt=""
-                                width={20}
-                                height={20}
-                              />
-                              BNB Chain
-                            </Dropdown.Item>
-                            {window.WALLET_TYPE !== "matchId" && (
-                              <Dropdown.Item
-                                onClick={() => switchNetwork("0xcc", 204)}
-                              >
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                                  }
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                />
-                                opBNB Chain
-                              </Dropdown.Item>
-                            )}
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
-                                <Dropdown.Item
-                                  onClick={() => switchNetwork("0x2ba", 698)}
-                                >
-                                  <img
-                                    src={
-                                      "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
-                                    }
-                                    width={20}
-                                    height={20}
-                                    alt=""
-                                  />
-                                  Matchain
-                                </Dropdown.Item>
-                              )}
-
-                            {window.WALLET_TYPE !== "matchId" && (
-                              <Dropdown.Item
-                                onClick={() => switchNetwork("0xa9", 169)}
-                              >
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/manta.png"
-                                  }
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                />
-                                Manta
-                              </Dropdown.Item>
-                            )}
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance &&
-                              window.WALLET_TYPE !== "matchId" && (
-                                <Dropdown.Item
-                                  onClick={() =>
-                                    switchNetwork("0x28c58", 167000)
-                                  }
-                                >
-                                  <img
-                                    src={
-                                      "https://cdn.worldofdypians.com/wod/taiko.svg"
-                                    }
-                                    width={20}
-                                    height={20}
-                                    alt=""
-                                  />
-                                  Taiko
-                                </Dropdown.Item>
-                              )}
-
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance &&
-                              window.WALLET_TYPE !== "matchId" && (
-                                <Dropdown.Item
-                                  onClick={() => switchNetwork("0x45c", 1116)}
-                                >
-                                  <img
-                                    src={
-                                      "https://cdn.worldofdypians.com/wod/core.svg"
-                                    }
-                                    width={20}
-                                    height={20}
-                                    alt=""
-                                  />
-                                  CORE
-                                </Dropdown.Item>
-                              )}
-                            {window.WALLET_TYPE !== "matchId" && (
-                              <Dropdown.Item
-                                onClick={() => switchNetwork("0x2105", 8453)}
-                              >
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/base.svg"
-                                  }
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                />
-                                Base
-                              </Dropdown.Item>
-                            )}
-                            {window.WALLET_TYPE !== "matchId" &&
-                              window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
-                                <Dropdown.Item
-                                  onClick={() => switchNetwork("0x531", 1329)}
-                                >
-                                  <img
-                                    src={
-                                      "https://cdn.worldofdypians.com/wod/seiLogo.svg"
-                                    }
-                                    width={20}
-                                    height={20}
-                                    alt=""
-                                  />
-                                  SEI
-                                </Dropdown.Item>
-                              )}
-
-                            {window.WALLET_TYPE !== "matchId" &&
-                              window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
-                                <Dropdown.Item
-                                  onClick={() => switchNetwork("0x58", 88)}
-                                >
-                                  <img
-                                    src={
-                                      "https://cdn.worldofdypians.com/wod/viction.svg"
-                                    }
-                                    width={20}
-                                    height={20}
-                                    alt=""
-                                  />
-                                  Viction
-                                </Dropdown.Item>
-                              )}
-                            {window.WALLET_TYPE !== "matchId" && (
-                              <Dropdown.Item
-                                onClick={() => switchNetwork("0xa86a", 43114)}
-                              >
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
-                                  }
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                />
-                                Avalanche
-                              </Dropdown.Item>
-                            )}
-                            {window.WALLET_TYPE !== "matchId" &&
-                              window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
-                                <Dropdown.Item
-                                  onClick={() =>
-                                    switchNetwork("0x585eb4b1", 1482601649)
-                                  }
-                                >
-                                  <img
-                                    src={
-                                      "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
-                                    }
-                                    alt=""
-                                    width={20}
-                                    height={20}
-                                  />
-                                  SKALE
-                                </Dropdown.Item>
-                              )}
-                            {window.WALLET_TYPE !== "matchId" &&
-                              window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
-                                <Dropdown.Item
-                                  onClick={() => switchNetwork("0x343b", 13371)}
-                                >
-                                  <img
-                                    src={
-                                      "https://cdn.worldofdypians.com/wod/immutable.svg"
-                                    }
-                                    width={20}
-                                    height={20}
-                                    alt=""
-                                  />
-                                  Immutable
-                                </Dropdown.Item>
-                              )}
-                            <Dropdown.Item
-                              onClick={() => switchNetwork("0x406", 1030)}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
-                                }
-                                alt=""
-                                width={20}
-                                height={20}
-                              />
-                              Conflux
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              onClick={() => switchNetwork("0x7f8", 2040)}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/vanar.png"
-                                }
-                                alt=""
-                                width={20}
-                                height={20}
-                              />
-                              Vanar
-                            </Dropdown.Item>
-                          </div>
-                          <hr className="header-divider my-0" />
-                          <a
-                            href="https://wod.space.id"
-                            rel="noreferrer"
-                            target="_blank"
-                          >
-                            <span
-                              className="dropdown-nav p-2 d-flex align-items-center gap-2"
-                              onClick={() => {
-                                // handleOpenDomains();
-                                setShowMenu(false);
-                              }}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/domainIcon.svg"
-                                }
-                                width={16}
-                                height={16}
-                                alt=""
-                              />{" "}
-                              Domain Name{" "}
-                            </span>
-                          </a>
-                          <button
-                            className="sign-out-btn p-2  d-flex align-items-center gap-2 justify-content-start"
-                            onClick={() => {
-                              manageDisconnect();
-                            }}
-                          >
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/logout.svg"
-                              }
-                              alt=""
-                              className="logout-icon"
-                            />
-                            DISCONNECT
-                          </button>
-                        </div>
-                      </div> */}
+ 
                         <span
                           className="d-flex align-items-center gap-2"
                           // onClick={() => {

@@ -557,13 +557,13 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_sei_address
       );
 
-      let matFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_mat_address
-      );
+      // let matFilter = collectedItems.filter(
+      //   (item) => item.nftAddress === window.config.nft_mat_address
+      // );
 
-      let taraxaFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_taraxa_address
-      );
+      // let taraxaFilter = collectedItems.filter(
+      //   (item) => item.nftAddress === window.config.nft_taraxa_address
+      // );
 
       let bnb5yaFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_bnb5ya_address
@@ -580,7 +580,7 @@ const Portfolio = ({
       const allBetapassArray = [
         ...bnb5yaFilter,
         ...teaFilter,
-        ...taraxaFilter,
+        // ...taraxaFilter,
         ...coingeckoFilter,
         ...vanarFilter,
         ...confluxFilter,
@@ -592,7 +592,7 @@ const Portfolio = ({
         ...seiFilter,
         ...kucoinFilter,
         ...cmcFilter,
-        ...matFilter,
+        // ...matFilter,
         ...baseFilter,
         ...skaleFilter,
         ...victionFilter,
@@ -970,11 +970,7 @@ const Portfolio = ({
       href: "https://www.biconomy.com/exchange/WOD_USDT",
       img: "https://cdn.worldofdypians.com/wod/biconomy.png",
     },
-    {
-      name: "BTCC",
-      href: "https://www.btcc.com/en-US/spot/WODUSDT",
-      img: "https://cdn.worldofdypians.com/wod/btcc.svg",
-    },
+
     {
       name: "SwissBorg",
       href: "https://swissborg.com/crypto-market/coins/world-of-dypians",
@@ -2168,128 +2164,7 @@ const Portfolio = ({
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
-                          state={{
-                            nft: nft,
-                            type:
-                              nft?.type !== undefined &&
-                              (nft.nftAddress ===
-                                window.config.nft_caws_address ||
-                                nft.nftAddress ===
-                                  window.config.nft_caws_bnb_address ||
-                                nft.nftAddress ===
-                                  window.config.nft_caws_base_address ||
-                                nft.nftAddress ===
-                                  window.config.nft_caws_avax_address)
-                                ? "caws"
-                                : nft.nftAddress ===
-                                    window.config.nft_land_address ||
-                                  nft.nftAddress ===
-                                    window.config.nft_land_bnb_address ||
-                                  nft.nftAddress ===
-                                    window.config.nft_land_base_address ||
-                                  nft.nftAddress ===
-                                    window.config.nft_land_avax_address
-                                ? "land"
-                                : nft.nftAddress ===
-                                  window.config.nft_gate_address
-                                ? "gate"
-                                : nft.nftAddress ===
-                                  window.config.nft_conflux_address
-                                ? "conflux"
-                                : nft.nftAddress ===
-                                  window.config.nft_base_address
-                                ? "base"
-                                : nft.nftAddress ===
-                                  window.config.nft_doge_address
-                                ? "doge"
-                                : nft.nftAddress ===
-                                  window.config.nft_teabnb_address
-                                ? "tea-bnb"
-                                : nft.nftAddress ===
-                                  window.config.nft_teaopbnb_address
-                                ? "tea-opbnb"
-                                : nft.nftAddress ===
-                                  window.config.nft_teabase_address
-                                ? "tea-base"
-                                : nft.nftAddress ===
-                                  window.config.nft_teasei_address
-                                ? "tea-sei"
-                                : nft.nftAddress ===
-                                  window.config.nft_skale_address
-                                ? "skale"
-                                : nft.nftAddress ===
-                                  window.config.nft_bnb_address
-                                ? "bnb"
-                                : nft.nftAddress ===
-                                  window.config.nft_opbnb_address
-                                ? "opbnb"
-                                : nft.nftAddress ===
-                                  window.config.nft_cmc_address
-                                ? "cmc"
-                                : nft.nftAddress ===
-                                  window.config.nft_coingecko_address
-                                ? "coingecko"
-                                : nft.nftAddress ===
-                                  window.config.nft_core_address
-                                ? "core"
-                                : nft.nftAddress ===
-                                  window.config.nft_viction_address
-                                ? "viction"
-                                : nft.nftAddress ===
-                                  window.config.nft_kucoin_address
-                                ? "kucoin"
-                                : nft.nftAddress ===
-                                  window.config.nft_vanar_address
-                                ? "vanar"
-                                : nft.nftAddress ===
-                                  window.config.nft_immutable_address
-                                ? "immutable"
-                                : nft.nftAddress ===
-                                  window.config.nft_multivers_address
-                                ? "multivers"
-                                : nft.nftAddress ===
-                                  window.config.nft_manta_address
-                                ? "manta"
-                                : nft.nftAddress ===
-                                  window.config.nft_taiko_address
-                                ? "taiko"
-                                : nft.nftAddress ===
-                                  window.config.nft_mat_address
-                                ? "mat"
-                                : nft.nftAddress ===
-                                  window.config.nft_cookie3_address
-                                ? "cookie3"
-                                : nft.nftAddress ===
-                                  window.config.nft_sei_address
-                                ? "sei"
-                                : nft.nftAddress ===
-                                  window.config.nft_taraxa_address
-                                ? "taraxa"
-                                : nft.nftAddress ===
-                                  window.config.nft_bnb5ya_address
-                                ? "5ya"
-                                : "timepiece",
-                            // isOwner:
-                            //   isVerified && email
-                            //     ? nft.buyer
-                            //       ? nft.buyer?.toLowerCase() ===
-                            //         address?.toLowerCase()
-                            //         ? nft.buyer?.toLowerCase() ===
-                            //           coinbase?.toLowerCase()
-                            //         : nft.seller?.toLowerCase() ===
-                            //           address?.toLowerCase()
-                            //       : nft.seller?.toLowerCase() ===
-                            //         coinbase?.toLowerCase()
-                            //     : false,
-                            isOwner:
-                              (nft.buyer &&
-                                nft.buyer.toLowerCase() ===
-                                  coinbase?.toLowerCase()) ||
-                              (nft.seller &&
-                                nft.seller.toLowerCase() ===
-                                  coinbase?.toLowerCase()),
-                            chain: nft.chain,
-                          }}
+                          
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
                           }}
@@ -2375,9 +2250,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_mat_address
-                                    ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
+                                    // : nft.nftAddress ===
+                                    //   window.config.nft_mat_address
+                                    // ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
@@ -2387,9 +2262,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_taraxa_address
-                                    ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
+                                    // : nft.nftAddress ===
+                                    //   window.config.nft_taraxa_address
+                                    // ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_bnb5ya_address
                                     ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
@@ -2480,18 +2355,18 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? "TKBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_mat_address
-                                    ? "MCBP"
+                                    // : nft.nftAddress ===
+                                    //   window.config.nft_mat_address
+                                    // ? "MCBP"
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
                                     : nft.nftAddress ===
                                       window.config.nft_sei_address
                                     ? "SEBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_taraxa_address
-                                    ? "TXBP"
+                                    // : nft.nftAddress ===
+                                    //   window.config.nft_taraxa_address
+                                    // ? "TXBP"
                                     : nft.nftAddress ===
                                       window.config.nft_bnb5ya_address
                                     ? "5YABP"

@@ -603,20 +603,7 @@ console.log('finalCollection',finalCollection)
     }
   };
 
-  const isApprovedBuy = async (tokenType, amount) => {
-    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
-      const result = await window
-        .isApprovedBuy(tokenType, amount)
-        .catch((e) => {
-          console.error(e);
-        });
-      return result;
-    } else if (window.WALLET_TYPE === "binance") {
-      if (tokenType === "eth") {
-        return true;
-      }
-    } else return false;
-  };
+
 
   // Check if NFT is approved using wagmi
   const getNFTAddressForType = (type) => {
@@ -640,9 +627,6 @@ console.log('finalCollection',finalCollection)
   const isNFTApproved = useNFTApprovalStatus(nftAddressForApproval, coinbase);
 
   async function isApprovedNFT(nft, type, coinbase) {
-    if (window.WALLET_TYPE === "matchId") {
-      return false;
-    }
     // Return the wagmi hook result
     return isNFTApproved;
   }
@@ -760,10 +744,7 @@ console.log('finalCollection',finalCollection)
   };
 
   const handleSell = async (tokenId, nftPrice, priceType, type) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
+   
 
     const isApproved = await isApprovedNFT(
       nftId,
@@ -934,10 +915,7 @@ console.log('finalCollection',finalCollection)
   };
 
   async function handleBuy(nft) {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
+  
 
     console.log("buying", nft.price);
     setPurchaseColor("#00FECF");
@@ -992,11 +970,7 @@ console.log('finalCollection',finalCollection)
   }
 
   const cancelNFT = async (nftAddress, tokenId, type, tokenType) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
-
+ 
     setcancelLoading(true);
     setcancelStatus("cancel");
     setPurchaseColor("#00FECF");
@@ -1040,10 +1014,7 @@ console.log('finalCollection',finalCollection)
   };
 
   async function updateListing(nft, price, priceType, type, tokenType) {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
+ 
 
     setPurchaseColor("#00FECF");
     setPurchaseStatus("Price is being updated...");
@@ -1180,11 +1151,7 @@ console.log('finalCollection',finalCollection)
   };
 
   const handleMakeOffer = async (price, pricetype, tokenType) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
-
+ 
     setOfferStatus("loading");
 
     try {
@@ -1214,10 +1181,7 @@ console.log('finalCollection',finalCollection)
   };
 
   const handleDeleteOffer = async (offerIndex) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
+     
 
     setOfferdeleteStatus("loadingdelete");
     console.log(nftAddress, nftId, offerIndex);
@@ -1241,10 +1205,7 @@ console.log('finalCollection',finalCollection)
   };
 
   const handleUpdateOffer = async (price, pricetype, offerIndex, tokenType) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
+  
 
     setOfferupdateStatus("loadingupdate");
 
@@ -1276,10 +1237,7 @@ console.log('finalCollection',finalCollection)
   };
 
   const handleAcceptOffer = async (offerIndex) => {
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      return;
-    }
+  
 
     setOfferacceptStatus("loading");
     console.log(nftAddress, nftId, offerIndex);
@@ -1610,10 +1568,10 @@ console.log('finalCollection',finalCollection)
   }, [nftId, nftAddress, owner, currentNft]);
 
   useEffect(() => {
-    if (window.WALLET_TYPE !== "matchId" && offers.length > 0) {
+    if (offers.length > 0) {
       getOffer();
     }
-  }, [coinbase, nftCount, window.WALLET_TYPE, offers]);
+  }, [coinbase, nftCount, offers]);
 
   useEffect(() => {
     if (favorites && favorites.length > 0) {

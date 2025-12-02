@@ -15,7 +15,7 @@ const Campaigns = ({ coinbase }) => {
   const dummyBanner = [
     {
       title: "Path of Kings: Claim Your Share of $150,000",
-      status: "Coming Soon",
+      status: "Expired",
       start_date: "Nov 17, 2025",
       end_date: " Dec 01, 2025",
       image: "https://cdn.worldofdypians.com/wod/path-of-kings-bg.webp",
@@ -25,7 +25,7 @@ const Campaigns = ({ coinbase }) => {
     <li style="list-style-type: disc;">Open the Royalty Chest on BNB Chain or opBNB</li>
     </ul>
    `,
-      link: "https://dappbay.bnbchain.org/campaign/413",
+      link: "https://dappbay.bnbchain.org/campaign/421-join-the-path-of-kings-to-share-150k-in-rewards",
       target: "_blank",
     },
     {
@@ -409,7 +409,7 @@ const Campaigns = ({ coinbase }) => {
                       <NavLink
                         to={item.link}
                         target={item.target}
-                        className="explore-btn invisible px-4 py-2 mt-4"
+                        className="explore-btn px-4 py-2 mt-4"
                         style={{ width: "fit-content" }}
                       >
                         Explore

@@ -7,6 +7,8 @@ import classes from "./ResetPassword.module.css";
 import { encode } from "base-64";
 import ErrorAlert from "../../Components/ErrorAlert/ErrorAlert";
 import ReCaptchaV2 from "react-google-recaptcha";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const ResetPassword = () => {
   const params = new URLSearchParams(window.location.search);
@@ -18,6 +20,9 @@ const ResetPassword = () => {
   const [isResetSuccess, setIsResetSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [captchaValue, setCaptchaValue] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+
   const recaptchaRef = useRef(null);
 
   const handleCaptchaChange = (value) => {
@@ -105,30 +110,56 @@ const ResetPassword = () => {
       <LoginCard>
         <div className={classes.container}>
           <h1>Set new password</h1>
-          <Input
-            style={{
-              marginBottom: 20,
-            }}
-            placeHolder="New Password"
-            value={newPassword}
-            onChange={(e) => {
-              setNewPassword(e);
-              setError(null);
-            }}
-            inputType={"password"}
-          />
-          <Input
-            style={{
-              marginBottom: 20,
-            }}
-            placeHolder="Confirm New Password"
-            value={confirmNewPassword}
-            onChange={(e) => {
-              setConfirmNewPassword(e);
-              setError(null);
-            }}
-            inputType={"password"}
-          />
+          <div className="position-relative">
+            <Input
+              style={{
+                marginBottom: 20,
+              }}
+              placeHolder="New Password"
+              value={newPassword}
+              onChange={(e) => {
+                setNewPassword(e);
+                setError(null);
+              }}
+              inputType={showPassword ? "text" : "password"}
+            />
+            <div
+              style={{
+                position: "absolute",
+                right: 10,
+                top: 18,
+                cursor: "pointer",
+              }}
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}} /> : <RemoveRedEyeIcon style={{color: 'wheat'}} />}
+            </div>
+          </div>
+          <div className="position-relative">
+            <Input
+              style={{
+                marginBottom: 20,
+              }}
+              placeHolder="Confirm New Password"
+              value={confirmNewPassword}
+              onChange={(e) => {
+                setConfirmNewPassword(e);
+                setError(null);
+              }}
+              inputType={showPassword2 ? "text" : "password"}
+            />
+            <div
+              style={{
+                position: "absolute",
+                right: 10,
+                top: 18,
+                cursor: "pointer",
+              }}
+              onClick={() => setShowPassword2((prev) => !prev)}
+            >
+              {showPassword2 ? <VisibilityOffIcon style={{color: 'wheat'}} /> : <RemoveRedEyeIcon style={{color: 'wheat'}} />}
+            </div>
+          </div>
           <ReCaptchaV2
             sitekey="6LfFVMQrAAAAAGauKrn5cyQZRaXHMMlHMUz9IOnu"
             style={{ display: "inline-block" }}
