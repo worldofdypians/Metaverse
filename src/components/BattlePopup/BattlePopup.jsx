@@ -75,10 +75,7 @@ const BattlePopup = ({
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
-  network_matchain,
   isOpen,
-  walletClient,
-  publicClient,
   closePopup,
   setClosePopup,
   battleFightResults,
@@ -94,14 +91,7 @@ const BattlePopup = ({
 
   const readOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-      if (window.WALLET_TYPE === "matchId" && publicClient) {
-        return await publicClient.readContract({
-          address,
-          abi,
-          functionName,
-          args,
-        });
-      }
+  
       return await wagmiReadContract(wagmiClient, {
         address,
         abi,
@@ -117,16 +107,7 @@ const BattlePopup = ({
 
   const writeOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-      if (window.WALLET_TYPE === "matchId" && walletClient && publicClient) {
-        const hash = await walletClient.writeContract({
-          address,
-          abi,
-          functionName,
-          args,
-        });
-        await publicClient.waitForTransactionReceipt({ hash });
-        return hash;
-      }
+
 
       const account = getAccount(wagmiClient);
       if (account?.chainId && chainId && account.chainId !== chainId) {
@@ -542,29 +523,7 @@ const BattlePopup = ({
 
       const functionName = "strike";
 
-      // If user is on MatchID wallet, use provided viem walletClient/publicClient
-      if (window.WALLET_TYPE === "matchId" && walletClient && publicClient) {
-        const txHash = await walletClient.writeContract({
-          address: contractConfig.address,
-          abi: contractConfig.abi,
-          functionName,
-          args: [],
-        });
-
-        await publicClient.waitForTransactionReceipt({ hash: txHash });
-        // onClaimRewards(email, txHash, contractConfig.chainText);
-        getUserRewards(email, txHash, "bnb", selectedPlayer.id);
-        //   if (video) {
-        //     video.play().catch((err) => console.error("Play failed:", err));
-        //     setTimeout(() => {
-        //       video.pause();
-        //
-        //       onClaimRewards();
-        //     }, 8000);
-        //   }
-
-        return;
-      }
+  
 
       // Default: use wagmi connected wallet via viem
       const account = getAccount(wagmiClient);
@@ -689,7 +648,6 @@ const BattlePopup = ({
         handleSwitchNetwork,
         handleSwitchChainGateWallet,
         handleSwitchChainBinanceWallet,
-        network_matchain,
         coinbase,
       });
     } catch (error) {

@@ -7349,8 +7349,7 @@ function Dashboard({
             <BattlePopup
               closePopup={closeBattle}
               setClosePopup={setcloseBattle}
-              publicClient={publicClient}
-              walletClient={walletClient}
+               
               onClose={() => {
                 setbattlePopup(false);
                 html.classList.remove("hidescroll");
@@ -7362,7 +7361,7 @@ function Dashboard({
               handleSwitchNetwork={handleSwitchNetwork}
               handleSwitchChainGateWallet={handleSwitchChainGateWallet}
               handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
-              network_matchain={network_matchain}
+              
               isConnected={isConnected}
               email={email}
               address={userWallet}
