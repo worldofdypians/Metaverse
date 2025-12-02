@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TwitterItem from "./TwitterItem";
 import axios from "axios";
 import "./_twitterrewards.scss";
@@ -9,7 +9,6 @@ import { useCountUp } from "../../../hooks/useCountup";
 import BlurredTwitterItem from "./BluredTwitterItem";
 import Countdown from "react-countdown";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
-
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -22,8 +21,6 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     fontSize: "12px",
   },
 }));
-
-
 
 const renderer = ({ hours, minutes, completed }) => {
   if (completed) {
@@ -53,7 +50,6 @@ const TwitterRewards = ({
   checkCooldown,
 }) => {
   const windowSize = useWindowSize();
-
 
   const dummyCooldown = 100000;
 
@@ -114,7 +110,9 @@ const TwitterRewards = ({
       });
   };
 
-  console.log(twitterCooldown.remainingHours, "hours");
+  useEffect(() => {
+    checkCooldown();
+  }, []);
 
   return (
     <>
@@ -242,9 +240,6 @@ const TwitterRewards = ({
                     </svg>
                     Disconnect
                   </button>
-
-                  
-                   
                 ) : (
                   <>
                     {twitterCooldown.remainingHours === 0 ? (
@@ -256,24 +251,25 @@ const TwitterRewards = ({
                         Connect
                       </a>
                     ) : (
-                   <HtmlTooltip
-                              placement="top"
-                              title={
-                                <span className="unlink-twitter-text mb-0">You can link your account after the cooldown ends</span>
-                              }
-                            >
-                             <button
-                        className="unlink-twitter-button d-flex align-items-center justify-content-center gap-1 px-3 py-2"
-                        style={{width: "150px"}}
-                        disabled
+                      <HtmlTooltip
+                        placement="top"
+                        title={
+                          <span className="unlink-twitter-text mb-0">
+                            You can link your account after the cooldown ends
+                          </span>
+                        }
                       >
-                        <Countdown
-                          date={twitterCooldown.remainingHours}
-                          renderer={renderer}
-                        />
-
-                      </button>
-                            </HtmlTooltip>
+                        <button
+                          className="unlink-twitter-button d-flex align-items-center justify-content-center gap-1 px-3 py-2"
+                          style={{ width: "150px" }}
+                          disabled
+                        >
+                          <Countdown
+                            date={Date.now() + twitterCooldown.remainingMs}
+                            renderer={renderer}
+                          />
+                        </button>
+                      </HtmlTooltip>
                     )}
                   </>
                 )}
