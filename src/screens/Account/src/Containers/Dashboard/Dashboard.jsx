@@ -154,8 +154,6 @@ function Dashboard({
   const { setUserNFTs } = useUser();
   const dispatch = useDispatch();
   const { eventId } = useParams();
-  const cutoff = new Date(Date.UTC(2025, 11, 2, 0, 30));
-  const now = new Date();
 
   const hasUserId = userId !== undefined && userId !== null;
 
@@ -4753,7 +4751,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: vanarStars,
-        previous_rewards: now <= cutoff ? previous_vanarStars : vanarStars,
+        previous_rewards: vanarStars,
         activeData: dailyRecordsVanar,
         previousData: prevDataVanar,
         player_data: userDataVanar,
@@ -4776,7 +4774,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards: now <= cutoff ? previous_skaleStars : skaleStars,
+        previous_rewards: skaleStars,
         activeData: dailyRecordsSkale,
         previousData: prevDataSkale,
         player_data: userDataSkale,
@@ -4799,7 +4797,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        previous_rewards: now <= cutoff ? coreStars : taikoStars,
+        previous_rewards: taikoStars,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,
         player_data: userDataCore,
@@ -4822,7 +4820,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards: now <= cutoff ? matStars : skaleStars,
+        previous_rewards: skaleStars,
         activeData: dailyRecordsViction,
         previousData: prevDataViction,
         player_data: userDataViction,
@@ -4845,7 +4843,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards: now <= cutoff ? previous_baseStars : skaleStars,
+        previous_rewards: skaleStars,
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
@@ -4868,7 +4866,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        previous_rewards: now <= cutoff ? seiStars : taikoStars,
+        previous_rewards: taikoStars,
         activeData: dailyRecordsSei,
         previousData: prevDataSei,
         player_data: userDataSei,
@@ -4907,7 +4905,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards: now <= cutoff ? previous_baseStars : baseStars,
+        previous_rewards: baseStars,
         activeData: dailyRecordsBase,
         previousData: prevDataBase,
         player_data: userDataBase,
@@ -4930,7 +4928,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        previous_rewards: now <= cutoff ? previous_taikoStars : taikoStars,
+        previous_rewards: taikoStars,
         activeData: dailyRecordsTaiko,
         previousData: prevDataTaiko,
         player_data: userDataTaiko,

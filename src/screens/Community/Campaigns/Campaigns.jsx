@@ -15,9 +15,9 @@ const Campaigns = ({ coinbase }) => {
   const dummyBanner = [
     {
       title: "Path of Kings: Claim Your Share of $150,000",
-      status: "Live",
+      status: "Expired",
       start_date: "Nov 17, 2025",
-      end_date: " Dec 03, 2025",
+      end_date: " Dec 01, 2025",
       image: "https://cdn.worldofdypians.com/wod/path-of-kings-bg.webp",
       desc: `Fuel your rise to royalty in the World of Dypians with the Path of Kings campaign and a massive $150,000 in rewards up for grabs!<br/>
     <ul><li style="list-style-type: disc;">Trade a minimum of $50 in WOD</li>

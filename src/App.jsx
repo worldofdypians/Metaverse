@@ -3842,9 +3842,9 @@ function AppRoutes() {
           }
 
           if (taraxaEvent && taraxaEvent[0]) {
-            if (taraxaEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (taraxaEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               taraxaEvent[0].reward.earn.total /
