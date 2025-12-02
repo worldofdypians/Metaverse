@@ -57,7 +57,7 @@ const LandDetails = ({
   const checkApproval = async () => {
     const address = coinbase;
     const stake25 = await window.config.landnftstake_address;
-    if (address !== null && window.WALLET_TYPE !== "matchId") {
+    if (address !== null) {
       const result = await window.landnft
         .checkapproveStake(address, stake25)
         .then((data) => {
@@ -136,7 +136,7 @@ const LandDetails = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+    if (window.WALLET_TYPE !== "binance") {
       let myStakes = await getStakesIds();
       let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
       // setclaimAllStatus("Claiming all rewards, please wait...");
@@ -192,9 +192,7 @@ const LandDetails = ({
         }, 5000);
         window.alertify.message("Claimed All Rewards!");
       }
-    } else if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    }
+    }  
   };
   const convertEthToUsd = async () => {
     const res = axios
@@ -211,7 +209,7 @@ const LandDetails = ({
   };
 
   const handleEthPool = async () => {
-    if (window.WALLET_TYPE !== "matchId") {
+   
       await switchNetworkWagmi(parseInt("0x1", 16), null, { coinbase })
         .then(() => {
           handleSwitchNetwork("1");
@@ -219,9 +217,7 @@ const LandDetails = ({
         .catch((e) => {
           console.log(e);
         });
-    } else if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    }
+    
   };
 
   const getApprovedNfts = (data) => {
@@ -249,19 +245,19 @@ const LandDetails = ({
   };
 
   useEffect(() => {
-    if (window.WALLET_TYPE !== "matchId") {
+    
       totalStakedNft();
-    }
-  }, [window.WALLET_TYPE]);
+   
+  }, []);
 
   useEffect(() => {
-    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+    if (isConnected && chainId === "1") {
       myNft();
       myStakes();
       checkApproval();
       handleClaimAll();
     }
-  }, [isConnected, chainId, window.WALLET_TYPE, coinbase]);
+  }, [isConnected, chainId, coinbase]);
 
   useEffect(() => {
     if (isConnected) {

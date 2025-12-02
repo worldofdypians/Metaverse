@@ -6,6 +6,8 @@ import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./SignUp.module.css";
 import ReCaptchaV2 from "react-google-recaptcha";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function SingUp() {
   const {
@@ -25,6 +27,9 @@ function SingUp() {
   const [disabled, setDisabled] = useState(false);
   const [verifyCode, setVerifyCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+
   const recaptchaRef = useRef(null);
 
   const handleCaptchaChange = (value) => {
@@ -141,10 +146,16 @@ function SingUp() {
     }
   }, [isAuthenticated]);
 
-
   useEffect(() => {
     const handleEnter = (event) => {
-      if (event.key === "Enter" && username && password && confirmPassword && !code && captchaValue) {
+      if (
+        event.key === "Enter" &&
+        username &&
+        password &&
+        confirmPassword &&
+        !code &&
+        captchaValue
+      ) {
         signup();
       }
     };
@@ -188,18 +199,43 @@ function SingUp() {
         onChange={setUserName}
         inputType="email"
       />
-      <Input
-        inputType="password"
-        placeHolder="Password"
-        value={password}
-        onChange={setPassword}
-      />
-      <Input
-        inputType="password"
-        placeHolder="Confirm Password"
-        value={confirmPassword}
-        onChange={setConfirmPassword}
-      />
+      <div className="position-relative">
+        <Input
+          placeHolder="Password"
+          inputType={showPassword ? "text" : "password"}
+          onChange={setPassword}
+        />
+        <div
+          style={{
+            position: "absolute",
+            right: 10,
+            top: 18,
+            cursor: "pointer",
+          }}
+          onClick={() => setShowPassword((prev) => !prev)}
+        >
+          {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+        </div>
+      </div>
+      <div className="position-relative">
+        <Input
+          inputType={showPassword2 ? "text" : "password"}
+          placeHolder="Confirm Password"
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+        />
+        <div
+          style={{
+            position: "absolute",
+            right: 10,
+            top: 18,
+            cursor: "pointer",
+          }}
+          onClick={() => setShowPassword2((prev) => !prev)}
+        >
+          {showPassword2 ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+        </div>
+      </div>
       <Button
         disabled={disabled || !captchaValue}
         style={{ margin: "auto" }}

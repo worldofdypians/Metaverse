@@ -11,16 +11,16 @@ const Completionist = () => (
   </h6>
 );
 
-const renderer2 = ({ days, hours, minutes, completed }) => {
-  if (completed) {
-    return <Completionist />;
-  } else {
-    return (
-      <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
-        {days}D:{hours}H:{minutes}M
-      </h6>
-    );
-  }
+const renderer2 = ({ days, hours, minutes }) => {
+  // if (completed) {
+  //   return <Completionist />;
+  // } else {
+  return (
+    <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
+      {days}D:{hours}H:{minutes}M
+    </h6>
+  );
+  // }
 };
 
 const WhitelistContent = ({
@@ -52,6 +52,11 @@ const WhitelistContent = ({
     useState(false);
   const [timerFinishedOTCCliff, settimerFinishedOTCCliff] = useState(false);
   const [timerFinishedOTC1Cliff4, settimerFinishedOTC1Cliff4] = useState(false);
+  const [timerFinishedRoundOtcVesting, settimerFinishedRoundOtcVesting] =
+    useState(false);
+
+  const [timerFinishedDypiansVesting, settimerFinishedDypiansVesting] =
+    useState(false);
 
   const [timerFinishedOTCCliff2, settimerFinishedOTCCliff2] = useState(false);
 
@@ -72,114 +77,130 @@ const WhitelistContent = ({
   const today = new Date();
 
   useEffect(() => {
+    const today2 = new Date();
+
     if (selectedRound) {
       if (selectedRound.id == "seed") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinished(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinished(true);
         }
       } else if (selectedRound.id == "otc") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTC(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTC(true);
         }
       } else if (selectedRound.id == "otc2") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTC2(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTC2(true);
         }
       } else if (selectedRound.id == "special-otc") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTCSpecial(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCSpecial(true);
         }
       } else if (selectedRound.id == "special-otc-4") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTCSpecial4(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCSpecial4(true);
         }
       } else if (selectedRound.id == "cliff-otc") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTCCliff(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCCliff(true);
         }
       } else if (selectedRound.id == "cliff1-otc4") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime + 2592000000 && cliffTime > 0) {
           settimerFinishedOTC1Cliff4(true);
           onTimerFinished(true);
-        } else if (Number(userClaimedTokens) === 0) {
+        } else if (Number(userClaimedTokens) > 0) {
           settimerFinishedOTC1Cliff4(true);
         }
+      } else if (selectedRound.id == "roundotc-vesting") {
+        if (today2.getTime() > cliffTime) {
+          settimerFinishedRoundOtcVesting(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedRoundOtcVesting(true);
+        }
+      } else if (selectedRound.id == "dypians-vesting") {
+        if (today2.getTime() > cliffTime) {
+          settimerFinishedDypiansVesting(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedDypiansVesting(true);
+        }
       } else if (selectedRound.id == "cliff-otc2") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTCCliff2(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCCliff2(true);
         }
       } else if (selectedRound.id == "pool-bonus") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTCPoolBonus(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCPoolBonus(true);
         }
       } else if (selectedRound.id == "pool-dynamic") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTCPoolDynamic(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCPoolDynamic(true);
         }
       } else if (selectedRound.id == "pool2-dynamic") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTCPool2Dynamic(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCPool2Dynamic(true);
         }
       } else if (selectedRound.id == "wod-dynamic") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTCWodDynamic(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCWodDynamic(true);
         }
       } else if (selectedRound.id == "bonus-otc") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedOTCBonus(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedOTCBonus(true);
         }
       } else if (selectedRound.id == "private") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedPrivate(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedPrivate(true);
         }
       } else if (selectedRound.id == "kol") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedKol(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedKol(true);
         }
       } else if (selectedRound.id == "advisors") {
-        if (today.getTime() > cliffTime) {
+        if (today2.getTime() > cliffTime) {
           settimerFinishedAdvisors(true);
         }
         // else if (Number(userClaimedTokens) === 0) {
@@ -264,10 +285,12 @@ const WhitelistContent = ({
                   {getFormattedNumber(wodBalance)}{" "}
                   {selectedRound?.id == "pool-dynamic" ||
                   selectedRound?.id == "pool2-dynamic" ||
-                  selectedRound?.id == "wod-dynamic"||
-                  selectedRound?.id == "cliff1-otc4"||
-                  selectedRound?.id == "cliff-otc"||
-                  selectedRound?.id == "cliff-otc2"
+                  selectedRound?.id == "wod-dynamic" ||
+                  selectedRound?.id == "cliff1-otc4" ||
+                  selectedRound?.id == "cliff-otc" ||
+                  selectedRound?.id == "cliff-otc2" ||
+                  selectedRound?.id == "roundotc-vesting" ||
+                  selectedRound?.id == "dypians-vesting"
                     ? "USD"
                     : "WOD"}
                 </span>
@@ -286,10 +309,12 @@ const WhitelistContent = ({
                     Total{" "}
                     {selectedRound?.id == "pool-dynamic" ||
                     selectedRound?.id == "pool2-dynamic" ||
-                    selectedRound?.id == "wod-dynamic"||
-                  selectedRound?.id == "cliff1-otc4"||
-                  selectedRound?.id == "cliff-otc"||
-                  selectedRound?.id == "cliff-otc2"
+                    selectedRound?.id == "wod-dynamic" ||
+                    selectedRound?.id == "cliff1-otc4" ||
+                    selectedRound?.id == "cliff-otc" ||
+                    selectedRound?.id == "cliff-otc2" ||
+                    selectedRound?.id == "roundotc-vesting" ||
+                    selectedRound?.id == "dypians-vesting"
                       ? "USD"
                       : "WOD"}
                   </span>
@@ -304,9 +329,11 @@ const WhitelistContent = ({
                 {selectedRound?.id !== "pool-dynamic" &&
                   selectedRound?.id !== "pool2-dynamic" &&
                   selectedRound?.id !== "wod-dynamic" &&
-                  selectedRound?.id !== "cliff1-otc4"&&
-                  selectedRound?.id !== "cliff-otc"&&
-                  selectedRound?.id !== "cliff-otc2" && (
+                  selectedRound?.id !== "cliff1-otc4" &&
+                  selectedRound?.id !== "cliff-otc" &&
+                  selectedRound?.id !== "cliff-otc2" &&
+                  selectedRound?.id !== "roundotc-vesting" &&
+                  selectedRound?.id !== "dypians-vesting" && (
                     <div className="d-flex flex-column">
                       <span className="whitelist-upper-txt">
                         {getFormattedNumber(
@@ -392,18 +419,42 @@ const WhitelistContent = ({
                           onTimerFinished(true);
                         }}
                       />
+                    ) : selectedRound?.id === "cliff1-otc4" ? (
+                      <Countdown
+                        date={
+                          Number(userClaimedTokens) > 0
+                            ? 0
+                            : Number(cliffTime) + 2592000000
+                        }
+                        renderer={renderer2}
+                        // onComplete={() => {
+                        //   settimerFinishedOTC1Cliff4(true);
+                        //   onTimerFinished(true);
+                        // }}
+                      />
                     ) : userClaimedTokens &&
-                    Number(userClaimedTokens) > 0 &&
-                    selectedRound?.id === "cliff1-otc4" ? (
-                    <Countdown
-                      date={Number(cliffTime)}
-                      renderer={renderer2}
-                      onComplete={() => {
-                        settimerFinishedOTC1Cliff4(true);
-                        onTimerFinished(true);
-                      }}
-                    />
-                  ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "roundotc-vesting" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedRoundOtcVesting(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "dypians-vesting" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedDypiansVesting(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
                       Number(userClaimedTokens) > 0 &&
                       selectedRound?.id === "cliff-otc2" ? (
                       <Countdown
@@ -784,7 +835,7 @@ const WhitelistContent = ({
                 </button>
               )}
 
-{isConnected &&
+            {isConnected &&
               chainId === 56 &&
               selectedRound?.id === "cliff1-otc4" && (
                 <button
@@ -828,6 +879,93 @@ const WhitelistContent = ({
                 </button>
               )}
 
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "roundotc-vesting" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedRoundOtcVesting === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedRoundOtcVesting === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "dypians-vesting" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedDypiansVesting === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedDypiansVesting === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
 
             {isConnected &&
               chainId === 56 &&

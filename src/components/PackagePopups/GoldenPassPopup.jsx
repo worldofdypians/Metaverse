@@ -53,8 +53,6 @@ const GoldenPassPopup = ({
   coinbase,
   wallet,
   chainId,
-  publicClient,
-  walletClient,
   isConnected,
   onSuccessDeposit,
   goldenPassRemainingTime,
@@ -69,14 +67,7 @@ const GoldenPassPopup = ({
 
   const readOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-      if (window.WALLET_TYPE === "matchId" && publicClient) {
-        return await publicClient.readContract({
-          address,
-          abi,
-          functionName,
-          args,
-        });
-      }
+      
       return await wagmiReadContract(wagmiClient, {
         address,
         abi,
@@ -92,16 +83,7 @@ const GoldenPassPopup = ({
 
   const writeOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-      if (window.WALLET_TYPE === "matchId" && walletClient && publicClient) {
-        const hash = await walletClient.writeContract({
-          address,
-          abi,
-          functionName,
-          args,
-        });
-        await publicClient.waitForTransactionReceipt({ hash });
-        return hash;
-      }
+  
 
       const account = getAccount(wagmiClient);
       if (account?.chainId && chainId && account.chainId !== chainId) {

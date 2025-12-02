@@ -19,9 +19,7 @@ const Earn = ({
   tokenPools,
   userPools,
   onSuccessfulStake,
-  walletClient,
-  publicClient,
-  network_matchain,
+ 
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   bnbUSDPrice,
@@ -180,9 +178,6 @@ const Earn = ({
             wodBalance={wodBalance}
             userPools={userPools}
             onSuccessfulStake={onSuccessfulStake}
-            walletClient={walletClient}
-            publicClient={publicClient}
-            network_matchain={network_matchain}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             bnbUSDPrice={bnbUSDPrice}

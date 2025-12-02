@@ -4,6 +4,9 @@ import { useMutation } from "@apollo/client/react";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import { getErrorMessage } from "../../Utils.js/Helpers";
 import { CREATE_PLAYER } from "./PlayerCreation.schema";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 
 import {
   Input,
@@ -25,6 +28,7 @@ function PlayerCreation({onPlayerSuccessfulCreate}) {
     displayName: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const setPassword = (val) => {
     setCreationState((prev) => ({
@@ -108,16 +112,30 @@ function PlayerCreation({onPlayerSuccessfulCreate}) {
               value={displayName}
               onChange={setDisplayName}
             />
+      <div className="position-relative">
+
             <Input
               name="player-password"
               style={{
                 marginBottom: 48,
               }}
-              inputType="password"
+              inputType={showPassword ? "text" : "password"}
               placeHolder="Password"
               value={password}
               onChange={setPassword}
             />
+            <div
+        style={{
+          position: "absolute",
+          right: 10,
+          top: 18,
+          cursor: "pointer",
+        }}
+        onClick={() => setShowPassword((prev) => !prev)}
+      >
+        {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+      </div>
+            </div>
             <Button
               style={{ margin: "auto" }}
               onPress={_onCreatePlayer}

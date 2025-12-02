@@ -129,21 +129,19 @@ username,
   onVanarChestClaimed,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
-  matImages,
-  claimedMatChests,
-  claimedMatPremiumChests,
-  openedMatChests,
-  onMatChestClaimed,
-  allMatChests,
+  // matImages,
+  // claimedMatChests,
+  // claimedMatPremiumChests,
+  // openedMatChests,
+  // onMatChestClaimed,
+  // allMatChests,
   onConnectWallet,
-  walletClient,
-  publicClient,
-  network_matchain,
-  claimedTaraxaChests,
-  claimedTaraxaPremiumChests,
-  openedTaraxaChests,
-  allTaraxaChests,
-  onTaraxaChestClaimed,
+ 
+  // claimedTaraxaChests,
+  // claimedTaraxaPremiumChests,
+  // openedTaraxaChests,
+  // allTaraxaChests,
+  // onTaraxaChestClaimed,
   openKickstarter,
 }) => {
   const html = document.querySelector("html");
@@ -172,14 +170,14 @@ username,
   const vanarClaimed = claimedVanarChests + claimedVanarPremiumChests;
   const vanarPercentage = (vanarClaimed / 20) * 100;
 
-  const matClaimed = claimedMatChests + claimedMatPremiumChests;
-  const matPercentage = (matClaimed / 20) * 100;
+  // const matClaimed = claimedMatChests + claimedMatPremiumChests;
+  // const matPercentage = (matClaimed / 20) * 100;
 
   const seiClaimed = claimedSeiChests + claimedSeiPremiumChests;
   const seiPercentage = (seiClaimed / 20) * 100;
 
-  const taraxaClaimed = claimedTaraxaChests + claimedTaraxaPremiumChests;
-  const taraxaPercentage = (taraxaClaimed / 20) * 100;
+  // const taraxaClaimed = claimedTaraxaChests + claimedTaraxaPremiumChests;
+  // const taraxaPercentage = (taraxaClaimed / 20) * 100;
   const sliderRef = useRef(null);
 
   var settings = {
@@ -352,11 +350,11 @@ username,
   const [totalCoreStars, settotalCoreStars] = useState(0);
   const [totalVictionStars, settotalVictionStars] = useState(0);
   const [totalMantaStars, settotalMantaStars] = useState(0);
-  const [totalTaraxaStars, settotalTaraxaStars] = useState(0);
+  // const [totalTaraxaStars, settotalTaraxaStars] = useState(0);
   const [totalBaseStars, settotalBaseStars] = useState(0);
   const [totalTaikoStars, settotalTaikoStars] = useState(0);
   const [totalVanarStars, settotalVanarStars] = useState(0);
-  const [totalMatStars, settotalMatStars] = useState(0);
+  // const [totalMatStars, settotalMatStars] = useState(0);
 
   const [totalPoints, settotalPoints] = useState(0);
   const [totalUsd, settotalUsd] = useState(0);
@@ -370,16 +368,16 @@ username,
   const [totalVictionUsd, settotalVictionUsd] = useState(0);
   const [totalMantaPoints, settotalMantaPoints] = useState(0);
   const [totalMantaUsd, settotalMantaUsd] = useState(0);
-  const [totalTaraxaPoints, settotalTaraxaPoints] = useState(0);
-  const [totalTaraxaUsd, settotalTaraxaUsd] = useState(0);
+  // const [totalTaraxaPoints, settotalTaraxaPoints] = useState(0);
+  // const [totalTaraxaUsd, settotalTaraxaUsd] = useState(0);
   const [totalBasePoints, settotalBasePoints] = useState(0);
   const [totalBaseUsd, settotalBaseUsd] = useState(0);
   const [totalTaikoPoints, settotalTaikoPoints] = useState(0);
   const [totalTaikoUsd, settotalTaikoUsd] = useState(0);
   const [totalVanarPoints, settotalVanarPoints] = useState(0);
   const [totalVanarUsd, settotalVanarUsd] = useState(0);
-  const [totalMatPoints, settotalMatPoints] = useState(0);
-  const [totalMatUsd, settotalMatUsd] = useState(0);
+  // const [totalMatPoints, settotalMatPoints] = useState(0);
+  // const [totalMatUsd, settotalMatUsd] = useState(0);
 
   const [totalSeiPoints, settotalSeiPoints] = useState(0);
   const [totalSeiUsd, settotalSeiUsd] = useState(0);
@@ -596,44 +594,44 @@ username,
       settotalMantaPoints(resultMantaPoints);
       settotalMantaUsd(resultMantaUsd);
     }
-    if (allTaraxaChests && allTaraxaChests.length > 0) {
-      let resultTaraxaPoints = 0;
-      let resultTaraxaUsd = 0;
-      let resultstars = 0;
+    // if (allTaraxaChests && allTaraxaChests.length > 0) {
+    //   let resultTaraxaPoints = 0;
+    //   let resultTaraxaUsd = 0;
+    //   let resultstars = 0;
 
-      allTaraxaChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (innerChest.rewardType === "Points") {
-                resultTaraxaPoints += Number(innerChest.reward);
-              }
-              if (innerChest.rewardType === "Stars") {
-                resultstars += Number(innerChest.reward);
-              }
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                resultTaraxaUsd += Number(innerChest.reward);
-              }
-            });
-          } else if (chest.rewards.length === 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (innerChest.rewardType === "Points") {
-                resultTaraxaPoints += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-      settotalTaraxaStars(resultstars);
+    //   allTaraxaChests.forEach((chest) => {
+    //     if (chest.isOpened === true) {
+    //       if (chest.rewards.length > 1) {
+    //         chest.rewards.forEach((innerChest) => {
+    //           if (innerChest.rewardType === "Points") {
+    //             resultTaraxaPoints += Number(innerChest.reward);
+    //           }
+    //           if (innerChest.rewardType === "Stars") {
+    //             resultstars += Number(innerChest.reward);
+    //           }
+    //           if (
+    //             innerChest.rewardType === "Money" &&
+    //             innerChest.status !== "Unclaimed" &&
+    //             innerChest.status !== "Unclaimable" &&
+    //             innerChest.status === "Claimed"
+    //           ) {
+    //             resultTaraxaUsd += Number(innerChest.reward);
+    //           }
+    //         });
+    //       } else if (chest.rewards.length === 1) {
+    //         chest.rewards.forEach((innerChest) => {
+    //           if (innerChest.rewardType === "Points") {
+    //             resultTaraxaPoints += Number(innerChest.reward);
+    //           }
+    //         });
+    //       }
+    //     }
+    //   });
+    //   settotalTaraxaStars(resultstars);
 
-      settotalTaraxaPoints(resultTaraxaPoints);
-      settotalTaraxaUsd(resultTaraxaUsd);
-    }
+    //   settotalTaraxaPoints(resultTaraxaPoints);
+    //   settotalTaraxaUsd(resultTaraxaUsd);
+    // }
 
     if (allBaseChests && allBaseChests.length > 0) {
       let resultBasePoints = 0;
@@ -754,44 +752,44 @@ username,
       settotalVanarUsd(resultVanarUsd);
     }
 
-    if (allMatChests && allMatChests.length > 0) {
-      let resultMatPoints = 0;
-      let resultMatUsd = 0;
-      let resultstars = 0;
+    // if (allMatChests && allMatChests.length > 0) {
+    //   let resultMatPoints = 0;
+    //   let resultMatUsd = 0;
+    //   let resultstars = 0;
 
-      allMatChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (innerChest.rewardType === "Points") {
-                resultMatPoints += Number(innerChest.reward);
-              }
-              if (innerChest.rewardType === "Stars") {
-                resultstars += Number(innerChest.reward);
-              }
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                resultMatUsd += Number(innerChest.reward);
-              }
-            });
-          } else if (chest.rewards.length === 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (innerChest.rewardType === "Points") {
-                resultMatPoints += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-      settotalMatStars(resultstars);
+    //   allMatChests.forEach((chest) => {
+    //     if (chest.isOpened === true) {
+    //       if (chest.rewards.length > 1) {
+    //         chest.rewards.forEach((innerChest) => {
+    //           if (innerChest.rewardType === "Points") {
+    //             resultMatPoints += Number(innerChest.reward);
+    //           }
+    //           if (innerChest.rewardType === "Stars") {
+    //             resultstars += Number(innerChest.reward);
+    //           }
+    //           if (
+    //             innerChest.rewardType === "Money" &&
+    //             innerChest.status !== "Unclaimed" &&
+    //             innerChest.status !== "Unclaimable" &&
+    //             innerChest.status === "Claimed"
+    //           ) {
+    //             resultMatUsd += Number(innerChest.reward);
+    //           }
+    //         });
+    //       } else if (chest.rewards.length === 1) {
+    //         chest.rewards.forEach((innerChest) => {
+    //           if (innerChest.rewardType === "Points") {
+    //             resultMatPoints += Number(innerChest.reward);
+    //           }
+    //         });
+    //       }
+    //     }
+    //   });
+    //   settotalMatStars(resultstars);
 
-      settotalMatPoints(resultMatPoints);
-      settotalMatUsd(resultMatUsd);
-    }
+    //   settotalMatPoints(resultMatPoints);
+    //   settotalMatUsd(resultMatUsd);
+    // }
 
     if (allSeiChests && allSeiChests.length > 0) {
       let resultSeiPoints = 0;
@@ -848,17 +846,13 @@ username,
         handleSwitchNetwork,
         handleSwitchChainGateWallet,
         handleSwitchChainBinanceWallet,
-        network_matchain,
         coinbase,
       });
     } catch (error) {
       // Error handling is done in switchNetworkWagmi
       console.error("Network switch error:", error);
       
-      // Show specific error for MatchId wallet if provided
-      if (window.WALLET_TYPE === "matchId" && matchIdError && window.alertify) {
-        window.alertify.error(matchIdError);
-      }
+       
       // Show specific error for Binance wallet if network not supported
       if (
         (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) &&
@@ -932,9 +926,9 @@ username,
   const handleMantaPool = async () => {
     await handleSwitchChainPool("0xa9", 169);
   };
-  const handleTaraxaPool = async () => {
-    await handleSwitchChainPool("0x349", 841);
-  };
+  // const handleTaraxaPool = async () => {
+  //   await handleSwitchChainPool("0x349", 841);
+  // };
 
   const handleBasePool = async () => {
     await handleSwitchChainPool("0x2105", 8453);
@@ -951,11 +945,11 @@ username,
     });
   };
 
-  const handleMatPool = async () => {
-    await handleSwitchChainPool("0x2ba", 698, {
-      supportsBinance: false,
-    });
-  };
+  // const handleMatPool = async () => {
+  //   await handleSwitchChainPool("0x2ba", 698, {
+  //     supportsBinance: false,
+  //   });
+  // };
 
   const handleSkalePool = async () => {
     await handleSwitchChainPool("0x585eb4b1", 1482601649, {
@@ -1822,85 +1816,85 @@ username,
     }
   };
 
-  const showSingleRewardDataMat = (chestID, chestIndex) => {
-    const filteredResult = openedMatChests.find(
-      (el) => el.chestId === chestID && allMatChests.indexOf(el) === chestIndex
-    );
-    setIsActive(chestID);
-    setIsActiveIndex(chestIndex + 1);
-    if (filteredResult) {
-      const resultPoints = filteredResult.rewards.length === 1;
-      const resultPointsStars =
-        filteredResult.rewards.length === 2 &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points";
-        }) !== undefined &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money";
-        }) === undefined;
+  // const showSingleRewardDataMat = (chestID, chestIndex) => {
+  //   const filteredResult = openedMatChests.find(
+  //     (el) => el.chestId === chestID && allMatChests.indexOf(el) === chestIndex
+  //   );
+  //   setIsActive(chestID);
+  //   setIsActiveIndex(chestIndex + 1);
+  //   if (filteredResult) {
+  //     const resultPoints = filteredResult.rewards.length === 1;
+  //     const resultPointsStars =
+  //       filteredResult.rewards.length === 2 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Stars" || obj.rewardType === "Points";
+  //       }) !== undefined &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Money";
+  //       }) === undefined;
 
-      const resultPointsMoney =
-        filteredResult.rewards.length === 2 &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money" || obj.rewardType === "Points";
-        }) !== undefined &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money" && obj.status === "Claimed";
-        }) !== undefined;
+  //     const resultPointsMoney =
+  //       filteredResult.rewards.length === 2 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Money" || obj.rewardType === "Points";
+  //       }) !== undefined &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Money" && obj.status === "Claimed";
+  //       }) !== undefined;
 
-      const resultWonMoneyNoLand =
-        filteredResult.rewards.length === 3 &&
-        filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Stars" ||
-            (obj.rewardType === "Money" &&
-              obj.status === "Unclaimable" &&
-              obj.details ===
-                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
-            obj.rewardType === "Points"
-          );
-        }) !== undefined;
+  //     const resultWonMoneyNoLand =
+  //       filteredResult.rewards.length === 3 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return (
+  //           obj.rewardType === "Stars" ||
+  //           (obj.rewardType === "Money" &&
+  //             obj.status === "Unclaimable" &&
+  //             obj.details ===
+  //               "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+  //           obj.rewardType === "Points"
+  //         );
+  //       }) !== undefined;
 
-      const resultWonMoneyNoCaws =
-        filteredResult.rewards.length === 3 &&
-        filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Stars" ||
-            (obj.rewardType === "Money" &&
-              obj.status === "Unclaimable" &&
-              obj.details ===
-                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
-            obj.rewardType === "Points"
-          );
-        }) !== undefined;
+  //     const resultWonMoneyNoCaws =
+  //       filteredResult.rewards.length === 3 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return (
+  //           obj.rewardType === "Stars" ||
+  //           (obj.rewardType === "Money" &&
+  //             obj.status === "Unclaimable" &&
+  //             obj.details ===
+  //               "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+  //           obj.rewardType === "Points"
+  //         );
+  //       }) !== undefined;
 
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
+  //     const resultPremium = filteredResult.rewards.find((obj) => {
+  //       return (
+  //         obj.rewardType === "Money" &&
+  //         obj.status === "Unclaimed" &&
+  //         obj.claimType === "PREMIUM"
+  //       );
+  //     });
 
-      if (resultPoints) {
-        setMessage("wonPoints");
-      } else if (resultPointsStars) {
-        setMessage("wonPointsStars");
-      } else if (resultWonMoneyNoLand) {
-        setMessage("winDangerLand");
-      } else if (resultPointsMoney) {
-        setMessage("won");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
-      } else if (resultPremium) {
-        setMessage("needPremium");
-      }
-      setLiveRewardData(filteredResult);
-      setRewardData(filteredResult);
-    } else {
-      setLiveRewardData([]);
-    }
-  };
+  //     if (resultPoints) {
+  //       setMessage("wonPoints");
+  //     } else if (resultPointsStars) {
+  //       setMessage("wonPointsStars");
+  //     } else if (resultWonMoneyNoLand) {
+  //       setMessage("winDangerLand");
+  //     } else if (resultPointsMoney) {
+  //       setMessage("won");
+  //     } else if (resultWonMoneyNoCaws) {
+  //       setMessage("winDangerCaws");
+  //     } else if (resultPremium) {
+  //       setMessage("needPremium");
+  //     }
+  //     setLiveRewardData(filteredResult);
+  //     setRewardData(filteredResult);
+  //   } else {
+  //     setLiveRewardData([]);
+  //   }
+  // };
 
   const showSingleRewardDataSei = (chestID, chestIndex) => {
     const filteredResult = openedSeiChests.find(
@@ -1982,91 +1976,91 @@ username,
     }
   };
 
-  const showSingleRewardDataTaraxa = (chestID, chestIndex) => {
-    const filteredResult = openedTaraxaChests.find(
-      (el) =>
-        el.chestId === chestID && allTaraxaChests.indexOf(el) === chestIndex
-    );
-    setIsActive(chestID);
-    setIsActiveIndex(chestIndex + 1);
-    if (filteredResult) {
-      const resultPoints = filteredResult.rewards.length === 1;
-      const resultPointsStars =
-        filteredResult.rewards.length === 2 &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points";
-        }) !== undefined &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money";
-        }) === undefined;
+  // const showSingleRewardDataTaraxa = (chestID, chestIndex) => {
+  //   const filteredResult = openedTaraxaChests.find(
+  //     (el) =>
+  //       el.chestId === chestID && allTaraxaChests.indexOf(el) === chestIndex
+  //   );
+  //   setIsActive(chestID);
+  //   setIsActiveIndex(chestIndex + 1);
+  //   if (filteredResult) {
+  //     const resultPoints = filteredResult.rewards.length === 1;
+  //     const resultPointsStars =
+  //       filteredResult.rewards.length === 2 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Stars" || obj.rewardType === "Points";
+  //       }) !== undefined &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Money";
+  //       }) === undefined;
 
-      const resultPointsMoney =
-        filteredResult.rewards.length === 2 &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money" || obj.rewardType === "Points";
-        }) !== undefined &&
-        filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money" && obj.status === "Claimed";
-        }) !== undefined;
+  //     const resultPointsMoney =
+  //       filteredResult.rewards.length === 2 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Money" || obj.rewardType === "Points";
+  //       }) !== undefined &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return obj.rewardType === "Money" && obj.status === "Claimed";
+  //       }) !== undefined;
 
-      const resultWonMoneyNoLand =
-        filteredResult.rewards.length === 3 &&
-        filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Stars" ||
-            (obj.rewardType === "Money" &&
-              obj.status === "Unclaimable" &&
-              obj.details ===
-                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
-            obj.rewardType === "Points"
-          );
-        }) !== undefined;
+  //     const resultWonMoneyNoLand =
+  //       filteredResult.rewards.length === 3 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return (
+  //           obj.rewardType === "Stars" ||
+  //           (obj.rewardType === "Money" &&
+  //             obj.status === "Unclaimable" &&
+  //             obj.details ===
+  //               "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+  //           obj.rewardType === "Points"
+  //         );
+  //       }) !== undefined;
 
-      const resultWonMoneyNoCaws =
-        filteredResult.rewards.length === 3 &&
-        filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Stars" ||
-            (obj.rewardType === "Money" &&
-              obj.status === "Unclaimable" &&
-              obj.details ===
-                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
-            obj.rewardType === "Points"
-          );
-        }) !== undefined;
+  //     const resultWonMoneyNoCaws =
+  //       filteredResult.rewards.length === 3 &&
+  //       filteredResult.rewards.find((obj) => {
+  //         return (
+  //           obj.rewardType === "Stars" ||
+  //           (obj.rewardType === "Money" &&
+  //             obj.status === "Unclaimable" &&
+  //             obj.details ===
+  //               "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+  //           obj.rewardType === "Points"
+  //         );
+  //       }) !== undefined;
 
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
+  //     const resultPremium = filteredResult.rewards.find((obj) => {
+  //       return (
+  //         obj.rewardType === "Money" &&
+  //         obj.status === "Unclaimed" &&
+  //         obj.claimType === "PREMIUM"
+  //       );
+  //     });
 
-      if (resultPoints) {
-        setMessage("wonPoints");
-      } else if (resultPointsStars) {
-        setMessage("wonPointsStars");
-      } else if (resultWonMoneyNoLand) {
-        setMessage("winDangerLand");
-      } else if (resultPointsMoney) {
-        setMessage("won");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
-      } else if (resultPremium) {
-        setMessage("needPremium");
-      }
-      setLiveRewardData(filteredResult);
-      setRewardData(filteredResult);
-    } else {
-      setLiveRewardData([]);
-    }
-  };
+  //     if (resultPoints) {
+  //       setMessage("wonPoints");
+  //     } else if (resultPointsStars) {
+  //       setMessage("wonPointsStars");
+  //     } else if (resultWonMoneyNoLand) {
+  //       setMessage("winDangerLand");
+  //     } else if (resultPointsMoney) {
+  //       setMessage("won");
+  //     } else if (resultWonMoneyNoCaws) {
+  //       setMessage("winDangerCaws");
+  //     } else if (resultPremium) {
+  //       setMessage("needPremium");
+  //     }
+  //     setLiveRewardData(filteredResult);
+  //     setRewardData(filteredResult);
+  //   } else {
+  //     setLiveRewardData([]);
+  //   }
+  // };
 
   const chains = [
     { chainId: [56, 204], chainName: "bnb" },
     { chainId: [2040], chainName: "vanar" },
-    { chainId: [841], chainName: "taraxa" },
+    // { chainId: [841], chainName: "taraxa" },
     { chainId: [167000], chainName: "taiko" },
     { chainId: [1116], chainName: "core" },
     { chainId: [1329], chainName: "sei" },
@@ -2074,7 +2068,7 @@ username,
     { chainId: [8453], chainName: "base" },
     { chainId: [88], chainName: "viction" },
     { chainId: [1482601649], chainName: "skale" },
-    { chainId: [698], chainName: "matchain" },
+    // { chainId: [698], chainName: "matchain" },
   ];
 
   useEffect(() => {
@@ -2087,10 +2081,10 @@ username,
     allBaseChests,
     allTaikoChests,
     allVanarChests,
-    allMatChests,
+    // allMatChests,
     allCoreChests,
     allSeiChests,
-    allTaraxaChests,
+    // allTaraxaChests,
   ]);
 
   useEffect(() => {
@@ -2183,8 +2177,7 @@ username,
       }
     } else if (chain === "skale") {
       if (
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
+        window.WALLET_TYPE !== "binance" 
       ) {
         if (!email) {
           setMessage("login");
@@ -2252,15 +2245,13 @@ username,
         }
       } else if (
         window.WALLET_TYPE === "binance" ||
-        window.WALLET_TYPE === "matchId" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "core") {
       if (
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
+        window.WALLET_TYPE !== "binance" 
       ) {
         if (!email) {
           setMessage("login");
@@ -2327,16 +2318,14 @@ username,
           setDisable(true);
         }
       } else if (
-        window.WALLET_TYPE === "binance" ||
-        window.WALLET_TYPE === "matchId" ||
+        window.WALLET_TYPE === "binance" || 
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "viction") {
       if (
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
+        window.WALLET_TYPE !== "binance" 
       ) {
         if (!email) {
           setMessage("login");
@@ -2403,16 +2392,13 @@ username,
           setDisable(true);
         }
       } else if (
-        window.WALLET_TYPE === "binance" ||
-        window.WALLET_TYPE === "matchId" ||
+        window.WALLET_TYPE === "binance" || 
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "manta") {
-      if (window.WALLET_TYPE === "matchId") {
-        setMessage("notsupported");
-      } else {
+     
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2477,11 +2463,9 @@ username,
           setMessage("connect");
           setDisable(true);
         }
-      }
+       
     } else if (chain === "base") {
-      if (window.WALLET_TYPE === "matchId") {
-        setMessage("notsupported");
-      } else {
+       
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2546,11 +2530,10 @@ username,
           setMessage("connect");
           setDisable(true);
         }
-      }
+       
     } else if (chain === "taiko") {
       if (
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
+        window.WALLET_TYPE !== "binance" 
       ) {
         if (!email) {
           setMessage("login");
@@ -2617,16 +2600,14 @@ username,
           setDisable(true);
         }
       } else if (
-        window.WALLET_TYPE === "binance" ||
-        window.WALLET_TYPE === "matchId" ||
+        window.WALLET_TYPE === "binance" || 
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "vanar") {
       if (
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
+        window.WALLET_TYPE !== "binance"  
       ) {
         if (!email) {
           setMessage("login");
@@ -2694,88 +2675,88 @@ username,
         }
       } else if (
         window.WALLET_TYPE === "binance" ||
-        window.WALLET_TYPE === "matchId" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
       // setMessage("comingsoon");
-    } else if (chain === "matchain") {
-      if (window.WALLET_TYPE !== "binance") {
-        if (!email) {
-          setMessage("login");
-          setDisable(true);
-        } else if (email && coinbase && address) {
-          if (coinbase.toLowerCase() === address.toLowerCase()) {
-            if (isPremium) {
-              if (
-                claimedMatChests + claimedMatPremiumChests === 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase()
-              ) {
-                setMessage("complete");
-              } else if (
-                claimedMatChests + claimedMatPremiumChests < 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 698
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedMatChests + claimedMatPremiumChests < 20 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 698
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            } else if (!isPremium) {
-              if (
-                claimedMatChests === 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 698
-              ) {
-                setMessage("premium");
-                setDisable(true);
-              } else if (
-                claimedMatChests < 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 698
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedMatChests < 10 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 698
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            }
-          } else {
-            setMessage("switchAccount");
-            setDisable(true);
-          }
-        } else {
-          setMessage("connect");
-          setDisable(true);
-        }
-      } else if (
-        window.WALLET_TYPE === "binance" ||
-        window.ethereum?.isBinance
-      ) {
-        setMessage("notsupported");
-      }
-    } else if (chain === "sei") {
+    } 
+    // else if (chain === "matchain") {
+    //   if (window.WALLET_TYPE !== "binance") {
+    //     if (!email) {
+    //       setMessage("login");
+    //       setDisable(true);
+    //     } else if (email && coinbase && address) {
+    //       if (coinbase.toLowerCase() === address.toLowerCase()) {
+    //         if (isPremium) {
+    //           if (
+    //             claimedMatChests + claimedMatPremiumChests === 20 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase()
+    //           ) {
+    //             setMessage("complete");
+    //           } else if (
+    //             claimedMatChests + claimedMatPremiumChests < 20 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId === 698
+    //           ) {
+    //             setMessage("");
+    //             setDisable(false);
+    //           } else if (
+    //             claimedMatChests + claimedMatPremiumChests < 20 &&
+    //             // rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId !== 698
+    //           ) {
+    //             setMessage("switch");
+    //             setDisable(true);
+    //           }
+    //         } else if (!isPremium) {
+    //           if (
+    //             claimedMatChests === 10 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId === 698
+    //           ) {
+    //             setMessage("premium");
+    //             setDisable(true);
+    //           } else if (
+    //             claimedMatChests < 10 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId === 698
+    //           ) {
+    //             setMessage("");
+    //             setDisable(false);
+    //           } else if (
+    //             claimedMatChests < 10 &&
+    //             // rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId !== 698
+    //           ) {
+    //             setMessage("switch");
+    //             setDisable(true);
+    //           }
+    //         }
+    //       } else {
+    //         setMessage("switchAccount");
+    //         setDisable(true);
+    //       }
+    //     } else {
+    //       setMessage("connect");
+    //       setDisable(true);
+    //     }
+    //   } else if (
+    //     window.WALLET_TYPE === "binance" ||
+    //     window.ethereum?.isBinance
+    //   ) {
+    //     setMessage("notsupported");
+    //   }
+    // }
+     else if (chain === "sei") {
       if (
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
+        window.WALLET_TYPE !== "binance"
       ) {
         if (!email) {
           setMessage("login");
@@ -2843,90 +2824,88 @@ username,
         }
       } else if (
         window.WALLET_TYPE === "binance" ||
-        window.WALLET_TYPE === "matchId" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
       // setMessage("comingsoon");
-    } else if (chain === "taraxa") {
-      if (
-        window.WALLET_TYPE !== "binance" &&
-        window.WALLET_TYPE !== "matchId"
-      ) {
-        if (!email) {
-          setMessage("login");
-          setDisable(true);
-        } else if (email && coinbase && address) {
-          if (coinbase.toLowerCase() === address.toLowerCase()) {
-            if (isPremium) {
-              if (
-                claimedTaraxaChests + claimedTaraxaPremiumChests === 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase()
-              ) {
-                setMessage("complete");
-              } else if (
-                claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 841
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 841
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            } else if (!isPremium) {
-              if (
-                claimedTaraxaChests === 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 841
-              ) {
-                setMessage("premium");
-                setDisable(true);
-              } else if (
-                claimedTaraxaChests < 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 841
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedTaraxaChests < 10 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 841
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            }
-          } else {
-            setMessage("switchAccount");
-            setDisable(true);
-          }
-        } else {
-          setMessage("connect");
-          setDisable(true);
-        }
-      } else if (
-        window.WALLET_TYPE === "binance" ||
-        window.WALLET_TYPE === "matchId" ||
-        window.ethereum?.isBinance
-      ) {
-        setMessage("notsupported");
-      }
-      // setMessage("comingsoon");
-    }
+    } 
+    // else if (chain === "taraxa") {
+    //   if (
+    //     window.WALLET_TYPE !== "binance"  
+    //   ) {
+    //     if (!email) {
+    //       setMessage("login");
+    //       setDisable(true);
+    //     } else if (email && coinbase && address) {
+    //       if (coinbase.toLowerCase() === address.toLowerCase()) {
+    //         if (isPremium) {
+    //           if (
+    //             claimedTaraxaChests + claimedTaraxaPremiumChests === 20 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase()
+    //           ) {
+    //             setMessage("complete");
+    //           } else if (
+    //             claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId === 841
+    //           ) {
+    //             setMessage("");
+    //             setDisable(false);
+    //           } else if (
+    //             claimedTaraxaChests + claimedTaraxaPremiumChests < 20 &&
+    //             // rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId !== 841
+    //           ) {
+    //             setMessage("switch");
+    //             setDisable(true);
+    //           }
+    //         } else if (!isPremium) {
+    //           if (
+    //             claimedTaraxaChests === 10 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId === 841
+    //           ) {
+    //             setMessage("premium");
+    //             setDisable(true);
+    //           } else if (
+    //             claimedTaraxaChests < 10 &&
+    //             rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId === 841
+    //           ) {
+    //             setMessage("");
+    //             setDisable(false);
+    //           } else if (
+    //             claimedTaraxaChests < 10 &&
+    //             // rewardData.length === 0 &&
+    //             address.toLowerCase() === coinbase.toLowerCase() &&
+    //             chainId !== 841
+    //           ) {
+    //             setMessage("switch");
+    //             setDisable(true);
+    //           }
+    //         }
+    //       } else {
+    //         setMessage("switchAccount");
+    //         setDisable(true);
+    //       }
+    //     } else {
+    //       setMessage("connect");
+    //       setDisable(true);
+    //     }
+    //   } else if (
+    //     window.WALLET_TYPE === "binance" ||
+    //     window.ethereum?.isBinance
+    //   ) {
+    //     setMessage("notsupported");
+    //   }
+    //   // setMessage("comingsoon");
+    // }
   }, [
     email,
     chain,
@@ -2950,12 +2929,12 @@ username,
     claimedTaikoPremiumChests,
     claimedVanarChests,
     claimedVanarPremiumChests,
-    claimedMatChests,
-    claimedMatPremiumChests,
+    // claimedMatChests,
+    // claimedMatPremiumChests,
     claimedSeiChests,
     claimedSeiPremiumChests,
-    claimedTaraxaChests,
-    claimedTaraxaPremiumChests,
+    // claimedTaraxaChests,
+    // claimedTaraxaPremiumChests,
     rewardData,
   ]);
 
@@ -3106,12 +3085,12 @@ username,
                       ? totalTaikoPoints
                       : chain === "vanar"
                       ? totalVanarPoints
-                      : chain === "matchain"
-                      ? totalMatPoints
+                      // : chain === "matchain"
+                      // ? totalMatPoints
                       : chain === "sei"
                       ? totalSeiPoints
-                      : chain === "taraxa"
-                      ? totalTaraxaPoints
+                      // : chain === "taraxa"
+                      // ? totalTaraxaPoints
                       : totalSkalePoints,
                     0
                   )}{" "}
@@ -3135,12 +3114,12 @@ username,
                       ? totalTaikoStars
                       : chain === "vanar"
                       ? totalVanarStars
-                      : chain === "matchain"
-                      ? totalMatStars
+                      // : chain === "matchain"
+                      // ? totalMatStars
                       : chain === "sei"
                       ? totalSeiStars
-                      : chain === "taraxa"
-                      ? totalTaraxaStars
+                      // : chain === "taraxa"
+                      // ? totalTaraxaStars
                       : totalSkaleStars,
                     0
                   )}{" "}
@@ -3167,12 +3146,12 @@ username,
                       ? totalTaikoUsd
                       : chain === "vanar"
                       ? totalVanarUsd
-                      : chain === "matchain"
-                      ? totalMatUsd
+                      // : chain === "matchain"
+                      // ? totalMatUsd
                       : chain === "sei"
                       ? totalSeiUsd
-                      : chain === "taraxa"
-                      ? totalTaraxaUsd
+                      // : chain === "taraxa"
+                      // ? totalTaraxaUsd
                       : totalSkaleUsd,
                     2
                   )}{" "}
@@ -3319,148 +3298,27 @@ username,
                             </div>
                           </div>
                         </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "vanar" && "chain-item-active"
-                          } w-100`}
-                        >
-                       
 
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
-                            }
-                            className={`chain-img ${
-                              chain === "vanar" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "vanar" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("vanar");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 2040
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleVanarPool}
-                            >
-                              {" "}
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/vanar.svg"
-                                }
-                                width={20}
-                                height={20}
-                                alt=""
-                              />{" "}
-                              Vanar
-                            </button>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    vanarPercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    vanarPercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    vanarPercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    vanarPercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    vanarPercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(vanarPercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
                         <div
                           className={`position-relative chain-item ${
-                            chain === "taraxa" && "chain-item-active"
+                            chain === "base" && "chain-item-active"
                           } w-100`}
                         >
-                             <HtmlTooltipGift
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                            }
-                          >
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/gift.png"
-                              }
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/taraxaBg.webp"
+                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
                             }
                             className={`chain-img ${
-                              chain === "taraxa" && "chain-img-active"
+                              chain === "base" && "chain-img-active"
                             }`}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "taraxa" && "chain-title-wrapper-active"
+                              chain === "base" && "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
-                              setChain("taraxa");
+                              setChain("base");
                               setIsActive();
                               setIsActiveIndex();
                               setRewardData([]);
@@ -3472,21 +3330,21 @@ username,
                             >
                               <button
                                 className={` ${
-                                  chainId === 841
+                                  chainId === 8453
                                     ? "new-chain-active-btn"
                                     : "new-chain-inactive-btn"
                                 } d-flex gap-1 align-items-center`}
-                                onClick={handleTaraxaPool}
+                                onClick={handleBasePool}
                               >
                                 {" "}
                                 <img
                                   src={
-                                    "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                                    "https://cdn.worldofdypians.com/wod/base.svg"
                                   }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
-                                Taraxa
+                                Base
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
@@ -3494,7 +3352,7 @@ username,
                                 <img
                                   className="percent-img"
                                   src={
-                                    taraxaPercentage >= 20
+                                    basePercentage >= 20
                                       ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
                                       : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
@@ -3504,7 +3362,7 @@ username,
                                 <img
                                   className="percent-img"
                                   src={
-                                    taraxaPercentage >= 40
+                                    basePercentage >= 40
                                       ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
                                       : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
@@ -3514,7 +3372,7 @@ username,
                                 <img
                                   className="percent-img"
                                   src={
-                                    taraxaPercentage >= 60
+                                    basePercentage >= 60
                                       ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
                                       : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
@@ -3524,7 +3382,7 @@ username,
                                 <img
                                   className="percent-img"
                                   src={
-                                    taraxaPercentage >= 80
+                                    basePercentage >= 80
                                       ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
                                       : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
@@ -3534,7 +3392,7 @@ username,
                                 <img
                                   className="percent-img"
                                   src={
-                                    taraxaPercentage === 100
+                                    basePercentage === 100
                                       ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
                                       : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
@@ -3543,117 +3401,7 @@ username,
                                 />
                               </div>
                               <span className="percentage-span">
-                                {parseInt(taraxaPercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "taiko" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "taiko" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "taiko" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("taiko");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">
-                              BNB CHAIN
-                            </h6> */}
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 167000
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleTaikoPool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Taiko
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    taikoPercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(taikoPercentage)}%
+                                {parseInt(basePercentage)}%
                               </span>
                             </div>
                           </div>
@@ -3875,6 +3623,350 @@ username,
                             </div>
                           </div>
                         </div>
+                         <div
+                          className={`position-relative chain-item ${
+                            chain === "taiko" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "taiko" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "taiko" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("taiko");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              BNB CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 167000
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleTaikoPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taiko
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taikoPercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(taikoPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "vanar" && "chain-item-active"
+                          } w-100`}
+                        >
+                       
+
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
+                            }
+                            className={`chain-img ${
+                              chain === "vanar" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "vanar" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("vanar");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 2040
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleVanarPool}
+                            >
+                              {" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/vanar.svg"
+                                }
+                                width={20}
+                                height={20}
+                                alt=""
+                              />{" "}
+                              Vanar
+                            </button>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    vanarPercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    vanarPercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    vanarPercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    vanarPercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    vanarPercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(vanarPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        {/* <div
+                          className={`position-relative chain-item ${
+                            chain === "taraxa" && "chain-item-active"
+                          } w-100`}
+                        >
+                             <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taraxaBg.webp"
+                            }
+                            className={`chain-img ${
+                              chain === "taraxa" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "taraxa" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("taraxa");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 841
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleTaraxaPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taraxa
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    taraxaPercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(taraxaPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div> */}
+                       
+
+                      
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "manta" && "chain-item-active"
@@ -3982,218 +4074,9 @@ username,
                             </div>
                           </div>
                         </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "base" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
-                            }
-                            className={`chain-img ${
-                              chain === "base" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "base" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("base");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 8453
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleBasePool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/base.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Base
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    basePercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(basePercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                       
 
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "viction" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/victionBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "viction" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "viction" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("viction");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 88
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleVictionPool}
-                            >
-                              {" "}
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/viction.svg"
-                                }
-                                width={20}
-                                height={20}
-                                alt=""
-                              />{" "}
-                              VICTION
-                            </button>
-                            <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 20
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 40
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 60
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage >= 80
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    victionPercentage === 100
-                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
-                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div>
-                              <span className="percentage-span">
-                                {parseInt(victionPercentage)}%
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                       
                         <div
                           className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
@@ -4302,8 +4185,112 @@ username,
                               </span>
                             </div>
                           </div>
-                        </div>
+                        </div> 
                         <div
+                          className={`position-relative chain-item ${
+                            chain === "viction" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/victionBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "viction" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "viction" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("viction");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 88
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleVictionPool}
+                            >
+                              {" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/viction.svg"
+                                }
+                                width={20}
+                                height={20}
+                                alt=""
+                              />{" "}
+                              VICTION
+                            </button>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 20
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 40
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 60
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage >= 80
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    victionPercentage === 100
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(victionPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        {/* <div
                           className={`position-relative chain-item ${
                             chain === "matchain" && "chain-item-active"
                           } w-100`}
@@ -4410,7 +4397,7 @@ username,
                               </span>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className={`position-relative chain-item w-100`}>
                           <img
@@ -4504,137 +4491,24 @@ username,
                         </div>
                         <div
                           className={`position-relative chain-item ${
-                            chain === "vanar" && "chain-item-active"
+                            chain === "base" && "chain-item-active"
                           }`}
                         >
-                     
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
+                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
                             }
                             className={`chain-img ${
-                              chain === "vanar" && "chain-img-active"
+                              chain === "base" && "chain-img-active"
                             }`}
                             alt=""
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "vanar" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("vanar");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 2040
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleVanarPool}
-                            >
-                              {" "}
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/vanar.svg"
-                                }
-                                style={{ width: 20, height: 20 }}
-                                alt=""
-                              />{" "}
-                              Vanar
-                            </button>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "taraxa" && "chain-item-active"
-                          } w-auto`}
-                        >
-                               <HtmlTooltipGift
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                            }
-                          >
-                            <img
-                              src={
-                                "https://cdn.worldofdypians.com/wod/gift.png"
-                              }
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/taraxaBg.webp"
-                            }
-                            className={`chain-img ${
-                              chain === "taraxa" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "taraxa" && "chain-title-wrapper-active"
+                              chain === "base" && "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center justify-content-between`}
                             onClick={() => {
-                              setChain("taraxa");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 169
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleTaraxaPool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/taraxa.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Taraxa
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "taiko" && "chain-item-active"
-                          } w-auto`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "taiko" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "taiko" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("taiko");
+                              setChain("base");
                               setIsActive();
                               setIsActiveIndex();
                               setRewardData([]);
@@ -4649,25 +4523,26 @@ username,
                             >
                               <button
                                 className={` ${
-                                  chainId === 169
+                                  chainId === 8453
                                     ? "new-chain-active-btn"
                                     : "new-chain-inactive-btn"
                                 } d-flex gap-1 align-items-center`}
-                                onClick={handleTaikoPool}
+                                onClick={handleBasePool}
                               >
                                 {" "}
                                 <img
                                   src={
-                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                    "https://cdn.worldofdypians.com/wod/base.svg"
                                   }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
-                                Taiko
+                                Base
                               </button>
                             </div>
                           </div>
                         </div>
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "core" && "chain-item-active"
@@ -4772,6 +4647,176 @@ username,
                         </div>
                         <div
                           className={`position-relative chain-item ${
+                            chain === "taiko" && "chain-item-active"
+                          } w-auto`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "taiko" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "taiko" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("taiko");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              Manta CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 169
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleTaikoPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taiko
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "vanar" && "chain-item-active"
+                          }`}
+                        >
+                     
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
+                            }
+                            className={`chain-img ${
+                              chain === "vanar" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "vanar" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("vanar");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 2040
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleVanarPool}
+                            >
+                              {" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/vanar.svg"
+                                }
+                                style={{ width: 20, height: 20 }}
+                                alt=""
+                              />{" "}
+                              Vanar
+                            </button>
+                          </div>
+                        </div>
+                        {/* <div
+                          className={`position-relative chain-item ${
+                            chain === "taraxa" && "chain-item-active"
+                          } w-auto`}
+                        >
+                               <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taraxaBg.webp"
+                            }
+                            className={`chain-img ${
+                              chain === "taraxa" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "taraxa" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("taraxa");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 169
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleTaraxaPool}
+                              >
+                                {" "}
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                                  }
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taraxa
+                              </button>
+                            </div>
+                          </div>
+                        </div> */}
+                      
+
+
+                        <div
+                          className={`position-relative chain-item ${
                             chain === "manta" && "chain-item-active"
                           } w-auto`}
                         >
@@ -4823,106 +4868,7 @@ username,
                             </div>
                           </div>
                         </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "base" && "chain-item-active"
-                          }`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
-                            }
-                            className={`chain-img ${
-                              chain === "base" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "base" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center justify-content-between`}
-                            onClick={() => {
-                              setChain("base");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">
-                              Manta CHAIN
-                            </h6> */}
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 8453
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleBasePool}
-                              >
-                                {" "}
-                                <img
-                                  src={
-                                    "https://cdn.worldofdypians.com/wod/base.svg"
-                                  }
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Base
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "viction" && "chain-item-active"
-                          } w-auto`}
-                        >
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/victionBg.png"
-                            }
-                            className={`chain-img ${
-                              chain === "viction" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "viction" &&
-                              "chain-title-wrapper-active-skale"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("viction");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <button
-                              className={`${
-                                chainId === 88
-                                  ? "new-chain-active-btn"
-                                  : "new-chain-inactive-btn"
-                              } d-flex gap-1 align-items-center`}
-                              onClick={handleVictionPool}
-                            >
-                              {" "}
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/viction.svg"
-                                }
-                                style={{ width: 20, height: 20 }}
-                                alt=""
-                              />{" "}
-                              VICTION
-                            </button>
-                          </div>
-                        </div>
-                        <div
+                         <div
                           className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
                           } w-auto`}
@@ -4975,6 +4921,53 @@ username,
                         </div>
                         <div
                           className={`position-relative chain-item ${
+                            chain === "viction" && "chain-item-active"
+                          } w-auto`}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/victionBg.png"
+                            }
+                            className={`chain-img ${
+                              chain === "viction" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "viction" &&
+                              "chain-title-wrapper-active-skale"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("viction");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <button
+                              className={`${
+                                chainId === 88
+                                  ? "new-chain-active-btn"
+                                  : "new-chain-inactive-btn"
+                              } d-flex gap-1 align-items-center`}
+                              onClick={handleVictionPool}
+                            >
+                              {" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/viction.svg"
+                                }
+                                style={{ width: 20, height: 20 }}
+                                alt=""
+                              />{" "}
+                              VICTION
+                            </button>
+                          </div>
+                        </div>
+                      
+                        {/* <div
+                          className={`position-relative chain-item ${
                             chain === "matchain" && "chain-item-active"
                           } w-100`}
                         >
@@ -5023,7 +5016,7 @@ username,
                               </button>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         {/* <div className={`position-relative chain-item w-100`}>
                           <img
                             src={
@@ -5109,8 +5102,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5165,8 +5158,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                           : chain === "core"
@@ -5219,8 +5212,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5275,8 +5268,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                           : chain === "manta"
@@ -5329,8 +5322,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5385,8 +5378,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                           : chain === "base"
@@ -5439,8 +5432,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5495,8 +5488,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                           : chain === "taiko"
@@ -5549,8 +5542,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5605,8 +5598,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                           : chain === "vanar"
@@ -5716,116 +5709,7 @@ username,
                                   }
                                 />
                               ))
-                          : chain === "matchain"
-                          ? allMatChests && allMatChests.length > 0
-                            ? allMatChests.map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  image={matImages[index]}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onMatChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataMat(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  image={matImages[index]}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onMatChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataMat(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
-                                />
-                              ))
+                           
                           : chain === "sei"
                           ? allSeiChests && allSeiChests.length > 0
                             ? allSeiChests.map((item, index) => (
@@ -5876,8 +5760,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5932,120 +5816,11 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
-                          : chain === "taraxa"
-                          ? allTaraxaChests && allTaraxaChests.length > 0
-                            ? allTaraxaChests.map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  image={taraxaImages[index]}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onTaraxaChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataTaraxa(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  image={taraxaImages[index]}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onTaraxaChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataTaraxa(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
-                                />
-                              ))
+                          
                           : chain === "viction"
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
@@ -6096,8 +5871,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -6152,8 +5927,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  walletClient={walletClient}
-                                  publicClient={publicClient}
+                                  
+                                  
                                 />
                               ))
                           : chain === "skale" &&
@@ -6206,8 +5981,8 @@ username,
                                 dummypremiumChests={
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
-                                walletClient={walletClient}
-                                publicClient={publicClient}
+                                
+                                
                               />
                             ))
                           : window.range(0, 19).map((item, index) => (
@@ -6261,8 +6036,8 @@ username,
                                 dummypremiumChests={
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
-                                walletClient={walletClient}
-                                publicClient={publicClient}
+                                
+                                
                               />
                             ))}
                       </div>
@@ -6397,23 +6172,7 @@ username,
                                 Manta Chain
                               </span>
                             </h6>
-                          ) : chain === "taraxa" ? (
-                            <h6
-                              className="loader-text mb-0"
-                              style={{ color: "#ce5d1b" }}
-                            >
-                              Switch to{" "}
-                              <span
-                                style={{
-                                  textDecoration: "underline",
-                                  cursor: "pointer",
-                                }}
-                                onClick={handleTaraxaPool}
-                              >
-                                Taraxa
-                              </span>
-                            </h6>
-                          ) : chain === "taiko" ? (
+                          )   : chain === "taiko" ? (
                             <h6
                               className="loader-text mb-0"
                               style={{ color: "#ce5d1b" }}
@@ -6445,23 +6204,7 @@ username,
                                 Vanar Chain
                               </span>
                             </h6>
-                          ) : chain === "matchain" ? (
-                            <h6
-                              className="loader-text mb-0"
-                              style={{ color: "#ce5d1b" }}
-                            >
-                              Switch to{" "}
-                              <span
-                                style={{
-                                  textDecoration: "underline",
-                                  cursor: "pointer",
-                                }}
-                                onClick={handleMatPool}
-                              >
-                                Matchain
-                              </span>
-                            </h6>
-                          ) : chain === "core" ? (
+                          )  : chain === "core" ? (
                             <h6
                               className="loader-text mb-0"
                               style={{ color: "#ce5d1b" }}
@@ -8990,11 +8733,9 @@ username,
             onChestClaimed();
             onVictionChestClaimed();
             onCoreChestClaimed();
-            onMantaChestClaimed();
-            onTaraxaChestClaimed();
+            onMantaChestClaimed(); 
             onTaikoChestClaimed();
-            onVanarChestClaimed();
-            onMatChestClaimed();
+            onVanarChestClaimed(); 
             onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
@@ -9011,11 +8752,7 @@ username,
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                : chain === "taraxa"
-                ? showSingleRewardDataTaraxa(
-                    rewardData.chestId,
-                    isActiveIndex - 1
-                  )
+                
                 : chain === "taiko"
                 ? showSingleRewardDataTaiko(
                     rewardData.chestId,
@@ -9026,8 +8763,7 @@ username,
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                : chain === "matchain"
-                ? showSingleRewardDataMat(rewardData.chestId, isActiveIndex - 1)
+                 
                 : chain === "viction"
                 ? showSingleRewardDataViction(
                     rewardData.chestId,

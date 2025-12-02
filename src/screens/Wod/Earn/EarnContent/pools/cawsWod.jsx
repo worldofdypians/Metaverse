@@ -81,7 +81,7 @@ const CawsWodDetails = ({
     const address = coinbase;
     const stakeApr50 = await window.config.wod_caws_address;
 
-    if (address !== null && window.WALLET_TYPE !== "matchId") {
+    if (address !== null) {
       const result = await window.nft
         .checkapproveStake(address, stakeApr50)
         .then((data) => {
@@ -210,12 +210,7 @@ const CawsWodDetails = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-      setclaimLoading(false);
-      return;
-    }
-
+    
     try {
       let myStakes = await getStakesIds();
 
@@ -283,7 +278,7 @@ const CawsWodDetails = ({
   };
 
   const handleEthPool = async () => {
-    if (window.WALLET_TYPE !== "matchId") {
+   
       await switchNetworkWagmi(parseInt("0x1", 16), null, { coinbase })
         .then(() => {
           handleSwitchNetwork("1");
@@ -291,13 +286,11 @@ const CawsWodDetails = ({
         .catch((e) => {
           console.log(e);
         });
-    } else if (window.WALLET_TYPE === "matchId") {
-      window.alertify.error("Please connect to another EVM wallet.");
-    }
+    
   };
 
   useEffect(() => {
-    if (coinbase && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+    if (coinbase && chainId === "1" ) {
       getStakesIds();
       getLandStakesIds();
       myNft();
@@ -335,10 +328,10 @@ const CawsWodDetails = ({
   }, [isConnected, EthRewards]);
 
   useEffect(() => {
-    if (window.WALLET_TYPE !== "matchId") {
+   
       totalStakedNft();
-    }
-  }, [window.WALLET_TYPE]);
+  
+  }, []);
 
   return (
     <div className={`p-0 ${listType === "list" && "pt-4"} `}>

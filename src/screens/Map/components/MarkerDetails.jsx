@@ -85,7 +85,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                   ×
                 </a>
               </div>
-              <div className="marker-details-inner-wrapper d-flex flex-column gap-2 h-100">
+              <div className="marker-details-inner-wrapper d-flex flex-column gap-2 h-100 overflow-auto">
                 <div
                   className="px-3 w-100 d-flex justify-content-center"
                   style={{ borderRadius: "12px" }}
@@ -664,8 +664,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
               </NavLink>
             </div>
           </div>
-        ) :
-        type === "museum" ? (
+        ) : type === "museum" ? (
           <div className="d-flex flex-column justify-content-between h-100">
             <div className="d-flex flex-column gap-2">
               <div className="d-flex flex-column">
@@ -704,7 +703,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                   </div> */}
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 challenge-popup-secondary-title">
-                  What You'll Discover
+                    What You'll Discover
                   </h6>
                   <div className="museum-marker-grid">
                     {marker.benefits.map((benefit, index) => (
@@ -739,10 +738,8 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                 </div>
               </div>
             </div>
-         
           </div>
-        ) :
-        (
+        ) : (
           <> </>
         )}
       </>

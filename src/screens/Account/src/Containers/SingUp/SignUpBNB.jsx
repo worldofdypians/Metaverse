@@ -5,6 +5,8 @@ import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./SignUp.module.css";
 import ReCaptchaV2 from "react-google-recaptcha";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function SingUpBNB({
   onVerifySuccess,
@@ -31,6 +33,9 @@ function SingUpBNB({
   const [disabled, setDisabled] = useState(false);
   const [verifyCode, setVerifyCode] = useState("");
   const [captchaValue, setCaptchaValue] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+
   const recaptchaRef = useRef(null);
 
   const handleCaptchaChange = (value) => {
@@ -177,10 +182,16 @@ function SingUpBNB({
     }
   }, [code, isLogin]);
 
-
   useEffect(() => {
     const handleEnter = (event) => {
-      if (event.key === "Enter" && username && password && confirmPassword && !code && captchaValue) {
+      if (
+        event.key === "Enter" &&
+        username &&
+        password &&
+        confirmPassword &&
+        !code &&
+        captchaValue
+      ) {
         signup();
       }
     };
@@ -260,25 +271,50 @@ function SingUpBNB({
 
         <div className="d-flex flex-column w-100 gap-1">
           <h6 className={classes.labelBNB}>Password*</h6>
-
-          <Input
-            inputType="password"
-            placeHolder="Password"
-            value={password}
-            onChange={setPassword}
-            type={"coingecko"}
-          />
+          <div className="position-relative">
+            <Input
+              inputType={showPassword ? "text" : "password"}
+              placeHolder="Password"
+              value={password}
+              onChange={setPassword}
+              type={"coingecko"}
+            />
+            <div
+              style={{
+                position: "absolute",
+                right: 10,
+                top: 7,
+                cursor: "pointer",
+              }}
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+            </div>
+          </div>
         </div>
 
         <div className="d-flex flex-column w-100 gap-1">
           <h6 className={classes.labelBNB}>Confirm Password*</h6>
+          <div className="position-relative">
           <Input
-            inputType="password"
+            inputType={showPassword2 ? "text" : "password"}
             placeHolder="Confirm Password"
             value={confirmPassword}
             onChange={setConfirmPassword}
             type={"coingecko"}
           />
+          <div
+              style={{
+                position: "absolute",
+                right: 10,
+                top: 7,
+                cursor: "pointer",
+              }}
+              onClick={() => setShowPassword2((prev) => !prev)}
+            >
+              {showPassword2 ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+            </div>
+          </div>
         </div>
 
         <div className="summaryseparator"></div>

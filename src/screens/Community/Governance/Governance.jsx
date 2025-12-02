@@ -15,9 +15,7 @@ const Governance = ({
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
   handleConnection,
-  walletClient,
-  publicClient,
-  network_matchain,
+
 }) => {
   const [createProposalPopup, setCreateProposalPopup] = useState(false);
   const [minWodBalanceForProposal, setminWodBalanceForProposal] = useState(0);
@@ -134,31 +132,7 @@ const Governance = ({
     }
 
     try {
-      // Use walletClient for MatchID, wagmiClient for all others
-      if (window.WALLET_TYPE === "matchId") {
-        if (walletClient) {
-          const result = await walletClient.writeContract({
-            address: window.config.governance_address,
-            abi: window.GOVERNANCE_ABI,
-            functionName: "proposeText",
-            args: [desc],
-          });
-
-          const receipt = await publicClient.waitForTransactionReceipt({
-            hash: result,
-          });
-
-          if (receipt) {
-            setgovLoading(false);
-            setgovStatus("success");
-            refreshProposals();
-            setTimeout(() => {
-              setgovStatus("initial");
-              setCreateProposalPopup(false);
-            }, 3000);
-          }
-        }
-      } else {
+   
         const hash = await writeContract(wagmiClient, {
           address: window.config.governance_address,
           abi: window.GOVERNANCE_ABI,
@@ -179,7 +153,7 @@ const Governance = ({
             setCreateProposalPopup(false);
           }, 3000);
         }
-      }
+       
     } catch (e) {
       console.error("Error submitting proposal:", e);
       setgovLoading(false);
@@ -233,7 +207,6 @@ const Governance = ({
             handleConnection();
             setCreateProposalPopup(false);
           }}
-          network_matchain={network_matchain}
         />
       )}
     </>

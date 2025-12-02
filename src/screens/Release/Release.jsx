@@ -22,9 +22,6 @@ const Release = ({
   handleConnection,
   coinbase,
   handleSwitchNetwork,
-  network_matchain,
-  walletClient,
-  publicClient,
   wagmiWalletClient,
   wagmiPublicClient,
 }) => {
@@ -48,9 +45,9 @@ const Release = ({
   const poolCap = 20000;
 
   // Determine which clients to use based on wallet type
-  const isMatchIdWallet = window.WALLET_TYPE === "matchId";
-  const activePublicClient = isMatchIdWallet ? publicClient : wagmiPublicClient;
-  const activeWalletClient = isMatchIdWallet ? walletClient : wagmiWalletClient;
+
+  const activePublicClient =  wagmiPublicClient;
+  const activeWalletClient =  wagmiWalletClient;
 
   const getInfo = async () => {
     if (!activePublicClient || !coinbase) return;
@@ -181,9 +178,7 @@ const Release = ({
   };
 
   const handleEthPool = async () => {
-    if (window.WALLET_TYPE === "matchId") {
-      network_matchain?.showChangeNetwork();
-    } else {
+     
       await switchNetworkWagmi(parseInt("0x38", 16), null, { coinbase })
         .then(() => {
           handleSwitchNetwork("56");
@@ -191,7 +186,7 @@ const Release = ({
         .catch((e) => {
           console.log(e);
         });
-    }
+  
   };
 
   useEffect(() => {

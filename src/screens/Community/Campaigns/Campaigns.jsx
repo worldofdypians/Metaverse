@@ -14,18 +14,18 @@ const Campaigns = ({ coinbase }) => {
 
   const dummyBanner = [
     {
-      title: "Surge to Glory: Claim Your Share of $95,000",
+      title: "Path of Kings: Claim Your Share of $150,000",
       status: "Expired",
-      start_date: "Sep 08, 2025",
-      end_date: "Sep 15, 2025",
-      image: "https://cdn.worldofdypians.com/wod/vault-of-power.webp",
-      desc: `Fuel your summer surge in the World of Dypians with a powerful new challenge and a massive $95,000 in rewards up for grabs! Whether you’re a seasoned explorer or just entering the realm, the Power Surge Quest is your chance to rise through the ranks with strategic gameplay and smart on-chain actions. Open daily bonus chests, stake your strength, and power up your WOD!<br/>
-    <ul><li style="list-style-type: disc;">Open at least 10 Daily Bonus Chests</li>
-    <li style="list-style-type: disc;">Swap a minimum of $20 in WOD</li>
-    <li style="list-style-type: disc;">Mint 5YA Beta Pass NFT</li>
+      start_date: "Nov 17, 2025",
+      end_date: " Dec 01, 2025",
+      image: "https://cdn.worldofdypians.com/wod/path-of-kings-bg.webp",
+      desc: `Fuel your rise to royalty in the World of Dypians with the Path of Kings campaign and a massive $150,000 in rewards up for grabs!<br/>
+    <ul><li style="list-style-type: disc;">Trade a minimum of $50 in WOD</li>
+    <li style="list-style-type: disc;">Log in or create your World of Dypians game account</li>
+    <li style="list-style-type: disc;">Open the Royalty Chest on BNB Chain or opBNB</li>
     </ul>
    `,
-      link: "https://dappbay.bnbchain.org/campaign/413",
+      link: "https://dappbay.bnbchain.org/campaign/421-join-the-path-of-kings-to-share-150k-in-rewards",
       target: "_blank",
     },
     {
@@ -98,7 +98,22 @@ const Campaigns = ({ coinbase }) => {
   ];
 
   const dummyData = [
-        {
+    {
+      title: "Surge to Glory: Claim Your Share of $95,000",
+      status: "Expired",
+      start_date: "Sep 08, 2025",
+      end_date: "Sep 15, 2025",
+      image: "https://cdn.worldofdypians.com/wod/vault-of-power.webp",
+      desc: `Fuel your summer surge in the World of Dypians with a powerful new challenge and a massive $95,000 in rewards up for grabs! Whether you’re a seasoned explorer or just entering the realm, the Power Surge Quest is your chance to rise through the ranks with strategic gameplay and smart on-chain actions. Open daily bonus chests, stake your strength, and power up your WOD!<br/>
+    <ul><li style="list-style-type: disc;">Open at least 10 Daily Bonus Chests</li>
+    <li style="list-style-type: disc;">Swap a minimum of $20 in WOD</li>
+    <li style="list-style-type: disc;">Mint 5YA Beta Pass NFT</li>
+    </ul>
+   `,
+      link: "https://dappbay.bnbchain.org/campaign/413",
+      target: "_blank",
+    },
+    {
       title: "Binance Alpha WOD Trading Competition",
       status: "Expired",
       start_date: "Aug 31, 2025",
@@ -328,7 +343,8 @@ const Campaigns = ({ coinbase }) => {
   return (
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-2 px-lg-0">
       <div className="custom-container  my-5 py-0 py-lg-5">
-        {dummyBanner.slice(0,1)
+        {dummyBanner
+          .slice(0, 1)
           // .filter((item) => {
           //   return item.status === "Live";
           // })

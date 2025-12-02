@@ -112,7 +112,7 @@ const MyProfile = ({
   });
 
   const midnight = new Date(now).setUTCHours(24, 30, 0, 0);
-  const chestPercentage = (totalClaimedChests / 220) * 100;
+  const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
   const utcHours = now2.getUTCHours();
   const utcMinutes = now2.getUTCMinutes();
@@ -884,8 +884,8 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsstd < 110
-                          ? allClaimedChestsstd + "/110"
+                        {allClaimedChestsstd < 90
+                          ? allClaimedChestsstd + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -903,8 +903,8 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsPremium < 110
-                          ? allClaimedChestsPremium + "/110"
+                        {allClaimedChestsPremium < 90
+                          ? allClaimedChestsPremium + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -974,9 +974,9 @@ const MyProfile = ({
                     />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 6
+                        {userActiveEvents === 5
                           ? "Completed"
-                          : userActiveEvents + "/6"}
+                          : userActiveEvents + "/5"}
                       </span>
                     </div>
 
@@ -1120,7 +1120,7 @@ const MyProfile = ({
                               color: "#fff",
                             }}
                           >
-                            220 Chests
+                            180 Chests
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-1">
@@ -1133,7 +1133,7 @@ const MyProfile = ({
                               color: "#fff",
                             }}
                           >
-                            12 Chains
+                            10 Chains
                           </span>
                         </div>
                         <div className="d-flex align-items-center gap-1">

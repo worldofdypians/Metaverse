@@ -1,0 +1,59 @@
+.wod-card-wrapper {
+  background: url("https://cdn.worldofdypians.com/wod/wod-cards-bg.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 480px;
+  @media only screen and (max-width: 991px) {
+    background: url("https://cdn.worldofdypians.com/wod/wod-card-banner-mobile.webp");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 600px;
+  }
+}
+
+.wod-card-title {
+  font-family: "Montserrat";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  background: linear-gradient(90deg, #75f4fd 0%, #c0efbb 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media only screen and (max-width: 767px) {
+    font-size: 22px;
+  }
+}
+
+.wod-card-button {
+  background: linear-gradient(90deg, #008ebf 0%, #00b7cc 100%);
+  border-radius: 14px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: #fff;
+  border: 1px solid #008ebf;
+  padding: 5px 10px;
+  transition: all ease 0.4s;
+  -webkit-transition: all ease 0.4s;
+}
+
+.wod-card-button:hover {
+  color: #fff;
+  background: linear-gradient(270deg, #066d90, #0ab5c9, #0ab5c9, #066d90);
+  background-size: 300%;
+  background-position: 100% 0 !important;
+}
+
+.wod-cards-img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 480px;
+  user-select: none;
+}

@@ -208,25 +208,36 @@ const Reserve = ({ wodPrice }) => {
                   </span>
                   <div className="d-flex flex-column flex-lg-row flex-md-row gap-2">
                     <a
-                      href="https://bscscan.com/address/0xb9e7F9434E27589298a6C8a174A4CE8003509fD8"
+                      href="https://bscscan.com/address/0xfdd31775471914532b643dd6cdaf9b1e9bfa18bf"
                       target="_blank"
                       rel="noreferrer"
                       className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300"
                     >
                       <img src="https://cdn.worldofdypians.com/wod/link.svg" />
                       <span className="text-cyan-400 text-sm">
-                        Reserve Wallet 1
+                        Reserve Contract 1
                       </span>
                     </a>
                     <a
-                      href="https://bscscan.com/address/0x3a0abB76fC578a5dBd8cf113AD70DF2ECeF86546"
+                      href="https://bscscan.com/address/0x9742f951f057bb58ae795bbef9d8674cb37fc02f"
                       target="_blank"
                       rel="noreferrer"
                       className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300"
                     >
                       <img src="https://cdn.worldofdypians.com/wod/link.svg" />
                       <span className="text-cyan-400 text-sm">
-                        Reserve Wallet 2
+                        Reserve Contract 2
+                      </span>
+                    </a>
+                    <a
+                      href="https://bscscan.com/address/0x512d9fe5d8c55f0300a0f7bfceb4fe4d849a5c9f"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300"
+                    >
+                      <img src="https://cdn.worldofdypians.com/wod/link.svg" />
+                      <span className="text-cyan-400 text-sm">
+                        Reserve Contract 3
                       </span>
                     </a>
                     <a

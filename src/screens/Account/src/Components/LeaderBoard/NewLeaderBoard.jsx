@@ -9,7 +9,7 @@ import Switch from "@mui/material/Switch";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import "./_leaderboard.scss";
 import ComingSoon from "./ComingSoon";
-
+import RefreshIcon from "@mui/icons-material/Refresh";
 const renderer = ({ hours, minutes, seconds }) => {
   return (
     <div className="timer-wrapper d-none align-items-start gap-3 justify-content-center">
@@ -87,8 +87,8 @@ const NewLeaderBoard = ({
   allMantaData,
   allBaseData,
   allTaikoData,
-  allMatData,
-  allTaraxaData,
+  // allMatData,
+  // allTaraxaData,
   onPremiumClick,
   onGoldenpassClick,
   allSeiData,
@@ -138,9 +138,9 @@ const NewLeaderBoard = ({
     if (allMantaData && allMantaData.length > 0 && optionText2 === "manta") {
       setAllData(allMantaData);
     }
-    if (allMatData && allMatData.length > 0 && optionText2 === "matchain") {
-      setAllData(allMatData);
-    }
+    // if (allMatData && allMatData.length > 0 && optionText2 === "matchain") {
+    //   setAllData(allMatData);
+    // }
     if (allSeiData && allSeiData.length > 0 && optionText2 === "sei") {
       setAllData(allSeiData);
     }
@@ -153,9 +153,9 @@ const NewLeaderBoard = ({
     if (allVanarData && allVanarData.length > 0 && optionText2 === "vanar") {
       setAllData(allVanarData);
     }
-    if (allTaraxaData && allTaraxaData.length > 0 && optionText2 === "taraxa") {
-      setAllData(allTaraxaData);
-    }
+    // if (allTaraxaData && allTaraxaData.length > 0 && optionText2 === "taraxa") {
+    //   setAllData(allTaraxaData);
+    // }
     if (
       allVictionData &&
       allVictionData.length > 0 &&
@@ -168,13 +168,13 @@ const NewLeaderBoard = ({
     allBaseData,
     allCoreData,
     allMantaData,
-    allMatData,
+    // allMatData,
     allSeiData,
     allSkaleData,
     allTaikoData,
     allVictionData,
     allVanarData,
-    allTaraxaData,
+    // allTaraxaData,
   ]);
 
   // useEffect(() => {
@@ -247,108 +247,29 @@ const NewLeaderBoard = ({
                           : ""}
                       </button>
                       <button
-                        onMouseEnter={() => handleMouseEnter("vanar")}
-                        onMouseLeave={handleMouseLeave}
-                        className={` 
-                     d-flex align-items-center gap-2
-                     ${
-                       optionText2 === "vanar" &&
-                       "otheroptionsActive optionswrapper-bg-new"
-                     } leaderboard-inactive-btn2 w-100`}
-                        onClick={() => {
-                          handleOption("vanar");
-                          setAllData(allVanarData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "vanar"
-                              ? "https://cdn.worldofdypians.com/wod/vanar.svg"
-                              : optionText2 !== "vanar" &&
-                                hoverState === "vanar"
-                              ? "https://cdn.worldofdypians.com/wod/vanarWhite.svg"
-                              : "https://cdn.worldofdypians.com/wod/vanarInactive.svg"
-                          }
-                          vanar
-                          className={`${
-                            optionText2 === "vanar"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={18}
-                          height={18}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Vanar"
-                          : windowSize.width < 786 && optionText2 === "vanar"
-                          ? "Vanar"
-                          : ""}
-                      </button>
-                      <button
-                        onMouseEnter={() => handleMouseEnter("taraxa")}
-                        onMouseLeave={handleMouseLeave}
-                        className={` 
-                     d-flex align-items-center gap-2
-                     ${
-                       optionText2 === "taraxa" &&
-                       "otheroptionsActive optionswrapper-bg-new"
-                     } leaderboard-inactive-btn2 w-100`}
-                        onClick={() => {
-                          handleOption("taraxa");
-                          setAllData(allTaraxaData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "taraxa"
-                              ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
-                              : optionText2 !== "taraxa" &&
-                                hoverState === "taraxa"
-                              ? "https://cdn.worldofdypians.com/wod/taraxaWhite.svg"
-                              : "https://cdn.worldofdypians.com/wod/taraxaInactive.svg"
-                          }
-                          taraxa
-                          className={`${
-                            optionText2 === "taraxa"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={18}
-                          height={18}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Taraxa"
-                          : windowSize.width < 786 && optionText2 === "taraxa"
-                          ? "Taraxa"
-                          : ""}
-                      </button>
-                      <button
-                        onMouseEnter={() => handleMouseEnter("taiko")}
+                        onMouseEnter={() => handleMouseEnter("base")}
                         onMouseLeave={handleMouseLeave}
                         className={`
                      d-flex align-items-center gap-2
                      ${
-                       optionText2 === "taiko" &&
+                       optionText2 === "base" &&
                        "otheroptionsActive optionswrapper-bg-new"
                      } leaderboard-inactive-btn2 w-100`}
                         onClick={() => {
-                          handleOption("taiko");
-                          setAllData(allTaikoData);
+                          handleOption("base");
+                          setAllData(allBaseData);
                         }}
                       >
                         <img
                           src={
-                            optionText2 === "taiko"
-                              ? "https://cdn.worldofdypians.com/wod/taiko.svg"
-                              : optionText2 !== "taiko" &&
-                                hoverState === "taiko"
-                              ? "https://cdn.worldofdypians.com/wod/taikoWhite.svg"
-                              : "https://cdn.worldofdypians.com/wod/taikoInactive.svg"
+                            optionText2 === "base"
+                              ? "https://cdn.worldofdypians.com/wod/base.svg"
+                              : optionText2 !== "base" && hoverState === "base"
+                              ? "https://cdn.worldofdypians.com/wod/baseWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/baseInactive.svg"
                           }
                           className={`${
-                            optionText2 === "taiko"
+                            optionText2 === "base"
                               ? "leaderboard-icon leaderboard-icon-active"
                               : "leaderboard-icon"
                           }`}
@@ -357,9 +278,9 @@ const NewLeaderBoard = ({
                           alt=""
                         />
                         {windowSize.width > 768
-                          ? "Taiko"
-                          : windowSize.width < 786 && optionText2 === "taiko"
-                          ? "Taiko"
+                          ? "Base"
+                          : windowSize.width < 786 && optionText2 === "base"
+                          ? "Base"
                           : ""}
                       </button>
                       <button
@@ -437,6 +358,126 @@ const NewLeaderBoard = ({
                           : ""}
                       </button>
                       <button
+                        onMouseEnter={() => handleMouseEnter("taiko")}
+                        onMouseLeave={handleMouseLeave}
+                        className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "taiko" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("taiko");
+                          setAllData(allTaikoData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "taiko"
+                              ? "https://cdn.worldofdypians.com/wod/taiko.svg"
+                              : optionText2 !== "taiko" &&
+                                hoverState === "taiko"
+                              ? "https://cdn.worldofdypians.com/wod/taikoWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/taikoInactive.svg"
+                          }
+                          className={`${
+                            optionText2 === "taiko"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={18}
+                          height={18}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Taiko"
+                          : windowSize.width < 786 && optionText2 === "taiko"
+                          ? "Taiko"
+                          : ""}
+                      </button>
+                     
+                     
+                      <button
+                        onMouseEnter={() => handleMouseEnter("vanar")}
+                        onMouseLeave={handleMouseLeave}
+                        className={` 
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "vanar" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("vanar");
+                          setAllData(allVanarData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "vanar"
+                              ? "https://cdn.worldofdypians.com/wod/vanar.svg"
+                              : optionText2 !== "vanar" &&
+                                hoverState === "vanar"
+                              ? "https://cdn.worldofdypians.com/wod/vanarWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/vanarInactive.svg"
+                          }
+                          vanar
+                          className={`${
+                            optionText2 === "vanar"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={18}
+                          height={18}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Vanar"
+                          : windowSize.width < 786 && optionText2 === "vanar"
+                          ? "Vanar"
+                          : ""}
+                      </button>
+                      {/* <button
+                        onMouseEnter={() => handleMouseEnter("taraxa")}
+                        onMouseLeave={handleMouseLeave}
+                        className={` 
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "taraxa" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("taraxa");
+                          setAllData(allTaraxaData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "taraxa"
+                              ? "https://cdn.worldofdypians.com/wod/taraxa.svg"
+                              : optionText2 !== "taraxa" &&
+                                hoverState === "taraxa"
+                              ? "https://cdn.worldofdypians.com/wod/taraxaWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/taraxaInactive.svg"
+                          }
+                          taraxa
+                          className={`${
+                            optionText2 === "taraxa"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={18}
+                          height={18}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Taraxa"
+                          : windowSize.width < 786 && optionText2 === "taraxa"
+                          ? "Taraxa"
+                          : ""}
+                      </button> */}
+                     
+                     
+                      <button
                         onMouseEnter={() => handleMouseEnter("manta")}
                         onMouseLeave={handleMouseLeave}
                         className={`
@@ -474,43 +515,7 @@ const NewLeaderBoard = ({
                           ? "Manta"
                           : ""}
                       </button>
-                      <button
-                        onMouseEnter={() => handleMouseEnter("base")}
-                        onMouseLeave={handleMouseLeave}
-                        className={`
-                     d-flex align-items-center gap-2
-                     ${
-                       optionText2 === "base" &&
-                       "otheroptionsActive optionswrapper-bg-new"
-                     } leaderboard-inactive-btn2 w-100`}
-                        onClick={() => {
-                          handleOption("base");
-                          setAllData(allBaseData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "base"
-                              ? "https://cdn.worldofdypians.com/wod/base.svg"
-                              : optionText2 !== "base" && hoverState === "base"
-                              ? "https://cdn.worldofdypians.com/wod/baseWhite.svg"
-                              : "https://cdn.worldofdypians.com/wod/baseInactive.svg"
-                          }
-                          className={`${
-                            optionText2 === "base"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={18}
-                          height={18}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Base"
-                          : windowSize.width < 786 && optionText2 === "base"
-                          ? "Base"
-                          : ""}
-                      </button>
+                     
                       <button
                         onMouseEnter={() => handleMouseEnter("skale")}
                         onMouseLeave={handleMouseLeave}
@@ -589,7 +594,7 @@ const NewLeaderBoard = ({
                           ? "Viction"
                           : ""}
                       </button>
-                      <button
+                      {/* <button
                         onMouseEnter={() => handleMouseEnter("matchain")}
                         onMouseLeave={handleMouseLeave}
                         className={`
@@ -626,7 +631,7 @@ const NewLeaderBoard = ({
                           : windowSize.width < 786 && optionText2 === "matchain"
                           ? "Matchain"
                           : ""}
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -838,6 +843,10 @@ const NewLeaderBoard = ({
                               </div>
                             </div> */}
                             <div className="position-relative">
+                              <span className="d-flex align-items-center text-sm position-absolute p-2 gap-2 text-white">
+                                <RefreshIcon fontSize="small" />
+                                Updates every 1 min
+                              </span>
                               <span className="top100-text">
                                 {" "}
                                 <OutsideClickHandler
@@ -1094,8 +1103,7 @@ const NewLeaderBoard = ({
                                                           index + 1 <= 85
                                                         ? "https://cdn.worldofdypians.com/wod/playerAvatar15.png"
                                                         : "https://cdn.worldofdypians.com/wod/playerAvatar16.png"
-                                                      : optionText2 ===
-                                                          "matchain" ||
+                                                      : 
                                                         optionText2 === "sei"
                                                       ? index + 1 <= 10
                                                         ? `https://cdn.worldofdypians.com/wod/globalRank${

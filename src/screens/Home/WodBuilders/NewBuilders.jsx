@@ -530,10 +530,7 @@ const NewBuilders = () => {
       name: "Biconomy",
       icon: "biconomy.png",
     },
-    {
-      name: "BTCC",
-      icon: "btcc.svg",
-    },
+
     {
       name: "SwissBorg",
       icon: "swissborg.svg",
