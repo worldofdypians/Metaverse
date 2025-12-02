@@ -20,7 +20,6 @@ window.config = {
   nft_cawsold_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",
   nft_caws_premiumstake_address: "0x097bB1679AC734E90907Ff4173bA966c694428Fc",
   nft_land_premiumstake_address: "0x3E0c0443A6a5382B2Ef20ECfe3bdbE84F1436523",
-
   nft_timepiece_address: "0x29c13273cf56dac69cfae173c73fde2cd75b5ede",
   nft_coingecko_address: "0x9b7c2B05367A729e0E671a24B8a143C0d4F6A90D",
   nft_gate_address: "0x2FED6783AdA5eA6B2D7cE9aE749c76B9f4858526",
@@ -48,7 +47,6 @@ window.config = {
   nft_teaopbnb_address: "0xf3Cf80a842b0A15d41B6c80F3eD3Da27F7a84bCA",
   nft_teasei_address: "0x3c65291C5f05Dc767E14E81bd367ab63448D7808",
   nft_teabase_address: "0x8572F7b2eCA8ABC86Ceb5eE17B7037DF82f0146e",
-
   nft_dypius_premium_address: "0xA3e62c82410fF6697B68CABE90a8b1B6e3CEC8CD",
   nft_dypius_premium_viction_address:
     "0x3216574908Fe5B4fF523c3E6d2edFfb7bBc066E0",
@@ -100,10 +98,9 @@ window.config = {
   daily_bonus_mat_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_sei_address: "0x2dEeCF2a05F735890Eb3eA085d55CEc8F1a93895",
   daily_bonus_vanar_address: "0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455",
-
   daily_question_bnb_address: "0xE7DA7750f4604cdcA598726bF6631A9A463A8Ba9",
   daily_question_opbnb_address: "0xfcCEC27EeAe7B2497A430459A1b3D3E7B5F96087",
-
+  single_strike_address: "0xe851e377C676C43d04dd4AEd4808BcC00642Bd41",
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",
 
   weth_address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7", // LOWERCASE! avax
@@ -13441,6 +13438,218 @@ window.DAILY_BONUS_ABI = [
   {
     inputs: [{ internalType: "address", name: "user", type: "address" }],
     name: "removePremiumUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+window.SINGLE_STRIKE_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "initialPremiumUsers",
+        type: "address[]",
+      },
+      { internalType: "address", name: "tokenAddress", type: "address" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    name: "ChestOpened",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "chestOpenCost",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "premiumChestOpenCost",
+        type: "uint256",
+      },
+    ],
+    name: "CostsUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "FundsWithdrawn",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    name: "PremiumChestOpened",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "PremiumUserAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "PremiumUserRemoved",
+    type: "event",
+  },
+  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
+    name: "addPremiumUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "chestOpenCost",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
+    name: "isPremiumUser",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "lifetimeChestCount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "lifetimePremiumChestCount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "premiumChestOpenCost",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "premiumUsers",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
+    name: "removePremiumUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "strike",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "strikePremium",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "token",
+    outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "newChestOpenCost", type: "uint256" },
+      {
+        internalType: "uint256",
+        name: "newPremiumChestOpenCost",
+        type: "uint256",
+      },
+    ],
+    name: "updateCosts",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    name: "withdrawTokens",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

@@ -1097,10 +1097,10 @@ const GetPremiumPopup = ({
   const handleCheckIfAlreadyApproved = async (token) => {
     const subscribeToken = token;
 
-    const contractConfig = resolvePremiumContract(chainId, token);
+    const contractConfig = resolvePremiumContract(chainId ?? 1, token);
 
     if (!contractConfig)
-      throw new Error("Unsupported chain for chest contract.");
+      console.error("Unsupported chain for premium contract.");
     const functionName = "getEstimatedTokenSubscriptionAmount";
 
     let tokenprice = await readOnChain({
