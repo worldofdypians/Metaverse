@@ -40,7 +40,7 @@ const renderer = ({ days, hours, minutes }) => {
 const renderer4 = ({ hours, minutes, seconds }) => {
   return (
     <span className="beast-siege-timer">
-      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
+      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")};
     </span>
   );
 };
@@ -1894,6 +1894,7 @@ const MyProfile = ({
             setPopup(false);
           }}
           address={address}
+          checkCooldown={checkCooldown}
           checkTwitter={checkTwitter}
           username={twitter?.twitterUsername}
           isConnected={isConnected}

@@ -50,8 +50,12 @@ const TwitterRewards = ({
   taskCount,
   twitter,
   twitterCooldown,
+  checkCooldown,
 }) => {
   const windowSize = useWindowSize();
+
+
+  const dummyCooldown = 100000;
 
   const completed = tasks.filter((item) =>
     item.tasks.every((t) => t.completed && t.verified)
@@ -99,15 +103,13 @@ const TwitterRewards = ({
   };
 
   const handleDisconnect = async () => {
-    setLoading(true);
     await axios
       .post(`https://api.worldofdypians.com/auth/twitter/unlink`, {
         walletAddress: coinbase,
       })
       .then((res) => {
-        console.log(res.data);
-        setLoading(false);
         checkTwitter();
+        checkCooldown();
         onClose();
       });
   };
