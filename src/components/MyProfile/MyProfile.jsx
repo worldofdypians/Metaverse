@@ -321,7 +321,7 @@ const MyProfile = ({
       <div className="custom-container mt-5">
         <div className="row mt-5 gap-5 gap-xl-0 mt-lg-3">
           <div className="col-12 col-xl-4 px-0 px-lg-2">
-            <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between gap-3 h-100">
+            <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between gap-2 h-100">
               <div className="d-flex gap-2">
                 <div className="d-flex align-items-center gap-2 daily-progress-wrapper p-2 overflow-x-clip w-100">
                   <div
@@ -634,6 +634,73 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
+              <div className="sidebar-separator2 my-2"></div>
+              <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row position-relative">
+                <div
+                  className="d-flex wallet-address-wrapper2 p-2 w-100 h-100"
+                  onClick={openMyRewards}
+                >
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <div className="d-flex gap-1 align-items-center">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/myRewardsLogo2.png"
+                        }
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <span className="user-data-item-left">My Rewards</span>
+                    </div>
+                    <span className="user-data-item-right">
+                      $
+                      {getFormattedNumber(
+                        liveRewards +
+                          Number(treasureRewardMoney) +
+                          Number(totalTreasureHuntUsd)
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <div
+                  className="wallet-address-wrapper2 p-2 w-100"
+                  onClick={onGoldenpassClick}
+                >
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex gap-1 align-items-center">
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/golden-pass-badge2.png"
+                        }
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                      />
+                      <div className="d-flex flex-column">
+                        <span className="user-data-item-left">
+                          {!isgoldenPassActive && "Golden Pass"}
+                        </span>
+                        <span className="user-data-item-left">
+                          {/* {!isgoldenPassActive ? `` : "Activated"} */}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="d-flex">
+                      {!isgoldenPassActive ? (
+                        <button className="activate-btn2 px-3 py-1">
+                          Activate
+                        </button>
+                      ) : (
+                        <Countdown
+                          date={Number(isgoldenPassActive) * 1000}
+                          renderer={renderer}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="sidebar-separator2 my-2"></div>
+
               <div className="d-flex flex-column gap-3 w-100">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="progress-line"></div>
@@ -898,7 +965,7 @@ const MyProfile = ({
                 </div>
               </div>
 
-              <div className="sidebar-separator2"></div>
+              {/* <div className="sidebar-separator2"></div> */}
               <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row position-relative">
                 {/* <NavLink
                   className="wallet-address-wrapper2 p-2 w-100"
@@ -928,68 +995,6 @@ const MyProfile = ({
                     </div>
                   </div>
                 </NavLink> */}
-                <div
-                  className="d-flex wallet-address-wrapper2 p-2 w-100 h-100"
-                  onClick={openMyRewards}
-                >
-                  <div className="d-flex align-items-center justify-content-between w-100">
-                    <div className="d-flex gap-1 align-items-center">
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/myRewardsLogo2.png"
-                        }
-                        alt=""
-                        style={{ width: 24, height: 24 }}
-                      />
-                      <span className="user-data-item-left">My Rewards</span>
-                    </div>
-                    <span className="user-data-item-right">
-                      $
-                      {getFormattedNumber(
-                        liveRewards +
-                          Number(treasureRewardMoney) +
-                          Number(totalTreasureHuntUsd)
-                      )}
-                    </span>
-                  </div>
-                </div>
-                <div
-                  className="wallet-address-wrapper2 p-2 w-100"
-                  onClick={onGoldenpassClick}
-                >
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex gap-1 align-items-center">
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/golden-pass-badge2.png"
-                        }
-                        alt=""
-                        style={{ width: 24, height: 24 }}
-                      />
-                      <div className="d-flex flex-column">
-                        <span className="user-data-item-left">
-                          {!isgoldenPassActive && "Golden Pass"}
-                        </span>
-                        <span className="user-data-item-left">
-                          {/* {!isgoldenPassActive ? `` : "Activated"} */}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="d-flex">
-                      {!isgoldenPassActive ? (
-                        <button className="activate-btn2 px-3 py-1">
-                          Activate
-                        </button>
-                      ) : (
-                        <Countdown
-                          date={Number(isgoldenPassActive) * 1000}
-                          renderer={renderer}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
 
                 {rankDropdown === true && (
                   <OutsideClickHandler
