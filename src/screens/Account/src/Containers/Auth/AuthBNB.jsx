@@ -100,7 +100,7 @@ function AuthBNB({ type, onSuccessLogin, onLinkWallet, data, syncStatus }) {
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      handleFirstTask(data.getPlayer.wallet.publicAddress);
+      // handleFirstTask(data.getPlayer.wallet.publicAddress);
       navigate("/account");
     }
   }, [data, playerId, isAuthenticated, isLogin]);
@@ -163,7 +163,7 @@ function AuthBNB({ type, onSuccessLogin, onLinkWallet, data, syncStatus }) {
       data.getPlayer.wallet &&
       data.getPlayer.wallet.publicAddress
     ) {
-      handleFirstTask(data.getPlayer.wallet.publicAddress);
+      // handleFirstTask(data.getPlayer.wallet.publicAddress);
       navigate("/account");
     } else if (isAuthenticated && !playerId) {
       setplayerCreation(true);

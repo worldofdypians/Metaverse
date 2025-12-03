@@ -4513,7 +4513,7 @@ function AppRoutes() {
 
       refreshSubscription(userAddress);
       handleManageLogin(signature, message);
-      handleSecondTask(coinbase);
+      // handleSecondTask(coinbase);
 
       setsyncStatus("success");
       setTimeout(() => {
@@ -4641,13 +4641,13 @@ function AppRoutes() {
     getWodBalance(coinbase);
     checkIfEOA(coinbase);
   }, [coinbase]);
-  useEffect(() => {
-    if (coinbase) {
-      handleFirstTask(coinbase);
-    } else if (userWallet) {
-      handleFirstTask(userWallet);
-    }
-  }, [coinbase, userWallet]);
+  // useEffect(() => {
+  //   if (coinbase) {
+  //     handleFirstTask(coinbase);
+  //   } else if (userWallet) {
+  //     handleFirstTask(userWallet);
+  //   }
+  // }, [coinbase, userWallet]);
 
   useEffect(() => {
     if (isConnected && coinbase) {
@@ -5354,7 +5354,7 @@ function AppRoutes() {
                   onSuccessLogin={() => {
                     setloginListener(loginListener + 1);
                     refetchPlayer();
-                    handleSecondTask(userWallet);
+                    // handleSecondTask(userWallet);
                   }}
                 />
               }
