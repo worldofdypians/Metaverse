@@ -218,7 +218,9 @@ const MyProfile = ({
       .get(`https://api.worldofdypians.com/auth/twitter/cooldown/${address}`)
       .then((res) => {
         console.log(res.data, "cooldown");
-        setTwitterCooldown(res.data);
+        setTwitterCooldown(res.data.remainingMs);
+      }).catch((err) => {
+        setTwitterCooldown(0)
       });
   };
 

@@ -242,7 +242,7 @@ const TwitterRewards = ({
                   </button>
                 ) : (
                   <>
-                    {twitterCooldown.remainingHours === 0 ? (
+                    {twitterCooldown === 0 ? (
                       <a
                         href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
                         className="connect-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
@@ -265,7 +265,7 @@ const TwitterRewards = ({
                           disabled
                         >
                           <Countdown
-                            date={Date.now() + twitterCooldown.remainingMs}
+                            date={Date.now() + twitterCooldown}
                             renderer={renderer}
                           />
                         </button>
