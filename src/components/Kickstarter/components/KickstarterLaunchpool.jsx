@@ -128,7 +128,7 @@ const KickstarterLaunchpool = ({ wodHolders }) => {
 
           {/* Visual representation */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-green-400/30 via-emerald-500/30 to-cyan-400/30 blur-3xl rounded-2xl scale-110"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-green-400/30 via-emerald-500/30 to-cyan-400/30 blur-3xl rounded-2xl"></div>
 
             <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-8 bordertw border-white/20">
               <div className="text-center mb-8">
