@@ -40,7 +40,7 @@ const renderer = ({ days, hours, minutes }) => {
 const renderer4 = ({ hours, minutes, seconds }) => {
   return (
     <span className="beast-siege-timer">
-      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")};
+      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
     </span>
   );
 };
@@ -183,14 +183,13 @@ const MyProfile = ({
           return t.tweetId;
         });
 
+        if (taskLength) {
+          const missingCount = oldTasks.filter(
+            (item) => !taskLength.includes(item)
+          ).length;
 
-       if(taskLength){
-         const missingCount = oldTasks.filter(
-          (item) => !taskLength.includes(item)
-        ).length;
-
-        setNewTaskLength(missingCount);
-       }
+          setNewTaskLength(missingCount);
+        }
 
         if (
           !taskLength ||
@@ -204,7 +203,6 @@ const MyProfile = ({
           localStorage.setItem("taskLength", JSON.stringify(oldTasks));
         }
 
-        
         setTwitterTasks(grouped);
         console.log(grouped, "grouped");
       })
@@ -1479,7 +1477,7 @@ const MyProfile = ({
                 className="col-12 col-lg-4 mt-3 px-0 px-lg-2"
                 onClick={onOpenBooster}
               >
-                <div className="booster-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                <div className="booster-wrapper2 d-flex h-100 align-items-center gap-5 justify-content-between p-3">
                   <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                     <div className="d-flex align-items-center gap-2">
                       {/* <img
@@ -1503,7 +1501,7 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <NavLink to="/loyalty-program">
-                  <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                  <div className="total-stars-premium-wrapper2 h-100 d-flex align-items-center gap-5 justify-content-between p-3">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                       <div className="d-flex align-items-center gap-2">
                         {/* <img
@@ -1534,53 +1532,57 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-                <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
-                  <div
-                    className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
-                    style={{ height: "60px" }}
-                    onClick={() => setPopup(true)}
-                  >
-                    <div className="d-flex align-items-start gap-2">
-                      <div className="d-flex flex-column justify-content-between h-100 mb-0">
+              <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
+                <div
+                  className="new-special-rewards-wrapper h-auto d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
+                  // style={{ height: "60px" }}
+                  onClick={() => setPopup(true)}
+                >
+                  <div className="d-flex align-items-start gap-2">
+                    <div className="d-flex flex-column justify-content-between h-100 mb-0">
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src="https://cdn.worldofdypians.com/wod/specialRewardsLogo.png"
+                          className="specialRewardsLogo"
+                        />
                         <div className="d-flex flex-column">
                           <span
                             className="user-blue-rank-2"
-                            style={{ color: "#9e3c7a" }}
+                            style={{ color: "#fff" }}
                           >
-                            X Rewards
+                            Social Rewards
                           </span>
                           <span
                             className="user-rank-text-2"
-                            style={{ color: "#3B5896" }}
+                            style={{ color: "#C8F9FF" }}
                           >
-                           {twitter && twitter.twitterUsername ?
-                          ` @${twitter.twitterUsername}` 
-                          : "Connect Your Account"
-                          }
-                          
+                            {twitter && twitter.twitterUsername
+                              ? ` @${twitter.twitterUsername}`
+                              : "Connect Your Account"}
                           </span>
                         </div>
                       </div>
-                      {newTaskLength > 0 && (
-                        <div className="task-length-wrapper d-flex align-items-center justify-content-center">
-                          <span className="task-length-text">
-                            {newTaskLength} New
-                          </span>
-                        </div>
-                      )}
                     </div>
-
-                    <button
-                      className="activate-btn2 px-3 py-1"
-                      style={{
-                        background: "#9E3C7A",
-                      }}
-                    >
-                      View
-                    </button>
+                    {newTaskLength > 0 && (
+                      <div className="task-length-wrapper d-flex align-items-center justify-content-center">
+                        <span className="task-length-text">
+                          {newTaskLength} New
+                        </span>
+                      </div>
+                    )}
                   </div>
+
+                  <button
+                    className="social-btn2 px-3 py-1"
+                    style={{
+                      background: "#083E6B",
+                    }}
+                  >
+                    View
+                  </button>
                 </div>
-             
+              </div>
+
               {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
@@ -1904,7 +1906,7 @@ const MyProfile = ({
           email={email}
           onConnectWallet={onConnectWallet}
           twitter={twitter}
-                twitterCooldown={twitterCooldown}
+          twitterCooldown={twitterCooldown}
         />
       )}
       {connectPopup && (

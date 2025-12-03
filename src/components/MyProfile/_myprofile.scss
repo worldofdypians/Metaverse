@@ -217,7 +217,7 @@
 }
 
 .new-special-rewards-wrapper {
-  background-image: url("https://cdn.worldofdypians.com/wod/specialRewardsBg.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/specialRewardsBg2.webp");
   border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1330,13 +1330,18 @@
 
 .task-length-wrapper{
 border-radius: 12px;
-border: 0.5px solid #FFE5C8;
-background: linear-gradient(270deg, #F34F09 0%, #F36B09 100%);
+border: 0.5px solid #C8F9FF;
+background: linear-gradient(270deg, #0976F3 0%, #091DF3 100%);
 padding: 2px 5px;
 }
 
+.specialRewardsLogo {
+  width: 32px;
+  height: 32px;
+}
+
 .task-length-text{
-color: #FFE5C8;
+color: #C8F9FF;
 text-align: center;
 font-size: 10px;
 font-style: normal;
