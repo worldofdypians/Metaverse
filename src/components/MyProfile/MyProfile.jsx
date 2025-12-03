@@ -40,7 +40,7 @@ const renderer = ({ days, hours, minutes }) => {
 const renderer4 = ({ hours, minutes, seconds }) => {
   return (
     <span className="beast-siege-timer">
-      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")};
+      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
     </span>
   );
 };
@@ -1478,7 +1478,7 @@ const MyProfile = ({
                 className="col-12 col-lg-4 mt-3 px-0 px-lg-2"
                 onClick={onOpenBooster}
               >
-                <div className="booster-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                <div className="booster-wrapper2 d-flex h-100 align-items-center gap-5 justify-content-between p-3">
                   <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                     <div className="d-flex align-items-center gap-2">
                       {/* <img
@@ -1502,7 +1502,7 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <NavLink to="/loyalty-program">
-                  <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                  <div className="total-stars-premium-wrapper2 h-100 d-flex align-items-center gap-5 justify-content-between p-3">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                       <div className="d-flex align-items-center gap-2">
                         {/* <img
@@ -1542,10 +1542,10 @@ const MyProfile = ({
                   <div className="d-flex align-items-start gap-2">
                     <div className="d-flex flex-column justify-content-between h-100 mb-0">
                       <div className="d-flex align-items-center gap-2">
-                        {/* <img
+                        <img
                           src="https://cdn.worldofdypians.com/wod/specialRewardsLogo.png"
                           className="specialRewardsLogo"
-                        /> */}
+                        />
                         <div className="d-flex flex-column">
                           <span
                             className="user-blue-rank-2"
