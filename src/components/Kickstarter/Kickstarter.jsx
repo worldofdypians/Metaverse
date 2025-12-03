@@ -292,9 +292,9 @@ const Kickstarter = ({
           }
         });
       if (result && result.status === 200) {
-        if (chainText === "opbnb" || chainText === "bnb") {
-          handleThirdTask(coinbase);
-        }
+        // if (chainText === "opbnb" || chainText === "bnb") {
+        //   handleThirdTask(coinbase);
+        // }
         setTimeout(() => {
           setRewards(result.data.rewards);
         }, 3600);
@@ -447,9 +447,9 @@ const Kickstarter = ({
           window.alertify.error(e?.message);
         });
       if (result && result.status === 200) {
-        if (chainText === "opbnb" || chainText === "bnb") {
-          handleThirdTask(coinbase);
-        }
+        // if (chainText === "opbnb" || chainText === "bnb") {
+        //   handleThirdTask(coinbase);
+        // }
         console.log(result.data);
         setTimeout(() => {
           setRewards(result.data.rewards);

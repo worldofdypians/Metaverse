@@ -117,7 +117,7 @@ const KickstarterGameplay = () => {
               return (
                 <NavLink to={game.link} key={index} className="relative group">
                   {/* Glow effect behind each image */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-cyan-500/30 to-purple-400/30 blur-2xl rounded-2xl scale-110 opacitytw-60 group-hover:opacitytw-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-cyan-500/30 to-purple-400/30 blur-2xl rounded-2xl opacitytw-60 group-hover:opacitytw-100 transition-opacity duration-500"></div>
 
                   <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-4 bordertw border-white/20 overflow-hidden hover:scale-105 transition-all duration-300">
                     <img
@@ -147,7 +147,7 @@ const KickstarterGameplay = () => {
                   }}
                 >
                   {/* Glow effect behind each image */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-cyan-500/30 to-purple-400/30 blur-2xl rounded-2xl scale-110 opacitytw-60 group-hover:opacitytw-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 via-cyan-500/30 to-purple-400/30 blur-2xl rounded-2xl  opacitytw-60 group-hover:opacitytw-100 transition-opacity duration-500"></div>
 
                   <div className="relative bg-black/40 backdrop-blur-sm rounded-2xl p-4 bordertw border-white/20 overflow-hidden hover:scale-105 transition-all duration-300">
                     <img
