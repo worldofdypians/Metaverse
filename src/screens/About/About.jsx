@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from "react";
+import React, { useEffect, Suspense, useRef } from "react";
 import Brand from "./Brand/Brand";
 import WodPartners from "../Home/WodBuilders/WodPartners";
 import Tokenomics from "../Wod/Token/Tokenomics/Tokenomics";
@@ -11,7 +11,7 @@ import Security from "./Security/Security";
 // Lazy load the Reserve component to prevent blocking the About page
 const Reserve = React.lazy(() => import("../Reserve/Reserve"));
 
-const About = ({wodPrice}) => {
+const About = ({ wodPrice, chartData, avgPrice }) => {
   const location = useLocation();
 
   const scrollToElement = () => {
@@ -65,16 +65,23 @@ const About = ({wodPrice}) => {
                         Loading...
                       </span>
                     </div>
-                    <p className="text-slate-400/70 text-sm m-0">Loading reserve data</p>
+                    <p className="text-slate-400/70 text-sm m-0">
+                      Loading reserve data
+                    </p>
                   </div>
                 </div>
                 <div className="bg-[#0f1729]/90 backdrop-blur-xl rounded-xl p-4 shadow-lg w-100">
                   <div className="d-flex align-items-center justify-content-center h-96">
                     <div className="text-center">
-                      <div className="spinner-border text-cyan-500" role="status">
+                      <div
+                        className="spinner-border text-cyan-500"
+                        role="status"
+                      >
                         <span className="visually-hidden">Loading...</span>
                       </div>
-                      <p className="text-slate-400/70 mt-3">Loading chart data...</p>
+                      <p className="text-slate-400/70 mt-3">
+                        Loading chart data...
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -92,7 +99,11 @@ const About = ({wodPrice}) => {
         <MainHero />
         <Tokenomics />
         <Suspense fallback={<ReserveLoading />}>
-          <Reserve wodPrice={wodPrice} />
+          <Reserve
+            wodPrice={wodPrice}
+            chartData={chartData}
+            avgPrice={avgPrice}
+          />
         </Suspense>
         <Security />
         <Roadmap />

@@ -107,6 +107,7 @@ import {
 import { wagmiClient } from "./wagmiConnectors.js";
 import { CandlelightCursor } from "./components/FestiveElements/CandleLightCursor.jsx";
 import { fetchStarMonthlyLeaderboard } from "./services/leaderboardApi";
+import { localData } from "./screens/Reserve/data.js";
 
 const Marketplace = React.lazy(() =>
   import("./screens/Marketplace/Marketplace")
@@ -558,7 +559,6 @@ function AppRoutes() {
   const [totalVolumeNew, setTotalVolumeNew] = useState(0);
   const [wodHolders, setWodHolders] = useState(0);
 
-  const [showForms2, setShowForms2] = useState(false);
   const [listedNFTS, setListedNFTS] = useState([]);
   const [cawsListed, setcawsListed] = useState([]);
   const [wodListed, setwodListed] = useState([]);
@@ -571,24 +571,20 @@ function AppRoutes() {
 
   const [cawsToUse, setcawsToUse] = useState([]);
 
-  const [limit, setLimit] = useState(0);
-
   const [allCawsForTimepieceMint, setAllCawsForTimepieceMint] = useState([]);
   const [myCAWstakes, setMyCAWstakes] = useState([]);
   const [timepieceMetadata, settimepieceMetadata] = useState([]);
 
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
 
-  const [listedNFTSCount, setListedNFTSCount] = useState(0);
+  // const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
 
-  const [isBnb, setisBnb] = useState(false);
-
   const [socials, setSocials] = useState([]);
-  const [isBnbSuccess, setisBnbSuccess] = useState(false);
+
   const [syncCount, setsyncCount] = useState(1);
 
-  const [logoutCount, setlogoutCount] = useState(1);
+  // const [logoutCount, setlogoutCount] = useState(1);
   const [nftCount, setNftCount] = useState(1);
   const [countBalance, setcountBalance] = useState(1);
 
@@ -605,9 +601,9 @@ function AppRoutes() {
   const [openedRoyaltyChest, setOpenedRoyaltyChest] = useState([]);
   const [royalChestIndex, setRoyalChestIndex] = useState();
 
-  const [openedRoyaltyChestTaiko, setOpenedRoyaltyChestTaiko] = useState([]);
+  // const [openedRoyaltyChestTaiko, setOpenedRoyaltyChestTaiko] = useState([]);
 
-  const [royalChestIndexTaiko, setRoyalChestIndexTaiko] = useState();
+  // const [royalChestIndexTaiko, setRoyalChestIndexTaiko] = useState();
 
   const [showSync, setshowSync] = useState(false);
   const [syncStatus, setsyncStatus] = useState("initial");
@@ -615,7 +611,7 @@ function AppRoutes() {
   const [dogePrice, setDogePrice] = useState(0);
   const [isEOA, setIsEOA] = useState(true);
 
-  const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
+  // const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
 
   const [kickstarter, setKickstarter] = useState(false);
   const location = useLocation();
@@ -636,7 +632,7 @@ function AppRoutes() {
   let coreLastDay2 = new Date("2025-12-12T14:00:00.000+02:00");
   let mantaLastDay = new Date("2025-08-13T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
-  let taikoLastDay2 = new Date("2025-12-06T14:00:00.000+02:00");
+  let taikoLastDay2 = new Date("2025-12-09T14:00:00.000+02:00");
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
@@ -655,7 +651,7 @@ function AppRoutes() {
   const [victionPrice, setVictionPrice] = useState(0);
   const [vanarPrice, setvanarPrice] = useState(0);
   const [taikoPrice, setTaikoPrice] = useState(0);
-  const [taraxaPrice, setTaraxaPrice] = useState(0);
+  // const [taraxaPrice, setTaraxaPrice] = useState(0);
   const [cookiePrice, setCookiePrice] = useState(0);
   const [immutablePrice, setImmutablePrice] = useState(0);
   const [kucoinPrice, setKucoinPrice] = useState(0);
@@ -673,6 +669,9 @@ function AppRoutes() {
   const [userPools, setUserPools] = useState([]);
   const [stakeCount, setstakeCount] = useState(0);
   const [nftTvl, setnftTvl] = useState(0);
+
+  const [chartData, setChartData] = useState(localData);
+  const [avgPrice, setavgPrice] = useState(0);
 
   // const [gameAccount, setGameAccount] = useState();
 
@@ -743,10 +742,10 @@ function AppRoutes() {
 
     if (finalboughtItems1 && finalboughtItems1.length > 0) {
       setListedNFTS(finalboughtItems1);
-      setListedNFTSCount(finalboughtItems1.length);
+      // setListedNFTSCount(finalboughtItems1.length);
     } else {
       setListedNFTS([]);
-      setListedNFTSCount([]);
+      // setListedNFTSCount([]);
     }
     if (recentListedNFTS2 && recentListedNFTS2.length > 0) {
       const updatedItems = await Promise.all(
@@ -874,31 +873,31 @@ function AppRoutes() {
     }
   };
 
-  const handleFirstTask = async (wallet) => {
-    if (wallet) {
-      const result2 = await axios
-        .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
-        .catch((e) => {
-          console.error(e);
-        });
-      if (result2 && result2.status === 200) {
-        console.log(result2);
-      }
-    }
-  };
+  // const handleFirstTask = async (wallet) => {
+  //   if (wallet) {
+  //     const result2 = await axios
+  //       .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
+  //       .catch((e) => {
+  //         console.error(e);
+  //       });
+  //     if (result2 && result2.status === 200) {
+  //       console.log(result2);
+  //     }
+  //   }
+  // };
 
-  const handleSecondTask = async (wallet) => {
-    if (wallet) {
-      const result2 = await axios
-        .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
-        .catch((e) => {
-          console.error(e);
-        });
-      if (result2 && result2.status === 200) {
-        console.log(result2);
-      }
-    }
-  };
+  // const handleSecondTask = async (wallet) => {
+  //   if (wallet) {
+  //     const result2 = await axios
+  //       .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+  //       .catch((e) => {
+  //         console.error(e);
+  //       });
+  //     if (result2 && result2.status === 200) {
+  //       console.log(result2);
+  //     }
+  //   }
+  // };
 
   const { user, setUserStats, setUserNFTs } = useUser();
 
@@ -2479,6 +2478,19 @@ function AppRoutes() {
     },
   ];
 
+  const fetchSocialData = async () => {
+    const result = await axios
+      .get("https://api.worldofdypians.com/api/socialUsers")
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      const socialsData = result.data;
+      setSocials(socialsData);
+    }
+  };
+
   const fetchBSCCoinPrice = async () => {
     await axios
       .get("https://api.worldofdypians.com/api/price/wbnb")
@@ -2710,7 +2722,61 @@ function AppRoutes() {
     }
   };
 
+  const mergeData = (fetchData) => {
+    const result = [...localData];
+    let lastAmount = localData[localData.length - 1]?.amount || 0;
+
+    const alteredFetch = fetchData.map((item) => {
+      lastAmount += item.amount;
+      return {
+        ...item,
+        amount: lastAmount,
+      };
+    });
+    // if (alteredFetch.length > 0) {
+    //   const lastItem = alteredFetch[alteredFetch.length - 1];
+    //   alteredFetch.push({
+    //     date: addOneDay(lastItem.date),
+    //     amount: lastItem.amount,
+    //     wodPrice: lastItem.wodPrice,
+    //   });
+    // }
+    let allprice = 0;
+    const sumFunction = (a, b) => a + b;
+    [...result, ...alteredFetch].forEach((data) => {
+      return (allprice = sumFunction(allprice, Number(data.wodPrice)));
+    });
+
+    setavgPrice(allprice / [...result, ...alteredFetch].length);
+    setChartData([...result, ...alteredFetch]);
+    return [...result, ...alteredFetch];
+  };
+  const fetchDynamicData = async () => {
+    const result = await axios
+      .get("https://api.worldofdypians.com/api/reserve-transfers")
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      // console.log(result.data);
+      // chartData.push(...result.data);
+
+      const formatedData = result.data.map((item) => {
+        return { ...item, date: new Date(item.date) };
+      });
+
+      mergeData(
+        formatedData.sort(function (a, b) {
+          return a.date - b.date;
+        })
+      );
+    }
+  };
+  const dataFetchedRef = useRef(false);
+
   useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
     fetchSkalePrice();
     fetchSeiPrice();
     fetchMantaPrice();
@@ -2730,6 +2796,7 @@ function AppRoutes() {
     getAllData();
     fetchSkaleBalance();
     fetchWodPrice();
+    fetchDynamicData();
   }, []);
 
   const checkPremiumOryn = async (addr) => {
@@ -2878,16 +2945,16 @@ function AppRoutes() {
     const requested = Number(data?.numberOfTokens || 0);
     const selectedCount = cawsToUse.length;
     if (requested <= 0 || selectedCount === 0) {
-      setLimit(0);
+      // setLimit(0);
       setFinalCaws([]);
       return;
     }
     if (requested >= selectedCount) {
-      setLimit(selectedCount);
+      // setLimit(selectedCount);
       setFinalCaws(cawsToUse);
       return;
     }
-    setLimit(requested);
+    // setLimit(requested);
     setFinalCaws(cawsToUse.slice(0, requested));
   };
 
@@ -3180,6 +3247,77 @@ function AppRoutes() {
       }
     }
   };
+
+  async function addNewUserIfNotExists(
+    walletAddress,
+    title,
+    description,
+    redirect_link
+  ) {
+    const API_BASE_URL = "https://api.worldofdypians.com";
+    try {
+      const response = await axios
+        .get(
+          `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+            walletAddress
+          )}`,
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
+        )
+        .catch((e) => {
+          console.error(e);
+        });
+
+      if (response.data.length === 0) {
+        const newUserResponse = await axios
+          .post(
+            `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+              walletAddress
+            )}`,
+            {
+              tokenId: "",
+              nftAddress: "",
+              timestamp: Date.now(),
+              read: false,
+              offer: "no",
+              offerAccepted: "no",
+              buy: "no",
+              event: "no",
+              news: "no",
+              welcome: "yes",
+              update: "no",
+              title: "Welcome",
+              description:
+                "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
+              redirect_link: "",
+            },
+            {
+              headers: { Authorization: `Bearer ${authToken}` },
+            }
+          )
+          .catch((e) => {
+            console.error(e);
+          });
+
+        console.log("New user added:", newUserResponse.data);
+        let lso = newUserResponse.sort((a, b) => {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+        setmyNftsOffer(lso);
+      } else {
+        console.log("User already exists:", response.data);
+
+        const notifications = response.data[0]?.notifications || [];
+        let lso = notifications.sort((a, b) => {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+        setmyNftsOffer(lso);
+      }
+    } catch (error) {
+      console.error("Error adding new user:", error.message);
+    }
+  }
 
   const fetchMonthlyPlayers = async () => {
     await axios
@@ -4178,6 +4316,33 @@ function AppRoutes() {
     // });
   };
 
+  async function fetchUserFavorites(userId) {
+    if (userId !== undefined && userId !== null) {
+      const authToken = localStorage.getItem("authToken");
+      try {
+        const response = await fetch(
+          `https://api.worldofdypians.com/user-favorites/${userId}`,
+          {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Error fetching user favorites");
+        }
+        const data = await response.json();
+        // console.log(data.favorites);
+
+        setFavorites(data.favorites);
+        return data.favorites;
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+        throw error;
+      }
+    } else {
+      setFavorites([]);
+    }
+  }
+
   const getMyNFTS = async (coinbase, type) => {
     if (coinbase) {
       return await window.getMyNFTs(coinbase, type);
@@ -4455,9 +4620,9 @@ function AppRoutes() {
       .then((data) => {
         const authToken = data.data.token;
         localStorage.setItem("authToken", authToken);
-        if (isCheckedNewsLetter === true) {
-          handleAddUserToNewsLetter(authToken);
-        }
+        // if (isCheckedNewsLetter === true) {
+        handleAddUserToNewsLetter(authToken);
+        // }
       })
       .catch((e) => {
         console.error(e);
@@ -4539,6 +4704,12 @@ function AppRoutes() {
   };
 
   useEffect(() => {
+    if (authToken && email && isConnected && !isTokenExpired) {
+      fetchUserFavorites(userWallet ? userWallet : coinbase);
+    }
+  }, [coinbase, userWallet, email, isConnected, isTokenExpired]);
+
+  useEffect(() => {
     if (dataVerify?.verifyWallet) {
       refetchPlayer();
       setsyncStatus("success");
@@ -4576,6 +4747,7 @@ function AppRoutes() {
     fetchTotalWodHolders();
     getTotalSupply();
     fetchBSCCoinPrice();
+    fetchSocialData();
     let isMounted = true;
 
     const loadStarRecords = async () => {
@@ -4720,6 +4892,22 @@ function AppRoutes() {
     });
   }, [starRecords]);
 
+  useEffect(() => {
+    if (
+      coinbase &&
+      isConnected &&
+      authToken &&
+      email &&
+      userWallet &&
+      userWallet.toLowerCase() === coinbase.toLowerCase()
+    )
+      addNewUserIfNotExists(
+        coinbase,
+        "Welcome",
+        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
+      );
+  }, [coinbase, isConnected, authToken, email, userWallet]);
+
   return (
     <>
       <div
@@ -4764,7 +4952,7 @@ function AppRoutes() {
           handleSwitchChainBinanceWallet={handleSwitchNetwork}
           onLogout={() => {
             // setCount55(count55 + 1);
-            // setlogoutCount(logoutCount + 1);
+
             handleLogout();
           }}
           onSigninClick={checkData}
@@ -4787,7 +4975,7 @@ function AppRoutes() {
           // }}
           onLogout={() => {
             // setCount55(count55 + 1);
-            // setlogoutCount(logoutCount + 1);
+
             handleLogout();
           }}
           handleDisconnect={handleDisconnect}
@@ -4892,7 +5080,6 @@ function AppRoutes() {
                   totalSupply={totalSupply}
                   monthlyPlayers={monthlyPlayers}
                   percent={percent}
-                  socials={socials}
                 />
               }
             />
@@ -5420,16 +5607,16 @@ function AppRoutes() {
                   setRoyalChestIndex={(value) => {
                     setRoyalChestIndex(value);
                   }}
-                  setRoyalChestIndexTaiko={(value) => {
-                    setRoyalChestIndexTaiko(value);
-                  }}
+                  // setRoyalChestIndexTaiko={(value) => {
+                  //   setRoyalChestIndexTaiko(value);
+                  // }}
                   royaltyCount={royaltyCount}
                   onOpenRoyaltyChest={(value) => {
                     setOpenedRoyaltyChest(value);
                   }}
-                  onOpenRoyaltyChestTaiko={(value) => {
-                    setOpenedRoyaltyChestTaiko(value);
-                  }}
+                  // onOpenRoyaltyChestTaiko={(value) => {
+                  //   setOpenedRoyaltyChestTaiko(value);
+                  // }}
                   isEOA={isEOA}
                   wodBalance={wodBalance}
                   authToken={authToken}
@@ -5446,7 +5633,6 @@ function AppRoutes() {
                   }}
                   syncStatus={syncStatus}
                   syncCount={syncCount}
-                  logoutCount={logoutCount}
                   userTreasureHuntStats={user.userStats}
                   userCollectedNFTS={user.userNFTs}
                   treasureHuntEvents={treasureHuntEvents}
@@ -5486,16 +5672,16 @@ function AppRoutes() {
                   setRoyalChestIndex={(value) => {
                     setRoyalChestIndex(value);
                   }}
-                  setRoyalChestIndexTaiko={(value) => {
-                    setRoyalChestIndexTaiko(value);
-                  }}
+                  // setRoyalChestIndexTaiko={(value) => {
+                  //   setRoyalChestIndexTaiko(value);
+                  // }}
                   royaltyCount={royaltyCount}
                   onOpenRoyaltyChest={(value) => {
                     setOpenedRoyaltyChest(value);
                   }}
-                  onOpenRoyaltyChestTaiko={(value) => {
-                    setOpenedRoyaltyChestTaiko(value);
-                  }}
+                  // onOpenRoyaltyChestTaiko={(value) => {
+                  //   setOpenedRoyaltyChestTaiko(value);
+                  // }}
                   isEOA={isEOA}
                   wodBalance={wodBalance}
                   authToken={authToken}
@@ -5512,7 +5698,6 @@ function AppRoutes() {
                   }}
                   syncStatus={syncStatus}
                   syncCount={syncCount}
-                  logoutCount={logoutCount}
                   userTreasureHuntStats={user.userStats}
                   userCollectedNFTS={user.userNFTs}
                   treasureHuntEvents={treasureHuntEvents}
@@ -5550,7 +5735,7 @@ function AppRoutes() {
                   isConnected={isConnected}
                   handleRegister={handleRegister}
                   chainId={networkId}
-                  showForms={showForms2}
+                  showForms={false}
                   socials={socials}
                 />
               }
@@ -5711,7 +5896,7 @@ function AppRoutes() {
               return (
                 <Route
                   exact
-                  key={item.path}
+                  key={item}
                   path={item}
                   element={
                     <BetaPassNFT
@@ -5742,16 +5927,16 @@ function AppRoutes() {
                   setRoyalChestIndex={(value) => {
                     setRoyalChestIndex(value);
                   }}
-                  setRoyalChestIndexTaiko={(value) => {
-                    setRoyalChestIndexTaiko(value);
-                  }}
+                  // setRoyalChestIndexTaiko={(value) => {
+                  //   setRoyalChestIndexTaiko(value);
+                  // }}
                   royaltyCount={royaltyCount}
                   onOpenRoyaltyChest={(value) => {
                     setOpenedRoyaltyChest(value);
                   }}
-                  onOpenRoyaltyChestTaiko={(value) => {
-                    setOpenedRoyaltyChestTaiko(value);
-                  }}
+                  // onOpenRoyaltyChestTaiko={(value) => {
+                  //   setOpenedRoyaltyChestTaiko(value);
+                  // }}
                   isEOA={isEOA}
                   wodBalance={wodBalance}
                   authToken={authToken}
@@ -5768,7 +5953,6 @@ function AppRoutes() {
                   }}
                   syncStatus={syncStatus}
                   syncCount={syncCount}
-                  logoutCount={logoutCount}
                   userTreasureHuntStats={user.userStats}
                   userCollectedNFTS={user.userNFTs}
                   treasureHuntEvents={treasureHuntEvents}
@@ -5799,7 +5983,13 @@ function AppRoutes() {
             <Route
               exact
               path="/token"
-              element={<Token wodPrice={wodPrice} />}
+              element={
+                <Token
+                  wodPrice={wodPrice}
+                  chartData={chartData}
+                  avgPrice={avgPrice}
+                />
+              }
             />
             <Route
               exact
@@ -5903,7 +6093,13 @@ function AppRoutes() {
             <Route
               exact
               path="/about"
-              element={<About wodPrice={wodPrice} />}
+              element={
+                <About
+                  wodPrice={wodPrice}
+                  chartData={chartData}
+                  avgPrice={avgPrice}
+                />
+              }
             />
             <Route
               exact

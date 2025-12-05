@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import "./_token.scss";
 import TokenUtility from "./TokenUtility/TokenUtility";
 import MainHero from "./MainHero/MainHero";
@@ -9,8 +9,7 @@ import WodBuilders from "../Home/WodBuilders/WodBuilders";
 import InGameEconomy from "./InGameEconomy";
 import WodCard from "./WodCard/WodCard";
 
-const Token = ({wodPrice}) => {
-
+const Token = ({ wodPrice, chartData, avgPrice }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "WOD Token";
@@ -19,18 +18,21 @@ const Token = ({wodPrice}) => {
   const scrollToView = (viewId) => {
     document.getElementById(viewId).scrollIntoView({
       behavior: "smooth",
-      block: "end"
+      block: "end",
     });
   };
 
-
   return (
     <div className="container-fluid token-wrapper px-0">
-      <div className="d-flex flex-column"> 
-        <MainHero scrollInto={scrollToView}/>
-        <WodCard/>
+      <div className="d-flex flex-column">
+        <MainHero scrollInto={scrollToView} />
+        <WodCard />
         <TokenUtility />
-        <Tokenomics wodPrice={wodPrice}/>
+        <Tokenomics
+          wodPrice={wodPrice}
+          chartData={chartData}
+          avgPrice={avgPrice}
+        />
         <InGameEconomy />
         <Investors page={"token"} />
         {/* <Utility /> */}

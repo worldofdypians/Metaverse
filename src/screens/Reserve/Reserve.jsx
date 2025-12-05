@@ -404,6 +404,7 @@ const Reserve = ({ wodPrice }) => {
                           stroke="#06b6d4"
                           fill="url(#colorGradient)"
                           strokeWidth={2}
+                          isAnimationActive={true}
                         />
                       </AreaChart>
                     </ResponsiveContainer>
