@@ -193,9 +193,9 @@ window.config = {
   otcpooldynamic_address: "0x3d373f680d0a5bbdbc9a48577652f9a327e9280d", //40%
   otcpool2dynamic_address: "0x96718b893aef64c8ff19df30c920aa6b4669984a", //30%
   otcwoddynamic_address: "0xf0a43b4549792f6116564a4253cb685d983e90fd", //50%
-  otccliff_address: "0x14ad9288a2607ed872364b2a34506242c49ae741", //30%
+  otccliff_address: "0x9bf8f8aeecf69c0ee2a287add093b6e284ed7dcf", //30%
   otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220",
-  otc1cliff4_address: "0xd3875933818828fefaC0A3cf9C5E45D64B48401C",
+  otc1cliff4_address: "0x32578a3cd74d31e7528649a771a89037933aff9d",
   roundotc_vesting_address: "0x2a743e768fb02efb66afb9b0236dded09468d5ba",
   dypiansvesting_address: "0x5f312ab8419386d217a9df2a0cee6a19703c7ce9",
 
