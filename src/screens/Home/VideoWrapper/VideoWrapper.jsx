@@ -188,7 +188,7 @@ const VideoWrapper = ({
       link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
       logo: "swissborg.svg",
     },
-        {
+    {
       title: "LetsExchange",
       logo: "https://cdn.worldofdypians.com/wod/letsexchangeLogo.svg",
       link: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
@@ -323,7 +323,7 @@ const VideoWrapper = ({
           className="row gap-4 gap-lg-0"
          
         > */}
-        <div className="h-100">
+        <div className="video-second-wrapper">
           <NavLink
             className="absolute d-none d-lg-block left-4 top-24 z-5"
             to="/keep-building"

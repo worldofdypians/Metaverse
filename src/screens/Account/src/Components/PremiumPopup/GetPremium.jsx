@@ -864,8 +864,8 @@ const GetPremiumPopup = ({
         // ? window.config.subscriptionmat_tokens[token]?.decimals
         : chainId === 1030
         ? window.config.subscriptioncfx_tokens[token]?.decimals
-        : chainId === 841
-        ? window.config.subscriptiontaraxa_tokens[token]?.decimals
+        // : chainId === 841
+        // ? window.config.subscriptiontaraxa_tokens[token]?.decimals
         : window.config.subscriptioneth_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
