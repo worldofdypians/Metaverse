@@ -50,6 +50,18 @@
   line-height: normal;
 }
 
+.twitter-warn-message {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: "Montserrat";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 10px;
+  }
+}
+
 .connect-twitter-btn {
   width: 100%;
   border-radius: 12px;
@@ -89,6 +101,10 @@
   border: 1px solid #2a2454;
   background: linear-gradient(180deg, #1a1640 0%, #0f0d28 100%);
   transition: all 0.25s ease;
+  min-height: 120px;
+  @media screen and (max-width: 786px) {
+    min-height: auto;
+  }
 }
 
 .twitter-username {
@@ -217,20 +233,17 @@
 }
 
 .twitter-action-btn-disabled {
-  pointer-events: none;
+  pointer-events: none !important;
   opacity: 0.7;
-  background: rgba(23, 133, 242, 0.6);
   border-radius: 8px;
-  border: 1px solid #1785f2;
-
+  border: 1px solid #17f284;
   .twitter-action-text {
-    color: #1785f2;
+    color: #17f284;
   }
 
   .icon-color {
-  color: #1785f2 !important;
-}
-
+    color: #17f284 !important;
+  }
 }
 
 .unlink-twitter-button {
@@ -247,8 +260,8 @@
   line-height: normal;
 }
 
-.unlink-twitter-text{
-    color: rgba(255, 255, 255, 0.8);
+.unlink-twitter-text {
+  color: rgba(255, 255, 255, 0.8);
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
@@ -265,7 +278,7 @@
 .twitter-action-text {
   color: #fff;
   font-family: "Montserrat";
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -287,8 +300,6 @@
     color: #ffd700 !important;
   }
 }
-
-
 
 .stars-completed {
   span {
@@ -554,7 +565,7 @@
   margin: auto;
   height: fit-content;
   z-index: 1;
-  @media screen and (max-width : 786px) {
+  @media screen and (max-width: 786px) {
     top: auto;
   }
 }
@@ -591,12 +602,34 @@
 
 .active-page-button {
   border: 1px solid rgba(0, 0, 0, 0) !important;
-    background: linear-gradient(180deg, #1e90ff 0%, #06c 100%) !important;
+  background: linear-gradient(180deg, #1e90ff 0%, #06c 100%) !important;
 }
 
-.blurred-twitter-item{
+.blurred-twitter-item {
   filter: blur(8px);
   pointer-events: none;
+}
+
+.task-timer-button {
+  border-radius: 10px;
+  border: 1px solid #2a2454;
+  background: #1a1640;
+  color: #a3a2b3;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px; /* 133.333% */
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // top: 0;
+    // bottom: 0;
+    // width: fit-content;
+    // height: fit-content;
+    // margin: auto;
+    @media screen and (max-width: 786px) {
+      font-size: 14px;
+    }
 }
 // a39990
 

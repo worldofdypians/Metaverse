@@ -16,9 +16,10 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "#252743 !important",
     color: "rgba(0, 0, 0, 0.87)",
-    maxWidth: "150px !important",
+    maxWidth: "250px !important",
     minWidth: "90px !important",
     fontSize: "12px",
+    textAlign: "center"
   },
 }));
 
@@ -30,6 +31,18 @@ const renderer = ({ hours, minutes, completed }) => {
   return (
     <span className="unlink-twitter-text mb-0">
       {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
+    </span>
+  );
+};
+
+const renderer2 = ({ minutes, seconds, completed }) => {
+  if (completed) {
+    return <span>00:00</span>;
+  }
+
+  return (
+    <span>
+      {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
     </span>
   );
 };
@@ -51,20 +64,78 @@ const TwitterRewards = ({
 }) => {
   const windowSize = useWindowSize();
 
-  const dummyCooldown = 100000;
+  const isLocked = () => {
+    const lock = Number(localStorage.getItem("apiLock")) || 0;
+    const cooldownUntil = Number(localStorage.getItem("apiCooldownUntil")) || 0;
+    console.log("");
+
+    return lock === 2 && Date.now() < cooldownUntil;
+  };
+
+  const SIXTEEN_MINUTES = 16 * 60 * 1000;
+
+  const checkLimit = () => {
+    const count = Number(localStorage.getItem("apiCount") || 0);
+    const lock = Number(localStorage.getItem("apiLock") || 0);
+    const cooldownUntil = Number(localStorage.getItem("apiCooldownUntil") || 0);
+
+    // RESET EXPIRED
+    if (cooldownUntil && Date.now() > cooldownUntil) {
+      localStorage.setItem("apiCount", "0");
+      localStorage.setItem("apiLock", "0");
+      localStorage.setItem("apiCooldownUntil", "0");
+
+      return { allowed: true, lock: 0, remaining: 0 };
+    }
+
+    // HARD LOCK ACTIVE
+    if (lock === 2) {
+      return { allowed: false, lock: 2, remaining: cooldownUntil - Date.now() };
+    }
+
+    // FIRST CALL
+    if (count === 0) {
+      localStorage.setItem("apiCount", "1");
+      localStorage.setItem("apiLock", "1");
+      localStorage.setItem(
+        "apiCooldownUntil",
+        String(Date.now() + SIXTEEN_MINUTES)
+      );
+
+      return { allowed: true, lock: 1, remaining: SIXTEEN_MINUTES };
+    }
+
+    // SECOND CALL → HARD LOCK
+    if (count === 1) {
+      localStorage.setItem("apiCount", "2");
+      localStorage.setItem("apiLock", "2");
+      localStorage.setItem(
+        "apiCooldownUntil",
+        String(Date.now() + SIXTEEN_MINUTES)
+      );
+
+      return { allowed: true, lock: 2, remaining: SIXTEEN_MINUTES };
+    }
+
+    // FAIL SAFE
+    return { allowed: false, lock: 2, remaining: cooldownUntil - Date.now() };
+  };
 
   const completed = tasks.filter((item) =>
-    item.tasks.every((t) => t.completed && t.verified)
+    item.tasks
+      .filter((t) => t.task === "like" || t.task === "retweet") // include only these
+      .every((t) => t.completed && t.verified)
   );
-
   const available = tasks.filter(
-    (item) => !item.tasks.every((t) => t.completed && t.verified)
+    (item) =>
+      !item.tasks
+        .filter((t) => t.task === "like" || t.task === "retweet")
+        .every((t) => t.completed && t.verified)
   );
 
   const [tab, setTab] = useState("available");
-  const [loading, setLoading] = useState(false);
   const [popup, setPopup] = useState(false);
-
+  const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [completedPage, setCompletedPage] = useState(1);
   const postsPerPage = 3;
@@ -113,6 +184,17 @@ const TwitterRewards = ({
   useEffect(() => {
     checkCooldown();
   }, []);
+
+  useEffect(() => {
+    isLocked();
+  }, [checkLimit]);
+
+  const apiCooldownUntil =
+    Number(localStorage.getItem("apiCooldownUntil")) || null;
+
+  console.log(
+    isLocked()
+  );
 
   return (
     <>
@@ -267,6 +349,7 @@ const TwitterRewards = ({
                           <Countdown
                             date={Date.now() + twitterCooldown}
                             renderer={renderer}
+                           
                           />
                         </button>
                       </HtmlTooltip>
@@ -276,22 +359,27 @@ const TwitterRewards = ({
               </div>
             </div>
             <div className="col-12 col-md-6">
-              <div className="twitter-tab-container-1 d-flex align-items-center justify-content-between relative bg-gradient-to-br from-[#1a1640] to-[#0f0d28]   rounded-xl p-3  transition-all duration-200">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src="https://cdn.worldofdypians.com/wod/lbStarLarge.png"
-                    height={50}
-                    width={50}
-                    alt=""
-                  />
-                  <div className="d-flex flex-column">
-                    <h6 className="text-white font-medium mb-1">Total Stars</h6>
-                    <div className="d-flex align-items-end gap-1">
-                      <span class="text-2xl font-bold text-[#FFD700]">
-                        {value}
-                      </span>
+              <div className="twitter-tab-container-1 d-flex align-items-center justify-content-between relative bg-gradient-to-br from-[#1a1640] to-[#0f0d28]   rounded-xl p-3  transition-all duration-200 position-relative">
+                <div className="d-flex align-items-start flex-column gap-2 gap-lg-4 flex-lg-row">
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src="https://cdn.worldofdypians.com/wod/lbStarLarge.png"
+                      height={50}
+                      width={50}
+                      alt=""
+                    />
+                    <div className="d-flex flex-column">
+                      <h6 className="text-white font-medium mb-1">
+                        Total Stars
+                      </h6>
+                      <div className="d-flex align-items-end gap-1">
+                        <span class="text-2xl font-bold text-[#FFD700]">
+                          {value}
+                        </span>
+                      </div>
                     </div>
                   </div>
+              
                 </div>
                 <div className="d-flex flex-column gap-1">
                   <div className="available-rewards-wrapper p-1 d-flex align-items-center justify-content-between">
@@ -454,6 +542,52 @@ const TwitterRewards = ({
               </div>
             </div>
           </div>
+          <div className="w-100 d-flex justify-content-between align-items-center mt-3" style={{minHeight: "38px"}}>
+            <h6 className="twitter-warn-message mb-0">
+              You can only check 2 tasks every 15 minutes. Make sure you have
+              actually like/repost before checking.
+            </h6>
+                {isLocked() ? (
+                       <HtmlTooltip
+                        placement="top"
+                        title={
+                          <span className="unlink-twitter-text mb-0">
+                            You can start completing tasks after the timer ends
+                          </span>
+                        }
+                      >
+                          <button className="task-timer-button d-flex align-items-center gap-2 p-1 p-lg-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="22"
+                        viewBox="0 0 16 18"
+                        fill="none"
+                      >
+                        <path
+                          d="M7.38528 9.91355V6.54513M14.9642 4.01881L13.28 2.3346M5.70107 0.650391H9.06949M7.38528 16.6504C3.66462 16.6504 0.648438 13.6342 0.648438 9.91355C0.648438 6.19289 3.66462 3.17671 7.38528 3.17671C11.106 3.17671 14.1221 6.19289 14.1221 9.91355C14.1221 13.6342 11.106 16.6504 7.38528 16.6504Z"
+                          stroke="#A3A2B3"
+                          stroke-width="1.3"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+
+                      <Countdown date={apiCooldownUntil} renderer={renderer2} onComplete={() => {
+                        isLocked();
+                        checkLimit();
+                        setCount(count + 1)
+                        
+                      }} />
+                    </button>
+                      </HtmlTooltip>
+
+
+                  
+                  ) : (
+                    <></>
+                  )}
+          </div>
           <div className="twitter-tab-container-1 p-3 d-flex flex-column gap-3 mt-3">
             <div className="twitter-task-tab-container w-100 position-relative d-flex align-items-center">
               <div
@@ -526,6 +660,7 @@ const TwitterRewards = ({
                                       address={address}
                                       checkTwitter={checkTwitter}
                                       currentLength={available.length}
+                                      checkLimit={checkLimit}
                                     />
                                   ))}
 
@@ -589,7 +724,7 @@ const TwitterRewards = ({
                           </>
                         ) : (
                           <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
-                            <h6 className="twitter-empty-message mb-0">
+                            <h6 className="twitter-empty-message mb-0 text-center">
                               There are no tasks available. Check back soon.
                             </h6>
                           </div>

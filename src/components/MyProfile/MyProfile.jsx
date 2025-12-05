@@ -148,68 +148,81 @@ const MyProfile = ({
   const taskLength = JSON.parse(localStorage.getItem("taskLength"));
 
   const checkTwitter = async () => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/website-account/${address}`)
-      .then((res) => {
-        console.log(res.data, "twitterData");
-        setTwitter(res.data);
-        const incompleteCount = res.data.twitterTasks.filter(
-          (t) => t.completed === false && t.verified === false
-        ).length;
-        setTaskCount(incompleteCount);
-        const grouped = Object.values(
-          res?.data.twitterTasks.reduce((acc, item) => {
-            if (!acc[item.tweetId]) {
-              acc[item.tweetId] = {
-                tweetId: item.tweetId,
-                assignedAt: item.assignedAt,
-                tweetCreatedAt: item.tweetCreatedAt,
-                tweetDescription: item.tweetDescription,
-                tasks: [],
-              };
-            }
+  try {
+    const res = await axios.get(
+      `https://api.worldofdypians.com/api/website-account/${address}`
+    );
 
-            acc[item.tweetId].tasks.push({
-              task: item.task,
-              completed: item.completed,
-              verified: item.verified,
-              _id: item._id,
-            });
-            return acc;
-          }, {})
-        );
+    const data = res.data;
+    console.log(data,"twitterData");
+    
+    setTwitter(data);
 
-        const oldTasks = grouped.map((t) => {
-          return t.tweetId;
+    // 1) Group tasks by tweetId
+    const grouped = Object.values(
+      data.twitterTasks.reduce((acc, item) => {
+        if (!acc[item.tweetId]) {
+          acc[item.tweetId] = {
+            tweetId: item.tweetId,
+            assignedAt: item.assignedAt,
+            tweetCreatedAt: item.tweetCreatedAt,
+            tweetDescription: item.tweetDescription,
+            tasks: [],
+          };
+        }
+
+        acc[item.tweetId].tasks.push({
+          task: item.task,
+          completed: item.completed,
+          verified: item.verified,
+          _id: item._id,
         });
 
-        if (taskLength) {
-          const missingCount = oldTasks.filter(
-            (item) => !taskLength.includes(item)
-          ).length;
+        return acc;
+      }, {})
+    );
 
-          setNewTaskLength(missingCount);
-        }
+    // 2) All current task tweetIds
+    const currentTaskIds = grouped.map((t) => t.tweetId);
 
-        if (
-          !taskLength ||
-          Number(taskLength.length) ===
-            Number(
-              grouped.map((t) => {
-                return t.tweetId;
-              }).length
-            )
-        ) {
-          localStorage.setItem("taskLength", JSON.stringify(oldTasks));
-        }
+    // 3) Read localStorage safely
+    let storedTaskIds = null;
+    try {
+      storedTaskIds = JSON.parse(localStorage.getItem("taskLength"));
+      if (!Array.isArray(storedTaskIds)) storedTaskIds = null;
+    } catch {
+      storedTaskIds = null;
+    }
 
-        setTwitterTasks(grouped);
-        console.log(grouped, "grouped");
-      })
-      .catch((err) => {
-        console.log(err, "twitterError");
-      });
-  };
+    // 4) Compare for new tasks
+    let missingCount = 0;
+
+    if (storedTaskIds) {
+      missingCount = currentTaskIds.filter(
+        (item) => !storedTaskIds.includes(item)
+      ).length;
+    } else {
+      // If storage empty → all tasks are new
+      missingCount = currentTaskIds.length;
+    }
+
+    setNewTaskLength(missingCount);
+
+    // 5) Update localStorage only AFTER comparison
+    localStorage.setItem("taskLength", JSON.stringify(currentTaskIds));
+
+    // 6) Incomplete count
+    const incompleteCount = data.twitterTasks.filter(
+      (t) => t.completed === false && t.verified === false
+    ).length;
+
+    setTaskCount(incompleteCount);
+    setTwitterTasks(grouped);
+
+  } catch (err) {
+    console.log(err, "twitterError");
+  }
+};
 
   const checkCooldown = async () => {
     await axios
