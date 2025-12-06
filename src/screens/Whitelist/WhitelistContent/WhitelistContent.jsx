@@ -123,7 +123,7 @@ const WhitelistContent = ({
           settimerFinishedOTCCliff(true);
         }
       } else if (selectedRound.id == "cliff1-otc4") {
-        if (today2.getTime() > cliffTime + 2592000000 && cliffTime > 0) {
+        if (today2.getTime() > cliffTime && cliffTime > 0) {
           settimerFinishedOTC1Cliff4(true);
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) > 0) {
@@ -419,13 +419,10 @@ const WhitelistContent = ({
                           onTimerFinished(true);
                         }}
                       />
-                    ) : selectedRound?.id === "cliff1-otc4" ? (
+                    ) : selectedRound?.id === "cliff1-otc4" &&
+                      Number(cliffTime) > 0 ? (
                       <Countdown
-                        date={
-                          Number(userClaimedTokens) > 0
-                            ? 0
-                            : Number(cliffTime) + 2592000000
-                        }
+                        date={Number(cliffTime)}
                         renderer={renderer2}
                         // onComplete={() => {
                         //   settimerFinishedOTC1Cliff4(true);
@@ -558,7 +555,7 @@ const WhitelistContent = ({
                         className="rewardstxtwod mb-0"
                         style={{ color: "#F3BF09" }}
                       >
-                        00d:00h:00m
+                        00D:00H:00M
                       </h6>
                     )}
                   </span>
