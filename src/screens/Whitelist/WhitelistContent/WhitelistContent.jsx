@@ -58,6 +58,9 @@ const WhitelistContent = ({
   const [timerFinishedDypiansVesting, settimerFinishedDypiansVesting] =
     useState(false);
 
+  const [timerFinishedEvanVesting, settimerFinishedEvanVesting] =
+    useState(false);
+
   const [timerFinishedOTCCliff2, settimerFinishedOTCCliff2] = useState(false);
 
   const [timerFinishedOTCPoolBonus, settimerFinishedOTCPoolBonus] =
@@ -142,6 +145,13 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedDypiansVesting(true);
+        }
+      } else if (selectedRound.id == "evan-vesting") {
+        if (today2.getTime() > cliffTime && cliffTime > 0) {
+          settimerFinishedEvanVesting(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedEvanVesting(true);
         }
       } else if (selectedRound.id == "cliff-otc2") {
         if (today2.getTime() > cliffTime) {
@@ -290,7 +300,8 @@ const WhitelistContent = ({
                   selectedRound?.id == "cliff-otc" ||
                   selectedRound?.id == "cliff-otc2" ||
                   selectedRound?.id == "roundotc-vesting" ||
-                  selectedRound?.id == "dypians-vesting"
+                  selectedRound?.id == "dypians-vesting"||
+                  selectedRound?.id == "evan-vesting"
                     ? "USD"
                     : "WOD"}
                 </span>
@@ -314,7 +325,8 @@ const WhitelistContent = ({
                     selectedRound?.id == "cliff-otc" ||
                     selectedRound?.id == "cliff-otc2" ||
                     selectedRound?.id == "roundotc-vesting" ||
-                    selectedRound?.id == "dypians-vesting"
+                    selectedRound?.id == "dypians-vesting"||
+                    selectedRound?.id == "evan-vesting"
                       ? "USD"
                       : "WOD"}
                   </span>
@@ -333,7 +345,8 @@ const WhitelistContent = ({
                   selectedRound?.id !== "cliff-otc" &&
                   selectedRound?.id !== "cliff-otc2" &&
                   selectedRound?.id !== "roundotc-vesting" &&
-                  selectedRound?.id !== "dypians-vesting" && (
+                  selectedRound?.id !== "dypians-vesting" &&
+                  selectedRound?.id !== "evan-vesting"&& (
                     <div className="d-flex flex-column">
                       <span className="whitelist-upper-txt">
                         {getFormattedNumber(
@@ -452,6 +465,17 @@ const WhitelistContent = ({
                         }}
                       />
                     ) : userClaimedTokens &&
+                    Number(userClaimedTokens) > 0 &&
+                    selectedRound?.id === "evan-vesting" ? (
+                    <Countdown
+                      date={Number(cliffTime)}
+                      renderer={renderer2}
+                      onComplete={() => {
+                        settimerFinishedEvanVesting(true);
+                        onTimerFinished(true);
+                      }}
+                    />
+                  ) : userClaimedTokens &&
                       Number(userClaimedTokens) > 0 &&
                       selectedRound?.id === "cliff-otc2" ? (
                       <Countdown
@@ -942,6 +966,50 @@ const WhitelistContent = ({
                   disabled={
                     canClaim === false ||
                     timerFinishedDypiansVesting === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+{isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "evan-vesting" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedEvanVesting === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedEvanVesting === false ||
                     Number(wodBalance) === 0 ||
                     !isEOA
                       ? true

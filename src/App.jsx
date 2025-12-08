@@ -5133,6 +5133,26 @@ function AppRoutes() {
                 />
               }
             />
+             <Route
+              exact
+              path="/evan-vesting"
+              element={
+                <Whitelist
+                type="evan-vesting"
+
+                  isEOA={isEOA}
+                  chainId={networkId}
+                  isConnected={isConnected}
+                  handleConnection={() => {
+                    setWalletId("connect");
+                    setWalletModal(true);
+                  }}
+                  coinbase={coinbase}
+                  wagmiWalletClient={wagmiWalletClient}
+                  wagmiPublicClient={wagmiPublicClient}
+                />
+              }
+            />
 
             <Route
               exact

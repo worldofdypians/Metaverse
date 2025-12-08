@@ -26,6 +26,8 @@ import {
   OTCCLIFF2_ABI,
   ROUNDOTC_VESTING_ABI,
   DYPIANSVESTING_ABI,
+  EVANVESTING_ABI,
+
 } from "./abis";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
 import WhitelistContent from "./WhitelistContent/WhitelistContent";
@@ -65,6 +67,8 @@ const Whitelist = ({
   const [cliffTimeOtc1Cliff4, setcliffTimeOtc1Cliff4] = useState(0);
   const [cliffTimeRoundOtcVesting, setcliffTimeRoundOtcVesting] = useState(0);
   const [cliffTimeDypiansVesting, setcliffTimeDypiansVesting] = useState(0);
+  const [cliffTimeEvanVesting, setcliffTimeEvanVesting] = useState(0);
+
 
   const [cliffTimeOtcPoolBonus, setcliffTimeOtcPoolBonus] = useState(0);
   const [cliffTimeOtcPoolDynamic, setcliffTimeOtcPoolDynamic] = useState(0);
@@ -121,6 +125,14 @@ const Whitelist = ({
     useState(0);
   const [userVestedTokensDypiansVesting, setuserVestedTokensDypiansVesting] =
     useState(0);
+
+    const [pendingTokensEvanVesting, setpendingTokensEvanVesting] =
+    useState(0);
+  const [userClaimedTokensEvanVesting, setuserClaimedTokensEvanVesting] =
+    useState(0);
+  const [userVestedTokensEvanVesting, setuserVestedTokensEvanVesting] =
+    useState(0);
+
 
   const [pendingTokensOTCCliff2, setpendingTokensOTCCliff2] = useState(0);
   const [userClaimedTokensOTCCliff2, setuserClaimedTokensOTCCliff2] =
@@ -218,6 +230,12 @@ const Whitelist = ({
     useState(false);
   const [claimStatusDypiansVesting, setclaimStatusDypiansVesting] =
     useState("initial");
+
+    const [canClaimEvanVesting, setcanClaimEvanVesting] = useState(false);
+    const [claimLoadingEvanVesting, setclaimLoadingEvanVesting] =
+      useState(false);
+    const [claimStatusEvanVesting, setclaimStatusEvanVesting] =
+      useState("initial");
 
   const [canClaimOTCCliff2, setcanClaimOTCCliff2] = useState(false);
   const [claimLoadingOTCCliff2, setclaimLoadingOTCCliff2] = useState(false);
@@ -391,6 +409,15 @@ const Whitelist = ({
         [coinbase]
       );
       setcanClaimDypiansVesting(Number(availableTGE_DypiansVesting) === 1);
+
+      const availableTGE_EvanVesting = await readContractData(
+        activePublicClient,
+        window.config.evanvesting_address,
+        EVANVESTING_ABI,
+        "availableTGE",
+        [coinbase]
+      );
+      setcanClaimEvanVesting(Number(availableTGE_EvanVesting) === 1);
 
       const availableTGE_OTCCliff2 = await readContractData(
         activePublicClient,
@@ -604,6 +631,28 @@ const Whitelist = ({
         tokensToClaimAmountDypiansVesting_formatted
       );
 
+
+
+
+      const tokensToClaimAmountEvanVesting = await readContractData(
+        activePublicClient,
+        window.config.evanvesting_address,
+        EVANVESTING_ABI,
+        "getPendingUnlocked",
+        [coinbase]
+      );
+      const tokensToClaimAmountEvanVesting_formatted = formatTokenAmount(
+        tokensToClaimAmountEvanVesting
+      );
+      setcanClaimEvanVesting(
+        tokensToClaimAmountEvanVesting_formatted > 0
+      );
+      setpendingTokensEvanVesting(
+        tokensToClaimAmountEvanVesting_formatted
+      );
+
+
+
       const tokensToClaimAmountOTCCliff2 = await readContractData(
         activePublicClient,
         window.config.otccliff2_address,
@@ -727,6 +776,7 @@ const Whitelist = ({
         claimedOTC1Cliff4,
         claimedRoundOtcVesting,
         claimedDypiansVesting,
+        claimedEvanVesting,
         claimedOTCCliff2,
         claimedOTCPoolBonus,
         claimedOTCPoolDynamic,
@@ -810,6 +860,14 @@ const Whitelist = ({
 
         readContractData(
           activePublicClient,
+          window.config.evanvesting_address,
+          EVANVESTING_ABI,
+          "claimedTokens",
+          [coinbase]
+        ),
+
+        readContractData(
+          activePublicClient,
           window.config.otccliff2_address,
           OTCCLIFF2_ABI,
           "claimedTokens",
@@ -882,6 +940,9 @@ const Whitelist = ({
       setuserClaimedTokensDypiansVesting(
         formatTokenAmount(claimedDypiansVesting)
       );
+      setuserClaimedTokensEvanVesting(
+        formatTokenAmount(claimedEvanVesting)
+      );
       setuserClaimedTokensOTCCliff2(formatTokenAmount(claimedOTCCliff2));
 
       setuserClaimedTokensOTCPoolBonus(formatTokenAmount(claimedOTCPoolBonus));
@@ -910,6 +971,7 @@ const Whitelist = ({
         vestedOTC1Cliff4,
         vestedRoundOtcVesting,
         vestedDypiansVesting,
+        vestedEvanVesting,
         vestedOTCCliff2,
         vestedOTCPoolBonus,
         vestedOTCPoolDynamic,
@@ -991,6 +1053,13 @@ const Whitelist = ({
         ),
         readContractData(
           activePublicClient,
+          window.config.evanvesting_address,
+          EVANVESTING_ABI,
+          "vestedTokens",
+          [coinbase]
+        ),
+        readContractData(
+          activePublicClient,
           window.config.otccliff2_address,
           OTCCLIFF2_ABI,
           "vestedTokens",
@@ -1063,6 +1132,9 @@ const Whitelist = ({
       setuserVestedTokensDypiansVesting(
         formatTokenAmount(vestedDypiansVesting)
       );
+      setuserVestedTokensEvanVesting(
+        formatTokenAmount(vestedEvanVesting)
+      );
       setuserVestedTokensOTCCliff2(formatTokenAmount(vestedOTCCliff2));
 
       setuserVestedTokensOTCPoolBonus(formatTokenAmount(vestedOTCPoolBonus));
@@ -1108,6 +1180,7 @@ const Whitelist = ({
         lastClaimedTimeOTC1Cliff4,
         lastClaimedTimeRoundOtcVesting,
         lastClaimedTimeDypiansVesting,
+        lastClaimedTimeEvanVesting,
         lastClaimedTimeOTCCliff2,
         lastClaimedTimeOTCPoolBonus,
         lastClaimedTimeOTCPoolDynamic,
@@ -1189,6 +1262,13 @@ const Whitelist = ({
         ),
         readContractData(
           activePublicClient,
+          window.config.evanvesting_address,
+          EVANVESTING_ABI,
+          "lastClaimedTime",
+          [coinbase]
+        ),
+        readContractData(
+          activePublicClient,
           window.config.otccliff2_address,
           OTCCLIFF2_ABI,
           "lastClaimedTime",
@@ -1259,6 +1339,8 @@ const Whitelist = ({
         Number(lastClaimedTimeRoundOtcVesting) * 1000
       );
       setcliffTimeDypiansVesting(Number(lastClaimedTimeDypiansVesting) * 1000);
+      setcliffTimeEvanVesting(Number(lastClaimedTimeEvanVesting) * 1000);
+
       setcliffTimeOtcCliff2(Number(lastClaimedTimeOTCCliff2) * 1000);
 
       setcliffTimeOtcPoolBonus(Number(lastClaimedTimeOTCPoolBonus) * 1000);
@@ -1731,6 +1813,51 @@ const Whitelist = ({
     }
   };
 
+  const handleClaimEvanVesting = async () => {
+    if (!activeWalletClient || !activePublicClient) {
+      window.alertify.error("Wallet not connected");
+      return;
+    }
+    console.log("evan-vesting");
+    setclaimLoadingEvanVesting(true);
+
+    try {
+      const hash = await activeWalletClient.writeContract({
+        address: window.config.evanvesting_address,
+        abi: EVANVESTING_ABI,
+        functionName: "claim",
+        args: [],
+        account: coinbase,
+      });
+
+      const receipt = await activePublicClient.waitForTransactionReceipt({
+        hash,
+      });
+
+      if (receipt.status === "success") {
+        setclaimStatusEvanVesting("success");
+        setclaimLoadingEvanVesting(false);
+        setTimeout(() => {
+          setclaimStatusEvanVesting("initial");
+          getInfo();
+          getInfoTimer();
+        }, 5000);
+      } else {
+        throw new Error("Transaction failed");
+      }
+    } catch (error) {
+      console.error(error);
+      window.alertify.error(
+        error?.shortMessage || error?.message || "Transaction failed"
+      );
+      setclaimStatusEvanVesting("failed");
+      setclaimLoadingEvanVesting(false);
+      setTimeout(() => {
+        setclaimStatusEvanVesting("initial");
+      }, 5000);
+    }
+  };
+
   const handleClaimOTCCliff2 = async () => {
     if (!activeWalletClient || !activePublicClient) {
       window.alertify.error("Wallet not connected");
@@ -2159,6 +2286,8 @@ const Whitelist = ({
               ? pendingTokensRoundOtcVesting
               : type === "dypians-vesting"
               ? pendingTokensDypiansVesting
+              : type === "evan-vesting"
+              ? pendingTokensEvanVesting
               : type === "cliff-otc2"
               ? pendingTokensOTCCliff2
               : type === "pool-bonus"
@@ -2198,6 +2327,8 @@ const Whitelist = ({
               ? userClaimedTokensRoundOtcVesting
               : type === "dypians-vesting"
               ? userClaimedTokensDypiansVesting
+              : type === "evan-vesting"
+              ? userClaimedTokensEvanVesting
               : type === "cliff-otc2"
               ? userClaimedTokensOTCCliff2
               : type === "pool-bonus"
@@ -2237,6 +2368,8 @@ const Whitelist = ({
               ? userVestedTokensRoundOtcVesting
               : type === "dypians-vesting"
               ? userVestedTokensDypiansVesting
+              : type === "evan-vesting"
+              ? userVestedTokensEvanVesting
               : type === "cliff-otc2"
               ? userVestedTokensOTCCliff2
               : type === "pool-bonus"
@@ -2276,6 +2409,8 @@ const Whitelist = ({
               ? handleClaimRoundOtcVesting()
               : type === "dypians-vesting"
               ? handleClaimDypiansVesting()
+              : type === "evan-vesting"
+              ? handleClaimEvanVesting()
               : type === "cliff-otc2"
               ? handleClaimOTCCliff2()
               : type === "pool-bonus"
@@ -2313,6 +2448,8 @@ const Whitelist = ({
               ? claimStatusRoundOtcVesting
               : type === "dypians-vesting"
               ? claimStatusDypiansVesting
+              : type === "evan -vesting"
+              ? claimStatusEvanVesting
               : type === "cliff-otc2"
               ? claimStatusOTCCliff2
               : type === "pool-bonus"
@@ -2352,6 +2489,8 @@ const Whitelist = ({
               ? claimLoadingRoundOtcVesting
               : type === "dypians-vesting"
               ? claimLoadingDypiansVesting
+              : type === "evan-vesting"
+              ? claimLoadingEvanVesting
               : type === "cliff-otc2"
               ? claimLoadingOTCCliff2
               : type === "pool-bonus"
@@ -2392,6 +2531,8 @@ const Whitelist = ({
               ? canClaimRoundOtcVesting
               : type === "dypians-vesting"
               ? canClaimDypiansVesting
+              : type === "evan-vesting"
+              ? canClaimEvanVesting
               : type === "cliff-otc2"
               ? canClaimOTCCliff2
               : type === "pool-bonus"
@@ -2431,6 +2572,8 @@ const Whitelist = ({
               ? setcanClaimRoundOtcVesting(value)
               : type === "dypians-vesting"
               ? setcanClaimDypiansVesting(value)
+              : type === "evan-vesting"
+              ? setcanClaimEvanVesting(value)
               : type === "cliff-otc2"
               ? setcanClaimOTCCliff2(value)
               : type === "pool-bonus"
@@ -2471,6 +2614,8 @@ const Whitelist = ({
               ? cliffTimeRoundOtcVesting
               : type === "dypians-vesting"
               ? cliffTimeDypiansVesting
+              : type === "evan-vesting"
+              ? cliffTimeEvanVesting
               : type === "cliff-otc2"
               ? cliffTimeOtcCliff2
               : type === "pool-bonus"
