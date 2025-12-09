@@ -248,8 +248,8 @@ const BetaPassNFT = ({
       rewardType: "Manta",
       userEarned: userTreasureHuntStats.mantaEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Apr 15, 2025",
-      eventEndDate: "Aug 13, 2025",
+      eventStartDate: "Apr. 15, 2025",
+      eventEndDate: "Aug. 13, 2025",
     },
 
     {
@@ -271,8 +271,8 @@ const BetaPassNFT = ({
       rewardType: "CORE",
       userEarned: userTreasureHuntStats.coreEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Aug 14, 2025",
-      eventEndDate: "Dec 13, 2025",
+      eventStartDate: "Dec. 12, 2025",
+      eventEndDate: "Apr. 11, 2026",
     },
     {
       id: "sei",
@@ -293,8 +293,8 @@ const BetaPassNFT = ({
       rewardType: "SEI",
       userEarned: userTreasureHuntStats.seiEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Apr 18, 2025",
-      eventEndDate: "Aug 18, 2025",
+      eventStartDate: "Apr. 18, 2025",
+      eventEndDate: "Aug. 18, 2025",
     },
     {
       id: "viction",
