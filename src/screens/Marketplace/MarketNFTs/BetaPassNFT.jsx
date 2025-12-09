@@ -66,12 +66,12 @@ const BetaPassNFT = ({
       cardClassName: "bnb-mint-bg",
       wrapperClassName: "bnb-eventwrapper",
       treasureHuntStatus: "Live",
-      rewardsTitle: "$30,000 in BNB rewards",
+      rewardsTitle: "$50,000 in BNB rewards",
       rewardType: "BNB",
       userEarned: userTreasureHuntStats.bnbEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Aug. 13, 2025",
-      eventEndDate: "Dec. 11, 2025",
+      eventStartDate: "Dec. 11, 2025",
+      eventEndDate: "Apr. 10, 2026",
     },
 
     {
