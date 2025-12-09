@@ -199,7 +199,8 @@ window.config = {
   roundotc_vesting_address: "0x2a743e768fb02efb66afb9b0236dded09468d5ba",
   dypiansvesting_address: "0x5f312ab8419386d217a9df2a0cee6a19703c7ce9",
   evanvesting_address: "0xe5f9b7648e22bbd0218d2e81096063c2ab0ee8fa",
-
+  old30vesting_address: "0x26eb18be24a827ca7427b903fdd6d12913aa6860",
+  old7vesting_address: "0xf3589ef463dcb851888b69b80f44dead2015d812",
 
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
@@ -36802,7 +36803,7 @@ window.cached_contracts = Object.create(null);
 async function getCoinbase() {
   if (
     window.ethereum &&
-    window.WALLET_TYPE !== "binance" && 
+    window.WALLET_TYPE !== "binance" &&
     window.WALLET_TYPE !== ""
   ) {
     if (window.WALLET_TYPE == "coin98") {
