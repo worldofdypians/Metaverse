@@ -7,11 +7,9 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-
 import OutsideClickHandler from "react-outside-click-handler";
 // import axios from "axios";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
-
 
 const BetaPassNFT = ({
   isConnected,
@@ -51,7 +49,7 @@ const BetaPassNFT = ({
       icon: "expand",
     },
   ];
-  
+
   const betaPasses = [
     {
       id: "bnb",
@@ -134,13 +132,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "taiko-mint-bg",
       wrapperClassName: "taiko-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in Taiko rewards",
       rewardType: "Taiko",
       userEarned: userTreasureHuntStats.taikoEarnUsd,
       eventType: "Explore & Mine",
       eventStartDate: "Aug 08, 2025",
-      eventEndDate: "Dec. 06, 2025",
+      eventEndDate: "Dec. 09, 2025",
     },
     {
       id: "cookie3",
@@ -499,8 +497,6 @@ const BetaPassNFT = ({
       eventEndDate: "Apr. 04, 2025",
     },
   ];
-
-
 
   const locationState = location?.pathname;
 
@@ -1002,7 +998,6 @@ const BetaPassNFT = ({
                               </ul>
                             </div>
                           )} */}
-                    
 
                       {/* {playerCreation === true &&
                           linkWallet === false &&

@@ -1416,7 +1416,7 @@ function AppRoutes() {
     {
       title: "Taiko",
       logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
       location: [-0.06942812516951939, 0.08510112762451173],
@@ -1437,7 +1437,7 @@ function AppRoutes() {
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Live",
+        status: "Expired",
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TAIKO Rewards",
@@ -3963,9 +3963,9 @@ function AppRoutes() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            if (taikoEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (taikoEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -5133,13 +5133,12 @@ function AppRoutes() {
                 />
               }
             />
-             <Route
+            <Route
               exact
               path="/evan-vesting"
               element={
                 <Whitelist
-                type="evan-vesting"
-
+                  type="evan-vesting"
                   isEOA={isEOA}
                   chainId={networkId}
                   isConnected={isConnected}
