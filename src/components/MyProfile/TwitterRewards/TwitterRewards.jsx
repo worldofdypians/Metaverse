@@ -19,7 +19,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     maxWidth: "250px !important",
     minWidth: "90px !important",
     fontSize: "12px",
-    textAlign: "center"
+    textAlign: "center",
   },
 }));
 
@@ -61,6 +61,8 @@ const TwitterRewards = ({
   twitter,
   twitterCooldown,
   checkCooldown,
+  taskLengthState,
+  setTaskLengthState,
 }) => {
   const windowSize = useWindowSize();
 
@@ -120,6 +122,21 @@ const TwitterRewards = ({
     // FAIL SAFE
     return { allowed: false, lock: 2, remaining: cooldownUntil - Date.now() };
   };
+
+  const initializeCooldown = () => {
+    const cooldownUntil = Number(localStorage.getItem("apiCooldownUntil")) || 0;
+
+    if (cooldownUntil && Date.now() > cooldownUntil) {
+      // cooldown expired → fully reset
+      localStorage.setItem("apiCount", "0");
+      localStorage.setItem("apiLock", "0");
+      localStorage.setItem("apiCooldownUntil", "0");
+    }
+  };
+
+  useEffect(() => {
+    initializeCooldown();
+  }, []);
 
   const completed = tasks.filter((item) =>
     item.tasks
@@ -192,9 +209,7 @@ const TwitterRewards = ({
   const apiCooldownUntil =
     Number(localStorage.getItem("apiCooldownUntil")) || null;
 
-  console.log(
-    isLocked()
-  );
+  console.log(isLocked());
 
   return (
     <>
@@ -349,7 +364,6 @@ const TwitterRewards = ({
                           <Countdown
                             date={Date.now() + twitterCooldown}
                             renderer={renderer}
-                           
                           />
                         </button>
                       </HtmlTooltip>
@@ -379,7 +393,6 @@ const TwitterRewards = ({
                       </div>
                     </div>
                   </div>
-              
                 </div>
                 <div className="d-flex flex-column gap-1">
                   <div className="available-rewards-wrapper p-1 d-flex align-items-center justify-content-between">
@@ -542,51 +555,54 @@ const TwitterRewards = ({
               </div>
             </div>
           </div>
-          <div className="w-100 d-flex justify-content-between align-items-center mt-3" style={{minHeight: "38px"}}>
+          <div
+            className="w-100 d-flex justify-content-between align-items-center mt-3"
+            style={{ minHeight: "38px" }}
+          >
             <h6 className="twitter-warn-message mb-0">
               You can only check 2 tasks every 15 minutes. Make sure you have
               actually like/repost before checking.
             </h6>
-                {isLocked() ? (
-                       <HtmlTooltip
-                        placement="top"
-                        title={
-                          <span className="unlink-twitter-text mb-0">
-                            You can start completing tasks after the timer ends
-                          </span>
-                        }
-                      >
-                          <button className="task-timer-button d-flex align-items-center gap-2 p-1 p-lg-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="22"
-                        viewBox="0 0 16 18"
-                        fill="none"
-                      >
-                        <path
-                          d="M7.38528 9.91355V6.54513M14.9642 4.01881L13.28 2.3346M5.70107 0.650391H9.06949M7.38528 16.6504C3.66462 16.6504 0.648438 13.6342 0.648438 9.91355C0.648438 6.19289 3.66462 3.17671 7.38528 3.17671C11.106 3.17671 14.1221 6.19289 14.1221 9.91355C14.1221 13.6342 11.106 16.6504 7.38528 16.6504Z"
-                          stroke="#A3A2B3"
-                          stroke-width="1.3"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
+            {isLocked() ? (
+              <HtmlTooltip
+                placement="top"
+                title={
+                  <span className="unlink-twitter-text mb-0">
+                    You can start completing tasks after the timer ends
+                  </span>
+                }
+              >
+                <button className="task-timer-button d-flex align-items-center gap-2 p-1 p-lg-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="22"
+                    viewBox="0 0 16 18"
+                    fill="none"
+                  >
+                    <path
+                      d="M7.38528 9.91355V6.54513M14.9642 4.01881L13.28 2.3346M5.70107 0.650391H9.06949M7.38528 16.6504C3.66462 16.6504 0.648438 13.6342 0.648438 9.91355C0.648438 6.19289 3.66462 3.17671 7.38528 3.17671C11.106 3.17671 14.1221 6.19289 14.1221 9.91355C14.1221 13.6342 11.106 16.6504 7.38528 16.6504Z"
+                      stroke="#A3A2B3"
+                      stroke-width="1.3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
 
-                      <Countdown date={apiCooldownUntil} renderer={renderer2} onComplete={() => {
-                        isLocked();
-                        checkLimit();
-                        setCount(count + 1)
-                        
-                      }} />
-                    </button>
-                      </HtmlTooltip>
-
-
-                  
-                  ) : (
-                    <></>
-                  )}
+                  <Countdown
+                    date={apiCooldownUntil}
+                    renderer={renderer2}
+                    onComplete={() => {
+                      isLocked();
+                      checkLimit();
+                      setCount(count + 1);
+                    }}
+                  />
+                </button>
+              </HtmlTooltip>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="twitter-tab-container-1 p-3 d-flex flex-column gap-3 mt-3">
             <div className="twitter-task-tab-container w-100 position-relative d-flex align-items-center">
@@ -661,6 +677,15 @@ const TwitterRewards = ({
                                       checkTwitter={checkTwitter}
                                       currentLength={available.length}
                                       checkLimit={checkLimit}
+                                      taskLengthState={taskLengthState}
+                                      onRemoveNew={(id) => {
+                                        const updated = [...taskLengthState, id];
+                                        localStorage.setItem(
+                                          "taskLength",
+                                          JSON.stringify(updated)
+                                        );
+                                        setTaskLengthState(updated); // <-- this forces rerender
+                                      }}
                                     />
                                   ))}
 
@@ -715,6 +740,15 @@ const TwitterRewards = ({
                                     address={address}
                                     checkTwitter={checkTwitter}
                                     currentLength={available.length}
+                                    taskLengthState={taskLengthState}
+                                    onRemoveNew={(id) => {
+                                      const updated = [...taskLengthState, id];
+                                      localStorage.setItem(
+                                        "taskLength",
+                                        JSON.stringify(updated)
+                                      );
+                                      setTaskLengthState(updated); // <-- this forces rerender
+                                    }}
                                   />
                                 ))}
 

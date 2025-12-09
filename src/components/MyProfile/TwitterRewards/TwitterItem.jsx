@@ -9,6 +9,7 @@ const TwitterItem = ({
   checkTwitter,
   add,
   checkLimit,
+  onRemoveNew,
 }) => {
   const [loading, setLoading] = useState({
     like: false,
@@ -18,13 +19,7 @@ const TwitterItem = ({
 
   const taskLength = JSON.parse(localStorage.getItem("taskLength"));
 
-  const removeNew = (id) => {
-    const stored = JSON.parse(localStorage.getItem("taskLength")) || [];
-
-    const updated = [...stored, id]; // safely push a string
-
-    localStorage.setItem("taskLength", JSON.stringify(updated));
-  };
+ 
 
   const timestamp = item.tweetCreatedAt;
   const date = new Date(timestamp);
@@ -108,7 +103,7 @@ const TwitterItem = ({
         <a
           href={`https://x.com/worldofdypians/status/${item.tweetId}`}
           onClick={() => {
-            removeNew(item.tweetId);
+            onRemoveNew(item.tweetId);
           }}
           target="_blank"
           className="tweet-title-holder p-3 d-flex align-items-center gap-2 position-relative"

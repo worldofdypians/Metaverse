@@ -103,6 +103,7 @@ const MyProfile = ({
   const [rankDropdown, setRankDropdown] = useState(false);
   const [tooltip, setTooltip] = useState(false);
   const [cooldown, setCooldown] = useState(null);
+  const [taskLengthState, setTaskLengthState] = useState([]);
   let now = new Date().getTime();
   let now2 = new Date();
 
@@ -189,6 +190,7 @@ const MyProfile = ({
     let storedTaskIds = null;
     try {
       storedTaskIds = JSON.parse(localStorage.getItem("taskLength"));
+      setTaskLengthState(storedTaskIds || []);
       if (!Array.isArray(storedTaskIds)) storedTaskIds = null;
     } catch {
       storedTaskIds = null;
@@ -1896,6 +1898,8 @@ const MyProfile = ({
       </div>
       {popup && (
         <TwitterRewards
+        taskLengthState={taskLengthState}
+        setTaskLengthState={setTaskLengthState}
           taskCount={taskCount}
           tasks={twitterTasks}
           onClose={() => {
