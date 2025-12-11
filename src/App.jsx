@@ -626,7 +626,7 @@ function AppRoutes() {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let teaLastDay = new Date("2025-10-16T13:00:00.000+02:00");
-  let bnbLastDay = new Date("2025-12-11T14:00:00.000+02:00");
+  let bnbLastDay = new Date("2026-04-10T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
   let coreLastDay2 = new Date("2025-12-12T14:00:00.000+02:00");
@@ -1037,6 +1037,66 @@ function AppRoutes() {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
       eventStatus: "Live",
+      totalRewards: "$50,000 in BNB Rewards",
+      rewardAmount: "$50,000",
+      myEarnings: 0.0,
+      location: [-0.06735561726792588, 0.08666753768920898],
+      eventType: "Explore & Mine",
+      eventDate: "Dec 11, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
+      userEarnUsd: user.userStats.bnbEarnUsd,
+      userEarnCrypto: user.userStats.bnbEarnToken,
+      userEarnPoints: user.userStats.bnbPoints,
+      image: "bnbBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      rewardType: "BNB",
+
+      marker: markers.treasureMarker,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Live",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$50,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Dec 11, 2025",
+        detailsText: `To participate in the event, players are required to
+                  <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
+                  Chain Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the BNB
+                  Chain area, players not only stand a chance to secure daily
+                  rewards in BNB, but also earn points for their placement on
+                  the global leaderboard. Remember to log in to the game daily 
+                  and venture into the BNB Chain area to uncover hidden
+                  treasures.`,
+        about: `BNB Chain is a high-performance blockchain designed to support the
+            expansive growth of decentralized applications. It offers a robust
+            infrastructure that combines high throughput, low latency, and low
+            fees, making it the ideal platform for DeFi, NFTs, and gaming. With
+            BNB Chain, developers can leverage advanced functionalities such as
+            cross-chain compatibility, on-chain governance, and scalable smart
+            contracts. The ecosystem empowers projects to build and scale
+            efficiently, ensuring fast, secure, and decentralized solutions
+            without compromising on user experience or innovation.`,
+        twitterLink: "https://x.com/BNBChain",
+        telegramLink: "https://t.me/bnbchain",
+        websiteLink: "https://www.bnbchain.org/en",
+        thumbImage: "https://cdn.worldofdypians.com/wod/bnbPopupImage.png",
+      },
+    },
+    {
+      title: "BNB Chain",
+      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
+      eventStatus: "Expired",
       totalRewards: "$30,000 in BNB Rewards",
       rewardAmount: "$30,000",
       myEarnings: 0.0,
@@ -1044,9 +1104,9 @@ function AppRoutes() {
       eventType: "Explore & Mine",
       eventDate: "Aug 13, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
-      userEarnUsd: user.userStats.bnbEarnUsd,
-      userEarnCrypto: user.userStats.bnbEarnToken,
-      userEarnPoints: user.userStats.bnbPoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       image: "bnbBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
