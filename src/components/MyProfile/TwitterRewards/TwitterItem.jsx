@@ -9,7 +9,8 @@ const TwitterItem = ({
   checkTwitter,
   add,
   checkLimit,
-  onRemoveNew,
+  seenPosts,
+  setSeenPosts,
 }) => {
   const [loading, setLoading] = useState({
     like: false,
@@ -17,9 +18,16 @@ const TwitterItem = ({
     retweet: false,
   });
 
-  const taskLength = JSON.parse(localStorage.getItem("taskLength"));
+  const isNew = (id) => !seenPosts.includes(id);
 
- 
+  const handleRemove = (id) => {
+    // Add to seen posts only if not already added
+    if (!seenPosts.includes(id)) {
+      const updated = [...seenPosts, id];
+      setSeenPosts(updated);
+      localStorage.setItem("seenPosts", JSON.stringify(updated));
+    }
+  };
 
   const timestamp = item.tweetCreatedAt;
   const date = new Date(timestamp);
@@ -93,7 +101,7 @@ const TwitterItem = ({
       className="twitter-task-item d-flex flex-column flex-lg-row align-items-center justify-content-between  w-100  p-2 position-relative"
       key={index}
     >
-      {!taskLength?.includes(item.tweetId) && (
+      {isNew(item.tweetId) && (
         <div className="new-post-tag d-flex px-2 py-1 align-items-center justify-content-center">
           <span className="new-post-text">NEW</span>
         </div>
@@ -103,7 +111,7 @@ const TwitterItem = ({
         <a
           href={`https://x.com/worldofdypians/status/${item.tweetId}`}
           onClick={() => {
-            onRemoveNew(item.tweetId);
+            handleRemove(item.tweetId);
           }}
           target="_blank"
           className="tweet-title-holder p-3 d-flex align-items-center gap-2 position-relative"

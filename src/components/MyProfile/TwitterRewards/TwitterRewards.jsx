@@ -61,8 +61,9 @@ const TwitterRewards = ({
   twitter,
   twitterCooldown,
   checkCooldown,
-  taskLengthState,
-  setTaskLengthState,
+
+  seenPosts,
+  setSeenPosts,
 }) => {
   const windowSize = useWindowSize();
 
@@ -677,15 +678,8 @@ const TwitterRewards = ({
                                       checkTwitter={checkTwitter}
                                       currentLength={available.length}
                                       checkLimit={checkLimit}
-                                      taskLengthState={taskLengthState}
-                                      onRemoveNew={(id) => {
-                                        const updated = [...taskLengthState, id];
-                                        localStorage.setItem(
-                                          "taskLength",
-                                          JSON.stringify(updated)
-                                        );
-                                        setTaskLengthState(updated); // <-- this forces rerender
-                                      }}
+                                      seenPosts={seenPosts}
+                                      setSeenPosts={setSeenPosts}
                                     />
                                   ))}
 
@@ -738,17 +732,10 @@ const TwitterRewards = ({
                                     item={item}
                                     index={index}
                                     address={address}
+                                    seenPosts={seenPosts}
+                                    setSeenPosts={setSeenPosts}
                                     checkTwitter={checkTwitter}
                                     currentLength={available.length}
-                                    taskLengthState={taskLengthState}
-                                    onRemoveNew={(id) => {
-                                      const updated = [...taskLengthState, id];
-                                      localStorage.setItem(
-                                        "taskLength",
-                                        JSON.stringify(updated)
-                                      );
-                                      setTaskLengthState(updated); // <-- this forces rerender
-                                    }}
                                   />
                                 ))}
 

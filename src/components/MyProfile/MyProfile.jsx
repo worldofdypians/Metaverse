@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import "./_myprofile.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import Clipboard from "react-clipboard.js";
@@ -103,7 +103,7 @@ const MyProfile = ({
   const [rankDropdown, setRankDropdown] = useState(false);
   const [tooltip, setTooltip] = useState(false);
   const [cooldown, setCooldown] = useState(null);
-  const [taskLengthState, setTaskLengthState] = useState([]);
+
   let now = new Date().getTime();
   let now2 = new Date();
 
@@ -145,86 +145,70 @@ const MyProfile = ({
   const [connectPopup, setConnectPopup] = useState(false);
   const [twitterCooldown, setTwitterCooldown] = useState({});
   const [taskCount, setTaskCount] = useState(0);
-  const [newTaskLength, setNewTaskLength] = useState(0);
-  const taskLength = JSON.parse(localStorage.getItem("taskLength"));
+  const [seenPosts, setSeenPosts] = useState([]);
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("seenPosts")) || [];
+    setSeenPosts(stored);
+  }, []);
 
   const checkTwitter = async () => {
-  try {
-    const res = await axios.get(
-      `https://api.worldofdypians.com/api/website-account/${address}`
-    );
-
-    const data = res.data;
-    console.log(data,"twitterData");
-    
-    setTwitter(data);
-
-    // 1) Group tasks by tweetId
-    const grouped = Object.values(
-      data.twitterTasks.reduce((acc, item) => {
-        if (!acc[item.tweetId]) {
-          acc[item.tweetId] = {
-            tweetId: item.tweetId,
-            assignedAt: item.assignedAt,
-            tweetCreatedAt: item.tweetCreatedAt,
-            tweetDescription: item.tweetDescription,
-            tasks: [],
-          };
-        }
-
-        acc[item.tweetId].tasks.push({
-          task: item.task,
-          completed: item.completed,
-          verified: item.verified,
-          _id: item._id,
-        });
-
-        return acc;
-      }, {})
-    );
-
-    // 2) All current task tweetIds
-    const currentTaskIds = grouped.map((t) => t.tweetId);
-
-    // 3) Read localStorage safely
-    let storedTaskIds = null;
     try {
-      storedTaskIds = JSON.parse(localStorage.getItem("taskLength"));
-      setTaskLengthState(storedTaskIds || []);
-      if (!Array.isArray(storedTaskIds)) storedTaskIds = null;
-    } catch {
-      storedTaskIds = null;
-    }
+      const res = await axios.get(
+        `https://api.worldofdypians.com/api/website-account/${address}`
+      );
 
-    // 4) Compare for new tasks
-    let missingCount = 0;
+      const data = res.data;
+      console.log(data, "twitterData");
 
-    if (storedTaskIds) {
-      missingCount = currentTaskIds.filter(
-        (item) => !storedTaskIds.includes(item)
+      setTwitter(data);
+
+      // 1) Group tasks by tweetId
+      const grouped = Object.values(
+        data.twitterTasks.reduce((acc, item) => {
+          if (!acc[item.tweetId]) {
+            acc[item.tweetId] = {
+              tweetId: item.tweetId,
+              assignedAt: item.assignedAt,
+              tweetCreatedAt: item.tweetCreatedAt,
+              tweetDescription: item.tweetDescription,
+              tasks: [],
+            };
+          }
+
+          acc[item.tweetId].tasks.push({
+            task: item.task,
+            completed: item.completed,
+            verified: item.verified,
+            _id: item._id,
+          });
+
+          return acc;
+        }, {})
+      );
+
+      // 6) Incomplete count
+      const incompleteCount = data.twitterTasks.filter(
+        (t) => t.completed === false && t.verified === false
       ).length;
-    } else {
-      // If storage empty → all tasks are new
-      missingCount = currentTaskIds.length;
+
+      setTaskCount(incompleteCount);
+      setTwitterTasks(grouped);
+    } catch (err) {
+      console.log(err, "twitterError");
     }
+  };
 
-    setNewTaskLength(missingCount);
+  const markAllAsSeen = () => {
+    const allIds = twitterTasks.map((post) => post.tweetId);
 
-    // 5) Update localStorage only AFTER comparison
-    localStorage.setItem("taskLength", JSON.stringify(currentTaskIds));
+    setSeenPosts(allIds);
+    localStorage.setItem("seenPosts", JSON.stringify(allIds));
+  };
 
-    // 6) Incomplete count
-    const incompleteCount = data.twitterTasks.filter(
-      (t) => t.completed === false && t.verified === false
-    ).length;
+  const newPostsCount = twitterTasks.length - seenPosts.length;
 
-    setTaskCount(incompleteCount);
-    setTwitterTasks(grouped);
-
-  } catch (err) {
-    console.log(err, "twitterError");
-  }
-};
+  console.log(newPostsCount);
 
   const checkCooldown = async () => {
     await axios
@@ -232,8 +216,9 @@ const MyProfile = ({
       .then((res) => {
         console.log(res.data, "cooldown");
         setTwitterCooldown(res.data.remainingMs);
-      }).catch((err) => {
-        setTwitterCooldown(0)
+      })
+      .catch((err) => {
+        setTwitterCooldown(0);
       });
   };
 
@@ -1578,10 +1563,10 @@ const MyProfile = ({
                         </div>
                       </div>
                     </div>
-                    {newTaskLength > 0 && (
+                    {newPostsCount > 0 && (
                       <div className="task-length-wrapper d-flex align-items-center justify-content-center">
                         <span className="task-length-text">
-                          {newTaskLength} New
+                          {newPostsCount} New
                         </span>
                       </div>
                     )}
@@ -1898,20 +1883,13 @@ const MyProfile = ({
       </div>
       {popup && (
         <TwitterRewards
-        taskLengthState={taskLengthState}
-        setTaskLengthState={setTaskLengthState}
+       
           taskCount={taskCount}
           tasks={twitterTasks}
+          seenPosts={seenPosts}
+          setSeenPosts={setSeenPosts}
           onClose={() => {
-            localStorage.setItem(
-              "taskLength",
-              JSON.stringify(
-                twitterTasks.map((t) => {
-                  return t.tweetId;
-                })
-              )
-            );
-            setNewTaskLength(0);
+            markAllAsSeen();
             setPopup(false);
           }}
           address={address}
