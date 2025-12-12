@@ -5213,7 +5213,7 @@ function AppRoutes() {
               }
             />
 
-            <Route
+            {/* <Route
               exact
               path="/old-30vesting"
               element={
@@ -5231,9 +5231,9 @@ function AppRoutes() {
                   wagmiPublicClient={wagmiPublicClient}
                 />
               }
-            />
+            /> */}
 
-            <Route
+            {/* <Route
               exact
               path="/old-7vesting"
               element={
@@ -5251,7 +5251,7 @@ function AppRoutes() {
                   wagmiPublicClient={wagmiPublicClient}
                 />
               }
-            />
+            /> */}
 
             <Route
               exact
