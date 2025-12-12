@@ -73,7 +73,6 @@ const BetaPassNFT = ({
       eventStartDate: "Dec. 11, 2025",
       eventEndDate: "Apr. 10, 2026",
     },
-
     {
       id: "vanar",
       mainTitle: "Vanar Beta Pass",
@@ -248,8 +247,8 @@ const BetaPassNFT = ({
       rewardType: "Manta",
       userEarned: userTreasureHuntStats.mantaEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Apr 15, 2025",
-      eventEndDate: "Aug 13, 2025",
+      eventStartDate: "Apr. 15, 2025",
+      eventEndDate: "Aug. 13, 2025",
     },
 
     {
@@ -266,13 +265,13 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "core-mint-bg",
       wrapperClassName: "core-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in CORE rewards",
       rewardType: "CORE",
       userEarned: userTreasureHuntStats.coreEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Aug 14, 2025",
-      eventEndDate: "Dec 13, 2025",
+      eventStartDate: "Dec. 12, 2025",
+      eventEndDate: "Apr. 11, 2026",
     },
     {
       id: "sei",
@@ -293,8 +292,8 @@ const BetaPassNFT = ({
       rewardType: "SEI",
       userEarned: userTreasureHuntStats.seiEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Apr 18, 2025",
-      eventEndDate: "Aug 18, 2025",
+      eventStartDate: "Apr. 18, 2025",
+      eventEndDate: "Aug. 18, 2025",
     },
     {
       id: "viction",
