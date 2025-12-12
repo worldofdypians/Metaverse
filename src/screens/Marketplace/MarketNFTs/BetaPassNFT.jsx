@@ -73,7 +73,6 @@ const BetaPassNFT = ({
       eventStartDate: "Dec. 11, 2025",
       eventEndDate: "Apr. 10, 2026",
     },
-
     {
       id: "vanar",
       mainTitle: "Vanar Beta Pass",
@@ -266,7 +265,7 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "core-mint-bg",
       wrapperClassName: "core-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in CORE rewards",
       rewardType: "CORE",
       userEarned: userTreasureHuntStats.coreEarnUsd,
