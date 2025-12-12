@@ -629,7 +629,7 @@ function AppRoutes() {
   let bnbLastDay = new Date("2026-04-10T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
-  let coreLastDay2 = new Date("2025-12-12T14:00:00.000+02:00");
+  let coreLastDay2 = new Date("2026-04-11T14:00:00.000+02:00");
   let mantaLastDay = new Date("2025-08-13T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
   let taikoLastDay2 = new Date("2025-12-09T14:00:00.000+02:00");
@@ -1696,11 +1696,11 @@ function AppRoutes() {
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Aug 14, 2025",
+      eventDate: "Dec 12, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
       image: "coreBanner.png",
       type: "Treasure Hunt",
@@ -1715,7 +1715,60 @@ function AppRoutes() {
         chain: "CORE Chain",
         linkState: "core",
         rewards: "CORE",
-        status: "Live",
+        status: "Expired",
+        id: "event12",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in CORE Rewards",
+        eventDuration: coreLastDay2,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Dec 12, 2025",
+        detailsText: `To participate in the event, players are required to&nbsp;
+                  <b>hold a CORE Beta Pass NFT</b>. You can get the CORE Beta
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the CORE area, players not
+                  only stand a chance to secure daily rewards in CORE, but also
+                  earn points for their placement on the global leaderboard.
+                  Remember to log in to the game daily and venture into the
+                  CORE area to uncover hidden treasures.`,
+        about: `Core DAO started as a community looking for better solutions,
+            and that's what it remains. With principles grounded in the
+            premises of both Bitcoin and Ethereum, our power comes from
+            embracing multiple ideas and communities. The opposite of a
+            winner-take-all mentality - Core is focused instead on platform
+            growth and driving the global adoption of blockchain technology.`,
+        twitterLink: "https://twitter.com/Coredao_Org",
+        telegramLink: "https://t.me/CoreDAOTelegram",
+        websiteLink: "https://coredao.org/",
+        thumbImage: "https://cdn.worldofdypians.com/wod/coreThumb.png",
+      },
+    },
+        {
+      title: "CORE",
+      logo: "https://cdn.worldofdypians.com/wod/core.svg",
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 14, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
+      image: "coreBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      location: [-0.06862698344579729, 0.08752048015594482],
+      marker: markers.treasureMarker,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Expired",
         id: "event12",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in CORE Rewards",
