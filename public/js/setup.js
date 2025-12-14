@@ -193,12 +193,12 @@ window.config = {
   otcpooldynamic_address: "0x3d373f680d0a5bbdbc9a48577652f9a327e9280d", //40%
   otcpool2dynamic_address: "0x96718b893aef64c8ff19df30c920aa6b4669984a", //30%
   otcwoddynamic_address: "0xf0a43b4549792f6116564a4253cb685d983e90fd", //50%
-  otccliff_address: "0x9bf8f8aeecf69c0ee2a287add093b6e284ed7dcf", //30%
+  otccliff_address: "0xad375c22165733e0b5c4e66cfd428ee45f3182c1", //30%
   otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220",
-  otc1cliff4_address: "0x32578a3cd74d31e7528649a771a89037933aff9d",
+  otc1cliff4_address: "0x610853892591f3d0f2af73b830cfd28835d4cb0c",
   roundotc_vesting_address: "0x2a743e768fb02efb66afb9b0236dded09468d5ba",
-  dypiansvesting_address: "0x5f312ab8419386d217a9df2a0cee6a19703c7ce9",
-  evanvesting_address: "0xe5f9b7648e22bbd0218d2e81096063c2ab0ee8fa",
+  dypiansvesting_address: "0x7787aad9fa48d2e70ca773ce1ad484fdb25732b0",
+  evanvesting_address: "0x4e0d58213261c6d32ecdc21827ba4e2378f7a523",
   old30vesting_address: "0x26eb18be24a827ca7427b903fdd6d12913aa6860",
   old7vesting_address: "0xf3589ef463dcb851888b69b80f44dead2015d812",
 
