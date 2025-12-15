@@ -395,8 +395,7 @@ const NewLeaderBoard = ({
                           ? "Taiko"
                           : ""}
                       </button>
-                     
-                     
+
                       <button
                         onMouseEnter={() => handleMouseEnter("vanar")}
                         onMouseLeave={handleMouseLeave}
@@ -475,8 +474,7 @@ const NewLeaderBoard = ({
                           ? "Taraxa"
                           : ""}
                       </button> */}
-                     
-                     
+
                       <button
                         onMouseEnter={() => handleMouseEnter("manta")}
                         onMouseLeave={handleMouseLeave}
@@ -515,7 +513,7 @@ const NewLeaderBoard = ({
                           ? "Manta"
                           : ""}
                       </button>
-                     
+
                       <button
                         onMouseEnter={() => handleMouseEnter("skale")}
                         onMouseLeave={handleMouseLeave}
@@ -770,36 +768,17 @@ const NewLeaderBoard = ({
                 </div>
                 {optionText !== "genesis" ? (
                   <div className={`position-relative`}>
-                    {allData[0]?.loading === true ? (
-                      <div className="coming-soon-position d-flex align-items-center justify-content-center">
-                        <CircularProgress size={18} />
-                      </div>
-                    ) : (
-                      //     optionText2 === "taraxa"  ? (
-                      //     <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
-                      //       <h6
-                      //         className="mb-0 text-center"
-                      //         style={{ fontSize: 18 }}
-                      //       >
-                      //         Coming Soon
-                      //       </h6>
-                      //       <h6
-                      //         className="mb-0 text-center"
-                      //         style={{ fontSize: 14 }}
-                      //       >
-                      //         The leaderboard is under maintenance.
-                      //       </h6>
-                      //       <h6
-                      //         className="mb-0 text-center"
-                      //         style={{ fontSize: 14 }}
-                      //       >
-                      //         The points and stars will be live tomorrow{" "}
-                      //       </h6>
-                      //     </div>
-                      //   )
-                      //   :
-                      <></>
-                    )}
+                    <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
+                      <h6 className="mb-0 text-center" style={{ fontSize: 18 }}>
+                        Coming Soon
+                      </h6>
+                      <h6 className="mb-0 text-center" style={{ fontSize: 14 }}>
+                        The leaderboards are under maintenance.
+                      </h6>
+                      <h6 className="mb-0 text-center" style={{ fontSize: 14 }}>
+                        The points and stars will be live soon{" "}
+                      </h6>
+                    </div>
                     {/* <img
                       src={leftArrow}
                       onClick={prevSlide}
@@ -1103,8 +1082,7 @@ const NewLeaderBoard = ({
                                                           index + 1 <= 85
                                                         ? "https://cdn.worldofdypians.com/wod/playerAvatar15.png"
                                                         : "https://cdn.worldofdypians.com/wod/playerAvatar16.png"
-                                                      : 
-                                                        optionText2 === "sei"
+                                                      : optionText2 === "sei"
                                                       ? index + 1 <= 10
                                                         ? `https://cdn.worldofdypians.com/wod/globalRank${
                                                             index + 1
