@@ -129,8 +129,8 @@ const GlobalLeaderboard = ({
                   <br />
                   <br />
                   Participate in Daily Chain Leaderboards from BNB Chain, Skale,
-                  Core, Manta, Base, Sei, Vanar, Taiko and
-                  Viction to earn STARS that will boost your global ranking.
+                  Core, Manta, Base, Sei, Vanar, Taiko and Viction to earn STARS
+                  that will boost your global ranking.
                   <br />
                   <br />
                   Prime Users earn extra STARS from Daily Leaderboards,
@@ -177,6 +177,21 @@ const GlobalLeaderboard = ({
         ) : (
           <div className="coming-soon-position d-flex align-items-center justify-content-center">
             <CircularProgress size={20} />
+          </div>
+        )}
+        {inactiveBoard === false && leaderboardBtn === "weekly" && (
+          <div>
+            <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
+              <h6 className="mb-0 text-center" style={{ fontSize: 18 }}>
+                Coming Soon
+              </h6>
+              <h6 className="mb-0 text-center" style={{ fontSize: 14 }}>
+                The leaderboard is under maintenance.
+              </h6>
+              <h6 className="mb-0 text-center" style={{ fontSize: 14 }}>
+                The points and stars will be live soon{" "}
+              </h6>
+            </div>
           </div>
         )}
         <div className={`table-outer-margin p-0`}>
@@ -428,142 +443,6 @@ const GlobalLeaderboard = ({
                   );
                 })}
 
-              {allStarData.activeDataWeekly &&
-                allStarData.activeDataWeekly.length > 0 &&
-                inactiveBoard === false &&
-                leaderboardBtn === "weekly" &&
-                allStarData.activeDataWeekly.map((item, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={`playerInnerRow ${
-                        inactiveBoard || item.displayName === username
-                          ? "playerInnerRow-inactive"
-                          : null
-                      }`}
-                    >
-                      <td className="playerData col-1 font-montserrat">
-                        {parseInt(index) + 1}
-                      </td>
-                      <td className="playerName col-5 font-montserrat">
-                        <div className="playerName-inner">
-                          <img
-                            src={
-                              index + 1 <= 10
-                                ? `https://cdn.worldofdypians.com/wod/globalRank${
-                                    index + 1
-                                  }.png`
-                                : index + 1 >= 11 && index + 1 <= 20
-                                ? "https://cdn.worldofdypians.com/wod/playerAvatar1.png"
-                                : index + 1 >= 21 && index + 1 <= 30
-                                ? "https://cdn.worldofdypians.com/wod/playerAvatar2.png"
-                                : index + 1 >= 31 && index + 1 <= 70
-                                ? "https://cdn.worldofdypians.com/wod/playerAvatar3.png"
-                                : index + 1 >= 71 && index + 1 <= 100
-                                ? "https://cdn.worldofdypians.com/wod/playerAvatar4.png"
-                                : "https://cdn.worldofdypians.com/wod/userAvatar2.png"
-                            }
-                            alt=""
-                            className="playerAvatar me-2"
-                          />
-                          <span>
-                            {" "}
-                            {item.displayName?.slice(0, 13)}
-                            {item.displayName?.length > 13 && "..."}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="playerScore col-2 text-center font-montserrat">
-                        <div className="d-flex align-items-center justify-content-center gap-2">
-                          <img
-                            src={
-                              "https://cdn.worldofdypians.com/wod/lbStar.png"
-                            }
-                            width={20}
-                            height={20}
-                            alt=""
-                          />
-                          {getFormattedNumber(item.statValue, 0)}
-                        </div>
-                      </td>
-                      <td
-                        className={`playerScore col-2 text-center font-montserrat  ${
-                          username === item.displayName
-                            ? "goldenscore"
-                            : "playerReward"
-                        }`}
-                        style={{ color: "#09F3D2" }}
-                      >
-                        $
-                        {getFormattedNumber(
-                          allStarData.rewardsWeekly[index],
-                          0
-                        )}
-                      </td>
-                      <td
-                        className={`playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100 ${
-                          username === item.displayName && isactive === true
-                            ? "goldenscore"
-                            : "playerReward"
-                        }`}
-                        style={{
-                          color:
-                            (username === item.displayName &&
-                              isactive === true) ||
-                            username !== item.displayName
-                              ? "#09F3D2"
-                              : "gray",
-                        }}
-                      >
-                        <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          +$
-                          {getFormattedNumber(
-                            allStarData.premium_rewards_weekly[index],
-                            0
-                          )}
-                          {screen === "home" ? (
-                            <HtmlTooltip
-                              placement="top"
-                              title={
-                                <span className="card-eth-chain-text">
-                                  Golden Pass
-                                </span>
-                              }
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/goldenActive.png"
-                                }
-                                alt=""
-                              />
-                            </HtmlTooltip>
-                          ) : (
-                            <HtmlTooltip
-                              placement="top"
-                              title={
-                                <span className="card-eth-chain-text">
-                                  Golden Pass
-                                </span>
-                              }
-                            >
-                              <img
-                                src={
-                                  (username === item.displayName &&
-                                    isactive === true) ||
-                                  username !== item.displayName
-                                    ? "https://cdn.worldofdypians.com/wod/goldenActive.png"
-                                    : "https://cdn.worldofdypians.com/wod/goldenInactive.png"
-                                }
-                                alt=""
-                              />
-                            </HtmlTooltip>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-
               {allStarData.previousDataWeekly &&
                 inactiveBoard === true &&
                 leaderboardBtn === "weekly" &&
@@ -755,7 +634,11 @@ const GlobalLeaderboard = ({
         })}
 
       {screen === "dash" ? (
-        <div className="optionsWrapper p-2">
+        <div
+          className={`optionsWrapper p-2 ${
+            inactiveBoard === false && leaderboardBtn === "weekly" && "z-5"
+          }`}
+        >
           <div className="d-flex flex-column">
             <div className="d-flex justify-content-between gap-2 align-items-center">
               <span className="viewWinners">View previous winners</span>
@@ -826,7 +709,6 @@ const GlobalLeaderboard = ({
                 style={{ width: 20, height: 20 }}
                 alt=""
               />
-             
             </div>
 
             <img
