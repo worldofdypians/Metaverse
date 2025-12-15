@@ -1368,6 +1368,10 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(userTreasureHuntStats.bnbEarnUsd, 2)}
                   </span>
                 </div>
+               
+              </div>
+
+              <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1381,10 +1385,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(userTreasureHuntStats.vanarEarnUsd, 2)}
                   </span>
                 </div>
-              </div>
-
-              <div className="d-flex flex-column gap-2">
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={"https://cdn.worldofdypians.com/wod/core.svg"}
@@ -1396,7 +1397,7 @@ const MyRewardsPopupNew = ({
                   <span className="item-name-right">
                     ${getFormattedNumber(userTreasureHuntStats.coreEarnUsd, 2)}
                   </span>
-                </div>
+                </div> */}
                 {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img

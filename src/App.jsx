@@ -1707,9 +1707,9 @@ function AppRoutes() {
       infoType: "Treasure Hunt",
       location: [-0.06862698344579729, 0.08752048015594482],
       marker: markers.treasureMarker,
-      userEarnUsd: user.userStats.coreEarnUsd,
-      userEarnCrypto: user.userStats.coreEarnToken,
-      userEarnPoints: user.userStats.corePoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints:0,
       popupInfo: {
         title: "CORE",
         chain: "CORE Chain",
