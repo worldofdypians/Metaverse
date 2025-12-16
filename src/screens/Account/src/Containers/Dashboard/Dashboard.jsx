@@ -4992,15 +4992,15 @@ function Dashboard({
   const handleFetchRecords = async (chain) => {
     if (chain === "bnb") {
       // if (dailyrecords.length === 0) {
-      // fetchDailyRecords();
+      fetchDailyRecords();
       // }
     } else if (chain === "taiko") {
       // if (dailyRecordsTaiko.length === 0) {
-      // fetchDailyRecordsTaiko();
+      fetchDailyRecordsTaiko();
       // }
     } else if (chain === "vanar") {
       // if (dailyRecordsVanar.length === 0) {
-      // fetchDailyRecordsVanar();
+      fetchDailyRecordsVanar();
       // }
     }
     // else if (chain === "matchain") {
@@ -5010,7 +5010,7 @@ function Dashboard({
     // }
     else if (chain === "sei") {
       // if (dailyRecordsSei.length === 0) {
-      // fetchDailyRecordsSei();
+      fetchDailyRecordsSei();
       // }
     }
     // else if (chain === "taraxa") {
@@ -5020,38 +5020,38 @@ function Dashboard({
     // }
     else if (chain === "manta") {
       // if (dailyRecordsManta.length === 0) {
-      // fetchDailyRecordsManta();
+      fetchDailyRecordsManta();
       // }
     } else if (chain === "base") {
       // if (dailyRecordsBase.length === 0) {
-      // fetchDailyRecordsBase();
+      fetchDailyRecordsBase();
       // }
     } else if (chain === "core") {
       // if (dailyRecordsCore.length === 0) {
-      // fetchDailyRecordsCore();
+      fetchDailyRecordsCore();
       // }
     } else if (chain === "viction") {
       // if (dailyRecordsViction.length === 0) {
-      // fetchDailyRecordsViction();
+      fetchDailyRecordsViction();
       // }
     } else if (chain === "skale") {
       // if (dailyRecordsSkale.length === 0) {
-      // fetchDailyRecordsSkale();
+      fetchDailyRecordsSkale();
       // }
     } else if (chain === "all") {
       if (!hasUserId) {
         return;
       }
-      // fetchDailyRecordsAroundPlayer(false, dailyrecords);
-      // fetchDailyRecordsAroundPlayerTaiko(false);
-      // fetchDailyRecordsAroundPlayerVanar(false);
+      fetchDailyRecordsAroundPlayer(false, dailyrecords);
+      fetchDailyRecordsAroundPlayerTaiko(false);
+      fetchDailyRecordsAroundPlayerVanar(false);
       // fetchDailyRecordsAroundPlayerMat(false);
-      // fetchDailyRecordsAroundPlayerSei(false);
-      // fetchDailyRecordsAroundPlayerManta(false);
-      // fetchDailyRecordsAroundPlayerBase(false);
-      // fetchDailyRecordsAroundPlayerCore(false);
-      // fetchDailyRecordsAroundPlayerViction(false);
-      // fetchDailyRecordsAroundPlayerSkale(false);
+      fetchDailyRecordsAroundPlayerSei(false);
+      fetchDailyRecordsAroundPlayerManta(false);
+      fetchDailyRecordsAroundPlayerBase(false);
+      fetchDailyRecordsAroundPlayerCore(false);
+      fetchDailyRecordsAroundPlayerViction(false);
+      fetchDailyRecordsAroundPlayerSkale(false);
       fetchDailyRecordsAroundPlayerStar(false, starRecords);
       fetchWeeklyRecordsAroundPlayerStar(false, starRecordsWeekly);
       // fetchDailyRecordsAroundPlayerTaraxa(false);
@@ -6713,7 +6713,7 @@ function Dashboard({
               }}
               onCloseRankPopup={() => {
                 handleResetRecords();
-                handleResetRecordsStars();
+                // handleResetRecordsStars();
               }}
               allClaimedChests={
                 openedBaseChests.length +
@@ -7099,7 +7099,7 @@ function Dashboard({
           <OutsideClickHandler
             onOutsideClick={() => {
               setGlobalLeaderboard(false);
-              handleResetRecordsStars();
+              // handleResetRecordsStars();
               window.location.hash = "";
             }}
           >
@@ -7124,7 +7124,7 @@ function Dashboard({
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => {
                     setGlobalLeaderboard(false);
-                    handleResetRecordsStars();
+                    // handleResetRecordsStars();
                     window.location.hash = "";
                   }}
                   alt=""

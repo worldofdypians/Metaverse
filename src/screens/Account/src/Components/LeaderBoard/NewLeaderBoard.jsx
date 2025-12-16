@@ -768,17 +768,36 @@ const NewLeaderBoard = ({
                 </div>
                 {optionText !== "genesis" ? (
                   <div className={`position-relative`}>
-                    <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
-                      <h6 className="mb-0 text-center" style={{ fontSize: 18 }}>
-                        Coming Soon
-                      </h6>
-                      <h6 className="mb-0 text-center" style={{ fontSize: 14 }}>
-                        The leaderboards are under maintenance.
-                      </h6>
-                      <h6 className="mb-0 text-center" style={{ fontSize: 14 }}>
-                        The points and stars will be live soon{" "}
-                      </h6>
-                    </div>
+                    {allData[0]?.loading === true ? (
+                      <div className="coming-soon-position d-flex align-items-center justify-content-center">
+                        <CircularProgress size={18} />
+                      </div>
+                    ) : (
+                      //     optionText2 === "taraxa"  ? (
+                      //     <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
+                      //       <h6
+                      //         className="mb-0 text-center"
+                      //         style={{ fontSize: 18 }}
+                      //       >
+                      //         Coming Soon
+                      //       </h6>
+                      //       <h6
+                      //         className="mb-0 text-center"
+                      //         style={{ fontSize: 14 }}
+                      //       >
+                      //         The leaderboard is under maintenance.
+                      //       </h6>
+                      //       <h6
+                      //         className="mb-0 text-center"
+                      //         style={{ fontSize: 14 }}
+                      //       >
+                      //         The points and stars will be live tomorrow{" "}
+                      //       </h6>
+                      //     </div>
+                      //   )
+                      //   :
+                      <></>
+                    )}
                     {/* <img
                       src={leftArrow}
                       onClick={prevSlide}
