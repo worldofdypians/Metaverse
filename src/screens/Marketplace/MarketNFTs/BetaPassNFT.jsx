@@ -270,8 +270,10 @@ const BetaPassNFT = ({
       rewardType: "CORE",
       userEarned: userTreasureHuntStats.coreEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Dec. 12, 2025",
-      eventEndDate: "Apr. 11, 2026",
+      // eventStartDate: "Dec. 12, 2025",
+      // eventEndDate: "Apr. 11, 2026",
+      eventStartDate: "Aug 14, 2025",
+      eventEndDate: "Dec 13, 2025",
     },
     {
       id: "sei",
