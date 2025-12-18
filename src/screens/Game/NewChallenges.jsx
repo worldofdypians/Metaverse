@@ -254,6 +254,27 @@ const NewChallenges = ({
       // ],
       link: "/account#royalty-chest",
     },
+    {
+      image: "https://cdn.worldofdypians.com/wod/socialRewardBanner.webp",
+      popupImage:
+        "https://cdn.worldofdypians.com/wod/socialRewardPopupBanner.webp",
+      desc: "Connect your X account and complete a daily social tasks to earn Stars.",
+      title: "Social Reward",
+      popupDesc:
+        "Claim daily rewards by completing quick social actions on X. Connect your X account and support the community to earn Stars and strengthen your ranking.",
+      workList: [
+        "Connect your X account to earn daily rewards.",
+        "Complete the available daily social tasks.",
+        "Each completed task grants Stars instantly",
+        "Prizes include Stars used for global rankings.",
+      ],
+      // tips: [
+      //   "Maximize your engagement across multiple chains to boost your global leaderboard rank.",
+      //   "Focus on daily tasks to ensure a consistent flow of Stars.",
+      //   "Participate in special events and missions for bonus opportunities.",
+      // ],
+      link: "/account#social-rewards",
+    },
   ];
 
   const challengeBeasts = [
