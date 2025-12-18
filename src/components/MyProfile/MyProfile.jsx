@@ -104,6 +104,8 @@ const MyProfile = ({
   const [tooltip, setTooltip] = useState(false);
   const [cooldown, setCooldown] = useState(null);
 
+  const hashValue = window.location.hash;
+
   let now = new Date().getTime();
   let now2 = new Date();
 
@@ -1891,7 +1893,8 @@ const MyProfile = ({
           </div>
         </div>
       </div>
-      {popup && (
+      {/* (showDailyQuestion || hashValue === "#daily-question") */}
+      {(popup || hashValue === "#social-rewards") && (
         <TwitterRewards
           taskCount={taskCount}
           tasks={twitterTasks}
@@ -1900,6 +1903,7 @@ const MyProfile = ({
           onClose={() => {
             markAllAsSeen();
             setPopup(false);
+            window.location.hash = "";
           }}
           address={address}
           handleRemove={handleRemove}

@@ -161,11 +161,9 @@ const TwitterItem = ({
             item?.tasks[0]?.verified && item?.tasks[0].completed
               ? "twitter-action-btn-disabled"
               : ""
+          } ${
+            isLocked() && "locked-action-btn"
           }  d-flex align-items-center gap-2 p-1`}
-          style={{
-            opacity: isLocked() ? "0.6" : "1",
-            pointerEvents: isLocked() ? "none" : "auto",
-          }}
           onClick={() => handleCheckTask("like")}
         >
           {loading.like ? (
@@ -211,11 +209,9 @@ const TwitterItem = ({
             item?.tasks[1]?.verified && item?.tasks[1].completed
               ? "twitter-action-btn-disabled"
               : ""
+          }   ${
+            isLocked() && "locked-action-btn"
           } d-flex align-items-center gap-2 p-1`}
-          style={{
-            opacity: isLocked() ? "0.6" : "1",
-            pointerEvents: isLocked() ? "none" : "auto",
-          }}
         >
           {loading.retweet ? (
             <div

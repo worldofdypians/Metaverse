@@ -38,11 +38,11 @@ const renderer = ({ hours, minutes, completed }) => {
 
 const renderer2 = ({ minutes, seconds, completed }) => {
   if (completed) {
-    return <span>00:00</span>;
+    return <span style={{color: "black"}}>00:00</span>;
   }
 
   return (
-    <span>
+    <span style={{color: "black"}}>
       {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
     </span>
   );
@@ -448,7 +448,7 @@ const TwitterRewards = ({
                           color: "gold",
                         }}
                       >
-                        +10
+                        +50
                       </span>
                       <img
                         src="https://cdn.worldofdypians.com/wod/lbStar.png"
@@ -516,7 +516,7 @@ const TwitterRewards = ({
                           color: "gold",
                         }}
                       >
-                        +20
+                        +50
                       </span>
                       <img
                         src="https://cdn.worldofdypians.com/wod/lbStar.png"
@@ -526,50 +526,7 @@ const TwitterRewards = ({
                       />
                     </div>
                   </div>
-                  <div className="available-rewards-wrapper p-1 d-flex align-items-center justify-content-between">
-                    <div className="d-flex align-items-center gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                      >
-                        <path
-                          d="M1.99683 10.8917C2.09482 11.1389 2.11664 11.4098 2.05947 11.6694L1.34973 13.862C1.32686 13.9732 1.33277 14.0884 1.3669 14.1966C1.40104 14.3049 1.46226 14.4027 1.54477 14.4806C1.62728 14.5586 1.72833 14.6142 1.83835 14.6422C1.94837 14.6701 2.06371 14.6695 2.17343 14.6404L4.44796 13.9753C4.69302 13.9267 4.9468 13.9479 5.18037 14.0366C6.60345 14.7012 8.21553 14.8418 9.73218 14.4336C11.2488 14.0254 12.5726 13.0947 13.4699 11.8056C14.3672 10.5166 14.7804 8.95201 14.6365 7.388C14.4927 5.82398 13.8011 4.36102 12.6837 3.25723C11.5664 2.15344 10.0951 1.47975 8.52943 1.35504C6.96377 1.23032 5.40438 1.66258 4.12637 2.57556C2.84836 3.48854 1.93387 4.82357 1.54425 6.34509C1.15463 7.86661 1.31492 9.47686 1.99683 10.8917Z"
-                          stroke="white"
-                          stroke-opacity="0.6"
-                          stroke-width="1.33286"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                      <span
-                        className="available-rewards-text"
-                        style={{
-                          color: "#fff",
-                        }}
-                      >
-                        Comment
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center gap-1">
-                      <span
-                        className="available-rewards-text"
-                        style={{
-                          color: "gold",
-                        }}
-                      >
-                        +30
-                      </span>
-                      <img
-                        src="https://cdn.worldofdypians.com/wod/lbStar.png"
-                        height={20}
-                        width={20}
-                        alt=""
-                      />
-                    </div>
-                  </div>
+              
                 </div>
               </div>
             </div>
@@ -579,7 +536,7 @@ const TwitterRewards = ({
             style={{ minHeight: "38px" }}
           >
             <h6 className="twitter-warn-message mb-0">
-              You can only check 2 tasks every 15 minutes. Make sure you have
+              You can only check 2 tasks every 16 minutes. Make sure you have
               actually like/repost before checking.
             </h6>
             {isLocked() ? (
@@ -601,7 +558,7 @@ const TwitterRewards = ({
                   >
                     <path
                       d="M7.38528 9.91355V6.54513M14.9642 4.01881L13.28 2.3346M5.70107 0.650391H9.06949M7.38528 16.6504C3.66462 16.6504 0.648438 13.6342 0.648438 9.91355C0.648438 6.19289 3.66462 3.17671 7.38528 3.17671C11.106 3.17671 14.1221 6.19289 14.1221 9.91355C14.1221 13.6342 11.106 16.6504 7.38528 16.6504Z"
-                      stroke="#A3A2B3"
+                      stroke="black"
                       stroke-width="1.3"
                       stroke-linecap="round"
                       stroke-linejoin="round"

@@ -232,8 +232,15 @@
   }
 }
 
+.locked-action-btn{
+  background: gray;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 .twitter-action-btn-disabled {
   pointer-events: none !important;
+  background: #1a1640 !important;
   opacity: 1 !important;
   border-radius: 8px;
   border: 1px solid #17f284;
@@ -632,6 +639,13 @@
     }
 }
 // a39990
+
+
+.task-timer-button{
+  border: 1px solid rgb(255, 215, 0) !important;
+  background: rgba(255, 215, 0, 0.7);
+  min-width: 90px;
+}
 
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
 @layer properties {
