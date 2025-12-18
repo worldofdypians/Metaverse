@@ -255,10 +255,9 @@ const NewChallenges = ({
       link: "/account#royalty-chest",
     },
     {
-      image: "https://cdn.worldofdypians.com/wod/socialRewardBanner.webp",
-      popupImage:
-        "https://cdn.worldofdypians.com/wod/socialRewardPopupBanner.webp",
-      desc: "Connect your X account and complete a daily social tasks to earn Stars.",
+      image: "https://cdn.worldofdypians.com/wod/socialRewardPopupBanner2.webp",
+      popupImage: "https://cdn.worldofdypians.com/wod/socialRewardBanner.webp",
+      desc: "Complete simple social actions each day to earn stars, boost your rankings, and stay engaged.",
       title: "Social Reward",
       popupDesc:
         "Claim daily rewards by completing quick social actions on X. Connect your X account and support the community to earn Stars and strengthen your ranking.",
