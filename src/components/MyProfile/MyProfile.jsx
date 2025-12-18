@@ -146,6 +146,16 @@ const MyProfile = ({
   const [twitterCooldown, setTwitterCooldown] = useState({});
   const [taskCount, setTaskCount] = useState(0);
   const [seenPosts, setSeenPosts] = useState([]);
+  const [newCount, setNewCount] = useState(0);
+
+  const handleRemove = (id) => {
+    // Add to seen posts only if not already added
+    if (!seenPosts.includes(id)) {
+      const updated = [...seenPosts, id];
+      setSeenPosts(updated);
+      localStorage.setItem("seenPosts", JSON.stringify(updated));
+    }
+  };
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("seenPosts")) || [];
@@ -159,7 +169,6 @@ const MyProfile = ({
       );
 
       const data = res.data;
-      console.log(data, "twitterData");
 
       setTwitter(data);
 
@@ -195,26 +204,29 @@ const MyProfile = ({
       setTaskCount(incompleteCount);
       setTwitterTasks(grouped);
     } catch (err) {
-      console.log(err, "twitterError");
+      console.log(err);
     }
   };
 
   const markAllAsSeen = () => {
     const allIds = twitterTasks.map((post) => post.tweetId);
-
     setSeenPosts(allIds);
     localStorage.setItem("seenPosts", JSON.stringify(allIds));
+    setNewCount(
+      twitterTasks.filter((p) => !seenPosts.includes(p.tweetId)).length
+    );
   };
 
-  const newPostsCount = twitterTasks.length - seenPosts.length;
-
-  console.log(newPostsCount);
+  useEffect(() => {
+    setNewCount(
+      twitterTasks.filter((p) => !seenPosts.includes(p.tweetId)).length
+    );
+  }, [handleRemove, popup]);
 
   const checkCooldown = async () => {
     await axios
       .get(`https://api.worldofdypians.com/auth/twitter/cooldown/${address}`)
       .then((res) => {
-        console.log(res.data, "cooldown");
         setTwitterCooldown(res.data.remainingMs);
       })
       .catch((err) => {
@@ -1563,11 +1575,9 @@ const MyProfile = ({
                         </div>
                       </div>
                     </div>
-                    {newPostsCount > 0 && (
+                    {newCount > 0 && (
                       <div className="task-length-wrapper d-flex align-items-center justify-content-center">
-                        <span className="task-length-text">
-                          {newPostsCount} New
-                        </span>
+                        <span className="task-length-text">{newCount} New</span>
                       </div>
                     )}
                   </div>
@@ -1883,7 +1893,6 @@ const MyProfile = ({
       </div>
       {popup && (
         <TwitterRewards
-       
           taskCount={taskCount}
           tasks={twitterTasks}
           seenPosts={seenPosts}
@@ -1893,6 +1902,7 @@ const MyProfile = ({
             setPopup(false);
           }}
           address={address}
+          handleRemove={handleRemove}
           checkCooldown={checkCooldown}
           checkTwitter={checkTwitter}
           username={twitter?.twitterUsername}

@@ -9,6 +9,7 @@ import { useCountUp } from "../../../hooks/useCountup";
 import BlurredTwitterItem from "./BluredTwitterItem";
 import Countdown from "react-countdown";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
+import { bounds } from "leaflet";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -61,7 +62,7 @@ const TwitterRewards = ({
   twitter,
   twitterCooldown,
   checkCooldown,
-
+  handleRemove,
   seenPosts,
   setSeenPosts,
 }) => {
@@ -70,7 +71,6 @@ const TwitterRewards = ({
   const isLocked = () => {
     const lock = Number(localStorage.getItem("apiLock")) || 0;
     const cooldownUntil = Number(localStorage.getItem("apiCooldownUntil")) || 0;
-    console.log("");
 
     return lock === 2 && Date.now() < cooldownUntil;
   };
@@ -187,6 +187,25 @@ const TwitterRewards = ({
     setCompletedPage(num);
   };
 
+  const getTotalStars = async () => {
+    const body = {
+      email: email,
+      timeline: "day",
+    };
+
+    await axios
+      .post(
+        `https://worldofdypianssocials-htbgbnd6a2b3hzgk.westeurope-01.azurewebsites.net/api/GetUserAwardedPoints?code=RPtKMrZ3eIJ2SI6ClpnRZEvj9RCpPhBCzoKDqZLlnH6bAzFux-NmWQ==`,
+        body
+      )
+      .then((res) => {
+        add(res.data.totalStars);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleDisconnect = async () => {
     await axios
       .post(`https://api.worldofdypians.com/auth/twitter/unlink`, {
@@ -201,6 +220,7 @@ const TwitterRewards = ({
 
   useEffect(() => {
     checkCooldown();
+    getTotalStars();
   }, []);
 
   useEffect(() => {
@@ -209,8 +229,6 @@ const TwitterRewards = ({
 
   const apiCooldownUntil =
     Number(localStorage.getItem("apiCooldownUntil")) || null;
-
-  console.log(isLocked());
 
   return (
     <>
@@ -672,6 +690,7 @@ const TwitterRewards = ({
                                     <TwitterItem
                                       key={(page - 1) * postsPerPage + index}
                                       add={add}
+                                      handleRemove={handleRemove}
                                       item={item}
                                       index={index}
                                       address={address}
@@ -680,6 +699,7 @@ const TwitterRewards = ({
                                       checkLimit={checkLimit}
                                       seenPosts={seenPosts}
                                       setSeenPosts={setSeenPosts}
+                                      email={email}
                                     />
                                   ))}
 
@@ -736,6 +756,8 @@ const TwitterRewards = ({
                                     setSeenPosts={setSeenPosts}
                                     checkTwitter={checkTwitter}
                                     currentLength={available.length}
+                                    handleRemove={handleRemove}
+                                    email={email}
                                   />
                                 ))}
 

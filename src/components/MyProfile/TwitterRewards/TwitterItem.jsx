@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useWindowSize from "../../../hooks/useWindowSize";
+import { log } from "three";
 
 const TwitterItem = ({
   item,
@@ -11,6 +12,8 @@ const TwitterItem = ({
   checkLimit,
   seenPosts,
   setSeenPosts,
+  handleRemove,
+  email,
 }) => {
   const [loading, setLoading] = useState({
     like: false,
@@ -19,15 +22,6 @@ const TwitterItem = ({
   });
 
   const isNew = (id) => !seenPosts.includes(id);
-
-  const handleRemove = (id) => {
-    // Add to seen posts only if not already added
-    if (!seenPosts.includes(id)) {
-      const updated = [...seenPosts, id];
-      setSeenPosts(updated);
-      localStorage.setItem("seenPosts", JSON.stringify(updated));
-    }
-  };
 
   const timestamp = item.tweetCreatedAt;
   const date = new Date(timestamp);
@@ -52,19 +46,49 @@ const TwitterItem = ({
         tweetId: tweetId,
         taskType: taskType,
       })
-      .then((res) => {
-        if (res.data.verified === true && taskType === "like") {
-          add(10);
-        } else if (res.data.verified === true && taskType === "retweet") {
-          add(20);
-        } else if (res.data.verified === true && taskType === "comment") {
-          add(30);
-        }
+      .then(() => {
+        addStars(tweetId, taskType);
         checkLimit();
         checkTwitter();
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+
+  const addStars = async (tweetId, taskType) => {
+    const body = {
+      email: email,
+      tweetId: tweetId,
+      taskType: taskType,
+    };
+
+    await axios
+      .post(
+        `https://worldofdypianssocials-htbgbnd6a2b3hzgk.westeurope-01.azurewebsites.net/api/AwardStarsForInteraction_X?code=Y8m2H8XIXz4DkOaOkYDTBMR9jnQ3NYbHDHlXRFv-ZX58AzFubmbkWQ==`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        add(Number(res.data.rewards[0].reward));
+
+        setLoading({
+          like: false,
+          comment: false,
+          retweet: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading({
+          like: false,
+          comment: false,
+          retweet: false,
+        });
       });
   };
 
@@ -86,14 +110,7 @@ const TwitterItem = ({
       }));
     }
 
-    setTimeout(() => {
-      checkTask(item.tweetId, type);
-      setLoading({
-        like: false,
-        comment: false,
-        retweet: false,
-      });
-    }, 2000);
+    checkTask(item.tweetId, type);
   };
 
   return (
