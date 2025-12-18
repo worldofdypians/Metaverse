@@ -26,12 +26,12 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const renderer = ({ hours, minutes, completed }) => {
   if (completed) {
-    return <span className="unlink-twitter-text mb-0">00:00</span>;
+    return <span className="unlink-twitter-text mb-0">00H:00M</span>;
   }
 
   return (
     <span className="unlink-twitter-text mb-0">
-      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
+      {String(hours).padStart(2, "0")}H:{String(minutes).padStart(2, "0")}M
     </span>
   );
 };
