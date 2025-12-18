@@ -65,6 +65,7 @@ const TwitterRewards = ({
   handleRemove,
   seenPosts,
   setSeenPosts,
+  onSyncClick
 }) => {
   const windowSize = useWindowSize();
 
@@ -331,7 +332,17 @@ const TwitterRewards = ({
                   >
                     Connect Wallet
                   </button>
-                ) : twitter && twitter.twitterUsername ? (
+                ) 
+                : isConnected && coinbase && (coinbase.toLowerCase() !== address.toLowerCase()) ? (
+                  <button
+                    onClick={onSyncClick}
+                    className="synchronize-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
+                    style={{ width: "fit-content" }}
+                  >
+                    Synchronize
+                  </button>
+                )
+                : twitter && twitter.twitterUsername ? (
                   <button
                     className="unlink-twitter-button d-flex align-items-center gap-1 px-3 py-2"
                     onClick={() => setPopup(true)}
