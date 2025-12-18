@@ -448,7 +448,7 @@ const TwitterRewards = ({
                           color: "gold",
                         }}
                       >
-                        +50
+                        +5
                       </span>
                       <img
                         src="https://cdn.worldofdypians.com/wod/lbStar.png"
@@ -516,7 +516,7 @@ const TwitterRewards = ({
                           color: "gold",
                         }}
                       >
-                        +50
+                        +10
                       </span>
                       <img
                         src="https://cdn.worldofdypians.com/wod/lbStar.png"

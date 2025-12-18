@@ -232,7 +232,19 @@
   }
 }
 
-.locked-action-btn{
+.fail-action-btn {
+  border: 1px solid #ff6467 !important;
+  background: #1a1640 !important;
+  pointer-events: none;
+  .twitter-action-text {
+    color: #ff6467 !important;
+  }
+  .icon-color {
+    color: #ff6467 !important;
+  }
+}
+
+.locked-action-btn {
   background: gray;
   opacity: 0.6;
   pointer-events: none;
@@ -626,22 +638,21 @@
   font-style: normal;
   font-weight: 600;
   line-height: 16px; /* 133.333% */
-    // position: absolute;
-    // left: 0;
-    // right: 0;
-    // top: 0;
-    // bottom: 0;
-    // width: fit-content;
-    // height: fit-content;
-    // margin: auto;
-    @media screen and (max-width: 786px) {
-      font-size: 14px;
-    }
+  // position: absolute;
+  // left: 0;
+  // right: 0;
+  // top: 0;
+  // bottom: 0;
+  // width: fit-content;
+  // height: fit-content;
+  // margin: auto;
+  @media screen and (max-width: 786px) {
+    font-size: 14px;
+  }
 }
 // a39990
 
-
-.task-timer-button{
+.task-timer-button {
   border: 1px solid rgb(255, 215, 0) !important;
   background: rgba(255, 215, 0, 0.7);
   min-width: 90px;
@@ -904,11 +915,11 @@
     display: block;
   }
 
-  img,
-  video {
-    max-width: 100%;
-    height: auto;
-  }
+  // img,
+  // video {
+  //   max-width: 100%;
+  //   height: auto;
+  // }
 
   button,
   input,

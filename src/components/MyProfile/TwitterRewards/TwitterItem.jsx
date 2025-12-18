@@ -39,6 +39,11 @@ const TwitterItem = ({
     return lock === 2 && Date.now() < cooldownUntil;
   };
 
+  const [failTask, setFailTask] = useState({
+    like: false,
+    repost: false,
+  });
+
   const checkTask = async (tweetId, taskType) => {
     axios
       .post(`https://api.worldofdypians.com/twitter/verify-task`, {
@@ -52,6 +57,8 @@ const TwitterItem = ({
         checkTwitter();
       })
       .catch((err) => {
+       
+
         console.log(err);
       });
   };
@@ -84,6 +91,24 @@ const TwitterItem = ({
       })
       .catch((err) => {
         console.log(err);
+         if (taskType === "like") {
+          setFailTask({
+            like: true,
+            repost: false,
+          });
+        } else {
+          setFailTask({
+            like: false,
+            repost: true,
+          });
+        }
+
+        setTimeout(() => {
+          setFailTask({
+            like: false,
+            repost: false,
+          });
+        }, 2500);
         setLoading({
           like: false,
           comment: false,
@@ -163,7 +188,9 @@ const TwitterItem = ({
               : ""
           } ${
             isLocked() && "locked-action-btn"
-          }  d-flex align-items-center gap-2 p-1`}
+          } 
+          ${failTask.like && "fail-action-btn"}
+          d-flex align-items-center gap-2 p-1`}
           onClick={() => handleCheckTask("like")}
         >
           {loading.like ? (
@@ -211,7 +238,10 @@ const TwitterItem = ({
               : ""
           }   ${
             isLocked() && "locked-action-btn"
-          } d-flex align-items-center gap-2 p-1`}
+          }
+          ${failTask.repost && "fail-action-btn"}
+          
+          d-flex align-items-center gap-2 p-1`}
         >
           {loading.retweet ? (
             <div
