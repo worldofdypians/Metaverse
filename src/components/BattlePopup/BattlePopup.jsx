@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import "./_battlepopup.scss";
-import xMark from "../Kickstarter/assets/kickstarterXMark.svg";
+ 
 import { switchNetworkWagmi } from "../../utils/wagmiSwitchChain";
 import { NavLink } from "react-router-dom";
 import { motion } from "motion/react";
@@ -712,7 +712,7 @@ const BattlePopup = ({
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column align-items-center">
         <img
-          src={xMark}
+          src={'https://cdn.worldofdypians.com/wod/kickstarterXMark.svg'}
           className="kickstarter-close"
           alt=""
           onClick={() => {

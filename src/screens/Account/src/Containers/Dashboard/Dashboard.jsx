@@ -6188,6 +6188,31 @@ function Dashboard({
       }
     }
   };
+
+  const getUserRewardData = async (addr) => {
+    const result = await axios
+      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result && result.status === 200) {
+      if (result.data && result.data.rewards && result.data.rewards === 0) {
+        setuserSocialRewards(0);
+        localStorage.setItem("cacheduserSocialRewards", 0);
+      } else if (result.data && !result.data.rewards) {
+        let amount = 0;
+        for (let i = 0; i < result.data.length; i++) {
+          amount += result.data[i].amount;
+        }
+        localStorage.setItem("cacheduserSocialRewards", amount);
+        setuserSocialRewards(amount);
+      }
+    }
+  };
+  
   const scrollToElement = () => {
     const element = document.getElementById(eventId);
     if (element && element !== "golden-pass") {
