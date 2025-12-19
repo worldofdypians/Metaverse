@@ -172,7 +172,7 @@ const GetPremiumPopup = ({
       abi,
       functionName: "getEstimatedTokenSubscriptionAmount",
       args,
-      chain: chainId,
+      chain: chainId ?? 1,
     });
   };
 
@@ -1099,8 +1099,10 @@ const GetPremiumPopup = ({
 
     const contractConfig = resolvePremiumContract(chainId, token);
 
-    if (!contractConfig)
-      throw new Error("Unsupported chain for chest contract.");
+    if (!contractConfig){
+      console.error("Unsupported chain for premium contract.");
+    return
+    }
     const functionName = "getEstimatedTokenSubscriptionAmount";
 
     let tokenprice = await readOnChain({
@@ -1111,7 +1113,7 @@ const GetPremiumPopup = ({
     }).catch(() => 0);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
-
+console.log(coinbase)
     if (coinbase) {
       const nftTotal = contractConfig.nftTotal;
       const nftTokenId = contractConfig.nftTokenId;
