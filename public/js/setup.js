@@ -281,6 +281,10 @@ window.config = {
       decimals: 18,
     },
 
+    "0xcE24439F2D9C6a2289F741120FE202248B666666": {
+      symbol: "U",
+      decimals: 18,
+    },
     "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8": {
       symbol: "WOD",
       decimals: 18,
