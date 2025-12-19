@@ -365,7 +365,8 @@ const MyRewardsPopupNew = ({
   };
 
   useEffect(() => {
-    fetchNftRewards(address);
+    if(address)
+  {  fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
     fetchSkaleboardData(address);
@@ -382,7 +383,7 @@ const MyRewardsPopupNew = ({
     fetchPastDailyBonusMoney(address);
     fetchPastDailyBonusBetaPass(address);
     fetchPastDailyBonusCaws(address);
-    fetchCachedData();
+    fetchCachedData();}
   }, [address, email]);
 
   useEffect(() => {
