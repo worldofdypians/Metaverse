@@ -185,6 +185,7 @@ const initialState = {
     primeStars: false,
     isPremium: false,
   },
+  userLiveRewards: {},
 };
 
 const userSlice = createSlice({
