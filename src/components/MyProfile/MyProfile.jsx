@@ -1899,6 +1899,7 @@ const MyProfile = ({
       {/* (showDailyQuestion || hashValue === "#daily-question") */}
       {(popup || hashValue === "#social-rewards") && (
         <TwitterRewards
+        onSyncClick={onSyncClick}
           taskCount={taskCount}
           tasks={twitterTasks}
           seenPosts={seenPosts}

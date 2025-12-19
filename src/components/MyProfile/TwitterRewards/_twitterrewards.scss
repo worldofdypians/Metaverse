@@ -86,6 +86,30 @@
 .connect-twitter-btn:hover {
   background-position: 100% 0 !important;
 }
+.synchronize-twitter-btn {
+  width: 100%;
+  border-radius: 12px;
+  background: linear-gradient(270deg, #ea6278, #ff8168, #ff8168, #ea6278);
+  background-size: 300%;
+  background-position: 0 0;
+  filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12pt;
+  line-height: 24px;
+  text-align: center;
+  color: #ffffff !important;
+  white-space: pre;
+  transition: all 0.25s;
+  @media screen and (max-width: 786px) {
+    font-size: 10pt;
+  }
+}
+
+.synchronize-twitter-btn:hover {
+  background-position: 100% 0 !important;
+}
 
 .twitter-popup-desc {
   color: #d3d5d7;
