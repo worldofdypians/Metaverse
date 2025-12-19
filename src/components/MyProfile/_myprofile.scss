@@ -153,11 +153,9 @@
 }
 
 .domain-name-wrapper {
-  background: linear-gradient(
-    172deg,
-    rgba(0, 0, 0, 1) 20%,
-    rgba(238, 237, 255, 0.1) 100%
-  );
+  background: linear-gradient(172deg,
+      rgba(0, 0, 0, 1) 20%,
+      rgba(238, 237, 255, 0.1) 100%);
   width: 25px;
   height: 25px;
 }
@@ -165,12 +163,10 @@
 .sidebar-separator2 {
   width: 100%;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    rgba(238, 237, 255, 0) 0%,
-    rgba(238, 237, 255, 0.5) 50%,
-    rgba(238, 237, 255, 0) 100%
-  );
+  background: linear-gradient(to right,
+      rgba(238, 237, 255, 0) 0%,
+      rgba(238, 237, 255, 0.5) 50%,
+      rgba(238, 237, 255, 0) 100%);
 }
 
 .rank-card-wrapper {
@@ -231,6 +227,7 @@
     height: 155px;
   }
 }
+
 .royalty-chest-wrapper {
   background-image: url("https://cdn.worldofdypians.com/wod/royaltyChestNewBg.webp");
   border-radius: 10px;
@@ -298,6 +295,7 @@
 .new-special-rewards-wrapper:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
+
 .royalty-chest-wrapper:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
@@ -311,6 +309,7 @@
   line-height: normal;
   text-transform: uppercase;
 }
+
 .royalty-chest-title {
   color: #cedbfe;
   font-family: "Montserrat";
@@ -320,7 +319,8 @@
   line-height: normal;
   text-transform: uppercase;
   text-shadow: -1px -1px 0 #471f06, 1px -1px 0 #471f06, -1px 1px 0 #471f06,
-    1px 1px 0 #471f06; /* Blue outline */
+    1px 1px 0 #471f06;
+  /* Blue outline */
 }
 
 .royal-rewards-img {
@@ -343,9 +343,11 @@
 .question-of-the-day-title {
   font-family: "Bowlby One SC", sans-serif;
   font-size: 16px;
-  color: #fac926; /* White text */
+  color: #fac926;
+  /* White text */
   text-shadow: -1px -1px 0 #471f06, 1px -1px 0 #471f06, -1px 1px 0 #471f06,
-    1px 1px 0 #471f06; /* Blue outline */
+    1px 1px 0 #471f06;
+  /* Blue outline */
 }
 
 .special-rewards-span {
@@ -426,6 +428,7 @@
   @media screen and (max-width: 1650px) {
     font-size: 10px;
   }
+
   @media screen and (max-width: 1500px) {
     font-size: 9px;
   }
@@ -462,11 +465,9 @@
 
 .treasure-hunt-wrapper {
   border-radius: 10px;
-  background: radial-gradient(
-    49.92% 49.92% at 50.08% 50%,
-    #8262d0 0%,
-    #482293 100%
-  );
+  background: radial-gradient(49.92% 49.92% at 50.08% 50%,
+      #8262d0 0%,
+      #482293 100%);
   cursor: pointer;
 }
 
@@ -588,11 +589,9 @@
 
 .limited-offers-wrapper {
   border-radius: 10px;
-  background: radial-gradient(
-    358.71% 141.42% at 100% 100%,
-    #092e4b 0%,
-    #18193c 100%
-  );
+  background: radial-gradient(358.71% 141.42% at 100% 100%,
+      #092e4b 0%,
+      #18193c 100%);
 
   height: 160px;
   cursor: pointer;
@@ -676,11 +675,9 @@
 }
 
 .radial-gradient-darklord {
-  background: radial-gradient(
-    30.98% 30.98% at 50% 50%,
-    #f00 0%,
-    rgba(255, 0, 0, 0) 100%
-  );
+  background: radial-gradient(30.98% 30.98% at 50% 50%,
+      #f00 0%,
+      rgba(255, 0, 0, 0) 100%);
   // filter: blur(7px);
 }
 
@@ -727,22 +724,23 @@
     height: inherit;
   }
 }
+
 .premium-badge-profile-enabled {
   background: url("https://cdn.worldofdypians.com/wod/premiumEnabledProfileBg.png");
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 10px;
-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
 }
 
 .premium-badge-profile {
   background: url("https://cdn.worldofdypians.com/wod/premiumDisabledProfileBg.png");
-    background-size: 100% 100%;
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-    border-radius: 10px;
-backdrop-filter: blur(1px);
+  border-radius: 10px;
+  backdrop-filter: blur(1px);
 }
 
 .ai-question-img {
@@ -751,12 +749,14 @@ backdrop-filter: blur(1px);
   bottom: 0;
   width: 21%;
   filter: drop-shadow(0 -4px 8px rgba(3, 77, 166, 0.7));
+
   @media screen and (max-width: 991px) {
     width: auto;
     bottom: 0;
     right: 0;
     height: inherit;
   }
+
   // @media screen and (max-width: 500px) {
   //   width: 16%;
   // }
@@ -797,6 +797,7 @@ backdrop-filter: blur(1px);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px 0px;
+
   @media screen and (max-width: 1650px) {
     grid-template-columns: repeat(4, 1fr);
     gap: 30px 0px;
@@ -933,7 +934,7 @@ backdrop-filter: blur(1px);
   right: 50%;
   width: 100%;
 
- 
+
 
   @media screen and (max-width: 1650px) {
     white-space: nowrap;
@@ -1121,7 +1122,8 @@ backdrop-filter: blur(1px);
   }
 }
 
-.ready-circle-ai,.ready-circle-battle {
+.ready-circle-ai,
+.ready-circle-battle {
   width: 70px;
   height: 70px;
   border-radius: 50%;
@@ -1182,15 +1184,16 @@ backdrop-filter: blur(1px);
 
 .premium-badge-profile-enabled:hover,
 .premium-badge-profile:hover {
-   box-shadow: 0px 0px 20px gold;
+  filter: drop-shadow(0px 0px 10px #c09645);
 }
 
 .new-stake-nft-wrapper:hover,
 .ai-question-banner:hover,
 .red-battle-wrapper:hover {
-    .ready-circle-battle {
+  .ready-circle-battle {
     box-shadow: 0px 0px 20px gold;
   }
+
   .ready-circle {
     box-shadow: 0px 0px 20px gold;
   }
@@ -1395,11 +1398,11 @@ backdrop-filter: blur(1px);
   }
 }
 
-.task-length-wrapper{
-border-radius: 12px;
-border: 0.5px solid #C8F9FF;
-background: linear-gradient(270deg, #0976F3 0%, #091DF3 100%);
-padding: 2px 5px;
+.task-length-wrapper {
+  border-radius: 12px;
+  border: 0.5px solid #C8F9FF;
+  background: linear-gradient(270deg, #0976F3 0%, #091DF3 100%);
+  padding: 2px 5px;
 }
 
 .specialRewardsLogo {
@@ -1407,11 +1410,11 @@ padding: 2px 5px;
   height: 32px;
 }
 
-.task-length-text{
-color: #C8F9FF;
-text-align: center;
-font-size: 10px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+.task-length-text {
+  color: #C8F9FF;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
