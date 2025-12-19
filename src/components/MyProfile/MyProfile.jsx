@@ -1,15 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import "./_myprofile.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import Clipboard from "react-clipboard.js";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Countdown from "react-countdown";
 import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
 import useWindowSize from "../../hooks/useWindowSize";
+import axios from "axios";
 import { useSelector } from "react-redux";
+import TwitterRewards from "./TwitterRewards/TwitterRewards";
+import ConnectTwitterPopup from "./TwitterRewards/ConnectTwitterPopup";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -102,6 +105,10 @@ const MyProfile = ({
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
   const [tooltip, setTooltip] = useState(false);
+  const [cooldown, setCooldown] = useState(null);
+
+  const hashValue = window.location.hash;
+
   let now = new Date().getTime();
   let now2 = new Date();
 
@@ -131,13 +138,124 @@ const MyProfile = ({
 
   const html = document.querySelector("html");
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  // Will be "true", "false", or null if it doesn't exist
+  const twitterLinkedParam = queryParams.get("twitterLinked");
+
+  const [twitter, setTwitter] = useState();
+  const [twitterTasks, setTwitterTasks] = useState([]);
+  const [popup, setPopup] = useState(false);
+  const [connectPopup, setConnectPopup] = useState(false);
+  const [twitterCooldown, setTwitterCooldown] = useState({});
+  const [cooldownHours, setCooldownHours] = useState(null)
+  const [taskCount, setTaskCount] = useState(0);
+  const [seenPosts, setSeenPosts] = useState([]);
+  const [newCount, setNewCount] = useState(0);
+
+  const handleRemove = (id) => {
+    // Add to seen posts only if not already added
+    if (!seenPosts.includes(id)) {
+      const updated = [...seenPosts, id];
+      setSeenPosts(updated);
+      localStorage.setItem("seenPosts", JSON.stringify(updated));
+    }
+  };
+
   useEffect(() => {
-    if (rankDropdown === true) {
+    const stored = JSON.parse(localStorage.getItem("seenPosts")) || [];
+    setSeenPosts(stored);
+  }, []);
+
+  const checkTwitter = async () => {
+    try {
+      const res = await axios.get(
+        `https://api.worldofdypians.com/api/website-account/${address}`
+      );
+
+      const data = res.data;
+
+      setTwitter(data);
+
+      // 1) Group tasks by tweetId
+      const grouped = Object.values(
+        data.twitterTasks.reduce((acc, item) => {
+          if (!acc[item.tweetId]) {
+            acc[item.tweetId] = {
+              tweetId: item.tweetId,
+              assignedAt: item.assignedAt,
+              tweetCreatedAt: item.tweetCreatedAt,
+              tweetDescription: item.tweetDescription,
+              tasks: [],
+            };
+          }
+
+          acc[item.tweetId].tasks.push({
+            task: item.task,
+            completed: item.completed,
+            verified: item.verified,
+            _id: item._id,
+          });
+
+          return acc;
+        }, {})
+      );
+
+      // 6) Incomplete count
+      const incompleteCount = data.twitterTasks.filter(
+        (t) => t.completed === false && t.verified === false
+      ).length;
+
+      setTaskCount(incompleteCount);
+      setTwitterTasks(grouped);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const markAllAsSeen = () => {
+    const allIds = twitterTasks.map((post) => post.tweetId);
+    setSeenPosts(allIds);
+    localStorage.setItem("seenPosts", JSON.stringify(allIds));
+    setNewCount(
+      twitterTasks.filter((p) => !seenPosts.includes(p.tweetId)).length
+    );
+  };
+
+  useEffect(() => {
+    setNewCount(
+      twitterTasks.filter((p) => !seenPosts.includes(p.tweetId)).length
+    );
+  }, [handleRemove, popup]);
+
+  const checkCooldown = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/auth/twitter/cooldown/${address}`)
+      .then((res) => {
+        setTwitterCooldown(res.data.remainingMs);
+        setCooldownHours(res.data.remainingHours);
+      })
+      .catch((err) => {
+        setTwitterCooldown(0);
+        setCooldownHours(0);
+      });
+  };
+
+  useEffect(() => {
+    if (address) {
+      checkTwitter();
+      checkCooldown();
+    }
+  }, [twitterLinkedParam, address]);
+
+  useEffect(() => {
+    if (rankDropdown === true || popup || connectPopup) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [rankDropdown]);
+  }, [rankDropdown, popup, connectPopup]);
 
   const dailyEvents = [
     {
@@ -1467,7 +1585,7 @@ const MyProfile = ({
                 className="col-12 col-lg-4 mt-3 px-0 px-lg-2"
                 onClick={onOpenBooster}
               >
-                <div className="booster-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                <div className="booster-wrapper2 d-flex h-100 align-items-center gap-5 justify-content-between p-3">
                   <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                     <div className="d-flex align-items-center gap-2">
                       {/* <img
@@ -1491,7 +1609,7 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <NavLink to="/loyalty-program">
-                  <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-3">
+                  <div className="total-stars-premium-wrapper2 h-100 d-flex align-items-center gap-5 justify-content-between p-3">
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                       <div className="d-flex align-items-center gap-2">
                         {/* <img
@@ -1524,61 +1642,53 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-4 mt-3 px-0 px-lg-2">
                 <div
-                  className="new-special-rewards-wrapper d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
-                  style={{ height: "60px" }}
-                  onClick={openSpecialRewards}
+                  className="new-special-rewards-wrapper h-auto d-flex align-items-center justify-content-between gap-2 p-3 pe-3"
+                  // style={{ height: "60px" }}
+                  onClick={() => setPopup(true)}
                 >
-                  <div className="d-flex align-items-center gap-2">
-                    {/* <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/domainNameIcon.png"
-                      }
-                      className="wod-domain-icon"
-                      alt=""
-                    /> */}
+                  <div className="d-flex align-items-start gap-2">
                     <div className="d-flex flex-column justify-content-between h-100 mb-0">
-                      <div className="d-flex flex-column">
-                        <span
-                          className="user-blue-rank-2"
-                          style={{ color: "#9e3c7a" }}
-                        >
-                          Special Rewards
-                        </span>
-                        <span
-                          className="user-rank-text-2"
-                          style={{ color: "#3B5896" }}
-                        >
-                          ${getFormattedNumber(specialRewards)} Rewards
-                        </span>
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src="https://cdn.worldofdypians.com/wod/specialRewardsLogo.png"
+                          className="specialRewardsLogo"
+                        />
+                        <div className="d-flex flex-column">
+                          <span
+                            className="user-blue-rank-2"
+                            style={{ color: "#fff" }}
+                          >
+                            Social Rewards
+                          </span>
+                          <span
+                            className="user-rank-text-2"
+                            style={{ color: "#C8F9FF" }}
+                          >
+                            {twitter && twitter.twitterUsername
+                              ? ` @${twitter.twitterUsername}`
+                              : "Connect Your Account"}
+                          </span>
+                        </div>
                       </div>
                     </div>
+                    {newCount > 0 && (
+                      <div className="task-length-wrapper d-flex align-items-center justify-content-center">
+                        <span className="task-length-text">{newCount} New</span>
+                      </div>
+                    )}
                   </div>
-                  {/* <img
-                    src={"https://cdn.worldofdypians.com/wod/redArrow.svg"}
-                    width={20}
-                    height={20}
-                    alt=""
-                  /> */}
-                  {/* <div className="d-flex gap-2 align-items-center">
-                        <h6 className="special-rewards-total mb-0">
-                          ${getFormattedNumber(specialRewards)}
-                        </h6>
-                        <span className="special-rewards-total-span">
-                          Rewards
-                        </span>
-                      </div> */}
 
                   <button
-                    onClick={openSpecialRewards}
-                    className="activate-btn2 px-3 py-1"
+                    className="social-btn2 px-3 py-1"
                     style={{
-                      background: "#9E3C7A",
+                      background: "#083E6B",
                     }}
                   >
-                    Apply
+                    View
                   </button>
                 </div>
               </div>
+
               {/* <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
@@ -1877,6 +1987,50 @@ const MyProfile = ({
           </div>
         </div>
       </div>
+      {/* (showDailyQuestion || hashValue === "#daily-question") */}
+      {(popup || hashValue === "#social-rewards") && (
+        <TwitterRewards
+        onSyncClick={onSyncClick}
+          taskCount={taskCount}
+          tasks={twitterTasks}
+          seenPosts={seenPosts}
+          setSeenPosts={setSeenPosts}
+          onClose={() => {
+            markAllAsSeen();
+            setPopup(false);
+            window.location.hash = "";
+            html.classList.remove("hidescroll");
+          }}
+          address={address}
+          handleRemove={handleRemove}
+          checkCooldown={checkCooldown}
+          cooldownHours={cooldownHours}
+          checkTwitter={checkTwitter}
+          username={twitter?.twitterUsername}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          email={email}
+          onConnectWallet={onConnectWallet}
+          twitter={twitter}
+          twitterCooldown={twitterCooldown}
+        />
+      )}
+      {connectPopup && (
+        <OutsideClickHandler onOutsideClick={() => setConnectPopup(false)}>
+          <ConnectTwitterPopup
+            onClose={() => setConnectPopup(false)}
+            twitterCooldown={twitterCooldown}
+            address={address}
+            isConnected={isConnected}
+            coinbase={coinbase}
+            email={email}
+            onConnectWallet={() => {
+              onConnectWallet();
+              checkTwitter();
+            }}
+          />
+        </OutsideClickHandler>
+      )}
     </>
   );
 };

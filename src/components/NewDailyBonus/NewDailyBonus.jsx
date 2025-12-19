@@ -75,7 +75,7 @@ const NewDailyBonus = ({
   onChestClaimed,
   onSkaleChestClaimed,
   listedNFTS,
-username,
+  username,
   ethTokenData,
   handleSwitchChain,
   openedSkaleChests,
@@ -136,7 +136,7 @@ username,
   // onMatChestClaimed,
   // allMatChests,
   onConnectWallet,
- 
+
   // claimedTaraxaChests,
   // claimedTaraxaPremiumChests,
   // openedTaraxaChests,
@@ -851,8 +851,7 @@ username,
     } catch (error) {
       // Error handling is done in switchNetworkWagmi
       console.error("Network switch error:", error);
-      
-       
+
       // Show specific error for Binance wallet if network not supported
       if (
         (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) &&
@@ -2059,15 +2058,17 @@ username,
 
   const chains = [
     { chainId: [56, 204], chainName: "bnb" },
-    { chainId: [2040], chainName: "vanar" },
-    // { chainId: [841], chainName: "taraxa" },
-    { chainId: [167000], chainName: "taiko" },
+    { chainId: [8453], chainName: "base" },
     { chainId: [1116], chainName: "core" },
     { chainId: [1329], chainName: "sei" },
+    { chainId: [167000], chainName: "taiko" },
+    { chainId: [2040], chainName: "vanar" },
+    // { chainId: [841], chainName: "taraxa" },
+
     { chainId: [169], chainName: "manta" },
-    { chainId: [8453], chainName: "base" },
-    { chainId: [88], chainName: "viction" },
     { chainId: [1482601649], chainName: "skale" },
+    { chainId: [88], chainName: "viction" },
+
     // { chainId: [698], chainName: "matchain" },
   ];
 
@@ -2176,9 +2177,7 @@ username,
         setDisable(true);
       }
     } else if (chain === "skale") {
-      if (
-        window.WALLET_TYPE !== "binance" 
-      ) {
+      if (window.WALLET_TYPE !== "binance") {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2250,9 +2249,7 @@ username,
         setMessage("notsupported");
       }
     } else if (chain === "core") {
-      if (
-        window.WALLET_TYPE !== "binance" 
-      ) {
+      if (window.WALLET_TYPE !== "binance") {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2318,15 +2315,13 @@ username,
           setDisable(true);
         }
       } else if (
-        window.WALLET_TYPE === "binance" || 
+        window.WALLET_TYPE === "binance" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "viction") {
-      if (
-        window.WALLET_TYPE !== "binance" 
-      ) {
+      if (window.WALLET_TYPE !== "binance") {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2392,149 +2387,143 @@ username,
           setDisable(true);
         }
       } else if (
-        window.WALLET_TYPE === "binance" || 
+        window.WALLET_TYPE === "binance" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "manta") {
-     
-        if (!email) {
-          setMessage("login");
-          setDisable(true);
-        } else if (email && coinbase && address) {
-          if (coinbase.toLowerCase() === address.toLowerCase()) {
-            if (isPremium) {
-              if (
-                claimedMantaChests + claimedMantaPremiumChests === 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase()
-              ) {
-                setMessage("complete");
-              } else if (
-                claimedMantaChests + claimedMantaPremiumChests < 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 169
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedMantaChests + claimedMantaPremiumChests < 20 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 169
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            } else if (!isPremium) {
-              if (
-                claimedMantaChests === 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 169
-              ) {
-                setMessage("premium");
-                setDisable(true);
-              } else if (
-                claimedMantaChests < 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 169
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedMantaChests < 10 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 169
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
+      if (!email) {
+        setMessage("login");
+        setDisable(true);
+      } else if (email && coinbase && address) {
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedMantaChests + claimedMantaPremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedMantaChests + claimedMantaPremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 169
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedMantaChests + claimedMantaPremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 169
+            ) {
+              setMessage("switch");
+              setDisable(true);
             }
-          } else {
-            setMessage("switchAccount");
-            setDisable(true);
+          } else if (!isPremium) {
+            if (
+              claimedMantaChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 169
+            ) {
+              setMessage("premium");
+              setDisable(true);
+            } else if (
+              claimedMantaChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 169
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedMantaChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 169
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
           }
         } else {
-          setMessage("connect");
+          setMessage("switchAccount");
           setDisable(true);
         }
-       
+      } else {
+        setMessage("connect");
+        setDisable(true);
+      }
     } else if (chain === "base") {
-       
-        if (!email) {
-          setMessage("login");
-          setDisable(true);
-        } else if (email && coinbase && address) {
-          if (coinbase.toLowerCase() === address.toLowerCase()) {
-            if (isPremium) {
-              if (
-                claimedBaseChests + claimedBasePremiumChests === 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase()
-              ) {
-                setMessage("complete");
-              } else if (
-                claimedBaseChests + claimedBasePremiumChests < 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 8453
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedBaseChests + claimedBasePremiumChests < 20 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 8453
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            } else if (!isPremium) {
-              if (
-                claimedBaseChests === 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 8453
-              ) {
-                setMessage("premium");
-                setDisable(true);
-              } else if (
-                claimedBaseChests < 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 8453
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedBaseChests < 10 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 8453
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
+      if (!email) {
+        setMessage("login");
+        setDisable(true);
+      } else if (email && coinbase && address) {
+        if (coinbase.toLowerCase() === address.toLowerCase()) {
+          if (isPremium) {
+            if (
+              claimedBaseChests + claimedBasePremiumChests === 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase()
+            ) {
+              setMessage("complete");
+            } else if (
+              claimedBaseChests + claimedBasePremiumChests < 20 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 8453
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedBaseChests + claimedBasePremiumChests < 20 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 8453
+            ) {
+              setMessage("switch");
+              setDisable(true);
             }
-          } else {
-            setMessage("switchAccount");
-            setDisable(true);
+          } else if (!isPremium) {
+            if (
+              claimedBaseChests === 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 8453
+            ) {
+              setMessage("premium");
+              setDisable(true);
+            } else if (
+              claimedBaseChests < 10 &&
+              rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId === 8453
+            ) {
+              setMessage("");
+              setDisable(false);
+            } else if (
+              claimedBaseChests < 10 &&
+              // rewardData.length === 0 &&
+              address.toLowerCase() === coinbase.toLowerCase() &&
+              chainId !== 8453
+            ) {
+              setMessage("switch");
+              setDisable(true);
+            }
           }
         } else {
-          setMessage("connect");
+          setMessage("switchAccount");
           setDisable(true);
         }
-       
+      } else {
+        setMessage("connect");
+        setDisable(true);
+      }
     } else if (chain === "taiko") {
-      if (
-        window.WALLET_TYPE !== "binance" 
-      ) {
+      if (window.WALLET_TYPE !== "binance") {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2600,15 +2589,13 @@ username,
           setDisable(true);
         }
       } else if (
-        window.WALLET_TYPE === "binance" || 
+        window.WALLET_TYPE === "binance" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "vanar") {
-      if (
-        window.WALLET_TYPE !== "binance"  
-      ) {
+      if (window.WALLET_TYPE !== "binance") {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2680,7 +2667,7 @@ username,
         setMessage("notsupported");
       }
       // setMessage("comingsoon");
-    } 
+    }
     // else if (chain === "matchain") {
     //   if (window.WALLET_TYPE !== "binance") {
     //     if (!email) {
@@ -2754,10 +2741,8 @@ username,
     //     setMessage("notsupported");
     //   }
     // }
-     else if (chain === "sei") {
-      if (
-        window.WALLET_TYPE !== "binance"
-      ) {
+    else if (chain === "sei") {
+      if (window.WALLET_TYPE !== "binance") {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2829,10 +2814,10 @@ username,
         setMessage("notsupported");
       }
       // setMessage("comingsoon");
-    } 
+    }
     // else if (chain === "taraxa") {
     //   if (
-    //     window.WALLET_TYPE !== "binance"  
+    //     window.WALLET_TYPE !== "binance"
     //   ) {
     //     if (!email) {
     //       setMessage("login");
@@ -3085,13 +3070,13 @@ username,
                       ? totalTaikoPoints
                       : chain === "vanar"
                       ? totalVanarPoints
-                      // : chain === "matchain"
+                      : // : chain === "matchain"
                       // ? totalMatPoints
-                      : chain === "sei"
+                      chain === "sei"
                       ? totalSeiPoints
-                      // : chain === "taraxa"
-                      // ? totalTaraxaPoints
-                      : totalSkalePoints,
+                      : // : chain === "taraxa"
+                        // ? totalTaraxaPoints
+                        totalSkalePoints,
                     0
                   )}{" "}
                 </h6>
@@ -3114,13 +3099,13 @@ username,
                       ? totalTaikoStars
                       : chain === "vanar"
                       ? totalVanarStars
-                      // : chain === "matchain"
+                      : // : chain === "matchain"
                       // ? totalMatStars
-                      : chain === "sei"
+                      chain === "sei"
                       ? totalSeiStars
-                      // : chain === "taraxa"
-                      // ? totalTaraxaStars
-                      : totalSkaleStars,
+                      : // : chain === "taraxa"
+                        // ? totalTaraxaStars
+                        totalSkaleStars,
                     0
                   )}{" "}
                 </h6>
@@ -3146,13 +3131,13 @@ username,
                       ? totalTaikoUsd
                       : chain === "vanar"
                       ? totalVanarUsd
-                      // : chain === "matchain"
+                      : // : chain === "matchain"
                       // ? totalMatUsd
-                      : chain === "sei"
+                      chain === "sei"
                       ? totalSeiUsd
-                      // : chain === "taraxa"
-                      // ? totalTaraxaUsd
-                      : totalSkaleUsd,
+                      : // : chain === "taraxa"
+                        // ? totalTaraxaUsd
+                        totalSkaleUsd,
                     2
                   )}{" "}
                 </h6>
@@ -3623,7 +3608,7 @@ username,
                             </div>
                           </div>
                         </div>
-                         <div
+                        <div
                           className={`position-relative chain-item ${
                             chain === "taiko" && "chain-item-active"
                           } w-100`}
@@ -3739,8 +3724,6 @@ username,
                             chain === "vanar" && "chain-item-active"
                           } w-100`}
                         >
-                       
-
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon3.png"
@@ -3963,9 +3946,6 @@ username,
                             </div>
                           </div>
                         </div> */}
-                       
-
-                      
 
                         <div
                           className={`position-relative chain-item ${
@@ -4074,9 +4054,7 @@ username,
                             </div>
                           </div>
                         </div>
-                       
 
-                       
                         <div
                           className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
@@ -4185,7 +4163,7 @@ username,
                               </span>
                             </div>
                           </div>
-                        </div> 
+                        </div>
                         <div
                           className={`position-relative chain-item ${
                             chain === "viction" && "chain-item-active"
@@ -4704,7 +4682,6 @@ username,
                             chain === "vanar" && "chain-item-active"
                           }`}
                         >
-                     
                           <img
                             src={
                               "https://cdn.worldofdypians.com/wod/comingSoon3.png"
@@ -4812,8 +4789,6 @@ username,
                             </div>
                           </div>
                         </div> */}
-                      
-
 
                         <div
                           className={`position-relative chain-item ${
@@ -4868,7 +4843,7 @@ username,
                             </div>
                           </div>
                         </div>
-                         <div
+                        <div
                           className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
                           } w-auto`}
@@ -4965,7 +4940,7 @@ username,
                             </button>
                           </div>
                         </div>
-                      
+
                         {/* <div
                           className={`position-relative chain-item ${
                             chain === "matchain" && "chain-item-active"
@@ -5066,7 +5041,7 @@ username,
                                   chain={chain}
                                   key={index}
                                   username={username}
-                                  item={item} 
+                                  item={item}
                                   image={bnbImages[index]}
                                   // openChest={openChest}
                                   selectedChest={selectedChest}
@@ -5102,8 +5077,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5158,8 +5131,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                           : chain === "core"
@@ -5212,8 +5183,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5268,8 +5237,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                           : chain === "manta"
@@ -5322,8 +5289,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5378,8 +5343,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                           : chain === "base"
@@ -5432,8 +5395,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5488,8 +5449,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                           : chain === "taiko"
@@ -5542,8 +5501,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5598,8 +5555,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                           : chain === "vanar"
@@ -5709,7 +5664,6 @@ username,
                                   }
                                 />
                               ))
-                           
                           : chain === "sei"
                           ? allSeiChests && allSeiChests.length > 0
                             ? allSeiChests.map((item, index) => (
@@ -5760,8 +5714,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5816,11 +5768,8 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
-                          
                           : chain === "viction"
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
@@ -5871,8 +5820,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5927,8 +5874,6 @@ username,
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
-                                  
-                                  
                                 />
                               ))
                           : chain === "skale" &&
@@ -5981,8 +5926,6 @@ username,
                                 dummypremiumChests={
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
-                                
-                                
                               />
                             ))
                           : window.range(0, 19).map((item, index) => (
@@ -6036,8 +5979,6 @@ username,
                                 dummypremiumChests={
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
-                                
-                                
                               />
                             ))}
                       </div>
@@ -6172,7 +6113,7 @@ username,
                                 Manta Chain
                               </span>
                             </h6>
-                          )   : chain === "taiko" ? (
+                          ) : chain === "taiko" ? (
                             <h6
                               className="loader-text mb-0"
                               style={{ color: "#ce5d1b" }}
@@ -6204,7 +6145,7 @@ username,
                                 Vanar Chain
                               </span>
                             </h6>
-                          )  : chain === "core" ? (
+                          ) : chain === "core" ? (
                             <h6
                               className="loader-text mb-0"
                               style={{ color: "#ce5d1b" }}
@@ -8198,11 +8139,7 @@ username,
           </div>
           <div className="rewards-container-outer custom-container-width d-flex align-items-center justify-content-center p-4">
             {windowSize.width > 992 ? (
-              <div
-                className={`${
-                 "new-rewards-grid"
-                }`}
-              >
+              <div className={`${"new-rewards-grid"}`}>
                 {dummyRewards.map((item, index) => (
                   <div
                     key={index}
@@ -8733,9 +8670,9 @@ username,
             onChestClaimed();
             onVictionChestClaimed();
             onCoreChestClaimed();
-            onMantaChestClaimed(); 
+            onMantaChestClaimed();
             onTaikoChestClaimed();
-            onVanarChestClaimed(); 
+            onVanarChestClaimed();
             onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
@@ -8752,7 +8689,6 @@ username,
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                
                 : chain === "taiko"
                 ? showSingleRewardDataTaiko(
                     rewardData.chestId,
@@ -8763,7 +8699,6 @@ username,
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                 
                 : chain === "viction"
                 ? showSingleRewardDataViction(
                     rewardData.chestId,

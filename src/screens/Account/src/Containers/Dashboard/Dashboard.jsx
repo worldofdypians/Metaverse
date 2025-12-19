@@ -45,15 +45,15 @@ import {
   taikoStars,
   weeklyStarPrizes,
   weeklyExtraStarPrizes,
-  seiStars,
+  // seiStars,
   // taraxaStars,
-  matStars,
+  // matStars,
   vanarStars,
-  coreStars,
-  previous_baseStars,
-  previous_vanarStars,
-  previous_skaleStars,
-  previous_taikoStars,
+  // coreStars,
+  // previous_baseStars,
+  // previous_vanarStars,
+  // previous_skaleStars,
+  // previous_taikoStars,
 } from "./stars";
 import { bannedEmails, placeholderplayerData, dummyPremiums } from "./data";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
@@ -126,7 +126,7 @@ function Dashboard({
   onSyncClick,
   handleSwitchNetwork,
   handleSwitchChain,
-  logoutCount,
+  // logoutCount,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   latest20BoughtNFTS,
@@ -144,8 +144,8 @@ function Dashboard({
   royaltyCount,
   onOpenRoyaltyChest,
   setRoyalChestIndex,
-  onOpenRoyaltyChestTaiko,
-  setRoyalChestIndexTaiko,
+  // onOpenRoyaltyChestTaiko,
+  // setRoyalChestIndexTaiko,
   userTreasureHuntStats,
   userCollectedNFTS,
   email,
@@ -154,7 +154,6 @@ function Dashboard({
   userWallet,
   isPremium,
 }) {
-  const { setUserNFTs } = useUser();
   const dispatch = useDispatch();
   const { eventId } = useParams();
 
@@ -265,19 +264,19 @@ function Dashboard({
     "10",
   ];
 
-  const chestImagesMat = [
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-  ];
+  // const chestImagesMat = [
+  //   "0",
+  //   "1",
+  //   "2",
+  //   "3",
+  //   "4",
+  //   "5",
+  //   "6",
+  //   "7",
+  //   "8",
+  //   "9",
+  //   "10",
+  // ];
   function shuffle(array) {
     let currentIndex = array.length,
       randomIndex;
@@ -311,17 +310,17 @@ function Dashboard({
 
   const [errors, setErrors] = useState({});
 
-  const [showNfts, setShowNfts] = useState(false);
+  // const [showNfts, setShowNfts] = useState(false);
   const [goldenPassRemainingTime, setGoldenPassRemainingTime] = useState();
 
-  const [landstakes, setLandStakes] = useState([]);
+  // const [landstakes, setLandStakes] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
   const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
 
-  const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
-  const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
+  // const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
+  // const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
 
   const [openedChests, setOpenedChests] = useState([]);
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
@@ -343,10 +342,10 @@ function Dashboard({
 
   const [globalLeaderboard, setGlobalLeaderboard] = useState(false);
 
-  const [myOffers, setmyOffers] = useState([]);
-  const [allActiveOffers, setallOffers] = useState([]);
+  // const [myOffers, setmyOffers] = useState([]);
+  // const [allActiveOffers, setallOffers] = useState([]);
 
-  const [isonlink, setIsOnLink] = useState(false);
+  // const [isonlink, setIsOnLink] = useState(false);
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
 
   const [dummypremiumChests, setDummyPremiumChests] = useState([]);
@@ -869,10 +868,10 @@ function Dashboard({
 
   const [dailyplayerData, setdailyplayerData] = useState([]);
 
-  const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
+  // const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
 
   const [genesisData, setgenesisData] = useState([]);
-  const [previousgenesisData, setpreviousgenesisData] = useState([]);
+  // const [previousgenesisData, setpreviousgenesisData] = useState([]);
   const [specialRewardsSuccess, setSpecialRewardsSuccess] = useState(false);
   const [treasureRewardMoney, setTreasureRewardMoney] = useState({
     bnb: 0,
@@ -4514,12 +4513,12 @@ function Dashboard({
     if ((error && !fromCache) || !data) {
       fillRecordsGenesis([]);
       setgenesisData([]);
-      setpreviousGenesisVersion(0);
+      // setpreviousGenesisVersion(0);
       return;
     }
 
     const leaderboard = data?.leaderboard ?? [];
-    setpreviousGenesisVersion(data?.version ?? 0);
+    // setpreviousGenesisVersion(data?.version ?? 0);
     setgenesisData(leaderboard);
     fillRecordsGenesis(leaderboard);
   };
@@ -5130,88 +5129,88 @@ function Dashboard({
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
-  const onOpenNfts = () => {
-    setShowNfts(!showNfts);
-  };
+  // const onOpenNfts = () => {
+  //   setShowNfts(!showNfts);
+  // };
 
   //land only stakes
-  const getStakesIdsWod = async () => {
-    const address = coinbase;
-    try {
-      const result = await readContract(wagmiClient, {
-        address: window.config.landnftstake_address,
-        abi: window.LANDSTAKING_ABI,
-        functionName: "depositsOf",
-        args: [address],
-        chainId: 1,
-      });
+  // const getStakesIdsWod = async () => {
+  //   const address = coinbase;
+  //   try {
+  //     const result = await readContract(wagmiClient, {
+  //       address: window.config.landnftstake_address,
+  //       abi: window.LANDSTAKING_ABI,
+  //       functionName: "depositsOf",
+  //       args: [address],
+  //       chainId: 1,
+  //     });
 
-      let stakenft_cawsWod = [];
-      for (let i = 0; i < result.length; i++) {
-        stakenft_cawsWod.push(parseInt(result[i]));
-      }
-      return stakenft_cawsWod;
-    } catch (e) {
-      console.error("Error getting WOD stakes:", e);
-      return [];
-    }
-  };
+  //     let stakenft_cawsWod = [];
+  //     for (let i = 0; i < result.length; i++) {
+  //       stakenft_cawsWod.push(parseInt(result[i]));
+  //     }
+  //     return stakenft_cawsWod;
+  //   } catch (e) {
+  //     console.error("Error getting WOD stakes:", e);
+  //     return [];
+  //   }
+  // };
 
-  const getmyWodStakes = async () => {
-    let myStakes = await getStakesIdsWod();
-    if (myStakes && myStakes.length > 0) {
-      let stakes = myStakes.map((stake) => window.getNft(stake));
+  // const getmyWodStakes = async () => {
+  //   let myStakes = await getStakesIdsWod();
+  //   if (myStakes && myStakes.length > 0) {
+  //     let stakes = myStakes.map((stake) => window.getNft(stake));
 
-      stakes = await Promise.all(stakes);
+  //     stakes = await Promise.all(stakes);
 
-      stakes.reverse();
-      setLandStakes(stakes);
-    } else setLandStakes([]);
-  };
+  //     stakes.reverse();
+  //     setLandStakes(stakes);
+  //   } else setLandStakes([]);
+  // };
 
-  const getCawsStakesIdsCawsWod = async () => {
-    const address = coinbase;
-    try {
-      const result = await readContract(wagmiClient, {
-        address: window.config.wod_caws_address,
-        abi: window.WOD_CAWS_ABI,
-        functionName: "depositsOf",
-        args: [address],
-        chainId: 1,
-      });
+  // const getCawsStakesIdsCawsWod = async () => {
+  //   const address = coinbase;
+  //   try {
+  //     const result = await readContract(wagmiClient, {
+  //       address: window.config.wod_caws_address,
+  //       abi: window.WOD_CAWS_ABI,
+  //       functionName: "depositsOf",
+  //       args: [address],
+  //       chainId: 1,
+  //     });
 
-      let stakenft_cawsWod = [];
-      for (let i = 0; i < result.length; i++) {
-        stakenft_cawsWod.push(parseInt(result[i]));
-      }
-      return stakenft_cawsWod;
-    } catch (e) {
-      console.error("Error getting CAWS WOD stakes:", e);
-      return [];
-    }
-  };
+  //     let stakenft_cawsWod = [];
+  //     for (let i = 0; i < result.length; i++) {
+  //       stakenft_cawsWod.push(parseInt(result[i]));
+  //     }
+  //     return stakenft_cawsWod;
+  //   } catch (e) {
+  //     console.error("Error getting CAWS WOD stakes:", e);
+  //     return [];
+  //   }
+  // };
 
-  const getWodStakesIdsCawsWod = async () => {
-    const address = coinbase;
-    try {
-      const result = await readContract(wagmiClient, {
-        address: window.config.wod_caws_address,
-        abi: window.WOD_CAWS_ABI,
-        functionName: "depositsOfWoD",
-        args: [address],
-        chainId: 1,
-      });
+  // const getWodStakesIdsCawsWod = async () => {
+  //   const address = coinbase;
+  //   try {
+  //     const result = await readContract(wagmiClient, {
+  //       address: window.config.wod_caws_address,
+  //       abi: window.WOD_CAWS_ABI,
+  //       functionName: "depositsOfWoD",
+  //       args: [address],
+  //       chainId: 1,
+  //     });
 
-      let stakenft_cawsWod = [];
-      for (let i = 0; i < result.length; i++) {
-        stakenft_cawsWod.push(parseInt(result[i]));
-      }
-      return stakenft_cawsWod;
-    } catch (e) {
-      console.error("Error getting WOD CAWS stakes:", e);
-      return [];
-    }
-  };
+  //     let stakenft_cawsWod = [];
+  //     for (let i = 0; i < result.length; i++) {
+  //       stakenft_cawsWod.push(parseInt(result[i]));
+  //     }
+  //     return stakenft_cawsWod;
+  //   } catch (e) {
+  //     console.error("Error getting WOD CAWS stakes:", e);
+  //     return [];
+  //   }
+  // };
 
   const getCawsStakesIds = async (address) => {
     try {
@@ -5804,12 +5803,12 @@ function Dashboard({
         if (chestOrder.length > 0) {
           for (let item = 0; item < chestOrder.length; item++) {
             if (chestOrder[item].chestType === "Standard") {
-              if (chestOrder[item].chestId === 99) {
-                setRoyalChestIndexTaiko(item);
-                if (chestOrder[item].isOpened === true) {
-                  onOpenRoyaltyChestTaiko(chestOrder[item]);
-                }
-              }
+              // if (chestOrder[item].chestId === 99) {
+              //   setRoyalChestIndexTaiko(item);
+              //   if (chestOrder[item].isOpened === true) {
+              //     onOpenRoyaltyChestTaiko(chestOrder[item]);
+              //   }
+              // }
               if (chestOrder[item].isOpened === true) {
                 openedChests.push(chestOrder[item]);
                 openedStandardChests.push(chestOrder[item]);
@@ -6042,7 +6041,7 @@ function Dashboard({
       });
 
     if (result && result.status === 200) {
-      const today = new Date();
+      // const today = new Date();
 
       const isToday = result.data.alreadyAnsweredToday;
 
@@ -6507,6 +6506,7 @@ function Dashboard({
     if (userWallet !== undefined && email !== undefined && email !== "") {
       // getUserRewardData(userWallet);
       getAIQuestionStatus(userWallet, email);
+      countUserDailyBundles(userWallet);
     }
   }, [userWallet, email]);
 
@@ -6522,6 +6522,7 @@ function Dashboard({
   useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
       fetchUserFavorites(userWallet ? userWallet : coinbase);
+      getUserRewardData(userWallet ? userWallet : coinbase);
     }
   }, [coinbase, userWallet, isConnected, authToken, email, isTokenExpired]);
 
@@ -6751,7 +6752,7 @@ function Dashboard({
               }}
               onCloseRankPopup={() => {
                 handleResetRecords();
-                handleResetRecordsStars();
+                // handleResetRecordsStars();
               }}
               allClaimedChests={
                 openedBaseChests.length +
@@ -7124,7 +7125,7 @@ function Dashboard({
 
               <GenesisLeaderboard
                 data={genesisData}
-                previousdata={previousgenesisData}
+                previousdata={[]}
                 playerdata={greatCollectionData}
                 username={username}
                 activePlayer={
@@ -7139,7 +7140,7 @@ function Dashboard({
           <OutsideClickHandler
             onOutsideClick={() => {
               setGlobalLeaderboard(false);
-              handleResetRecordsStars();
+              // handleResetRecordsStars();
               window.location.hash = "";
             }}
           >
@@ -7164,7 +7165,7 @@ function Dashboard({
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => {
                     setGlobalLeaderboard(false);
-                    handleResetRecordsStars();
+                    // handleResetRecordsStars();
                     window.location.hash = "";
                   }}
                   alt=""
@@ -7201,14 +7202,10 @@ function Dashboard({
               </div>
               <GlobalLeaderboard
                 leaderboardBtn={leaderboardBtn}
-                genesisData={genesisData}
-                previousgenesisData={previousgenesisData}
-                previousGenesisVersion={previousGenesisVersion}
                 allStarData={allStarData}
                 screen={"dash"}
                 availableTime={goldenPassRemainingTime}
                 username={username}
-                userId={userId}
               />
             </div>
           </OutsideClickHandler>
@@ -7404,6 +7401,7 @@ function Dashboard({
                       "https://cdn.worldofdypians.com/wod/ai-question-header-img2.webp"
                     }
                     className="ai-question-header-img"
+                    alt=""
                   />
                 </div>
                 <div className="d-flex align-items-center justify-content-between w-100 ai-popup-x-wrapper">
@@ -7682,11 +7680,11 @@ function Dashboard({
                 email={email}
                 userId={userId}
                 username={username}
-                landStaked={landstakes}
-                myCawsWodStakes={myCawsWodStakesAll}
-                myWodWodStakes={myWodWodStakesAll}
+                landStaked={[]}
+                myCawsWodStakes={[]}
+                myWodWodStakes={[]}
                 latestBoughtNFTS={latest20BoughtNFTS}
-                myOffers={myOffers}
+                myOffers={[]}
                 userCollectedNFTS={userCollectedNFTS}
               />
             </div>

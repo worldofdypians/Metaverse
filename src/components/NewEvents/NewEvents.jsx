@@ -105,7 +105,6 @@ const NewEvents = ({
   onConnectWallet,
   wodBalance,
   genesisUsd,
-
 }) => {
   // ----------------------
   // Unified wagmi/viem helpers
@@ -115,7 +114,6 @@ const NewEvents = ({
 
   const readOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-     
       return await wagmiReadContract(wagmiClient, {
         address,
         abi,
@@ -131,8 +129,6 @@ const NewEvents = ({
 
   const writeOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
- 
-
       const account = getAccount(wagmiClient);
       if (account?.chainId && chainId && account.chainId !== chainId) {
         try {
@@ -2076,7 +2072,6 @@ const NewEvents = ({
       setStatus("Please connect your wallet in order to activate the event");
     } else setCheckWallet(false);
   };
- 
 
   useEffect(() => {
     const storedOrder = localStorage.getItem("binanceOrder");
@@ -2140,7 +2135,7 @@ const NewEvents = ({
       setHasBoughtpuzzleMadness(false);
       setHasBoughtEagle(false);
       setHasBoughtScorpion(false);
-      
+
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
         dragon: false,
@@ -2151,7 +2146,7 @@ const NewEvents = ({
         cyclops: false,
         puzzleMadness: false,
       }));
-      
+
       setDragonShowApproval(false);
       setDragonBundleState("initial");
       setpuzzleMadnessShowApproval(false);
@@ -2169,43 +2164,41 @@ const NewEvents = ({
     }
   }, [wallet, coinbase, email, isEOA, statusbinance, activeEvent?.challange]);
 
-    useEffect(() => {
-      // Event handler mapping - only call functions for the active event
-      const eventHandlers = {
-        "dragon-ruins": () => {
-          getBundlePrizesDragon();
-        },
-        "cold-bite": () => {
-          getBundlePrizesBear();
-        },
-        "fury-beast": () => {
-          getBundlePrizesBeast();
-        },
-        "wing-storm": () => {
-          getBundlePrizesEagle();
-        },
-        "scorpion-king": () => {
-          getBundlePrizesScorpion();
-        },
-        "stone-eye": () => {
-          getBundlePrizesCyclops();
-        },
-        "puzzle-madness": () => {
-          getBundlePrizesPuzzle();
-        },
-      };
-
-      // Call the handler for the selected event if it exists
-      const handler = eventHandlers[activeEvent?.challange];
-      if (handler) {
-        handler();
-      } else {
-        // If no specific event selected, (fallback to dragon)
+  useEffect(() => {
+    // Event handler mapping - only call functions for the active event
+    const eventHandlers = {
+      "dragon-ruins": () => {
         getBundlePrizesDragon();
-      }
-   
-  }, [ activeEvent?.challange]);
+      },
+      "cold-bite": () => {
+        getBundlePrizesBear();
+      },
+      "fury-beast": () => {
+        getBundlePrizesBeast();
+      },
+      "wing-storm": () => {
+        getBundlePrizesEagle();
+      },
+      "scorpion-king": () => {
+        getBundlePrizesScorpion();
+      },
+      "stone-eye": () => {
+        getBundlePrizesCyclops();
+      },
+      "puzzle-madness": () => {
+        getBundlePrizesPuzzle();
+      },
+    };
 
+    // Call the handler for the selected event if it exists
+    const handler = eventHandlers[activeEvent?.challange];
+    if (handler) {
+      handler();
+    } else {
+      // If no specific event selected, (fallback to dragon)
+      getBundlePrizesDragon();
+    }
+  }, [activeEvent?.challange]);
 
   // Split into focused useEffects for better performance
   useEffect(() => {
@@ -3174,6 +3167,18 @@ const NewEvents = ({
                                 }}
                               >
                                 <span>3</span>
+                              </div>
+                              <div
+                                className={`${
+                                  page === 4
+                                    ? "active-challenge-tab"
+                                    : "challenge-tab"
+                                } px-4 py-2 d-flex align-items-center justify-content-center`}
+                                onClick={() => {
+                                  setPage(4);
+                                }}
+                              >
+                                <span>4</span>
                               </div>
                             </div>
                           ))}

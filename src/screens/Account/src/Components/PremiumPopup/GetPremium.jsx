@@ -172,7 +172,7 @@ const GetPremiumPopup = ({
       abi,
       functionName: "getEstimatedTokenSubscriptionAmount",
       args,
-      chain: chainId,
+      chain: chainId ?? 1,
     });
   };
 
@@ -864,8 +864,8 @@ const GetPremiumPopup = ({
         // ? window.config.subscriptionmat_tokens[token]?.decimals
         : chainId === 1030
         ? window.config.subscriptioncfx_tokens[token]?.decimals
-        : chainId === 841
-        ? window.config.subscriptiontaraxa_tokens[token]?.decimals
+        // : chainId === 841
+        // ? window.config.subscriptiontaraxa_tokens[token]?.decimals
         : window.config.subscriptioneth_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -1099,8 +1099,10 @@ const GetPremiumPopup = ({
 
     const contractConfig = resolvePremiumContract(chainId ?? 1, token);
 
-    if (!contractConfig)
+    if (!contractConfig){
       console.error("Unsupported chain for premium contract.");
+    return
+    }
     const functionName = "getEstimatedTokenSubscriptionAmount";
 
     let tokenprice = await readOnChain({
@@ -1111,7 +1113,7 @@ const GetPremiumPopup = ({
     }).catch(() => 0);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
-
+console.log(coinbase)
     if (coinbase) {
       const nftTotal = contractConfig.nftTotal;
       const nftTokenId = contractConfig.nftTokenId;
@@ -1959,7 +1961,7 @@ const GetPremiumPopup = ({
                           <span className="text-white w-100">
                             Payment Method
                           </span>
-                          <div className="d-flex gap-2 align-items-center w-100">
+                          <div className="d-flex flex-column flex-lg-row gap-2 align-items-center w-100">
                             <motion.div
                               // whileTap={{ scale: 0.98 }}
                               className={` flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${

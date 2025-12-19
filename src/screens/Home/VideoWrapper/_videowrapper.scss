@@ -24,6 +24,7 @@
     height: 80%;
   }
 
+
   .sys-req-title {
     font-style: normal;
     font-weight: 800;
@@ -66,7 +67,12 @@
     cursor: pointer;
   }
 }
-
+  .video-second-wrapper {
+    height: 100vh;
+    @media screen and (max-width: 786px) {
+      height: auto;
+    }
+  }
 .epicgame {
   // padding: 10px 11px 9px 11px;
   width: 38px;
@@ -275,7 +281,7 @@
     margin-bottom: 2rem;
   }
 
-    @media screen and (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     position: relative;
     margin-top: 8rem;
     margin-bottom: 2rem;
@@ -283,9 +289,11 @@
 }
 
 .token-launch-wrapper {
-  background: linear-gradient(148deg,
-      rgb(255 254 254 / 20%),
-      rgb(237 222 222 / 20%));
+  background: linear-gradient(
+    148deg,
+    rgb(255 254 254 / 20%),
+    rgb(237 222 222 / 20%)
+  );
   border-radius: 12px;
 }
 
