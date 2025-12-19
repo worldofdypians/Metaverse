@@ -1961,7 +1961,7 @@ console.log(coinbase)
                           <span className="text-white w-100">
                             Payment Method
                           </span>
-                          <div className="d-flex gap-2 align-items-center w-100">
+                          <div className="d-flex flex-column flex-lg-row gap-2 align-items-center w-100">
                             <motion.div
                               // whileTap={{ scale: 0.98 }}
                               className={` flex w-100 min-w-122 items-center justify-center gap-3 p-2 rounded-lg cursor-pointer transition-all ${
