@@ -804,7 +804,9 @@
   .top-32 {
     top: calc(var(--spacing) * 32);
   }
-
+  .top-36 {
+    top: calc(var(--spacing) * 36);
+  }
   .top-\[1px\] {
     top: 1px;
   }
@@ -891,6 +893,10 @@
     right: calc(var(--spacing) * 32);
   }
 
+    .right-36 {
+    right: calc(var(--spacing) * 36);
+  }
+
   .-bottom-4 {
     bottom: calc(var(--spacing) * -4);
   }
@@ -923,6 +929,10 @@
     bottom: calc(var(--spacing) * 8);
   }
 
+    .bottom-10 {
+    bottom: calc(var(--spacing) * 10);
+  }
+
   .bottom-12 {
     bottom: calc(var(--spacing) * 12);
   }
@@ -945,8 +955,8 @@
     left: calc(var(--spacing) * -8);
   }
 
-  .left-8 {
-    left: calc(var(--spacing) * 8);
+  .-left-8 {
+    left: calc(var(--spacing) * -8);
   }
 
   .-left-12 {
@@ -1001,8 +1011,16 @@
     left: calc(var(--spacing) * 20);
   }
 
+   .left-24 {
+    left: calc(var(--spacing) * 24);
+  }
+
   .left-32 {
     left: calc(var(--spacing) * 32);
+  }
+
+    .left-36 {
+    left: calc(var(--spacing) * 36);
   }
 
   .left-\[50\%\] {
@@ -6856,7 +6874,9 @@
   .text-cyan-400 {
     color: var(--color-cyan-400);
   }
-
+  .text-cyan-500 {
+    color: var(--color-cyan-500);
+  }
   .text-destructive {
     color: var(--destructive);
   }

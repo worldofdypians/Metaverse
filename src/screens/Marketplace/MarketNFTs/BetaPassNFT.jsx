@@ -7,11 +7,9 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-
 import OutsideClickHandler from "react-outside-click-handler";
 // import axios from "axios";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
-
 
 const BetaPassNFT = ({
   isConnected,
@@ -51,7 +49,7 @@ const BetaPassNFT = ({
       icon: "expand",
     },
   ];
-  
+
   const betaPasses = [
     {
       id: "bnb",
@@ -68,14 +66,13 @@ const BetaPassNFT = ({
       cardClassName: "bnb-mint-bg",
       wrapperClassName: "bnb-eventwrapper",
       treasureHuntStatus: "Live",
-      rewardsTitle: "$30,000 in BNB rewards",
+      rewardsTitle: "$50,000 in BNB rewards",
       rewardType: "BNB",
       userEarned: userTreasureHuntStats.bnbEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Aug. 13, 2025",
-      eventEndDate: "Dec. 11, 2025",
+      eventStartDate: "Dec. 11, 2025",
+      eventEndDate: "Apr. 10, 2026",
     },
-
     {
       id: "vanar",
       mainTitle: "Vanar Beta Pass",
@@ -134,13 +131,13 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "taiko-mint-bg",
       wrapperClassName: "taiko-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in Taiko rewards",
       rewardType: "Taiko",
       userEarned: userTreasureHuntStats.taikoEarnUsd,
       eventType: "Explore & Mine",
       eventStartDate: "Aug 08, 2025",
-      eventEndDate: "Dec. 06, 2025",
+      eventEndDate: "Dec. 09, 2025",
     },
     {
       id: "cookie3",
@@ -250,8 +247,8 @@ const BetaPassNFT = ({
       rewardType: "Manta",
       userEarned: userTreasureHuntStats.mantaEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Apr 15, 2025",
-      eventEndDate: "Aug 13, 2025",
+      eventStartDate: "Apr. 15, 2025",
+      eventEndDate: "Aug. 13, 2025",
     },
 
     {
@@ -268,11 +265,13 @@ const BetaPassNFT = ({
       areaImage: "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg",
       cardClassName: "core-mint-bg",
       wrapperClassName: "core-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$20,000 in CORE rewards",
       rewardType: "CORE",
       userEarned: userTreasureHuntStats.coreEarnUsd,
       eventType: "Explore & Mine",
+      // eventStartDate: "Dec. 12, 2025",
+      // eventEndDate: "Apr. 11, 2026",
       eventStartDate: "Aug 14, 2025",
       eventEndDate: "Dec 13, 2025",
     },
@@ -295,8 +294,8 @@ const BetaPassNFT = ({
       rewardType: "SEI",
       userEarned: userTreasureHuntStats.seiEarnUsd,
       eventType: "Explore & Mine",
-      eventStartDate: "Apr 18, 2025",
-      eventEndDate: "Aug 18, 2025",
+      eventStartDate: "Apr. 18, 2025",
+      eventEndDate: "Aug. 18, 2025",
     },
     {
       id: "viction",
@@ -499,8 +498,6 @@ const BetaPassNFT = ({
       eventEndDate: "Apr. 04, 2025",
     },
   ];
-
-
 
   const locationState = location?.pathname;
 
@@ -1002,7 +999,6 @@ const BetaPassNFT = ({
                               </ul>
                             </div>
                           )} */}
-                    
 
                       {/* {playerCreation === true &&
                           linkWallet === false &&

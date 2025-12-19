@@ -193,11 +193,14 @@ window.config = {
   otcpooldynamic_address: "0x3d373f680d0a5bbdbc9a48577652f9a327e9280d", //40%
   otcpool2dynamic_address: "0x96718b893aef64c8ff19df30c920aa6b4669984a", //30%
   otcwoddynamic_address: "0xf0a43b4549792f6116564a4253cb685d983e90fd", //50%
-  otccliff_address: "0x14ad9288a2607ed872364b2a34506242c49ae741", //30%
+  otccliff_address: "0xad375c22165733e0b5c4e66cfd428ee45f3182c1", //30%
   otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220",
-  otc1cliff4_address: "0xd3875933818828fefaC0A3cf9C5E45D64B48401C",
+  otc1cliff4_address: "0x610853892591f3d0f2af73b830cfd28835d4cb0c",
   roundotc_vesting_address: "0x2a743e768fb02efb66afb9b0236dded09468d5ba",
-  dypiansvesting_address: "0x5f312ab8419386d217a9df2a0cee6a19703c7ce9",
+  dypiansvesting_address: "0x7787aad9fa48d2e70ca773ce1ad484fdb25732b0",
+  evanvesting_address: "0x4e0d58213261c6d32ecdc21827ba4e2378f7a523",
+  old30vesting_address: "0x26eb18be24a827ca7427b903fdd6d12913aa6860",
+  old7vesting_address: "0xf3589ef463dcb851888b69b80f44dead2015d812",
 
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
@@ -278,6 +281,10 @@ window.config = {
       decimals: 18,
     },
 
+    "0xcE24439F2D9C6a2289F741120FE202248B666666": {
+      symbol: "U",
+      decimals: 18,
+    },
     "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8": {
       symbol: "WOD",
       decimals: 18,
@@ -36800,7 +36807,7 @@ window.cached_contracts = Object.create(null);
 async function getCoinbase() {
   if (
     window.ethereum &&
-    window.WALLET_TYPE !== "binance" && 
+    window.WALLET_TYPE !== "binance" &&
     window.WALLET_TYPE !== ""
   ) {
     if (window.WALLET_TYPE == "coin98") {

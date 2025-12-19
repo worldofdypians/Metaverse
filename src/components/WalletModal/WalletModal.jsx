@@ -74,13 +74,15 @@ const WALLET_OPTIONS = [
     type: "more",
     walletType: "safepal",
   },
+  {
+    name: "WalletConnect",
+    icon: "https://cdn.worldofdypians.com/wod/walletConnect.svg",
+    type: "more",
+    walletType: "walletconnect",
+  },
 ];
 
-const WalletModal = ({
-  handleClose,
-  show,
-  handleConnectionPassport, 
-}) => {
+const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
   const { isLoading, pendingConnector, error } = useConnect();
   // const chainId = useChainId();
   const connectors = wagmiClient.connectors;
@@ -92,12 +94,13 @@ const WalletModal = ({
     // SafePal injects as window.ethereum with specific identifiers
     const ethereum = window.ethereum;
     if (!ethereum) return false;
-    
+
     // Check for SafePal specific properties
     return (
       ethereum.isSafePal ||
       ethereum.isSafePalWallet ||
-      (ethereum.providers && ethereum.providers.find(p => p.isSafePal || p.isSafePalWallet)) ||
+      (ethereum.providers &&
+        ethereum.providers.find((p) => p.isSafePal || p.isSafePalWallet)) ||
       window.safepalProvider ||
       (navigator.userAgent && navigator.userAgent.includes("SafePal"))
     );
@@ -108,19 +111,22 @@ const WalletModal = ({
     if (option.customHandler) {
       if (option.customHandler === "handleConnectionPassport")
         return handleConnectionPassport();
-     
+
       return;
     }
-    
+
     // Special handling for SafePal wallet (especially mobile app browser)
     if (option.walletType === "safepal") {
       // First check if SafePal provider is detected
       if (isSafePalProvider()) {
         // Find injected connector for SafePal
         const injectedConnector = connectors.find(
-          (c) => c.type === "injected" || c.id === "injected" || c.name.toLowerCase().includes("injected")
+          (c) =>
+            c.type === "injected" ||
+            c.id === "injected" ||
+            c.name.toLowerCase().includes("injected")
         );
-        
+
         if (injectedConnector) {
           try {
             await connect(wagmiClient, { connector: injectedConnector });
@@ -132,29 +138,41 @@ const WalletModal = ({
           }
         }
       }
-      
+
       // Fallback: try to find connector by name
-      const connector = connectors.find((c) =>
-        c.name.toLowerCase().includes(option.name.toLowerCase()) ||
-        c.name.toLowerCase().includes("safepal")
+      const connector = connectors.find(
+        (c) =>
+          c.name.toLowerCase().includes(option.name.toLowerCase()) ||
+          c.name.toLowerCase().includes("safepal")
       );
-      
+
       if (connector) {
-        connect(wagmiClient, { connector: connector }).then(() => {
-          window.WALLET_TYPE = option.walletType;
-          setWalletType(option.walletType);
-        }).catch((err) => {
-          console.error("SafePal connection error:", err);
-          window.alertify.error("Failed to connect SafePal wallet. Please make sure SafePal is installed and unlocked.");
-        });
+        try {
+          connect(wagmiClient, { connector: connector })
+            .then(() => {
+              window.WALLET_TYPE = option.walletType;
+              setWalletType(option.walletType);
+            })
+            .catch((err) => {
+              console.error("SafePal connection error:", err);
+              window.alertify.error(
+                "Failed to connect SafePal wallet. Please make sure SafePal is installed and unlocked."
+              );
+            });
+        } catch (err) {
+          console.error("Failed to connect SafePal:", err);
+        }
         return;
       }
-      
+
       // If still not found, show error
-      window.alertify.error(option.name + " not found! Please make sure SafePal is installed and the wallet is unlocked.");
+      window.alertify.error(
+        option.name +
+          " not found! Please make sure SafePal is installed and the wallet is unlocked."
+      );
       return;
     }
-    
+
     // For Binance Wallet, use WalletConnect with BSC chain
     // if (option.connectorName === "Binance Wallet") {
     //   const connector = connectors.find((c) => c.name === "Binance Wallet");
@@ -166,19 +184,46 @@ const WalletModal = ({
       c.name.toLowerCase().includes(option.name.toLowerCase())
     );
     console.log("connector", connector);
-    if (connector) {
-      connect(wagmiClient, { connector: connector }).then(() => {
-        window.WALLET_TYPE = option.walletType;
-        setWalletType(option.walletType);
+    if (connector && connector.name !== "WalletConnect") {
+      connect(wagmiClient, { connector: connector })
+        .then(() => {
+          window.WALLET_TYPE = option.walletType;
+          setWalletType(option.walletType);
 
-        if (option.connectorName === "Binance Wallet") {
-          setTimeout(() => {
-            console.log(getAccount(wagmiClient))
-            getAccount(wagmiClient);
-          }, 2000);
-        }
-      });
-    } else window.alertify.error(option.name + " not found! Please add the browser extension or use mobile app wallet.");
+          if (option.connectorName === "Binance Wallet") {
+            setTimeout(() => {
+              console.log(getAccount(wagmiClient));
+              getAccount(wagmiClient);
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          console.error("Wallet connection error:", err);
+          window.alertify.error("Failed to connect wallet. Please try again.");
+        });
+    } else if (connector && connector.name === "WalletConnect") {
+      // Fallback to WalletConnect if specific connector not found
+      const wcConnector = connectors.find((c) => c.name === "WalletConnect");
+      if (wcConnector) {
+        setWalletModal(false);
+        connect(wagmiClient, { connector: wcConnector })
+          .then(() => {
+            window.WALLET_TYPE = "walletconnect";
+            setWalletType("walletconnect");
+          })
+          .catch((err) => {
+            console.error("WalletConnect connection error:", err);
+            window.alertify.error(
+              "Failed to connect via WalletConnect. Please try again."
+            );
+          });
+      }
+    } else {
+      window.alertify.error(
+        option.name +
+          " not found! Please add the browser extension or use mobile app wallet."
+      );
+    }
   };
 
   return (

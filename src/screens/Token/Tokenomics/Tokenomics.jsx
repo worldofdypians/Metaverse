@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import "./_tokenomics.scss";
- 
+
 import Clipboard from "react-clipboard.js";
 import { shortAddress } from "../../Caws/functions/shortAddress";
-import useWindowSize from "../../../hooks/useWindowSize"; 
-import Reserve from "../../Reserve/Reserve";
-const Tokenomics = ({wodPrice}) => {
+import useWindowSize from "../../../hooks/useWindowSize";
+// import Reserve from "../../Reserve/Reserve";
+
+const Reserve = React.lazy(() => import("../../Reserve/Reserve"));
+const Tokenomics = ({ wodPrice, chartData, avgPrice }) => {
   const [tooltip, setTooltip] = useState(false);
 
   const tokenomicsData = [
@@ -102,15 +104,72 @@ const Tokenomics = ({wodPrice}) => {
 
   const windowSize = useWindowSize();
 
+  // Loading component for Reserve
+  const ReserveLoading = () => (
+    <div
+      className="container-fluid bg-[#0a0d1f] py-5 bottom-border-divider position-relative"
+      id="reserve"
+    >
+      <div className="d-flex flex-column">
+        <div className="custom-container d-flex flex-column w-100 gap-3 mx-auto">
+          <div className="d-flex flex-column align-items-center gap-2">
+            <section className="w-100 mx-auto d-flex flex-column gap-5">
+              <div className="d-flex flex-column flex-lg-row gap-2 align-items-center justify-content-center justify-content-lg-between">
+                <div className="d-flex flex-column gap-3">
+                  <h4 className="explorer-grid-title font-montserrat text-start mb-0">
+                    World of Dypians Reserve
+                  </h4>
+                  <span className="tokenomics-wrapper-desc">
+                    The World of Dypians Reserve is a strategic WOD fund powered
+                    by continuous buybacks from on-chain and off-chain revenues,
+                    driving long-term growth and stability.
+                  </span>
+                </div>
+              </div>
+              {/* Loading placeholder */}
+              <div className="d-flex flex-column flex-lg-row justify-content-between gap-4 mb-4 h-100">
+                <div className="relative bg-[#0f1729]/90 backdrop-blur-xl bordertw border-cyan-500/20 rounded-xl d-flex flex-column col-lg-3">
+                  <div className="p-4">
+                    <div className="text-4xl font-semibold mb-0">
+                      <span className="bg-gradient-to-r from-white via-cyan-100 to-blue-200 bg-clip-text text-transparent">
+                        Loading...
+                      </span>
+                    </div>
+                    <p className="text-slate-400/70 text-sm m-0">
+                      Loading reserve data
+                    </p>
+                  </div>
+                </div>
+                <div className="bg-[#0f1729]/90 backdrop-blur-xl rounded-xl p-4 shadow-lg w-100">
+                  <div className="d-flex align-items-center justify-content-center h-96">
+                    <div className="text-center">
+                      <div
+                        className="spinner-border text-cyan-500"
+                        role="status"
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                      <p className="text-slate-400/70 mt-3">
+                        Loading chart data...
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div
       className="d-flex  flex-column align-items-center gap-4 mt-4"
       id="tokenomics"
     >
       <div className="custom-container  d-flex flex-column w-100 gap-3 ">
-        <h4
-          className="explorer-grid-title font-montserrat text-start mb-0"
-        >
+        <h4 className="explorer-grid-title font-montserrat text-start mb-0">
           WOD Tokenomics
         </h4>
         <span className="tokenomics-wrapper-desc">
@@ -185,7 +244,10 @@ const Tokenomics = ({wodPrice}) => {
             <div className="col-12 col-lg-6 mt-4 mt-lg-0">
               <div className="d-flex flex-column align-items-center align-items-lg-end gap-2">
                 <div className="d-flex align-items-center gap-2">
-                  <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                    alt=""
+                  />
                   <div className="d-flex flex-column">
                     <span className="wod-copy-span">WOD Contract Address</span>
                     <div className="d-flex align-items-center gap-2">
@@ -216,7 +278,14 @@ const Tokenomics = ({wodPrice}) => {
                             setTimeout(() => setTooltip(false), 2000);
                           }}
                         >
-                          <img src={tooltip ? 'https://cdn.worldofdypians.com/wod/check.svg' : 'https://cdn.worldofdypians.com/wod/copy.svg'} alt="" />{" "}
+                          <img
+                            src={
+                              tooltip
+                                ? "https://cdn.worldofdypians.com/wod/check.svg"
+                                : "https://cdn.worldofdypians.com/wod/copy.svg"
+                            }
+                            alt=""
+                          />{" "}
                         </span>
                       </Clipboard>
                     </div>
@@ -224,7 +293,9 @@ const Tokenomics = ({wodPrice}) => {
                 </div>
                 <div className="wod-chart-wrapper w-100 d-flex justify-content-center align-items-center ">
                   <img
-                    src={'https://cdn.worldofdypians.com/wod/tokenomicsChart.svg'}
+                    src={
+                      "https://cdn.worldofdypians.com/wod/tokenomicsChart.svg"
+                    }
                     alt=""
                     className="tokenomics-chart"
                   />
@@ -234,7 +305,13 @@ const Tokenomics = ({wodPrice}) => {
           </div>
         </div>
       </div>
-      <Reserve wodPrice={wodPrice}/>
+      <Suspense fallback={<ReserveLoading />}>
+        <Reserve
+          wodPrice={wodPrice}
+          chartData={chartData}
+          avgPrice={avgPrice}
+        />
+      </Suspense>
     </div>
     // <div className="py-5 mint-wrappernew container-fluid justify-content-center position-relative d-flex align-items-center">
     //   <div className="custom-container w-100">

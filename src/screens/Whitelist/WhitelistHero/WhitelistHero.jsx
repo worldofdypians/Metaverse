@@ -19,7 +19,10 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "cliff1-otc4" ||
       type === "cliff-otc2" ||
       type === "roundotc-vesting" ||
-      type === "dypians-vesting"
+      type === "dypians-vesting" ||
+      type === "evan-vesting" ||
+      type === "old-30vesting" ||
+      type === "old-7vesting"
       ? "otc"
       : "seed"
   );
@@ -80,8 +83,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
           ? type
           : "otc",
       title: "OTC Round",
@@ -100,10 +106,14 @@ const WhitelistHero = ({ onSelectRound, type }) => {
           ? "12 months"
           : type === "cliff-otc"
           ? "2 months"
+          : type === "old-7vesting"
+          ? "7 days"
+          : type === "evan-vesting" || type === "old-30vesting"
+          ? "1 month"
           : type === "special-otc-4" ||
             type === "cliff-otc2" ||
-            type === "cliff1-otc4"||
-        type === "dypians-vesting"
+            type === "cliff1-otc4" ||
+            type === "dypians-vesting"
           ? "4 months"
           : type === "bonus-otc"
           ? "18 months"
@@ -130,8 +140,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "cliff-otc" ||
       type === "cliff1-otc4" ||
       type === "cliff-otc2" ||
-      type === "roundotc-vesting"||
-      type === "dypians-vesting"
+      type === "roundotc-vesting" ||
+      type === "dypians-vesting" ||
+      type === "evan-vesting" ||
+      type === "old-30vesting" ||
+      type === "old-7vesting"
         ? 1
         : 4,
     slidesToScroll: 1,
@@ -159,8 +172,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? 1
               : 4,
           slidesToScroll: 1,
@@ -183,8 +199,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? 1
               : 4,
           slidesToScroll: 1,
@@ -207,8 +226,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? 1
               : 3,
           slidesToScroll: 1,
@@ -226,8 +248,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? false
               : true,
           autoplay:
@@ -243,8 +268,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? false
               : true,
           dots:
@@ -260,8 +288,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? false
               : true,
         },
@@ -282,8 +313,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? 1
               : 2,
           slidesToScroll: 1,
@@ -301,8 +335,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? false
               : true,
           autoplay:
@@ -318,8 +355,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? false
               : true,
           dots:
@@ -335,8 +375,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? false
               : true,
         },
@@ -360,8 +403,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? false
               : true,
           autoplay:
@@ -377,8 +423,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? false
               : true,
           dots:
@@ -394,8 +443,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "cliff-otc" ||
             type === "cliff1-otc4" ||
             type === "cliff-otc2" ||
-            type === "roundotc-vesting"||
-            type === "dypians-vesting"
+            type === "roundotc-vesting" ||
+            type === "dypians-vesting" ||
+            type === "evan-vesting" ||
+            type === "old-30vesting" ||
+            type === "old-7vesting"
               ? false
               : true,
         },
@@ -417,8 +469,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
         type === "cliff-otc" ||
         type === "cliff1-otc4" ||
         type === "cliff-otc2" ||
-        type === "roundotc-vesting"||
-        type === "dypians-vesting"
+        type === "roundotc-vesting" ||
+        type === "dypians-vesting" ||
+        type === "evan-vesting" ||
+        type === "old-30vesting" ||
+        type === "old-7vesting"
         ? otc_data[0]
         : sliderData[0]
     );
@@ -455,8 +510,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "cliff-otc" ||
                 type === "cliff1-otc4" ||
                 type === "cliff-otc2" ||
-                type === "roundotc-vesting"||
-                type === "dypians-vesting"
+                type === "roundotc-vesting" ||
+                type === "dypians-vesting" ||
+                type === "evan-vesting" ||
+                type === "old-30vesting" ||
+                type === "old-7vesting"
                   ? "otc-wrapper"
                   : "col-lg-10"
               } opacitywrapper-release position-relative`}
@@ -474,8 +532,11 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "cliff-otc" ||
                 type === "cliff1-otc4" ||
                 type === "cliff-otc2" ||
-                type === "roundotc-vesting"||
-                type === "dypians-vesting"
+                type === "roundotc-vesting" ||
+                type === "dypians-vesting" ||
+                type === "evan-vesting" ||
+                type === "old-30vesting" ||
+                type === "old-7vesting"
                   ? otc_data
                   : sliderData
                 ).map((item, index) => (

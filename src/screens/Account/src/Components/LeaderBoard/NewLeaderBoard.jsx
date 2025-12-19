@@ -395,8 +395,7 @@ const NewLeaderBoard = ({
                           ? "Taiko"
                           : ""}
                       </button>
-                     
-                     
+
                       <button
                         onMouseEnter={() => handleMouseEnter("vanar")}
                         onMouseLeave={handleMouseLeave}
@@ -475,8 +474,7 @@ const NewLeaderBoard = ({
                           ? "Taraxa"
                           : ""}
                       </button> */}
-                     
-                     
+
                       <button
                         onMouseEnter={() => handleMouseEnter("manta")}
                         onMouseLeave={handleMouseLeave}
@@ -515,7 +513,7 @@ const NewLeaderBoard = ({
                           ? "Manta"
                           : ""}
                       </button>
-                     
+
                       <button
                         onMouseEnter={() => handleMouseEnter("skale")}
                         onMouseLeave={handleMouseLeave}
@@ -1103,8 +1101,7 @@ const NewLeaderBoard = ({
                                                           index + 1 <= 85
                                                         ? "https://cdn.worldofdypians.com/wod/playerAvatar15.png"
                                                         : "https://cdn.worldofdypians.com/wod/playerAvatar16.png"
-                                                      : 
-                                                        optionText2 === "sei"
+                                                      : optionText2 === "sei"
                                                       ? index + 1 <= 10
                                                         ? `https://cdn.worldofdypians.com/wod/globalRank${
                                                             index + 1
