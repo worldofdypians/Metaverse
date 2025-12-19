@@ -334,7 +334,7 @@ const TwitterRewards = ({
                     Connect Wallet
                   </button>
                 ) 
-                : isConnected && coinbase && (coinbase.toLowerCase() !== address.toLowerCase()) ? (
+                : isConnected && coinbase && address && (coinbase.toLowerCase() !== address.toLowerCase()) ? (
                   <button
                     onClick={onSyncClick}
                     className="synchronize-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
