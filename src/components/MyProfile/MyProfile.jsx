@@ -146,6 +146,7 @@ const MyProfile = ({
   const [popup, setPopup] = useState(false);
   const [connectPopup, setConnectPopup] = useState(false);
   const [twitterCooldown, setTwitterCooldown] = useState({});
+  const [cooldownHours, setCooldownHours] = useState(null)
   const [taskCount, setTaskCount] = useState(0);
   const [seenPosts, setSeenPosts] = useState([]);
   const [newCount, setNewCount] = useState(0);
@@ -230,9 +231,11 @@ const MyProfile = ({
       .get(`https://api.worldofdypians.com/auth/twitter/cooldown/${address}`)
       .then((res) => {
         setTwitterCooldown(res.data.remainingMs);
+        setCooldownHours(res.data.remainingHours);
       })
       .catch((err) => {
         setTwitterCooldown(0);
+        setCooldownHours(0);
       });
   };
 
@@ -1904,10 +1907,12 @@ const MyProfile = ({
             markAllAsSeen();
             setPopup(false);
             window.location.hash = "";
+            html.classList.remove("hidescroll");
           }}
           address={address}
           handleRemove={handleRemove}
           checkCooldown={checkCooldown}
+          cooldownHours={cooldownHours}
           checkTwitter={checkTwitter}
           username={twitter?.twitterUsername}
           isConnected={isConnected}

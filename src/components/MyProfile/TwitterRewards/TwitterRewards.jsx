@@ -61,6 +61,7 @@ const TwitterRewards = ({
   taskCount,
   twitter,
   twitterCooldown,
+  cooldownHours,
   checkCooldown,
   handleRemove,
   seenPosts,
@@ -257,7 +258,7 @@ const TwitterRewards = ({
           <div className="row mt-3 gap-2 gap-md-0">
             <div className="col-12 col-md-6">
               <div className="twitter-tab-container-1 h-100 d-flex align-items-center  gap-2 gap-lg-0 justify-content-between  relative bg-gradient-to-br from-[#1a1640] to-[#0f0d28]   rounded-xl p-3  transition-all duration-200">
-                <div className="d-flex align-items-center gap-2">
+                <div className="d-flex align-items-center gap-2 w-100">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="50"
@@ -315,7 +316,7 @@ const TwitterRewards = ({
                     </div>
                   )}
                 </div>
-                {!isConnected && coinbase && !email ? (
+                { !email ? (
                   <NavLink
                     to={`/auth`}
                     onClick={onClose}
@@ -358,7 +359,7 @@ const TwitterRewards = ({
                   </button>
                 ) : (
                   <>
-                    {twitterCooldown === 0 ? (
+                    {cooldownHours === 0 ? (
                       <a
                         href={`https://api.worldofdypians.com/auth/twitter?walletAddress=${address}`}
                         className="connect-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
@@ -612,9 +613,9 @@ const TwitterRewards = ({
                 </span>
               </div>
             </div>
-            {twitter && twitter.twitterUsername ? (
+            {twitter ? (
               <div className="mt-3 d-flex flex-column gap-2 twitter-tasks-container">
-                {!isConnected && coinbase && !email ? (
+                {!email ? (
                   <div className="d-flex w-100 h-100 justify-content-center align-items-center">
                     <NavLink
                       to={`/auth`}
