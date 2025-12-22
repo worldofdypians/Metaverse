@@ -94,6 +94,8 @@ function SingUp() {
   const signup = () => {
     if (!captchaValue) {
       window.alertify.error("Please verify the reCAPTCHA");
+    } else if (password !== confirmPassword) {
+      window.alertify.error("Passwords do not match");
     } else {
       signUp({
         username,
@@ -214,7 +216,11 @@ function SingUp() {
           }}
           onClick={() => setShowPassword((prev) => !prev)}
         >
-          {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+          {showPassword ? (
+            <VisibilityOffIcon style={{ color: "wheat" }} />
+          ) : (
+            <RemoveRedEyeIcon style={{ color: "wheat" }} />
+          )}
         </div>
       </div>
       <div className="position-relative">
@@ -233,7 +239,11 @@ function SingUp() {
           }}
           onClick={() => setShowPassword2((prev) => !prev)}
         >
-          {showPassword2 ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+          {showPassword2 ? (
+            <VisibilityOffIcon style={{ color: "wheat" }} />
+          ) : (
+            <RemoveRedEyeIcon style={{ color: "wheat" }} />
+          )}
         </div>
       </div>
       <Button
