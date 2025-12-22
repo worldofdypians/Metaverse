@@ -123,13 +123,7 @@ const ForgotPassword = () => {
             ref={recaptchaRef}
             onChange={handleCaptchaChange}
           />
-          <ReCaptchaV2
-            sitekey="6LdBzb0rAAAAACitHtIIUPpDrVu62taNzj7r8jFK"
-            style={{ display: "inline-block" }}
-            theme="dark"
-            size="invisible"
-            ref={recaptchaRef}
-          />
+
           <h1
             onClick={() => {
               history("/auth");
