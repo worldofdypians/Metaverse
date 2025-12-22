@@ -1337,7 +1337,7 @@ const FestiveElements = () => {
   const renderChristmasElements = () => (
     <>
       {" "}
-      <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
+      <div className="pointer-events-none d-lg-block d-md-block d-none fixed inset-0 z-50 overflow-hidden">
         {/* Floating Snowflakes */}
         {[...Array(40)].map((_, i) => (
           <motion.div
@@ -1784,7 +1784,7 @@ const FestiveElements = () => {
 
         {/* Ornament Balls - Hanging decorations */}
         <motion.div
-          className="absolute left-24 top-32"
+          className="absolute left-0 top-24"
           animate={{
             rotate: [-8, 8, -8],
             y: [0, 10, 0],
@@ -1846,7 +1846,7 @@ const FestiveElements = () => {
         </motion.div>
 
         <motion.div
-          className="absolute right-32 top-36"
+          className="absolute right-0 top-24"
           animate={{
             rotate: [8, -8, 8],
             y: [0, 12, 0],
@@ -2173,7 +2173,7 @@ const FestiveElements = () => {
 
             {/* Left Bell */}
             <path
-              d="M 30 20 Q 25 22 25 30 L 35 40 L 15 40 L 15 30 Q 15 22 20 20 Q 25 15 30 20 Z"
+              d="M 30 20 L 35 40 L 15 40 L 15 30 Q 15 22 20 20 Q 25 15 30 20 Z"
               fill="url(#bellGradient)"
               stroke="#b45309"
               strokeWidth="1"
@@ -2189,7 +2189,7 @@ const FestiveElements = () => {
 
             {/* Right Bell */}
             <path
-              d="M 70 20 Q 65 22 65 30 L 75 40 L 55 40 L 55 30 Q 55 22 60 20 Q 65 15 70 20 Z"
+              d="M 70 20 L 75 40 L 55 40 L 55 30 Q 55 22 60 20 Q 65 15 70 20 Z"
               fill="url(#bellGradient)"
               stroke="#b45309"
               strokeWidth="1"

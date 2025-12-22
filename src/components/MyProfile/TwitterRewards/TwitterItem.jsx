@@ -53,12 +53,8 @@ const TwitterItem = ({
       })
       .then(() => {
         addStars(tweetId, taskType);
-        checkLimit();
-        checkTwitter();
       })
       .catch((err) => {
-       
-
         console.log(err);
       });
   };
@@ -82,7 +78,8 @@ const TwitterItem = ({
       )
       .then((res) => {
         add(Number(res.data.rewards[0].reward));
-
+        checkLimit();
+        checkTwitter();
         setLoading({
           like: false,
           comment: false,
@@ -91,7 +88,7 @@ const TwitterItem = ({
       })
       .catch((err) => {
         console.log(err);
-         if (taskType === "like") {
+        if (taskType === "like") {
           setFailTask({
             like: true,
             repost: false,
@@ -186,9 +183,7 @@ const TwitterItem = ({
             item?.tasks[0]?.verified && item?.tasks[0].completed
               ? "twitter-action-btn-disabled"
               : ""
-          } ${
-            isLocked() && "locked-action-btn"
-          } 
+          } ${isLocked() && "locked-action-btn"} 
           ${failTask.like && "fail-action-btn"}
           d-flex align-items-center gap-2 p-1`}
           onClick={() => handleCheckTask("like")}
@@ -236,9 +231,7 @@ const TwitterItem = ({
             item?.tasks[1]?.verified && item?.tasks[1].completed
               ? "twitter-action-btn-disabled"
               : ""
-          }   ${
-            isLocked() && "locked-action-btn"
-          }
+          }   ${isLocked() && "locked-action-btn"}
           ${failTask.repost && "fail-action-btn"}
           
           d-flex align-items-center gap-2 p-1`}
