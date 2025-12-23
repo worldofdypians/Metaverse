@@ -7,7 +7,7 @@ const MyRewardsPopupNew = ({
   email,
   treasureRewardMoney,
   totalDailyBonusSum,
-  userSocialRewards,
+
   cawsPremiumRewards,
   genesisRank2,
   userDataStar,
@@ -33,15 +33,15 @@ const MyRewardsPopupNew = ({
   const [gemRewards, setGemRewards] = useState(0);
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
-  const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
-  const [pasttreasureRewardNftWod, setpastTreasureRewardNftWod] = useState(0);
-  const [pasttreasureRewardNftBetaPass, setpastTreasureRewardNftBetaPass] =
-    useState(0);
+  // const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
+  // const [pasttreasureRewardNftWod, setpastTreasureRewardNftWod] = useState(0);
+  // const [pasttreasureRewardNftBetaPass, setpastTreasureRewardNftBetaPass] =
+  //   useState(0);
 
   const [confluxRewardsUSD, setConfluxRewardsUSD] = useState(0);
   const [dypiusRewardsUSD, setDypiusRewardsUSD] = useState(0);
   const [coingeckoRewardsUSD, setcoingeckoRewardsUSD] = useState(0);
-  const [pastSpecialRewards, setpastSpecialRewards] = useState(0);
+  // const [pastSpecialRewards, setpastSpecialRewards] = useState(0);
 
   const [cmcRewardsUSD, setcmcRewardsUSD] = useState(0);
   const [dogeRewardsUSD, setdogeRewardsUSD] = useState(0);
@@ -49,19 +49,19 @@ const MyRewardsPopupNew = ({
   const [gateRewardsUSD, setGateRewardsUSD] = useState(0);
   const [baseRewardsUSD, setBaseRewardsUSD] = useState(0);
   const [dypPremiumUSD, setdypPremiumUSD] = useState(0);
-  const [pastUserRankUsd, setpastUserRankUsd] = useState(0);
+  // const [pastUserRankUsd, setpastUserRankUsd] = useState(0);
 
-  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
+  // const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
 
-  const fetchUsersocialRewards = () => {
-    const cachedUserSocialRewards = localStorage.getItem(
-      "cacheduserSocialRewards"
-    );
+  // const fetchUsersocialRewards = () => {
+  //   const cachedUserSocialRewards = localStorage.getItem(
+  //     "cacheduserSocialRewards"
+  //   );
 
-    if (cachedUserSocialRewards) {
-      setuserSocialRewardsCached(cachedUserSocialRewards);
-    }
-  };
+  //   if (cachedUserSocialRewards) {
+  //     setuserSocialRewardsCached(cachedUserSocialRewards);
+  //   }
+  // };
 
   const fetchConfluxUSDRewards = async (addr) => {
     await axios
@@ -136,29 +136,29 @@ const MyRewardsPopupNew = ({
       });
   };
 
-  const fetchPastSpecialRewards = async (addr) => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/special_r/${addr}`)
-      .then((data) => {
-        if (data.data.userRewards) {
-          setpastSpecialRewards(data.data.userRewards);
-        } else {
-          setpastSpecialRewards(0);
-        }
-      });
-  };
+  // const fetchPastSpecialRewards = async (addr) => {
+  //   await axios
+  //     .get(`https://api.worldofdypians.com/api/special_r/${addr}`)
+  //     .then((data) => {
+  //       if (data.data.userRewards) {
+  //         setpastSpecialRewards(data.data.userRewards);
+  //       } else {
+  //         setpastSpecialRewards(0);
+  //       }
+  //     });
+  // };
 
-  const fetchPastUserRankRewards = async (addr) => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/past-user-rank-rewards/${addr}`)
-      .then((data) => {
-        if (data.data.userRewards) {
-          setpastUserRankUsd(data.data.userRewards);
-        } else {
-          setpastUserRankUsd(0);
-        }
-      });
-  };
+  // const fetchPastUserRankRewards = async (addr) => {
+  //   await axios
+  //     .get(`https://api.worldofdypians.com/api/past-user-rank-rewards/${addr}`)
+  //     .then((data) => {
+  //       if (data.data.userRewards) {
+  //         setpastUserRankUsd(data.data.userRewards);
+  //       } else {
+  //         setpastUserRankUsd(0);
+  //       }
+  //     });
+  // };
 
   const fetchCoingeckoUSDRewards = async (addr) => {
     await axios
@@ -255,27 +255,27 @@ const MyRewardsPopupNew = ({
     }
   };
 
-  const fetchPastDailyBonusBetaPass = async (userAddr) => {
-    const result = await axios.get(
-      `https://api.worldofdypians.com/api/beta_passes/${userAddr}`
-    );
-    if (result && result.status === 200) {
-      const bp_Rewards = result.data.userRewards;
+  // const fetchPastDailyBonusBetaPass = async (userAddr) => {
+  //   const result = await axios.get(
+  //     `https://api.worldofdypians.com/api/beta_passes/${userAddr}`
+  //   );
+  //   if (result && result.status === 200) {
+  //     const bp_Rewards = result.data.userRewards;
 
-      setpastTreasureRewardNftBetaPass(bp_Rewards);
-    }
-  };
+  //     setpastTreasureRewardNftBetaPass(bp_Rewards);
+  //   }
+  // };
 
-  const fetchPastDailyBonusCaws = async (userAddr) => {
-    const result = await axios.get(
-      `https://api.worldofdypians.com/api/caws/${userAddr}`
-    );
-    if (result && result.status === 200) {
-      const caws_Rewards = result.data.userRewards;
+  // const fetchPastDailyBonusCaws = async (userAddr) => {
+  //   const result = await axios.get(
+  //     `https://api.worldofdypians.com/api/caws/${userAddr}`
+  //   );
+  //   if (result && result.status === 200) {
+  //     const caws_Rewards = result.data.userRewards;
 
-      setpastTreasureRewardNftCaws(caws_Rewards);
-    }
-  };
+  //     setpastTreasureRewardNftCaws(caws_Rewards);
+  //   }
+  // };
 
   const fetchLeaderboardData = async (userAddr) => {
     const result = await axios
@@ -365,30 +365,31 @@ const MyRewardsPopupNew = ({
   };
 
   useEffect(() => {
-    if(address)
-  {  fetchNftRewards(address);
-    fetchGenesisGem(address);
-    fetchLeaderboardData(address);
-    fetchSkaleboardData(address);
-    fetchConfluxUSDRewards(address);
-    fetchCmcUSDRewards(address);
-    fetchDogeUSDRewards(address);
-    fetchGateUSDRewards(address);
-    fetchBaseUSDRewards(address);
-    fetchDypiusUSDRewards(address);
-    fetchDypiusPremiumUSDRewards(address);
-    fetchCoingeckoUSDRewards(address);
-    fetchPastSpecialRewards(address);
-    fetchPastUserRankRewards(address);
-    fetchPastDailyBonusMoney(address);
-    fetchPastDailyBonusBetaPass(address);
-    fetchPastDailyBonusCaws(address);
-    fetchCachedData();}
+    if (address) {
+      fetchNftRewards(address);
+      fetchGenesisGem(address);
+      fetchLeaderboardData(address);
+      fetchSkaleboardData(address);
+      fetchConfluxUSDRewards(address);
+      fetchCmcUSDRewards(address);
+      fetchDogeUSDRewards(address);
+      fetchGateUSDRewards(address);
+      fetchBaseUSDRewards(address);
+      fetchDypiusUSDRewards(address);
+      fetchDypiusPremiumUSDRewards(address);
+      fetchCoingeckoUSDRewards(address);
+      // fetchPastSpecialRewards(address);
+      // fetchPastUserRankRewards(address);
+      fetchPastDailyBonusMoney(address);
+      // fetchPastDailyBonusBetaPass(address);
+      // fetchPastDailyBonusCaws(address);
+      fetchCachedData();
+    }
   }, [address, email]);
 
-  useEffect(() => {
-    fetchUsersocialRewards();
-  }, [userSocialRewards]);
+  // useEffect(() => {
+  //   fetchUsersocialRewards();
+  // }, [userSocialRewards]);
 
   const scrollToView = (viewId) => {
     document.getElementById(viewId).scrollIntoView({
@@ -520,7 +521,7 @@ const MyRewardsPopupNew = ({
                       Number(genesisRank2) +
                       Number(userDataStar) +
                       Number(userDataStarWeekly) +
-                      Number(userSocialRewardsCached) +
+                      // Number(userSocialRewardsCached) +
                       Number(cawsPremiumRewards) +
                       Number(landPremiumRewards),
                     2
@@ -776,7 +777,7 @@ const MyRewardsPopupNew = ({
             </span>
           </div>
         </div>
-        <div
+        {/* <div
           className={` ${
             rewardCategory === "specialRewards"
               ? "reward-category-item-active"
@@ -827,7 +828,7 @@ const MyRewardsPopupNew = ({
                 : getFormattedNumber(Number(userSocialRewardsCached), 2)}
             </span>
           </div>
-        </div>
+        </div> */}
       </div>
       <div
         className="d-flex flex-column gap-2"
@@ -1369,7 +1370,19 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(userTreasureHuntStats.bnbEarnUsd, 2)}
                   </span>
                 </div>
-               
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Sei
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(userTreasureHuntStats.seiEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
 
               <div className="d-flex flex-column gap-2">
@@ -1468,19 +1481,7 @@ const MyRewardsPopupNew = ({
                     {getFormattedNumber(userTreasureHuntStats.taraxaEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Sei
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(userTreasureHuntStats.seiEarnUsd, 2)}
-                  </span>
-                </div>
+
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1566,6 +1567,19 @@ const MyRewardsPopupNew = ({
                       userTreasureHuntStats.victionEarnUsd,
                       2
                     )}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/core.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    CORE
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(userTreasureHuntStats.coreEarnUsd, 2)}
                   </span>
                 </div>
                 <div className="d-flex flex-column gap-2">
@@ -1692,23 +1706,6 @@ const MyRewardsPopupNew = ({
                     {getFormattedNumber(userTreasureHuntStats.kucoinEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/core.svg"
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    CORE
-                  </span>
-                  <span className="item-name-right">
-                    $
-                    {getFormattedNumber(userTreasureHuntStats.coreEarnUsd, 2)}
-                  </span>
-                </div>
-                
               </div>
 
               <div className="d-flex flex-column gap-2">
@@ -1822,7 +1819,7 @@ const MyRewardsPopupNew = ({
           </div>
         </div>
       )}
-      <div
+      {/* <div
         className="d-flex flex-column gap-2"
         id={previousRewards ? "pastspecialRewards" : "specialRewards"}
       >
@@ -1843,7 +1840,7 @@ const MyRewardsPopupNew = ({
           }
         >
           <div className="d-flex flex-column gap-2">
-            <div className="d-flex w-100 justify-content-between gap-2">
+             <div className="d-flex w-100 justify-content-between gap-2">
               <span className="item-name-left">Social Bonus</span>
               <span className="item-name-right">
                 $
@@ -1851,8 +1848,8 @@ const MyRewardsPopupNew = ({
                   ? getFormattedNumber(pastSpecialRewards, 2)
                   : getFormattedNumber(userSocialRewardsCached, 2)}
               </span>
-            </div>
-            {/* <div className="d-flex w-100 justify-content-between gap-2">
+            </div> 
+             <div className="d-flex w-100 justify-content-between gap-2">
               <span className="item-name-left">Rank Bonus</span>
               <span className="item-name-right">
                 $
@@ -1860,10 +1857,10 @@ const MyRewardsPopupNew = ({
                   ? getFormattedNumber(pastUserRankUsd, 2)
                   : getFormattedNumber(userRankRewards, 2)}
               </span>
-            </div> */}
+            </div> 
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
