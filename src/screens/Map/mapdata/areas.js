@@ -1514,6 +1514,11 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
+      {
+        title: "Treasure Hunt",
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+        link: "/account/challenges/treasure-hunt",
+      },
     ],
     pastEvents: [
       {

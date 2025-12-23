@@ -325,7 +325,7 @@ const VideoWrapper = ({
         > */}
         <div className="video-second-wrapper">
           <NavLink
-            className="absolute d-none d-lg-block left-4 top-24 z-5"
+            className="absolute d-none d-lg-block left-4 top-32 z-5"
             to="/keep-building"
           >
             <div className="group relative">

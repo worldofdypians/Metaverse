@@ -4,9 +4,8 @@ import { useMutation } from "@apollo/client/react";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import { getErrorMessage } from "../../Utils.js/Helpers";
 import { CREATE_PLAYER } from "./PlayerCreation.schema";
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import {
   Input,
@@ -18,12 +17,12 @@ import {
 import classes from "./PlayerCreation.module.css";
 import { useNavigate } from "react-router-dom";
 
-function PlayerCreation({onPlayerSuccessfulCreate}) {
+function PlayerCreation({ onPlayerSuccessfulCreate }) {
   const { getUpdatedUser } = useAuth();
 
   const [onCreatePlayer, { loading }] = useMutation(CREATE_PLAYER);
   const [createError, setCreateError] = useState("");
-  
+
   const [creationState, setCreationState] = useState({
     displayName: "",
     password: "",
@@ -45,11 +44,9 @@ function PlayerCreation({onPlayerSuccessfulCreate}) {
         ...prev,
         displayName: val,
       }));
+    } else if (!validInput) {
+      setCreateError("Username can only contain letters and numbers.");
     }
-    else if(!validInput) {
-        setCreateError('Username can only contain letters and numbers.');
-    }
-    
   };
 
   const { displayName, password } = creationState;
@@ -112,29 +109,32 @@ function PlayerCreation({onPlayerSuccessfulCreate}) {
               value={displayName}
               onChange={setDisplayName}
             />
-      <div className="position-relative">
-
-            <Input
-              name="player-password"
-              style={{
-                marginBottom: 48,
-              }}
-              inputType={showPassword ? "text" : "password"}
-              placeHolder="Password"
-              value={password}
-              onChange={setPassword}
-            />
-            <div
-        style={{
-          position: "absolute",
-          right: 10,
-          top: 18,
-          cursor: "pointer",
-        }}
-        onClick={() => setShowPassword((prev) => !prev)}
-      >
-        {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
-      </div>
+            <div className="position-relative">
+              <Input
+                name="player-password"
+                style={{
+                  marginBottom: 48,
+                }}
+                inputType={showPassword ? "text" : "password"}
+                placeHolder="Password"
+                value={password}
+                onChange={setPassword}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  right: 10,
+                  top: 18,
+                  cursor: "pointer",
+                }}
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                {showPassword ? (
+                  <VisibilityOffIcon style={{ color: "wheat" }} />
+                ) : (
+                  <RemoveRedEyeIcon style={{ color: "wheat" }} />
+                )}
+              </div>
             </div>
             <Button
               style={{ margin: "auto" }}
