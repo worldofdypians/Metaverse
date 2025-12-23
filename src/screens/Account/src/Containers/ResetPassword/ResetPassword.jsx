@@ -54,6 +54,8 @@ const ResetPassword = () => {
             }
           }
         }
+      } else {
+        setError("Passwords do not match.");
       }
     }
   };
@@ -132,7 +134,11 @@ const ResetPassword = () => {
               }}
               onClick={() => setShowPassword((prev) => !prev)}
             >
-              {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}} /> : <RemoveRedEyeIcon style={{color: 'wheat'}} />}
+              {showPassword ? (
+                <VisibilityOffIcon style={{ color: "wheat" }} />
+              ) : (
+                <RemoveRedEyeIcon style={{ color: "wheat" }} />
+              )}
             </div>
           </div>
           <div className="position-relative">
@@ -157,7 +163,11 @@ const ResetPassword = () => {
               }}
               onClick={() => setShowPassword2((prev) => !prev)}
             >
-              {showPassword2 ? <VisibilityOffIcon style={{color: 'wheat'}} /> : <RemoveRedEyeIcon style={{color: 'wheat'}} />}
+              {showPassword2 ? (
+                <VisibilityOffIcon style={{ color: "wheat" }} />
+              ) : (
+                <RemoveRedEyeIcon style={{ color: "wheat" }} />
+              )}
             </div>
           </div>
           <ReCaptchaV2
