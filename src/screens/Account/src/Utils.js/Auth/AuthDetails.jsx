@@ -31,7 +31,7 @@ function AuthProvider({ children }) {
     loginError: null,
   });
 
-  const logout = async() => {
+  const logout = async () => {
     // signOut()
     //   .then(() => {
     //     setAuth({
@@ -46,7 +46,7 @@ function AuthProvider({ children }) {
     //     });
     //   })
     //   .catch(() => {});
-     await signOut();
+    await signOut();
     resetAuth();
   };
 
@@ -56,29 +56,29 @@ function AuthProvider({ children }) {
       isLoginIn: true,
     }));
     try {
-    //   const data = await signIn({ username: username, password: password });
-    //   console.log('login data',data)
-    //   setAuth({
-    //     playerId: data?.attributes?.["custom:playerId"] || null,
-    //     user: data?.username,
-    //     email: data?.attributes?.email,
-    //     picture: data?.attributes?.picture,
-    //     token: data?.signInUserSession?.idToken?.jwtToken,
-    //     userAttributes: data?.attributes,
-    //     roles:
-    //       data?.signInUserSession?.accessToken?.payload["cognito:groups"] || [],
-    //     isAuthenticated: true,
-    //     isLoading: false,
-    //   });
-    const user = await signIn({ username, password });
-    await getAuthenticatedUser(user);
+      //   const data = await signIn({ username: username, password: password });
+      //   console.log('login data',data)
+      //   setAuth({
+      //     playerId: data?.attributes?.["custom:playerId"] || null,
+      //     user: data?.username,
+      //     email: data?.attributes?.email,
+      //     picture: data?.attributes?.picture,
+      //     token: data?.signInUserSession?.idToken?.jwtToken,
+      //     userAttributes: data?.attributes,
+      //     roles:
+      //       data?.signInUserSession?.accessToken?.payload["cognito:groups"] || [],
+      //     isAuthenticated: true,
+      //     isLoading: false,
+      //   });
+      const user = await signIn({ username, password });
+      await getAuthenticatedUser(user);
       setLoginValues((prev) => ({
         ...prev,
         isLoginIn: false,
         code: undefined,
       }));
     } catch (error) {
-      console.error("errorr", error);
+      // console.log(error, error.code, error.name, error.message);
       setAuth({
         isAuthenticated: false,
         isLoading: false,
@@ -95,6 +95,16 @@ function AuthProvider({ children }) {
         setLoginValues({
           isLoginIn: false,
           loginError: "",
+          code: error?.code,
+        });
+      } else if (
+        error?.name === "ForbiddenException" &&
+        error?.message === "Request not allowed due to WAF block."
+      ) {
+        setLoginValues({
+          isLoginIn: false,
+          loginError:
+            "The IP address you are using through a VPN appears suspicious or blacklisted. Please update it and try again.",
           code: error?.code,
         });
       } else {
@@ -185,17 +195,17 @@ function AuthProvider({ children }) {
         console.error("getAuthenticatedUser error:", error);
         // resetAuth();
         setAuth({
-                    isAuthenticated: false,
-                    isLoading: false,
-                    user: '',
-                    picture: '',
-                    userAttributes: '',
-                    data_loading: '',
-                    tooltips: '',
-                    website_locked: '',
-                    roles: [],
-                    token: undefined,
-                })
+          isAuthenticated: false,
+          isLoading: false,
+          user: "",
+          picture: "",
+          userAttributes: "",
+          data_loading: "",
+          tooltips: "",
+          website_locked: "",
+          roles: [],
+          token: undefined,
+        });
       }
     }
   };
@@ -254,17 +264,17 @@ function AuthProvider({ children }) {
     } catch (error) {
       // resetAuth();
       setAuth({
-                    isAuthenticated: false,
-                    isLoading: false,
-                    user: '',
-                    picture: '',
-                    userAttributes: '',
-                    data_loading: '',
-                    tooltips: '',
-                    website_locked: '',
-                    roles: [],
-                    token: undefined,
-                })
+        isAuthenticated: false,
+        isLoading: false,
+        user: "",
+        picture: "",
+        userAttributes: "",
+        data_loading: "",
+        tooltips: "",
+        website_locked: "",
+        roles: [],
+        token: undefined,
+      });
     }
   };
 

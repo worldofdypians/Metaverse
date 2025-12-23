@@ -112,13 +112,25 @@ function SingUp() {
           });
         })
         .catch((err) => {
-          setLoginValues((prev) => {
-            return {
-              ...prev,
-              loginError: err?.message,
-              code: undefined,
-            };
-          });
+          if (
+            err?.name === "ForbiddenException" &&
+            err?.message === "Request not allowed due to WAF block."
+          ) {
+            setLoginValues({
+              isLoginIn: false,
+              loginError:
+                "The IP address you are using through a VPN appears suspicious or blacklisted. Please update it and try again.",
+              code: err?.code,
+            });
+          } else {
+            setLoginValues((prev) => {
+              return {
+                ...prev,
+                loginError: err?.message,
+                code: undefined,
+              };
+            });
+          }
         });
     }
   };
