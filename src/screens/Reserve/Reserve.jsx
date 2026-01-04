@@ -78,11 +78,11 @@ const Reserve = ({ wodPrice }) => {
     // }
     let allprice = 0;
     const sumFunction = (a, b) => a + b;
-    [...result, ...alteredFetch].forEach((data) => {
+    [...alteredFetch].forEach((data) => {
       return (allprice = sumFunction(allprice, Number(data.wodPrice)));
     });
 
-    setavgPrice(allprice / [...result, ...alteredFetch].length);
+    setavgPrice(allprice / [...alteredFetch].length);
     setChartData([...result, ...alteredFetch]);
     return [...result, ...alteredFetch];
   };
