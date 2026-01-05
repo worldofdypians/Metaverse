@@ -9,7 +9,7 @@ const Roadmap = () => {
     document.title = "Roadmap";
   }, []);
 
-  const [title, setTitle] = useState("2025");
+  const [title, setTitle] = useState("2026");
   // const [tooltip, setTooltip] = useState(false);
 
   const roadmapItems2023 = [
@@ -683,65 +683,95 @@ const Roadmap = () => {
           completed: true,
         },
         {
-          title: "Adopt CAWS Functionality",
-          desc: "Allow players to adopt a CAWS (cat) in-game, feed it, grow it, and use it within the game world.",
-          completed: false,
+          title: "New Staking Pools",
+          desc: "Expansion of staking options with new pools designed to support long term participation, ecosystem growth, and enhanced utility for WOD holders.",
+          completed: true,
         },
         {
-          title: "NFT Customization",
-          desc: "Enable players to customize their NFTs, such as weapons and equipment, by adding elements or items to them.",
-          completed: false,
+          title: "Expanding WOD Markets",
+          desc: "Strategic expansion of WOD market presence through additional listings and ecosystem growth, increasing accessibility, liquidity, and global reach.",
+          completed: true,
         },
         {
-          title: "Full Release of the Multiplayer PvE",
-          desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
-          completed: false,
+          title: "Social Reward Launch",
+          desc: "Introduction of a social driven reward system that incentivizes player interactions, and daily activity across the ecosystem.",
+          completed: true,
+        },
+        // {
+        //   title: "Grok Integration",
+        //   desc: "Integration of Grok powered intelligence to enhance NPC interactions, deliver smarter in game responses, and create more dynamic and immersive player experiences.",
+        //   completed: true,
+        // },
+        {
+          title: "Launch of World of Dypians Card",
+          desc: "Release of the official World of Dypians card, enabling players to bridge in game activity with real world usage through seamless payments and ecosystem access.",
+          completed: true,
         },
         {
-          title: "Addition of Trade P2P",
-          desc: "Introduce peer-to-peer trading functionality in the game to allow players to exchange items and goods directly.",
-          completed: false,
+          title: "United Stables (U) Integrated",
+          desc: "Seamless integration of United Stables within World of Dypians, enabling direct utility and expanded gameplay powered by the U coin.",
+          completed: true,
         },
-        {
-          title: "Addition of New AI Powered NPCs",
-          desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
-          completed: false,
-        },
+        // {
+        //   title: "Adopt CAWS Functionality",
+        //   desc: "Allow players to adopt a CAWS (cat) in-game, feed it, grow it, and use it within the game world.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "NFT Customization",
+        //   desc: "Enable players to customize their NFTs, such as weapons and equipment, by adding elements or items to them.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "Full Release of the Multiplayer PvE",
+        //   desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "Addition of Trade P2P",
+        //   desc: "Introduce peer-to-peer trading functionality in the game to allow players to exchange items and goods directly.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "Addition of New AI Powered NPCs",
+        //   desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
+        //   completed: false,
+        // },
         // {
         //   title: "New Land NFTs Batch",
         //   desc: "Release a fresh batch of exclusive Land NFTs, offering players new opportunities to own, customize, and expand their in-game territories, fostering creativity and strategic gameplay.",
         //   completed: false,
         // },
-        {
-          title: "Intelligent Economy Integration",
-          desc: "Combine AI-powered features with DeFi mechanics to create an adaptive and engaging in-game economy.",
-          completed: false,
-        },
-        {
-          title: "Launch of Crypto Museum",
-          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
-          completed: false,
-        },
-        {
-          title: "Open Beta Launch",
-          desc: "Introduce an open beta program, giving players early access to upcoming features and the opportunity to provide feedback, helping refine the experience before the full release.",
-          completed: false,
-        },
-        {
-          title: "Introduction of the Mall Center",
-          desc: "Introduce a mall center in the game where players can shop for various items and goods.",
-          completed: false,
-        },
-        {
-          title: "In-Game DeFi Integration",
-          desc: "Introduce seamless DeFi mechanics within the game, allowing players to earn directly in the virtual economy.",
-          completed: false,
-        },
-        {
-          title: "Introduction of Shop v1",
-          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
-          completed: false,
-        },
+        // {
+        //   title: "Intelligent Economy Integration",
+        //   desc: "Combine AI-powered features with DeFi mechanics to create an adaptive and engaging in-game economy.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "Launch of Crypto Museum",
+        //   desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "Open Beta Launch",
+        //   desc: "Introduce an open beta program, giving players early access to upcoming features and the opportunity to provide feedback, helping refine the experience before the full release.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "Introduction of the Mall Center",
+        //   desc: "Introduce a mall center in the game where players can shop for various items and goods.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "In-Game DeFi Integration",
+        //   desc: "Introduce seamless DeFi mechanics within the game, allowing players to earn directly in the virtual economy.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "Introduction of Shop v1",
+        //   desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
+        //   completed: false,
+        // },
         // {
         //   title: "Introduction of Shop v2",
         //   desc: "Improve and expand the in-game shop with new features and offerings.",
@@ -755,13 +785,201 @@ const Roadmap = () => {
         {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
+          completed: true,
+        },
+      ],
+    },
+  ];
+
+  const roadmapItems2026 = [
+    {
+      quarter: "quarterOne",
+      image: "quarterOneImage",
+      content: [
+        {
+          title: "Single Strike Launch",
+          desc: "A daily opportunity for players to fight the Dark Lord with heroes and earn rewards.",
+          completed: false,
+        },
+        {
+          title: "Liquidity Campaign",
+          desc: "Execute a liquidity initiative focused on improving market depth, stability, and accessibility.",
+          completed: false,
+        },
+        {
+          title: "Strategic Fund Launch",
+          desc: "Establish a strategic fund to support long term development, ecosystem expansion, and innovation.",
+          completed: false,
+        },
+        {
+          title: "Prediction Market Launch",
+          desc: "Introduce an in game prediction market connected to market dynamics, gameplay events, and ecosystem activity.",
+          completed: false,
+        },
+        {
+          title: "Grok Integration",
+          desc: "Integration of Grok to enhance NPC interactions, deliver smarter in game responses, and create more dynamic experiences.",
+          completed: false,
+        },
+        {
+          title: "Expanding WOD Markets",
+          desc: "Expand WOD market presence through new listings and ecosystem growth, increasing accessibility and liquidity.",
+          completed: false,
+        },
+        {
+          title: "New Chain Expansion",
+          desc: "Continue multi chain integrations to support broader accessibility and onboarding",
+          completed: false,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Collaborate with strategic partners to introduce new features, integrations, and ecosystem opportunities.",
+          completed: false,
+        },
+      ],
+    },
+    {
+      quarter: "quarterTwo",
+      image: "quarterTwoImage",
+      content: [
+        {
+          title: "Gameplay Optimization",
+          desc: "Improve performance, balance, and overall gameplay experience across core systems.",
+          completed: false,
+        },
+
+        {
+          title: "Player Migration",
+          desc: "Migration to a scalable upgraded platform and system to support long term growth and stability.",
+          completed: false,
+        },
+        {
+          title: "Improving Tracking Rewards",
+          desc: "Upgrade reward tracking with automated reward distribution and improved visibility of earned rewards.",
+          completed: false,
+        },
+        {
+          title: "UI and UX Enhancements",
+          desc: "Refine interface design to deliver smoother navigation and improved player usability.",
+          completed: false,
+        },
+
+        {
+          title: "Player Account Revamp",
+          desc: "Redesign player accounts to improve profile management, progression visibility, and connected features.",
+          completed: false,
+        },
+        {
+          title: "New Heroes Introduction",
+          desc: "Introduction of new hero classes and races with expanded skins to increase gameplay diversity and personalization.",
+          completed: false,
+        },
+        {
+          title: "Improve Point System",
+          desc: "Enhancement of the point system to improve fairness, clarity, and engagement across activities.",
+          completed: false,
+        },
+        {
+          title: "Non EVM Chain Support",
+          desc: "Expansion of infrastructure to support non EVM blockchains and broaden ecosystem accessibility.",
+          completed: false,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Expand partnerships to support feature development and ecosystem growth.",
+          completed: false,
+        },
+      ],
+    },
+    {
+      quarter: "quarterThree",
+      image: "quarterThreeImage",
+
+      content: [
+        {
+          title: "Introduction of the Mall Center",
+          desc: "Launch a mall center for exploring and purchasing in game items.",
+          completed: false,
+        },
+        {
+          title: "Full Release of the Multiplayer PvE",
+          desc: "Release the complete multiplayer PvE mode for large scale cooperative gameplay.",
+          completed: false,
+        },
+
+        {
+          title: "Introduction of Shop v1",
+          desc: " Launch the first version of the in game shop.",
+          completed: false,
+        },
+        {
+          title: "NFT Customization",
+          desc: "Enable customization of NFTs such as weapons and equipment.",
+          completed: false,
+        },
+        {
+          title: "New Staking Pools",
+          desc: "Expansion of WOD staking options with new pools designed to support long term participation and enhanced utility for WOD holders.",
+          completed: false,
+        },
+        {
+          title: "Addition of New AI Powered NPCs",
+          desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
+          completed: false,
+        },
+
+        {
+          title: "Partnership Development",
+          desc: "Develop strategic partnerships to expand integrations and ecosystem initiatives.",
+          completed: false,
+        },
+      ],
+    },
+    {
+      quarter: "quarterFour",
+      image: "quarterFourImage",
+
+      content: [
+        {
+          title: "Full Release of the Multiplayer PvP",
+          desc: "Launch the full multiplayer PvP experience with competitive gameplay and rankings.",
+          completed: false,
+        },
+        {
+          title: "Adopt CAWS Functionality",
+          desc: "Allow players to adopt, grow, and use CAWS companions within the game world.",
+          completed: false,
+        },
+        {
+          title: "Upgrade Prime Benefits",
+          desc: "Upgrade Prime benefits with expanded advantages, exclusive features, and improved value for long term players.",
+          completed: false,
+        },
+        {
+          title: "Daily Bonus Improvement",
+          desc: "Enhance the daily bonus system with more engaging and inclusive rewards.",
+          completed: false,
+        },
+        {
+          title: "Launch of Crypto Museum",
+          desc: "Introduce a crypto museum focused on education and exploration of digital assets.",
+          completed: false,
+        },
+        {
+          title: "Addition of Trade P2P",
+          desc: "Introduction of direct player trading for exchanging items and assets.",
+          completed: false,
+        },
+        {
+          title: "Partnership Development",
+          desc: "Continue expanding partnerships to enhance features, content, and ecosystem growth.",
           completed: false,
         },
       ],
     },
   ];
 
-  const [roadmapItems, setRoadmapItems] = useState(roadmapItems2025);
+  const [roadmapItems, setRoadmapItems] = useState(roadmapItems2026);
 
   const slider = useRef();
 
@@ -850,7 +1068,18 @@ const Roadmap = () => {
             Dypians. From new quests and game modes to major updates and
             community events, stay informed on the exciting journey ahead.
           </span>
-          <div className="d-flex align-items-center justify-content-center gap-3">
+          <div className="row align-items-center justify-content-center gap-3">
+            <button
+              className={`btn ${
+                title === "2026" ? "getpremium-active-btn" : "getpremium-btn"
+              } px-5`}
+              onClick={() => {
+                setRoadmapItems(roadmapItems2026);
+                setTitle("2026");
+              }}
+            >
+              2026
+            </button>
             <button
               className={`btn ${
                 title === "2025" ? "getpremium-active-btn" : "getpremium-btn"
