@@ -10,6 +10,7 @@ import BlurredTwitterItem from "./BluredTwitterItem";
 import Countdown from "react-countdown";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
 import { bounds } from "leaflet";
+import GoldenTask from "./GoldenTask";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -38,11 +39,11 @@ const renderer = ({ hours, minutes, completed }) => {
 
 const renderer2 = ({ minutes, seconds, completed }) => {
   if (completed) {
-    return <span style={{color: "black"}}>00:00</span>;
+    return <span style={{ color: "black" }}>00:00</span>;
   }
 
   return (
-    <span style={{color: "black"}}>
+    <span style={{ color: "black" }}>
       {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
     </span>
   );
@@ -66,7 +67,7 @@ const TwitterRewards = ({
   handleRemove,
   seenPosts,
   setSeenPosts,
-  onSyncClick
+  onSyncClick,
 }) => {
   const windowSize = useWindowSize();
 
@@ -317,7 +318,7 @@ const TwitterRewards = ({
                     </div>
                   )}
                 </div>
-                { !email ? (
+                {!email ? (
                   <NavLink
                     to={`/auth`}
                     onClick={onClose}
@@ -333,8 +334,10 @@ const TwitterRewards = ({
                   >
                     Connect Wallet
                   </button>
-                ) 
-                : isConnected && coinbase && address && (coinbase.toLowerCase() !== address.toLowerCase()) ? (
+                ) : isConnected &&
+                  coinbase &&
+                  address &&
+                  coinbase.toLowerCase() !== address.toLowerCase() ? (
                   <button
                     onClick={onSyncClick}
                     className="synchronize-twitter-btn d-flex align-items-center justify-content-center py-2 px-4 gap-2"
@@ -342,8 +345,7 @@ const TwitterRewards = ({
                   >
                     Synchronize
                   </button>
-                )
-                : twitter && twitter.twitterUsername ? (
+                ) : twitter && twitter.twitterUsername ? (
                   <button
                     className="unlink-twitter-button d-flex align-items-center gap-1 px-3 py-2"
                     onClick={() => setPopup(true)}
@@ -538,7 +540,6 @@ const TwitterRewards = ({
                       />
                     </div>
                   </div>
-              
                 </div>
               </div>
             </div>
@@ -615,16 +616,39 @@ const TwitterRewards = ({
                 className="twitter-task-tab w-50 p-2 d-flex justify-content-center align-items-center"
                 onClick={() => setTab("completed")}
               >
+              <div className="d-flex align-items-center gap-2">
+                  <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-trophy w-4 h-4"
+                  style={{color: tab === "completed" ? "black" : "#9f9ea1"}}
+                  aria-hidden="true"
+                >
+                  <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978"></path>
+                  <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978"></path>
+                  <path d="M18 9h1.5a1 1 0 0 0 0-5H18"></path>
+                  <path d="M4 22h16"></path>
+                  <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"></path>
+                  <path d="M6 9H4.5a1 1 0 0 1 0-5H6"></path>
+                </svg>
                 <span
-                  className={`twitter-task-tab-title ${
-                    tab === "completed" && "text-white"
+                  className={`twitter-task-tab-title  ${
+                    tab === "completed" && "text-black"
                   }`}
                 >
-                  Completed
+                  Gold Task
                 </span>
               </div>
+              </div>
             </div>
-            {twitter ? (
+            {!twitter ? (
               <div className="mt-3 d-flex flex-column gap-2 twitter-tasks-container">
                 {!email ? (
                   <div className="d-flex w-100 h-100 justify-content-center align-items-center">
@@ -743,85 +767,88 @@ const TwitterRewards = ({
                         )}
                       </>
                     ) : (
+                      // <>
+                      //   {completed.length > 0 ? (
+                      //     <>
+                      //       {windowSize.width > 786 ? (
+                      //         <div className="d-flex align-items-center flex-column justify-content-between h-100">
+                      //           <div className="d-flex flex-column align-items-center gap-3 w-100">
+                      //             {paginatedComplete.map((item, index) => (
+                      //               <CompletedTwitterItem
+                      //                 item={item}
+                      //                 index={index}
+                      //               />
+                      //             ))}
+
+                      //             {/* Custom Pagination */}
+                      //           </div>
+                      //           <div className="d-flex justify-content-center mt-1 gap-2">
+                      //             <button
+                      //               className={`page-button ${
+                      //                 completedPage === 1 &&
+                      //                 "disabled-page-button"
+                      //               } `}
+                      //               onClick={() =>
+                      //                 goToCompletedPage(completedPage - 1)
+                      //               }
+                      //               disabled={completedPage === 1}
+                      //             >
+                      //               {"<"}
+                      //             </button>
+
+                      //             {Array.from(
+                      //               { length: totalCompletedPages },
+                      //               (_, i) => (
+                      //                 <button
+                      //                   className={`page-button ${
+                      //                     completedPage === i + 1 &&
+                      //                     "active-page-button"
+                      //                   }`}
+                      //                   key={i + 1}
+                      //                   onClick={() => goToCompletedPage(i + 1)}
+                      //                 >
+                      //                   {i + 1}
+                      //                 </button>
+                      //               )
+                      //             )}
+
+                      //             <button
+                      //               className={`page-button ${
+                      //                 completedPage === totalCompletedPages &&
+                      //                 "disabled-page-button"
+                      //               } `}
+                      //               onClick={() =>
+                      //                 goToCompletedPage(completedPage + 1)
+                      //               }
+                      //               disabled={
+                      //                 completedPage === totalCompletedPages
+                      //               }
+                      //             >
+                      //               {">"}
+                      //             </button>
+                      //           </div>
+                      //         </div>
+                      //       ) : (
+                      //         <div className="d-flex align-items-center flex-column gap-3 w-100 h-100">
+                      //           {completed.map((item, index) => (
+                      //             <CompletedTwitterItem
+                      //               item={item}
+                      //               index={index}
+                      //             />
+                      //           ))}
+                      //         </div>
+                      //       )}
+                      //     </>
+                      //   ) : (
+                      //     <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
+                      //       <h6 className="twitter-empty-message mb-0">
+                      //         You have not completed any tasks yet.
+                      //       </h6>
+                      //     </div>
+                      //   )}
+                      // </>
                       <>
-                        {completed.length > 0 ? (
-                          <>
-                            {windowSize.width > 786 ? (
-                              <div className="d-flex align-items-center flex-column justify-content-between h-100">
-                                <div className="d-flex flex-column align-items-center gap-3 w-100">
-                                  {paginatedComplete.map((item, index) => (
-                                    <CompletedTwitterItem
-                                      item={item}
-                                      index={index}
-                                    />
-                                  ))}
-
-                                  {/* Custom Pagination */}
-                                </div>
-                                <div className="d-flex justify-content-center mt-1 gap-2">
-                                  <button
-                                    className={`page-button ${
-                                      completedPage === 1 &&
-                                      "disabled-page-button"
-                                    } `}
-                                    onClick={() =>
-                                      goToCompletedPage(completedPage - 1)
-                                    }
-                                    disabled={completedPage === 1}
-                                  >
-                                    {"<"}
-                                  </button>
-
-                                  {Array.from(
-                                    { length: totalCompletedPages },
-                                    (_, i) => (
-                                      <button
-                                        className={`page-button ${
-                                          completedPage === i + 1 &&
-                                          "active-page-button"
-                                        }`}
-                                        key={i + 1}
-                                        onClick={() => goToCompletedPage(i + 1)}
-                                      >
-                                        {i + 1}
-                                      </button>
-                                    )
-                                  )}
-
-                                  <button
-                                    className={`page-button ${
-                                      completedPage === totalCompletedPages &&
-                                      "disabled-page-button"
-                                    } `}
-                                    onClick={() =>
-                                      goToCompletedPage(completedPage + 1)
-                                    }
-                                    disabled={
-                                      completedPage === totalCompletedPages
-                                    }
-                                  >
-                                    {">"}
-                                  </button>
-                                </div>
-                              </div>
-                            ) : (
-                              <div className="d-flex align-items-center flex-column gap-3 w-100 h-100">
-                                {completed.map((item, index) => (
-                                  <CompletedTwitterItem
-                                    item={item}
-                                    index={index}
-                                  />
-                                ))}
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          <div className="d-flex w-100 h-100 justify-content-center align-items-center mt-5">
-                            <h6 className="twitter-empty-message mb-0">
-                              You have not completed any tasks yet.
-                            </h6>
-                          </div>
-                        )}
+                      <GoldenTask />
                       </>
                     )}
                   </>

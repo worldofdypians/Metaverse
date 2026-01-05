@@ -233,6 +233,7 @@
 
 .tab-move {
   transform: translateX(100%);
+  background: linear-gradient(180deg, gold 0%, orange 100%);
 }
 
 .twitter-action-btn {
@@ -2778,4 +2779,184 @@ html {
   50% {
     opacity: 0.5;
   }
+}
+
+.golden-task-wrapper {
+  border: 2px solid gold;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.golden-cup-holder {
+  background: linear-gradient(180deg, gold 0%, orange 100%);
+  border-radius: 8px;
+}
+
+.golden-task-title {
+  font-size: 16px;
+  color: white;
+  font-weight: 700;
+}
+
+.golden-task-desc {
+  color: color-mix(in oklab, #ffffff 60%, transparent);
+}
+
+.total-pool-span {
+  font-size: 10px;
+  color: oklab(17.2002% 0.010471 -0.0689409 / 0.6);
+}
+
+.total-pool {
+  color: #0b092d;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.milestone-text {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.current-milestone-progress {
+  font-size: 12px;
+  color: color-mix(in oklab, #ffffff 60%, transparent);
+
+  font-weight: 300;
+}
+
+.total-milestone-progress {
+  font-size: 12px;
+  color: #ffd700;
+  font-weight: 400;
+}
+
+.milestone-progess-bar {
+  background-color: #0f0d28;
+  border: 1px solid #2a2454;
+  border-radius: 20px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.milestone-progess-bar-inner {
+  width: 15%;
+  height: 100%;
+  background: linear-gradient(180deg, gold 0%, orange 100%);
+}
+
+.next-milestone-text {
+  font-size: 10px;
+  color: color-mix(in oklab, #ffffff 60%, transparent);
+}
+
+.milestone-wrapper-completed {
+  border: 1px solid #1ed3604d;
+  background: rgba(30, 211, 96, 0.302);
+  border-radius: 8px;
+}
+
+.completed-milestone-icon-wrapper {
+  background: linear-gradient(180deg, #16a34a 0%, #22c55e 100%);
+  border-radius: 8px;
+}
+
+.milestone-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: color-mix(in oklab, #ffffff 80%, transparent);
+}
+
+.completed-milestone-span {
+  font-size: 10px;
+  color: #22c55e;
+}
+
+.milestone-prize-completed {
+  font-size: 14px;
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.milestone-wrapper {
+  background: #0f0d28;
+  border: 1px solid #2a2454;
+  border-radius: 8px;
+}
+
+.milestone-icon-wrapper {
+  border: 1px solid #2a2454;
+  background: #1a1640;
+  border-radius: 8px;
+}
+
+.milestone-span {
+  font-size: 10px;
+  color: color-mix(in oklab, var(--color-white) 40%, transparent);
+}
+
+.milestone-prize {
+  font-size: 14px;
+  color: gold;
+  font-weight: 600;
+}
+.lock-color {
+  color: color-mix(in oklab, var(--color-white) 40%, transparent);
+}
+
+.milestone-leaderboard-wrapper {
+  border: 2px solid #2a2454;
+  border-radius: 12px;
+  height: 100%;
+}
+
+.milestone-leaderboard-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.milestone-leaderboard-divider {
+  width: 100%;
+  height: 1px;
+  background: #2a2454;
+}
+
+.milestone-leaderboard-item {
+  background: #0f0d28;
+  border: 1px solid #2a2454;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.milestone-leaderboard-item:hover {
+  border: 1px solid gold;
+  transform: scale(1.01);
+}
+
+.milestone-leaderboard-rank-holder {
+  border: 1px solid #2a2454;
+  background: #1a1640;
+  border-radius: 8px;
+  width: 25px;
+  height: 25px;
+}
+
+.milestone-leaderboard-rank {
+  color: #fff9;
+  font-size: 12px;
+  font-weight: 600;
+}
+.milestone-player {
+  font-size: 12px;
+  color: #ffffffe6;
+  font-weight: 400;
+}
+
+.milestone-leaderboard-prize {
+  font-size: 12px;
+  font-weight: 700;
+  color: gold;
 }
