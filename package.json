@@ -47,7 +47,7 @@
     "leaflet": "^1.9.4",
     "leaflet-draw": "^1.0.4",
     "leva": "^0.9.35",
-    "lucide-react": "^0.548.0",
+    "lucide-react": "^0.562.0",
     "moment": "^2.29.4",
     "motion": "^12.23.12",
     "node-sass": "^9.0.0",
