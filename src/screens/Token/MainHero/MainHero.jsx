@@ -102,10 +102,16 @@ const MainHero = ({ scrollInto }) => {
       link: "https://blofin.com/spot/WOD-USDT",
     },
     {
+      title: "CoinDCX",
+      link: "https://coindcx.com/trade/WODUSDT",
+      logo: "CoinDCXExchange2.svg",
+    },
+    {
       title: "WEEX",
       logo: "weex-exchange.svg",
       link: "https://www.weex.com/spot/WOD-USDT",
     },
+
     {
       title: "Uniswap",
       logo: "uniswap-exchange.png",
@@ -208,9 +214,7 @@ const MainHero = ({ scrollInto }) => {
                   key={index}
                 >
                   <img
-                    src={
-                        `https://cdn.worldofdypians.com/wod/${item.logo}`
-                    }
+                    src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
                     className={` exchange-grid-image ${
                       (index === 0 ||
                         item.title === "KCEX" ||
