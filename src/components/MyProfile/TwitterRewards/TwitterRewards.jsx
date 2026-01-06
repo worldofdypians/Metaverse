@@ -648,7 +648,7 @@ const TwitterRewards = ({
               </div>
               </div>
             </div>
-            {!twitter ? (
+            {twitter ? (
               <div className="mt-3 d-flex flex-column gap-2 twitter-tasks-container">
                 {!email ? (
                   <div className="d-flex w-100 h-100 justify-content-center align-items-center">
