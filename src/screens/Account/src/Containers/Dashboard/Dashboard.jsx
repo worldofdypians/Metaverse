@@ -7356,6 +7356,9 @@ function Dashboard({
                 aiQuestionRewards={
                   claimedMoneyReward ? Number(claimedMoneyReward.reward) : 0
                 }
+                battleRewards={
+                  claimedMoneyFight ? Number(claimedMoneyFight.reward) : 0
+                }
               />
             </div>
           </OutsideClickHandler>

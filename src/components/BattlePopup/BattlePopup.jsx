@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import "./_battlepopup.scss";
- 
+
 import { switchNetworkWagmi } from "../../utils/wagmiSwitchChain";
 import { NavLink } from "react-router-dom";
 import { motion } from "motion/react";
@@ -91,7 +91,6 @@ const BattlePopup = ({
 
   const readOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-  
       return await wagmiReadContract(wagmiClient, {
         address,
         abi,
@@ -107,8 +106,6 @@ const BattlePopup = ({
 
   const writeOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-
-
       const account = getAccount(wagmiClient);
       if (account?.chainId && chainId && account.chainId !== chainId) {
         try {
@@ -245,7 +242,6 @@ const BattlePopup = ({
   const [disableButtons, setDisableButtons] = useState(false);
   const [showPrizes, setShowPrizes] = useState(false);
   const [tempfighter, setTempfighter] = useState(fighters[0]);
-
 
   function handleEsc(event) {
     if (event.key === "Escape" || event.keyCode === 27) {
@@ -394,7 +390,6 @@ const BattlePopup = ({
                   console.warn("Audio play failed:", err);
               });
             }
-         
           }, 26500);
 
           // 🎁 Save data + show rewards
@@ -476,7 +471,6 @@ const BattlePopup = ({
                   console.warn("Audio play failed:", err);
               });
             }
-          
           }, 26500);
 
           // 🎁 Save data + show rewards
@@ -522,8 +516,6 @@ const BattlePopup = ({
         throw new Error("Unsupported chain for chest contract.");
 
       const functionName = "strike";
-
-  
 
       // Default: use wagmi connected wallet via viem
       const account = getAccount(wagmiClient);
@@ -712,7 +704,7 @@ const BattlePopup = ({
     <div className="kickstarter-container slide-in d-flex flex-column justify-content-between align-items-center">
       <div className="position-relative  d-flex w-100 h-100 flex-column align-items-center">
         <img
-          src={'https://cdn.worldofdypians.com/wod/kickstarterXMark.svg'}
+          src={"https://cdn.worldofdypians.com/wod/kickstarterXMark.svg"}
           className="kickstarter-close"
           alt=""
           onClick={() => {
@@ -1185,6 +1177,9 @@ const BattlePopup = ({
                           </div>
                         </div>
                       ))}
+                      <span className="text-yellow-700 fight-rewards-item-name rounded-md py-2 px-3 bg-yellow-800/10 text-sm">
+                        Initiating a fight requires 1 WOD.
+                      </span>
                     </motion.div>
                   </OutsideClickHandler>
                 )}

@@ -473,7 +473,7 @@ const MyProfile = ({
                         </h6>
                         {!email && coinbase && (
                           <NavLink
-                            className="loginbtn-profile px-5 py-2"
+                            className="loginbtn-profile px-lg-5 px-md-5 px-4 py-2"
                             to="/auth"
                           >
                             Log in
@@ -666,7 +666,7 @@ const MyProfile = ({
                         </div>
                       ) : !isConnected ? (
                         <button
-                          className="loginbtn-profile px-5 py-2"
+                          className="loginbtn-profile px-lg-5 px-md-5 px-4 py-2"
                           onClick={onConnectWallet}
                         >
                           Connect
@@ -718,7 +718,7 @@ const MyProfile = ({
                         </button>
                       ) : coinbase && email && !address && !username ? (
                         <NavLink
-                          className="loginbtn-profile px-5 py-2 d-flex align-items-center"
+                          className="loginbtn-profile px-lg-5 px-md-5 px-4 py-2 d-flex align-items-center"
                           to={"/player"}
                         >
                           Create player
