@@ -423,7 +423,7 @@ const VideoWrapper = ({
 
             <div
               className="relative  flex items-center justify-center z-5"
-              style={{  height: "fit-content" }}
+              style={{ height: "fit-content" }}
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.8, y: 30 }}
@@ -570,7 +570,7 @@ const VideoWrapper = ({
                       whileTap={{ scale: 0.95 }}
                     >
                       <NavLink
-                        to="/liquidity-competition"
+                        to="/liquidity-catalyst"
                         className="font-bold px-8 py-3 rounded-md shadow-xl flex items-center space-x-2 bg-white text-purple-600 hover:bg-gray-100 hover:bg-gray-100"
                       >
                         <span>Join Now</span>

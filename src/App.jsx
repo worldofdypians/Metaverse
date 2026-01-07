@@ -6295,7 +6295,7 @@ function AppRoutes() {
             />
             <Route
               exact
-              path="/liquidity-competition"
+              path="/liquidity-catalyst"
               element={
                 <LiquidityComp coinbase={coinbase} isConnected={isConnected} />
               }

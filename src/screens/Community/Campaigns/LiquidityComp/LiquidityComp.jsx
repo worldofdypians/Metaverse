@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Droplets,
   TrendingUp,
@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import DisclaimerModal from "./components/DisclaimerModal";
 import Countdown from "react-countdown";
+import OutsideClickHandler from "react-outside-click-handler";
+import "../../../../components/Kickstarter/components/kickstarter_newcss.scss";
 const renderer = ({ days, hours }) => {
   return (
     <div className="d-flex">
@@ -159,6 +161,11 @@ const LiquidityComp = () => {
     );
   };
 
+  useEffect(() => {
+    document.title = "WOD Liquidity Catalyst Campaign";
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="container-fluid font-ui  d-flex justify-content-center bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
       {/* Animated background */}
@@ -186,18 +193,18 @@ const LiquidityComp = () => {
                   <div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 bordertw border-blue-500/30 rounded-full mb-3">
                     <Droplets className="w-3 h-3 text-cyan-400" />
                     <span className="text-cyan-400 text-xs font-medium">
-                      Season 1 • 3 Month Campaign
+                      Season 1 • Liquidity Catalyst
                     </span>
                   </div>
                   <br />
                   <span className="text-3xl font-bold mb-3">
                     <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-300 bg-clip-text text-transparent">
-                      Supercharge Your Stablecoin Yields
+                      Enter the Liquidity Catalyst Campaign
                     </span>
                   </span>
                   <p className="text-xs text-slate-300 mb-4">
-                    Deposit stablecoins and earn boosted rewards through
-                    automated WOD-USDT LP positions on PancakeSwap.
+                    Deposit and earn rewards through automated WOD-USDT LP
+                    positions on PancakeSwap.
                   </p>
                   {/* Stats grid */}
                   <div className="grid grid-cols-2 gap-3 mb-4">
@@ -246,7 +253,7 @@ const LiquidityComp = () => {
                     </div>
                   </div>
                   {/* Key features */}
-                  <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2 text-center text-xs">
                     <div className="bg-blue-500/10 bordertw border-blue-500/20 rounded-lg p-2">
                       <Lock className="w-4 h-4 text-cyan-400 mx-auto mb-1" />
                       <div className="text-white font-semibold">
@@ -280,7 +287,7 @@ const LiquidityComp = () => {
                     {/* <div className="text-xs text-cyan-400 font-semibold mb-2">
                       Tiered Rewards (60% Pool Share + 40% Duration)
                     </div> */}
-                    <div className="grid grid-cols-4 gap-2 text-xs">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-2 text-xs">
                       <div className="bg-blue-500/10 bordertw border-blue-500/20 rounded-lg p-2">
                         <div className="text-cyan-400 font-semibold">
                           Top 10
@@ -426,45 +433,51 @@ const LiquidityComp = () => {
                           </button>
 
                           {showTokenSelect && (
-                            <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 bordertw border-white/10 rounded-lg shadow-xl max-h-48 overflow-y-auto">
-                              {STABLECOINS.map((token) => (
-                                <button
-                                  key={token.symbol}
-                                  onClick={() => {
-                                    setSelectedToken(token);
-                                    setShowTokenSelect(false);
-                                  }}
-                                  className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-colors"
-                                >
-                                  <div className="flex items-center gap-2">
-                                    {/* <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-xs">
+                            <OutsideClickHandler
+                              onOutsideClick={() => {
+                                setShowTokenSelect(false);
+                              }}
+                            >
+                              <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 bordertw border-white/10 rounded-lg shadow-xl max-h-48 overflow-y-auto">
+                                {STABLECOINS.map((token) => (
+                                  <button
+                                    key={token.symbol}
+                                    onClick={() => {
+                                      setSelectedToken(token);
+                                      setShowTokenSelect(false);
+                                    }}
+                                    className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-colors"
+                                  >
+                                    <div className="flex items-center gap-2">
+                                      {/* <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-xs">
                                       {token.symbol[0]}
                                     </div> */}
-                                    <img
-                                      src={`https://cdn.worldofdypians.com/wod/${token.icon}`}
-                                      alt=""
-                                      className="w-7 h-7"
-                                    />
-                                    <div className="text-left">
-                                      <div className="text-white font-semibold text-xs">
-                                        {token.symbol}
+                                      <img
+                                        src={`https://cdn.worldofdypians.com/wod/${token.icon}`}
+                                        alt=""
+                                        className="w-7 h-7"
+                                      />
+                                      <div className="text-left">
+                                        <div className="text-white font-semibold text-xs">
+                                          {token.symbol}
+                                        </div>
+                                        <div className="text-xs text-slate-400">
+                                          {token.name}
+                                        </div>
                                       </div>
+                                    </div>
+                                    <div className="text-right">
                                       <div className="text-xs text-slate-400">
-                                        {token.name}
+                                        Balance
+                                      </div>
+                                      <div className="text-white font-semibold text-xs">
+                                        {token.balance}
                                       </div>
                                     </div>
-                                  </div>
-                                  <div className="text-right">
-                                    <div className="text-xs text-slate-400">
-                                      Balance
-                                    </div>
-                                    <div className="text-white font-semibold text-xs">
-                                      {token.balance}
-                                    </div>
-                                  </div>
-                                </button>
-                              ))}
-                            </div>
+                                  </button>
+                                ))}
+                              </div>
+                            </OutsideClickHandler>
                           )}
                         </div>
                       </div>
@@ -561,7 +574,7 @@ const LiquidityComp = () => {
                                   Total Available
                                 </div>
                                 <div className="text-xl font-bold text-green-400">
-                                  ${totalAvailableToClaim.toFixed(2)} USDT
+                                  {totalAvailableToClaim.toFixed(2)} USDT
                                 </div>
                               </div>
                               <button
@@ -597,9 +610,9 @@ const LiquidityComp = () => {
                               <div className="flex items-center gap-3">
                                 <div className="text-right">
                                   <div className="text-white font-bold">
-                                    ${claim.amount.toFixed(2)}
+                                    {claim.amount.toFixed(2)}
                                   </div>
-                                  <div className="text-xs text-slate-400">
+                                  <div className="text-xs text-slate-400 text-end">
                                     USDT
                                   </div>
                                 </div>

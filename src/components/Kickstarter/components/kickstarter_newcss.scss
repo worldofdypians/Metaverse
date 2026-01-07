@@ -1494,7 +1494,16 @@
     .max-h-48 {
         max-height: calc(var(--spacing)*48)
     }
+        .max-h-64 {
+        max-height: calc(var(--spacing)*64)
+    }
+    .max-h-\[80vh\] {
+        max-height: 80vh
+    }
 
+        .max-h-\[60vh\] {
+        max-height: 60vh
+    }
 
   .max-h-\(--radix-context-menu-content-available-height\) {
     max-height: var(--radix-context-menu-content-available-height);
