@@ -17,7 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useUser, useWallet } from "./redux/hooks/useWallet.js";
 import { setUserProgress } from "./redux/slices/userSlice";
 import { useConnect } from "wagmi";
-import { signMessage as signMessageWagmi, getBalance } from "@wagmi/core";
+import {
+  signMessage as signMessageWagmi,
+  getBalance,
+  readContract as wagmiReadContract,
+} from "@wagmi/core";
 import { formatEther } from "viem";
 
 import { createWalletClient as createWalletClientWagmi, custom } from "viem";
@@ -2966,20 +2970,35 @@ function AppRoutes() {
     fetchDynamicData();
   }, []);
 
+  const readOnChain = async ({ address, abi, functionName, args = [] }) => {
+    try {
+      return await wagmiReadContract(wagmiClient, {
+        address,
+        abi,
+        functionName,
+        args,
+        chainId: bsc.id,
+      });
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
+
   const checkPremiumOryn = async (addr) => {
     try {
       if (!addr) {
         setPremiumOryn(false);
         return;
       }
-      const oryn_premium_contract = new window.bscWeb3.eth.Contract(
-        window.ORYN_PREMIUM_ABI,
-        window.config.oryn_premium_address
-      );
-      const result = await oryn_premium_contract.methods
-        .hasLocked(addr)
-        .call()
-        .catch(() => false);
+      const result = await wagmiReadContract(wagmiClient, {
+        address: window.config.oryn_premium_address,
+        abi: window.ORYN_PREMIUM_ABI,
+        functionName: "hasLocked",
+        args: [addr],
+        chainId: bsc.id,
+      }).catch(() => false);
+      console.log(result, Boolean(result));
       setPremiumOryn(Boolean(result));
     } catch (e) {
       setPremiumOryn(false);
@@ -4979,6 +4998,7 @@ function AppRoutes() {
     fetchUserPools(coinbase);
     getWodBalance(coinbase);
     checkIfEOA(coinbase);
+    checkPremiumOryn(coinbase);
   }, [coinbase]);
   // useEffect(() => {
   //   if (coinbase) {
