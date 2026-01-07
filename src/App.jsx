@@ -636,7 +636,7 @@ function AppRoutes() {
   let kucoinLastDay = new Date("2025-07-30T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
-  let seiLastDay = new Date("2025-08-18T14:00:00.000+02:00");
+  let seiLastDay = new Date("2026-04-21T14:00:00.000+02:00");
   let vanarLastDay = new Date("2026-01-14T14:00:00.000+02:00");
   let trustwalletLastDay = new Date("2026-01-29T14:00:00.000+02:00");
 
@@ -1804,6 +1804,58 @@ function AppRoutes() {
     {
       title: "SEI",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
+      eventStatus: "Live",
+      rewardType: "SEI",
+      rewardAmount: "$10,000",
+      location: [-0.06734488843929015, 0.08361518383026124],
+      image: "seiBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$10,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 22, 2025",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/seiBg.webp",
+      userEarnUsd: user.userStats.seiEarnUsd,
+      userEarnCrypto: user.userStats.seiEarnToken,
+      userEarnPoints: user.userStats.seiEarnPoints,
+      popupInfo: {
+        title: "SEI",
+        chain: "Sei Network",
+        linkState: "sei",
+        rewards: "SEI",
+        status: "Live",
+        id: "event13",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in SEI Rewards",
+        eventDuration: seiLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Dec 22, 2025",
+        detailsText: `To participate in the event, players are required to&nbsp;
+                  <b>hold a SEI Beta Pass NFT</b>. You can get the SEI Beta Pass
+                  NFT from the World of Dypians Shop. By engaging in the game on
+                  a daily basis and exploring the SEI area, players not only
+                  stand a chance to secure daily rewards in SEI, but also earn
+                  points for their placement on the global leaderboard. Remember
+                  to log in to the game daily and venture into the SEI area to
+                  uncover hidden treasures.`,
+        about: `Sei is at the pinnacle of high-speed blockchain platforms, ideal
+            for web2 like experiences, high-frequency trading and real-time
+            digital exchanges.`,
+        twitterLink: "https://x.com/SeiNetwork",
+        telegramLink: "https://t.me/seinetwork?ref=blog.sei.io",
+        websiteLink: "https://www.sei.io/",
+        thumbImage: "https://cdn.worldofdypians.com/wod/seiThumb.png",
+      },
+    },
+    {
+      title: "SEI",
+      logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
       eventStatus: "Expired",
       rewardType: "SEI",
       rewardAmount: "$20,000",
@@ -1817,9 +1869,9 @@ function AppRoutes() {
       eventType: "Explore & Mine",
       eventDate: "Apr 18, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/seiBg.webp",
-      userEarnUsd: user.userStats.seiEarnUsd,
-      userEarnCrypto: user.userStats.seiEarnToken,
-      userEarnPoints: user.userStats.seiEarnPoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       popupInfo: {
         title: "SEI",
         chain: "Sei Network",
@@ -4174,9 +4226,9 @@ function AppRoutes() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            // if (seiEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (seiEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /

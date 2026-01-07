@@ -7,9 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Brush,
-  Legend,
-  Line,
+  // Brush,
+  // Legend,
+  // Line,
 } from "recharts";
 import { localData } from "./data";
 import { abbreviateNumber } from "js-abbreviation-number";
@@ -51,11 +51,11 @@ const Reserve = ({ wodPrice }) => {
   );
   const updatedMonth = chartData[chartData.length - 1]?.date;
 
-  const addOneDay = (dateStr) => {
-    const date = new Date(dateStr);
-    date.setDate(date.getDate() + 1);
-    return date.toISOString().split("T")[0];
-  };
+  // const addOneDay = (dateStr) => {
+  //   const date = new Date(dateStr);
+  //   date.setDate(date.getDate() + 1);
+  //   return date.toISOString().split("T")[0];
+  // };
 
   const mergeData = (fetchData) => {
     const result = [...localData];
@@ -78,11 +78,11 @@ const Reserve = ({ wodPrice }) => {
     // }
     let allprice = 0;
     const sumFunction = (a, b) => a + b;
-    [...result, ...alteredFetch].forEach((data) => {
+    [...alteredFetch].forEach((data) => {
       return (allprice = sumFunction(allprice, Number(data.wodPrice)));
     });
 
-    setavgPrice(allprice / [...result, ...alteredFetch].length);
+    setavgPrice(allprice / [...alteredFetch].length);
     setChartData([...result, ...alteredFetch]);
     return [...result, ...alteredFetch];
   };
@@ -213,7 +213,10 @@ const Reserve = ({ wodPrice }) => {
                       rel="noreferrer"
                       className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300"
                     >
-                      <img src="https://cdn.worldofdypians.com/wod/link.svg" />
+                      <img
+                        src="https://cdn.worldofdypians.com/wod/link.svg"
+                        alt=""
+                      />
                       <span className="text-cyan-400 text-sm">
                         Reserve Contract 1
                       </span>
@@ -224,7 +227,10 @@ const Reserve = ({ wodPrice }) => {
                       rel="noreferrer"
                       className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300"
                     >
-                      <img src="https://cdn.worldofdypians.com/wod/link.svg" />
+                      <img
+                        src="https://cdn.worldofdypians.com/wod/link.svg"
+                        alt=""
+                      />
                       <span className="text-cyan-400 text-sm">
                         Reserve Contract 2
                       </span>
@@ -235,7 +241,10 @@ const Reserve = ({ wodPrice }) => {
                       rel="noreferrer"
                       className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300"
                     >
-                      <img src="https://cdn.worldofdypians.com/wod/link.svg" />
+                      <img
+                        src="https://cdn.worldofdypians.com/wod/link.svg"
+                        alt=""
+                      />
                       <span className="text-cyan-400 text-sm">
                         Reserve Contract 3
                       </span>
@@ -246,7 +255,10 @@ const Reserve = ({ wodPrice }) => {
                       rel="noreferrer"
                       className="group flex items-center gap-2 px-3 py-1.5 rounded-lg bordertw border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400/50 transition-all duration-300"
                     >
-                      <img src="https://cdn.worldofdypians.com/wod/link.svg" />
+                      <img
+                        src="https://cdn.worldofdypians.com/wod/link.svg"
+                        alt=""
+                      />
                       <span className="text-cyan-400 text-sm">
                         Reserve Blog
                       </span>

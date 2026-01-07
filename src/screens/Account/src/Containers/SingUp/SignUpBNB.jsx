@@ -112,6 +112,8 @@ function SingUpBNB({
   const signup = () => {
     if (!captchaValue) {
       window.alertify.error("Please verify the reCAPTCHA");
+    } else if (password !== confirmPassword) {
+      window.alertify.error("Passwords do not match");
     } else {
       signUp({
         username,
@@ -288,7 +290,11 @@ function SingUpBNB({
               }}
               onClick={() => setShowPassword((prev) => !prev)}
             >
-              {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+              {showPassword ? (
+                <VisibilityOffIcon style={{ color: "wheat" }} />
+              ) : (
+                <RemoveRedEyeIcon style={{ color: "wheat" }} />
+              )}
             </div>
           </div>
         </div>
@@ -296,14 +302,14 @@ function SingUpBNB({
         <div className="d-flex flex-column w-100 gap-1">
           <h6 className={classes.labelBNB}>Confirm Password*</h6>
           <div className="position-relative">
-          <Input
-            inputType={showPassword2 ? "text" : "password"}
-            placeHolder="Confirm Password"
-            value={confirmPassword}
-            onChange={setConfirmPassword}
-            type={"coingecko"}
-          />
-          <div
+            <Input
+              inputType={showPassword2 ? "text" : "password"}
+              placeHolder="Confirm Password"
+              value={confirmPassword}
+              onChange={setConfirmPassword}
+              type={"coingecko"}
+            />
+            <div
               style={{
                 position: "absolute",
                 right: 10,
@@ -312,7 +318,11 @@ function SingUpBNB({
               }}
               onClick={() => setShowPassword2((prev) => !prev)}
             >
-              {showPassword2 ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+              {showPassword2 ? (
+                <VisibilityOffIcon style={{ color: "wheat" }} />
+              ) : (
+                <RemoveRedEyeIcon style={{ color: "wheat" }} />
+              )}
             </div>
           </div>
         </div>

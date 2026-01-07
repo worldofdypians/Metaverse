@@ -316,7 +316,6 @@ function Dashboard({
   // const [landstakes, setLandStakes] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
-  const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
 
   // const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
@@ -380,8 +379,6 @@ function Dashboard({
   // const [claimedTaraxaPremiumChests, setclaimedTaraxaPremiumChests] =
   //   useState(0);
 
-  const [userSocialRewards, setuserSocialRewards] = useState(0);
-
   const [canBuy, setCanBuy] = useState(false);
 
   const [allChests, setallChests] = useState([]);
@@ -433,7 +430,7 @@ function Dashboard({
   const [seiImages] = useState(shuffle(chestImagesSei));
 
   const [mediaUrl, setMediaUrl] = useState("");
-  const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
+
   const [suspenseSound, setSuspenseSound] = useState(false);
   const [selectedEvent, setselectedEvent] = useState([]);
   const [showEventPopup, setshowEventPopup] = useState(false);
@@ -679,15 +676,15 @@ function Dashboard({
     }
   };
 
-  const fetchUsersocialRewards = () => {
-    const cachedUserSocialRewards = localStorage.getItem(
-      "cacheduserSocialRewards"
-    );
+  // const fetchUsersocialRewards = () => {
+  //   const cachedUserSocialRewards = localStorage.getItem(
+  //     "cacheduserSocialRewards"
+  //   );
 
-    if (cachedUserSocialRewards) {
-      setuserSocialRewardsCached(cachedUserSocialRewards);
-    }
-  };
+  //   if (cachedUserSocialRewards) {
+  //     setuserSocialRewardsCached(cachedUserSocialRewards);
+  //   }
+  // };
   const validateUrl = (url) => {
     let errors = {};
     let regex =
@@ -5122,6 +5119,7 @@ function Dashboard({
         console.error(e);
       });
     if (result && result.status === 200) {
+      console.log("result.data", result.data);
       setuserDailyBundles(result.data);
     }
   };
@@ -6148,7 +6146,31 @@ function Dashboard({
     }
   }
 
-  const handleGetFightResults = async (email, chain) => {
+  // const getUserRewardData = async (addr) => {
+  //   const result = await axios
+  //     .get(`https://api.worldofdypians.com/api/specialreward/${addr}`, {
+  //       headers: { Authorization: `Bearer ${authToken}` },
+  //     })
+  //     .catch((e) => {
+  //       console.error(e);
+  //     });
+
+  //   if (result && result.status === 200) {
+  //     if (result.data && result.data.rewards && result.data.rewards === 0) {
+  //       setuserSocialRewards(0);
+  //       localStorage.setItem("cacheduserSocialRewards", 0);
+  //     } else if (result.data && !result.data.rewards) {
+  //       let amount = 0;
+  //       for (let i = 0; i < result.data.length; i++) {
+  //         amount += result.data[i].amount;
+  //       }
+  //       localStorage.setItem("cacheduserSocialRewards", amount);
+  //       setuserSocialRewards(amount);
+  //     }
+  //   }
+  // };
+
+    const handleGetFightResults = async (email, chain) => {
     const result = await axios
       .post(
         `https://worldofdypiansdailybonus.azurewebsites.net/api/GetFightOfTheDayResult?code=7X5t65iOoiMTYlCnKyoMwBHAGmJOr9NoN3lhXk0RRkgTAzFudoavxg==`,
@@ -6185,30 +6207,6 @@ function Dashboard({
           };
           setFightInfo(newFightInfo);
         }, 1000);
-      }
-    }
-  };
-
-  const getUserRewardData = async (addr) => {
-    const result = await axios
-      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-
-    if (result && result.status === 200) {
-      if (result.data && result.data.rewards && result.data.rewards === 0) {
-        setuserSocialRewards(0);
-        localStorage.setItem("cacheduserSocialRewards", 0);
-      } else if (result.data && !result.data.rewards) {
-        let amount = 0;
-        for (let i = 0; i < result.data.length; i++) {
-          amount += result.data[i].amount;
-        }
-        localStorage.setItem("cacheduserSocialRewards", amount);
-        setuserSocialRewards(amount);
       }
     }
   };
@@ -6547,7 +6545,7 @@ function Dashboard({
   useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
       fetchUserFavorites(userWallet ? userWallet : coinbase);
-      getUserRewardData(userWallet ? userWallet : coinbase);
+      // getUserRewardData(userWallet ? userWallet : coinbase);
     }
   }, [coinbase, userWallet, isConnected, authToken, email, isTokenExpired]);
 
@@ -6587,9 +6585,9 @@ function Dashboard({
     primeStars,
   ]);
 
-  useEffect(() => {
-    fetchUsersocialRewards();
-  }, [userSocialRewards]);
+  // useEffect(() => {
+  //   fetchUsersocialRewards();
+  // }, [userSocialRewards]);
 
   useEffect(() => {
     if (
@@ -6837,12 +6835,11 @@ function Dashboard({
               openMyRewards={() => setmyRewardsPopup(true)}
               openDailyBonus={() => setdailyBonusPopup(true)}
               openPortfolio={() => setPortfolio(true)}
-              openSpecialRewards={() => setSpecialRewardsPopup(true)}
               isConnected={isConnected}
               onConnectWallet={handleConnect}
               fightInfo={fightInfo}
               liveRewards={
-                Number(userSocialRewardsCached) +
+                // Number(userSocialRewardsCached) +
                 Number(genesisRank2) +
                 Number(dataAmountStar) +
                 Number(dataAmountStarWeekly) +
@@ -6859,7 +6856,6 @@ function Dashboard({
 
                 // Number(chainlinkEarnUsd)
               }
-              specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
               onSyncClick={handleShowSyncModal}
               onEventCardClick={() => {
@@ -7354,7 +7350,6 @@ function Dashboard({
                 userDataStarWeekly={dataAmountStarWeekly}
                 treasureRewardMoney={treasureRewardMoney}
                 totalDailyBonusSum={totalDailyBonusSum}
-                userSocialRewards={userSocialRewards}
                 cawsPremiumRewards={cawsPremiumRewards}
                 landPremiumRewards={landPremiumRewards}
                 genesisRank2={genesisRank2}
@@ -7712,163 +7707,6 @@ function Dashboard({
                 myOffers={[]}
                 userCollectedNFTS={userCollectedNFTS}
               />
-            </div>
-          </OutsideClickHandler>
-        )}
-
-        {(specialRewardsPopup || hashValue === "#special-rewards") && (
-          <OutsideClickHandler
-            onOutsideClick={() => {
-              setSpecialRewardsPopup(false);
-              window.location.hash = "";
-            }}
-          >
-            <div
-              className="popup-wrapper popup-active p-3"
-              style={{ width: "30%", pointerEvents: "auto" }}
-            >
-              {specialRewardsSuccess === "Email sent successfully" ? (
-                <>
-                  <div className="d-flex align-items-center justify-content-end w-100 mb-4">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        setSpecialRewardsPopup(false);
-                        window.location.hash = "";
-                      }}
-                      alt=""
-                    />
-                  </div>
-                  <div className="d-flex flex-column align-items-center justify-content-center w-100 mb-4">
-                    <h6 className="rewards-success-title font-organetto">
-                      Successfully
-                    </h6>
-                    <h6
-                      className="rewards-success-title font-organetto"
-                      style={{ color: "#8C56FF" }}
-                    >
-                      Applied
-                    </h6>
-                  </div>
-                  <div className="d-flex w-100 justify-content-center mb-4">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/successMark.svg"}
-                      alt=""
-                    />
-                  </div>
-                  <div className="d-flex w-100 justify-content-center">
-                    <p
-                      className="popup-paragraph w-50"
-                      style={{ textAlign: "center" }}
-                    >
-                      Congratulations, your Special Reward application request
-                      is submitted. Please check back soon when our team reviews
-                      your application.
-                    </p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="d-flex align-items-center justify-content-between w-100 mb-4">
-                    <h6 className="popup-title-2 mb-0">Special Rewards</h6>
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        setSpecialRewardsPopup(false);
-                        window.location.hash = "";
-                      }}
-                      alt=""
-                    />
-                  </div>
-                  <p className="popup-paragraph">
-                    The Special Rewards program is designed to recognize and
-                    reward players for sharing their World of Dypians gameplay
-                    content on various social media platforms, including X
-                    (Twitter), Instagram, TikTok, YouTube, Facebook, Reddit, and
-                    more.
-                    <ul className="mt-3">
-                      <li>
-                        Minimum requirement of 1,000 followers on social media.
-                      </li>
-                    </ul>
-                  </p>
-                  <p className="popup-paragraph mb-4">
-                    The WOD Team will review the quality of the content, the
-                    engagement of the post, and other details. If you are
-                    eligible, they will determine the reward, which is
-                    distributed in WOD on a monthly basis.
-                  </p>
-                  <p className="popup-paragraph mb-4">
-                    <b>*Note:</b> You can submit one post per time. The team
-                    will not reply in any form, but if you are eligible, you
-                    will see the reward here. The display of the rewards will
-                    occur every Monday and will be distributed monthly.
-                  </p>
-                  <div className="d-flex align-items-center gap-4 mb-4">
-                    <StyledTextField
-                      error={errors?.url ? true : false}
-                      size="small"
-                      label="URL"
-                      id="email"
-                      name="email"
-                      value={mediaUrl}
-                      helperText={errors?.url}
-                      required
-                      onChange={(e) => {
-                        setMediaUrl(e.target.value);
-                      }}
-                      sx={{ width: "100%" }}
-                    />
-                    <div
-                      className={`${
-                        !email || !coinbase
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                      style={{
-                        width: "fit-content",
-                      }}
-                    >
-                      <button
-                        className={`btn ${
-                          !email || !coinbase
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
-                        } px-5`}
-                        onClick={handleSubmit}
-                        disabled={!email || !coinbase ? true : false}
-                      >
-                        {loading ? (
-                          <div
-                            className="spinner-border text-light spinner-border-sm"
-                            role="status"
-                          >
-                            <span className="visually-hidden">Loading...</span>
-                          </div>
-                        ) : (
-                          "Submit"
-                        )}
-                      </button>
-                      <ReCaptchaV2
-                        sitekey="6LflZgEgAAAAAO-psvqdoreRgcDdtkQUmYXoHuy2"
-                        style={{ display: "inline-block" }}
-                        theme="dark"
-                        size="invisible"
-                        ref={recaptchaRef}
-                      />
-                    </div>
-                  </div>
-                  <hr className="linear-divider" />
-                  <div className="d-flex align-items-center justify-content-between">
-                    <span className="my-special-rewards mb-0">My Rewards</span>
-                    <h6 className="my-special-rewards-value mb-0">
-                      ${getFormattedNumber(Number(userSocialRewardsCached), 2)}
-                    </h6>
-                  </div>
-                </>
-              )}
             </div>
           </OutsideClickHandler>
         )}

@@ -67,11 +67,10 @@ const MyProfile = ({
   openMyRewards,
   openDailyBonus,
   openPortfolio,
-  openSpecialRewards,
+
   isConnected,
   onConnectWallet,
   liveRewards,
-  specialRewards,
   syncStatus,
   onSyncClick,
   isgoldenPassActive,
@@ -137,7 +136,7 @@ const MyProfile = ({
     : utcDayIndex;
 
   const html = document.querySelector("html");
-
+  // console.log(userDailyBundles);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
@@ -149,7 +148,7 @@ const MyProfile = ({
   const [popup, setPopup] = useState(false);
   const [connectPopup, setConnectPopup] = useState(false);
   const [twitterCooldown, setTwitterCooldown] = useState({});
-  const [cooldownHours, setCooldownHours] = useState(null)
+  const [cooldownHours, setCooldownHours] = useState(null);
   const [taskCount, setTaskCount] = useState(0);
   const [seenPosts, setSeenPosts] = useState([]);
   const [newCount, setNewCount] = useState(0);
@@ -1006,9 +1005,9 @@ const MyProfile = ({
                       />
                       <div className="daily-progress-value-golden">
                         <span>
-                          {userActiveEvents === 3
+                          {userActiveEvents === 4
                             ? "Completed"
-                            : userActiveEvents + "/3"}
+                            : userActiveEvents + "/4"}
                         </span>
                       </div>
 
@@ -1990,7 +1989,7 @@ const MyProfile = ({
       {/* (showDailyQuestion || hashValue === "#daily-question") */}
       {(popup || hashValue === "#social-rewards") && (
         <TwitterRewards
-        onSyncClick={onSyncClick}
+          onSyncClick={onSyncClick}
           taskCount={taskCount}
           tasks={twitterTasks}
           seenPosts={seenPosts}

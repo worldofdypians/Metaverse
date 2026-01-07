@@ -94,6 +94,8 @@ function SingUp() {
   const signup = () => {
     if (!captchaValue) {
       window.alertify.error("Please verify the reCAPTCHA");
+    } else if (password !== confirmPassword) {
+      window.alertify.error("Passwords do not match");
     } else {
       signUp({
         username,
@@ -110,13 +112,25 @@ function SingUp() {
           });
         })
         .catch((err) => {
-          setLoginValues((prev) => {
-            return {
-              ...prev,
-              loginError: err?.message,
-              code: undefined,
-            };
-          });
+          if (
+            err?.name === "ForbiddenException" &&
+            err?.message === "Request not allowed due to WAF block."
+          ) {
+            setLoginValues({
+              isLoginIn: false,
+              loginError:
+                "The IP address you are using through a VPN appears suspicious or blacklisted. Please update it and try again.",
+              code: err?.code,
+            });
+          } else {
+            setLoginValues((prev) => {
+              return {
+                ...prev,
+                loginError: err?.message,
+                code: undefined,
+              };
+            });
+          }
         });
     }
   };
@@ -214,7 +228,11 @@ function SingUp() {
           }}
           onClick={() => setShowPassword((prev) => !prev)}
         >
-          {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+          {showPassword ? (
+            <VisibilityOffIcon style={{ color: "wheat" }} />
+          ) : (
+            <RemoveRedEyeIcon style={{ color: "wheat" }} />
+          )}
         </div>
       </div>
       <div className="position-relative">
@@ -233,7 +251,11 @@ function SingUp() {
           }}
           onClick={() => setShowPassword2((prev) => !prev)}
         >
-          {showPassword2 ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}}/>}
+          {showPassword2 ? (
+            <VisibilityOffIcon style={{ color: "wheat" }} />
+          ) : (
+            <RemoveRedEyeIcon style={{ color: "wheat" }} />
+          )}
         </div>
       </div>
       <Button

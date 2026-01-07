@@ -103,10 +103,16 @@ const VideoWrapper = ({
       link: "https://bingx.com/en/spot/WODUSDT",
     },
     {
+      title: "CoinDCX",
+      link: "https://coindcx.com/trade/WODUSDT",
+      logo: "CoinDCX.svg",
+    },
+    {
       title: "WEEX",
       logo: "weex.svg",
       link: "https://www.weex.com/spot/WOD-USDT",
     },
+
     {
       title: "Toobit",
       logo: "toobit.svg",
@@ -325,7 +331,7 @@ const VideoWrapper = ({
         > */}
         <div className="video-second-wrapper">
           <NavLink
-            className="absolute d-none d-lg-block left-4 top-24 z-5"
+            className="absolute d-none d-lg-block left-4 top-32 z-5"
             to="/keep-building"
           >
             <div className="group relative">

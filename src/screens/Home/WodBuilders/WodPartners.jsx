@@ -366,6 +366,10 @@ const WodPartners = ({ full }) => {
       icon: "superfortune.png",
     },
     {
+      name: "CoinDCX",
+      icon: "CoinDCX.svg",
+    },
+    {
       name: "WEEX",
       icon: "weex.svg",
     },
