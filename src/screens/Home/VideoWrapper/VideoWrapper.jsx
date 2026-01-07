@@ -103,10 +103,16 @@ const VideoWrapper = ({
       link: "https://bingx.com/en/spot/WODUSDT",
     },
     {
+      title: "CoinDCX",
+      link: "https://coindcx.com/trade/WODUSDT",
+      logo: "CoinDCX.svg",
+    },
+    {
       title: "WEEX",
       logo: "weex.svg",
       link: "https://www.weex.com/spot/WOD-USDT",
     },
+
     {
       title: "Toobit",
       logo: "toobit.svg",

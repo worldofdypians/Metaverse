@@ -487,6 +487,10 @@ const NewBuilders = () => {
       icon: "superfortune.png",
     },
     {
+      name: "CoinDCX",
+      icon: "CoinDCX.svg",
+    },
+    {
       name: "WEEX",
       icon: "weex.svg",
     },

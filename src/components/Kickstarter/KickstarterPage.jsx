@@ -13,7 +13,7 @@ import KickstarterLaunchpool from "./components/KickstarterLaunchpool";
 import { useLocation } from "react-router-dom";
 
 const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
-    const partners = [
+  const partners = [
     {
       name: "Bnb Chain",
       icon: "bnbIcon.svg",
@@ -374,6 +374,10 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
     {
       name: "SUPERFORTUNE",
       icon: "superfortune.png",
+    },
+    {
+      name: "CoinDCX",
+      icon: "CoinDCX.svg",
     },
     {
       name: "WEEX",
