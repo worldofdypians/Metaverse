@@ -445,10 +445,8 @@ const BattlePopup = ({
 
       setTimeout(() => {
         setLoading(false);
-        const randomBit = Math.round(Math.random());
-        console.log(randomBit, "random");
 
-        setFightType(randomBit === 0 ? "LOSE" : "WIN");
+        setFightType(result.data.victory === true ? "WIN" : "LOSE");
         setFightStep(2);
 
         if (audioRef.current) {
@@ -484,13 +482,13 @@ const BattlePopup = ({
               rarity: "COMMON",
               tier: "TIER II",
               fighter: selectedPlayer,
-              win: randomBit !== 0,
+              win: result.data.victory,
             };
             if (onFightInfoUpdate) {
               onFightInfoUpdate(newFightInfo);
             }
 
-            if (randomBit !== 0) {
+            if (result.data.victory) {
               setShowRewards(true);
             }
           }, 21500);
