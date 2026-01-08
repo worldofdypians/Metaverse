@@ -274,6 +274,27 @@ const NewChallenges = ({
       // ],
       link: "/account#social-rewards",
     },
+    {
+      image: "https://cdn.worldofdypians.com/wod/singleStrikeBanner.webp",
+      popupImage:
+        "https://cdn.worldofdypians.com/wod/singleStrikePopupBanner.webp",
+      desc: "Take one decisive swing each day for a chance at powerful rewards. Quick, exciting, and packed with potential.",
+      title: "Single Strike",
+      popupDesc:
+        "Single Strike is a daily combat challenge where players face the Dark Lord. To initiate the fight, players pay 1 WOD. Each win delivers premium rewards that help you progress faster and stay ahead in the competition.",
+      workList: [
+        "Available once per day on BNB Chain.",
+        "Players have to pay 1 WOD.",
+        "Sign a transaction to start the fight.",
+        "Prizes include leaderboard points, stars, or direct rewards.",
+      ],
+      // tips: [
+      //   "Maximize your engagement across multiple chains to boost your global leaderboard rank.",
+      //   "Focus on daily tasks to ensure a consistent flow of Stars.",
+      //   "Participate in special events and missions for bonus opportunities.",
+      // ],
+      link: "/account#single-strike",
+    },
   ];
 
   const challengeBeasts = [
