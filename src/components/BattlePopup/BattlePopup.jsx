@@ -426,14 +426,18 @@ const BattlePopup = ({
         // Ensure video is loaded
         if (videoRef.current.readyState < 2) {
           videoRef.current.load();
-          // Wait for video to be ready
-          await new Promise((resolve) => {
-            if (videoRef.current.readyState >= 2) {
-              resolve();
-            } else {
-              videoRef.current.addEventListener('loadeddata', resolve, { once: true });
-            }
-          });
+          // Wait for video to be ready with timeout
+          await Promise.race([
+            new Promise((resolve) => {
+              if (videoRef.current.readyState >= 2) {
+                resolve();
+              } else {
+                videoRef.current.addEventListener('loadeddata', resolve, { once: true });
+                videoRef.current.addEventListener('canplay', resolve, { once: true });
+              }
+            }),
+            new Promise((resolve) => setTimeout(resolve, 3000)) // 3 second timeout
+          ]);
         }
         
         // For iOS, ensure muted for autoplay (unless shouldMute is false)
@@ -441,22 +445,56 @@ const BattlePopup = ({
           videoRef.current.muted = true;
         }
         
-        await videoRef.current.play();
+        // For step 3 (unmuted) on iOS, try a workaround: start muted then unmute
+        if (isIOS && !shouldMute && fightStep === 3) {
+          // Try playing muted first to get it started, then unmute
+          const wasMuted = videoRef.current.muted;
+          videoRef.current.muted = true;
+          await videoRef.current.play();
+          // Try to unmute after a short delay (iOS may still block this)
+          setTimeout(() => {
+            if (videoRef.current && !wasMuted) {
+              videoRef.current.muted = false;
+            }
+          }, 100);
+        } else {
+          await videoRef.current.play();
+        }
       } catch (err) {
         console.warn("Video play failed:", err);
-        // Retry once after a short delay
-        setTimeout(async () => {
+        // For step 3 on iOS, if unmuted play fails, try muted as fallback
+        if (isIOS && !shouldMute && fightStep === 3 && videoRef.current) {
           try {
-            if (videoRef.current) {
-              if (isIOS && shouldMute) {
-                videoRef.current.muted = true;
+            videoRef.current.muted = true;
+            await videoRef.current.play();
+            // Try to unmute after playing starts
+            setTimeout(() => {
+              if (videoRef.current) {
+                videoRef.current.muted = false;
               }
-              await videoRef.current.play();
+            }, 200);
+          } catch (mutedErr) {
+            console.warn("Video play with muted fallback failed:", mutedErr);
+            // At least ensure video loads
+            if (videoRef.current) {
+              videoRef.current.load();
             }
-          } catch (retryErr) {
-            console.warn("Video play retry failed:", retryErr);
           }
-        }, 500);
+        } else {
+          // Retry once after a short delay
+          setTimeout(async () => {
+            try {
+              if (videoRef.current) {
+                if (isIOS && shouldMute) {
+                  videoRef.current.muted = true;
+                }
+                await videoRef.current.play();
+              }
+            } catch (retryErr) {
+              console.warn("Video play retry failed:", retryErr);
+            }
+          }, 500);
+        }
       }
     };
 
@@ -476,7 +514,14 @@ const BattlePopup = ({
         }
       } else if (fightStep === 3) {
         if (videoRef3.current) {
-          playVideo(videoRef3, false); // NOT muted for step 3
+          // For step 3, try unmuted first, but on iOS if it fails, 
+          // we'll at least ensure the video loads
+          playVideo(videoRef3, false).catch(() => {
+            // If play fails, ensure video is loaded for iOS
+            if (isIOS && videoRef3.current) {
+              videoRef3.current.load();
+            }
+          });
         }
       }
     }, 100);
@@ -1067,7 +1112,7 @@ const BattlePopup = ({
               }
             }}
           />
-        ) : fightStep === 3 ? (
+        ) : fightStep === 3 && fightType ? (
           <>
             {windowSize.width > 786 ? (
               <video
@@ -1077,13 +1122,76 @@ const BattlePopup = ({
                 playsInline
                 preload="auto"
                 autoPlay
+                onLoadedMetadata={() => {
+                  // Ensure video loads on iOS
+                  if (videoRef3.current && isIOS) {
+                    videoRef3.current.load();
+                  }
+                }}
+                onCanPlay={async () => {
+                  if (videoRef3.current) {
+                    try {
+                      // On iOS, try to play - if it fails due to unmuted autoplay restriction,
+                      // at least the video will be loaded and ready
+                      await videoRef3.current.play();
+                    } catch (err) {
+                      console.warn("Video3 play on canPlay failed:", err);
+                      // On iOS, if unmuted autoplay fails, try muted play then unmute
+                      if (isIOS && err.name === 'NotAllowedError') {
+                        try {
+                          videoRef3.current.muted = true;
+                          await videoRef3.current.play();
+                          // Try to unmute after playing starts
+                          setTimeout(() => {
+                            if (videoRef3.current) {
+                              videoRef3.current.muted = false;
+                            }
+                          }, 100);
+                        } catch (mutedErr) {
+                          console.warn("Video3 muted play failed:", mutedErr);
+                          // At least ensure video loads
+                          videoRef3.current.load();
+                        }
+                      }
+                    }
+                  }
+                }}
                 onLoadedData={async () => {
                   if (videoRef3.current) {
                     try {
                       await videoRef3.current.play();
                     } catch (err) {
                       console.warn("Video3 play on load failed:", err);
+                      // If play fails on iOS, try muted as fallback
+                      if (isIOS && err.name === 'NotAllowedError') {
+                        try {
+                          videoRef3.current.muted = true;
+                          await videoRef3.current.play();
+                          setTimeout(() => {
+                            if (videoRef3.current) {
+                              videoRef3.current.muted = false;
+                            }
+                          }, 100);
+                        } catch (mutedErr) {
+                          console.warn("Video3 muted fallback failed:", mutedErr);
+                          // At least ensure video loads
+                          if (videoRef3.current) {
+                            videoRef3.current.load();
+                          }
+                        }
+                      }
                     }
+                  }
+                }}
+                onError={(e) => {
+                  console.error("Video3 error:", e);
+                  if (videoRef3.current) {
+                    console.error("Video3 error details:", {
+                      error: videoRef3.current.error,
+                      networkState: videoRef3.current.networkState,
+                      readyState: videoRef3.current.readyState,
+                      src: videoRef3.current.src
+                    });
                   }
                 }}
               />
@@ -1095,13 +1203,76 @@ const BattlePopup = ({
                 playsInline
                 preload="auto"
                 autoPlay
+                onLoadedMetadata={() => {
+                  // Ensure video loads on iOS
+                  if (videoRef3.current && isIOS) {
+                    videoRef3.current.load();
+                  }
+                }}
+                onCanPlay={async () => {
+                  if (videoRef3.current) {
+                    try {
+                      // On iOS, try to play - if it fails due to unmuted autoplay restriction,
+                      // at least the video will be loaded and ready
+                      await videoRef3.current.play();
+                    } catch (err) {
+                      console.warn("Video3 play on canPlay failed:", err);
+                      // On iOS, if unmuted autoplay fails, try muted play then unmute
+                      if (isIOS && err.name === 'NotAllowedError') {
+                        try {
+                          videoRef3.current.muted = true;
+                          await videoRef3.current.play();
+                          // Try to unmute after playing starts
+                          setTimeout(() => {
+                            if (videoRef3.current) {
+                              videoRef3.current.muted = false;
+                            }
+                          }, 100);
+                        } catch (mutedErr) {
+                          console.warn("Video3 muted play failed:", mutedErr);
+                          // At least ensure video loads
+                          videoRef3.current.load();
+                        }
+                      }
+                    }
+                  }
+                }}
                 onLoadedData={async () => {
                   if (videoRef3.current) {
                     try {
                       await videoRef3.current.play();
                     } catch (err) {
                       console.warn("Video3 play on load failed:", err);
+                      // If play fails on iOS, try muted as fallback
+                      if (isIOS && err.name === 'NotAllowedError') {
+                        try {
+                          videoRef3.current.muted = true;
+                          await videoRef3.current.play();
+                          setTimeout(() => {
+                            if (videoRef3.current) {
+                              videoRef3.current.muted = false;
+                            }
+                          }, 100);
+                        } catch (mutedErr) {
+                          console.warn("Video3 muted fallback failed:", mutedErr);
+                          // At least ensure video loads
+                          if (videoRef3.current) {
+                            videoRef3.current.load();
+                          }
+                        }
+                      }
                     }
+                  }
+                }}
+                onError={(e) => {
+                  console.error("Video3 error:", e);
+                  if (videoRef3.current) {
+                    console.error("Video3 error details:", {
+                      error: videoRef3.current.error,
+                      networkState: videoRef3.current.networkState,
+                      readyState: videoRef3.current.readyState,
+                      src: videoRef3.current.src
+                    });
                   }
                 }}
               />
