@@ -85,7 +85,22 @@ const BattlePopup = ({
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
   const videoRef3 = useRef(null);
+  const videoRefStep2 = useRef(null);
   const windowSize = useWindowSize();
+  
+  // Detect iOS - more robust detection
+  const [isIOS, setIsIOS] = useState(false);
+  
+  useEffect(() => {
+    const checkIOS = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isIOSDevice = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+      // Also check for iOS in newer iPads
+      const isIPad = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+      setIsIOS(isIOSDevice || isIPad);
+    };
+    checkIOS();
+  }, []);
   const MIN_APPROVAL = 5000000000000000000n; // 5 WOD with 18 decimals
   const MAX_APPROVE_AMOUNT = 500000000000000000000000n; // 500,000 * 1e18
 
@@ -301,6 +316,7 @@ const BattlePopup = ({
             audio.currentTime = 0;
           }
 
+          // On iOS, audio requires user interaction, so we'll try but won't fail silently
           await audio.play();
           console.log("Audio playing successfully");
         } catch (err) {
@@ -317,14 +333,21 @@ const BattlePopup = ({
         }
       };
 
-      playAudio();
+      // On iOS, delay audio play slightly to ensure it's after user interaction
+      if (isIOS) {
+        setTimeout(() => {
+          playAudio();
+        }, 100);
+      } else {
+        playAudio();
+      }
     } else {
       if (!audio.paused) {
         audio.pause();
         audio.currentTime = 0;
       }
     }
-  }, [isOpen]);
+  }, [isOpen, isIOS]);
 
   useEffect(() => {
     if (fightInfo) {
@@ -333,6 +356,133 @@ const BattlePopup = ({
       setTempfighter(fightInfo.fighter);
     }
   }, [fightInfo]);
+
+  // Pause audio when page becomes hidden (app goes to background, screen locks, etc.)
+  useEffect(() => {
+    if (!audioRef.current || !audioInitializedRef.current || !isOpen) {
+      return;
+    }
+
+    const audio = audioRef.current;
+
+    const handleVisibilityChange = () => {
+      // Pause audio when page becomes hidden
+      if (document.hidden || document.visibilityState === 'hidden') {
+        if (!audio.paused) {
+          audio.pause();
+          console.log("Audio paused - page hidden");
+        }
+      }
+      // Optionally resume when page becomes visible again
+      // Uncomment below if you want audio to resume when user returns
+      else {
+        if (audio.paused && isOpen) {
+          audio.play().catch(err => {
+            console.warn("Audio resume failed:", err);
+          });
+        }
+      }
+    };
+
+    const handleBlur = () => {
+      // Pause audio when window loses focus (app goes to background)
+      if (!audio.paused) {
+        audio.pause();
+        console.log("Audio paused - window blurred");
+      }
+    };
+
+    // Listen to visibility changes (works for tab switching, app backgrounding, screen lock)
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    // Listen to window blur (works when app goes to background)
+    window.addEventListener('blur', handleBlur);
+
+    // Also listen to pagehide event (when page is being unloaded or hidden)
+    const handlePageHide = () => {
+      if (!audio.paused) {
+        audio.pause();
+        console.log("Audio paused - page hide");
+      }
+    };
+    window.addEventListener('pagehide', handlePageHide);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('blur', handleBlur);
+      window.removeEventListener('pagehide', handlePageHide);
+    };
+  }, [isOpen]);
+
+  // Handle video playback for iOS
+  useEffect(() => {
+    // Wait for iOS detection before attempting to play videos
+    if (fightStep === 0) return;
+    
+    const playVideo = async (videoRef, shouldMute = true) => {
+      if (!videoRef?.current) return;
+      
+      try {
+        // Ensure video is loaded
+        if (videoRef.current.readyState < 2) {
+          videoRef.current.load();
+          // Wait for video to be ready
+          await new Promise((resolve) => {
+            if (videoRef.current.readyState >= 2) {
+              resolve();
+            } else {
+              videoRef.current.addEventListener('loadeddata', resolve, { once: true });
+            }
+          });
+        }
+        
+        // For iOS, ensure muted for autoplay (unless shouldMute is false)
+        if (isIOS && shouldMute && !videoRef.current.muted) {
+          videoRef.current.muted = true;
+        }
+        
+        await videoRef.current.play();
+      } catch (err) {
+        console.warn("Video play failed:", err);
+        // Retry once after a short delay
+        setTimeout(async () => {
+          try {
+            if (videoRef.current) {
+              if (isIOS && shouldMute) {
+                videoRef.current.muted = true;
+              }
+              await videoRef.current.play();
+            }
+          } catch (retryErr) {
+            console.warn("Video play retry failed:", retryErr);
+          }
+        }, 500);
+      }
+    };
+
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      // Play videos based on fightStep
+      if (fightStep === 1) {
+        if (videoRef1.current) {
+          playVideo(videoRef1, true); // Muted for step 1
+        }
+        if (videoRef2.current) {
+          playVideo(videoRef2, true); // Muted for step 1
+        }
+      } else if (fightStep === 2) {
+        if (videoRefStep2.current) {
+          playVideo(videoRefStep2, false); // NOT muted for step 2
+        }
+      } else if (fightStep === 3) {
+        if (videoRef3.current) {
+          playVideo(videoRef3, false); // NOT muted for step 3
+        }
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [fightStep, selectedPlayer, fightType, isIOS]);
 
   // Attach listener
   window.addEventListener("keydown", handleEsc);
@@ -847,12 +997,24 @@ const BattlePopup = ({
                 </div>
               )}
               <video
+                ref={videoRef1}
                 src={selectedPlayer.videoLoop}
                 className={`fight-video`}
                 playsInline
                 preload="auto"
                 loop
                 autoPlay
+                muted={isIOS}
+                onLoadedData={async () => {
+                  if (videoRef1.current && isIOS) {
+                    try {
+                      videoRef1.current.muted = true;
+                      await videoRef1.current.play();
+                    } catch (err) {
+                      console.warn("Video1 play on load failed:", err);
+                    }
+                  }
+                }}
               />
             </motion.div>
             <div className="hero-name-position-2">
@@ -863,6 +1025,7 @@ const BattlePopup = ({
               </div>
             </div>
             <video
+              ref={videoRef2}
               src={
                 "https://cdn.worldofdypians.com/wod/battleVideos/darkLordLOOP.mp4"
               }
@@ -871,10 +1034,22 @@ const BattlePopup = ({
               preload="auto"
               loop
               autoPlay
+              muted={isIOS}
+              onLoadedData={async () => {
+                if (videoRef2.current && isIOS) {
+                  try {
+                    videoRef2.current.muted = true;
+                    await videoRef2.current.play();
+                  } catch (err) {
+                    console.warn("Video2 play on load failed:", err);
+                  }
+                }
+              }}
             />
           </div>
         ) : fightStep === 2 ? (
           <video
+            ref={videoRefStep2}
             src={`https://cdn.worldofdypians.com/wod/battleVideos/${
               selectedPlayer.id
             }VS${windowSize.width > 450 ? "" : "mobile"}.mp4`}
@@ -882,6 +1057,15 @@ const BattlePopup = ({
             playsInline
             preload="auto"
             autoPlay
+            onLoadedData={async () => {
+              if (videoRefStep2.current) {
+                try {
+                  await videoRefStep2.current.play();
+                } catch (err) {
+                  console.warn("VideoStep2 play on load failed:", err);
+                }
+              }
+            }}
           />
         ) : fightStep === 3 ? (
           <>
@@ -893,6 +1077,15 @@ const BattlePopup = ({
                 playsInline
                 preload="auto"
                 autoPlay
+                onLoadedData={async () => {
+                  if (videoRef3.current) {
+                    try {
+                      await videoRef3.current.play();
+                    } catch (err) {
+                      console.warn("Video3 play on load failed:", err);
+                    }
+                  }
+                }}
               />
             ) : (
               <video
@@ -902,6 +1095,15 @@ const BattlePopup = ({
                 playsInline
                 preload="auto"
                 autoPlay
+                onLoadedData={async () => {
+                  if (videoRef3.current) {
+                    try {
+                      await videoRef3.current.play();
+                    } catch (err) {
+                      console.warn("Video3 play on load failed:", err);
+                    }
+                  }
+                }}
               />
             )}
           </>
@@ -1244,8 +1446,23 @@ const BattlePopup = ({
                     !fightInfo && (
                       <button
                         className="fantasy-btn font-abaddon text-white"
-                        onClick={() => {
-                          new Audio(clickSound).play();
+                        onClick={async () => {
+                          try {
+                            // Play click sound - this user interaction helps unlock audio on iOS
+                            const clickAudio = new Audio(clickSound);
+                            await clickAudio.play();
+                            
+                            // After user interaction, try to play background audio on iOS
+                            if (isIOS && audioRef.current && audioRef.current.paused) {
+                              try {
+                                await audioRef.current.play();
+                              } catch (audioErr) {
+                                console.warn("Background audio play failed:", audioErr);
+                              }
+                            }
+                          } catch (err) {
+                            console.warn("Click sound failed:", err);
+                          }
 
                           handleStartFight();
                         }}
@@ -1286,8 +1503,14 @@ const BattlePopup = ({
                             ? "player-img-lose"
                             : ""
                         }`}
-                        onClick={() => {
-                          new Audio(click).play();
+                        onClick={async () => {
+                          try {
+                            // Play click sound - this user interaction helps unlock audio on iOS
+                            const clickAudio = new Audio(click);
+                            await clickAudio.play();
+                          } catch (err) {
+                            console.warn("Click sound failed:", err);
+                          }
                           setselectedPlayer(item);
                         }}
                       />

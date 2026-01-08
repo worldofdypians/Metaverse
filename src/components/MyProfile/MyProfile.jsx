@@ -1561,7 +1561,47 @@ const MyProfile = ({
                   onClick={openKickstarter}
                 >
                   <h6 className="royalty-chest-title z-1">Royalty Chest</h6>
-
+                  <div className={`d-flex flex-column infotips-holder`}>
+                    <div className="d-flex align-items-center gap-1">
+                      <div className="yellow-dot"></div>
+                      <span
+                        className="beast-siege-timer"
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: 400,
+                          color: "#fff",
+                        }}
+                      >
+                        Stars
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center gap-1">
+                      <div className="yellow-dot"></div>
+                      <span
+                        className="beast-siege-timer"
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: 400,
+                          color: "#fff",
+                        }}
+                      >
+                        Points
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center gap-1">
+                      <div className="yellow-dot"></div>
+                      <span
+                        className="beast-siege-timer"
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: 400,
+                          color: "#fff",
+                        }}
+                      >
+                        Rewards
+                      </span>
+                    </div>
+                  </div>
                   <div className="d-flex flex-column gap-2">
                     <img
                       src="https://cdn.worldofdypians.com/wod/royalRewards.png"
