@@ -87,16 +87,18 @@ const BattlePopup = ({
   const videoRef3 = useRef(null);
   const videoRefStep2 = useRef(null);
   const windowSize = useWindowSize();
-  
+
   // Detect iOS - more robust detection
   const [isIOS, setIsIOS] = useState(false);
-  
+
   useEffect(() => {
     const checkIOS = () => {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      const isIOSDevice = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+      const isIOSDevice =
+        /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
       // Also check for iOS in newer iPads
-      const isIPad = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+      const isIPad =
+        navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
       setIsIOS(isIOSDevice || isIPad);
     };
     checkIOS();
@@ -367,7 +369,7 @@ const BattlePopup = ({
 
     const handleVisibilityChange = () => {
       // Pause audio when page becomes hidden
-      if (document.hidden || document.visibilityState === 'hidden') {
+      if (document.hidden || document.visibilityState === "hidden") {
         if (!audio.paused) {
           audio.pause();
           console.log("Audio paused - page hidden");
@@ -377,7 +379,7 @@ const BattlePopup = ({
       // Uncomment below if you want audio to resume when user returns
       else {
         if (audio.paused && isOpen) {
-          audio.play().catch(err => {
+          audio.play().catch((err) => {
             console.warn("Audio resume failed:", err);
           });
         }
@@ -393,10 +395,10 @@ const BattlePopup = ({
     };
 
     // Listen to visibility changes (works for tab switching, app backgrounding, screen lock)
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     // Listen to window blur (works when app goes to background)
-    window.addEventListener('blur', handleBlur);
+    window.addEventListener("blur", handleBlur);
 
     // Also listen to pagehide event (when page is being unloaded or hidden)
     const handlePageHide = () => {
@@ -405,12 +407,12 @@ const BattlePopup = ({
         console.log("Audio paused - page hide");
       }
     };
-    window.addEventListener('pagehide', handlePageHide);
+    window.addEventListener("pagehide", handlePageHide);
 
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('blur', handleBlur);
-      window.removeEventListener('pagehide', handlePageHide);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("pagehide", handlePageHide);
     };
   }, [isOpen]);
 
@@ -418,10 +420,10 @@ const BattlePopup = ({
   useEffect(() => {
     // Wait for iOS detection before attempting to play videos
     if (fightStep === 0) return;
-    
+
     const playVideo = async (videoRef, shouldMute = true) => {
       if (!videoRef?.current) return;
-      
+
       try {
         // Ensure video is loaded
         if (videoRef.current.readyState < 2) {
@@ -432,19 +434,23 @@ const BattlePopup = ({
               if (videoRef.current.readyState >= 2) {
                 resolve();
               } else {
-                videoRef.current.addEventListener('loadeddata', resolve, { once: true });
-                videoRef.current.addEventListener('canplay', resolve, { once: true });
+                videoRef.current.addEventListener("loadeddata", resolve, {
+                  once: true,
+                });
+                videoRef.current.addEventListener("canplay", resolve, {
+                  once: true,
+                });
               }
             }),
-            new Promise((resolve) => setTimeout(resolve, 3000)) // 3 second timeout
+            new Promise((resolve) => setTimeout(resolve, 3000)), // 3 second timeout
           ]);
         }
-        
+
         // For iOS, ensure muted for autoplay (unless shouldMute is false)
         if (isIOS && shouldMute && !videoRef.current.muted) {
           videoRef.current.muted = true;
         }
-        
+
         // For step 3 (unmuted) on iOS, try a workaround: start muted then unmute
         if (isIOS && !shouldMute && fightStep === 3) {
           // Try playing muted first to get it started, then unmute
@@ -510,13 +516,20 @@ const BattlePopup = ({
         }
       } else if (fightStep === 2) {
         if (videoRefStep2.current) {
-          playVideo(videoRefStep2, false); // NOT muted for step 2
+          // For step 2, try unmuted first, but on iOS if it fails,
+          // we'll at least ensure the video loads
+          playVideo(videoRefStep2, true).catch(() => {
+            // If play fails, ensure video is loaded for iOS
+            if (isIOS && videoRefStep2.current) {
+              videoRefStep2.current.load();
+            }
+          });
         }
       } else if (fightStep === 3) {
         if (videoRef3.current) {
-          // For step 3, try unmuted first, but on iOS if it fails, 
+          // For step 3, try unmuted first, but on iOS if it fails,
           // we'll at least ensure the video loads
-          playVideo(videoRef3, false).catch(() => {
+          playVideo(videoRef3, true).catch(() => {
             // If play fails, ensure video is loaded for iOS
             if (isIOS && videoRef3.current) {
               videoRef3.current.load();
@@ -1106,8 +1119,30 @@ const BattlePopup = ({
               if (videoRefStep2.current) {
                 try {
                   await videoRefStep2.current.play();
+                  videoRefStep2.current.muted = false;
                 } catch (err) {
-                  console.warn("VideoStep2 play on load failed:", err);
+                  console.warn("Videoref2 play on load failed:", err);
+                  // If play fails on iOS, try muted as fallback
+                  if (isIOS && err.name === "NotAllowedError") {
+                    try {
+                      videoRefStep2.current.muted = true;
+                      await videoRefStep2.current.play();
+                      setTimeout(() => {
+                        if (videoRefStep2.current) {
+                          videoRefStep2.current.muted = false;
+                        }
+                      }, 100);
+                    } catch (mutedErr) {
+                      console.warn(
+                        "Videoref2 muted fallback failed:",
+                        mutedErr
+                      );
+                      // At least ensure video loads
+                      if (videoRefStep2.current) {
+                        videoRefStep2.current.load();
+                      }
+                    }
+                  }
                 }
               }
             }}
@@ -1122,48 +1157,52 @@ const BattlePopup = ({
                 playsInline
                 preload="auto"
                 autoPlay
-                onLoadedMetadata={() => {
-                  // Ensure video loads on iOS
-                  if (videoRef3.current && isIOS) {
-                    videoRef3.current.load();
-                  }
-                }}
-                onCanPlay={async () => {
-                  if (videoRef3.current) {
-                    try {
-                      // On iOS, try to play - if it fails due to unmuted autoplay restriction,
-                      // at least the video will be loaded and ready
-                      await videoRef3.current.play();
-                    } catch (err) {
-                      console.warn("Video3 play on canPlay failed:", err);
-                      // On iOS, if unmuted autoplay fails, try muted play then unmute
-                      if (isIOS && err.name === 'NotAllowedError') {
-                        try {
-                          videoRef3.current.muted = true;
-                          await videoRef3.current.play();
-                          // Try to unmute after playing starts
-                          setTimeout(() => {
-                            if (videoRef3.current) {
-                              videoRef3.current.muted = false;
-                            }
-                          }, 100);
-                        } catch (mutedErr) {
-                          console.warn("Video3 muted play failed:", mutedErr);
-                          // At least ensure video loads
-                          videoRef3.current.load();
-                        }
-                      }
-                    }
-                  }
-                }}
+                // onLoadedMetadata={() => {
+                //   // Ensure video loads on iOS
+                //   if (videoRef3.current && isIOS) {
+                //     videoRef3.current.load();
+                //   }
+                // }}
+                // onCanPlay={async () => {
+                //   if (videoRef3.current) {
+                //     try {
+                //       // On iOS, try to play - if it fails due to unmuted autoplay restriction,
+                //       // at least the video will be loaded and ready
+                //       await videoRef3.current.play();
+                //       videoRef3.current.muted = false;
+                //     } catch (err) {
+                //       console.warn("Video3 play on canPlay failed:", err);
+                //       // On iOS, if unmuted autoplay fails, try muted play then unmute
+                //       if (isIOS && err.name === "NotAllowedError") {
+                //         try {
+                //           videoRef3.current.muted = true;
+                //           await videoRef3.current.play();
+                //           videoRef3.current.muted = false;
+
+                //           // Try to unmute after playing starts
+                //           setTimeout(() => {
+                //             if (videoRef3.current) {
+                //               videoRef3.current.muted = false;
+                //             }
+                //           }, 100);
+                //         } catch (mutedErr) {
+                //           console.warn("Video3 muted play failed:", mutedErr);
+                //           // At least ensure video loads
+                //           videoRef3.current.load();
+                //         }
+                //       }
+                //     }
+                //   }
+                // }}
                 onLoadedData={async () => {
                   if (videoRef3.current) {
                     try {
                       await videoRef3.current.play();
+                      videoRef3.current.muted = false;
                     } catch (err) {
                       console.warn("Video3 play on load failed:", err);
                       // If play fails on iOS, try muted as fallback
-                      if (isIOS && err.name === 'NotAllowedError') {
+                      if (isIOS && err.name === "NotAllowedError") {
                         try {
                           videoRef3.current.muted = true;
                           await videoRef3.current.play();
@@ -1173,7 +1212,10 @@ const BattlePopup = ({
                             }
                           }, 100);
                         } catch (mutedErr) {
-                          console.warn("Video3 muted fallback failed:", mutedErr);
+                          console.warn(
+                            "Video3 muted fallback failed:",
+                            mutedErr
+                          );
                           // At least ensure video loads
                           if (videoRef3.current) {
                             videoRef3.current.load();
@@ -1190,7 +1232,7 @@ const BattlePopup = ({
                       error: videoRef3.current.error,
                       networkState: videoRef3.current.networkState,
                       readyState: videoRef3.current.readyState,
-                      src: videoRef3.current.src
+                      src: videoRef3.current.src,
                     });
                   }
                 }}
@@ -1203,48 +1245,49 @@ const BattlePopup = ({
                 playsInline
                 preload="auto"
                 autoPlay
-                onLoadedMetadata={() => {
-                  // Ensure video loads on iOS
-                  if (videoRef3.current && isIOS) {
-                    videoRef3.current.load();
-                  }
-                }}
-                onCanPlay={async () => {
-                  if (videoRef3.current) {
-                    try {
-                      // On iOS, try to play - if it fails due to unmuted autoplay restriction,
-                      // at least the video will be loaded and ready
-                      await videoRef3.current.play();
-                    } catch (err) {
-                      console.warn("Video3 play on canPlay failed:", err);
-                      // On iOS, if unmuted autoplay fails, try muted play then unmute
-                      if (isIOS && err.name === 'NotAllowedError') {
-                        try {
-                          videoRef3.current.muted = true;
-                          await videoRef3.current.play();
-                          // Try to unmute after playing starts
-                          setTimeout(() => {
-                            if (videoRef3.current) {
-                              videoRef3.current.muted = false;
-                            }
-                          }, 100);
-                        } catch (mutedErr) {
-                          console.warn("Video3 muted play failed:", mutedErr);
-                          // At least ensure video loads
-                          videoRef3.current.load();
-                        }
-                      }
-                    }
-                  }
-                }}
+                // onLoadedMetadata={() => {
+                //   // Ensure video loads on iOS
+                //   if (videoRef3.current && isIOS) {
+                //     videoRef3.current.load();
+                //   }
+                // }}
+                // onCanPlay={async () => {
+                //   if (videoRef3.current) {
+                //     try {
+                //       // On iOS, try to play - if it fails due to unmuted autoplay restriction,
+                //       // at least the video will be loaded and ready
+                //       await videoRef3.current.play();
+                //     } catch (err) {
+                //       console.warn("Video3 play on canPlay failed:", err);
+                //       // On iOS, if unmuted autoplay fails, try muted play then unmute
+                //       if (isIOS && err.name === "NotAllowedError") {
+                //         try {
+                //           videoRef3.current.muted = true;
+                //           await videoRef3.current.play();
+                //           // Try to unmute after playing starts
+                //           setTimeout(() => {
+                //             if (videoRef3.current) {
+                //               videoRef3.current.muted = false;
+                //             }
+                //           }, 100);
+                //         } catch (mutedErr) {
+                //           console.warn("Video3 muted play failed:", mutedErr);
+                //           // At least ensure video loads
+                //           videoRef3.current.load();
+                //         }
+                //       }
+                //     }
+                //   }
+                // }}
                 onLoadedData={async () => {
                   if (videoRef3.current) {
                     try {
                       await videoRef3.current.play();
+                      videoRef3.current.muted = false;
                     } catch (err) {
                       console.warn("Video3 play on load failed:", err);
                       // If play fails on iOS, try muted as fallback
-                      if (isIOS && err.name === 'NotAllowedError') {
+                      if (isIOS && err.name === "NotAllowedError") {
                         try {
                           videoRef3.current.muted = true;
                           await videoRef3.current.play();
@@ -1254,7 +1297,10 @@ const BattlePopup = ({
                             }
                           }, 100);
                         } catch (mutedErr) {
-                          console.warn("Video3 muted fallback failed:", mutedErr);
+                          console.warn(
+                            "Video3 muted fallback failed:",
+                            mutedErr
+                          );
                           // At least ensure video loads
                           if (videoRef3.current) {
                             videoRef3.current.load();
@@ -1271,7 +1317,7 @@ const BattlePopup = ({
                       error: videoRef3.current.error,
                       networkState: videoRef3.current.networkState,
                       readyState: videoRef3.current.readyState,
-                      src: videoRef3.current.src
+                      src: videoRef3.current.src,
                     });
                   }
                 }}
@@ -1622,13 +1668,20 @@ const BattlePopup = ({
                             // Play click sound - this user interaction helps unlock audio on iOS
                             const clickAudio = new Audio(clickSound);
                             await clickAudio.play();
-                            
+
                             // After user interaction, try to play background audio on iOS
-                            if (isIOS && audioRef.current && audioRef.current.paused) {
+                            if (
+                              isIOS &&
+                              audioRef.current &&
+                              audioRef.current.paused
+                            ) {
                               try {
                                 await audioRef.current.play();
                               } catch (audioErr) {
-                                console.warn("Background audio play failed:", audioErr);
+                                console.warn(
+                                  "Background audio play failed:",
+                                  audioErr
+                                );
                               }
                             }
                           } catch (err) {
