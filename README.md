@@ -67,6 +67,7 @@ BNB Smart Chain is the primary supported network for this project.
 
 ## 📁 Repository Structure
 
+```
 Metaverse/
 ├─ public/ # Static assets
 │ └─ index.html
@@ -88,6 +89,7 @@ Metaverse/
 ├─ .env.example
 ├─ .gitignore
 └─ README.md
+```
 
 ---
 
