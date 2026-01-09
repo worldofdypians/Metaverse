@@ -43,16 +43,60 @@ BNB Smart Chain is the primary supported network for this project.
 
 ## 📦 Smart Contract Addresses
 
-| Network     | Core Contract | Token Contract | Optional Modules |
-| ----------- | ------------- | -------------- | ---------------- |
-| BNB Mainnet | 0x...         | 0x...          | 0x...            |
-| BNB Testnet | 0x...         | 0x...          | 0x...            |
-| opBNB       | 0x...         | 0x...          | 0x...            |
-| Ethereum    | 0x...         | 0x...          | 0x...            |
+### 🪙 Token (BNB Smart Chain)
 
-> Replace with verified deployed contract addresses.
+| Contract  | Address                                      |
+| --------- | -------------------------------------------- |
+| WoD Token | `0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8` |
 
 ---
+
+### 🟡 BNB Smart Chain
+
+| Contract                   | Address                                      |
+| -------------------------- | -------------------------------------------- |
+| NFT BNB                    | `0xe468df1606650452b2c08c36F79eaA8B78848E9C` |
+| Dypius Premium NFT Voucher | `0xA3e62c82410fF6697B68CABE90a8b1B6e3CEC8CD` |
+| Subscription               | `0x6A96d47B8B93Fb656Bf305146C27FAE38dE1F646` |
+| Daily Bonus                | `0xF4435c244A292a8E8D56767bf6DF9b9c4D59aEED` |
+| Royalty Chest              | `0xF4435c244A292a8E8D56767bf6DF9b9c4D59aEED` |
+| Single Strike              | `0xe851e377C676C43d04dd4AEd4808BcC00642Bd41` |
+| Daily Question             | `0xE7DA7750f4604cdcA598726bF6631A9A463A8Ba9` |
+| Dragon Ruins               | `0xA9D3c4f11C9a9eb4ea47E30d3210EEbF939d71De` |
+| Cold Bite                  | `0x6fDB783a9102961B9Ea62D40C69C067e93Ac170b` |
+| Fury Beast                 | `0xEceF913121D299f7D962A7887C11bf60F3338a63` |
+| Wing Storm                 | `0x5990a2e7c895A5A5F35787E81bC7BF5cFF085688` |
+| Scorpion King              | `0x6fC8de0936d45071aFF7918137a436148107574C` |
+| Stone Eye                  | `0x1b8112Fd61391E5Cf8971EC35988D47e4Ced5621` |
+| Puzzle Madness             | `0xE44E483486d38DADC77bBF968B55F39bBDACE80d` |
+| Golden Pass                | `0x64D519666D67F95124C3ac755F731ad6e15786DF` |
+
+### 🟣 opBNB Chain
+
+| Contract       | Address                                      |
+| -------------- | -------------------------------------------- |
+| Daily Question | `0xfcCEC27EeAe7B2497A430459A1b3D3E7B5F96087` |
+| Daily Bonus    | `0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455` |
+| Royalty Chest  | `0xd600fBcF64Da43CcBB4ab6Da61007F5b1f8Fe455` |
+| NFT BNB 5Y     | `0x7A95F56395001865c58F31779781197ba53B8892` |
+| NFT opBNB      | `0x4e4A3f047fA8Fe69cB1a79a0452121ED6fca95ba` |
+
+---
+
+### 🌐 Ethereum Mainnet
+
+| Contract           | Address                                      |
+| ------------------ | -------------------------------------------- |
+| NFT Marketplace    | `0xF55D96735Fa22ba1C119bA37aF76C2c4E3BeC224` |
+| CAWS NFT           | `0xd06cf9e1189feab09c844c597abc3767bc12608c` |
+| CAWS Premium Stake | `0x097bB1679AC734E90907Ff4173bA966c694428Fc` |
+| Land Premium Stake | `0x3E0c0443A6a5382B2Ef20ECfe3bdbE84F1436523` |
+| Timepiece NFT      | `0x29c13273cf56dac69cfae173c73fde2cd75b5ede` |
+| Subscription (ETH) | `0x29c90c6a1243455266afd7f92649e384213d45b0` |
+
+---
+
+> All contracts are verified and actively used by the World of Dypians ecosystem across BNB Smart Chain, Ethereum, and opBNB networks.
 
 ## ✨ Features
 
@@ -112,7 +156,9 @@ npm start
 
 ## 🧪 Build
 
+```bash
 npm run build
+```
 
 ## ⚙️ BNB Chain Configuration Evidence
 
