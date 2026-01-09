@@ -68,19 +68,26 @@ BNB Smart Chain is the primary supported network for this project.
 ## 📁 Repository Structure
 
 Metaverse/
-┣ public/
-src/
-├── actions/ # Action creators
-├── components/ # React components
-├── constants/ # App constants
-├── contexts/ # App contexts
-├── hooks/ # Custom hooks
-├── redux/ # Redux store and slices
-├── screens/ # Page components
-├── utils/ # Utility functions
-└── App.jsx # Main app component
-┣ package.json
-┣ README.md
+├─ public/ # Static assets
+│ └─ index.html
+│
+├─ src/
+│ ├─ assets/ # Images, icons, media files
+│ ├─ components/ # Reusable UI components
+│ ├─ pages/ # Application pages / views
+│ ├─ hooks/ # Custom React hooks
+│ ├─ services/ # API & blockchain service handlers
+│ ├─ utils/ # Helper utilities
+│ ├─ constants/ # Network, contract, and app constants
+│ ├─ wagmiConnectors.js # BNB Chain wallet & RPC configuration
+│ ├─ App.js
+│ └─ index.js
+│
+├─ package.json
+├─ package-lock.json
+├─ .env.example
+├─ .gitignore
+└─ README.md
 
 ---
 
