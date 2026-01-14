@@ -161,6 +161,9 @@ function Dashboard({
 
   // Get isPremium and primeStars from Redux store
   const primeStars = useSelector((state) => state.user.userProgress.primeStars);
+  const liveTreasureHuntEvent = treasureHuntEvents.filter((item) => {
+    return item.eventStatus === "Live";
+  });
 
   // const override = {
   //   display: "block",
@@ -6170,7 +6173,7 @@ function Dashboard({
   //   }
   // };
 
-    const handleGetFightResults = async (email, chain) => {
+  const handleGetFightResults = async (email, chain) => {
     const result = await axios
       .post(
         `https://worldofdypiansdailybonus.azurewebsites.net/api/GetFightOfTheDayResult?code=7X5t65iOoiMTYlCnKyoMwBHAGmJOr9NoN3lhXk0RRkgTAzFudoavxg==`,
@@ -6210,7 +6213,7 @@ function Dashboard({
       }
     }
   };
-  
+
   const scrollToElement = () => {
     const element = document.getElementById(eventId);
     if (element && element !== "golden-pass") {
@@ -6764,6 +6767,7 @@ function Dashboard({
               explorerHuntData={explorerHuntData}
               isgoldenPassActive={goldenPassRemainingTime}
               userActiveEvents={userTreasureHuntStats.userEvents}
+              liveTreasureHuntEvents={liveTreasureHuntEvent.length}
               beastSiegeStatus={beastSiegeStatus}
               puzzleMadnessTimer={puzzleMadnessTimer}
               onGoldenpassClick={() => setgoldenPassPopup(true)}
@@ -7369,7 +7373,6 @@ function Dashboard({
             <BattlePopup
               closePopup={closeBattle}
               setClosePopup={setcloseBattle}
-               
               onClose={() => {
                 setbattlePopup(false);
                 html.classList.remove("hidescroll");
@@ -7381,7 +7384,6 @@ function Dashboard({
               handleSwitchNetwork={handleSwitchNetwork}
               handleSwitchChainGateWallet={handleSwitchChainGateWallet}
               handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
-              
               isConnected={isConnected}
               email={email}
               address={userWallet}
