@@ -67,7 +67,7 @@ const MyProfile = ({
   openMyRewards,
   openDailyBonus,
   openPortfolio,
-
+  liveTreasureHuntEvents,
   isConnected,
   onConnectWallet,
   liveRewards,
@@ -1005,9 +1005,9 @@ const MyProfile = ({
                       />
                       <div className="daily-progress-value-golden">
                         <span>
-                          {userActiveEvents === 4
+                          {userActiveEvents === liveTreasureHuntEvents
                             ? "Completed"
-                            : userActiveEvents + "/4"}
+                            : userActiveEvents + "/" + liveTreasureHuntEvents}
                         </span>
                       </div>
 
