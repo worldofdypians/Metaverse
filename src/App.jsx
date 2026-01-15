@@ -112,6 +112,7 @@ import { wagmiClient } from "./wagmiConnectors.js";
 import { CandlelightCursor } from "./components/FestiveElements/CandleLightCursor.jsx";
 import { fetchStarMonthlyLeaderboard } from "./services/leaderboardApi";
 import { localData } from "./screens/Reserve/data.js";
+import LiquidityComp from "./screens/Community/Campaigns/LiquidityComp/LiquidityComp.jsx";
 
 const Marketplace = React.lazy(() =>
   import("./screens/Marketplace/Marketplace")
@@ -6361,6 +6362,13 @@ function AppRoutes() {
               path="/trading-competition"
               element={
                 <TradingComp coinbase={coinbase} isConnected={isConnected} />
+              }
+            />
+            <Route
+              exact
+              path="/liquidity-catalyst"
+              element={
+                <LiquidityComp coinbase={coinbase} isConnected={isConnected} />
               }
             />
 
