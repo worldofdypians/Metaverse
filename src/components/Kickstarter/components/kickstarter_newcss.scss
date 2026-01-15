@@ -203,7 +203,9 @@
     --color-amber-500: oklch(0.769 0.188 70.08);
     --color-amber-600: oklch(0.666 0.179 58.318);
     --color-amber-700: oklch(0.555 0.163 48.998);
+    --color-amber-800: oklch(0.7347 0.1524 39.9);
     --color-amber-900: oklch(0.414 0.112 45.904);
+    --color-amber-1000: oklch(0.6682 0.1856 35.67);
     --color-yellow-100: oklch(0.973 0.071 103.193);
     --color-yellow-200: oklch(0.945 0.129 101.54);
     --color-yellow-300: oklch(0.905 0.182 98.111);
@@ -224,12 +226,14 @@
     --color-emerald-600: oklch(0.596 0.145 163.225);
     --color-emerald-900: oklch(0.378 0.077 168.94);
     --color-teal-600: oklch(0.6 0.118 184.704);
+    --color-brandCyan: oklch(0.7137 0.1231 209.23);
     --color-cyan-100: oklch(0.956 0.045 203.388);
     --color-cyan-300: oklch(0.865 0.127 207.078);
     --color-cyan-400: oklch(0.789 0.154 211.53);
     --color-cyan-500: oklch(0.715 0.143 215.221);
     --color-cyan-600: oklch(0.609 0.126 221.723);
     --color-cyan-900: oklch(0.398 0.07 227.392);
+    --color-brandBlue: oklch(0.6072 0.12358 231.7998);
     --color-blue-50: oklch(0.97 0.014 254.604);
     --color-blue-100: oklch(0.932 0.032 255.585);
     --color-blue-200: oklch(0.882 0.059 254.128);
@@ -3597,6 +3601,11 @@
         --tw-gradient-stops: var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))
     }
 
+         .from-brandBlue  {
+        --tw-gradient-from: var(--color-brandBlue);
+        --tw-gradient-stops: var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))
+    }
+
     .from-green-500\/10 {
         --tw-gradient-from: #00c7581a
     }
@@ -4916,6 +4925,25 @@
     );
   }
 
+    .from-amber-800 {
+    --tw-gradient-from: var(--color-amber-800);
+    --tw-gradient-stops: var(
+      --tw-gradient-via-stops,
+      var(--tw-gradient-position),
+      var(--tw-gradient-from) var(--tw-gradient-from-position),
+      var(--tw-gradient-to) var(--tw-gradient-to-position)
+    );
+  }
+      .to-amber-1000 {
+    --tw-gradient-to: var(--color-amber-1000);
+    --tw-gradient-stops: var(
+      --tw-gradient-via-stops,
+      var(--tw-gradient-position),
+      var(--tw-gradient-from) var(--tw-gradient-from-position),
+      var(--tw-gradient-to) var(--tw-gradient-to-position)
+    );
+  }
+
   .from-yellow-400\/10 {
     --tw-gradient-from: color-mix(
       in srgb,
@@ -6017,6 +6045,16 @@
 
   .to-cyan-400 {
     --tw-gradient-to: var(--color-cyan-400);
+    --tw-gradient-stops: var(
+      --tw-gradient-via-stops,
+      var(--tw-gradient-position),
+      var(--tw-gradient-from) var(--tw-gradient-from-position),
+      var(--tw-gradient-to) var(--tw-gradient-to-position)
+    );
+  }
+
+    .to-brandCyan {
+    --tw-gradient-to: var(--color-brandCyan);
     --tw-gradient-stops: var(
       --tw-gradient-via-stops,
       var(--tw-gradient-position),
@@ -7263,8 +7301,8 @@
   }
 
   .text-lg {
-    font-size: var(--text-lg);
-    line-height: var(--tw-leading, var(--text-lg--line-height));
+    font-size: var(--text-lg) !important;
+    line-height: var(--tw-leading, var(--text-lg--line-height)) !important;
   }
 
   .text-sm {
@@ -7274,6 +7312,9 @@
 
   .line-height-normal {
     line-height: normal !important;
+  }
+    .line-height-inherit {
+    line-height: inherit !important;
   }
 
   .text-xl {
@@ -8941,6 +8982,18 @@
   @media (hover: hover) {
     .hover\:to-orange-400:hover {
       --tw-gradient-to: var(--color-orange-400);
+      --tw-gradient-stops: var(
+        --tw-gradient-via-stops,
+        var(--tw-gradient-position),
+        var(--tw-gradient-from) var(--tw-gradient-from-position),
+        var(--tw-gradient-to) var(--tw-gradient-to-position)
+      );
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:to-amber-1000:hover {
+      --tw-gradient-to: var(--color-amber-1000);
       --tw-gradient-stops: var(
         --tw-gradient-via-stops,
         var(--tw-gradient-position),

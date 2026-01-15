@@ -6368,7 +6368,14 @@ function AppRoutes() {
               exact
               path="/liquidity-catalyst"
               element={
-                <LiquidityComp coinbase={coinbase} isConnected={isConnected} />
+                <LiquidityComp
+                  coinbase={coinbase}
+                  isConnected={isConnected}
+                  chainId={networkId}
+                  handleConnection={() => setWalletModal(true)}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  isEOA={isEOA}
+                />
               }
             />
 

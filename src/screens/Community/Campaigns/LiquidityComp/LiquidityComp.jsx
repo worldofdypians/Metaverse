@@ -15,6 +15,20 @@ import DisclaimerModal from "./components/DisclaimerModal";
 import Countdown from "react-countdown";
 import OutsideClickHandler from "react-outside-click-handler";
 import "../../../../components/Kickstarter/components/kickstarter_newcss.scss";
+
+import {
+  readContract,
+  writeContract,
+  waitForTransactionReceipt,
+  getAccount,
+} from "@wagmi/core";
+import { wagmiClient } from "../../../../wagmiConnectors";
+import { bsc } from "viem/chains";
+import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
+import { switchNetworkWagmi } from "../../../../utils/wagmiSwitchChain";
+import { abbreviateNumber } from "js-abbreviation-number";
+import { get } from "http";
+
 const renderer = ({ days, hours }) => {
   return (
     <div className="d-flex">
@@ -25,112 +39,166 @@ const renderer = ({ days, hours }) => {
   );
 };
 
-const LiquidityComp = () => {
-  let lastDay = new Date("2026-04-06T14:00:00.000+02:00");
-
+const LiquidityComp = ({
+  coinbase,
+  isConnected,
+  chainId,
+  handleConnection,
+  handleSwitchNetwork,
+  isEOA,
+}) => {
+  let lastDay = new Date("2026-04-14T18:22:00.000+02:00");
+  const SEASON_DAYS = 90;
+  const [tokenBalance, setTokenBalance] = useState({
+    usdtBalance: 0,
+    usdcBalance: 0,
+    usd1Balance: 0,
+    uBalance: 0,
+  });
   const STABLECOINS = [
     {
+      address: "0x55d398326f99059ff775485246999027b3197955",
       symbol: "USDT",
       name: "Tether USD",
-      balance: "1,234.56",
       icon: "usdtIconPremium.svg",
+      decimals: 18,
+      balance: tokenBalance.usdtBalance,
     },
     {
+      address: "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
       symbol: "USDC",
       name: "USD Coin",
-      balance: "5,678.90",
       icon: "usdcIconPremium.svg",
+      decimals: 18,
+      balance: tokenBalance.usdcBalance,
     },
     {
-      symbol: "U",
-      name: "U Stablecoin",
-      balance: "0.00",
-      icon: "uIconPremium.svg",
-    },
-    {
+      address: "0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d",
       symbol: "USD1",
       name: "USD1",
-      balance: "890.12",
       icon: "usd1IconPremium.svg",
+      decimals: 18,
+      balance: tokenBalance.usd1Balance,
+    },
+    {
+      address: "0xcE24439F2D9C6a2289F741120FE202248B666666",
+      symbol: "U",
+      name: "U Stablecoin",
+      balance: tokenBalance.uBalance,
+      icon: "uIconPremium.svg",
     },
   ];
-  const [selectedToken, setSelectedToken] = useState(STABLECOINS[0]);
+
+  const [selectedSymbol, setSelectedSymbol] = useState("USDT");
   const [amount, setAmount] = useState("");
+
+  const [claimLPAmount, setClaimLPAmount] = useState(0);
+  const [claimBonusAmount, setClaimBonusAmount] = useState(0);
+
   const [showTokenSelect, setShowTokenSelect] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
-  const [totalDeposited, setTotalDeposited] = useState(5420.0);
+  const [totalDeposited, setTotalDeposited] = useState(0);
   const [activeTab, setActiveTab] = useState("deposit");
   const [claimFilter, setClaimFilter] = useState("available");
+  const [totalUserDeposited, setTotalUserDeposited] = useState(0);
+  const [userScore, setUserScore] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
+  const [currentDayIndex, setCurrentDayIndex] = useState(0);
 
+  const [seasonStart, setSeasonStart] = useState(null);
+  const [seasonEnd, setSeasonEnd] = useState(lastDay.getTime());
+  const [share, setShare] = useState(0);
+  const [estimatedFinalBonus, setEstimatedFinalBonus] = useState(0);
+  const [calculatedFinalBonus, setCalculatedFinalBonus] = useState(0);
+
+  const [withdrawAmount, setwithdrawAmount] = useState("");
+  const [withdrawLoading, setwithdrawLoading] = useState(false);
+  const [withdrawStatus, setwithdrawStatus] = useState("initial");
+
+  const [depositLoading, setdepositLoading] = useState(false);
+  const [depositStatus, setdepositStatus] = useState("initial");
+  const [claimLoading, setclaimLoading] = useState(false);
+  const [claimBonusLoading, setclaimBonusLoading] = useState(false);
+
+  const [claimStatus, setclaimStatus] = useState("initial");
+  const [claimBonusStatus, setclaimBonusStatus] = useState("initial");
+  const [errorMsg, seterrorMsg] = useState("");
+  const [errorMsg2, seterrorMsg2] = useState("");
+  const [errorMsg3, seterrorMsg3] = useState("");
+  const [errorMsg4, seterrorMsg4] = useState("");
+
+  const BONUS_POOL_USDT = 200000;
+  const selectedToken = STABLECOINS.find((t) => t.symbol === selectedSymbol);
   const claims = [
     {
       week: "Week 1",
-      amount: 145.32,
+      amount: claimLPAmount,
       status: "available",
       date: "2026-01-06",
     },
     {
       week: "Week 2",
-      amount: 138.45,
-      status: "available",
+      amount: 20,
+      status: "claimed",
       date: "2026-01-13",
     },
     {
       week: "Week 3",
-      amount: 138.45,
+      amount: 0,
       status: "available",
       date: "2026-01-20",
     },
     {
       week: "Week 4",
-      amount: 138.45,
+      amount: 0,
       status: "available",
       date: "2026-01-27",
     },
     {
       week: "Week 5",
-      amount: 138.45,
+      amount: 0,
       status: "available",
       date: "2026-02-03",
     },
     {
       week: "Week 6",
-      amount: 138.45,
+      amount: 0,
       status: "available",
       date: "2026-02-10",
     },
     {
       week: "Week 7",
-      amount: 138.45,
+      amount: 0,
       status: "available",
       date: "2026-02-17",
     },
     {
       week: "Week 8",
-      amount: 142.18,
+      amount: 0,
       status: "available",
       date: "2026-02-24",
     },
-    { week: "Week 9", amount: 139.67, status: "available", date: "2026-03-03" },
+    { week: "Week 9", amount: 0, status: "available", date: "2026-03-03" },
     {
       week: "Week 10",
-      amount: 138.45,
+      amount: 0,
       status: "available",
       date: "2026-03-10",
     },
     {
       week: "Week 11",
-      amount: 138.45,
+      amount: 0,
       status: "available",
       date: "2026-03-17",
     },
     {
       week: "Week 12",
-      amount: 138.45,
+      amount: 0,
       status: "available",
       date: "2026-03-23",
     },
   ];
+  const { BigNumber } = window;
 
   const filteredClaims = claims.filter((claim) => {
     if (claimFilter === "all") return true;
@@ -141,30 +209,435 @@ const LiquidityComp = () => {
     .filter((c) => c.status === "available")
     .reduce((sum, c) => sum + c.amount, 0);
 
-  const handleDeposit = () => {
-    if (amount && parseFloat(amount) > 0) {
-      setTotalDeposited((prev) => prev + parseFloat(amount));
-      setAmount("");
-      window.alertify.message("Deposit successful!");
+  const checkTokenApproval = async (amount) => {
+    try {
+      let result;
+
+      result = await readContract(wagmiClient, {
+        address: selectedToken.address,
+        abi: window.TOKEN_ABI,
+        functionName: "allowance",
+        args: [coinbase, window.config.liquidity_campaign_address],
+        chainId: 56,
+      });
+
+      let result_formatted = new BigNumber(result || 0).div(1e18).toFixed(6);
+
+      if (
+        Number(result_formatted) >= Number(amount) &&
+        Number(result_formatted) !== 0
+      ) {
+        setdepositStatus("deposit");
+      } else {
+        setdepositStatus("initial");
+      }
+    } catch (e) {
+      console.error("Error checking approval:", e);
+      setdepositStatus("initial");
     }
   };
 
-  const handleClaim = (week) => {
-    window.alertify.message(`Claimed rewards for ${week}!`);
+  const handleApproveToken = async () => {
+    setdepositLoading(true);
+
+    try {
+      let amount_formatted = new BigNumber(amount).times(1e18).toFixed(0);
+
+      const hash = await writeContract(wagmiClient, {
+        address: selectedToken.address,
+        abi: window.TOKEN_ABI,
+        functionName: "approve",
+        args: [window.config.liquidity_campaign_address, amount_formatted],
+        chainId: bsc.id,
+      });
+
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
+
+      if (receipt) {
+        setdepositLoading(false);
+        setdepositStatus("deposit");
+        getAllInfo();
+      }
+    } catch (e) {
+      console.error("Error approving:", e);
+      setdepositLoading(false);
+      setdepositStatus("fail");
+      seterrorMsg(e?.message || e?.shortMessage || "Approval failed");
+      setTimeout(() => {
+        setAmount("");
+        setdepositStatus("initial");
+        seterrorMsg("");
+      }, 10000);
+    }
   };
 
-  const handleClaimAll = () => {
-    window.alertify.message(
-      `Claimed all available rewards: $${totalAvailableToClaim.toFixed(
-        2
-      )} USDT!`
-    );
+  const handleDeposit = async () => {
+    try {
+      setdepositLoading(true);
+      let amount_formatted = new BigNumber(amount).times(1e18).toFixed(0);
+
+      const hash = await writeContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "deposit",
+        args: [selectedToken.address, amount_formatted],
+        chainId: bsc.id,
+      });
+
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
+
+      if (receipt) {
+        setdepositLoading(false);
+        setdepositStatus("success");
+        setTimeout(() => {
+          setdepositStatus("initial");
+          setAmount("");
+          getAllInfo();
+          setCalculatedFinalBonus(0);
+          getTokenBalance();
+        }, 5000);
+      }
+    } catch (e) {
+      console.error("Error depositing:", e);
+      setdepositLoading(false);
+      setdepositStatus("fail");
+      seterrorMsg(e?.message || e?.shortMessage || "Deposit failed");
+      setTimeout(() => {
+        setAmount("");
+        setdepositStatus("deposit");
+        seterrorMsg("");
+        setCalculatedFinalBonus(0);
+      }, 10000);
+    }
+  };
+
+  const handleClaim = async () => {
+    setclaimLoading(true);
+
+    try {
+      const hash = await writeContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "claimLPFees",
+        args: [],
+        chainId: bsc.id,
+      });
+
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
+
+      if (receipt) {
+        setclaimStatus("success");
+        setclaimLoading(false);
+        setClaimLPAmount(0);
+        getAllInfo();
+        setTimeout(() => {
+          setclaimStatus("initial");
+        }, 5000);
+      }
+    } catch (e) {
+      console.error("Error claiming rewards:", e);
+      setclaimStatus("failed");
+      setclaimLoading(false);
+      seterrorMsg2(e?.message || e?.shortMessage || "Claim failed");
+      setTimeout(() => {
+        setclaimStatus("initial");
+        seterrorMsg2("");
+      }, 10000);
+    }
+  };
+
+  const handleClaimBonus = async () => {
+    setclaimBonusLoading(true);
+
+    try {
+      const hash = await writeContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "claimBonusRewards",
+        args: [],
+        chainId: bsc.id,
+      });
+
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
+
+      if (receipt) {
+        setclaimBonusStatus("success");
+        setclaimBonusLoading(false);
+        setClaimBonusAmount(0);
+        getAllInfo();
+        setTimeout(() => {
+          setclaimBonusStatus("initial");
+        }, 5000);
+      }
+    } catch (e) {
+      console.error("Error claiming rewards:", e);
+      setclaimBonusStatus("failed");
+      setclaimBonusLoading(false);
+      seterrorMsg3(e?.message || e?.shortMessage || "Claim failed");
+      setTimeout(() => {
+        setclaimBonusStatus("initial");
+        seterrorMsg3("");
+      }, 10000);
+    }
+  };
+
+  const handleWithdrawPrincipal = async () => {
+    setwithdrawLoading(true);
+
+    try {
+      const hash = await writeContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "withdrawPrincipal",
+        args: [],
+        chainId: bsc.id,
+      });
+
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
+
+      if (receipt) {
+        setwithdrawLoading(false);
+        setwithdrawStatus("success");
+        setTimeout(() => {
+          setwithdrawStatus("initial");
+          getAllInfo();
+          setwithdrawAmount(0);
+        }, 5000);
+      }
+    } catch (e) {
+      console.error("Error withdrawing:", e);
+      setwithdrawLoading(false);
+      setwithdrawStatus("failed");
+      seterrorMsg4(e?.message || e?.shortMessage || "Withdrawal failed");
+      setTimeout(() => {
+        setwithdrawStatus("initial");
+        seterrorMsg4("");
+        setwithdrawAmount("");
+      }, 10000);
+    }
+  };
+
+  const getTokenBalance = async () => {
+    let temp = {
+      usdtBalance: 0,
+      usdcBalance: 0,
+      usd1Balance: 0,
+      uBalance: 0,
+    };
+    if (coinbase) {
+      for (let token of STABLECOINS) {
+        const result = await readContract(wagmiClient, {
+          address: token.address,
+          abi: window.TOKEN_ABI,
+          functionName: "balanceOf",
+          args: [coinbase],
+          chainId: bsc.id,
+        }).catch(() => 0);
+
+        if (token.symbol === "USDT") {
+          temp.usdtBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
+        } else if (token.symbol === "USDC") {
+          temp.usdcBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
+        } else if (token.symbol === "USD1") {
+          temp.usd1Balance = new BigNumber(result ?? 0).div(1e18).toString(10);
+        } else if (token.symbol === "U") {
+          temp.uBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
+        }
+      }
+
+      setTokenBalance(temp);
+    }
+  };
+
+  const calculateScore = async (amount) => {
+    // let newScore
+    let dayIdx = currentDayIndex;
+    // since we ensured block.timestamp < seasonEnd, dayIdx <= 89
+    let remaining = SEASON_DAYS - Number(dayIdx); // 90..1
+    let scoreAdded = Number(amount) * Number(remaining);
+    let userScorePrime = Number(userScore) + Number(scoreAdded);
+    let totalScorePrime = Number(totalScore) + Number(scoreAdded);
+
+    let sharePrime =
+      userScorePrime === 0 ? 0 : userScorePrime / totalScorePrime;
+    let estimatedFinalBonusPrime = BONUS_POOL_USDT * sharePrime;
+    setCalculatedFinalBonus(estimatedFinalBonusPrime);
+  };
+
+  const getAllInfo = async () => {
+    const [
+      user_totalDeposited,
+      userScore,
+      totalScore,
+      seasonStart,
+      seasonEnd,
+      currentDayIndex,
+      claimsAvailableLP,
+      claimsAvailableBonus,
+      withdrawableAmount,
+    ] = await Promise.all([
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "userUnits",
+        args: [coinbase ?? window.config.ZERO_ADDRESS],
+        chainId: bsc.id,
+      }).catch(() => 0),
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "userScore",
+        args: [coinbase ?? window.config.ZERO_ADDRESS],
+        chainId: bsc.id,
+      }).catch(() => 0),
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "totalScore",
+        args: [],
+        chainId: bsc.id,
+      }).catch(() => 0),
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "seasonStart",
+        args: [],
+        chainId: bsc.id,
+      }).catch(() => 0),
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "seasonEnd",
+        args: [],
+        chainId: bsc.id,
+      }).catch(() => 0),
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "currentDayIndex",
+        args: [],
+        chainId: bsc.id,
+      }).catch(() => 0),
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "lpFeesClaimableUSDT",
+        args: [coinbase ?? window.config.ZERO_ADDRESS],
+        chainId: bsc.id,
+      }).catch(() => 0),
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "bonusClaimableUSDT",
+        args: [coinbase ?? window.config.ZERO_ADDRESS],
+        chainId: bsc.id,
+      }).catch(() => 0),
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "withdrawableUSDT",
+        args: [coinbase ?? window.config.ZERO_ADDRESS],
+        chainId: bsc.id,
+      }).catch(() => 0),
+    ]);
+
+    const userScore_formatted = new BigNumber(userScore ?? 0)
+      .div(1e18)
+      .toString(10);
+    const totalScore_formatted = new BigNumber(totalScore ?? 0)
+      .div(1e18)
+      .toString(10);
+
+    const share =
+      totalScore_formatted === 0
+        ? 0
+        : userScore_formatted / totalScore_formatted;
+    let estimatedFinalBonus = share * BONUS_POOL_USDT;
+    setUserScore(userScore_formatted);
+    setTotalScore(totalScore_formatted);
+    setCurrentDayIndex(currentDayIndex);
+    const seasonEndMiliseconds = Number(seasonEnd) * 1000;
+    const seasonStart_formatted = Number(seasonStart);
+
+    const user_totalDeposited_formatted = new BigNumber(
+      user_totalDeposited ?? 0
+    )
+      .div(1e18)
+      .toString(10);
+    const totalPoolDeposited =
+      totalScore_formatted / SEASON_DAYS - Number(currentDayIndex);
+    const claimsAvailableLP_formatted = new BigNumber(claimsAvailableLP ?? 0)
+      .div(1e18)
+      .toString(10);
+    const claimsAvailableBonus_formatted = new BigNumber(
+      claimsAvailableBonus ?? 0
+    )
+      .div(1e18)
+      .toString(10);
+    const withdrawableAmount_formatted = new BigNumber(withdrawableAmount ?? 0)
+      .div(1e18)
+      .toString(10);
+    setwithdrawAmount(Number(withdrawableAmount_formatted));
+    setClaimLPAmount(Number(claimsAvailableLP_formatted));
+    setClaimBonusAmount(Number(claimsAvailableBonus_formatted));
+    setTotalDeposited(totalPoolDeposited);
+    setTotalUserDeposited(user_totalDeposited_formatted);
+    setEstimatedFinalBonus(estimatedFinalBonus);
+    setSeasonEnd(seasonEndMiliseconds);
+  };
+
+  const handleSwitchChainPool = async (hexChainId, chainId, options = {}) => {
+    const {
+      supportsBinance = true,
+      binanceError = "This network is not available on Binance Wallet",
+    } = options;
+
+    try {
+      await switchNetworkWagmi(parseInt(hexChainId, 16), chainId, {
+        handleSwitchNetwork,
+        handleSwitchChainGateWallet: null,
+        handleSwitchChainBinanceWallet: null,
+        coinbase,
+      });
+    } catch (error) {
+      // Error handling is done in switchNetworkWagmi
+      console.error("Network switch error:", error);
+
+      // Show specific error for Binance wallet if network not supported
+      if (
+        (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) &&
+        !supportsBinance &&
+        binanceError &&
+        window.alertify
+      ) {
+        window.alertify.error(binanceError);
+      }
+    }
+  };
+
+  const handleBNBPool = async () => {
+    await handleSwitchChainPool("0x38", 56);
   };
 
   useEffect(() => {
     document.title = "WOD Liquidity Catalyst Campaign";
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    getTokenBalance();
+    getAllInfo();
+  }, [coinbase]);
 
   return (
     <div className="container-fluid font-ui  d-flex justify-content-center bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
@@ -224,7 +697,9 @@ const LiquidityComp = () => {
                         <Clock className="w-4 h-4" />
                         <span className="text-xs">Time Left</span>
                       </div>
-                      <Countdown renderer={renderer} date={lastDay} />
+                      {seasonEnd && (
+                        <Countdown renderer={renderer} date={seasonEnd} />
+                      )}
                       <div className="text-xs text-slate-400">
                         Until Season Ends
                       </div>
@@ -236,9 +711,12 @@ const LiquidityComp = () => {
                         <span className="text-xs">Pool Status</span>
                       </div>
                       <div className="text-xl font-bold text-white">
-                        $847K / $2M
+                        ${abbreviateNumber(totalDeposited, 1).replace("G", "B")}{" "}
+                        / $2M
                       </div>
-                      <div className="text-xs text-slate-400">42.4% Filled</div>
+                      <div className="text-xs text-slate-400">
+                        {(totalDeposited / 2000000) * 100}% Filled
+                      </div>
                     </div>
 
                     <div className="bg-white/5 rounded-lg p-3">
@@ -349,11 +827,7 @@ const LiquidityComp = () => {
                         Total Deposited
                       </div>
                       <div className="text-xl font-bold text-cyan-400">
-                        $
-                        {totalDeposited.toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
+                        ${getFormattedNumber(totalUserDeposited, 2)}
                       </div>
                     </div>
                     <div className="bg-white/5 rounded-lg p-3">
@@ -361,11 +835,7 @@ const LiquidityComp = () => {
                         Est. Final Rewards
                       </div>
                       <div className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                        $
-                        {(totalDeposited * 0.784).toLocaleString("en-US", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
+                        ${getFormattedNumber(estimatedFinalBonus, 2)}
                       </div>
                     </div>
                   </div>
@@ -443,7 +913,8 @@ const LiquidityComp = () => {
                                   <button
                                     key={token.symbol}
                                     onClick={() => {
-                                      setSelectedToken(token);
+                                      // setSelectedToken(token);
+                                      setSelectedSymbol(token.symbol);
                                       setShowTokenSelect(false);
                                     }}
                                     className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-colors"
@@ -487,7 +958,8 @@ const LiquidityComp = () => {
                         <label className="text-xs text-slate-400 mb-2 d-flex items-center w-100 justify-between">
                           <span>Amount</span>
                           <span className="text-xs">
-                            Balance: {selectedToken.balance}
+                            Balance:{" "}
+                            {getFormattedNumber(selectedToken.balance, 6)}
                           </span>
                         </label>
                         <div className="bg-slate-800/50 bordertw border-white/10 rounded-lg p-3 focus-within:border-cyan-500/30 transition-colors">
@@ -495,7 +967,11 @@ const LiquidityComp = () => {
                             <input
                               type="text"
                               value={amount}
-                              onChange={(e) => setAmount(e.target.value)}
+                              onChange={(e) => {
+                                setAmount(e.target.value);
+                                checkTokenApproval(e.target.value);
+                                calculateScore(e.target.value);
+                              }}
                               placeholder="0.00"
                               className="flex-1 bg-transparent text-white text-xl font-semibold outline-none"
                               maxLength={7}
@@ -527,20 +1003,78 @@ const LiquidityComp = () => {
                           <div>
                             <div className="text-xs text-slate-400">Bonus</div>
                             <div className="text-lg font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                              ${((parseFloat(amount) || 0) * 0.4).toFixed(2)}
+                              ${getFormattedNumber(calculatedFinalBonus, 2)}
                             </div>
                           </div>
                         </div>
                       </div>
 
                       {/* Deposit button */}
-                      <button
-                        onClick={handleDeposit}
-                        disabled={!amount || parseFloat(amount) === 0}
-                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
-                      >
-                        Deposit Now
-                      </button>
+                      {isConnected && coinbase && chainId === 56 && (
+                        <button
+                          onClick={() => {
+                            depositStatus === "deposit"
+                              ? handleDeposit()
+                              : depositStatus === "initial" &&
+                                amount !== "" &&
+                                isEOA
+                              ? handleApproveToken()
+                              : console.log("");
+                          }}
+                          disabled={!amount || parseFloat(amount) === 0}
+                          className={`${
+                            depositStatus === "initial" ||
+                            depositStatus === "deposit"
+                              ? "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
+                              : depositStatus === "success"
+                              ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
+                              : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
+                          } w-full py-3 text-lg disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold`}
+                        >
+                          {depositLoading ? (
+                            <div
+                              className="spinner-border spinner-border-sm text-light"
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
+                          ) : depositStatus === "initial" ? (
+                            <>Approve</>
+                          ) : depositStatus === "deposit" ? (
+                            <>Deposit</>
+                          ) : depositStatus === "success" ? (
+                            <>Success</>
+                          ) : (
+                            <>
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/failMark.svg"
+                                }
+                                alt=""
+                              />
+                              Failed
+                            </>
+                          )}
+                        </button>
+                      )}
+                      {!isConnected && !coinbase && (
+                        <button
+                          onClick={handleConnection}
+                          className="w-full py-3 text-lg bg-gradient-to-r from-brandBlue to-brandCyan line-height-inherit hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
+                        >
+                          Connect Wallet
+                        </button>
+                      )}
+                      {isConnected && coinbase && chainId !== 56 && (
+                        <button
+                          onClick={handleBNBPool}
+                          className="w-full py-3 text-lg bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
+                        >
+                          Switch to BNB Chain
+                        </button>
+                      )}
                     </>
                   )}
 
@@ -567,7 +1101,7 @@ const LiquidityComp = () => {
                       {/* Available to claim summary */}
                       {claimFilter !== "claimed" &&
                         totalAvailableToClaim > 0 && (
-                          <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 bordertw border-green-500/30 rounded-lg p-3 mb-4">
+                          <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 bordertw border-green-500/30 rounded-lg p-3 mb-3">
                             <div className="flex items-center justify-between">
                               <div>
                                 <div className="text-xs text-slate-300 mb-1">
@@ -578,17 +1112,53 @@ const LiquidityComp = () => {
                                 </div>
                               </div>
                               <button
-                                onClick={handleClaimAll}
-                                className="px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white rounded-lg text-xs font-semibold transition-all shadow-lg shadow-green-500/30"
+                                onClick={handleClaim}
+                                className={`${
+                                  claimStatus === "initial" ||
+                                  claimStatus === "claim"
+                                    ? "bg-gradient-to-r from-green-600 to-emerald-500"
+                                    : claimStatus === "success"
+                                    ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
+                                    : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
+                                } px-4 py-2  hover:from-green-700 hover:to-emerald-600 text-white rounded-lg text-xs font-semibold transition-all shadow-lg shadow-green-500/30`}
                               >
-                                Claim
+                                {claimLoading ? (
+                                  <div
+                                    className="spinner-border spinner-border-sm text-light"
+                                    role="status"
+                                  >
+                                    <span className="visually-hidden">
+                                      Loading...
+                                    </span>
+                                  </div>
+                                ) : claimStatus === "failed" ? (
+                                  <>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/failMark.svg"
+                                      }
+                                      alt=""
+                                    />
+                                    Failed
+                                  </>
+                                ) : claimStatus === "success" ? (
+                                  <>Success</>
+                                ) : (
+                                  <>Claim</>
+                                )}
                               </button>
                             </div>
                           </div>
                         )}
 
                       {/* Claims list */}
-                      <div className="space-y-2 max-h-48 overflow-y-auto pe-2">
+                      <div
+                        className={` ${
+                          claimFilter !== "claimed" && totalAvailableToClaim > 0
+                            ? "max-h-48"
+                            : "max-h-64"
+                        } space-y-2 overflow-y-auto pe-2`}
+                      >
                         {filteredClaims.length === 0 ? (
                           <div className="text-center py-8 text-slate-400 text-xs">
                             You have no rewards claimed.
