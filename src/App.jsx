@@ -17,7 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useUser, useWallet } from "./redux/hooks/useWallet.js";
 import { setUserProgress } from "./redux/slices/userSlice";
 import { useConnect } from "wagmi";
-import { signMessage as signMessageWagmi, getBalance } from "@wagmi/core";
+import {
+  signMessage as signMessageWagmi,
+  getBalance,
+  readContract as wagmiReadContract,
+} from "@wagmi/core";
 import { formatEther } from "viem";
 
 import { createWalletClient as createWalletClientWagmi, custom } from "viem";
@@ -638,7 +642,7 @@ function AppRoutes() {
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2026-04-21T14:00:00.000+02:00");
-  let vanarLastDay = new Date("2026-01-14T14:00:00.000+02:00");
+  let vanarLastDay = new Date("2026-05-16T14:00:00.000+02:00");
   let trustwalletLastDay = new Date("2026-01-29T14:00:00.000+02:00");
 
   const [allStarData, setAllStarData] = useState({});
@@ -2593,10 +2597,61 @@ function AppRoutes() {
       },
     },
 
+    // {
+    //   title: "Vanar",
+    //   logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+    //   eventStatus: "Live",
+    //   totalRewards: "$10,000 in VANRY Rewards",
+    //   location: [-0.06784377896887378, 0.0839531421661377],
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Jan 16, 2026",
+    //   type: "Treasure Hunt",
+    //   rewardType: "VANRY",
+    //   rewardAmount: "$10,000",
+    //   infoType: "Treasure Hunt",
+    //   backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+    //   image: "vanarArea.webp",
+    //   userEarnUsd: user.userStats.vanarEarnUsd,
+    //   userEarnCrypto: user.userStats.vanarEarnToken,
+    //   userEarnPoints: user.userStats.vanarPoints,
+    //   popupInfo: {
+    //     title: "Vanar",
+    //     chain: "Vanar Network",
+    //     linkState: "vanar",
+    //     rewards: "VANRY",
+    //     status: "Live",
+    //     id: "event2",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$10,000 in VANRY Rewards",
+    //     eventDuration: vanarLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Jan 16, 2026",
+    //     detailsText: `To participate in the event, players are required to
+    //               <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
+    //               Pass NFT from the World of Dypians Shop. By engaging in the
+    //               game on a daily basis and exploring the Vanar area, players
+    //               not only stand a chance to secure daily rewards in VANRY, but
+    //               also earn points for their placement on the global
+    //               leaderboard. Remember to log in to the game daily and venture
+    //               into the Vanar area to uncover hidden treasures.`,
+    //     about: ` Vanar offers a suite of solutions for brands built on years of
+    //         experience. From new engagement experiences to AI-driven IP
+    //        tracking.`,
+    //     twitterLink: "https://x.com/vanarchain",
+    //     telegramLink: "https://t.me/vanarofficial",
+    //     websiteLink: "https://vanarchain.com/",
+    //     thumbImage: "https://cdn.worldofdypians.com/wod/vanarThumb.webp",
+    //   },
+    // },
     {
       title: "Vanar",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in VANRY Rewards",
       location: [-0.06784377896887378, 0.0839531421661377],
       myEarnings: 0.0,
@@ -2608,15 +2663,15 @@ function AppRoutes() {
       infoType: "Treasure Hunt",
       backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
       image: "vanarArea.webp",
-      userEarnUsd: user.userStats.vanarEarnUsd,
-      userEarnCrypto: user.userStats.vanarEarnToken,
-      userEarnPoints: user.userStats.vanarPoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       popupInfo: {
         title: "Vanar",
         chain: "Vanar Network",
         linkState: "vanar",
         rewards: "VANRY",
-        status: "Live",
+        status: "Expired",
         id: "event2",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in VANRY Rewards",
@@ -2967,20 +3022,35 @@ function AppRoutes() {
     fetchDynamicData();
   }, []);
 
+  const readOnChain = async ({ address, abi, functionName, args = [] }) => {
+    try {
+      return await wagmiReadContract(wagmiClient, {
+        address,
+        abi,
+        functionName,
+        args,
+        chainId: bsc.id,
+      });
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
+
   const checkPremiumOryn = async (addr) => {
     try {
       if (!addr) {
         setPremiumOryn(false);
         return;
       }
-      const oryn_premium_contract = new window.bscWeb3.eth.Contract(
-        window.ORYN_PREMIUM_ABI,
-        window.config.oryn_premium_address
-      );
-      const result = await oryn_premium_contract.methods
-        .hasLocked(addr)
-        .call()
-        .catch(() => false);
+      const result = await wagmiReadContract(wagmiClient, {
+        address: window.config.oryn_premium_address,
+        abi: window.ORYN_PREMIUM_ABI,
+        functionName: "hasLocked",
+        args: [addr],
+        chainId: bsc.id,
+      }).catch(() => false);
+      console.log(result, Boolean(result));
       setPremiumOryn(Boolean(result));
     } catch (e) {
       setPremiumOryn(false);
@@ -4244,9 +4314,9 @@ function AppRoutes() {
           }
 
           if (vanarEvent && vanarEvent[0]) {
-            if (vanarEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (vanarEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               vanarEvent[0].reward.earn.total /
@@ -4980,6 +5050,7 @@ function AppRoutes() {
     fetchUserPools(coinbase);
     getWodBalance(coinbase);
     checkIfEOA(coinbase);
+    checkPremiumOryn(coinbase);
   }, [coinbase]);
   // useEffect(() => {
   //   if (coinbase) {

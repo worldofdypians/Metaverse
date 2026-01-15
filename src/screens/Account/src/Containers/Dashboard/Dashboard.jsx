@@ -60,10 +60,13 @@ import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
 import BoosterPopup from "../../../../../components/Booster/BoosterPopup";
-// import { useUser } from "../../../../../redux/hooks/useWallet";
+import BattlePopup from "../../../../../components/BattlePopup/BattlePopup";
+import CloseBattlePopup from "../../../../../components/BattlePopup/CloseBattlePopup";
+import { useUser } from "../../../../../redux/hooks/useWallet";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserProgress } from "../../../../../redux/slices/userSlice";
 import { useQuery as useReactQuery } from "@tanstack/react-query";
+import { fighters } from "../../../../../components/BattlePopup/battleInfo";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -158,6 +161,9 @@ function Dashboard({
 
   // Get isPremium and primeStars from Redux store
   const primeStars = useSelector((state) => state.user.userProgress.primeStars);
+  const liveTreasureHuntEvent = treasureHuntEvents.filter((item) => {
+    return item.eventStatus === "Live";
+  });
 
   // const override = {
   //   display: "block",
@@ -298,10 +304,12 @@ function Dashboard({
   const [loading, setLoading] = useState(false);
   const [showDailyQuestion, setShowDailyQuestion] = useState(false);
   const [booster, setBooster] = useState(false);
+  const [battlePopup, setbattlePopup] = useState(false);
 
   const [tooltip, setTooltip] = useState(false);
 
   const [closePopup, setClosePopup] = useState(false);
+  const [closeBattle, setcloseBattle] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -430,6 +438,8 @@ function Dashboard({
   const [selectedEvent, setselectedEvent] = useState([]);
   const [showEventPopup, setshowEventPopup] = useState(false);
   const [aiStep, setAiStep] = useState(0);
+  const [battleFightResult, setBattleFightResult] = useState([]);
+  const [fightInfo, setFightInfo] = useState(null);
 
   const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
 
@@ -909,6 +919,10 @@ function Dashboard({
 
   const claimedMoneyReward = aiQuestionRewards.find(
     (item) => item.rewardType === "Money" && item.status === "Claimed"
+  );
+
+  const claimedMoneyFight = battleFightResult.rewards?.find(
+    (item) => item.rewardType === "money"
   );
 
   const useWarnOnRefresh = (shouldWarn) => {
@@ -6159,6 +6173,47 @@ function Dashboard({
   //   }
   // };
 
+  const handleGetFightResults = async (email, chain) => {
+    const result = await axios
+      .post(
+        `https://worldofdypiansdailybonus.azurewebsites.net/api/GetFightOfTheDayResult?code=7X5t65iOoiMTYlCnKyoMwBHAGmJOr9NoN3lhXk0RRkgTAzFudoavxg==`,
+        {
+          email: email,
+          chainId: chain,
+        }
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      if (result.data.message === "You have not fought today") {
+        setBattleFightResult([]);
+        setFightInfo(null);
+      } else {
+        setBattleFightResult(result.data);
+
+        const fighter = fighters.find((item) => {
+          return item.id === result.data.character;
+        });
+
+        setTimeout(() => {
+          const newFightInfo = {
+            id: "Points",
+            name: "POINTS",
+            icon: "https://cdn.worldofdypians.com/wod/ai-reward-active.webp",
+            count: "20K",
+            color: "from-blue-400 to-purple-500",
+            rarity: "COMMON",
+            tier: "TIER II",
+            fighter: fighter,
+            win: result.data.victory,
+          };
+          setFightInfo(newFightInfo);
+        }, 1000);
+      }
+    }
+  };
+
   const scrollToElement = () => {
     const element = document.getElementById(eventId);
     if (element && element !== "golden-pass") {
@@ -6482,6 +6537,15 @@ function Dashboard({
   }, [userWallet, email]);
 
   useEffect(() => {
+    if (email) {
+      handleGetFightResults(email, "bnb");
+    } else {
+      setBattleFightResult([]);
+      setFightInfo(null);
+    }
+  }, [email]);
+
+  useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
       fetchUserFavorites(userWallet ? userWallet : coinbase);
       // getUserRewardData(userWallet ? userWallet : coinbase);
@@ -6694,12 +6758,16 @@ function Dashboard({
           <>
             <MyProfile
               onOpenBooster={() => setBooster(true)}
+              openBattlePopup={() => {
+                setbattlePopup(true);
+              }}
+              // battleCompleted={false}
               openKickstarter={openKickstarter}
               aiQuestionCompleted={aiQuestionCompleted}
-              greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               isgoldenPassActive={goldenPassRemainingTime}
               userActiveEvents={userTreasureHuntStats.userEvents}
+              liveTreasureHuntEvents={liveTreasureHuntEvent.length}
               beastSiegeStatus={beastSiegeStatus}
               puzzleMadnessTimer={puzzleMadnessTimer}
               onGoldenpassClick={() => setgoldenPassPopup(true)}
@@ -6773,6 +6841,7 @@ function Dashboard({
               openPortfolio={() => setPortfolio(true)}
               isConnected={isConnected}
               onConnectWallet={handleConnect}
+              fightInfo={fightInfo}
               liveRewards={
                 // Number(userSocialRewardsCached) +
                 Number(genesisRank2) +
@@ -6780,7 +6849,8 @@ function Dashboard({
                 Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
-                (claimedMoneyReward ? Number(claimedMoneyReward.reward) : 0)
+                (claimedMoneyReward ? Number(claimedMoneyReward.reward) : 0) +
+                (claimedMoneyFight ? Number(claimedMoneyFight.reward) : 0)
                 // Number(mantaEarnUsd) +
                 // Number(seiEarnUsd) +
 
@@ -7290,9 +7360,45 @@ function Dashboard({
                 aiQuestionRewards={
                   claimedMoneyReward ? Number(claimedMoneyReward.reward) : 0
                 }
+                battleRewards={
+                  claimedMoneyFight ? Number(claimedMoneyFight.reward) : 0
+                }
               />
             </div>
           </OutsideClickHandler>
+        )}
+
+        {(battlePopup || hashValue === "#single-strike") && (
+          <div className={`package-popup-wrapper2 `}>
+            <BattlePopup
+              closePopup={closeBattle}
+              setClosePopup={setcloseBattle}
+              onClose={() => {
+                setbattlePopup(false);
+                html.classList.remove("hidescroll");
+                window.location.hash = "";
+              }}
+              isOpen={battlePopup || hashValue === "#single-strike"}
+              coinbase={coinbase}
+              chainId={chainId}
+              handleSwitchNetwork={handleSwitchNetwork}
+              handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+              handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+              isConnected={isConnected}
+              email={email}
+              address={userWallet}
+              onConnectWallet={() => {
+                setbattlePopup(false);
+                handleConnect();
+              }}
+              onClaimRewards={(userEmail, chainTxt) => {
+                handleGetFightResults(userEmail, chainTxt);
+              }}
+              battleFightResults={battleFightResult}
+              fightInfo={fightInfo}
+              onFightInfoUpdate={setFightInfo}
+            />
+          </div>
         )}
 
         {(showDailyQuestion || hashValue === "#daily-question") && (
@@ -7531,6 +7637,7 @@ function Dashboard({
           <OutsideClickHandler onOutsideClick={() => setClosePopup(false)}>
             <ClosePopup
               onClose={() => {
+                setbattlePopup(false);
                 setSuspenseSound(true);
                 setShowDailyQuestion(false);
                 suspenseMusicRef.current?.pause();
@@ -7543,6 +7650,18 @@ function Dashboard({
               }}
               setClosePopup={setClosePopup}
             />
+          </OutsideClickHandler>
+        )}
+        {closeBattle && (
+          <OutsideClickHandler onOutsideClick={() => setcloseBattle(false)}>
+            <div className="package-popup-wrapper2">
+              <CloseBattlePopup
+                onClose={() => {
+                  setbattlePopup(false);
+                }}
+                setClosePopup={setcloseBattle}
+              />
+            </div>
           </OutsideClickHandler>
         )}
         {(portfolio || hashValue === "#portfolio") && (

@@ -1097,7 +1097,7 @@ const GetPremiumPopup = ({
   const handleCheckIfAlreadyApproved = async (token) => {
     const subscribeToken = token;
 
-    const contractConfig = resolvePremiumContract(chainId, token);
+    const contractConfig = resolvePremiumContract(chainId ?? 1, token);
 
     if (!contractConfig){
       console.error("Unsupported chain for premium contract.");

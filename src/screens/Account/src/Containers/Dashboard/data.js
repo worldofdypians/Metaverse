@@ -16,6 +16,12 @@ export const bannedEmails = [
   "deryanuwu7@gmail.com",
   "amox@poczta.fm",
   "hmbsamd@gmail.com",
+  "sinosfirst@gmail.com",
+  "xtremecharro1@gmail.com",
+  "iceman89icm@gmail.com",
+  "computronfromhell@gmail.com",
+  "cirssimson@gmail.com",
+  "therockcharro@gmail.com",
 ];
 
 export const placeholderplayerData = [

@@ -891,10 +891,16 @@ const Portfolio = ({
       img: "https://cdn.worldofdypians.com/wod/bingx.svg",
     },
     {
+      name: "CoinDCX",
+      href: "https://coindcx.com/trade/WODUSDT",
+      img: "https://cdn.worldofdypians.com/wod/CoinDCX.svg",
+    },
+    {
       name: "WEEX",
       href: "https://www.weex.com/spot/WOD-USDT",
       img: "https://cdn.worldofdypians.com/wod/phemex.png",
     },
+
     {
       name: "Toobit",
       href: "https://www.toobit.com/en-US/spot/WOD_USDT",
@@ -1560,7 +1566,7 @@ const Portfolio = ({
                   )}
                 </div>
               )}
-            
+
               {loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||
                   (filterTitle === "Listed" && listedItems.length > 0) ||
@@ -2164,7 +2170,6 @@ const Portfolio = ({
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
-                          
                           onClick={() => {
                             updateViewCount(nft.tokenId, nft.nftAddress);
                           }}
@@ -2250,10 +2255,10 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
-                                    // : nft.nftAddress ===
+                                    : // : nft.nftAddress ===
                                     //   window.config.nft_mat_address
                                     // ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
-                                    : nft.nftAddress ===
+                                    nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                     : nft.nftAddress ===
@@ -2262,10 +2267,10 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
-                                    // : nft.nftAddress ===
+                                    : // : nft.nftAddress ===
                                     //   window.config.nft_taraxa_address
                                     // ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
-                                    : nft.nftAddress ===
+                                    nft.nftAddress ===
                                       window.config.nft_bnb5ya_address
                                     ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -2355,19 +2360,19 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? "TKBP"
-                                    // : nft.nftAddress ===
+                                    : // : nft.nftAddress ===
                                     //   window.config.nft_mat_address
                                     // ? "MCBP"
-                                    : nft.nftAddress ===
+                                    nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
                                     : nft.nftAddress ===
                                       window.config.nft_sei_address
                                     ? "SEBP"
-                                    // : nft.nftAddress ===
+                                    : // : nft.nftAddress ===
                                     //   window.config.nft_taraxa_address
                                     // ? "TXBP"
-                                    : nft.nftAddress ===
+                                    nft.nftAddress ===
                                       window.config.nft_bnb5ya_address
                                     ? "5YABP"
                                     : "CAWS Timepiece"}{" "}
