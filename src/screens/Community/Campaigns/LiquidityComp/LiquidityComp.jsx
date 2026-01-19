@@ -110,6 +110,7 @@ const LiquidityComp = ({
   const [share, setShare] = useState(0);
   const [estimatedFinalBonus, setEstimatedFinalBonus] = useState(0);
   const [calculatedFinalBonus, setCalculatedFinalBonus] = useState(0);
+  const [calculatedLPBonus, setCalculatedLPBonus] = useState(0);
 
   const [withdrawAmount, setwithdrawAmount] = useState("");
   const [withdrawLoading, setwithdrawLoading] = useState(false);
@@ -126,9 +127,21 @@ const LiquidityComp = ({
   const [errorMsg2, seterrorMsg2] = useState("");
   const [errorMsg3, seterrorMsg3] = useState("");
   const [errorMsg4, seterrorMsg4] = useState("");
+  const [baseAprPercent, setBaseAprPercent] = useState(0);
+  const [bonusAprPercent, setBonusAprPercent] = useState(0);
+  const [totalAprPercent, setTotalAprPercent] = useState(0);
+  const [feesUsd24Percent, setfeesUsd24Percent] = useState(0);
 
   const BONUS_POOL_USDT = 200000;
+  const MIN_DEPOSIT = 100;
+  const MAX_POOL = 2000000;
   const selectedToken = STABLECOINS.find((t) => t.symbol === selectedSymbol);
+  const maxPoolRemaining = Math.max(0, MAX_POOL - Number(totalDeposited || 0));
+  const parsedAmount = Number(amount);
+  const isAmountInvalid =
+    !Number.isFinite(parsedAmount) ||
+    parsedAmount < MIN_DEPOSIT ||
+    parsedAmount > maxPoolRemaining;
   const claims = [
     {
       week: "Week 1",
@@ -138,8 +151,8 @@ const LiquidityComp = ({
     },
     {
       week: "Week 2",
-      amount: 20,
-      status: "claimed",
+      amount: 0,
+      status: "available",
       date: "2026-01-13",
     },
     {
@@ -208,6 +221,18 @@ const LiquidityComp = ({
   const totalAvailableToClaim = claims
     .filter((c) => c.status === "available")
     .reduce((sum, c) => sum + c.amount, 0);
+
+  const fetchAprData = async () => {
+    const result = await fetch(
+      "https://api.worldofdypians.com/api/wod/pancake/apr",
+    )
+      .then((res) => res.json())
+      .catch((e) => console.error("Error fetching APR data:", e));
+    setBaseAprPercent(result.base_apr_percent);
+    setBonusAprPercent(result.bonus_apr_percent);
+    setTotalAprPercent(result.total_apr_percent);
+    setfeesUsd24Percent(result.fees_usd_24h);
+  };
 
   const checkTokenApproval = async (amount) => {
     try {
@@ -471,6 +496,10 @@ const LiquidityComp = ({
     let sharePrime =
       userScorePrime === 0 ? 0 : userScorePrime / totalScorePrime;
     let estimatedFinalBonusPrime = BONUS_POOL_USDT * sharePrime;
+
+    const userShare = Number(amount) / totalScorePrime;
+    const estimatedLPFees = feesUsd24Percent * remaining * userShare;
+    setCalculatedLPBonus(estimatedLPFees);
     setCalculatedFinalBonus(estimatedFinalBonusPrime);
   };
 
@@ -485,6 +514,7 @@ const LiquidityComp = ({
       claimsAvailableLP,
       claimsAvailableBonus,
       withdrawableAmount,
+      totalUnits,
     ] = await Promise.all([
       readContract(wagmiClient, {
         address: window.config.liquidity_campaign_address,
@@ -549,6 +579,13 @@ const LiquidityComp = ({
         args: [coinbase ?? window.config.ZERO_ADDRESS],
         chainId: bsc.id,
       }).catch(() => 0),
+      readContract(wagmiClient, {
+        address: window.config.liquidity_campaign_address,
+        abi: window.LIQUIDITY_ABI,
+        functionName: "totalUnits",
+        args: [],
+        chainId: bsc.id,
+      }).catch(() => 0),
     ]);
 
     const userScore_formatted = new BigNumber(userScore ?? 0)
@@ -570,17 +607,18 @@ const LiquidityComp = ({
     const seasonStart_formatted = Number(seasonStart);
 
     const user_totalDeposited_formatted = new BigNumber(
-      user_totalDeposited ?? 0
+      user_totalDeposited ?? 0,
     )
       .div(1e18)
       .toString(10);
-    const totalPoolDeposited =
-      totalScore_formatted / SEASON_DAYS - Number(currentDayIndex);
+    const totalPoolDeposited = new BigNumber(totalUnits ?? 0)
+      .div(1e18)
+      .toString(10);
     const claimsAvailableLP_formatted = new BigNumber(claimsAvailableLP ?? 0)
       .div(1e18)
       .toString(10);
     const claimsAvailableBonus_formatted = new BigNumber(
-      claimsAvailableBonus ?? 0
+      claimsAvailableBonus ?? 0,
     )
       .div(1e18)
       .toString(10);
@@ -630,8 +668,19 @@ const LiquidityComp = ({
   };
 
   useEffect(() => {
+    if (isConnected && coinbase && chainId === 56) {
+      if (Number(amount) > maxPoolRemaining) {
+        window.alertify.error(
+          "Deposit amount is greater than available quota. Please add another amount.",
+        );
+      }
+    }
+  }, [amount, maxPoolRemaining, isConnected, coinbase, chainId]);
+
+  useEffect(() => {
     document.title = "WOD Liquidity Catalyst Campaign";
     window.scrollTo(0, 0);
+    fetchAprData();
   }, []);
 
   useEffect(() => {
@@ -686,9 +735,12 @@ const LiquidityComp = ({
                         <TrendingUp className="w-4 h-4" />
                         <span className="text-xs">Current APR</span>
                       </div>
-                      <div className="text-2xl font-bold text-white">78.4%</div>
+                      <div className="text-2xl font-bold text-white">
+                        {getFormattedNumber(totalAprPercent)}%
+                      </div>
                       <div className="text-xs text-slate-400">
-                        38.4% Base + 40% Bonus
+                        {getFormattedNumber(baseAprPercent)}% Base +{" "}
+                        {getFormattedNumber(bonusAprPercent)}% Bonus
                       </div>
                     </div>
 
@@ -972,12 +1024,20 @@ const LiquidityComp = ({
                                 checkTokenApproval(e.target.value);
                                 calculateScore(e.target.value);
                               }}
+                              max={maxPoolRemaining}
                               placeholder="0.00"
                               className="flex-1 bg-transparent text-white text-xl font-semibold outline-none"
                               maxLength={7}
                             />
                             <button
-                              onClick={() => setAmount(selectedToken.balance)}
+                              onClick={() =>
+                                setAmount(
+                                  Math.min(
+                                    Number(selectedToken.balance || 0),
+                                    maxPoolRemaining,
+                                  ).toString(),
+                                )
+                              }
                               className="px-3 py-1 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 rounded text-xs font-semibold transition-colors"
                             >
                               MAX
@@ -987,7 +1047,7 @@ const LiquidityComp = ({
                       </div>
 
                       {/* Estimated rewards */}
-                      <div className="bg-gradient-to-br d-flex align-items-center justify-content-between from-yellow-500/10 to-orange-500/10 bordertw border-yellow-500/20 rounded-lg p-3 mb-3">
+                      <div className="bg-gradient-to-br d-flex align-items-center justify-content-between from-yellow-500/10 to-orange-500/10 bordertw border-yellow-500/20 rounded-lg px-3 py-2 mb-3">
                         <div className="text-xs text-slate-300 mb-0">
                           Estimated Rewards (USDT)
                         </div>
@@ -997,7 +1057,7 @@ const LiquidityComp = ({
                               LP Fees
                             </div>
                             <div className="text-lg font-bold text-white">
-                              ${((parseFloat(amount) || 0) * 0.384).toFixed(2)}
+                              ${getFormattedNumber(calculatedLPBonus, 2)}
                             </div>
                           </div>
                           <div>
@@ -1016,20 +1076,24 @@ const LiquidityComp = ({
                             depositStatus === "deposit"
                               ? handleDeposit()
                               : depositStatus === "initial" &&
-                                amount !== "" &&
-                                isEOA
-                              ? handleApproveToken()
-                              : console.log("");
+                                  amount !== "" &&
+                                  isEOA
+                                ? handleApproveToken()
+                                : console.log("");
                           }}
-                          disabled={!amount || parseFloat(amount) === 0}
+                          disabled={
+                            !amount ||
+                            parseFloat(amount) === 0 ||
+                            isAmountInvalid
+                          }
                           className={`${
                             depositStatus === "initial" ||
                             depositStatus === "deposit"
                               ? "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
                               : depositStatus === "success"
-                              ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
-                              : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
-                          } w-full py-3 text-lg disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold`}
+                                ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
+                                : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
+                          } w-full py-2 text-lg disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold`}
                         >
                           {depositLoading ? (
                             <div
@@ -1062,7 +1126,7 @@ const LiquidityComp = ({
                       {!isConnected && !coinbase && (
                         <button
                           onClick={handleConnection}
-                          className="w-full py-3 text-lg bg-gradient-to-r from-brandBlue to-brandCyan line-height-inherit hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
+                          className="w-full py-2 text-lg bg-gradient-to-r from-brandBlue to-brandCyan line-height-inherit hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
                         >
                           Connect Wallet
                         </button>
@@ -1070,7 +1134,7 @@ const LiquidityComp = ({
                       {isConnected && coinbase && chainId !== 56 && (
                         <button
                           onClick={handleBNBPool}
-                          className="w-full py-3 text-lg bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
+                          className="w-full py-2 text-lg bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
                         >
                           Switch to BNB Chain
                         </button>
@@ -1118,8 +1182,8 @@ const LiquidityComp = ({
                                   claimStatus === "claim"
                                     ? "bg-gradient-to-r from-green-600 to-emerald-500"
                                     : claimStatus === "success"
-                                    ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
-                                    : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
+                                      ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
+                                      : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
                                 } px-4 py-2  hover:from-green-700 hover:to-emerald-600 text-white rounded-lg text-xs font-semibold transition-all shadow-lg shadow-green-500/30`}
                               >
                                 {claimLoading ? (
