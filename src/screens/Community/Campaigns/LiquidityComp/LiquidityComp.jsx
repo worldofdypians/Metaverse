@@ -53,7 +53,7 @@ const LiquidityComp = ({
     usdtBalance: 0,
     usdcBalance: 0,
     usd1Balance: 0,
-    uBalance: 0,
+    // uBalance: 0,
   });
   const STABLECOINS = [
     {
@@ -80,13 +80,13 @@ const LiquidityComp = ({
       decimals: 18,
       balance: tokenBalance.usd1Balance,
     },
-    {
-      address: "0xcE24439F2D9C6a2289F741120FE202248B666666",
-      symbol: "U",
-      name: "U Stablecoin",
-      balance: tokenBalance.uBalance,
-      icon: "uIconPremium.svg",
-    },
+    // {
+    //   address: "0xcE24439F2D9C6a2289F741120FE202248B666666",
+    //   symbol: "U",
+    //   name: "U Stablecoin",
+    //   balance: tokenBalance.uBalance,
+    //   icon: "uIconPremium.svg",
+    // },
   ];
 
   const [selectedSymbol, setSelectedSymbol] = useState("USDT");
@@ -457,7 +457,7 @@ const LiquidityComp = ({
       usdtBalance: 0,
       usdcBalance: 0,
       usd1Balance: 0,
-      uBalance: 0,
+      // uBalance: 0,
     };
     if (coinbase) {
       for (let token of STABLECOINS) {
@@ -475,9 +475,10 @@ const LiquidityComp = ({
           temp.usdcBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
         } else if (token.symbol === "USD1") {
           temp.usd1Balance = new BigNumber(result ?? 0).div(1e18).toString(10);
-        } else if (token.symbol === "U") {
-          temp.uBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
         }
+        // else if (token.symbol === "U") {
+        //   temp.uBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
+        // }
       }
 
       setTokenBalance(temp);
@@ -762,12 +763,10 @@ const LiquidityComp = ({
                         <DollarSign className="w-4 h-4" />
                         <span className="text-xs">Pool Status</span>
                       </div>
-                      <div className="text-xl font-bold text-white">
-                        ${abbreviateNumber(totalDeposited, 1).replace("G", "B")}{" "}
-                        / $2M
-                      </div>
+                      <div className="text-xl font-bold text-white">$2M</div>
                       <div className="text-xs text-slate-400">
-                        {(totalDeposited / 2000000) * 100}% Filled
+                        {/* {(totalDeposited / 2000000) * 100}% Filled */}
+                        Max Cap
                       </div>
                     </div>
 
@@ -960,7 +959,7 @@ const LiquidityComp = ({
                                 setShowTokenSelect(false);
                               }}
                             >
-                              <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 bordertw border-white/10 rounded-lg shadow-xl max-h-48 overflow-y-auto">
+                              <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 bordertw border-white/10 rounded-lg shadow-xl max-h-49 overflow-y-auto">
                                 {STABLECOINS.map((token) => (
                                   <button
                                     key={token.symbol}
@@ -1025,7 +1024,7 @@ const LiquidityComp = ({
                                 calculateScore(e.target.value);
                               }}
                               max={maxPoolRemaining}
-                              placeholder="0.00"
+                              placeholder="Min 100 USDT"
                               className="flex-1 bg-transparent text-white text-xl font-semibold outline-none"
                               maxLength={7}
                             />
