@@ -27,7 +27,7 @@ import { bsc } from "viem/chains";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import { switchNetworkWagmi } from "../../../../utils/wagmiSwitchChain";
 import { abbreviateNumber } from "js-abbreviation-number";
-import { get } from "http";
+
 
 const renderer = ({ days, hours }) => {
   return (
@@ -132,9 +132,9 @@ const LiquidityComp = ({
   const [totalAprPercent, setTotalAprPercent] = useState(0);
   const [feesUsd24Percent, setfeesUsd24Percent] = useState(0);
 
-  const BONUS_POOL_USDT = 200000;
+  const BONUS_POOL_USDT = 250000;
   const MIN_DEPOSIT = 100;
-  const MAX_POOL = 2000000;
+  const MAX_POOL = 2500000;
   const selectedToken = STABLECOINS.find((t) => t.symbol === selectedSymbol);
   const maxPoolRemaining = Math.max(0, MAX_POOL - Number(totalDeposited || 0));
   const parsedAmount = Number(amount);
@@ -763,7 +763,7 @@ const LiquidityComp = ({
                         <DollarSign className="w-4 h-4" />
                         <span className="text-xs">Pool Status</span>
                       </div>
-                      <div className="text-xl font-bold text-white">$2M</div>
+                      <div className="text-xl font-bold text-white">${abbreviateNumber(MAX_POOL)}</div>
                       <div className="text-xs text-slate-400">
                         {/* {(totalDeposited / 2000000) * 100}% Filled */}
                         Max Cap
@@ -776,7 +776,7 @@ const LiquidityComp = ({
                         <span className="text-xs">Bonus Rewards</span>
                       </div>
                       <div className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                        $200K USDT
+                        ${abbreviateNumber(BONUS_POOL_USDT, 0)} USDT
                       </div>
                       <div className="text-xs text-slate-400">Season Pool</div>
                     </div>
@@ -821,25 +821,25 @@ const LiquidityComp = ({
                         <div className="text-cyan-400 font-semibold">
                           Top 10
                         </div>
-                        <div className="text-white font-bold">$50K USDT</div>
+                        <div className="text-white font-bold">$90K USDT</div>
                       </div>
                       <div className="bg-blue-500/10 bordertw border-blue-500/20 rounded-lg p-2">
                         <div className="text-cyan-400 font-semibold">
                           Rank 11-50
                         </div>
-                        <div className="text-white font-bold">$80K USDT</div>
+                        <div className="text-white font-bold">$70K USDT</div>
                       </div>
                       <div className="bg-blue-500/10 bordertw border-blue-500/20 rounded-lg p-2">
                         <div className="text-cyan-400 font-semibold">
                           Rank 51-100
                         </div>
-                        <div className="text-white font-bold">$40K USDT</div>
+                        <div className="text-white font-bold">$50K USDT</div>
                       </div>
                       <div className="bg-blue-500/10 bordertw border-blue-500/20 rounded-lg p-2">
                         <div className="text-cyan-400 font-semibold">
                           Rank 101-300
                         </div>
-                        <div className="text-white font-bold">$30K USDT</div>
+                        <div className="text-white font-bold">$40K USDT</div>
                       </div>
                     </div>
                   </div>

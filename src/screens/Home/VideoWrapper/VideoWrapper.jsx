@@ -559,7 +559,7 @@ const VideoWrapper = ({
                       }}
                     >
                       <motion.h5 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-0">
-                        $200,000 Rewards
+                        $250,000 Rewards
                       </motion.h5>
                     </motion.div>
                   </motion.div>
