@@ -634,7 +634,7 @@ function AppRoutes() {
   let bnbLastDay = new Date("2026-04-10T14:00:00.000+02:00");
   let coreLastDay = new Date("2025-04-04T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
-  let coreLastDay2 = new Date("2026-04-11T14:00:00.000+02:00");
+  let coreLastDay2 = new Date("2026-05-19T14:00:00.000+02:00");
   let mantaLastDay = new Date("2025-08-13T14:00:00.000+02:00");
   let taikoLastDay = new Date("2025-08-02T14:00:00.000+02:00");
   let taikoLastDay2 = new Date("2025-12-09T14:00:00.000+02:00");
@@ -1698,61 +1698,61 @@ function AppRoutes() {
         thumbImage: "https://cdn.worldofdypians.com/wod/immutableThumb.png",
       },
     },
-    // {
-    //   title: "CORE",
-    //   logo: "https://cdn.worldofdypians.com/wod/core.svg",
-    //   eventStatus: "Expired",
-    //   totalRewards: "$20,000 in CORE Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Mine",
-    //   // eventDate: "Dec 12, 2025",
-    //   eventDate: "Aug 14, 2025",
-    //   backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
-    //   image: "coreBanner.png",
-    //   type: "Treasure Hunt",
-    //   infoType: "Treasure Hunt",
-    //   location: [-0.06862698344579729, 0.08752048015594482],
-    //   marker: markers.treasureMarker,
-    //   userEarnUsd: 0,
-    //   userEarnCrypto: 0,
-    //   userEarnPoints: 0,
-    //   popupInfo: {
-    //     title: "CORE",
-    //     chain: "CORE Chain",
-    //     linkState: "core",
-    //     rewards: "CORE",
-    //     status: "Expired",
-    //     id: "event12",
-    //     eventType: "Explore & Mine",
-    //     totalRewards: "$20,000 in CORE Rewards",
-    //     eventDuration: coreLastDay2,
-    //     minRewards: "0.5",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore: "",
-    //     // eventDate: "Dec 12, 2025",
-    //     eventDate: "Aug 14, 2025",
-    //     detailsText: `To participate in the event, players are required to&nbsp;
-    //               <b>hold a CORE Beta Pass NFT</b>. You can get the CORE Beta
-    //               Pass NFT from the World of Dypians Shop. By engaging in the
-    //               game on a daily basis and exploring the CORE area, players not
-    //               only stand a chance to secure daily rewards in CORE, but also
-    //               earn points for their placement on the global leaderboard.
-    //               Remember to log in to the game daily and venture into the
-    //               CORE area to uncover hidden treasures.`,
-    //     about: `Core DAO started as a community looking for better solutions,
-    //         and that's what it remains. With principles grounded in the
-    //         premises of both Bitcoin and Ethereum, our power comes from
-    //         embracing multiple ideas and communities. The opposite of a
-    //         winner-take-all mentality - Core is focused instead on platform
-    //         growth and driving the global adoption of blockchain technology.`,
-    //     twitterLink: "https://twitter.com/Coredao_Org",
-    //     telegramLink: "https://t.me/CoreDAOTelegram",
-    //     websiteLink: "https://coredao.org/",
-    //     thumbImage: "https://cdn.worldofdypians.com/wod/coreThumb.png",
-    //   },
-    // },
+    {
+      title: "CORE",
+      logo: "https://cdn.worldofdypians.com/wod/core.svg",
+      eventStatus: "Live",
+      totalRewards: "$10,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      // eventDate: "Dec 12, 2025",
+      eventDate: "Jan 19, 2026",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
+      image: "coreBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      location: [-0.06862698344579729, 0.08752048015594482],
+      marker: markers.treasureMarker,
+      userEarnUsd: user.userStats.coreEarnUsd,
+      userEarnCrypto: user.userStats.coreEarnToken,
+      userEarnPoints: user.userStats.corePoints,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Live",
+        id: "event12",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in CORE Rewards",
+        eventDuration: coreLastDay2,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        // eventDate: "Dec 12, 2025",
+        eventDate: "Jan 19, 2026",
+        detailsText: `To participate in the event, players are required to&nbsp;
+                  <b>hold a CORE Beta Pass NFT</b>. You can get the CORE Beta
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the CORE area, players not
+                  only stand a chance to secure daily rewards in CORE, but also
+                  earn points for their placement on the global leaderboard.
+                  Remember to log in to the game daily and venture into the
+                  CORE area to uncover hidden treasures.`,
+        about: `Core DAO started as a community looking for better solutions,
+            and that's what it remains. With principles grounded in the
+            premises of both Bitcoin and Ethereum, our power comes from
+            embracing multiple ideas and communities. The opposite of a
+            winner-take-all mentality - Core is focused instead on platform
+            growth and driving the global adoption of blockchain technology.`,
+        twitterLink: "https://twitter.com/Coredao_Org",
+        telegramLink: "https://t.me/CoreDAOTelegram",
+        websiteLink: "https://coredao.org/",
+        thumbImage: "https://cdn.worldofdypians.com/wod/coreThumb.png",
+      },
+    },
     {
       title: "CORE",
       logo: "https://cdn.worldofdypians.com/wod/core.svg",
@@ -2597,57 +2597,57 @@ function AppRoutes() {
       },
     },
 
-    // {
-    //   title: "Vanar",
-    //   logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-    //   eventStatus: "Live",
-    //   totalRewards: "$10,000 in VANRY Rewards",
-    //   location: [-0.06784377896887378, 0.0839531421661377],
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "Jan 16, 2026",
-    //   type: "Treasure Hunt",
-    //   rewardType: "VANRY",
-    //   rewardAmount: "$10,000",
-    //   infoType: "Treasure Hunt",
-    //   backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
-    //   image: "vanarArea.webp",
-    //   userEarnUsd: user.userStats.vanarEarnUsd,
-    //   userEarnCrypto: user.userStats.vanarEarnToken,
-    //   userEarnPoints: user.userStats.vanarPoints,
-    //   popupInfo: {
-    //     title: "Vanar",
-    //     chain: "Vanar Network",
-    //     linkState: "vanar",
-    //     rewards: "VANRY",
-    //     status: "Live",
-    //     id: "event2",
-    //     eventType: "Explore & Mine",
-    //     totalRewards: "$10,000 in VANRY Rewards",
-    //     eventDuration: vanarLastDay,
-    //     minRewards: "0.5",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore: "",
-    //     eventDate: "Jan 16, 2026",
-    //     detailsText: `To participate in the event, players are required to
-    //               <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
-    //               Pass NFT from the World of Dypians Shop. By engaging in the
-    //               game on a daily basis and exploring the Vanar area, players
-    //               not only stand a chance to secure daily rewards in VANRY, but
-    //               also earn points for their placement on the global
-    //               leaderboard. Remember to log in to the game daily and venture
-    //               into the Vanar area to uncover hidden treasures.`,
-    //     about: ` Vanar offers a suite of solutions for brands built on years of
-    //         experience. From new engagement experiences to AI-driven IP
-    //        tracking.`,
-    //     twitterLink: "https://x.com/vanarchain",
-    //     telegramLink: "https://t.me/vanarofficial",
-    //     websiteLink: "https://vanarchain.com/",
-    //     thumbImage: "https://cdn.worldofdypians.com/wod/vanarThumb.webp",
-    //   },
-    // },
+    {
+      title: "Vanar",
+      logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
+      eventStatus: "Live",
+      totalRewards: "$10,000 in VANRY Rewards",
+      location: [-0.06784377896887378, 0.0839531421661377],
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jan 16, 2026",
+      type: "Treasure Hunt",
+      rewardType: "VANRY",
+      rewardAmount: "$10,000",
+      infoType: "Treasure Hunt",
+      backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
+      image: "vanarArea.webp",
+      userEarnUsd: user.userStats.vanarEarnUsd,
+      userEarnCrypto: user.userStats.vanarEarnToken,
+      userEarnPoints: user.userStats.vanarPoints,
+      popupInfo: {
+        title: "Vanar",
+        chain: "Vanar Network",
+        linkState: "vanar",
+        rewards: "VANRY",
+        status: "Live",
+        id: "event2",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in VANRY Rewards",
+        eventDuration: vanarLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jan 16, 2026",
+        detailsText: `To participate in the event, players are required to
+                  <b>hold a Vanar Beta Pass NFT</b>. You can get the Vanar Beta
+                  Pass NFT from the World of Dypians Shop. By engaging in the
+                  game on a daily basis and exploring the Vanar area, players
+                  not only stand a chance to secure daily rewards in VANRY, but
+                  also earn points for their placement on the global
+                  leaderboard. Remember to log in to the game daily and venture
+                  into the Vanar area to uncover hidden treasures.`,
+        about: ` Vanar offers a suite of solutions for brands built on years of
+            experience. From new engagement experiences to AI-driven IP
+           tracking.`,
+        twitterLink: "https://x.com/vanarchain",
+        telegramLink: "https://t.me/vanarofficial",
+        websiteLink: "https://vanarchain.com/",
+        thumbImage: "https://cdn.worldofdypians.com/wod/vanarThumb.webp",
+      },
+    },
     {
       title: "Vanar",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
@@ -4314,9 +4314,9 @@ function AppRoutes() {
           }
 
           if (vanarEvent && vanarEvent[0]) {
-            // if (vanarEvent[0].reward.earn.totalPoints > 0) {
-            //   userActiveEvents = userActiveEvents + 1;
-            // }
+            if (vanarEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               vanarEvent[0].reward.earn.total /
