@@ -26,8 +26,7 @@ const Campaigns = ({ coinbase }) => {
     <li style="list-style-type: disc;">Weekly rewards + tiered leaderboard prizes</li>
     </ul>
    `,
-      link: "https://dappbay.bnbchain.org/campaign/421-join-the-path-of-kings-to-share-150k-in-rewards",
-      target: "_blank",
+      link: "/liquidity-catalyst",
     },
     {
       title: "Path of Kings: Claim Your Share of $150,000",
