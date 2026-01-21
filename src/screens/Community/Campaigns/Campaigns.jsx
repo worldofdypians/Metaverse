@@ -14,6 +14,22 @@ const Campaigns = ({ coinbase }) => {
 
   const dummyBanner = [
     {
+      title: "Liquidity Catalyst: Earn From the $250k Reward Pool",
+      status: "Live",
+      start_date: "Jan 22, 2026",
+      end_date: "Apr 22, 2026",
+      image: "https://cdn.worldofdypians.com/wod/liquidityBanner.jpg",
+      desc: `Power up your earnings in World of Dypians with the Liquidity Catalyst Campaign and compete for a $250,000 USDT Season Pool.<br/>
+    <ul><li style="list-style-type: disc;">Deposit 100 USDT minimum</li>
+    <li style="list-style-type: disc;">Automated WOD USDT LP on PancakeSwap</li>
+    <li style="list-style-type: disc;">Auto compounding enabled</li>
+    <li style="list-style-type: disc;">Weekly rewards + tiered leaderboard prizes</li>
+    </ul>
+   `,
+      link: "https://dappbay.bnbchain.org/campaign/421-join-the-path-of-kings-to-share-150k-in-rewards",
+      target: "_blank",
+    },
+    {
       title: "Path of Kings: Claim Your Share of $150,000",
       status: "Expired",
       start_date: "Nov 17, 2025",
@@ -98,6 +114,21 @@ const Campaigns = ({ coinbase }) => {
   ];
 
   const dummyData = [
+       {
+      title: "Path of Kings: Claim Your Share of $150,000",
+      status: "Expired",
+      start_date: "Nov 17, 2025",
+      end_date: " Dec 01, 2025",
+      image: "https://cdn.worldofdypians.com/wod/path-of-kings-bg.webp",
+      desc: `Fuel your rise to royalty in the World of Dypians with the Path of Kings campaign and a massive $150,000 in rewards up for grabs!<br/>
+    <ul><li style="list-style-type: disc;">Trade a minimum of $50 in WOD</li>
+    <li style="list-style-type: disc;">Log in or create your World of Dypians game account</li>
+    <li style="list-style-type: disc;">Open the Royalty Chest on BNB Chain or opBNB</li>
+    </ul>
+   `,
+      link: "https://dappbay.bnbchain.org/campaign/421-join-the-path-of-kings-to-share-150k-in-rewards",
+      target: "_blank",
+    },
     {
       title: "Surge to Glory: Claim Your Share of $95,000",
       status: "Expired",
