@@ -12,6 +12,7 @@ import {
   Check,
 } from "lucide-react";
 import DisclaimerModal from "./components/DisclaimerModal";
+import UserPositionModal from "./components/UserPositionModal";
 import Countdown from "react-countdown";
 import OutsideClickHandler from "react-outside-click-handler";
 import "../../../../components/Kickstarter/components/kickstarter_newcss.scss";
@@ -27,7 +28,6 @@ import { bsc } from "viem/chains";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import { switchNetworkWagmi } from "../../../../utils/wagmiSwitchChain";
 import { abbreviateNumber } from "js-abbreviation-number";
-
 
 const renderer = ({ days, hours }) => {
   return (
@@ -97,6 +97,8 @@ const LiquidityComp = ({
 
   const [showTokenSelect, setShowTokenSelect] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [showUserPosition, setShowUserPosition] = useState(false);
+
   const [totalDeposited, setTotalDeposited] = useState(0);
   const [activeTab, setActiveTab] = useState("deposit");
   const [claimFilter, setClaimFilter] = useState("available");
@@ -147,68 +149,68 @@ const LiquidityComp = ({
       week: "Week 1",
       amount: claimLPAmount,
       status: "available",
-      date: "2026-01-06",
+      date: "2026-01-22",
     },
     {
       week: "Week 2",
       amount: 0,
       status: "available",
-      date: "2026-01-13",
+      date: "2026-01-29",
     },
     {
       week: "Week 3",
       amount: 0,
       status: "available",
-      date: "2026-01-20",
+      date: "2026-02-05",
     },
     {
       week: "Week 4",
       amount: 0,
       status: "available",
-      date: "2026-01-27",
+      date: "2026-02-12",
     },
     {
       week: "Week 5",
       amount: 0,
       status: "available",
-      date: "2026-02-03",
+      date: "2026-02-19",
     },
     {
       week: "Week 6",
       amount: 0,
       status: "available",
-      date: "2026-02-10",
+      date: "2026-02-26",
     },
     {
       week: "Week 7",
       amount: 0,
       status: "available",
-      date: "2026-02-17",
+      date: "2026-03-05",
     },
     {
       week: "Week 8",
       amount: 0,
       status: "available",
-      date: "2026-02-24",
+      date: "2026-03-12",
     },
-    { week: "Week 9", amount: 0, status: "available", date: "2026-03-03" },
+    { week: "Week 9", amount: 0, status: "available", date: "2026-03-19" },
     {
       week: "Week 10",
       amount: 0,
       status: "available",
-      date: "2026-03-10",
+      date: "2026-03-26",
     },
     {
       week: "Week 11",
       amount: 0,
       status: "available",
-      date: "2026-03-17",
+      date: "2026-04-02",
     },
     {
       week: "Week 12",
       amount: 0,
       status: "available",
-      date: "2026-03-23",
+      date: "2026-04-09",
     },
   ];
   const { BigNumber } = window;
@@ -498,7 +500,8 @@ const LiquidityComp = ({
       userScorePrime === 0 ? 0 : userScorePrime / totalScorePrime;
     let estimatedFinalBonusPrime = BONUS_POOL_USDT * sharePrime;
 
-    const userShare = Number(amount) / totalScorePrime;
+    const userShare =
+      totalScorePrime === 0 ? 0 : Number(amount) / totalScorePrime;
     const estimatedLPFees = feesUsd24Percent * remaining * userShare;
     setCalculatedLPBonus(estimatedLPFees);
     setCalculatedFinalBonus(estimatedFinalBonusPrime);
@@ -597,9 +600,10 @@ const LiquidityComp = ({
       .toString(10);
 
     const share =
-      totalScore_formatted === 0
+      Number(totalScore_formatted) === 0
         ? 0
         : userScore_formatted / totalScore_formatted;
+
     let estimatedFinalBonus = share * BONUS_POOL_USDT;
     setUserScore(userScore_formatted);
     setTotalScore(totalScore_formatted);
@@ -705,6 +709,9 @@ const LiquidityComp = ({
           {showDisclaimer && (
             <DisclaimerModal onClose={() => setShowDisclaimer(false)} />
           )}
+          {showUserPosition && (
+            <UserPositionModal onClose={() => setShowUserPosition(false)} />
+          )}
 
           {/* Main content - single scroll */}
           <main className="max-w-7xl mx-auto px-lg-4 sm:px-6 lg:px-8 py-6 relative">
@@ -763,7 +770,9 @@ const LiquidityComp = ({
                         <DollarSign className="w-4 h-4" />
                         <span className="text-xs">Pool Status</span>
                       </div>
-                      <div className="text-xl font-bold text-white">${abbreviateNumber(MAX_POOL)}</div>
+                      <div className="text-xl font-bold text-white">
+                        ${abbreviateNumber(MAX_POOL)}
+                      </div>
                       <div className="text-xs text-slate-400">
                         {/* {(totalDeposited / 2000000) * 100}% Filled */}
                         Max Cap
@@ -864,7 +873,7 @@ const LiquidityComp = ({
                       Your Position
                     </span>
                     <button
-                      onClick={() => setShowDisclaimer(true)}
+                      onClick={() => setShowUserPosition(true)}
                       className="w-7 h-7 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 flex items-center justify-center transition-colors group"
                       title="View Important Disclaimer"
                     >
@@ -989,11 +998,11 @@ const LiquidityComp = ({
                                       </div>
                                     </div>
                                     <div className="text-right">
-                                      <div className="text-xs text-slate-400">
+                                      <div className="text-xs text-end text-slate-400">
                                         Balance
                                       </div>
                                       <div className="text-white font-semibold text-xs">
-                                        {token.balance}
+                                        {getFormattedNumber(token.balance, 4)}
                                       </div>
                                     </div>
                                   </button>
@@ -1047,20 +1056,23 @@ const LiquidityComp = ({
 
                       {/* Estimated rewards */}
                       <div className="bg-gradient-to-br d-flex align-items-center justify-content-between from-yellow-500/10 to-orange-500/10 bordertw border-yellow-500/20 rounded-lg px-3 py-2 mb-3">
-                        <div className="text-xs text-slate-300 mb-0">
+                        <div className="text-sm text-slate-300 mb-0">
                           Estimated Rewards (USDT)
                         </div>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="d-flex align-items-center gap-3">
                           <div>
                             <div className="text-xs text-slate-400">
-                              LP Fees
+                              From LP Fees
                             </div>
                             <div className="text-lg font-bold text-white">
                               ${getFormattedNumber(calculatedLPBonus, 2)}
                             </div>
                           </div>
+                          <span className="text-white">+</span>
                           <div>
-                            <div className="text-xs text-slate-400">Bonus</div>
+                            <div className="text-xs text-slate-400">
+                              From Bonus
+                            </div>
                             <div className="text-lg font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
                               ${getFormattedNumber(calculatedFinalBonus, 2)}
                             </div>
@@ -1270,7 +1282,16 @@ const LiquidityComp = ({
             <div className="mt-4 text-center">
               <p className="text-xs text-slate-400">
                 By depositing, you acknowledge all risks and agree to the terms.
-                3-month Campaign period • Auto-LP every 3 hours
+                •{" "}
+                <span
+                  className="text-decoration-underline cursor-pointer"
+                  onClick={() => {
+                    setShowDisclaimer(true);
+                  }}
+                >
+                  Terms and conditions
+                </span>{" "}
+                •
               </p>
             </div>
           </main>

@@ -65,7 +65,7 @@ const DisclaimerModal = ({ onClose }) => {
                   throughout the campaign duration.
                 </p>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  <span className="">2. Bonus Rewards ($200K pool):</span>{" "}
+                  <span className="">2. Bonus Rewards ($250K pool):</span>{" "}
                   Distributed{" "}
                   <span className="">at the end of the 3-month campaign</span>{" "}
                   based on your pool share. Allocated across tiered rankings
@@ -88,7 +88,7 @@ const DisclaimerModal = ({ onClose }) => {
                   the assumption that the total value locked (TVL) reaches our
                   target pool cap of{" "}
                   {/* <span className="bg-yellow-300/20 text-yellow-300 font-semibold px-1 rounded"> */}
-                  $2,000,000
+                  $2,500,000
                   {/* </span> */}.
                 </p>
                 <p className="text-xs text-slate-300 leading-relaxed mb-2">
@@ -138,7 +138,7 @@ const DisclaimerModal = ({ onClose }) => {
                     {/* <span className="bg-blue-300/20 text-blue-300 font-semibold px-1 rounded"> */}
                     Only stablecoins
                     {/* </span>{" "} */}
-                    (USDT, USDC, U, USD1) are accepted.
+                    (USDT, USDC, USD1) are accepted.
                   </li>
                   <li>
                     •{" "}
