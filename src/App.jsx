@@ -5175,6 +5175,7 @@ function AppRoutes() {
           !location.pathname.includes("forgotPassword") &&
           !location.pathname.includes("wod-okxwallet") &&
           !location.pathname.includes("keep-building") &&
+          !location.pathname.includes("liquidity-catalyst") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}

@@ -62,33 +62,6 @@ const UserPositionModal = ({ onClose }) => {
             </div>
           </div>
 
-          {/* Reward Adjustments */}
-          <div className="">
-            <div className="flex items-start gap-3">
-              {/* <Info className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" /> */}
-              <div>
-                <h4 className="text-sm font-bold text-blue-300">
-                  Bonus Rewards Tiers
-                </h4>
-                <p className="text-xs text-slate-300 leading-relaxed  mb-0">
-                  Top 10
-                </p>
-                <p className="text-xs text-slate-300 leading-relaxed  mb-0">
-                  {/* <span className="bg-yellow-300/20 text-yellow-300 font-semibold px-1 rounded"> */}
-                  Rank 11 to 50
-                </p>
-                <p className="text-xs text-slate-300 leading-relaxed mb-0">
-                  {/* <span className="bg-yellow-300/20 text-yellow-300 font-semibold px-1 rounded"> */}
-                  Rank 51 to 100
-                </p>
-                <p className="text-xs text-slate-300 leading-relaxed mb-0">
-                  {/* <span className="bg-yellow-300/20 text-yellow-300 font-semibold px-1 rounded"> */}
-                  Rank 101 to 300
-                </p>
-              </div>
-            </div>
-          </div>
-
           {/* General Terms */}
           <div className="">
             <div className="flex items-start gap-3">
