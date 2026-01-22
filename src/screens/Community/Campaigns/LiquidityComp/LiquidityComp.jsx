@@ -135,7 +135,7 @@ const LiquidityComp = ({
   const [feesUsd24Percent, setfeesUsd24Percent] = useState(0);
 
   const BONUS_POOL_USDT = 250000;
-  const MIN_DEPOSIT = 100;
+  const MIN_DEPOSIT = 1;
   const MAX_POOL = 2500000;
   const selectedToken = STABLECOINS.find((t) => t.symbol === selectedSymbol);
   const maxPoolRemaining = Math.max(0, MAX_POOL - Number(totalDeposited || 0));
@@ -338,7 +338,7 @@ const LiquidityComp = ({
         setdepositStatus("deposit");
         seterrorMsg("");
         setCalculatedFinalBonus(0);
-      }, 10000);
+      }, 5000);
     }
   };
 
@@ -375,7 +375,7 @@ const LiquidityComp = ({
       setTimeout(() => {
         setclaimStatus("initial");
         seterrorMsg2("");
-      }, 10000);
+      }, 5000);
     }
   };
 
@@ -678,6 +678,8 @@ const LiquidityComp = ({
         window.alertify.error(
           "Deposit amount is greater than available quota. Please add another amount.",
         );
+      } else if (Number(amount) < 1 && Number(amount) > 0 && amount !== "") {
+        window.alertify.error("Minimum deposit amount is $1.");
       }
     }
   }, [amount, maxPoolRemaining, isConnected, coinbase, chainId]);
@@ -1033,9 +1035,10 @@ const LiquidityComp = ({
                                 calculateScore(e.target.value);
                               }}
                               max={maxPoolRemaining}
-                              placeholder="Min 100 USDT"
+                              placeholder="Min 1 USDT"
                               className="flex-1 bg-transparent text-white text-xl font-semibold outline-none"
                               maxLength={7}
+                              min={1}
                             />
                             <button
                               onClick={() =>
@@ -1056,7 +1059,7 @@ const LiquidityComp = ({
 
                       {/* Estimated rewards */}
                       <div className="bg-gradient-to-br d-flex align-items-center justify-content-between from-yellow-500/10 to-orange-500/10 bordertw border-yellow-500/20 rounded-lg px-3 py-2 mb-3">
-                        <div className="text-sm text-slate-300 mb-0">
+                        <div className="text-sm text-yellow-400 mb-0">
                           Estimated Rewards (USDT)
                         </div>
                         <div className="d-flex align-items-center gap-3">
@@ -1068,12 +1071,14 @@ const LiquidityComp = ({
                               ${getFormattedNumber(calculatedLPBonus, 2)}
                             </div>
                           </div>
-                          <span className="text-white">+</span>
+                          <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent font-bold text-lg">
+                            +
+                          </span>
                           <div>
                             <div className="text-xs text-slate-400">
                               From Bonus
                             </div>
-                            <div className="text-lg font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                            <div className="text-lg font-bold text-white">
                               ${getFormattedNumber(calculatedFinalBonus, 2)}
                             </div>
                           </div>
