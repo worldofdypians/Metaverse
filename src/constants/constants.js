@@ -17,6 +17,6 @@ export const betaPasses = [
   "/shop/beta-pass/doge",
   "/shop/beta-pass/coinmarketcap",
   "/shop/beta-pass/gate",
-  "/shop/beta-pass/coingecko/:terms?",
+  "/shop/beta-pass/coingecko/:terms-conditions?",
   "/shop/beta-pass/base",
 ];

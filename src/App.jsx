@@ -112,71 +112,77 @@ import { wagmiClient } from "./wagmiConnectors.js";
 import { CandlelightCursor } from "./components/FestiveElements/CandleLightCursor.jsx";
 import { fetchStarMonthlyLeaderboard } from "./services/leaderboardApi";
 import { localData } from "./screens/Reserve/data.js";
+import LiquidityComp from "./screens/Community/Campaigns/LiquidityComp/LiquidityComp.jsx";
 
-const Marketplace = React.lazy(() =>
-  import("./screens/Marketplace/Marketplace")
+const Marketplace = React.lazy(
+  () => import("./screens/Marketplace/Marketplace"),
 );
-const CawsNFT = React.lazy(() =>
-  import("./screens/Marketplace/MarketNFTs/CawsNFT")
+const CawsNFT = React.lazy(
+  () => import("./screens/Marketplace/MarketNFTs/CawsNFT"),
 );
-const WoDNFT = React.lazy(() =>
-  import("./screens/Marketplace/MarketNFTs/WoDNFT")
+const WoDNFT = React.lazy(
+  () => import("./screens/Marketplace/MarketNFTs/WoDNFT"),
 );
-const TimepieceNFT = React.lazy(() =>
-  import("./screens/Marketplace/MarketNFTs/TimepieceNFT")
+const TimepieceNFT = React.lazy(
+  () => import("./screens/Marketplace/MarketNFTs/TimepieceNFT"),
 );
-const SingleNft = React.lazy(() =>
-  import("./screens/Marketplace/MarketNFTs/SingleNft")
+const SingleNft = React.lazy(
+  () => import("./screens/Marketplace/MarketNFTs/SingleNft"),
 );
-const Notifications = React.lazy(() =>
-  import("./screens/Marketplace/Notifications/Notifications")
+const Notifications = React.lazy(
+  () => import("./screens/Marketplace/Notifications/Notifications"),
 );
-const BetaPassNFT = React.lazy(() =>
-  import("./screens/Marketplace/MarketNFTs/BetaPassNFT")
+const BetaPassNFT = React.lazy(
+  () => import("./screens/Marketplace/MarketNFTs/BetaPassNFT"),
 );
 const Caws = React.lazy(() => import("./screens/Caws/Caws.jsx"));
-const AuthBNB = React.lazy(() =>
-  import("./screens/Account/src/Containers/Auth/AuthBNB.jsx")
+const AuthBNB = React.lazy(
+  () => import("./screens/Account/src/Containers/Auth/AuthBNB.jsx"),
 );
 const Bridge = React.lazy(() => import("./screens/Wod/Bridge/Bridge.jsx"));
 const Earn = React.lazy(() => import("./screens/Wod/Earn/Earn.jsx"));
-const Governance = React.lazy(() =>
-  import("./screens/Community/Governance/Governance.jsx")
+const Governance = React.lazy(
+  () => import("./screens/Community/Governance/Governance.jsx"),
 );
-const GovernanceInner = React.lazy(() =>
-  import("./screens/Community/Governance/GovernanceContent/GovernanceInner.jsx")
+const GovernanceInner = React.lazy(
+  () =>
+    import("./screens/Community/Governance/GovernanceContent/GovernanceInner.jsx"),
 );
 
 const Redirect = React.lazy(() => import("./screens/Home/Redirect"));
 const Token = React.lazy(() => import("./screens/Token/Token"));
-const LoyaltyProgram = React.lazy(() =>
-  import("./screens/LoyaltyProgram/LoyaltyProgram.jsx")
+const LoyaltyProgram = React.lazy(
+  () => import("./screens/LoyaltyProgram/LoyaltyProgram.jsx"),
 );
 const About = React.lazy(() => import("./screens/About/About.jsx"));
 const Game = React.lazy(() => import("./screens/Game/Game.jsx"));
-const Campaigns = React.lazy(() =>
-  import("./screens/Community/Campaigns/Campaigns.jsx")
+const Campaigns = React.lazy(
+  () => import("./screens/Community/Campaigns/Campaigns.jsx"),
 );
 const Map = React.lazy(() => import("./screens/Map/Map.jsx"));
 const Whitelist = React.lazy(() => import("./screens/Whitelist/Whitelist.jsx"));
 const Release = React.lazy(() => import("./screens/Release/Release.jsx"));
-const BinanceCampaignRules = React.lazy(() =>
-  import("./screens/TermsConditions/BinanceCampaignRules.jsx")
+const BinanceCampaignRules = React.lazy(
+  () => import("./screens/TermsConditions/BinanceCampaignRules.jsx"),
 );
-const Launchpool = React.lazy(() =>
-  import("./screens/Launchpool/Launchpool.jsx")
+const Launchpool = React.lazy(
+  () => import("./screens/Launchpool/Launchpool.jsx"),
 );
-const ListNFT = React.lazy(() =>
-  import("./screens/Marketplace/MarketNFTs/ListNFT")
+const ListNFT = React.lazy(
+  () => import("./screens/Marketplace/MarketNFTs/ListNFT"),
 );
 // const NFTBridge = React.lazy(() => import("./screens/NFTBridge/NftBridge"));
 // const NewEvents = React.lazy(() =>
 //   import("./components/NewEvents/NewEvents.jsx")
 // );
-const Dashboard = React.lazy(() =>
-  import("./screens/Account/src/Containers/Dashboard/Dashboard.jsx")
+const Dashboard = React.lazy(
+  () => import("./screens/Account/src/Containers/Dashboard/Dashboard.jsx"),
 );
 const Agent = React.lazy(() => import("./screens/NewAgent/Agent.jsx"));
+
+const LiquidityCampaign = React.lazy(
+  () => import("./screens/Community/Campaigns/LiquidityComp/LiquidityComp.jsx"),
+);
 
 // Immutable SDK is heavy; load only when needed
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH";
@@ -421,7 +427,7 @@ function WalletSync() {
       console.log(
         "👀 WalletSync - Account changed:",
         account.status,
-        account.address
+        account.address,
       );
 
       switch (account.status) {
@@ -472,7 +478,7 @@ function WalletSync() {
         console.log(
           "🔗 Connections changed:",
           connections.length,
-          "active connection(s)"
+          "active connection(s)",
         );
 
         if (connections.length === 0) {
@@ -701,25 +707,25 @@ function AppRoutes() {
     const allSold = latest20BoughtNFTS;
     if (allSold && allSold.length > 0) {
       let cawsFilter = allSold.filter(
-        (item) => item.nftAddress === window.config.nft_caws_address
+        (item) => item.nftAddress === window.config.nft_caws_address,
       );
       let uniqueCaws = cawsFilter.filter(
-        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i,
       );
 
       let wodFilter = allSold.filter(
-        (item) => item.nftAddress === window.config.nft_land_address
+        (item) => item.nftAddress === window.config.nft_land_address,
       );
       let uniqueWod = wodFilter.filter(
-        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i,
       );
 
       let timepieceFilter = allSold.filter(
-        (item) => item.nftAddress === window.config.nft_timepiece_address
+        (item) => item.nftAddress === window.config.nft_timepiece_address,
       );
 
       let uniqueTimepiece = timepieceFilter.filter(
-        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
+        (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i,
       );
 
       setCawsBought(uniqueCaws);
@@ -760,11 +766,11 @@ function AppRoutes() {
               nft.nftAddress === window.config.nft_timepiece_address
                 ? "timepiece"
                 : nft.nftAddress === window.config.nft_land_address
-                ? "land"
-                : "caws",
+                  ? "land"
+                  : "caws",
             chain: 1,
           };
-        })
+        }),
       );
 
       setLatest20RecentListedNFTS(updatedItems);
@@ -807,7 +813,7 @@ function AppRoutes() {
     const timepieceNft = allTimepieceNfts;
     if (timepieceNft && timepieceNft.length > 0) {
       let timepieceNft_ETH = timepieceNft.filter(
-        (item) => item.payment_priceType === 0
+        (item) => item.payment_priceType === 0,
       );
       let latestTimepiece = timepieceNft_ETH.sort((a, b) => {
         return (
@@ -2923,7 +2929,7 @@ function AppRoutes() {
     if (address) {
       const tokenContract = new window.bscWeb3.eth.Contract(
         window.TOKEN_ABI,
-        window.config.wod_token_address
+        window.config.wod_token_address,
       );
       const tokenBalance = await tokenContract.methods
         .balanceOf(address)
@@ -2990,7 +2996,7 @@ function AppRoutes() {
       mergeData(
         formatedData.sort(function (a, b) {
           return a.date - b.date;
-        })
+        }),
       );
     }
   };
@@ -3069,9 +3075,8 @@ function AppRoutes() {
 
   const getStakesIds = async () => {
     const address = coinbase;
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
-    );
+    let staking_contract =
+      await window.getContractCawsPremiumNFT("CAWSPREMIUM");
     let stakenft = [];
     let myStakes = await staking_contract.methods
       .depositsOf(address)
@@ -3096,9 +3101,8 @@ function AppRoutes() {
   };
 
   const getTimepieceNftMinted = async () => {
-    const result = await window.caws_timepiece.calculateTimepieceBalance(
-      coinbase
-    );
+    const result =
+      await window.caws_timepiece.calculateTimepieceBalance(coinbase);
     setTotalTimepieceCreated(result);
     let metadataArray = [];
     if (result && result > 0) {
@@ -3106,7 +3110,7 @@ function AppRoutes() {
         const tokenId =
           +(await window.caws_timepiece.getCawsTimepieceTokenByIndex(
             coinbase,
-            index
+            index,
           ));
 
         metadataArray.push({
@@ -3201,7 +3205,7 @@ function AppRoutes() {
 
     let nft_contract = new window.infuraWeb3.eth.Contract(
       window.CAWS_TIMEPIECE_ABI,
-      window.config.caws_timepiece_address
+      window.config.caws_timepiece_address,
     );
 
     if (cawsArray.length > 0) {
@@ -3252,7 +3256,7 @@ function AppRoutes() {
     ) {
       const tokenSc = new window.bscWeb3.eth.Contract(
         window.TOKEN_ABI,
-        window.config.wod_token_address
+        window.config.wod_token_address,
       );
 
       const totaldesposited_wod1 = await tokenSc.methods
@@ -3263,7 +3267,7 @@ function AppRoutes() {
         });
 
       const totaldesposited_wod1_formatted = new window.BigNumber(
-        totaldesposited_wod1
+        totaldesposited_wod1,
       )
         .div(1e18)
         .toFixed(6);
@@ -3275,7 +3279,7 @@ function AppRoutes() {
           console.error(e);
         });
       const totaldesposited_wod2_formatted = new window.BigNumber(
-        totaldesposited_wod2
+        totaldesposited_wod2,
       )
         .div(1e18)
         .toFixed(6);
@@ -3287,7 +3291,7 @@ function AppRoutes() {
           console.error(e);
         });
       const totaldesposited_wod3_formatted = new window.BigNumber(
-        totaldesposited_wod3
+        totaldesposited_wod3,
       )
         .div(1e18)
         .toFixed(6);
@@ -3328,30 +3332,30 @@ function AppRoutes() {
         });
 
       const totaldesposited_wod4_formatted = new window.BigNumber(
-        totaldesposited_wod4
+        totaldesposited_wod4,
       )
         .div(1e18)
         .toFixed(6);
 
       const totaldesposited_wod5_formatted = new window.BigNumber(
-        totaldesposited_wod5
+        totaldesposited_wod5,
       )
         .div(1e18)
         .toFixed(6);
 
       const totaldesposited_wod6_formatted = new window.BigNumber(
-        totaldesposited_wod6
+        totaldesposited_wod6,
       )
         .div(1e18)
         .toFixed(6);
 
       const totaldesposited_wod7_formatted = new window.BigNumber(
-        totaldesposited_wod7
+        totaldesposited_wod7,
       )
         .div(1e18)
         .toFixed(6);
       const totaldesposited_wod8_formatted = new window.BigNumber(
-        totaldesposited_wod8
+        totaldesposited_wod8,
       )
         .div(1e18)
         .toFixed(6);
@@ -3489,18 +3493,18 @@ function AppRoutes() {
     walletAddress,
     title,
     description,
-    redirect_link
+    redirect_link,
   ) {
     const API_BASE_URL = "https://api.worldofdypians.com";
     try {
       const response = await axios
         .get(
           `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
-            walletAddress
+            walletAddress,
           )}`,
           {
             headers: { Authorization: `Bearer ${authToken}` },
-          }
+          },
         )
         .catch((e) => {
           console.error(e);
@@ -3510,7 +3514,7 @@ function AppRoutes() {
         const newUserResponse = await axios
           .post(
             `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
-              walletAddress
+              walletAddress,
             )}`,
             {
               tokenId: "",
@@ -3531,7 +3535,7 @@ function AppRoutes() {
             },
             {
               headers: { Authorization: `Bearer ${authToken}` },
-            }
+            },
           )
           .catch((e) => {
             console.error(e);
@@ -3614,7 +3618,7 @@ function AppRoutes() {
     let result = await safeReadTotalSupply(
       timepieceClient,
       window.config.nft_timepiece_address,
-      window.CAWS_TIMEPIECE_ABI
+      window.CAWS_TIMEPIECE_ABI,
     );
 
     // Base (cycle multiple endpoints to mitigate rate limits)
@@ -3625,12 +3629,12 @@ function AppRoutes() {
         result_base = await safeReadTotalSupply(
           baseClient,
           window.config.nft_base_address,
-          window.BASE_NFT_ABI
+          window.BASE_NFT_ABI,
         );
       } catch (err) {
         const message = err?.message || "";
         console.warn(
-          `Error with ${window.config.all_base_endpoints[i]}: ${message}`
+          `Error with ${window.config.all_base_endpoints[i]}: ${message}`,
         );
         const lower = message.toLowerCase();
         const isRateLimited =
@@ -3639,7 +3643,7 @@ function AppRoutes() {
           lower.includes("over rate limit");
         if (isRateLimited) {
           console.log(
-            `Rate limited on totalSupply ${window.config.all_base_endpoints[i]}. Trying next...`
+            `Rate limited on totalSupply ${window.config.all_base_endpoints[i]}. Trying next...`,
           );
         }
       }
@@ -3686,102 +3690,102 @@ function AppRoutes() {
       safeReadTotalSupply(
         confluxClient,
         window.config.nft_conflux_address,
-        window.CONFLUX_NFT_ABI
+        window.CONFLUX_NFT_ABI,
       ),
       safeReadTotalSupply(
         bscClient,
         window.config.nft_gate_address,
-        window.GATE_NFT_ABI
+        window.GATE_NFT_ABI,
       ),
       safeReadTotalSupply(
         bscClient,
         window.config.nft_doge_address,
-        window.DOGE_NFT_ABI
+        window.DOGE_NFT_ABI,
       ),
       safeReadTotalSupply(
         bscClient,
         window.config.nft_cmc_address,
-        window.CMC_NFT_ABI
+        window.CMC_NFT_ABI,
       ),
       safeReadTotalSupply(
         skaleClient,
         window.config.nft_skale_address,
-        window.SKALE_NFT_ABI
+        window.SKALE_NFT_ABI,
       ),
       safeReadTotalSupply(
         bscClient,
         window.config.nft_bnb_address,
-        window.BNB_NFT_ABI
+        window.BNB_NFT_ABI,
       ),
       safeReadTotalSupply(
         opbnbClient,
         window.config.nft_opbnb_address,
-        window.OPBNB_NFT_ABI
+        window.OPBNB_NFT_ABI,
       ),
       safeReadTotalSupply(
         opbnbClient,
         window.config.nft_kucoin_address,
-        window.OPBNB_NFT_ABI
+        window.OPBNB_NFT_ABI,
       ),
       safeReadTotalSupply(
         opbnbClient,
         window.config.nft_bnb5ya_address,
-        window.OPBNB_NFT_ABI
+        window.OPBNB_NFT_ABI,
       ),
       safeReadTotalSupply(
         victionClient,
         window.config.nft_viction_address.toLowerCase(),
-        window.VICTION_NFT_ABI
+        window.VICTION_NFT_ABI,
       ),
       safeReadTotalSupply(
         coreClient,
         window.config.nft_core_address,
-        window.CORE_NFT_ABI
+        window.CORE_NFT_ABI,
       ),
       safeReadTotalSupply(
         multiversClient,
         window.config.nft_multivers_address,
-        window.MULTIVERS_NFT_ABI
+        window.MULTIVERS_NFT_ABI,
       ),
       safeReadTotalSupply(
         mantaClient,
         window.config.nft_manta_address,
-        window.MANTA_NFT_ABI
+        window.MANTA_NFT_ABI,
       ),
       safeReadTotalSupply(
         taikoClient,
         window.config.nft_taiko_address,
-        window.TAIKO_NFT_ABI
+        window.TAIKO_NFT_ABI,
       ),
       safeReadTotalSupply(
         bscClient,
         window.config.nft_cookie3_address,
-        window.COOKIE3_NFT_ABI
+        window.COOKIE3_NFT_ABI,
       ),
       safeReadTotalSupply(
         matClient,
         window.config.nft_mat_address,
-        window.MAT_NFT_ABI
+        window.MAT_NFT_ABI,
       ),
       safeReadTotalSupply(
         seiClient,
         window.config.nft_sei_address,
-        window.SEI_NFT_ABI
+        window.SEI_NFT_ABI,
       ),
       safeReadTotalSupply(
         vanarClient,
         window.config.nft_vanar_address,
-        window.VANAR_NFT_ABI
+        window.VANAR_NFT_ABI,
       ),
       safeReadTotalSupply(
         taraxaClient,
         window.config.nft_taraxa_address,
-        window.TARAXA_NFT_ABI
+        window.TARAXA_NFT_ABI,
       ),
       safeReadTotalSupply(
         seiClient,
         window.config.nft_teasei_address,
-        window.SEI_NFT_ABI
+        window.SEI_NFT_ABI,
       ),
     ]);
 
@@ -3841,7 +3845,7 @@ function AppRoutes() {
         Number(teaseiResult) +
         Number(taraxaResult) +
         Number(bnb_5ya_result) +
-        20002
+        20002,
     );
   };
 
@@ -3852,18 +3856,18 @@ function AppRoutes() {
         targetChainId === 1
           ? "0x1"
           : targetChainId === 56
-          ? "0x38"
-          : targetChainId === 204
-          ? "0xcc"
-          : targetChainId === 8453
-          ? "0x2105"
-          : targetChainId === 43114
-          ? "0xa86a"
-          : targetChainId === 1482601649
-          ? "0x585eb4b1"
-          : targetChainId === 1030
-          ? "0x406"
-          : `0x${targetChainId.toString(16)}`;
+            ? "0x38"
+            : targetChainId === 204
+              ? "0xcc"
+              : targetChainId === 8453
+                ? "0x2105"
+                : targetChainId === 43114
+                  ? "0xa86a"
+                  : targetChainId === 1482601649
+                    ? "0x585eb4b1"
+                    : targetChainId === 1030
+                      ? "0x406"
+                      : `0x${targetChainId.toString(16)}`;
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: hex }],
@@ -3918,7 +3922,7 @@ function AppRoutes() {
   const handleConnection = async (option) => {
     const connectors = wagmiClient.connectors;
     const connector = connectors.find((c) =>
-      c.name.toLowerCase().includes(option.toLowerCase())
+      c.name.toLowerCase().includes(option.toLowerCase()),
     );
     if (connector) {
       connect({ connector, chainId });
@@ -3976,7 +3980,7 @@ function AppRoutes() {
           method: "POST",
           redirect: "follow",
           mode: "cors",
-        }
+        },
       );
       if (response.status === 200) {
         let userActiveEvents = 0;
@@ -4561,7 +4565,7 @@ function AppRoutes() {
           `https://api.worldofdypians.com/user-favorites/${userId}`,
           {
             headers: { Authorization: `Bearer ${authToken}` },
-          }
+          },
         );
         if (!response.ok) {
           throw new Error("Error fetching user favorites");
@@ -4588,25 +4592,25 @@ function AppRoutes() {
 
   const fetchAllMyNfts = async (wallet) => {
     getMyNFTS(wallet, "caws").then((NFTS) =>
-      setUserNFTs({ myNFTSCaws: NFTS ?? [] })
+      setUserNFTs({ myNFTSCaws: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "cawsbnb").then((NFTS) =>
-      setUserNFTs({ myNFTSCawsBNB: NFTS ?? [] })
+      setUserNFTs({ myNFTSCawsBNB: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "cawsbase").then((NFTS) =>
-      setUserNFTs({ myNFTSCawsBase: NFTS ?? [] })
+      setUserNFTs({ myNFTSCawsBase: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "cawsavax").then((NFTS) =>
-      setUserNFTs({ myNFTSCawsAvax: NFTS ?? [] })
+      setUserNFTs({ myNFTSCawsAvax: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "timepiece").then((NFTS) =>
-      setUserNFTs({ myNFTSTimepiece: NFTS ?? [] })
+      setUserNFTs({ myNFTSTimepiece: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "land").then((NFTS) =>
-      setUserNFTs({ myNFTSLand: NFTS ?? [] })
+      setUserNFTs({ myNFTSLand: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "bnb").then((NFTS) => {
@@ -4614,62 +4618,62 @@ function AppRoutes() {
     });
 
     getMyNFTS(wallet, "opbnb").then((NFTS) =>
-      setUserNFTs({ myNFTSOpBNB: NFTS ?? [] })
+      setUserNFTs({ myNFTSOpBNB: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "landbnb").then((NFTS) =>
-      setUserNFTs({ myNFTSLandBNB: NFTS ?? [] })
+      setUserNFTs({ myNFTSLandBNB: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "landbase").then((NFTS) =>
-      setUserNFTs({ myNFTSLandBase: NFTS ?? [] })
+      setUserNFTs({ myNFTSLandBase: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "landavax").then((NFTS) =>
-      setUserNFTs({ myNFTSLandAvax: NFTS ?? [] })
+      setUserNFTs({ myNFTSLandAvax: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "coingecko").then((NFTS) =>
-      setUserNFTs({ myNFTSCoingecko: NFTS ?? [] })
+      setUserNFTs({ myNFTSCoingecko: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "gate").then((NFTS) =>
-      setUserNFTs({ myGateNfts: NFTS ?? [] })
+      setUserNFTs({ myGateNfts: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "conflux").then((NFTS) =>
-      setUserNFTs({ myConfluxNfts: NFTS ?? [] })
+      setUserNFTs({ myConfluxNfts: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "base").then((NFTS) =>
-      setUserNFTs({ myBaseNfts: NFTS ?? [] })
+      setUserNFTs({ myBaseNfts: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "doge").then((NFTS) =>
-      setUserNFTs({ myDogeNfts: NFTS ?? [] })
+      setUserNFTs({ myDogeNfts: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "cmc").then((NFTS) =>
-      setUserNFTs({ myCmcNfts: NFTS ?? [] })
+      setUserNFTs({ myCmcNfts: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "core").then((NFTS) =>
-      setUserNFTs({ myCoreNfts: NFTS ?? [] })
+      setUserNFTs({ myCoreNfts: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "viction").then((NFTS) =>
-      setUserNFTs({ myVictionNfts: NFTS ?? [] })
+      setUserNFTs({ myVictionNfts: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "immutable").then((NFTS) =>
-      setUserNFTs({ myImmutableNfts: NFTS ?? [] })
+      setUserNFTs({ myImmutableNfts: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "multivers").then((NFTS) =>
-      setUserNFTs({ myMultiversNfts: NFTS ?? [] })
+      setUserNFTs({ myMultiversNfts: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "skale").then((NFTS) =>
-      setUserNFTs({ mySkaleNfts: NFTS ?? [] })
+      setUserNFTs({ mySkaleNfts: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "manta").then((NFTS) =>
-      setUserNFTs({ myMantaNfts: NFTS ?? [] })
+      setUserNFTs({ myMantaNfts: NFTS ?? [] }),
     );
 
     getMyNFTS(wallet, "taiko").then((NFTS) =>
-      setUserNFTs({ myTaikoNfts: NFTS ?? [] })
+      setUserNFTs({ myTaikoNfts: NFTS ?? [] }),
     );
 
     // getMyNFTS(wallet, "mat").then((NFTS) =>
@@ -4677,10 +4681,10 @@ function AppRoutes() {
     // );
 
     getMyNFTS(wallet, "cookie3").then((NFTS) =>
-      setUserNFTs({ myCookieNfts: NFTS ?? [] })
+      setUserNFTs({ myCookieNfts: NFTS ?? [] }),
     );
     getMyNFTS(wallet, "sei").then((NFTS) =>
-      setUserNFTs({ mySeiNfts: NFTS ?? [] })
+      setUserNFTs({ mySeiNfts: NFTS ?? [] }),
     );
   };
 
@@ -4688,27 +4692,27 @@ function AppRoutes() {
     if (addr) {
       const daily_bonus_contract = new window.opBnbWeb3.eth.Contract(
         window.DAILY_BONUS_ABI,
-        window.config.daily_bonus_address
+        window.config.daily_bonus_address,
       );
 
       const daily_bonus_contract_bnb = new window.bscWeb3.eth.Contract(
         window.DAILY_BONUS_BNB_ABI,
-        window.config.daily_bonus_bnb_address
+        window.config.daily_bonus_bnb_address,
       );
 
       const daily_bonus_contract_skale = new window.skaleWeb3.eth.Contract(
         window.DAILY_BONUS_SKALE_ABI,
-        window.config.daily_bonus_skale_address
+        window.config.daily_bonus_skale_address,
       );
 
       const daily_bonus_contract_core = new window.coreWeb3.eth.Contract(
         window.DAILY_BONUS_CORE_ABI,
-        window.config.daily_bonus_core_address
+        window.config.daily_bonus_core_address,
       );
 
       const daily_bonus_contract_viction = new window.victionWeb3.eth.Contract(
         window.DAILY_BONUS_VICTION_ABI,
-        window.config.daily_bonus_viction_address
+        window.config.daily_bonus_viction_address,
       );
 
       // const daily_bonus_contract_manta = new window.mantaWeb3.eth.Contract(
@@ -4718,12 +4722,12 @@ function AppRoutes() {
 
       const daily_bonus_contract_taiko = new window.taikoWeb3.eth.Contract(
         window.DAILY_BONUS_TAIKO_ABI,
-        window.config.daily_bonus_taiko_address
+        window.config.daily_bonus_taiko_address,
       );
 
       const daily_bonus_contract_base = new window.baseWeb3.eth.Contract(
         window.DAILY_BONUS_BASE_ABI,
-        window.config.daily_bonus_base_address
+        window.config.daily_bonus_base_address,
       );
 
       if (addr) {
@@ -5142,7 +5146,7 @@ function AppRoutes() {
       addNewUserIfNotExists(
         coinbase,
         "Welcome",
-        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
+        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
       );
   }, [coinbase, isConnected, authToken, email, userWallet]);
 
@@ -5171,6 +5175,7 @@ function AppRoutes() {
           !location.pathname.includes("forgotPassword") &&
           !location.pathname.includes("wod-okxwallet") &&
           !location.pathname.includes("keep-building") &&
+          !location.pathname.includes("liquidity-catalyst") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
@@ -6361,6 +6366,20 @@ function AppRoutes() {
               path="/trading-competition"
               element={
                 <TradingComp coinbase={coinbase} isConnected={isConnected} />
+              }
+            />
+            <Route
+              exact
+              path="/liquidity-catalyst"
+              element={
+                <LiquidityCampaign
+                  coinbase={coinbase}
+                  isConnected={isConnected}
+                  chainId={networkId}
+                  handleConnection={() => setWalletModal(true)}
+                  handleSwitchNetwork={handleSwitchNetwork}
+                  isEOA={isEOA}
+                />
               }
             />
 
