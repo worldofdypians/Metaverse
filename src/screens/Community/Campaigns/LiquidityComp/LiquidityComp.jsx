@@ -135,7 +135,7 @@ const LiquidityComp = ({
   const [feesUsd24Percent, setfeesUsd24Percent] = useState(0);
 
   const BONUS_POOL_USDT = 250000;
-  const MIN_DEPOSIT = 1;
+  const MIN_DEPOSIT = 100;
   const MAX_POOL = 2500000;
   const selectedToken = STABLECOINS.find((t) => t.symbol === selectedSymbol);
   const maxPoolRemaining = Math.max(0, MAX_POOL - Number(totalDeposited || 0));
@@ -678,8 +678,8 @@ const LiquidityComp = ({
         window.alertify.error(
           "Deposit amount is greater than available quota. Please add another amount.",
         );
-      } else if (Number(amount) < 1 && Number(amount) > 0 && amount !== "") {
-        window.alertify.error("Minimum deposit amount is $1.");
+      } else if (Number(amount) < MIN_DEPOSIT && Number(amount) > 0 && amount !== "") {
+        window.alertify.error("Minimum deposit amount is $100.");
       }
     }
   }, [amount, maxPoolRemaining, isConnected, coinbase, chainId]);
@@ -1035,7 +1035,7 @@ const LiquidityComp = ({
                                 calculateScore(e.target.value);
                               }}
                               max={maxPoolRemaining}
-                              placeholder="Min 1 USDT"
+                              placeholder="Min 100 USDT"
                               className="flex-1 bg-transparent text-white text-xl font-semibold outline-none"
                               maxLength={7}
                               min={1}
