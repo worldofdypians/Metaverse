@@ -71,7 +71,7 @@ const UserPositionModal = ({ onClose }) => {
                   How to Participate
                 </h4>
                 <ul className="text-xs p-0 text-slate-300 space-y-1.5">
-                  <li>Deposit supported stablecoins: USDT, USDC, USD1</li>
+                  <li>Deposit supported stablecoins: USDT, USDC, USD1, U</li>
                   <li>You can deposit multiple times during the campaign</li>
                 </ul>
               </div>

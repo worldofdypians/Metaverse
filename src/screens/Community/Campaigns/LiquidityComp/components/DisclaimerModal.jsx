@@ -138,7 +138,7 @@ const DisclaimerModal = ({ onClose }) => {
                     {/* <span className="bg-blue-300/20 text-blue-300 font-semibold px-1 rounded"> */}
                     Only stablecoins
                     {/* </span>{" "} */}
-                    (USDT, USDC, USD1) are accepted.
+                    (USDT, USDC, USD1, U) are accepted.
                   </li>
                   <li>
                     •{" "}
