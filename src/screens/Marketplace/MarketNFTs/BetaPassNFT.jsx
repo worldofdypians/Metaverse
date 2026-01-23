@@ -521,7 +521,7 @@ const BetaPassNFT = ({
     if (openTerms === true || openConflux === true) {
       html.classList.add("hidescroll");
       bgmenu.style.pointerEvents = "auto";
-      bgmenu2.style.pointerEvents = "auto";
+      // bgmenu2.style.pointerEvents = "auto";
     } else {
       // Enable scroll
       html.classList.remove("hidescroll");
@@ -540,16 +540,14 @@ const BetaPassNFT = ({
   }, []);
 
   useEffect(() => {
-    setSelectedMint(
-      betaPasses.find(
-        (mint) => mint.id === locationState.split("/").slice(-1)[0]
-      )
-    );
-    setMintTitle(
-      betaPasses.find(
-        (mint) => mint.id === locationState.split("/").slice(-1)[0]
-      ).id
-    );
+    const parts = locationState.split("/").filter(Boolean);
+    const betaPassIndex = parts.indexOf("beta-pass");
+    const mintId = betaPassIndex !== -1 ? parts[betaPassIndex + 1] : null;
+
+    if (mintId) {
+      setSelectedMint(betaPasses.find((mint) => mint.id === mintId));
+      setMintTitle(betaPasses.find((mint) => mint.id === mintId).id);
+    }
   }, [locationState]);
 
   return (
@@ -831,7 +829,7 @@ const BetaPassNFT = ({
                                     $
                                     {getFormattedNumber(
                                       selectedMint?.userEarned,
-                                      2
+                                      2,
                                     )}
                                   </h6>
                                 </div>
@@ -1261,7 +1259,10 @@ const BetaPassNFT = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => setOpenTerms(true)}
                 >
-                  <NavLink to="/shop/beta-pass/coingecko/terms-conditions">
+                  <NavLink
+                    to="/shop/beta-pass/coingecko/terms-conditions"
+                    className={"d-flex align-items-center gap-2"}
+                  >
                     <span className="terms-and-conditions mb-0">
                       Terms & Conditions
                     </span>

@@ -427,31 +427,35 @@ const VideoWrapper = ({
               />
             </div> */}
 
-            <div className="relative flex items-center justify-center z-5">
+            <div
+              className="relative  flex items-center justify-center z-5"
+              style={{ height: "fit-content" }}
+            >
               <motion.div
-                // initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                // animate={{ opacity: 1, scale: 1, y: 0 }}
-                // transition={{ duration: 0.8, ease: "easeOut" }}
-                className="text-center w-fit h-fit mx-auto px-6"
+                initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="text-center max-w-2xl mx-auto px-6"
               >
                 {/* Compact Announcement Card */}
                 <motion.div
-                  className="rounded-xl py-6 px-10 shadow-2xl relative overflow-hidden backdrop-blur-sm"
+                  className="rounded-xl p-8 shadow-2xl relative overflow-hidden backdrop-blur-sm"
                   style={{
-                    background: "#181A20",
-                    border: "1px solid rgba(243, 186, 47, 0.4)",
+                    background:
+                      "linear-gradient(135deg, #5690FF 0%, #8C56FF 100%)",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
                   }}
-                  // initial={{ rotateX: 20 }}
-                  // animate={{ rotateX: 0 }}
-                  // transition={{ duration: 0.8, ease: "easeOut" }}
+                  initial={{ rotateX: 20 }}
+                  animate={{ rotateX: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
                   whileHover={{ scale: 1.02 }}
                 >
-                  {/* Animated background pattern */}
+                  {/* Shimmer sweep effect */}
                   <motion.div
                     className="absolute inset-0 rounded-xl"
                     style={{
                       background:
-                        "linear-gradient(45deg, transparent 30%, rgba(243, 186, 47, 0.1) 50%, transparent 70%)",
+                        "linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)",
                     }}
                     animate={{
                       x: ["-100%", "100%"],
@@ -464,9 +468,9 @@ const VideoWrapper = ({
                     }}
                   />
 
-                  {/* Floating particles overlay */}
+                  {/* Subtle particle overlay */}
                   <motion.div
-                    className="absolute inset-0 opacity-15"
+                    className="absolute inset-0 opacity-10"
                     animate={{
                       backgroundPosition: ["0% 0%", "100% 100%"],
                     }}
@@ -476,52 +480,93 @@ const VideoWrapper = ({
                       ease: "linear",
                     }}
                     style={{
-                      backgroundImage: `radial-gradient(circle, rgba(243, 186, 47, 0.8) 1px, transparent 1px)`,
+                      backgroundImage: `radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px)`,
                       backgroundSize: "25px 25px",
                     }}
                   />
 
-                  {/* Binance Logo */}
+                  {/* Animated gradient orbs */}
                   <motion.div
-                    className="flex justify-center mb-3 relative z-5"
-                    initial={{ y: -10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
+                    className="absolute top-0 left-0 w-40 h-40 rounded-full blur-3xl opacity-30"
+                    style={{
+                      background:
+                        "radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 70%)",
+                    }}
+                    animate={{
+                      x: [0, 100, 0],
+                      y: [0, 80, 0],
+                      scale: [1, 1.2, 1],
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+                  <motion.div
+                    className="absolute bottom-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-25"
+                    style={{
+                      background:
+                        "radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%)",
+                    }}
+                    animate={{
+                      x: [0, -80, 0],
+                      y: [0, -60, 0],
+                      scale: [1, 1.3, 1],
+                    }}
+                    transition={{
+                      duration: 10,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+
+                  {/* Title */}
+                  <motion.h3
+                    className="text-1xl md:text-2xl font-bold text-white mb-3 relative z-10 drop-shadow-lg"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
                   >
+                    Liquidity Catalyst Campaign
+                  </motion.h3>
+
+                  {/* Rewards Container */}
+                  <motion.div
+                    className="inline-block mb-6 relative z-10"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                  >
                     <motion.div
+                      className="px-6 py-3 rounded-full relative overflow-hidden"
+                      style={{
+                        background: "rgba(255, 255, 255, 0.25)",
+                        border: "2px solid rgba(255, 255, 255, 0.5)",
+                        backdropFilter: "blur(10px)",
+                      }}
                       animate={{
-                        scale: [1, 1.05, 1],
+                        boxShadow: [
+                          "0 0 20px rgba(255, 255, 255, 0.3)",
+                          "0 0 30px rgba(255, 255, 255, 0.5)",
+                          "0 0 20px rgba(255, 255, 255, 0.3)",
+                        ],
                       }}
                       transition={{
                         duration: 2,
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
-                      className="bg-white/10 backdrop-blur-sm rounded-lg p-3 bordertw border-white/20 shadow-lg"
                     >
-                      <img
-                        src={
-                          "https://cdn.worldofdypians.com/wod/binance-alpha-exchange.png"
-                        }
-                        alt="Binance"
-                        className="h-6 w-auto opacity-90 filter brightness-110"
-                      />
+                      <motion.h5 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-0">
+                        $250,000 Rewards
+                      </motion.h5>
                     </motion.div>
                   </motion.div>
 
-                  {/* Compact Title */}
-                  <motion.h4
-                    className="text-2xl md:text-3xl font-bold text-white mb-3 relative z-5 drop-shadow-lg"
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                  >
-                    WOD on Binance Alpha
-                  </motion.h4>
-
                   {/* Single Action Button */}
                   <motion.div
-                    className="flex justify-center relative z-5"
+                    className="flex justify-center relative z-10"
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7, duration: 0.6 }}
@@ -530,29 +575,19 @@ const VideoWrapper = ({
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <a
-                        href="https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"
-                        style={{
-                          background: "#F3BA2F",
-                          color: "#181A20",
-                          border: "2px solid rgba(243, 186, 47, 0.5)",
-                        }}
+                      <NavLink
+                        to="/liquidity-catalyst"
+                        className="font-bold px-8 py-3 rounded-md shadow-xl flex items-center space-x-2 bg-white text-purple-600 hover:bg-gray-100 hover:bg-gray-100"
                       >
-                        Trade Now
-                        <img
-                          src="https://cdn.worldofdypians.com/wod/link-trade2.svg"
-                          className="ps-3"
-                        />
-                      </a>
+                        <span>Join Now</span>
+                        {/* <ExternalLink className="w-4 h-4" /> */}
+                      </NavLink>
                     </motion.div>
                   </motion.div>
 
-                  {/* Enhanced corner animations */}
-                  {/* <motion.div
-                    className="absolute top-3 right-3 w-8 h-8 border-2 border-white/50 rounded-full relative z-6"
+                  {/* Corner decorations */}
+                  <motion.div
+                    className="absolute top-3 right-3 w-8 h-8 rounded-full z-10 border-2 border-white/40"
                     animate={{ rotate: 360 }}
                     transition={{
                       duration: 12,
@@ -561,24 +596,44 @@ const VideoWrapper = ({
                     }}
                   />
                   <motion.div
-                    className="absolute bottom-3 left-3 w-6 h-6 border-2 border-yellow-200/50 rounded-full relative z-6"
+                    className="absolute bottom-3 left-3 w-6 h-6 rounded-full z-10 border-2 border-white/30"
                     animate={{ rotate: -360 }}
                     transition={{
                       duration: 10,
                       repeat: Infinity,
                       ease: "linear",
                     }}
-                  /> */}
+                  />
 
-                  {/* Additional glow effects */}
+                  {/* Glow effect */}
                   <motion.div
-                    className="absolute top-1/2 left-1/2 w-32 h-32 bg-yellow-400/20 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"
+                    className="absolute top-1/2 left-1/2 w-32 h-32 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2 bg-white/20"
                     animate={{
                       scale: [1, 1.2, 1],
-                      opacity: [0.3, 0.6, 0.3],
+                      opacity: [0.3, 0.5, 0.3],
                     }}
                     transition={{
                       duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+
+                  {/* Edge glow */}
+                  <motion.div
+                    className="absolute inset-0 rounded-xl"
+                    style={{
+                      boxShadow: "inset 0 0 20px rgba(255, 255, 255, 0.15)",
+                    }}
+                    animate={{
+                      boxShadow: [
+                        "inset 0 0 20px rgba(255, 255, 255, 0.15)",
+                        "inset 0 0 30px rgba(255, 255, 255, 0.25)",
+                        "inset 0 0 20px rgba(255, 255, 255, 0.15)",
+                      ],
+                    }}
+                    transition={{
+                      duration: 3,
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
