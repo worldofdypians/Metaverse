@@ -16,8 +16,8 @@ const Campaigns = ({ coinbase }) => {
     {
       title: "Liquidity Catalyst: Earn From the $250k Reward Pool",
       status: "Live",
-      start_date: "Jan 22, 2026",
-      end_date: "Apr 22, 2026",
+      start_date: "Jan 23, 2026",
+      end_date: "Apr 23, 2026",
       image: "https://cdn.worldofdypians.com/wod/liquidityBanner.jpg",
       desc: `Power up your earnings in World of Dypians with the Liquidity Catalyst Campaign and compete for a $250,000 USDT Season Pool.<br/>
     <ul><li style="list-style-type: disc;">Deposit 100 USDT minimum</li>
