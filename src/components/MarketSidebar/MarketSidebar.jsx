@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
 import { useQuery } from "@apollo/client/react";
 import { GET_PLAYER } from "../../screens/Account/src/Containers/Dashboard/Dashboard.schema";
+import { motion } from "motion/react";
 
 const MarketSidebar = () => {
   const location = useLocation();
@@ -269,7 +270,11 @@ const MarketSidebar = () => {
               );
             }}
           />
-          <a href="https://www.space.id/tld/21/" target="_blank" className="d-flex p-2 align-items-center gap-2 sidebar-item">
+          <a
+            href="https://www.space.id/tld/21/"
+            target="_blank"
+            className="d-flex p-2 align-items-center gap-2 sidebar-item"
+          >
             <img
               src="https://cdn.worldofdypians.com/wod/domainNameIcon.png"
               style={{ width: "20px", height: "20px" }}
@@ -277,6 +282,220 @@ const MarketSidebar = () => {
             />
             <span className={`sidebar-title`}>.WOD Domain</span>
           </a>
+          <div
+            className="relative  flex items-center justify-center z-5"
+            style={{ height: "fit-content" }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="text-center max-w-lg mx-auto"
+            >
+              {/* Compact Announcement Card */}
+              <motion.div
+                className="rounded-xl p-4 shadow-2xl relative overflow-hidden backdrop-blur-sm"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #5690FF 0%, #8C56FF 100%)",
+                  border: "1px solid rgba(255, 255, 255, 0.3)",
+                }}
+                initial={{ rotateX: 20 }}
+                animate={{ rotateX: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                whileHover={{ scale: 1.02 }}
+              >
+                {/* Shimmer sweep effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-xl"
+                  style={{
+                    background:
+                      "linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%)",
+                  }}
+                  animate={{
+                    x: ["-100%", "100%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "linear",
+                    repeatDelay: 2,
+                  }}
+                />
+
+                {/* Subtle particle overlay */}
+                <motion.div
+                  className="absolute inset-0 opacity-10"
+                  animate={{
+                    backgroundPosition: ["0% 0%", "100% 100%"],
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                  style={{
+                    backgroundImage: `radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px)`,
+                    backgroundSize: "25px 25px",
+                  }}
+                />
+
+                {/* Animated gradient orbs */}
+                <motion.div
+                  className="absolute top-0 left-0 w-40 h-40 rounded-full blur-3xl opacity-30"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 70%)",
+                  }}
+                  animate={{
+                    x: [0, 100, 0],
+                    y: [0, 80, 0],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+                <motion.div
+                  className="absolute bottom-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-25"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%)",
+                  }}
+                  animate={{
+                    x: [0, -80, 0],
+                    y: [0, -60, 0],
+                    scale: [1, 1.3, 1],
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+
+                {/* Title */}
+                <motion.h3
+                  className="text-lg line-height-normal md:text-lg font-bold text-white mb-3 relative z-10 drop-shadow-lg"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                >
+                  Liquidity Catalyst Campaign
+                </motion.h3>
+
+                {/* Rewards Container */}
+                <motion.div
+                  className="inline-block mb-4 relative z-10"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
+                  <motion.div
+                    className="px-3 py-2 rounded-full relative overflow-hidden"
+                    style={{
+                      background: "rgba(255, 255, 255, 0.25)",
+                      border: "2px solid rgba(255, 255, 255, 0.5)",
+                      backdropFilter: "blur(10px)",
+                    }}
+                    animate={{
+                      boxShadow: [
+                        "0 0 20px rgba(255, 255, 255, 0.3)",
+                        "0 0 30px rgba(255, 255, 255, 0.5)",
+                        "0 0 20px rgba(255, 255, 255, 0.3)",
+                      ],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <motion.h5 className="line-height-normal text-lg md:text-lg font-bold text-white drop-shadow-lg mb-0">
+                      $250,000 Rewards
+                    </motion.h5>
+                  </motion.div>
+                </motion.div>
+
+                {/* Single Action Button */}
+                <motion.div
+                  className="flex justify-center relative z-10"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <NavLink
+                      to="/liquidity-catalyst"
+                      className="font-bold px-3 py-2 rounded-md shadow-xl flex items-center space-x-2 bg-white text-purple-600 hover:bg-gray-100 hover:bg-gray-100"
+                    >
+                      <span>Join Now</span>
+                      {/* <ExternalLink className="w-4 h-4" /> */}
+                    </NavLink>
+                  </motion.div>
+                </motion.div>
+
+                {/* Corner decorations */}
+                <motion.div
+                  className="absolute top-3 right-3 w-8 h-8 rounded-full z-10 border-2 border-white/40"
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 12,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+                <motion.div
+                  className="absolute bottom-3 left-3 w-6 h-6 rounded-full z-10 border-2 border-white/30"
+                  animate={{ rotate: -360 }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+
+                {/* Glow effect */}
+                <motion.div
+                  className="absolute top-1/2 left-1/2 w-32 h-32 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2 bg-white/20"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.5, 0.3],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+
+                {/* Edge glow */}
+                <motion.div
+                  className="absolute inset-0 rounded-xl"
+                  style={{
+                    boxShadow: "inset 0 0 20px rgba(255, 255, 255, 0.15)",
+                  }}
+                  animate={{
+                    boxShadow: [
+                      "inset 0 0 20px rgba(255, 255, 255, 0.15)",
+                      "inset 0 0 30px rgba(255, 255, 255, 0.25)",
+                      "inset 0 0 20px rgba(255, 255, 255, 0.15)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </div>
