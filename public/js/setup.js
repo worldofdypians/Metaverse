@@ -219,7 +219,7 @@ window.config = {
     },
   ],
 
-  liquidity_campaign_address: "0xC0C7c3DEf32511712D25D77d8b8E0892A26cB9d9",
+  liquidity_campaign_address: "0x832bFEf0A0c182aDD29D8ABBc7ceD09e1a76d0f9",
   liquidity_tokens: [
     {
       address: "0x55d398326f99059ff775485246999027b3197955",
@@ -21330,6 +21330,25 @@ window.LIQUIDITY_ABI = [
   {
     anonymous: false,
     inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "oldAdmin",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newAdmin",
+        type: "address",
+      },
+    ],
+    name: "WithdrawAdminUpdated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
       { indexed: true, internalType: "address", name: "user", type: "address" },
       {
         indexed: false,
@@ -21596,6 +21615,13 @@ window.LIQUIDITY_ABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "_admin", type: "address" }],
+    name: "setWithdrawAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address[]", name: "users", type: "address[]" },
       { internalType: "uint256[]", name: "amountsUSDT", type: "uint256[]" },
@@ -21658,6 +21684,13 @@ window.LIQUIDITY_ABI = [
     inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "userUnits",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawAdmin",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },

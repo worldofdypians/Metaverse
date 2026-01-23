@@ -53,7 +53,7 @@ const LiquidityComp = ({
     usdtBalance: 0,
     usdcBalance: 0,
     usd1Balance: 0,
-    // uBalance: 0,
+    uBalance: 0,
   });
   const STABLECOINS = [
     {
@@ -80,13 +80,13 @@ const LiquidityComp = ({
       decimals: 18,
       balance: tokenBalance.usd1Balance,
     },
-    // {
-    //   address: "0xcE24439F2D9C6a2289F741120FE202248B666666",
-    //   symbol: "U",
-    //   name: "U Stablecoin",
-    //   balance: tokenBalance.uBalance,
-    //   icon: "uIconPremium.svg",
-    // },
+    {
+      address: "0xcE24439F2D9C6a2289F741120FE202248B666666",
+      symbol: "U",
+      name: "U Stablecoin",
+      balance: tokenBalance.uBalance,
+      icon: "uIconPremium.svg",
+    },
   ];
 
   const [selectedSymbol, setSelectedSymbol] = useState("USDT");
@@ -459,7 +459,7 @@ const LiquidityComp = ({
       usdtBalance: 0,
       usdcBalance: 0,
       usd1Balance: 0,
-      // uBalance: 0,
+      uBalance: 0,
     };
     if (coinbase) {
       for (let token of STABLECOINS) {
@@ -478,9 +478,9 @@ const LiquidityComp = ({
         } else if (token.symbol === "USD1") {
           temp.usd1Balance = new BigNumber(result ?? 0).div(1e18).toString(10);
         }
-        // else if (token.symbol === "U") {
-        //   temp.uBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
-        // }
+        else if (token.symbol === "U") {
+          temp.uBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
+        }
       }
 
       setTokenBalance(temp);
