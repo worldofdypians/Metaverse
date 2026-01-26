@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 // import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
-
 import axios from "axios";
 import { switchNetworkWagmi } from "../../utils/wagmiSwitchChain";
 import ChainPopup from "./ChainPopup";
@@ -75,7 +74,6 @@ const Header = ({
   const navigate = useNavigate();
   const [openNotifications, setOpenNotifications] = useState(false);
 
-
   // let id = Math.random().toString(36);
 
   const manageDisconnect = () => {
@@ -113,7 +111,7 @@ const Header = ({
         setchainState("sei");
       } else if (chainId === 2040) {
         setchainState("vanar");
-      }  else {
+      } else {
         setchainState("");
       }
     }
@@ -129,8 +127,9 @@ const Header = ({
 
   const switchNetwork = async (hexChainId, chain) => {
     // Extract chainId from hex or use chain number directly
-    const chainId = typeof chain === 'number' ? chain : parseInt(hexChainId, 16);
-    
+    const chainId =
+      typeof chain === "number" ? chain : parseInt(hexChainId, 16);
+
     try {
       await switchNetworkWagmi(chainId, chain, {
         handleSwitchNetwork,
@@ -149,11 +148,11 @@ const Header = ({
     try {
       await axios.patch(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
-          walletAddress
+          walletAddress,
         )}/${notificationId}`,
         {
           headers: { Authorization: `Bearer ${authToken}` },
-        }
+        },
       );
       console.log("Notification marked as read", notificationId);
       handleRefreshList();
@@ -212,7 +211,7 @@ const Header = ({
   useEffect(() => {
     checkRead();
   }, [myOffers, coinbase, nftCount]);
-  
+
   useEffect(() => {
     if (email !== undefined && gameAccount !== undefined && coinbase) {
       if (gameAccount.toLowerCase() === coinbase.toLowerCase()) {
@@ -266,7 +265,6 @@ const Header = ({
   // }, []);
 
   // const { wallet } = useWallet();
-  
 
   return (
     <>
@@ -563,13 +561,13 @@ const Header = ({
                     </div>
                     <div className="d-flex align-items-center justify-content-between px-2 mb-2">
                       <a
-                        href="https://www.facebook.com/worldofdypians"
+                        href="https://www.binance.com/en/square/profile/world-of-dypians"
                         target="_blank"
                         rel="noreferrer"
                       >
                         <img
                           src={
-                            "https://cdn.worldofdypians.com/wod/facebookHeader.svg"
+                            "https://cdn.worldofdypians.com/wod/binanceSquareHeader.svg"
                           }
                           width={25}
                           alt=""
@@ -1145,10 +1143,10 @@ const Header = ({
                                       nft.welcome === "yes"
                                         ? "https://www.worldofdypians.com/shop"
                                         : nft.redirect_link
-                                        ? nft.redirect_link
-                                        : `https://www.worldofdypians.com/shop/nft/${
-                                            nft.tokenId
-                                          }/${nft.nftAddress.toLowerCase()}`
+                                          ? nft.redirect_link
+                                          : `https://www.worldofdypians.com/shop/nft/${
+                                              nft.tokenId
+                                            }/${nft.nftAddress.toLowerCase()}`
                                     }
                                     rel="noreferrer"
                                     style={{ textDecoration: "none" }}
@@ -1167,49 +1165,61 @@ const Header = ({
                                           nft.read === false
                                             ? "https://cdn.worldofdypians.com/wod/cartIconActive.svg"
                                             : nft.bought === "yes" &&
-                                              nft.read === true
-                                            ? "https://cdn.worldofdypians.com/wod/cartIcon.svg"
-                                            : nft.offer === "yes" &&
-                                              nft.read === false
-                                            ? "https://cdn.worldofdypians.com/wod/offerIconActive.svg"
-                                            : nft.offer === "yes" &&
-                                              nft.read === true
-                                            ? "https://cdn.worldofdypians.com/wod/offerIcon.svg"
-                                            : nft.buy === "yes" &&
-                                              nft.read === false
-                                            ? "https://cdn.worldofdypians.com/wod/transferIconActive.svg"
-                                            : nft.buy === "yes" &&
-                                              nft.read === true
-                                            ? "https://cdn.worldofdypians.com/wod/transferIcon.svg"
-                                            : //welcome
-                                            nft.welcome === "yes" &&
-                                              nft.read === false
-                                            ? "https://cdn.worldofdypians.com/wod/welcomeIconActive.svg"
-                                            : nft.welcome === "yes" &&
-                                              nft.read === true
-                                            ? "https://cdn.worldofdypians.com/wod/welcomeIcon.svg"
-                                            : //news
-                                            nft.news === "yes" &&
-                                              nft.read === false
-                                            ? "https://cdn.worldofdypians.com/wod/newsIconActive.svg"
-                                            : nft.news === "yes" &&
-                                              nft.read === true
-                                            ? "https://cdn.worldofdypians.com/wod/newsIcon.svg"
-                                            : //updates
-                                            nft.update === "yes" &&
-                                              nft.read === false
-                                            ? "https://cdn.worldofdypians.com/wod/updateIconActive.svg"
-                                            : nft.update === "yes" &&
-                                              nft.read === true
-                                            ? "https://cdn.worldofdypians.com/wod/updateIcon.svg"
-                                            : //events
-                                            nft.event === "yes" &&
-                                              nft.read === false
-                                            ? "https://cdn.worldofdypians.com/wod/eventIconActive.svg"
-                                            : nft.event === "yes" &&
-                                              nft.read === true
-                                            ? "https://cdn.worldofdypians.com/wod/eventIcon.svg"
-                                            : null
+                                                nft.read === true
+                                              ? "https://cdn.worldofdypians.com/wod/cartIcon.svg"
+                                              : nft.offer === "yes" &&
+                                                  nft.read === false
+                                                ? "https://cdn.worldofdypians.com/wod/offerIconActive.svg"
+                                                : nft.offer === "yes" &&
+                                                    nft.read === true
+                                                  ? "https://cdn.worldofdypians.com/wod/offerIcon.svg"
+                                                  : nft.buy === "yes" &&
+                                                      nft.read === false
+                                                    ? "https://cdn.worldofdypians.com/wod/transferIconActive.svg"
+                                                    : nft.buy === "yes" &&
+                                                        nft.read === true
+                                                      ? "https://cdn.worldofdypians.com/wod/transferIcon.svg"
+                                                      : //welcome
+                                                        nft.welcome === "yes" &&
+                                                          nft.read === false
+                                                        ? "https://cdn.worldofdypians.com/wod/welcomeIconActive.svg"
+                                                        : nft.welcome ===
+                                                              "yes" &&
+                                                            nft.read === true
+                                                          ? "https://cdn.worldofdypians.com/wod/welcomeIcon.svg"
+                                                          : //news
+                                                            nft.news ===
+                                                                "yes" &&
+                                                              nft.read === false
+                                                            ? "https://cdn.worldofdypians.com/wod/newsIconActive.svg"
+                                                            : nft.news ===
+                                                                  "yes" &&
+                                                                nft.read ===
+                                                                  true
+                                                              ? "https://cdn.worldofdypians.com/wod/newsIcon.svg"
+                                                              : //updates
+                                                                nft.update ===
+                                                                    "yes" &&
+                                                                  nft.read ===
+                                                                    false
+                                                                ? "https://cdn.worldofdypians.com/wod/updateIconActive.svg"
+                                                                : nft.update ===
+                                                                      "yes" &&
+                                                                    nft.read ===
+                                                                      true
+                                                                  ? "https://cdn.worldofdypians.com/wod/updateIcon.svg"
+                                                                  : //events
+                                                                    nft.event ===
+                                                                        "yes" &&
+                                                                      nft.read ===
+                                                                        false
+                                                                    ? "https://cdn.worldofdypians.com/wod/eventIconActive.svg"
+                                                                    : nft.event ===
+                                                                          "yes" &&
+                                                                        nft.read ===
+                                                                          true
+                                                                      ? "https://cdn.worldofdypians.com/wod/eventIcon.svg"
+                                                                      : null
                                         }
                                         alt=""
                                       />
@@ -1226,10 +1236,10 @@ const Header = ({
                                         {nft.buy === "yes"
                                           ? "NFT Sold"
                                           : nft.offer === "yes"
-                                          ? "New Offer"
-                                          : nft.bought === "yes"
-                                          ? "NFT Bought"
-                                          : nft.title}
+                                            ? "New Offer"
+                                            : nft.bought === "yes"
+                                              ? "NFT Bought"
+                                              : nft.title}
                                       </h6>
                                     </div>
                                     <p
@@ -1242,32 +1252,32 @@ const Header = ({
                                             window.config.nft_caws_address.toLowerCase()
                                               ? "CAWS"
                                               : nft.nftAddress.toLowerCase() ===
-                                                window.config.nft_land_address.toLowerCase()
-                                              ? "WOD"
-                                              : "Timepiece"
+                                                  window.config.nft_land_address.toLowerCase()
+                                                ? "WOD"
+                                                : "Timepiece"
                                           } #${nft.tokenId}.`
                                         : nft.buy === "yes"
-                                        ? `Your  ${
-                                            nft.nftAddress.toLowerCase() ===
-                                            window.config.nft_caws_address.toLowerCase()
-                                              ? "CAWS"
-                                              : nft.nftAddress.toLowerCase() ===
-                                                window.config.nft_land_address.toLowerCase()
-                                              ? "WOD"
-                                              : "Timepiece"
-                                          } #${nft.tokenId} was sold.`
-                                        : nft.offer === "yes"
-                                        ? `There is a new offer for your ${
-                                            nft.nftAddress.toLowerCase() ===
-                                            window.config.nft_caws_address.toLowerCase()
-                                              ? "CAWS"
-                                              : nft.nftAddress.toLowerCase() ===
-                                                window.config.nft_land_address.toLowerCase()
-                                              ? "WOD"
-                                              : "Timepiece"
-                                          } #${nft.tokenId}`
-                                        : nft.description?.slice(0, 150) +
-                                          "..."}
+                                          ? `Your  ${
+                                              nft.nftAddress.toLowerCase() ===
+                                              window.config.nft_caws_address.toLowerCase()
+                                                ? "CAWS"
+                                                : nft.nftAddress.toLowerCase() ===
+                                                    window.config.nft_land_address.toLowerCase()
+                                                  ? "WOD"
+                                                  : "Timepiece"
+                                            } #${nft.tokenId} was sold.`
+                                          : nft.offer === "yes"
+                                            ? `There is a new offer for your ${
+                                                nft.nftAddress.toLowerCase() ===
+                                                window.config.nft_caws_address.toLowerCase()
+                                                  ? "CAWS"
+                                                  : nft.nftAddress.toLowerCase() ===
+                                                      window.config.nft_land_address.toLowerCase()
+                                                    ? "WOD"
+                                                    : "Timepiece"
+                                              } #${nft.tokenId}`
+                                            : nft.description?.slice(0, 150) +
+                                              "..."}
                                     </p>
                                     <span className="notification-relative-time mb-0">
                                       {getRelativeTime(nft.timestamp)}
@@ -1335,34 +1345,36 @@ const Header = ({
                                     chainState === "eth"
                                       ? "https://cdn.worldofdypians.com/wod/eth.svg"
                                       : chainState === "bnb"
-                                      ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                                      : chainState === "opbnb"
-                                      ? "https://cdn.worldofdypians.com/wod/opbnbChain.png"
-                                      : chainState === "avax"
-                                      ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
-                                      : chainState === "base"
-                                      ? "https://cdn.worldofdypians.com/wod/base.svg"
-                                      : chainState === "conflux"
-                                      ? "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
-                                      : chainState === "skale"
-                                      ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
-                                      : chainState === "core"
-                                      ? "https://cdn.worldofdypians.com/wod/core.svg"
-                                      : chainState === "viction"
-                                      ? "https://cdn.worldofdypians.com/wod/viction.svg"
-                                      : chainState === "immutable"
-                                      ? "https://cdn.worldofdypians.com/wod/immutable.svg"
-                                      : chainState === "manta"
-                                      ? "https://cdn.worldofdypians.com/wod/manta.png"
-                                      : chainState === "taiko"
-                                      ? "https://cdn.worldofdypians.com/wod/taiko.svg"
-                                      
-                                      : chainState === "sei"
-                                      ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
-                                      : chainState === "vanar"
-                                      ? "https://cdn.worldofdypians.com/wod/vanar.svg"
-                                    
-                                      : "https://cdn.worldofdypians.com/wod/error.svg"
+                                        ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                        : chainState === "opbnb"
+                                          ? "https://cdn.worldofdypians.com/wod/opbnbChain.png"
+                                          : chainState === "avax"
+                                            ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
+                                            : chainState === "base"
+                                              ? "https://cdn.worldofdypians.com/wod/base.svg"
+                                              : chainState === "conflux"
+                                                ? "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                                                : chainState === "skale"
+                                                  ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                                                  : chainState === "core"
+                                                    ? "https://cdn.worldofdypians.com/wod/core.svg"
+                                                    : chainState === "viction"
+                                                      ? "https://cdn.worldofdypians.com/wod/viction.svg"
+                                                      : chainState ===
+                                                          "immutable"
+                                                        ? "https://cdn.worldofdypians.com/wod/immutable.svg"
+                                                        : chainState === "manta"
+                                                          ? "https://cdn.worldofdypians.com/wod/manta.png"
+                                                          : chainState ===
+                                                              "taiko"
+                                                            ? "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                                            : chainState ===
+                                                                "sei"
+                                                              ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                                              : chainState ===
+                                                                  "vanar"
+                                                                ? "https://cdn.worldofdypians.com/wod/vanar.svg"
+                                                                : "https://cdn.worldofdypians.com/wod/error.svg"
                                   }
                                   width={20}
                                   height={20}
@@ -1378,7 +1390,7 @@ const Header = ({
                             </span>
                           }
                         ></DropdownButton>
- 
+
                         <span
                           className="d-flex align-items-center gap-2"
                           // onClick={() => {
