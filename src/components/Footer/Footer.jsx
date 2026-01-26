@@ -52,8 +52,8 @@ const Footer = () => {
       link: "https://www.instagram.com/worldofdypians",
     },
     {
-      icon: "facebookFooter",
-      link: "https://www.facebook.com/worldofdypians",
+      icon: "binanceSquareFooter",
+      link: "https://www.binance.com/en/square/profile/world-of-dypians",
     },
     // {
     //   icon: "reddit",

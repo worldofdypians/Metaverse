@@ -53,15 +53,13 @@ const OrynPopup = ({
   ];
 
   const handleEthPool = async () => {
-  
-      await switchNetworkWagmi(parseInt("0x38", 16), null, { coinbase })
-        .then(() => {
-          handleSwitchNetwork(56);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-     
+    await switchNetworkWagmi(parseInt("0x38", 16), null, { coinbase })
+      .then(() => {
+        handleSwitchNetwork(56);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const [timer, setTimer] = useState(false);
@@ -125,8 +123,8 @@ const OrynPopup = ({
               unlockStatus === "fail" || !isEOA
                 ? "reverse-btn"
                 : unlockStatus === "success"
-                ? "action-btn"
-                : "explore-btn"
+                  ? "action-btn"
+                  : "explore-btn"
             } px-3 py-2`}
             disabled={
               unlockLoading ||
@@ -165,8 +163,8 @@ const OrynPopup = ({
               withdrawStatus === "failed" || !isEOA
                 ? "reverse-btn"
                 : withdrawStatus === "success"
-                ? "action-btn"
-                : "explore-btn"
+                  ? "action-btn"
+                  : "explore-btn"
             } px-3 py-2`}
             disabled={
               withdrawLoading ||
@@ -205,7 +203,7 @@ const OrynPopup = ({
             <span className="oryn-lock-title">You can withdaw in</span>
             <Countdown
               renderer={renderer}
-              date={Date.now() + withdrawTimer * 1000}
+              date={Date.now() + Number(withdrawTimer) * 1000}
               onComplete={() => {
                 checkTimer();
                 getWithdrawTimer();
@@ -221,19 +219,19 @@ const OrynPopup = ({
               !isEOA
                 ? "reverse-btn"
                 : depositStatus === "success"
-                ? "action-btn"
-                : "explore-btn"
+                  ? "action-btn"
+                  : "explore-btn"
             } px-3 py-2`}
             onClick={() => {
               !isConnected
                 ? handleConnectWallet()
                 : isConnected && chainId !== 56
-                ? handleEthPool()
-                : depositStatus === "deposit"
-                ? handleDeposit()
-                : depositStatus === "initial"
-                ? handleApprove()
-                : console.log("");
+                  ? handleEthPool()
+                  : depositStatus === "deposit"
+                    ? handleDeposit()
+                    : depositStatus === "initial"
+                      ? handleApprove()
+                      : console.log("");
             }}
             disabled={
               depositLoading ||
