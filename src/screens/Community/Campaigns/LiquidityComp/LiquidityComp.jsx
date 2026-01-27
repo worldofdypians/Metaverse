@@ -477,8 +477,7 @@ const LiquidityComp = ({
           temp.usdcBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
         } else if (token.symbol === "USD1") {
           temp.usd1Balance = new BigNumber(result ?? 0).div(1e18).toString(10);
-        }
-        else if (token.symbol === "U") {
+        } else if (token.symbol === "U") {
           temp.uBalance = new BigNumber(result ?? 0).div(1e18).toString(10);
         }
       }
@@ -678,8 +677,6 @@ const LiquidityComp = ({
         window.alertify.error(
           "Deposit amount is greater than available quota. Please add another amount.",
         );
-      } else if (Number(amount) < MIN_DEPOSIT && Number(amount) > 0 && amount !== "") {
-        window.alertify.error("Minimum deposit amount is $100.");
       }
     }
   }, [amount, maxPoolRemaining, isConnected, coinbase, chainId]);
@@ -1054,6 +1051,14 @@ const LiquidityComp = ({
                               MAX
                             </button>
                           </div>
+                        </div>
+                        <div className="d-flex py-2 align-items-center gap-2 justify-content-end">
+                          <span
+                            className="bal-smallTxt text-slate-400"
+                            style={{ fontSize: 12 }}
+                          >
+                            Minimum deposit amount is $100.
+                          </span>
                         </div>
                       </div>
 
