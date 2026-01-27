@@ -5014,7 +5014,7 @@ async function getMyNFTs(address, type = "") {
       window.config.nft_manta_address,
     );
 
-    const balance = await contract.methods.balanceOf(address).call();
+    const balance = await contract.methods.balanceOf(address).call().catch((e)=>{console.error(e); return 0});
 
     const tokens = await Promise.all(
       range(0, balance - 1).map(async (i) => {
