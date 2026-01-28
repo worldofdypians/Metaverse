@@ -33,7 +33,6 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-
 const EventsPopup = ({ onClose, dummyEvent }) => {
   return (
     <OutsideClickHandler onOutsideClick={() => onClose()}>
@@ -46,8 +45,8 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                 dummyEvent.popupInfo?.status === "Live"
                   ? "event-popup-status-live"
                   : dummyEvent.popupInfo?.status === "Coming Soon"
-                  ? "event-popup-status-upcoming"
-                  : "event-popup-status-expired"
+                    ? "event-popup-status-upcoming"
+                    : "event-popup-status-expired"
               }  d-flex align-items-center justify-content-center p-1`}
             >
               {dummyEvent.popupInfo.status === "Live" && (
@@ -286,7 +285,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   dummyEvent.popupInfo?.status === "Coming Soon"
                     ? 0
                     : dummyEvent.userEarnPoints,
-                  0
+                  0,
                 )}
                 {dummyEvent.popupInfo.id === "event5" && " DYP"}
               </h6>
@@ -312,7 +311,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                   dummyEvent.popupInfo?.status === "Coming Soon"
                     ? 0
                     : dummyEvent.userEarnUsd,
-                  2
+                  2,
                 )}
                 <span className="ethpricerewards specialstyle-wrapper-eth">
                   {dummyEvent.popupInfo.id !== "event5" &&
@@ -322,7 +321,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
                           dummyEvent.popupInfo?.status === "Coming Soon"
                             ? 0
                             : dummyEvent.userEarnCrypto,
-                          2
+                          4,
                         )}
                         {dummyEvent.popupInfo.rewards}
                       </>

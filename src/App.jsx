@@ -3996,7 +3996,7 @@ function AppRoutes() {
             return obj.betapassId === "skale";
           });
           const bnbEvent = responseData.events.filter((obj) => {
-            return obj.id === "bnbChainEvent31";
+            return obj.name === "BNB CHAIN Treasure Hunt";
           });
 
           const trustwalletEvent = responseData.events.filter((obj) => {
@@ -5084,14 +5084,55 @@ function AppRoutes() {
     coinbase,
   ]);
 
+  const isTreasureHuntReady =
+    bnbPrice &&
+    trustPrice &&
+    immutablePrice &&
+    kucoinPrice &&
+    taikoPrice &&
+    cookiePrice &&
+    corePrice &&
+    seiPrice &&
+    vanarPrice &&
+    victionPrice &&
+    mantaPrice &&
+    multiversPrice &&
+    skalePrice &&
+    dogePrice &&
+    cfxPrice &&
+    ethTokenData;
+
   useEffect(() => {
     if (email && userWallet) {
       refreshSubscription(userWallet);
-      fetchTreasureHuntData(email, userWallet);
+      if (isTreasureHuntReady) {
+        fetchTreasureHuntData(email, userWallet);
+      }
     } else if (coinbase) {
       refreshSubscription(coinbase);
     } else refreshSubscription();
-  }, [email, userWallet, coinbase]);
+  }, [
+    email,
+    userWallet,
+    coinbase,
+    bnbPrice,
+    trustPrice,
+    immutablePrice,
+    kucoinPrice,
+    taikoPrice,
+    cookiePrice,
+    corePrice,
+    seiPrice,
+    vanarPrice,
+    victionPrice,
+    mantaPrice,
+    multiversPrice,
+    skalePrice,
+    dogePrice,
+    cfxPrice,
+    ethTokenData,
+    isTreasureHuntReady,
+  ]);
 
   useEffect(() => {
     if (recentListedNFTS2 && recentListedNFTS2.length > 0) {
