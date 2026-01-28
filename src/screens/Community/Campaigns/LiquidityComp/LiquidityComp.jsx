@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   Droplets,
   TrendingUp,
@@ -47,6 +48,7 @@ const LiquidityComp = ({
   handleSwitchNetwork,
   isEOA,
 }) => {
+  const location = useLocation();
   let lastDay = new Date("2026-04-14T18:22:00.000+02:00");
   const SEASON_DAYS = 90;
   const [tokenBalance, setTokenBalance] = useState({
@@ -113,6 +115,33 @@ const LiquidityComp = ({
   const [estimatedFinalBonus, setEstimatedFinalBonus] = useState(0);
   const [calculatedFinalBonus, setCalculatedFinalBonus] = useState(0);
   const [calculatedLPBonus, setCalculatedLPBonus] = useState(0);
+
+  const setCookie = (name, value, days = 30) => {
+    const maxAge = days * 24 * 60 * 60;
+    document.cookie = `${name}=${encodeURIComponent(
+      value,
+    )}; Max-Age=${maxAge}; Path=/; SameSite=None; Secure`;
+  };
+
+  const getCookie = (name) => {
+    const prefix = `${name}=`;
+    return (
+      document.cookie
+        .split(";")
+        .map((cookie) => cookie.trim())
+        .find((cookie) => cookie.startsWith(prefix))
+        ?.slice(prefix.length) || ""
+    );
+  };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search || "");
+    const sourceParam = searchParams.get("source");
+
+    if (sourceParam) {
+      setCookie("source", sourceParam);
+    }
+  }, [location.search]);
 
   const [withdrawAmount, setwithdrawAmount] = useState("");
   const [withdrawLoading, setwithdrawLoading] = useState(false);
@@ -275,7 +304,6 @@ const LiquidityComp = ({
         abi: window.TOKEN_ABI,
         functionName: "approve",
         args: [window.config.liquidity_campaign_address, amount_formatted],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
@@ -288,7 +316,8 @@ const LiquidityComp = ({
         getAllInfo();
       }
     } catch (e) {
-      console.error("Error approving:", e);
+      console.error("Error approving:", e?.message || e?.shortMessage);
+      // window.alertify.error(e);
       setdepositLoading(false);
       setdepositStatus("fail");
       seterrorMsg(e?.message || e?.shortMessage || "Approval failed");
@@ -310,7 +339,6 @@ const LiquidityComp = ({
         abi: window.LIQUIDITY_ABI,
         functionName: "deposit",
         args: [selectedToken.address, amount_formatted],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
@@ -318,6 +346,30 @@ const LiquidityComp = ({
       });
 
       if (receipt) {
+        const sourceCookie = getCookie("source");
+        if (sourceCookie && coinbase && amount) {
+          try {
+            await fetch(
+              "https://api.worldofdypians.com/api/track-liquidity-deposit",
+              {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  wallet: coinbase,
+                  amount,
+                  txHash: hash,
+                  source: sourceCookie,
+                }),
+              },
+            );
+          } catch (postError) {
+            console.error("Deposit attribution POST failed:", postError);
+          }
+        }
+
         setdepositLoading(false);
         setdepositStatus("success");
         setTimeout(() => {
@@ -351,7 +403,6 @@ const LiquidityComp = ({
         abi: window.LIQUIDITY_ABI,
         functionName: "claimLPFees",
         args: [],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
@@ -388,7 +439,6 @@ const LiquidityComp = ({
         abi: window.LIQUIDITY_ABI,
         functionName: "claimBonusRewards",
         args: [],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
@@ -425,7 +475,6 @@ const LiquidityComp = ({
         abi: window.LIQUIDITY_ABI,
         functionName: "withdrawPrincipal",
         args: [],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
