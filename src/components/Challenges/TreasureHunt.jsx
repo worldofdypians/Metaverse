@@ -12,7 +12,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
           .filter((obj) => {
             return obj.eventStatus === eventDuration;
           })
-          .slice(0, 8)
+          .slice(0, 8),
       );
     } else if (page === 2) {
       setSlicedEvents(
@@ -20,7 +20,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
           .filter((obj) => {
             return obj.eventStatus === eventDuration;
           })
-          .slice(8, 16)
+          .slice(8, 16),
       );
     } else if (page === 3) {
       setSlicedEvents(
@@ -28,7 +28,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
           .filter((obj) => {
             return obj.eventStatus === eventDuration;
           })
-          .slice(16, 24)
+          .slice(16, 24),
       );
     } else if (page === 4) {
       setSlicedEvents(
@@ -36,16 +36,16 @@ const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
           .filter((obj) => {
             return obj.eventStatus === eventDuration;
           })
-          .slice(24, events.length)
+          .slice(24, events.length),
       );
     } else if (eventDuration !== "Live") {
       setSlicedEvents(
         events.filter((obj) => {
           return obj.eventStatus === eventDuration;
-        })
+        }),
       );
     }
-  }, [page, eventDuration]);
+  }, [page, eventDuration, events]);
 
   return (
     <div className="treasurehunt-wrapper">
