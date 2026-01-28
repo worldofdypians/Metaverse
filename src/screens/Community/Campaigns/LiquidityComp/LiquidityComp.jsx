@@ -275,7 +275,6 @@ const LiquidityComp = ({
         abi: window.TOKEN_ABI,
         functionName: "approve",
         args: [window.config.liquidity_campaign_address, amount_formatted],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
@@ -288,7 +287,8 @@ const LiquidityComp = ({
         getAllInfo();
       }
     } catch (e) {
-      console.error("Error approving:", e);
+      console.error("Error approving:", e?.message || e?.shortMessage);
+      // window.alertify.error(e);
       setdepositLoading(false);
       setdepositStatus("fail");
       seterrorMsg(e?.message || e?.shortMessage || "Approval failed");
@@ -310,7 +310,6 @@ const LiquidityComp = ({
         abi: window.LIQUIDITY_ABI,
         functionName: "deposit",
         args: [selectedToken.address, amount_formatted],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
@@ -351,7 +350,6 @@ const LiquidityComp = ({
         abi: window.LIQUIDITY_ABI,
         functionName: "claimLPFees",
         args: [],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
@@ -388,7 +386,6 @@ const LiquidityComp = ({
         abi: window.LIQUIDITY_ABI,
         functionName: "claimBonusRewards",
         args: [],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
@@ -425,7 +422,6 @@ const LiquidityComp = ({
         abi: window.LIQUIDITY_ABI,
         functionName: "withdrawPrincipal",
         args: [],
-        chainId: bsc.id,
       });
 
       const receipt = await waitForTransactionReceipt(wagmiClient, {
