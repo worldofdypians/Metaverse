@@ -140,7 +140,7 @@ const LiquidityComp = ({
 
     if (sourceParam) {
       setCookie("source", sourceParam);
-    }
+    } else setCookie("source", "wod");
   }, [location.search]);
 
   const [withdrawAmount, setwithdrawAmount] = useState("");
@@ -259,10 +259,12 @@ const LiquidityComp = ({
     )
       .then((res) => res.json())
       .catch((e) => console.error("Error fetching APR data:", e));
-    setBaseAprPercent(result.base_apr_percent);
-    setBonusAprPercent(result.bonus_apr_percent);
-    setTotalAprPercent(result.total_apr_percent);
-    setfeesUsd24Percent(result.fees_usd_24h);
+    if (result) {
+      setBaseAprPercent(result.base_apr_percent);
+      setBonusAprPercent(result.bonus_apr_percent);
+      setTotalAprPercent(result.total_apr_percent);
+      setfeesUsd24Percent(result.fees_usd_24h);
+    }
   };
 
   const checkTokenApproval = async (amount) => {
