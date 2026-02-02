@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import {
   Droplets,
@@ -96,6 +96,7 @@ const LiquidityComp = ({
 
   const [claimLPAmount, setClaimLPAmount] = useState(0);
   const [claimBonusAmount, setClaimBonusAmount] = useState(0);
+  const [weeklyClaimsData, setWeeklyClaimsData] = useState(null);
 
   const [showTokenSelect, setShowTokenSelect] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
@@ -173,76 +174,106 @@ const LiquidityComp = ({
     !Number.isFinite(parsedAmount) ||
     parsedAmount < MIN_DEPOSIT ||
     parsedAmount > maxPoolRemaining;
-  const claims = [
-    {
-      week: "Week 1",
-      amount: claimLPAmount,
-      status: "available",
-      date: "2026-01-22",
-    },
-    {
-      week: "Week 2",
-      amount: 0,
-      status: "available",
-      date: "2026-01-29",
-    },
-    {
-      week: "Week 3",
-      amount: 0,
-      status: "available",
-      date: "2026-02-05",
-    },
-    {
-      week: "Week 4",
-      amount: 0,
-      status: "available",
-      date: "2026-02-12",
-    },
-    {
-      week: "Week 5",
-      amount: 0,
-      status: "available",
-      date: "2026-02-19",
-    },
-    {
-      week: "Week 6",
-      amount: 0,
-      status: "available",
-      date: "2026-02-26",
-    },
-    {
-      week: "Week 7",
-      amount: 0,
-      status: "available",
-      date: "2026-03-05",
-    },
-    {
-      week: "Week 8",
-      amount: 0,
-      status: "available",
-      date: "2026-03-12",
-    },
-    { week: "Week 9", amount: 0, status: "available", date: "2026-03-19" },
-    {
-      week: "Week 10",
-      amount: 0,
-      status: "available",
-      date: "2026-03-26",
-    },
-    {
-      week: "Week 11",
-      amount: 0,
-      status: "available",
-      date: "2026-04-02",
-    },
-    {
-      week: "Week 12",
-      amount: 0,
-      status: "available",
-      date: "2026-04-09",
-    },
-  ];
+  const baseClaims = useMemo(
+    () => [
+      {
+        week: "Week 1",
+        amount: 0,
+        status: "available",
+        date: "2026-01-22",
+      },
+      {
+        week: "Week 2",
+        amount: 0,
+        status: "available",
+        date: "2026-01-29",
+      },
+      {
+        week: "Week 3",
+        amount: 0,
+        status: "available",
+        date: "2026-02-05",
+      },
+      {
+        week: "Week 4",
+        amount: 0,
+        status: "available",
+        date: "2026-02-12",
+      },
+      {
+        week: "Week 5",
+        amount: 0,
+        status: "available",
+        date: "2026-02-19",
+      },
+      {
+        week: "Week 6",
+        amount: 0,
+        status: "available",
+        date: "2026-02-26",
+      },
+      {
+        week: "Week 7",
+        amount: 0,
+        status: "available",
+        date: "2026-03-05",
+      },
+      {
+        week: "Week 8",
+        amount: 0,
+        status: "available",
+        date: "2026-03-12",
+      },
+      { week: "Week 9", amount: 0, status: "available", date: "2026-03-19" },
+      {
+        week: "Week 10",
+        amount: 0,
+        status: "available",
+        date: "2026-03-26",
+      },
+      {
+        week: "Week 11",
+        amount: 0,
+        status: "available",
+        date: "2026-04-02",
+      },
+      {
+        week: "Week 12",
+        amount: 0,
+        status: "available",
+        date: "2026-04-09",
+      },
+    ],
+    [],
+  );
   const { BigNumber } = window;
+  const claims = useMemo(() => {
+    const currentWeek = Math.min(
+      12,
+      Math.max(1, Math.floor(Number(currentDayIndex || 0) / 7) + 1),
+    );
+
+    return baseClaims.map((claim, index) => {
+      const weekNumber = index + 1;
+      const apiKey = `week${weekNumber}`;
+      const hasApiValue =
+        weeklyClaimsData != null &&
+        typeof weeklyClaimsData === "object" &&
+        Object.prototype.hasOwnProperty.call(weeklyClaimsData, apiKey);
+      const claimedAmount = Number(weeklyClaimsData?.[apiKey] ?? 0);
+      const isClaimed = claimedAmount > 0;
+      const isCurrentWeek = weekNumber === currentWeek;
+      const availableAmount =
+        !isClaimed && isCurrentWeek ? Number(claimLPAmount || 0) : 0;
+
+      return {
+        ...claim,
+        amount: isClaimed ? claimedAmount : availableAmount,
+        status: isClaimed ? "claimed" : "available",
+        dimmed: hasApiValue && claimedAmount === 0,
+      };
+    });
+  }, [baseClaims, claimLPAmount, currentDayIndex, weeklyClaimsData]);
 
   const filteredClaims = claims.filter((claim) => {
     if (claimFilter === "all") return true;
@@ -264,6 +295,22 @@ const LiquidityComp = ({
       setBonusAprPercent(result.bonus_apr_percent);
       setTotalAprPercent(result.total_apr_percent);
       setfeesUsd24Percent(result.fees_usd_24h);
+    }
+  };
+
+  const fetchWeeklyClaimedData = async (address) => {
+    if (!address) {
+      setWeeklyClaimsData(null);
+      return;
+    }
+    const result = await fetch(
+      `https://api.worldofdypians.com/api/weekly-claims/${address}`,
+    )
+      .then((res) => res.json())
+      .catch((e) => console.error("Error fetching APR data:", e));
+
+    if (result) {
+      setWeeklyClaimsData(result || null);
     }
   };
 
@@ -741,6 +788,7 @@ const LiquidityComp = ({
   useEffect(() => {
     getTokenBalance();
     getAllInfo();
+    fetchWeeklyClaimedData(coinbase);
   }, [coinbase]);
 
   return (
@@ -1304,6 +1352,11 @@ const LiquidityComp = ({
                             <div
                               key={claim.week}
                               className="bg-slate-800/50 bordertw border-white/10 rounded-lg p-3 flex items-center justify-between hover:border-cyan-500/30 transition-colors"
+                              style={
+                                claim.dimmed
+                                  ? { filter: "brightness(0.5)" }
+                                  : undefined
+                              }
                             >
                               <div>
                                 <div className="text-white font-semibold text-xs">
