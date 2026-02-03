@@ -1,4 +1,5 @@
 import { createConfig, http } from "wagmi";
+import { fallback } from "viem";
 import {
   mainnet,
   // matchain,
@@ -61,17 +62,37 @@ export const wagmiClient = createConfig({
     [mainnet.id]: http(),
     // [matchain.id]: http(),
     [opBNB.id]: http(),
-    [manta.id]: http(),
-    [taiko.id]: http(),
-    [coreDao.id]: http(),
-    [base.id]: http(),
-    [sei.id]: http(),
-    [viction.id]: http(),
-    [avalanche.id]: http(),
-    [skaleNebula.id]: http(),
-    [immutableZkEvm.id]: http(),
-    [confluxESpace.id]: http(),
-    [vanar.id]: http(),
+    [manta.id]: http("https://pacific-rpc.manta.network/http"),
+    [taiko.id]: fallback([
+      http("https://rpc.mainnet.taiko.xyz"),
+      http("https://rpc.ankr.com/taiko"),
+    ]),
+    [coreDao.id]: fallback([
+      http("https://rpc.coredao.org"),
+      http("https://core.drpc.org"),
+    ]),
+    [base.id]: fallback([
+      http("https://1rpc.io/base"),
+      http("https://base-rpc.publicnode.com"),
+    ]),
+    [sei.id]: fallback([
+      http("https://evm-rpc.sei-apis.com"),
+      http("https://sei.drpc.org"),
+    ]),
+    [viction.id]: fallback([
+      http("https://rpc.viction.xyz"),
+      http("https://viction.drpc.org"),
+    ]),
+    [avalanche.id]: fallback([
+      http("https://api.avax.network/ext/bc/C/rpc"),
+      http("https://avalanche.publicnode.com"),
+    ]),
+    [skaleNebula.id]: http(
+      "https://mainnet.skalenodes.com/v1/green-giddy-denebola"
+    ),
+    [immutableZkEvm.id]: http("https://rpc.immutable.com"),
+    [confluxESpace.id]: http("https://evm.confluxrpc.com"),
+    [vanar.id]: http("https://rpc.vanarchain.com"),
     // [taraxa.id]: http(),
   },
 });
