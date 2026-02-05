@@ -2305,7 +2305,7 @@ const FestiveElements = () => {
   return (
     <div className="festive-elements">
       {theme.name === "Halloween" && renderHalloweenElements()}
-      {theme.name === "Valentine's Day" && renderValentineElements()}
+      {/* {theme.name === "Valentine's Day" && renderValentineElements()} */}
       {theme.name === "Christmas" && renderChristmasElements()}
     </div>
   );
