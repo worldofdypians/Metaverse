@@ -17,13 +17,13 @@ const ThemeSwitcher = () => {
       const halloweenEnd = new Date(currentYear, 10, 2, 23, 59, 59); // November 2nd
       
       // Valentine period: February 13 to February 14 at 11:59:59 PM
-      const valentineStart = new Date(currentYear, 1, 13, 0, 0, 0); // February 13
-      const valentineEnd = new Date(currentYear, 1, 14, 23, 59, 59); // February 14
+      // const valentineStart = new Date(currentYear, 1, 13, 0, 0, 0); // February 13
+      // const valentineEnd = new Date(currentYear, 1, 14, 23, 59, 59); // February 14
       
       const inHalloweenPeriod = now >= halloweenStart && now <= halloweenEnd;
-      const inValentinePeriod = now >= valentineStart && now <= valentineEnd;
+      // const inValentinePeriod = now >= valentineStart && now <= valentineEnd;
       
-      setIsFestivePeriod(inHalloweenPeriod || inValentinePeriod);
+      setIsFestivePeriod(inHalloweenPeriod);
     };
 
     checkDate();
@@ -39,8 +39,8 @@ const ThemeSwitcher = () => {
         return '🎨';
       case 'halloween':
         return '🎃';
-      case 'valentine':
-        return '💕';
+      // case 'valentine':
+      //   return '💕';
       default:
         return '🎨';
     }
@@ -52,8 +52,8 @@ const ThemeSwitcher = () => {
         return 'Default';
       case 'halloween':
         return 'Halloween';
-      case 'valentine':
-        return 'Valentine\'s Day';
+      // case 'valentine':
+      //   return 'Valentine\'s Day';
       default:
         return 'Default';
     }

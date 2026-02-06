@@ -24,8 +24,8 @@ const getAutoTheme = () => {
   const christmasEnd = new Date(currentYear, 11, 29, 23, 59, 59); // December 29th, 11:59:59 PM
 
   // Valentine period: February 13 to February 14 at 11:59:59 PM
-  const valentineStart = new Date(currentYear, 1, 13, 0, 0, 0); // February 13, 12:00:00 AM (month 1 = February, day 13)
-  const valentineEnd = new Date(currentYear, 1, 14, 23, 59, 59); // February 14, 11:59:59 PM
+  // const valentineStart = new Date(currentYear, 1, 13, 0, 0, 0); // February 13, 12:00:00 AM (month 1 = February, day 13)
+  // const valentineEnd = new Date(currentYear, 1, 14, 23, 59, 59); // February 14, 11:59:59 PM
 
   // Check Halloween first (higher priority if dates overlap)
   if (now >= halloweenStart && now <= halloweenEnd) {
@@ -33,9 +33,9 @@ const getAutoTheme = () => {
   }
 
   // Check Valentine period
-  if (now >= valentineStart && now <= valentineEnd) {
-    return "valentine";
-  }
+  // if (now >= valentineStart && now <= valentineEnd) {
+  //   return "valentine";
+  // }
 
   // Check Christmas period
   if (now >= christmasStart && now <= christmasEnd) {
@@ -78,7 +78,7 @@ export const ThemeProvider = ({ children }) => {
       // During festive periods (Halloween or Valentine), always enforce the theme
       if (
         autoTheme === "halloween" ||
-        autoTheme === "valentine" ||
+        // autoTheme === "valentine" ||
         autoTheme === "christmas"
       ) {
         setCurrentTheme(autoTheme);
@@ -86,7 +86,7 @@ export const ThemeProvider = ({ children }) => {
       // After festive period ends, switch to saved theme or default if currently on festive theme
       else if (
         currentTheme === "halloween" ||
-        currentTheme === "valentine" ||
+        // currentTheme === "valentine" ||
         currentTheme === "christmas"
       ) {
         const savedTheme = localStorage.getItem("festiveTheme");
@@ -153,25 +153,25 @@ export const ThemeProvider = ({ children }) => {
         ghosts: true,
       },
     },
-    valentine: {
-      name: "Valentine's Day",
-      colors: {
-        primary: "#ff69b4",
-        secondary: "#ff1493",
-        accent: "#ffc0cb",
-        background: "#2d0a1a",
-        text: "#ffffff",
-        pink: "#ff69b4",
-        rose: "#ff1493",
-      },
-      animations: {
-        floating: true,
-        sparkles: true,
-        particles: true,
-        hearts: true,
-        roses: true,
-      },
-    },
+    // valentine: {
+    //   name: "Valentine's Day",
+    //   colors: {
+    //     primary: "#ff69b4",
+    //     secondary: "#ff1493",
+    //     accent: "#ffc0cb",
+    //     background: "#2d0a1a",
+    //     text: "#ffffff",
+    //     pink: "#ff69b4",
+    //     rose: "#ff1493",
+    //   },
+    //   animations: {
+    //     floating: true,
+    //     sparkles: true,
+    //     particles: true,
+    //     hearts: true,
+    //     roses: true,
+    //   },
+    // },
     christmas: {
       name: "Christmas",
       colors: {
