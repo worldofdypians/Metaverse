@@ -24,8 +24,8 @@ const getAutoTheme = () => {
   const christmasEnd = new Date(currentYear, 11, 29, 23, 59, 59); // December 29th, 11:59:59 PM
 
   // Valentine period: February 13 to February 14 at 11:59:59 PM
-  const valentineStart = new Date(currentYear, 1, 13, 0, 0, 0); // February 13, 12:00:00 AM (month 1 = February, day 13)
-  const valentineEnd = new Date(currentYear, 1, 14, 23, 59, 59); // February 14, 11:59:59 PM
+  // const valentineStart = new Date(currentYear, 1, 13, 0, 0, 0); // February 13, 12:00:00 AM (month 1 = February, day 13)
+  // const valentineEnd = new Date(currentYear, 1, 14, 23, 59, 59); // February 14, 11:59:59 PM
 
   // Check Halloween first (higher priority if dates overlap)
   if (now >= halloweenStart && now <= halloweenEnd) {
