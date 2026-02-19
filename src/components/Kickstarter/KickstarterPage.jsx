@@ -436,6 +436,10 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
       name: "Equity Block",
       icon: "euqityblock.png",
     },
+    {
+      name: "Bim Exchange",
+      icon: "bimLogo.png",
+    },
   ];
 
   const location = useLocation();

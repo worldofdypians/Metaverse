@@ -426,6 +426,10 @@ const WodPartners = ({ full }) => {
       name: "Equity Block",
       icon: "euqityblock.png",
     },
+      {
+      name: "Bim Exchange",
+      icon: "bimLogo.png",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
