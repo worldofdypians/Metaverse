@@ -547,6 +547,10 @@ const NewBuilders = () => {
       name: "Equity Block",
       icon: "euqityblock.png",
     },
+      {
+      name: "Bim Exchange",
+      icon: "bimLogo.png",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>

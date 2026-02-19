@@ -987,6 +987,11 @@ const Portfolio = ({
       img: "https://cdn.worldofdypians.com/wod/letsexchangeLogo.svg",
       href: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
     },
+    {
+      name: "Bim Exchange",
+      img: "https://cdn.worldofdypians.com/wod/bimLogo.png",
+      href: "https://exchange.bim.finance/swap",
+    },
   ];
 
   return (
