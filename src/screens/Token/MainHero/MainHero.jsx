@@ -158,6 +158,11 @@ const MainHero = ({ scrollInto }) => {
       logo: "letsExchange.svg",
       link: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
     },
+    {
+      title: "Bim Exchange",
+      logo: "bimLogoLarge.png",
+      link: "https://exchange.bim.finance/swap",
+    },
   ];
 
   return (

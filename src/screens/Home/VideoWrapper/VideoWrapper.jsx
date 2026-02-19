@@ -196,8 +196,13 @@ const VideoWrapper = ({
     },
     {
       title: "LetsExchange",
-      logo: "https://cdn.worldofdypians.com/wod/letsexchangeLogo.svg",
+      logo: "letsexchangeLogo.svg",
       link: "https://letsexchange.io/?coin_from=usdt-bep20&coin_to=wod-bep20&sent_amount=120",
+    },
+    {
+      title: "Bim Exchange",
+      logo: "bimLogo.png",
+      link: "https://exchange.bim.finance/swap",
     },
   ];
 
