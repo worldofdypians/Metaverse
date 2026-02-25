@@ -11,10 +11,14 @@ import { UI } from "./UI";
 import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
 import OrynPopup from "./components/OrynPopup";
-import { writeContract, readContract, waitForTransactionReceipt } from "@wagmi/core";
+import {
+  writeContract,
+  readContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { wagmiClient } from "../../wagmiConnectors";
 
-import "../Wod/Bridge/BridgeHero/_bridgehero.scss"
+import "../Wod/Bridge/BridgeHero/_bridgehero.scss";
 
 const Agent = ({
   isEOA,
@@ -104,7 +108,7 @@ const Agent = ({
     
     try {
       let amount = new BigNumber(10000).times(1e18).toFixed(0);
-      
+
       const hash = await writeContract(wagmiClient, {
         address: reward_token_wod._address,
         abi: window.TOKEN_ABI,
@@ -136,10 +140,10 @@ const Agent = ({
 
   const handleDeposit = async (e) => {
     setdepositLoading(true);
-    
+
     try {
       let amount = new BigNumber(10000).times(1e18).toFixed(0);
-      
+
       const hash = await writeContract(wagmiClient, {
         address: window.config.oryn_premium_address,
         abi: window.ORYN_PREMIUM_ABI,
@@ -175,7 +179,7 @@ const Agent = ({
 
   const startWithdrawTimer = async () => {
     setUnlockLoading(true);
-    
+
     try {
       const hash = await writeContract(wagmiClient, {
         address: window.config.oryn_premium_address,
@@ -218,8 +222,8 @@ const Agent = ({
         args: [coinbase],
         chainId: 56,
       });
-
-      setWithdrawTimer(result);
+      
+      setWithdrawTimer(Number(result));
     } catch (err) {
       console.error("Error getting withdraw timer:", err);
       setWithdrawTimer(0);
@@ -235,8 +239,7 @@ const Agent = ({
         args: [coinbase],
         chainId: 56,
       });
-
-      setHasStartedTimer(result.isUnlockStarted);
+      setHasStartedTimer(result[2]);
     } catch (err) {
       console.error("Error checking timer:", err);
       setHasStartedTimer(false);
@@ -245,7 +248,7 @@ const Agent = ({
 
   const handleWithdraw = async (e) => {
     setwithdrawLoading(true);
-    
+
     try {
       const hash = await writeContract(wagmiClient, {
         address: window.config.oryn_premium_address,
@@ -301,7 +304,7 @@ const Agent = ({
         "https://api.worldofdypians.com/user-tries/",
         {
           params: { userId: coinbase },
-        }
+        },
       );
       setTries(res.data.tries);
     } catch (error) {
@@ -332,7 +335,7 @@ const Agent = ({
     document.title = "AI Agent";
     window.scrollTo(0, 0);
   }, []);
-
+  
   return (
     <>
       <div className="container-fluid d-flex bridge-mainhero-wrapper token-wrapper justify-content-center">
@@ -456,7 +459,7 @@ const Agent = ({
       {popup && (
         <OutsideClickHandler onOutsideClick={() => setPopup(false)}>
           <OrynPopup
-          coinbase={coinbase}
+            coinbase={coinbase}
             onClose={() => setPopup(false)}
             isConnected={isConnected}
             handleApprove={handleApprove}
