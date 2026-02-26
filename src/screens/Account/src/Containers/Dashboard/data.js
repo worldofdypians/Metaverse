@@ -63,6 +63,10 @@ export const bannedEmails = [
   "tz8u0@airsworld.net",
 ];
 
+export const suspicousEmails = [
+  ""
+]
+
 export const placeholderplayerData = [
   {
     position: "0",

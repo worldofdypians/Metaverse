@@ -55,7 +55,12 @@ import {
   // previous_skaleStars,
   // previous_taikoStars,
 } from "./stars";
-import { bannedEmails, placeholderplayerData, dummyPremiums } from "./data";
+import {
+  bannedEmails,
+  placeholderplayerData,
+  dummyPremiums,
+  suspicousEmails,
+} from "./data";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import AIQuestion from "../../../../../components/AIQuestion/AIQuestion";
 import ClosePopup from "../../../../../components/AIQuestion/ClosePopup";
@@ -447,7 +452,7 @@ function Dashboard({
   const clockSoundRef = useRef(null);
   const totalTreasureHuntUsd = Object.entries(userTreasureHuntStats)
     .filter(
-      ([key, value]) => key.toLowerCase().includes("earnusd") && value > 0
+      ([key, value]) => key.toLowerCase().includes("earnusd") && value > 0,
     )
     .reduce((sum, [, value]) => sum + value, 0);
 
@@ -479,8 +484,8 @@ function Dashboard({
         (userData?.statValue === 0
           ? 0
           : userData?.position > 100
-          ? 0
-          : bnbStars[userData?.position]) ?? 0,
+            ? 0
+            : bnbStars[userData?.position]) ?? 0,
       userBnbScore:
         userData?.statValue !== undefined && userData?.statValue > 0
           ? userData?.statValue
@@ -495,8 +500,8 @@ function Dashboard({
         (userDataSkale?.statValue === 0
           ? 0
           : userDataSkale?.position > 100
-          ? 0
-          : skaleStars[userDataSkale?.position]) ?? 0,
+            ? 0
+            : skaleStars[userDataSkale?.position]) ?? 0,
       userSkaleScore:
         userDataSkale?.statValue !== undefined && userDataSkale?.statValue > 0
           ? userDataSkale?.statValue
@@ -511,8 +516,8 @@ function Dashboard({
         (userDataCore?.statValue === 0
           ? 0
           : userDataCore?.position > 100
-          ? 0
-          : taikoStars[userDataCore?.position]) ?? 0,
+            ? 0
+            : taikoStars[userDataCore?.position]) ?? 0,
       userCoreScore:
         userDataCore?.statValue !== undefined && userDataCore?.statValue > 0
           ? userDataCore?.statValue
@@ -528,8 +533,8 @@ function Dashboard({
         (userDataViction?.statValue === 0
           ? 0
           : userDataViction?.position > 100
-          ? 0
-          : skaleStars[userDataViction?.position]) ?? 0,
+            ? 0
+            : skaleStars[userDataViction?.position]) ?? 0,
       userVictionScore:
         userDataViction?.statValue !== undefined &&
         userDataViction?.statValue > 0
@@ -545,8 +550,8 @@ function Dashboard({
         (userDataManta?.statValue === 0
           ? 0
           : userDataManta?.position > 100
-          ? 0
-          : skaleStars[userDataManta?.position]) ?? 0,
+            ? 0
+            : skaleStars[userDataManta?.position]) ?? 0,
       userMantaScore:
         userDataManta?.statValue !== undefined && userDataManta?.statValue > 0
           ? userDataManta?.statValue
@@ -561,8 +566,8 @@ function Dashboard({
         (userDataBase?.statValue === 0
           ? 0
           : userDataBase?.position > 100
-          ? 0
-          : baseStars[userDataBase?.position]) ?? 0,
+            ? 0
+            : baseStars[userDataBase?.position]) ?? 0,
       userBaseScore:
         userDataBase?.statValue !== undefined && userDataBase?.statValue > 0
           ? userDataBase?.statValue
@@ -577,8 +582,8 @@ function Dashboard({
         (userDataTaiko?.statValue === 0
           ? 0
           : userDataTaiko?.position > 100
-          ? 0
-          : taikoStars[userDataTaiko?.position]) ?? 0,
+            ? 0
+            : taikoStars[userDataTaiko?.position]) ?? 0,
       userTaikoScore:
         userDataTaiko?.statValue !== undefined && userDataTaiko?.statValue > 0
           ? userDataTaiko?.statValue
@@ -609,8 +614,8 @@ function Dashboard({
         userDataSei?.statValue === 0
           ? 0
           : userDataSei?.position > 100
-          ? 0
-          : taikoStars[userDataSei?.position],
+            ? 0
+            : taikoStars[userDataSei?.position],
       userSeiScore:
         userDataSei?.statValue !== undefined && userDataSei?.statValue > 0
           ? userDataSei?.statValue
@@ -625,8 +630,8 @@ function Dashboard({
         (userDataVanar?.statValue === 0
           ? 0
           : userDataVanar?.position > 100
-          ? 0
-          : vanarStars[userDataVanar?.position]) ?? 0,
+            ? 0
+            : vanarStars[userDataVanar?.position]) ?? 0,
       userVanarScore:
         userDataVanar?.statValue !== undefined && userDataVanar?.statValue > 0
           ? userDataVanar?.statValue
@@ -914,15 +919,15 @@ function Dashboard({
 
   const totalDailyBonusSum = Object.values(treasureRewardMoney).reduce(
     (sum, value) => sum + value,
-    0
+    0,
   );
 
   const claimedMoneyReward = aiQuestionRewards.find(
-    (item) => item.rewardType === "Money" && item.status === "Claimed"
+    (item) => item.rewardType === "Money" && item.status === "Claimed",
   );
 
   const claimedMoneyFight = battleFightResult.rewards?.find(
-    (item) => item.rewardType === "money"
+    (item) => item.rewardType === "money",
   );
 
   const useWarnOnRefresh = (shouldWarn) => {
@@ -969,8 +974,8 @@ function Dashboard({
         0, // hour
         0, // minute
         0, // second
-        0 // millisecond
-      )
+        0, // millisecond
+      ),
     );
 
     // If current time is before 00:30 UTC today, use today's target
@@ -987,8 +992,8 @@ function Dashboard({
           0, // hour
           0, // minute
           0, // second
-          0 // millisecond
-        )
+          0, // millisecond
+        ),
       );
       return targetTomorrow.getTime() - now.getTime();
     }
@@ -1085,7 +1090,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -1107,7 +1112,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -1130,7 +1135,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data.leaderboard || [];
     },
@@ -1178,7 +1183,7 @@ function Dashboard({
           previousWinnersCoreQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataCore(placeholderplayerData);
@@ -1219,7 +1224,7 @@ function Dashboard({
           dailyRecordsAroundPlayerCoreQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
         if ((error && !fromCache) || !data?.length) {
           setActivePlayerCore(false);
@@ -1228,7 +1233,7 @@ function Dashboard({
         const [userRecord] = data;
         setUserDataCore(userRecord);
         setActivePlayerCore(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
         );
       } finally {
         // Clear the promise ref if this is still the current fetch
@@ -1255,7 +1260,7 @@ function Dashboard({
       dailyRecordsCoreQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -1272,7 +1277,7 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersCore(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId) {
@@ -1325,7 +1330,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -1347,7 +1352,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -1370,7 +1375,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data.leaderboard || [];
     },
@@ -1418,7 +1423,7 @@ function Dashboard({
           previousWinnersVictionQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataViction(placeholderplayerData);
@@ -1459,7 +1464,7 @@ function Dashboard({
           dailyRecordsAroundPlayerVictionQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
         if ((error && !fromCache) || !data?.length) {
           setActivePlayerViction(false);
@@ -1468,7 +1473,7 @@ function Dashboard({
         const [userRecord] = data;
         setUserDataViction(userRecord);
         setActivePlayerViction(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
         );
       } finally {
         // Clear the promise ref if this is still the current fetch
@@ -1496,7 +1501,7 @@ function Dashboard({
       dailyRecordsVictionQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -1513,7 +1518,7 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersViction(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId) {
@@ -1566,7 +1571,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -1588,7 +1593,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -1611,7 +1616,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data.leaderboard || [];
     },
@@ -1659,7 +1664,7 @@ function Dashboard({
           previousWinnersMantaQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataManta(placeholderplayerData);
@@ -1700,7 +1705,7 @@ function Dashboard({
           dailyRecordsAroundPlayerMantaQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
         if ((error && !fromCache) || !data?.length) {
           setActivePlayerManta(false);
@@ -1709,7 +1714,7 @@ function Dashboard({
         const [userRecord] = data;
         setUserDataManta(userRecord);
         setActivePlayerManta(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
         );
       } finally {
         // Clear the promise ref if this is still the current fetch
@@ -1736,7 +1741,7 @@ function Dashboard({
       dailyRecordsMantaQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -1753,7 +1758,7 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersManta(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId) {
@@ -1806,7 +1811,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -1828,7 +1833,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -1851,7 +1856,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data.leaderboard || [];
     },
@@ -1899,7 +1904,7 @@ function Dashboard({
           previousWinnersSeiQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataSei(placeholderplayerData);
@@ -1940,7 +1945,7 @@ function Dashboard({
           dailyRecordsAroundPlayerSeiQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
         if ((error && !fromCache) || !data?.length) {
           setActivePlayerSei(false);
@@ -1949,7 +1954,7 @@ function Dashboard({
         const [userRecord] = data;
         setUserDataSei(userRecord);
         setActivePlayerSei(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
         );
       } finally {
         // Clear the promise ref if this is still the current fetch
@@ -1976,7 +1981,7 @@ function Dashboard({
       dailyRecordsSeiQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -1993,7 +1998,7 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersSei(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId) {
@@ -2288,7 +2293,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -2310,7 +2315,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -2333,7 +2338,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data.leaderboard || [];
     },
@@ -2381,7 +2386,7 @@ function Dashboard({
           previousWinnersBaseQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataBase(placeholderplayerData);
@@ -2422,7 +2427,7 @@ function Dashboard({
           dailyRecordsAroundPlayerBaseQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
         if ((error && !fromCache) || !data?.length) {
           setActivePlayerBase(false);
@@ -2431,7 +2436,7 @@ function Dashboard({
         const [userRecord] = data;
         setUserDataBase(userRecord);
         setActivePlayerBase(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
         );
       } finally {
         // Clear the promise ref if this is still the current fetch
@@ -2458,7 +2463,7 @@ function Dashboard({
       dailyRecordsBaseQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -2475,7 +2480,7 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersBase(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId) {
@@ -2528,7 +2533,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -2550,7 +2555,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -2573,7 +2578,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data.leaderboard || [];
     },
@@ -2621,7 +2626,7 @@ function Dashboard({
           previousWinnersVanarQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataVanar(placeholderplayerData);
@@ -2662,7 +2667,7 @@ function Dashboard({
           dailyRecordsAroundPlayerVanarQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
 
         if ((error && !fromCache) || !data?.length) {
@@ -2673,7 +2678,7 @@ function Dashboard({
         const [userRecord] = data;
         setUserDataVanar(userRecord);
         setActivePlayerVanar(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
         );
       } finally {
         // Clear the promise ref if this is still the current fetch
@@ -2700,7 +2705,7 @@ function Dashboard({
       dailyRecordsVanarQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -2717,7 +2722,7 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersVanar(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId) {
@@ -2770,7 +2775,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -2792,7 +2797,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -2815,7 +2820,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data.leaderboard || [];
     },
@@ -2863,7 +2868,7 @@ function Dashboard({
           previousWinnersTaikoQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataTaiko(placeholderplayerData);
@@ -2904,7 +2909,7 @@ function Dashboard({
           dailyRecordsAroundPlayerTaikoQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
         if ((error && !fromCache) || !data?.length) {
           setActivePlayerTaiko(false);
@@ -2913,7 +2918,7 @@ function Dashboard({
         const [userRecord] = data;
         setUserDataTaiko(userRecord);
         setActivePlayerTaiko(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
         );
       } finally {
         // Clear the promise ref if this is still the current fetch
@@ -2940,7 +2945,7 @@ function Dashboard({
       dailyRecordsTaikoQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -2957,7 +2962,7 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersTaiko(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId) {
@@ -3250,7 +3255,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -3272,7 +3277,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -3295,7 +3300,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data.leaderboard || [];
     },
@@ -3343,7 +3348,7 @@ function Dashboard({
           previousWinnersSkaleQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataSkale(placeholderplayerData);
@@ -3384,7 +3389,7 @@ function Dashboard({
           dailyRecordsAroundPlayerSkaleQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
         if ((error && !fromCache) || !data?.length) {
           setActivePlayerSkale(false);
@@ -3393,7 +3398,7 @@ function Dashboard({
         const [userRecord] = data;
         setUserDataSkale(userRecord);
         setActivePlayerSkale(
-          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+          (userRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
         );
       } finally {
         // Clear the promise ref if this is still the current fetch
@@ -3420,7 +3425,7 @@ function Dashboard({
       dailyRecordsSkaleQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -3437,7 +3442,7 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersSkale(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId) {
@@ -3491,7 +3496,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -3512,7 +3517,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -3534,7 +3539,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -3543,7 +3548,7 @@ function Dashboard({
   const fetchPreviousUserDataStar = async (
     version,
     userIdParam,
-    forceRefresh = false
+    forceRefresh = false,
   ) => {
     if (version === 0 || !userIdParam) {
       setUserPreviousDataStar([]);
@@ -3590,7 +3595,7 @@ function Dashboard({
         const shouldForce = forceRefresh;
         const { data, error, fromCache } = await fetchQueryData(
           previousUserDataStarQuery,
-          { force: shouldForce }
+          { force: shouldForce },
         );
 
         if ((error && !fromCache) || !data) {
@@ -3623,7 +3628,7 @@ function Dashboard({
 
   const fetchDailyRecordsAroundPlayerStar = async (
     forceRefresh = false,
-    leaderboardData = starRecords
+    leaderboardData = starRecords,
   ) => {
     if (!userId) return;
 
@@ -3645,7 +3650,7 @@ function Dashboard({
           recordsAroundPlayerStarQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
 
         const aroundData = data?.leaderboard || [];
@@ -3675,11 +3680,11 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) +
-                  Number(monthlyExtraStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition]) +
-                  Number(monthlyExtraStarPrizes[userPosition])
-              : 0
+                  ? Number(monthlyStarPrizes[99]) +
+                    Number(monthlyExtraStarPrizes[99])
+                  : Number(monthlyStarPrizes[userPosition]) +
+                    Number(monthlyExtraStarPrizes[userPosition])
+              : 0,
           );
         } else {
           setDataAmountStar(
@@ -3687,9 +3692,9 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition])
-              : 0
+                  ? Number(monthlyStarPrizes[99])
+                  : Number(monthlyStarPrizes[userPosition])
+              : 0,
           );
         }
 
@@ -3755,7 +3760,7 @@ function Dashboard({
           previousWinnersStarQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataStar(placeholderplayerData);
@@ -3795,7 +3800,7 @@ function Dashboard({
       greatCollectionQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -3830,12 +3835,12 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersStar(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId) {
       const testArray = leaderboard.filter(
-        (item) => item.displayName === username
+        (item) => item.displayName === username,
       );
 
       if (testArray.length > 0) {
@@ -3849,11 +3854,11 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) +
-                  Number(monthlyExtraStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition]) +
-                  Number(monthlyExtraStarPrizes[userPosition])
-              : 0
+                  ? Number(monthlyStarPrizes[99]) +
+                    Number(monthlyExtraStarPrizes[99])
+                  : Number(monthlyStarPrizes[userPosition]) +
+                    Number(monthlyExtraStarPrizes[userPosition])
+              : 0,
           );
         } else {
           setDataAmountStar(
@@ -3861,9 +3866,9 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition])
-              : 0
+                  ? Number(monthlyStarPrizes[99])
+                  : Number(monthlyStarPrizes[userPosition])
+              : 0,
           );
         }
       } else {
@@ -3917,7 +3922,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard;
     },
@@ -3938,7 +3943,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -3960,7 +3965,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -3968,7 +3973,7 @@ function Dashboard({
 
   const fetchPreviousWinnersStarWeekly = async (
     version,
-    forceRefresh = false
+    forceRefresh = false,
   ) => {
     if (version === 0) {
       setPrevDataStarWeekly(placeholderplayerData);
@@ -4011,7 +4016,7 @@ function Dashboard({
           previousWinnersStarWeeklyQuery,
           {
             force: shouldForce,
-          }
+          },
         );
         if ((error && !fromCache) || !data) {
           setPrevDataStarWeekly(placeholderplayerData);
@@ -4043,7 +4048,7 @@ function Dashboard({
       recordsStarWeeklyQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -4060,12 +4065,12 @@ function Dashboard({
     const version = parseInt(data?.version);
     await fetchPreviousWinnersStarWeekly(
       Number.isNaN(version) ? 0 : version,
-      forceRefresh
+      forceRefresh,
     );
 
     if (userId && username && leaderboard) {
       const testArray = leaderboard.filter(
-        (item) => item.displayName === username
+        (item) => item.displayName === username,
       );
       if (testArray.length > 0) {
         setActivePlayerStarWeekly(true);
@@ -4078,11 +4083,11 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(weeklyStarPrizes[99]) +
-                  Number(weeklyExtraStarPrizes[99])
-                : Number(weeklyStarPrizes[userPosition]) +
-                  Number(weeklyExtraStarPrizes[userPosition])
-              : 0
+                  ? Number(weeklyStarPrizes[99]) +
+                    Number(weeklyExtraStarPrizes[99])
+                  : Number(weeklyStarPrizes[userPosition]) +
+                    Number(weeklyExtraStarPrizes[userPosition])
+              : 0,
           );
         } else {
           setDataAmountStarWeekly(
@@ -4090,9 +4095,9 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(weeklyStarPrizes[99])
-                : Number(weeklyStarPrizes[userPosition])
-              : 0
+                  ? Number(weeklyStarPrizes[99])
+                  : Number(weeklyStarPrizes[userPosition])
+              : 0,
           );
         }
       } else {
@@ -4112,7 +4117,7 @@ function Dashboard({
 
   const fetchWeeklyRecordsAroundPlayerStar = async (
     forceRefresh = false,
-    leaderboardData = starRecordsWeekly
+    leaderboardData = starRecordsWeekly,
   ) => {
     if (!userId) return;
 
@@ -4134,7 +4139,7 @@ function Dashboard({
           recordsAroundPlayerStarWeeklyQuery,
           {
             force: forceRefresh,
-          }
+          },
         );
 
         const aroundData = data?.leaderboard || [];
@@ -4159,11 +4164,11 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(weeklyStarPrizes[99]) +
-                  Number(weeklyExtraStarPrizes[99])
-                : Number(weeklyStarPrizes[userPosition]) +
-                  Number(weeklyExtraStarPrizes[userPosition])
-              : 0
+                  ? Number(weeklyStarPrizes[99]) +
+                    Number(weeklyExtraStarPrizes[99])
+                  : Number(weeklyStarPrizes[userPosition]) +
+                    Number(weeklyExtraStarPrizes[userPosition])
+              : 0,
           );
         } else {
           setDataAmountStarWeekly(
@@ -4171,9 +4176,9 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(weeklyStarPrizes[99])
-                : Number(weeklyStarPrizes[userPosition])
-              : 0
+                  ? Number(weeklyStarPrizes[99])
+                  : Number(weeklyStarPrizes[userPosition])
+              : 0,
           );
         }
 
@@ -4246,7 +4251,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
+        data,
       );
       return result.data.data.leaderboard ?? [];
     },
@@ -4268,7 +4273,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -4291,7 +4296,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data?.leaderboard ?? [];
     },
@@ -4312,7 +4317,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard`,
-        data
+        data,
       );
       return result.data.data;
     },
@@ -4335,7 +4340,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data?.leaderboard ?? [];
     },
@@ -4358,7 +4363,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data.data?.leaderboard ?? [];
     },
@@ -4390,7 +4395,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `https://worldofdypiansutilities.azurewebsites.net/api/GetLeaderboardAroundMe?code=PvuUnNv28vxey5X48EaNidm5E6gN3r6V8wuccb0SLO82AzFukRBaqA==`,
-        data
+        data,
       );
       return result.data?.data?.leaderboard ?? [];
     },
@@ -4437,7 +4442,7 @@ function Dashboard({
         const shouldForce = forceRefresh;
         const { data, error, fromCache } = await fetchQueryData(
           previousWinnersDailyQuery,
-          { force: shouldForce }
+          { force: shouldForce },
         );
 
         if ((error && !fromCache) || !data) {
@@ -4472,7 +4477,7 @@ function Dashboard({
         dailyRecordsQuery,
         {
           force: forceRefresh,
-        }
+        },
       );
 
       if ((error && !fromCache) || !data) {
@@ -4488,7 +4493,7 @@ function Dashboard({
       const version = Number.parseInt(data?.version, 10);
       await fetchPreviousWinners(
         Number.isNaN(version) ? 0 : version,
-        forceRefresh
+        forceRefresh,
       );
 
       if (userId) {
@@ -4507,7 +4512,7 @@ function Dashboard({
       genesisRecordsQuery,
       {
         force: forceRefresh,
-      }
+      },
     );
 
     if ((error && !fromCache) || !data) {
@@ -5116,7 +5121,7 @@ function Dashboard({
   const countUserDailyBundles = async (address) => {
     const result = await axios
       .get(
-        `https://api.worldofdypians.com/api/userBundlesCount?walletAddress=${address}`
+        `https://api.worldofdypians.com/api/userBundlesCount?walletAddress=${address}`,
       )
       .catch((e) => {
         console.error(e);
@@ -5323,7 +5328,7 @@ function Dashboard({
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       return result.data?.data?.leaderboard ?? [];
     },
@@ -5351,7 +5356,7 @@ function Dashboard({
       try {
         const { data, error, fromCache } = await fetchQueryData(
           genesisAroundPlayerQuery,
-          { force: forceRefresh }
+          { force: forceRefresh },
         );
 
         const aroundData = Array.isArray(data) ? data : [];
@@ -5382,7 +5387,7 @@ function Dashboard({
 
   const fetchDailyRecordsAroundPlayer = async (
     forceRefresh = false,
-    leaderboardData = dailyrecords
+    leaderboardData = dailyrecords,
   ) => {
     if (!userId) {
       setActivePlayer(false);
@@ -5406,7 +5411,7 @@ function Dashboard({
       try {
         const { data, error, fromCache } = await fetchQueryData(
           dailyRecordsAroundPlayerQuery,
-          { force: forceRefresh }
+          { force: forceRefresh },
         );
 
         const aroundData = Array.isArray(data) ? data : [];
@@ -5419,7 +5424,7 @@ function Dashboard({
           if (fallbackRecord) {
             setUserData(fallbackRecord);
             setActivePlayer(
-              (fallbackRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99
+              (fallbackRecord?.position ?? Number.MAX_SAFE_INTEGER) <= 99,
             );
             return;
           }
@@ -5531,7 +5536,7 @@ function Dashboard({
 
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData
+        emailData,
       );
       if (result.status === 200 && result.data) {
         const chestOrder = result.data.chestOrder;
@@ -5579,7 +5584,7 @@ function Dashboard({
 
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData
+        emailData,
       );
       if (result.status === 200 && result.data) {
         const chestOrder = result.data.chestOrder;
@@ -5621,7 +5626,7 @@ function Dashboard({
 
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData
+        emailData,
       );
       if (result.status === 200 && result.data) {
         const chestOrder = result.data.chestOrder;
@@ -5664,7 +5669,7 @@ function Dashboard({
 
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData
+        emailData,
       );
       if (result.status === 200 && result.data) {
         const chestOrder = result.data.chestOrder;
@@ -5707,7 +5712,7 @@ function Dashboard({
 
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData
+        emailData,
       );
       if (result.status === 200 && result.data) {
         const chestOrder = result.data.chestOrder;
@@ -5748,7 +5753,7 @@ function Dashboard({
 
     const result = await axios.post(
       "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
+      emailData,
     );
     if (result.status === 200 && result.data) {
       const chestOrder = result.data.chestOrder;
@@ -5790,7 +5795,7 @@ function Dashboard({
 
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData
+        emailData,
       );
       if (result.status === 200 && result.data) {
         const chestOrder = result.data.chestOrder;
@@ -5837,7 +5842,7 @@ function Dashboard({
 
       const result = await axios.post(
         "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-        emailData
+        emailData,
       );
       if (result.status === 200 && result.data) {
         const chestOrder = result.data.chestOrder;
@@ -5916,7 +5921,7 @@ function Dashboard({
 
     const result = await axios.post(
       "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
+      emailData,
     );
     if (result.status === 200 && result.data) {
       const chestOrder = result.data.chestOrder;
@@ -6000,7 +6005,7 @@ function Dashboard({
     const result = await axios
       .post(
         `https://worldofdypiansdailybonus.azurewebsites.net/api/GetDailyQuestionAnswer?code=YaQr78883ptswtmsk4Oyfl3QK_ni3SN2E5okDerTxsxwAzFurSAsvQ==`,
-        data
+        data,
       )
       .catch((e) => {
         console.error(e);
@@ -6018,7 +6023,7 @@ function Dashboard({
       const result = await axios
         .post(
           `https://worldofdypiansdailybonus.azurewebsites.net/api/GetDailyQuestionAnswer?code=YaQr78883ptswtmsk4Oyfl3QK_ni3SN2E5okDerTxsxwAzFurSAsvQ==`,
-          data
+          data,
         )
         .catch((e) => {
           console.error(e);
@@ -6035,7 +6040,7 @@ function Dashboard({
   const getAIQuestionStatus = async (wallet, email) => {
     const result = await axios
       .get(
-        `https://api.worldofdypians.com/api/qa/profile?walletAddress=${wallet}&email=${email}`
+        `https://api.worldofdypians.com/api/qa/profile?walletAddress=${wallet}&email=${email}`,
       )
       .catch((e) => {
         console.error(e);
@@ -6057,7 +6062,7 @@ function Dashboard({
       }
       if (isToday === true) {
         const cleanedAnswers = todayObj.answers.map((answer) =>
-          answer.replace(/^[A-D][.)]\s*/, "")
+          answer.replace(/^[A-D][.)]\s*/, ""),
         );
 
         setAiQuestionObjectAnswered({
@@ -6130,7 +6135,7 @@ function Dashboard({
           `https://api.worldofdypians.com/user-favorites/${userId}`,
           {
             headers: { Authorization: `Bearer ${authToken}` },
-          }
+          },
         );
         if (!response.ok) {
           throw new Error("Error fetching user favorites");
@@ -6180,7 +6185,7 @@ function Dashboard({
         {
           email: email,
           chainId: chain,
-        }
+        },
       )
       .catch((e) => {
         console.error(e);
@@ -6636,7 +6641,7 @@ function Dashboard({
 
   useEffect(() => {
     handleRefreshCountdown700(
-      email ? userWallet : isConnected ? coinbase : window.config.ZERO_ADDRESS
+      email ? userWallet : isConnected ? coinbase : window.config.ZERO_ADDRESS,
     );
   }, [coinbase, isConnected, email, userWallet]);
 
@@ -6749,6 +6754,25 @@ function Dashboard({
               <h6 className="banned-account-message mb-0 text-white text-center">
                 This account has been banned permanently. Check your email for
                 more information.
+              </h6>
+            </div>
+          </div>
+        )}
+        {suspicousEmails.includes(email) && (
+          <div className="custom-container mt-5 mt-lg-0">
+            <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl w-100 px-2 py-3 mt-5 mt-lg-2 d-flex align-items-center justify-content-center">
+              <h6 className="banned-account-message mb-0 text-white text-center">
+                This account has been flagged for suspicious activity and is
+                being monitored. For any issues submit a ticket on:{" "}
+                <a
+                  href="https://discord.gg/worldofdypians"
+                  className="text-white text-decoration-underline"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  World of Dypians Discord
+                </a>
+                .
               </h6>
             </div>
           </div>
@@ -7261,24 +7285,24 @@ function Dashboard({
                   !userDataStar?.statValue || userDataStar?.statValue === 0
                     ? 0
                     : userDataStar.position
-                    ? userDataStar.position + 1
-                    : 0
+                      ? userDataStar.position + 1
+                      : 0
                 }
                 userPreviousDataStar={
                   !userPreviousDataStar?.StatValue ||
                   userPreviousDataStar?.StatValue === 0
                     ? 0
                     : userPreviousDataStar.Position !== undefined
-                    ? userPreviousDataStar.Position + 1
-                    : 0
+                      ? userPreviousDataStar.Position + 1
+                      : 0
                 }
                 userPreviousDataStar2={
                   !userPreviousDataStar2?.StatValue ||
                   userPreviousDataStar2?.StatValue === 0
                     ? 0
                     : userPreviousDataStar2.Position !== undefined
-                    ? userPreviousDataStar2.Position + 1
-                    : 0
+                      ? userPreviousDataStar2.Position + 1
+                      : 0
                 }
               />
             </div>
