@@ -194,7 +194,7 @@ window.config = {
   otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220",
   otc1cliff4_address: "0x78b320e7fa1c8b5fa3ab85e4618d401117573ced",
   roundotc_vesting_address: "0x2a743e768fb02efb66afb9b0236dded09468d5ba",
-  dypiansvesting_address: "0x7787aad9fa48d2e70ca773ce1ad484fdb25732b0",
+  dypiansvesting_address: "0x64fba8a80d3204e6bbbbfde45637b8f6fd6e6cf6",
   evanvesting_address: "0x4e0d58213261c6d32ecdc21827ba4e2378f7a523",
   old30vesting_address: "0x26eb18be24a827ca7427b903fdd6d12913aa6860",
   old7vesting_address: "0xf3589ef463dcb851888b69b80f44dead2015d812",
