@@ -192,7 +192,7 @@ window.config = {
   otcwoddynamic_address: "0xf0a43b4549792f6116564a4253cb685d983e90fd", //50%
   otccliff_address: "0xad375c22165733e0b5c4e66cfd428ee45f3182c1", //30%
   otccliff2_address: "0xd300ec634cdf9be87b5c96756dedb254bc898220",
-  otc1cliff4_address: "0x610853892591f3d0f2af73b830cfd28835d4cb0c",
+  otc1cliff4_address: "0x78b320e7fa1c8b5fa3ab85e4618d401117573ced",
   roundotc_vesting_address: "0x2a743e768fb02efb66afb9b0236dded09468d5ba",
   dypiansvesting_address: "0x7787aad9fa48d2e70ca773ce1ad484fdb25732b0",
   evanvesting_address: "0x4e0d58213261c6d32ecdc21827ba4e2378f7a523",
@@ -5014,7 +5014,13 @@ async function getMyNFTs(address, type = "") {
       window.config.nft_manta_address,
     );
 
-    const balance = await contract.methods.balanceOf(address).call().catch((e)=>{console.error(e); return 0});
+    const balance = await contract.methods
+      .balanceOf(address)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
 
     const tokens = await Promise.all(
       range(0, balance - 1).map(async (i) => {
