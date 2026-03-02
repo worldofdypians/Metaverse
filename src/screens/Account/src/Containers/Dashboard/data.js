@@ -64,7 +64,7 @@ export const bannedEmails = [
 ];
 
 export const suspicousEmails = [
-  "pdelaguila777@gmail.com"
+  ""
 ]
 
 export const placeholderplayerData = [
