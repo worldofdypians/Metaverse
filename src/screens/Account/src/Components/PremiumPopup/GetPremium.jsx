@@ -27,7 +27,6 @@ const GetPremiumPopup = ({
   authToken,
   isPremium,
   isConnected,
-
 }) => {
   const { statusPrime, txHash, createPremiumOrder, QRComponent } =
     useBinancePayPremium();
@@ -46,7 +45,6 @@ const GetPremiumPopup = ({
   const activeConnectorName =
     wagmiAccount?.connector?.name?.toLowerCase?.() || "";
   const isBinanceWallet = activeConnectorName.includes("binance");
-  
 
   // Unified on-chain helpers using wagmi/viem only
   const readOnChain = async ({
@@ -57,7 +55,7 @@ const GetPremiumPopup = ({
     chain,
   }) => {
     const targetChainId = chain ?? chainId;
-  
+
     return await readContract(wagmiClient, {
       address,
       abi,
@@ -74,7 +72,6 @@ const GetPremiumPopup = ({
     args = [],
     value,
   }) => {
-   
     const hash = await writeContract(wagmiClient, {
       address,
       abi,
@@ -139,7 +136,7 @@ const GetPremiumPopup = ({
       case 169:
         address = window.config.subscription_manta_address;
         abi = window.SUBSCRIPTION_MANTA_ABI;
-        args = [token];
+        args = [token, 0];
         break;
       case 167000:
         address = window.config.subscription_taiko_address;
@@ -327,7 +324,7 @@ const GetPremiumPopup = ({
   const [loadspinnerSub, setloadspinnerSub] = useState(false);
   const [chainDropdown, setChainDropdown] = useState(chainDropdowns[0]);
   const [selectedSubscriptionToken, setselectedSubscriptionToken] = useState(
-    Object.keys(window.config.subscription_tokens)[0]
+    Object.keys(window.config.subscription_tokens)[0],
   );
   const [tokenDecimals, settokenDecimals] = useState(1);
   const [showChainDropdown, setshowChainDropdown] = useState(false);
@@ -392,10 +389,10 @@ const GetPremiumPopup = ({
         setchainState("base");
       } else if (chainId === 56) {
         setchainState("bnb");
-      } 
+      }
       // else if (chainId === 698) {
       //   setchainState("mat");
-      // } 
+      // }
       else if (chainId === 204) {
         setchainState("opbnb");
       } else if (chainId === 1030) {
@@ -419,7 +416,7 @@ const GetPremiumPopup = ({
       }
       //  else if (chainId === 841) {
       //   setchainState("taraxa");
-      // } 
+      // }
       else {
         setchainState("");
       }
@@ -562,16 +559,16 @@ const GetPremiumPopup = ({
         functionName: "nftDiscounts",
         args: [nftTaiko.address],
       }).catch(() => undefined),
-    //   readContract(wagmiClient, {
-    //     ...matSubscription,
-    //     functionName: "nftDiscounts",
-    //     args: [nftMat.address],
-    //   }).catch(() => undefined),
-    //   readContract(wagmiClient, {
-    //     ...taraxaSubscription,
-    //     functionName: "nftDiscounts",
-    //     args: [nftTaraxa.address],
-    //   }).catch(() => undefined),
+      //   readContract(wagmiClient, {
+      //     ...matSubscription,
+      //     functionName: "nftDiscounts",
+      //     args: [nftMat.address],
+      //   }).catch(() => undefined),
+      //   readContract(wagmiClient, {
+      //     ...taraxaSubscription,
+      //     functionName: "nftDiscounts",
+      //     args: [nftTaraxa.address],
+      //   }).catch(() => undefined),
     ]);
 
     const extractDiscount = (data) => {
@@ -644,7 +641,7 @@ const GetPremiumPopup = ({
       }
       setnftPremium_tokenIdTaiko(tokenId);
       setnftPremium_totalTaiko(parseInt(result_taiko));
-    } 
+    }
     // else if (result_mat && parseInt(result_mat) > 0) {
     //   const tokenId = await getFirstTokenId(nftMat);
     //   if (nftObject_mat) {
@@ -662,7 +659,7 @@ const GetPremiumPopup = ({
     //   }
     //   setnftPremium_tokenIdTaraxa(tokenId);
     //   setnftPremium_totalTaraxa(parseInt(result_taraxa));
-    // } 
+    // }
     else {
       setnftPremium_tokenId(0);
       setnftPremium_total(0);
@@ -676,7 +673,6 @@ const GetPremiumPopup = ({
       // setnftPremium_totalMat(0);
       // setnftPremium_tokenIdTaraxa(0);
       // setnftPremium_totalTaraxa(0);
- 
     }
   };
 
@@ -839,34 +835,39 @@ const GetPremiumPopup = ({
       chainId === 1
         ? window.config.subscriptioneth_tokens[token]?.decimals
         : chainId === 56
-        ? window.config.subscriptionbnb_tokens[token]?.decimals
-        : chainId === 1030
-        ? window.config.subscriptioncfx_tokens[token]?.decimals
-        : chainId === 8453
-        ? window.config.subscriptionbase_tokens[token]?.decimals
-        : chainId === 43114
-        ? window.config.subscription_tokens[token]?.decimals
-        : chainId === 1482601649
-        ? window.config.subscriptionskale_tokens[token]?.decimals
-        : chainId === 1116
-        ? window.config.subscriptioncore_tokens[token]?.decimals
-        : chainId === 1329
-        ? window.config.subscriptionsei_tokens[token]?.decimals
-        : chainId === 88
-        ? window.config.subscriptionviction_tokens[token]?.decimals
-        // : chainId === 2040
-        // ? window.config.subscriptionvanar_tokens[token]?.decimals
-        : chainId === 169
-        ? window.config.subscriptionmanta_tokens[token]?.decimals
-        : chainId === 167000
-        ? window.config.subscriptiontaiko_tokens[token]?.decimals
-        // : chainId === 698
-        // ? window.config.subscriptionmat_tokens[token]?.decimals
-        : chainId === 1030
-        ? window.config.subscriptioncfx_tokens[token]?.decimals
-        // : chainId === 841
-        // ? window.config.subscriptiontaraxa_tokens[token]?.decimals
-        : window.config.subscriptioneth_tokens[token]?.decimals;
+          ? window.config.subscriptionbnb_tokens[token]?.decimals
+          : chainId === 1030
+            ? window.config.subscriptioncfx_tokens[token]?.decimals
+            : chainId === 8453
+              ? window.config.subscriptionbase_tokens[token]?.decimals
+              : chainId === 43114
+                ? window.config.subscription_tokens[token]?.decimals
+                : chainId === 1482601649
+                  ? window.config.subscriptionskale_tokens[token]?.decimals
+                  : chainId === 1116
+                    ? window.config.subscriptioncore_tokens[token]?.decimals
+                    : chainId === 1329
+                      ? window.config.subscriptionsei_tokens[token]?.decimals
+                      : chainId === 88
+                        ? window.config.subscriptionviction_tokens[token]
+                            ?.decimals
+                        : // : chainId === 2040
+                          // ? window.config.subscriptionvanar_tokens[token]?.decimals
+                          chainId === 169
+                          ? window.config.subscriptionmanta_tokens[token]
+                              ?.decimals
+                          : chainId === 167000
+                            ? window.config.subscriptiontaiko_tokens[token]
+                                ?.decimals
+                            : // : chainId === 698
+                              // ? window.config.subscriptionmat_tokens[token]?.decimals
+                              chainId === 1030
+                              ? window.config.subscriptioncfx_tokens[token]
+                                  ?.decimals
+                              : // : chainId === 841
+                                // ? window.config.subscriptiontaraxa_tokens[token]?.decimals
+                                window.config.subscriptioneth_tokens[token]
+                                  ?.decimals;
     setprice("");
     setformattedPrice("");
     setTokenBalance("");
@@ -878,7 +879,7 @@ const GetPremiumPopup = ({
 
     let formattedTokenPrice = getFormattedNumber(
       tokenprice / 10 ** tokenDecimals,
-      tokenDecimals
+      tokenDecimals,
     );
 
     if (coinbase) {
@@ -1099,9 +1100,9 @@ const GetPremiumPopup = ({
 
     const contractConfig = resolvePremiumContract(chainId ?? 1, token);
 
-    if (!contractConfig){
+    if (!contractConfig) {
       console.error("Unsupported chain for premium contract.");
-    return
+      return;
     }
     const functionName = "getEstimatedTokenSubscriptionAmount";
 
@@ -1113,7 +1114,7 @@ const GetPremiumPopup = ({
     }).catch(() => 0);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
-console.log(coinbase)
+    console.log(coinbase);
     if (coinbase) {
       const nftTotal = contractConfig.nftTotal;
       const nftTokenId = contractConfig.nftTokenId;
@@ -1232,7 +1233,7 @@ console.log(coinbase)
         functionName,
         args,
         value,
-        account: coinbase
+        account: coinbase,
       });
 
       // Handle success
@@ -1257,12 +1258,12 @@ console.log(coinbase)
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptioneth_tokens)[0]
+        Object.keys(window.config.subscriptioneth_tokens)[0],
       );
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
@@ -1270,12 +1271,12 @@ console.log(coinbase)
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionbnb_tokens)[0]
+        Object.keys(window.config.subscriptionbnb_tokens)[0],
       );
       handleSubscriptionTokenChange(wbnbAddress);
       handleCheckIfAlreadyApproved(wbnbAddress);
@@ -1283,12 +1284,12 @@ console.log(coinbase)
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptioncfx_tokens)[0]
+        Object.keys(window.config.subscriptioncfx_tokens)[0],
       );
       handleSubscriptionTokenChange(wcfx);
       handleCheckIfAlreadyApproved(wcfx);
@@ -1296,12 +1297,12 @@ console.log(coinbase)
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("weth");
       setdropdownTitle("WETH");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionbase_tokens)[0]
+        Object.keys(window.config.subscriptionbase_tokens)[0],
       );
       handleSubscriptionTokenChange(wbase);
       handleCheckIfAlreadyApproved(wbase);
@@ -1309,36 +1310,36 @@ console.log(coinbase)
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscription_tokens)[0]
+        Object.keys(window.config.subscription_tokens)[0],
       );
       handleSubscriptionTokenChange(wavaxAddress);
     } else if (chainId === 1482601649) {
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdc");
       setdropdownTitle("USDC");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionskale_tokens)[0]
+        Object.keys(window.config.subscriptionskale_tokens)[0],
       );
       handleSubscriptionTokenChange(wskaleAddress);
     } else if (chainId === 88) {
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionviction_tokens)[0]
+        Object.keys(window.config.subscriptionviction_tokens)[0],
       );
       handleSubscriptionTokenChange(wvictionAddress);
       handleCheckIfAlreadyApproved(wvictionAddress);
@@ -1346,12 +1347,12 @@ console.log(coinbase)
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdc");
       setdropdownTitle("USDC");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionvanar_tokens)[0]
+        Object.keys(window.config.subscriptionvanar_tokens)[0],
       );
       handleSubscriptionTokenChange(wvanarAddress);
       handleCheckIfAlreadyApproved(wvanarAddress);
@@ -1359,12 +1360,12 @@ console.log(coinbase)
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionmanta_tokens)[0]
+        Object.keys(window.config.subscriptionmanta_tokens)[0],
       );
       handleSubscriptionTokenChange(wmantaddress);
       handleCheckIfAlreadyApproved(wmantaddress);
@@ -1372,12 +1373,12 @@ console.log(coinbase)
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptiontaiko_tokens)[0]
+        Object.keys(window.config.subscriptiontaiko_tokens)[0],
       );
       handleSubscriptionTokenChange(wtaikoaddress);
       handleCheckIfAlreadyApproved(wtaikoaddress);
@@ -1395,17 +1396,17 @@ console.log(coinbase)
     //   );
     //   handleSubscriptionTokenChange(wmataddress);
     //   handleCheckIfAlreadyApproved(wmataddress);
-    // } 
+    // }
     else if (chainId === 1116) {
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptioncore_tokens)[0]
+        Object.keys(window.config.subscriptioncore_tokens)[0],
       );
       handleSubscriptionTokenChange(wcoreAddress);
       handleCheckIfAlreadyApproved(wcoreAddress);
@@ -1413,16 +1414,16 @@ console.log(coinbase)
       setChainDropdown(
         chainDropdowns.find((item) => {
           return item.chainId === chainId;
-        })
+        }),
       );
       setdropdownIcon("usdt");
       setdropdownTitle("usdt");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptionsei_tokens)[0]
+        Object.keys(window.config.subscriptionsei_tokens)[0],
       );
       handleSubscriptionTokenChange(wseiAddress);
       handleCheckIfAlreadyApproved(wseiAddress);
-    } 
+    }
     // else if (chainId === 841) {
     //   setChainDropdown(
     //     chainDropdowns.find((item) => {
@@ -1437,11 +1438,11 @@ console.log(coinbase)
     //   handleSubscriptionTokenChange(wtaraxaAddress);
     //   handleCheckIfAlreadyApproved(wtaraxaAddress);
     // }
-     else {
+    else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
-        Object.keys(window.config.subscriptioneth_tokens)[0]
+        Object.keys(window.config.subscriptioneth_tokens)[0],
       );
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
@@ -1473,80 +1474,80 @@ console.log(coinbase)
     if (chainId === 1 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptioneth_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     } else if (chainId === 56 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionbnb_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     } else if (chainId === 43114 && selectedSubscriptionToken !== "") {
       settokenDecimals(
-        window.config.subscription_tokens[selectedSubscriptionToken]?.decimals
+        window.config.subscription_tokens[selectedSubscriptionToken]?.decimals,
       );
     } else if (chainId === 1030 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptioncfx_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     } else if (chainId === 88 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionviction_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
-    } 
+    }
     // else if (chainId === 841 && selectedSubscriptionToken !== "") {
     //   settokenDecimals(
     //     window.config.subscriptiontaraxa_tokens[selectedSubscriptionToken]
     //       ?.decimals
     //   );
     // }
-     else if (chainId === 2040 && selectedSubscriptionToken !== "") {
+    else if (chainId === 2040 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionvanar_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     } else if (chainId === 169 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionmanta_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     } else if (chainId === 167000 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptiontaiko_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
-    } 
+    }
     // else if (chainId === 698 && selectedSubscriptionToken !== "") {
     //   settokenDecimals(
     //     window.config.subscriptionmat_tokens[selectedSubscriptionToken]
     //       ?.decimals
     //   );
-    // } 
+    // }
     else if (chainId === 1116 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptioncore_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     } else if (chainId === 8453 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionbase_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     } else if (chainId === 1482601649 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     } else if (chainId === 1329 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionsei_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     } else {
       settokenDecimals(
         window.config.subscriptioneth_tokens[selectedSubscriptionToken]
-          ?.decimals
+          ?.decimals,
       );
     }
   }, [chainId, selectedSubscriptionToken]);
@@ -1619,10 +1620,9 @@ console.log(coinbase)
             nftPremium_total > 0 ||
             nftPremium_totalViction ||
             nftPremium_totalVanar ||
-            nftPremium_totalTaiko > 0  
-            // nftPremium_totalMat > 0 ||
-            // nftPremium_totalTaraxa > 0 
-            ? (
+            nftPremium_totalTaiko > 0 ? (
+              // nftPremium_totalMat > 0 ||
+              // nftPremium_totalTaraxa > 0
               <div className="premium-gold-bg mt-3 p-4 position-relative d-flex align-items-center justify-content-between">
                 <div className="premiumRedTag position-absolute">
                   <div className="position-relative d-flex flex-column">
@@ -1637,16 +1637,16 @@ console.log(coinbase)
                         {discountPercentage > 0
                           ? discountPercentage
                           : discountPercentageViction > 0
-                          ? discountPercentageViction
-                          : discountPercentageVanar > 0
-                          ? discountPercentageVanar
-                          : discountPercentageTaiko > 0
-                          ? discountPercentageTaiko
-                          // : discountPercentageMat > 0
-                          // ? discountPercentageMat
-                          // : discountPercentageTaraxa > 0
-                          // ? discountPercentageTaraxa
-                          : discountPercentage}
+                            ? discountPercentageViction
+                            : discountPercentageVanar > 0
+                              ? discountPercentageVanar
+                              : discountPercentageTaiko > 0
+                                ? discountPercentageTaiko
+                                : // : discountPercentageMat > 0
+                                  // ? discountPercentageMat
+                                  // : discountPercentageTaraxa > 0
+                                  // ? discountPercentageTaraxa
+                                  discountPercentage}
                         %
                       </span>
                       <span className="discount-price-bottom">Discount</span>
@@ -1659,22 +1659,21 @@ console.log(coinbase)
                     {(nftPremium_total > 0 ||
                       nftPremium_totalViction > 0 ||
                       nftPremium_totalVanar > 0 ||
-                      nftPremium_totalTaiko > 0 
-                       ) && (
+                      nftPremium_totalTaiko > 0) && (
                       <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
                         Valid until:{" "}
                         {new Date(
                           nftPremium_total > 0
                             ? nftDiscountObject.expiration * 1000
                             : nftPremium_totalTaiko > 0
-                            ? nftDiscountObjectTaiko.expiration * 1000
-                            // : nftPremium_totalMat > 0
-                            // ? nftDiscountObjectMat.expiration * 1000
-                            : nftPremium_totalVanar > 0
-                            ? nftDiscountObjectVanar.expiration * 1000
-                            // : nftPremium_totalTaraxa > 0
-                            // ? nftDiscountObjectTaraxa.expiration * 1000
-                            : nftDiscountObjectViction.expiration * 1000
+                              ? nftDiscountObjectTaiko.expiration * 1000
+                              : // : nftPremium_totalMat > 0
+                                // ? nftDiscountObjectMat.expiration * 1000
+                                nftPremium_totalVanar > 0
+                                ? nftDiscountObjectVanar.expiration * 1000
+                                : // : nftPremium_totalTaraxa > 0
+                                  // ? nftDiscountObjectTaraxa.expiration * 1000
+                                  nftDiscountObjectViction.expiration * 1000,
                         )
                           .toDateString()
                           .slice(
@@ -1683,15 +1682,16 @@ console.log(coinbase)
                               nftPremium_total > 0
                                 ? nftDiscountObject.expiration * 1000
                                 : nftPremium_totalTaiko > 0
-                                ? nftDiscountObjectTaiko.expiration * 1000
-                                // : nftPremium_totalMat > 0
-                                // ? nftDiscountObjectMat.expiration * 1000
-                                : nftPremium_totalVanar > 0
-                                ? nftDiscountObjectVanar.expiration * 1000
-                                // : nftPremium_totalTaraxa > 0
-                                // ? nftDiscountObjectTaraxa.expiration * 1000
-                                : nftDiscountObjectViction.expiration * 1000
-                            ).toDateString().length
+                                  ? nftDiscountObjectTaiko.expiration * 1000
+                                  : // : nftPremium_totalMat > 0
+                                    // ? nftDiscountObjectMat.expiration * 1000
+                                    nftPremium_totalVanar > 0
+                                    ? nftDiscountObjectVanar.expiration * 1000
+                                    : // : nftPremium_totalTaraxa > 0
+                                      // ? nftDiscountObjectTaraxa.expiration * 1000
+                                      nftDiscountObjectViction.expiration *
+                                      1000,
+                            ).toDateString().length,
                           )}
                       </h6>
                     )}
@@ -1701,26 +1701,26 @@ console.log(coinbase)
                       {discountPercentage == 100 ||
                       discountPercentageViction == 100 ||
                       discountPercentageVanar == 100 ||
-                      discountPercentageTaiko == 100 
-                      // discountPercentageMat == 100 ||
-                      // discountPercentageTaraxa == 100
-                        ? "FREE"
+                      discountPercentageTaiko == 100
+                        ? // discountPercentageMat == 100 ||
+                          // discountPercentageTaraxa == 100
+                          "FREE"
                         : "$" +
                           (100 -
                             Number(
                               discountPercentage > 0
                                 ? discountPercentage
                                 : discountPercentageViction > 0
-                                ? discountPercentageViction
-                                : discountPercentageVanar > 0
-                                ? discountPercentageVanar
-                                : discountPercentageTaiko > 0
-                                ? discountPercentageTaiko
-                                // : discountPercentageMat > 0
-                                // ? discountPercentageMat
-                                // : discountPercentageTaraxa > 0
-                                // ? discountPercentageTaraxa
-                                : discountPercentage
+                                  ? discountPercentageViction
+                                  : discountPercentageVanar > 0
+                                    ? discountPercentageVanar
+                                    : discountPercentageTaiko > 0
+                                      ? discountPercentageTaiko
+                                      : // : discountPercentageMat > 0
+                                        // ? discountPercentageMat
+                                        // : discountPercentageTaraxa > 0
+                                        // ? discountPercentageTaraxa
+                                        discountPercentage,
                             ))}
                     </h6>
                     <h6 className="old-price-text">$100</h6>
@@ -1728,24 +1728,23 @@ console.log(coinbase)
                   {(nftPremium_total > 0 ||
                     nftPremium_totalViction > 0 ||
                     nftPremium_totalVanar > 0 ||
-                    nftPremium_totalTaiko > 0 
+                    nftPremium_totalTaiko > 0) && (
                     // nftPremium_totalMat > 0 ||
                     // nftPremium_totalTaraxa > 0
-                    ) && (
                     <h6 className="token-amount-placeholder m-0 premium-custom-text">
                       Valid until:{" "}
                       {new Date(
                         nftPremium_total > 0
                           ? nftDiscountObject.expiration * 1000
                           : nftPremium_totalTaiko > 0
-                          ? nftDiscountObjectTaiko.expiration * 1000
-                          // : nftPremium_totalMat > 0
-                          // ? nftDiscountObjectMat.expiration * 1000
-                          : nftPremium_totalVanar > 0
-                          ? nftDiscountObjectVanar.expiration * 1000
-                          // : nftPremium_totalTaraxa > 0
-                          // ? nftDiscountObjectTaraxa.expiration * 1000
-                          : nftDiscountObjectViction.expiration * 1000
+                            ? nftDiscountObjectTaiko.expiration * 1000
+                            : // : nftPremium_totalMat > 0
+                              // ? nftDiscountObjectMat.expiration * 1000
+                              nftPremium_totalVanar > 0
+                              ? nftDiscountObjectVanar.expiration * 1000
+                              : // : nftPremium_totalTaraxa > 0
+                                // ? nftDiscountObjectTaraxa.expiration * 1000
+                                nftDiscountObjectViction.expiration * 1000,
                       )
                         .toDateString()
                         .slice(
@@ -1754,15 +1753,15 @@ console.log(coinbase)
                             nftPremium_total > 0
                               ? nftDiscountObject.expiration * 1000
                               : nftPremium_totalTaiko > 0
-                              ? nftDiscountObjectTaiko.expiration * 1000
-                              // : nftPremium_totalMat > 0
-                              // ? nftDiscountObjectMat.expiration * 1000
-                              : nftPremium_totalVanar > 0
-                              ? nftDiscountObjectVanar.expiration * 1000
-                              // : nftPremium_totalTaraxa > 0
-                              // ? nftDiscountObjectTaraxa.expiration * 1000
-                              : nftDiscountObjectViction.expiration * 1000
-                          ).toDateString().length
+                                ? nftDiscountObjectTaiko.expiration * 1000
+                                : // : nftPremium_totalMat > 0
+                                  // ? nftDiscountObjectMat.expiration * 1000
+                                  nftPremium_totalVanar > 0
+                                  ? nftDiscountObjectVanar.expiration * 1000
+                                  : // : nftPremium_totalTaraxa > 0
+                                    // ? nftDiscountObjectTaraxa.expiration * 1000
+                                    nftDiscountObjectViction.expiration * 1000,
+                          ).toDateString().length,
                         )}
                     </h6>
                   )}
@@ -2101,34 +2100,44 @@ console.log(coinbase)
                                       chainId === 1
                                         ? window.config.subscriptioneth_tokens
                                         : chainId === 56
-                                        ? window.config.subscriptionbnb_tokens
-                                        : chainId === 1030
-                                        ? window.config.subscriptioncfx_tokens
-                                        : chainId === 43114
-                                        ? window.config.subscription_tokens
-                                        : chainId === 8453
-                                        ? window.config.subscriptionbase_tokens
-                                        : chainId === 1482601649
-                                        ? window.config.subscriptionskale_tokens
-                                        : chainId === 88
-                                        ? window.config
-                                            .subscriptionviction_tokens
-                                        : chainId === 2040
-                                        ? window.config.subscriptionvanar_tokens
-                                        : chainId === 169
-                                        ? window.config.subscriptionmanta_tokens
-                                        : chainId === 167000
-                                        ? window.config.subscriptiontaiko_tokens
-                                        // : chainId === 698
-                                        // ? window.config.subscriptionmat_tokens
-                                        : chainId === 1116
-                                        ? window.config.subscriptioncore_tokens
-                                        // : chainId === 841
-                                        // ? window.config
-                                        //     .subscriptiontaraxa_tokens
-                                        : chainId === 1329
-                                        ? window.config.subscriptionsei_tokens
-                                        : window.config.subscriptioneth_tokens
+                                          ? window.config.subscriptionbnb_tokens
+                                          : chainId === 1030
+                                            ? window.config
+                                                .subscriptioncfx_tokens
+                                            : chainId === 43114
+                                              ? window.config
+                                                  .subscription_tokens
+                                              : chainId === 8453
+                                                ? window.config
+                                                    .subscriptionbase_tokens
+                                                : chainId === 1482601649
+                                                  ? window.config
+                                                      .subscriptionskale_tokens
+                                                  : chainId === 88
+                                                    ? window.config
+                                                        .subscriptionviction_tokens
+                                                    : chainId === 2040
+                                                      ? window.config
+                                                          .subscriptionvanar_tokens
+                                                      : chainId === 169
+                                                        ? window.config
+                                                            .subscriptionmanta_tokens
+                                                        : chainId === 167000
+                                                          ? window.config
+                                                              .subscriptiontaiko_tokens
+                                                          : // : chainId === 698
+                                                            // ? window.config.subscriptionmat_tokens
+                                                            chainId === 1116
+                                                            ? window.config
+                                                                .subscriptioncore_tokens
+                                                            : // : chainId === 841
+                                                              // ? window.config
+                                                              //     .subscriptiontaraxa_tokens
+                                                              chainId === 1329
+                                                              ? window.config
+                                                                  .subscriptionsei_tokens
+                                                              : window.config
+                                                                  .subscriptioneth_tokens,
                                     ).map((t, i) => (
                                       <li
                                         key={i}
@@ -2143,62 +2152,80 @@ console.log(coinbase)
                                                     .subscriptioneth_tokens[t]
                                                     ?.symbol
                                                 : chainId === 56
-                                                ? window.config
-                                                    .subscriptionbnb_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 43114
-                                                ? window.config
-                                                    .subscription_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 8453
-                                                ? window.config
-                                                    .subscriptionbase_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 1030
-                                                ? window.config
-                                                    .subscriptioncfx_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 1482601649
-                                                ? window.config
-                                                    .subscriptionskale_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 88
-                                                ? window.config
-                                                    .subscriptionviction_tokens[
-                                                    t
-                                                  ]?.symbol
-                                                : chainId === 2040
-                                                ? window.config
-                                                    .subscriptionvanar_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 169
-                                                ? window.config
-                                                    .subscriptionmanta_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 167000
-                                                ? window.config
-                                                    .subscriptiontaiko_tokens[t]
-                                                    ?.symbol
-                                                // : chainId === 698
-                                                // ? window.config
-                                                //     .subscriptionmat_tokens[t]
-                                                //     ?.symbol
-                                                // : chainId === 841
-                                                // ? window.config
-                                                //     .subscriptiontaraxa_tokens[
-                                                //     t
-                                                //   ]?.symbol
-                                                : chainId === 1116
-                                                ? window.config
-                                                    .subscriptioncore_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 1329
-                                                ? window.config
-                                                    .subscriptionsei_tokens[t]
-                                                    ?.symbol
-                                                : window.config
-                                                    .subscriptioneth_tokens[t]
-                                                    ?.symbol
+                                                  ? window.config
+                                                      .subscriptionbnb_tokens[t]
+                                                      ?.symbol
+                                                  : chainId === 43114
+                                                    ? window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
+                                                    : chainId === 8453
+                                                      ? window.config
+                                                          .subscriptionbase_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1030
+                                                        ? window.config
+                                                            .subscriptioncfx_tokens[
+                                                            t
+                                                          ]?.symbol
+                                                        : chainId === 1482601649
+                                                          ? window.config
+                                                              .subscriptionskale_tokens[
+                                                              t
+                                                            ]?.symbol
+                                                          : chainId === 88
+                                                            ? window.config
+                                                                .subscriptionviction_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 2040
+                                                              ? window.config
+                                                                  .subscriptionvanar_tokens[
+                                                                  t
+                                                                ]?.symbol
+                                                              : chainId === 169
+                                                                ? window.config
+                                                                    .subscriptionmanta_tokens[
+                                                                    t
+                                                                  ]?.symbol
+                                                                : chainId ===
+                                                                    167000
+                                                                  ? window
+                                                                      .config
+                                                                      .subscriptiontaiko_tokens[
+                                                                      t
+                                                                    ]?.symbol
+                                                                  : // : chainId === 698
+                                                                    // ? window.config
+                                                                    //     .subscriptionmat_tokens[t]
+                                                                    //     ?.symbol
+                                                                    // : chainId === 841
+                                                                    // ? window.config
+                                                                    //     .subscriptiontaraxa_tokens[
+                                                                    //     t
+                                                                    //   ]?.symbol
+                                                                    chainId ===
+                                                                      1116
+                                                                    ? window
+                                                                        .config
+                                                                        .subscriptioncore_tokens[
+                                                                        t
+                                                                      ]?.symbol
+                                                                    : chainId ===
+                                                                        1329
+                                                                      ? window
+                                                                          .config
+                                                                          .subscriptionsei_tokens[
+                                                                          t
+                                                                        ]
+                                                                          ?.symbol
+                                                                      : window
+                                                                          .config
+                                                                          .subscriptioneth_tokens[
+                                                                          t
+                                                                        ]
+                                                                          ?.symbol,
                                             );
                                             setdropdownTitle(
                                               chainId === 1
@@ -2206,62 +2233,80 @@ console.log(coinbase)
                                                     .subscriptioneth_tokens[t]
                                                     ?.symbol
                                                 : chainId === 56
-                                                ? window.config
-                                                    .subscriptionbnb_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 43114
-                                                ? window.config
-                                                    .subscription_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 8453
-                                                ? window.config
-                                                    .subscriptionbase_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 1030
-                                                ? window.config
-                                                    .subscriptioncfx_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 1482601649
-                                                ? window.config
-                                                    .subscriptionskale_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 88
-                                                ? window.config
-                                                    .subscriptionviction_tokens[
-                                                    t
-                                                  ]?.symbol
-                                                // : chainId === 841
-                                                // ? window.config
-                                                //     .subscriptiontaraxa_tokens[
-                                                //     t
-                                                //   ]?.symbol
-                                                : chainId === 2040
-                                                ? window.config
-                                                    .subscriptionvanar_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 169
-                                                ? window.config
-                                                    .subscriptionmanta_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 167000
-                                                ? window.config
-                                                    .subscriptiontaiko_tokens[t]
-                                                    ?.symbol
-                                                // : chainId === 698
-                                                // ? window.config
-                                                //     .subscriptionmat_tokens[t]
-                                                //     ?.symbol
-                                                : chainId === 1329
-                                                ? window.config
-                                                    .subscriptionsei_tokens[t]
-                                                    ?.symbol
-                                                : chainId === 1116
-                                                ? window.config
-                                                    .subscriptionsei_tokens[t]
-                                                    ?.symbol
-                                                : window.config
-                                                    .subscriptioneth_tokens[t]
-                                                    ?.symbol
+                                                  ? window.config
+                                                      .subscriptionbnb_tokens[t]
+                                                      ?.symbol
+                                                  : chainId === 43114
+                                                    ? window.config
+                                                        .subscription_tokens[t]
+                                                        ?.symbol
+                                                    : chainId === 8453
+                                                      ? window.config
+                                                          .subscriptionbase_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1030
+                                                        ? window.config
+                                                            .subscriptioncfx_tokens[
+                                                            t
+                                                          ]?.symbol
+                                                        : chainId === 1482601649
+                                                          ? window.config
+                                                              .subscriptionskale_tokens[
+                                                              t
+                                                            ]?.symbol
+                                                          : chainId === 88
+                                                            ? window.config
+                                                                .subscriptionviction_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : // : chainId === 841
+                                                              // ? window.config
+                                                              //     .subscriptiontaraxa_tokens[
+                                                              //     t
+                                                              //   ]?.symbol
+                                                              chainId === 2040
+                                                              ? window.config
+                                                                  .subscriptionvanar_tokens[
+                                                                  t
+                                                                ]?.symbol
+                                                              : chainId === 169
+                                                                ? window.config
+                                                                    .subscriptionmanta_tokens[
+                                                                    t
+                                                                  ]?.symbol
+                                                                : chainId ===
+                                                                    167000
+                                                                  ? window
+                                                                      .config
+                                                                      .subscriptiontaiko_tokens[
+                                                                      t
+                                                                    ]?.symbol
+                                                                  : // : chainId === 698
+                                                                    // ? window.config
+                                                                    //     .subscriptionmat_tokens[t]
+                                                                    //     ?.symbol
+                                                                    chainId ===
+                                                                      1329
+                                                                    ? window
+                                                                        .config
+                                                                        .subscriptionsei_tokens[
+                                                                        t
+                                                                      ]?.symbol
+                                                                    : chainId ===
+                                                                        1116
+                                                                      ? window
+                                                                          .config
+                                                                          .subscriptionsei_tokens[
+                                                                          t
+                                                                        ]
+                                                                          ?.symbol
+                                                                      : window
+                                                                          .config
+                                                                          .subscriptioneth_tokens[
+                                                                          t
+                                                                        ]
+                                                                          ?.symbol,
                                             );
 
                                             // console.log(t);
@@ -2277,60 +2322,62 @@ console.log(coinbase)
                                                   t
                                                 ]?.symbol.toLowerCase()}IconPremium.svg`
                                               : chainId === 56
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbnb_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 43114
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscription_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 1030
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncfx_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 8453
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbase_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 1482601649
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionskale_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 1116
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncore_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 88
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionviction_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 2040
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 169
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 167000
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaiko_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              // : chainId === 698
-                                              // ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
-                                              //     t
-                                              //   ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              // : chainId === 841
-                                              // ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaraxa_tokens[
-                                              //     t
-                                              //   ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : chainId === 1329
-                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionsei_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
-                                              : `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
-                                                  t
-                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbnb_tokens[
+                                                    t
+                                                  ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                : chainId === 43114
+                                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscription_tokens[
+                                                      t
+                                                    ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                  : chainId === 1030
+                                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncfx_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                    : chainId === 8453
+                                                      ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbase_tokens[
+                                                          t
+                                                        ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                      : chainId === 1482601649
+                                                        ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionskale_tokens[
+                                                            t
+                                                          ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                        : chainId === 1116
+                                                          ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncore_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                          : chainId === 88
+                                                            ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionviction_tokens[
+                                                                t
+                                                              ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                            : chainId === 2040
+                                                              ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionvanar_tokens[
+                                                                  t
+                                                                ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                              : chainId === 169
+                                                                ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
+                                                                    t
+                                                                  ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                                : chainId ===
+                                                                    167000
+                                                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaiko_tokens[
+                                                                      t
+                                                                    ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                                  : // : chainId === 698
+                                                                    // ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
+                                                                    //     t
+                                                                    //   ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                                    // : chainId === 841
+                                                                    // ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaraxa_tokens[
+                                                                    //     t
+                                                                    //   ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                                    chainId ===
+                                                                      1329
+                                                                    ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionsei_tokens[
+                                                                        t
+                                                                      ]?.symbol.toLowerCase()}IconPremium.svg`
+                                                                    : `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
+                                                                        t
+                                                                      ]?.symbol.toLowerCase()}IconPremium.svg`
                                           }
                                           alt=""
                                           style={{
@@ -2342,55 +2389,68 @@ console.log(coinbase)
                                           ? window.config
                                               .subscriptioneth_tokens[t]?.symbol
                                           : chainId === 56
-                                          ? window.config
-                                              .subscriptionbnb_tokens[t]?.symbol
-                                          : chainId === 43114
-                                          ? window.config.subscription_tokens[t]
-                                              ?.symbol
-                                          : chainId === 1030
-                                          ? window.config
-                                              .subscriptioncfx_tokens[t]?.symbol
-                                          : chainId === 8453
-                                          ? window.config
-                                              .subscriptionbase_tokens[t]
-                                              ?.symbol
-                                          : chainId === 1482601649
-                                          ? window.config
-                                              .subscriptionskale_tokens[t]
-                                              ?.symbol
-                                          : chainId === 1116
-                                          ? window.config
-                                              .subscriptioncore_tokens[t]
-                                              ?.symbol
-                                          : chainId === 88
-                                          ? window.config
-                                              .subscriptionviction_tokens[t]
-                                              ?.symbol
-                                          : chainId === 2040
-                                          ? window.config
-                                              .subscriptionvanar_tokens[t]
-                                              ?.symbol
-                                          : chainId === 169
-                                          ? window.config
-                                              .subscriptionmanta_tokens[t]
-                                              ?.symbol
-                                          : chainId === 167000
-                                          ? window.config
-                                              .subscriptiontaiko_tokens[t]
-                                              ?.symbol
-                                          // : chainId === 698
-                                          // ? window.config
-                                          //     .subscriptionmat_tokens[t]?.symbol
-                                          // : chainId === 841
-                                          // ? window.config
-                                          //     .subscriptiontaraxa_tokens[t]
-                                          //     ?.symbol
-                                          : chainId === 1329
-                                          ? window.config
-                                              .subscriptionsei_tokens[t]?.symbol
-                                          : window.config
-                                              .subscriptioneth_tokens[t]
-                                              ?.symbol}
+                                            ? window.config
+                                                .subscriptionbnb_tokens[t]
+                                                ?.symbol
+                                            : chainId === 43114
+                                              ? window.config
+                                                  .subscription_tokens[t]
+                                                  ?.symbol
+                                              : chainId === 1030
+                                                ? window.config
+                                                    .subscriptioncfx_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 8453
+                                                  ? window.config
+                                                      .subscriptionbase_tokens[
+                                                      t
+                                                    ]?.symbol
+                                                  : chainId === 1482601649
+                                                    ? window.config
+                                                        .subscriptionskale_tokens[
+                                                        t
+                                                      ]?.symbol
+                                                    : chainId === 1116
+                                                      ? window.config
+                                                          .subscriptioncore_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 88
+                                                        ? window.config
+                                                            .subscriptionviction_tokens[
+                                                            t
+                                                          ]?.symbol
+                                                        : chainId === 2040
+                                                          ? window.config
+                                                              .subscriptionvanar_tokens[
+                                                              t
+                                                            ]?.symbol
+                                                          : chainId === 169
+                                                            ? window.config
+                                                                .subscriptionmanta_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 167000
+                                                              ? window.config
+                                                                  .subscriptiontaiko_tokens[
+                                                                  t
+                                                                ]?.symbol
+                                                              : // : chainId === 698
+                                                                // ? window.config
+                                                                //     .subscriptionmat_tokens[t]?.symbol
+                                                                // : chainId === 841
+                                                                // ? window.config
+                                                                //     .subscriptiontaraxa_tokens[t]
+                                                                //     ?.symbol
+                                                                chainId === 1329
+                                                                ? window.config
+                                                                    .subscriptionsei_tokens[
+                                                                    t
+                                                                  ]?.symbol
+                                                                : window.config
+                                                                    .subscriptioneth_tokens[
+                                                                    t
+                                                                  ]?.symbol}
                                       </li>
                                     ))}
                                   </ul>
@@ -2411,16 +2471,16 @@ console.log(coinbase)
                                     discountPercentage != 0
                                       ? discountPercentage
                                       : discountPercentageViction != 0
-                                      ? discountPercentageViction
-                                      : discountPercentageVanar != 0
-                                      ? discountPercentageVanar
-                                      : discountPercentageTaiko != 0
-                                      ? discountPercentageTaiko
-                                      // : discountPercentageMat != 0
-                                      // ? discountPercentageMat
-                                      // : discountPercentageTaraxa != 0
-                                      // ? discountPercentageTaraxa
-                                      : discountPercentage
+                                        ? discountPercentageViction
+                                        : discountPercentageVanar != 0
+                                          ? discountPercentageVanar
+                                          : discountPercentageTaiko != 0
+                                            ? discountPercentageTaiko
+                                            : // : discountPercentageMat != 0
+                                              // ? discountPercentageMat
+                                              // : discountPercentageTaraxa != 0
+                                              // ? discountPercentageTaraxa
+                                              discountPercentage,
                                   )}
                               </span>
                             </div>
@@ -2439,8 +2499,8 @@ console.log(coinbase)
                             approveStatus === "fail" || !coinbase || !isEOA
                               ? "stake-wod-btn-inactive px-4"
                               : isApproved
-                              ? "d-none"
-                              : "explore-btn px-3 py-2"
+                                ? "d-none"
+                                : "explore-btn px-3 py-2"
                           }`}
                           disabled={
                             approveStatus === "fail" ||
@@ -2463,8 +2523,8 @@ console.log(coinbase)
                               {approveStatus === "approveAmount"
                                 ? "token"
                                 : nftPremium_total > 0
-                                ? "NFT"
-                                : ""}
+                                  ? "NFT"
+                                  : ""}
                             </>
                           ) : loadspinner === false &&
                             approveStatus === "fail" ? (
@@ -2582,8 +2642,8 @@ console.log(coinbase)
                             approveStatus === "fail" || !coinbase || !isEOA
                               ? "stake-wod-btn-inactive px-4"
                               : isApproved
-                              ? "d-none"
-                              : "explore-btn px-3 py-2"
+                                ? "d-none"
+                                : "explore-btn px-3 py-2"
                           }`}
                           disabled={
                             approveStatus === "fail" ||
@@ -2606,8 +2666,8 @@ console.log(coinbase)
                               {approveStatus === "approveAmount"
                                 ? "token"
                                 : nftPremium_totalViction > 0
-                                ? "NFT"
-                                : ""}
+                                  ? "NFT"
+                                  : ""}
                             </>
                           ) : loadspinner === false &&
                             approveStatus === "fail" ? (
@@ -2715,7 +2775,7 @@ console.log(coinbase)
                       </div>
                     ) : null}
                   </div>
-                )   : isConnected &&
+                ) : isConnected &&
                   discountPercentageVanar > 0 &&
                   chainId === 2040 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
@@ -2726,8 +2786,8 @@ console.log(coinbase)
                             approveStatus === "fail" || !coinbase || !isEOA
                               ? "stake-wod-btn-inactive px-4"
                               : isApproved
-                              ? "d-none"
-                              : "explore-btn px-3 py-2"
+                                ? "d-none"
+                                : "explore-btn px-3 py-2"
                           } `}
                           disabled={
                             approveStatus === "fail" ||
@@ -2750,8 +2810,8 @@ console.log(coinbase)
                               {approveStatus === "approveAmount"
                                 ? "token"
                                 : nftPremium_totalVanar > 0
-                                ? "NFT"
-                                : ""}
+                                  ? "NFT"
+                                  : ""}
                             </>
                           ) : loadspinner === false &&
                             approveStatus === "fail" ? (
@@ -2870,8 +2930,8 @@ console.log(coinbase)
                             approveStatus === "fail" || !coinbase || !isEOA
                               ? "stake-wod-btn-inactive px-4"
                               : isApproved
-                              ? "d-none"
-                              : "explore-btn px-3 py-2"
+                                ? "d-none"
+                                : "explore-btn px-3 py-2"
                           } `}
                           disabled={
                             approveStatus === "fail" ||
@@ -2894,8 +2954,8 @@ console.log(coinbase)
                               {approveStatus === "approveAmount"
                                 ? "token"
                                 : nftPremium_totalTaiko > 0
-                                ? "NFT"
-                                : ""}
+                                  ? "NFT"
+                                  : ""}
                             </>
                           ) : loadspinner === false &&
                             approveStatus === "fail" ? (
@@ -3003,7 +3063,7 @@ console.log(coinbase)
                       </div>
                     ) : null}
                   </div>
-                )  : isConnected && discountPercentage > 0 && chainId !== 56 ? (
+                ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
                   <div
                     className={`d-flex align-items-center justify-content-center mb-2`}
                   >
@@ -3081,7 +3141,7 @@ console.log(coinbase)
                       Switch to Taiko
                     </button>
                   </div>
-                )  : (
+                ) : (
                   <div className="d-flex align-items-center gap-3 justify-content-center w-100">
                     <>
                       {window.WALLET_TYPE !== "binance" &&
@@ -3142,8 +3202,8 @@ console.log(coinbase)
                             approveStatus === "fail" || !isEOA || !coinbase
                               ? "stake-wod-btn-inactive px-4"
                               : isApproved
-                              ? "d-none"
-                              : "explore-btn px-3 py-2"
+                                ? "d-none"
+                                : "explore-btn px-3 py-2"
                           }`}
                           disabled={
                             approveStatus === "fail" ||
