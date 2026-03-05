@@ -1160,8 +1160,9 @@ const GetPremiumPopup = ({
     }).catch(() => 0);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
+    let tokenPriceManta = (tokenprice * (100 - discountPercentageManta)) / 100;
 
-    if (coinbase) {
+    if (coinbase && chainId !== 169) {
       console.log(coinbase);
       const nftTotal = contractConfig.nftTotal;
       const nftTokenId = contractConfig.nftTokenId;
@@ -1188,6 +1189,78 @@ const GetPremiumPopup = ({
           setisApproved(true);
           setapproveStatus("deposit");
         } else if (result == 0 || Number(result) < Number(tokenprice)) {
+          setloadspinner(false);
+          setisApproved(false);
+          setapproveStatus("initial");
+        }
+      } else if (contractConfig.args.length === 2) {
+        if (
+          contractConfig.nftAbi !== undefined &&
+          contractConfig.nftAddress !== undefined
+        ) {
+          if (nftTotal > 0) {
+            let approved = await readOnChain({
+              address: contractConfig.nftAddress,
+              abi: contractConfig.nftAbi,
+              functionName: "getApproved",
+              args: [nftTokenId],
+            }).catch(() => "false");
+
+            let approvedAll = await readOnChain({
+              address: contractConfig.nftAddress,
+              abi: contractConfig.nftAbi,
+              functionName: "isApprovedForAll",
+              args: [coinbase, contractConfig.address],
+            }).catch(() => false);
+
+            const isApproved =
+              approved?.toLowerCase() ===
+                contractConfig.address.toLowerCase() || approvedAll === true;
+            if (isApproved) {
+              if (contractConfig.discountPercentage === 100) {
+                setisApproved(true);
+                setapproveStatus("deposit");
+              } else {
+                setisApproved(true);
+                setapproveStatus("approveAmount");
+              }
+            } else {
+              setisApproved(false);
+              setapproveStatus("initial");
+            }
+
+            setloadspinner(false);
+            return;
+          }
+        }
+      }
+    } else if (coinbase && chainId === 169 && discountPercentageManta > 0) {
+    
+      const nftTotal = contractConfig.nftTotal;
+      const nftTokenId = contractConfig.nftTokenId;
+      // For simple discounts (no NFT) or when user has no NFT, just check token allowance
+      if (
+        contractConfig.args.length === 1 ||
+        !contractConfig.nftAddress ||
+        !contractConfig.nftAbi ||
+        nftTotal === 0
+      ) {
+        let result = await readOnChain({
+          address: subscribeToken,
+          abi: window.ERC20_ABI,
+          functionName: "allowance",
+          args: [coinbase, contractConfig.address],
+        }).catch(() => 0);
+        if (
+          token.toLowerCase() === window.config.native_bnb_address.toLowerCase()
+        ) {
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result != 0 && Number(result) >= Number(tokenPriceManta)) {
+          setloadspinner(false);
+          setisApproved(true);
+          setapproveStatus("deposit");
+        } else if (result == 0 || Number(result) < Number(tokenPriceManta)) {
           setloadspinner(false);
           setisApproved(false);
           setapproveStatus("initial");
