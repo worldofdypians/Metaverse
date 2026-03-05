@@ -120,6 +120,16 @@ line-height: 32px;
     }
 }
 
+.manta-premium-badge {
+    width: auto;
+    height: 50px;
+    margin-right: 4rem;
+     @media screen and (max-width: 786px) {
+        margin-right: 0;
+        height: 30px;
+    }
+}
+
 .bgwrapper { 
 background: linear-gradient(180deg, rgba(18, 18, 53, 0.80) 0%, rgba(18, 18, 53, 0.00) 133.46%);
 }

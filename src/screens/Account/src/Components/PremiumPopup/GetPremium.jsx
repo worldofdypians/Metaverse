@@ -136,7 +136,7 @@ const GetPremiumPopup = ({
       case 169:
         address = window.config.subscription_manta_address;
         abi = window.SUBSCRIPTION_MANTA_ABI;
-        args = [token, 0];
+        args = [token, discountPercentageManta];
         break;
       case 167000:
         address = window.config.subscription_taiko_address;
@@ -334,6 +334,8 @@ const GetPremiumPopup = ({
   const [nftPremium_total, setnftPremium_total] = useState(0);
   const [nftDiscountObject, setnftDiscountObject] = useState([]);
 
+  const [discountPercentageManta, setdiscountPercentageManta] = useState(0);
+
   const [discountPercentageViction, setdiscountPercentageViction] = useState(0);
   const [nftPremium_tokenIdViction, setnftPremium_tokenIdViction] = useState(0);
   const [nftPremium_totalViction, setnftPremium_totalViction] = useState(0);
@@ -440,6 +442,11 @@ const GetPremiumPopup = ({
       address: window.config.subscription_taiko_address,
       abi: window.SUBSCRIPTION_TAIKO_ABI,
     };
+
+    const mantaSubscription = {
+      address: window.config.subscription_manta_address,
+      abi: window.SUBSCRIPTION_MANTA_ABI,
+    };
     // const matSubscription = {
     //   address: window.config.subscription_mat_address,
     //   abi: window.SUBSCRIPTION_MAT_ABI,
@@ -536,6 +543,8 @@ const GetPremiumPopup = ({
       nftObject_viction,
       nftObject_vanar,
       nftObject_taiko,
+      nftObject_manta,
+
       // nftObject_mat,
       // nftObject_taraxa,
     ] = await Promise.all([
@@ -558,6 +567,11 @@ const GetPremiumPopup = ({
         ...taikoSubscription,
         functionName: "nftDiscounts",
         args: [nftTaiko.address],
+      }).catch(() => undefined),
+      readContract(wagmiClient, {
+        ...mantaSubscription,
+        functionName: "discountPercentageGlobal",
+        args: [],
       }).catch(() => undefined),
       //   readContract(wagmiClient, {
       //     ...matSubscription,
@@ -596,6 +610,8 @@ const GetPremiumPopup = ({
     const discount_viction = extractDiscount(nftObject_viction);
     const discount_vanar = extractDiscount(nftObject_vanar);
     const discount_taiko = extractDiscount(nftObject_taiko);
+    const discount_manta = extractDiscount(nftObject_manta);
+
     // const discount_mat = extractDiscount(nftObject_mat);
     // const discount_taraxa = extractDiscount(nftObject_taraxa);
 
@@ -641,6 +657,8 @@ const GetPremiumPopup = ({
       }
       setnftPremium_tokenIdTaiko(tokenId);
       setnftPremium_totalTaiko(parseInt(result_taiko));
+    } else if (discount_manta && parseInt(discount_manta) >= 0) {
+      setdiscountPercentageManta(parseInt(70));
     }
     // else if (result_mat && parseInt(result_mat) > 0) {
     //   const tokenId = await getFirstTokenId(nftMat);
@@ -716,9 +734,12 @@ const GetPremiumPopup = ({
             address: window.config.subscription_manta_address,
             abi: window.SUBSCRIPTION_MANTA_ABI,
             chainText: "manta",
-            args: [token, 0],
+            args: [token, discountPercentageManta],
             nftAddress: undefined,
             nftAbi: undefined,
+            nftTotal: 0,
+            nftTokenId: 0,
+            discountPercentage: discountPercentageManta,
           };
         case 8453:
           return {
@@ -872,27 +893,52 @@ const GetPremiumPopup = ({
     setformattedPrice("");
     setTokenBalance("");
     setselectedSubscriptionToken(token);
+    if (chainId === 169) {
+      let tokenprice = await getEstimatedPrice(token);
 
-    let tokenprice = await getEstimatedPrice(token);
+      tokenprice =
+        (new BigNumber(tokenprice).toFixed(0) *
+          (100 - discountPercentageManta)) /
+        100;
 
-    tokenprice = new BigNumber(tokenprice).toFixed(0);
+      let formattedTokenPrice = getFormattedNumber(
+        tokenprice / 10 ** tokenDecimals,
+        tokenDecimals,
+      );
 
-    let formattedTokenPrice = getFormattedNumber(
-      tokenprice / 10 ** tokenDecimals,
-      tokenDecimals,
-    );
+      if (coinbase) {
+        const balance = await readOnChain({
+          address: token,
+          abi: window.ERC20_ABI,
+          functionName: "balanceOf",
+          args: [coinbase],
+        }).catch(() => 0);
+        setTokenBalance(Number(balance));
+      }
+      setprice(tokenprice);
+      setformattedPrice(formattedTokenPrice);
+    } else {
+      let tokenprice = await getEstimatedPrice(token);
 
-    if (coinbase) {
-      const balance = await readOnChain({
-        address: token,
-        abi: window.ERC20_ABI,
-        functionName: "balanceOf",
-        args: [coinbase],
-      }).catch(() => 0);
-      setTokenBalance(Number(balance));
+      tokenprice = new BigNumber(tokenprice).toFixed(0);
+
+      let formattedTokenPrice = getFormattedNumber(
+        tokenprice / 10 ** tokenDecimals,
+        tokenDecimals,
+      );
+
+      if (coinbase) {
+        const balance = await readOnChain({
+          address: token,
+          abi: window.ERC20_ABI,
+          functionName: "balanceOf",
+          args: [coinbase],
+        }).catch(() => 0);
+        setTokenBalance(Number(balance));
+      }
+      setprice(tokenprice);
+      setformattedPrice(formattedTokenPrice);
     }
-    setprice(tokenprice);
-    setformattedPrice(formattedTokenPrice);
   };
 
   // ==================== HELPER FUNCTIONS ====================
@@ -1114,11 +1160,18 @@ const GetPremiumPopup = ({
     }).catch(() => 0);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
-    console.log(coinbase);
+
     if (coinbase) {
+      console.log(coinbase);
       const nftTotal = contractConfig.nftTotal;
       const nftTokenId = contractConfig.nftTokenId;
-      if (contractConfig.args.length === 1 || nftTotal === 0) {
+      // For simple discounts (no NFT) or when user has no NFT, just check token allowance
+      if (
+        contractConfig.args.length === 1 ||
+        !contractConfig.nftAddress ||
+        !contractConfig.nftAbi ||
+        nftTotal === 0
+      ) {
         let result = await readOnChain({
           address: subscribeToken,
           abi: window.ERC20_ABI,
@@ -1460,7 +1513,7 @@ const GetPremiumPopup = ({
     discountPercentageViction,
     discountPercentageVanar,
     discountPercentageTaiko,
-    // discountPercentageMat,
+    discountPercentageManta,
     // discountPercentageTaraxa,
     nftPremium_tokenId,
     nftPremium_tokenIdViction,
@@ -1615,7 +1668,7 @@ const GetPremiumPopup = ({
             discountPercentageViction > 0 ||
             discountPercentageVanar > 0 ||
             discountPercentageTaiko > 0 ||
-            // discountPercentageMat > 0 ||
+            discountPercentageManta > 0 ||
             // discountPercentageTaraxa > 0 ||
             nftPremium_total > 0 ||
             nftPremium_totalViction ||
@@ -1642,25 +1695,101 @@ const GetPremiumPopup = ({
                               ? discountPercentageVanar
                               : discountPercentageTaiko > 0
                                 ? discountPercentageTaiko
-                                : // : discountPercentageMat > 0
-                                  // ? discountPercentageMat
-                                  // : discountPercentageTaraxa > 0
-                                  // ? discountPercentageTaraxa
-                                  discountPercentage}
+                                : discountPercentageManta > 0
+                                  ? discountPercentageManta
+                                  : // : discountPercentageMat > 0
+                                    // ? discountPercentageMat
+                                    // : discountPercentageTaraxa > 0
+                                    // ? discountPercentageTaraxa
+                                    discountPercentage}
                         %
                       </span>
                       <span className="discount-price-bottom">Discount</span>
                     </div>
                   </div>
                 </div>
-                <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
-                  <div className="d-flex flex-column">
-                    <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
+                <div className="d-flex flex-column align-items-center gap-2 justify-content-between col-lg-7 flex-lg-row flex-md-row">
+                  <div className="d-flex gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
+                    <div className="d-flex flex-column">
+                      <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
+                      {(nftPremium_total > 0 ||
+                        nftPremium_totalViction > 0 ||
+                        nftPremium_totalVanar > 0 ||
+                        nftPremium_totalTaiko > 0) && (
+                        <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                          Valid until:{" "}
+                          {new Date(
+                            nftPremium_total > 0
+                              ? nftDiscountObject.expiration * 1000
+                              : nftPremium_totalTaiko > 0
+                                ? nftDiscountObjectTaiko.expiration * 1000
+                                : // : nftPremium_totalMat > 0
+                                  // ? nftDiscountObjectMat.expiration * 1000
+                                  nftPremium_totalVanar > 0
+                                  ? nftDiscountObjectVanar.expiration * 1000
+                                  : // : nftPremium_totalTaraxa > 0
+                                    // ? nftDiscountObjectTaraxa.expiration * 1000
+                                    nftDiscountObjectViction.expiration * 1000,
+                          )
+                            .toDateString()
+                            .slice(
+                              3,
+                              new Date(
+                                nftPremium_total > 0
+                                  ? nftDiscountObject.expiration * 1000
+                                  : nftPremium_totalTaiko > 0
+                                    ? nftDiscountObjectTaiko.expiration * 1000
+                                    : // : nftPremium_totalMat > 0
+                                      // ? nftDiscountObjectMat.expiration * 1000
+                                      nftPremium_totalVanar > 0
+                                      ? nftDiscountObjectVanar.expiration * 1000
+                                      : // : nftPremium_totalTaraxa > 0
+                                        // ? nftDiscountObjectTaraxa.expiration * 1000
+                                        nftDiscountObjectViction.expiration *
+                                        1000,
+                              ).toDateString().length,
+                            )}
+                        </h6>
+                      )}
+                    </div>
+                    <div className="d-flex align-items-end gap-2">
+                      <h6 className="discount-price">
+                        {discountPercentage == 100 ||
+                        discountPercentageViction == 100 ||
+                        discountPercentageVanar == 100 ||
+                        discountPercentageTaiko == 100 ||
+                        discountPercentageManta == 100
+                          ? "FREE"
+                          : "$" +
+                            (100 -
+                              Number(
+                                discountPercentage > 0
+                                  ? discountPercentage
+                                  : discountPercentageViction > 0
+                                    ? discountPercentageViction
+                                    : discountPercentageVanar > 0
+                                      ? discountPercentageVanar
+                                      : discountPercentageTaiko > 0
+                                        ? discountPercentageTaiko
+                                        : discountPercentageManta > 0
+                                          ? discountPercentageManta
+                                          : discountPercentage,
+                              ))}
+                      </h6>
+                      <h6 className="old-price-text">$100</h6>
+                    </div>
+                    {discountPercentageManta > 0 && isConnected && (
+                      <span className="subscription-chain mb-0">
+                        On Manta, limited-time 70% discount (3 days)
+                      </span>
+                    )}
                     {(nftPremium_total > 0 ||
                       nftPremium_totalViction > 0 ||
                       nftPremium_totalVanar > 0 ||
                       nftPremium_totalTaiko > 0) && (
-                      <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                      // nftPremium_totalMat > 0 ||
+                      // nftPremium_totalTaraxa > 0
+                      <h6 className="token-amount-placeholder m-0 premium-custom-text">
                         Valid until:{" "}
                         {new Date(
                           nftPremium_total > 0
@@ -1696,75 +1825,11 @@ const GetPremiumPopup = ({
                       </h6>
                     )}
                   </div>
-                  <div className="d-flex align-items-end gap-2">
-                    <h6 className="discount-price">
-                      {discountPercentage == 100 ||
-                      discountPercentageViction == 100 ||
-                      discountPercentageVanar == 100 ||
-                      discountPercentageTaiko == 100
-                        ? // discountPercentageMat == 100 ||
-                          // discountPercentageTaraxa == 100
-                          "FREE"
-                        : "$" +
-                          (100 -
-                            Number(
-                              discountPercentage > 0
-                                ? discountPercentage
-                                : discountPercentageViction > 0
-                                  ? discountPercentageViction
-                                  : discountPercentageVanar > 0
-                                    ? discountPercentageVanar
-                                    : discountPercentageTaiko > 0
-                                      ? discountPercentageTaiko
-                                      : // : discountPercentageMat > 0
-                                        // ? discountPercentageMat
-                                        // : discountPercentageTaraxa > 0
-                                        // ? discountPercentageTaraxa
-                                        discountPercentage,
-                            ))}
-                    </h6>
-                    <h6 className="old-price-text">$100</h6>
-                  </div>
-                  {(nftPremium_total > 0 ||
-                    nftPremium_totalViction > 0 ||
-                    nftPremium_totalVanar > 0 ||
-                    nftPremium_totalTaiko > 0) && (
-                    // nftPremium_totalMat > 0 ||
-                    // nftPremium_totalTaraxa > 0
-                    <h6 className="token-amount-placeholder m-0 premium-custom-text">
-                      Valid until:{" "}
-                      {new Date(
-                        nftPremium_total > 0
-                          ? nftDiscountObject.expiration * 1000
-                          : nftPremium_totalTaiko > 0
-                            ? nftDiscountObjectTaiko.expiration * 1000
-                            : // : nftPremium_totalMat > 0
-                              // ? nftDiscountObjectMat.expiration * 1000
-                              nftPremium_totalVanar > 0
-                              ? nftDiscountObjectVanar.expiration * 1000
-                              : // : nftPremium_totalTaraxa > 0
-                                // ? nftDiscountObjectTaraxa.expiration * 1000
-                                nftDiscountObjectViction.expiration * 1000,
-                      )
-                        .toDateString()
-                        .slice(
-                          3,
-                          new Date(
-                            nftPremium_total > 0
-                              ? nftDiscountObject.expiration * 1000
-                              : nftPremium_totalTaiko > 0
-                                ? nftDiscountObjectTaiko.expiration * 1000
-                                : // : nftPremium_totalMat > 0
-                                  // ? nftDiscountObjectMat.expiration * 1000
-                                  nftPremium_totalVanar > 0
-                                  ? nftDiscountObjectVanar.expiration * 1000
-                                  : // : nftPremium_totalTaraxa > 0
-                                    // ? nftDiscountObjectTaraxa.expiration * 1000
-                                    nftDiscountObjectViction.expiration * 1000,
-                          ).toDateString().length,
-                        )}
-                    </h6>
-                  )}
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/mantaBackers.svg"}
+                    alt=""
+                    className="manta-premium-badge"
+                  />
                 </div>
                 <img
                   src={"https://cdn.worldofdypians.com/wod/premiumIcon.webp"}
@@ -1776,7 +1841,12 @@ const GetPremiumPopup = ({
               <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
                 <div className="d-flex flex-column gap-2">
                   <span className="lifetime-plan mb-0">Lifetime plan</span>
-                  <h6 className="plan-cost mb-0">$100</h6>
+                  <h6 className="plan-cost mb-0">$ 100</h6>
+                  {discountPercentageManta > 0 && isConnected && (
+                    <span className="subscription-chain mb-0">
+                      On Manta, limited-time 70% discount (3 days)
+                    </span>
+                  )}
                 </div>
                 <div className="d-flex flex-row align-items-center gap-3">
                   <div className="premium-chains-wrapper">
@@ -1952,7 +2022,23 @@ const GetPremiumPopup = ({
                               Lifetime Plan
                             </span>
                           </div>
-                          <h3 className="plan-cost2 mb-0">$100</h3>
+                          <h3 className="plan-cost2 mb-0">
+                            $
+                            {100 -
+                              Number(
+                                discountPercentage > 0
+                                  ? discountPercentage
+                                  : discountPercentageViction > 0
+                                    ? discountPercentageViction
+                                    : discountPercentageVanar > 0
+                                      ? discountPercentageVanar
+                                      : discountPercentageTaiko > 0
+                                        ? discountPercentageTaiko
+                                        : discountPercentageManta > 0
+                                          ? discountPercentageManta
+                                          : discountPercentage,
+                              )}
+                          </h3>
                         </div>
                       </div>
                       <div className="prime-subs-secondhalf p-3">
@@ -2476,11 +2562,11 @@ const GetPremiumPopup = ({
                                           ? discountPercentageVanar
                                           : discountPercentageTaiko != 0
                                             ? discountPercentageTaiko
-                                            : // : discountPercentageMat != 0
-                                              // ? discountPercentageMat
-                                              // : discountPercentageTaraxa != 0
-                                              // ? discountPercentageTaraxa
-                                              discountPercentage,
+                                            : discountPercentageManta != 0
+                                              ? discountPercentageManta
+                                              : // : discountPercentageTaraxa != 0
+                                                // ? discountPercentageTaraxa
+                                                discountPercentage,
                                   )}
                               </span>
                             </div>
@@ -2490,7 +2576,7 @@ const GetPremiumPopup = ({
                     )}
                   </div>
                 </div>
-                {isConnected && discountPercentage > 0 && chainId === 56 ? (
+                {/* {isConnected && discountPercentage > 0 && chainId === 56 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
                     {binancePay === false ? (
                       <>
@@ -2506,9 +2592,8 @@ const GetPremiumPopup = ({
                             approveStatus === "fail" ||
                             !coinbase ||
                             isApproved ||
-                            !isEOA
-                              ? true
-                              : false
+                            !isEOA ||
+                            chainId !== 169
                           }
                           onClick={(e) => handleApprove(e)}
                         >
@@ -2550,7 +2635,8 @@ const GetPremiumPopup = ({
                               ? "stake-wod-btn-inactive px-4 d-none"
                               : "explore-btn px-3 py-2"
                           }`}
-                          onClick={() => handleSubscribe()}
+                          disabled={chainId !== 169}
+                          onClick={() => chainId === 169 && handleSubscribe()}
                         >
                           {loadspinnerSub === false &&
                           (approveStatus === "initial" ||
@@ -2600,9 +2686,7 @@ const GetPremiumPopup = ({
                     ) : binancePay === true &&
                       window.WALLET_TYPE !== "binance" ? (
                       <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-                        {/* Background image */}
-
-                        {/* Glow effect */}
+                     
                         <div
                           className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                         ></div>
@@ -2744,9 +2828,7 @@ const GetPremiumPopup = ({
                     ) : binancePay === true &&
                       window.WALLET_TYPE !== "binance" ? (
                       <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-                        {/* Background image */}
-
-                        {/* Glow effect */}
+                
                         <div
                           className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                         ></div>
@@ -2888,9 +2970,7 @@ const GetPremiumPopup = ({
                     ) : binancePay === true &&
                       window.WALLET_TYPE !== "binance" ? (
                       <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-                        {/* Background image */}
-
-                        {/* Glow effect */}
+              
                         <div
                           className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                         ></div>
@@ -3032,9 +3112,7 @@ const GetPremiumPopup = ({
                     ) : binancePay === true &&
                       window.WALLET_TYPE !== "binance" ? (
                       <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-                        {/* Background image */}
-
-                        {/* Glow effect */}
+                      
                         <div
                           className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                         ></div>
@@ -3141,15 +3219,13 @@ const GetPremiumPopup = ({
                       Switch to Taiko
                     </button>
                   </div>
-                ) : (
-                  <div className="d-flex align-items-center gap-3 justify-content-center w-100">
-                    <>
+                ) : ( */}
+                <div className="d-flex align-items-center gap-3 justify-content-center w-100">
+                  {/* <>
                       {window.WALLET_TYPE !== "binance" &&
                         binancePay === true && (
                           <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-                            {/* Background image */}
-
-                            {/* Glow effect */}
+            
                             <div
                               className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                             ></div>
@@ -3193,83 +3269,41 @@ const GetPremiumPopup = ({
                         >
                           {buttonText}
                         </button>
-                      )}
+                      )} */}
 
-                    {binancePay === false && (
-                      <>
-                        <button
-                          className={`btn ${
-                            approveStatus === "fail" || !isEOA || !coinbase
-                              ? "stake-wod-btn-inactive px-4"
-                              : isApproved
-                                ? "d-none"
-                                : "explore-btn px-3 py-2"
-                          }`}
-                          disabled={
-                            approveStatus === "fail" ||
-                            !isEOA ||
-                            !coinbase ||
-                            isApproved
-                              ? true
-                              : false
-                          }
-                          onClick={(e) => handleApprove(e)}
-                        >
-                          {loadspinner === false &&
-                          (approveStatus === "initial" ||
-                            approveStatus === "deposit" ||
-                            approveStatus === "approveAmount" ||
-                            approveStatus === "failsubscribe" ||
-                            approveStatus === "successsubscribe") ? (
-                            <>Approve token</>
-                          ) : loadspinner === false &&
-                            approveStatus === "fail" ? (
-                            "Failed"
-                          ) : (
-                            <div className="d-flex align-items-center gap-2">
-                              Processing
-                              <div
-                                className="spinner-border "
-                                role="status"
-                                style={{
-                                  height: "1rem",
-                                  width: "1rem",
-                                }}
-                              ></div>{" "}
-                            </div>
-                          )}
-                        </button>
-
-                        <button
-                          className={`btn ${
-                            isApproved === false || !isEOA
-                              ? "stake-wod-btn-inactive px-4 d-none"
+                  {binancePay === false && chainId === 169 && (
+                    <>
+                      <button
+                        className={`btn ${
+                          approveStatus === "fail" || !isEOA || !coinbase
+                            ? "stake-wod-btn-inactive px-4"
+                            : isApproved
+                              ? "d-none"
                               : "explore-btn px-3 py-2"
-                          }`}
-                          disabled={
-                            approveStatus === "fail" ||
-                            !coinbase ||
-                            !isApproved ||
-                            !isEOA
-                              ? true
-                              : false
-                          }
-                          onClick={() => {
-                            handleSubscribe();
-                          }}
-                        >
-                          {loadspinnerSub === false &&
-                          (approveStatus === "initial" ||
-                            approveStatus === "fail" ||
-                            approveStatus === "deposit") ? (
-                            <>Buy</>
-                          ) : loadspinnerSub === false &&
-                            approveStatus === "successsubscribe" ? (
-                            "Success"
-                          ) : loadspinnerSub === false &&
-                            approveStatus === "failsubscribe" ? (
-                            "Failed"
-                          ) : (
+                        }`}
+                        disabled={
+                          approveStatus === "fail" ||
+                          !isEOA ||
+                          !coinbase ||
+                          isApproved
+                            ? true
+                            : false
+                        }
+                        onClick={(e) => handleApprove(e)}
+                      >
+                        {loadspinner === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "deposit" ||
+                          approveStatus === "approveAmount" ||
+                          approveStatus === "failsubscribe" ||
+                          approveStatus === "successsubscribe") ? (
+                          <>Approve token</>
+                        ) : loadspinner === false &&
+                          approveStatus === "fail" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
                             <div
                               className="spinner-border "
                               role="status"
@@ -3277,13 +3311,55 @@ const GetPremiumPopup = ({
                                 height: "1rem",
                                 width: "1rem",
                               }}
-                            ></div>
-                          )}
-                        </button>
-                      </>
-                    )}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
 
-                    {/* {window.WALLET_TYPE === "binance" && (
+                      <button
+                        className={`btn ${
+                          isApproved === false || !isEOA
+                            ? "stake-wod-btn-inactive px-4 d-none"
+                            : "explore-btn px-3 py-2"
+                        }`}
+                        disabled={
+                          approveStatus === "fail" ||
+                          !coinbase ||
+                          !isApproved ||
+                          !isEOA
+                            ? true
+                            : false
+                        }
+                        onClick={() => {
+                          handleSubscribe();
+                        }}
+                      >
+                        {loadspinnerSub === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "fail" ||
+                          approveStatus === "deposit") ? (
+                          <>Buy</>
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "successsubscribe" ? (
+                          "Success"
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "failsubscribe" ? (
+                          "Failed"
+                        ) : (
+                          <div
+                            className="spinner-border "
+                            role="status"
+                            style={{
+                              height: "1rem",
+                              width: "1rem",
+                            }}
+                          ></div>
+                        )}
+                      </button>
+                    </>
+                  )}
+
+                  {/* {window.WALLET_TYPE === "binance" && (
                       <div>
                         <button
                           onClick={() => handlePurchasePremium(coinbase, price)}
@@ -3304,8 +3380,8 @@ const GetPremiumPopup = ({
                         </button>
                       </div>
                     )} */}
-                  </div>
-                )}
+                </div>
+                {/* )} */}
 
                 {chainId === 1482601649 && isConnected && (
                   <div className="gotoNebula-wrapper p-3 mb-3">
@@ -3325,7 +3401,7 @@ const GetPremiumPopup = ({
                   </div>
                 )}
                 <div
-                  className={`d-flex align-items-center ${
+                  className={`d-flex flex-column flex-lg-row align-items-center gap-2 ${
                     !coinbase
                       ? "justify-content-between"
                       : "justify-content-end"
@@ -3340,6 +3416,13 @@ const GetPremiumPopup = ({
                   {isConnected && coinbase && !isEOA && (
                     <span className="text-danger">
                       Smart contract wallets are not supported for this action.
+                    </span>
+                  )}
+
+                  {isConnected && coinbase && chainId !== 169 && (
+                    <span className="text-warning">
+                      Premium is only available on Manta Network. Please switch
+                      to Manta to continue.
                     </span>
                   )}
                 </div>
