@@ -157,7 +157,7 @@ window.config = {
   subscription_viction_address: "0x128a60F2F359D11C2C768C6a9880223e98342634",
   subscription_vanar_address: "0xCb2Eb4ba62346751F36bA652010b553759141AEE",
 
-  subscription_manta_address: "0xF943437f92519e3AdE18f16cb045453B7a92e6D5",
+  subscription_manta_address: "0x3187918212c5a21d55e88dde36e5379fbc0f22ef",
   subscription_taiko_address: "0x0570cb2bb014d0eda8dfffffdeb07906a5b40aa3",
   subscription_mat_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
   subscription_sei_address: "0xbBFd178b9f41C349857b753CE57f0E22089A8de3",
@@ -365,18 +365,18 @@ window.config = {
       symbol: "USDT",
       decimals: 6,
     },
-    "0xb73603C5d87fA094B7314C74ACE2e64D165016fb": {
-      symbol: "USDC",
-      decimals: 6,
-    },
-    "0x0Dc808adcE2099A9F62AA87D9670745AbA741746": {
-      symbol: "WETH",
-      decimals: 18,
-    },
-    "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5": {
-      symbol: "MANTA",
-      decimals: 18,
-    },
+    // "0xb73603C5d87fA094B7314C74ACE2e64D165016fb": {
+    //   symbol: "USDC",
+    //   decimals: 6,
+    // },
+    // "0x0Dc808adcE2099A9F62AA87D9670745AbA741746": {
+    //   symbol: "WETH",
+    //   decimals: 18,
+    // },
+    // "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5": {
+    //   symbol: "MANTA",
+    //   decimals: 18,
+    // },
   },
 
   subscriptiontaiko_tokens: {
