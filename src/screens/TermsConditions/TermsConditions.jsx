@@ -14,7 +14,7 @@ const TermsConditions = () => {
           <div className="row w-100 mx-0 news-container">
             <div className="explorer-grid-title my-4">Terms of Service</div>
             <div className="news-card terms-container p-4 d-flex flex-column gap-3">
-              <p className="text-white m-0">Last Revised on October 01, 2024</p>
+              <p className="text-white m-0">Last Revised on March 09, 2026</p>
               <p className="text-white m-0">
                 Welcome to the Terms of Service (these “Terms”) for the website
                 https://www.worldofdypians.com/ (the “Website”), the World of
@@ -590,6 +590,54 @@ const TermsConditions = () => {
                 c. If the Services detect the use of an Unauthorized Third-Party
                 Program, your access to the Services may be terminated with or
                 without additional notice to you.
+              </p>
+              <p className="text-white m-0">
+                3.8. Ethical Conduct Requirements
+              </p>
+              <p className="text-white m-0">
+                Users participating in beta testing, early access programs,
+                ambassador initiatives, reward programs, promotional campaigns,
+                or similar initiatives offered through the Services
+                (collectively, “Programs”) are expected to act in good faith and
+                in accordance with ethical standards that support the integrity
+                of the Services and the community.
+              </p>
+              <p className="text-white m-0">
+                Participants must not engage in conduct intended to
+                intentionally mislead the community, damage the reputation of
+                the Services, or create unjustified fear, uncertainty, or doubt
+                (“FUD”) regarding the Company, the Game, or related offerings
+                through knowingly false, misleading, malicious, or coordinated
+                statements or actions.
+              </p>
+              <p className="text-white m-0">
+                Participants are also expected to maintain respectful and
+                constructive communication standards when interacting with the
+                Company, its team members, moderators, or representatives,
+                including through support channels, testing environments,
+                community platforms, or other communication mediums associated
+                with the Services. The Company reserves the right to evaluate
+                such conduct in its sole discretion.
+              </p>
+
+              <p className="text-white m-0">
+                3.9. Enforcement of Ethical Standards; Revocation of Program
+                Privileges and Forfeiture of Rewards
+              </p>
+              <p className="text-white m-0">
+                If the Company determines, in its sole discretion, that a user
+                participating in any Program has violated the ethical conduct
+                expectations described in Section 3.6 or otherwise engaged in
+                conduct harmful to the Services or the community, the Company
+                may revoke such user’s participation status in the applicable
+                Program.
+              </p>
+              <p className="text-white m-0">
+                In such cases, the Company may disqualify the user from
+                receiving any rewards, incentives, distributions, privileges, or
+                benefits associated with the Program. Any rewards or benefits
+                not yet distributed or granted may be withheld or forfeited
+                without liability to the Company.
               </p>
               <p className="text-white m-0">4. OWNERSHIP AND CONTENT</p>
               <p className="text-white m-0">
