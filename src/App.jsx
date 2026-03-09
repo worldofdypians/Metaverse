@@ -2376,7 +2376,7 @@ function AppRoutes() {
         maxPoints: "50,000",
         eventDate: "Mar 11, 2026",
         learnMore:
-          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+          "",
         detailsText: `To participate in the event, players are required to&nbsp;
                   <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
                   CoinMarketCap Beta Pass NFT from the World of Dypians Shop. By
