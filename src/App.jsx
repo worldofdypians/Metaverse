@@ -633,7 +633,7 @@ function AppRoutes() {
   let baseLastDay = new Date("2025-07-10T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
-  let cmcLastDay = new Date("2026-06-09T14:00:00.000+02:00");
+  let cmcLastDay = new Date("2026-07-09T14:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let teaLastDay = new Date("2025-10-16T13:00:00.000+02:00");
   let bnbLastDay = new Date("2026-04-10T14:00:00.000+02:00");
