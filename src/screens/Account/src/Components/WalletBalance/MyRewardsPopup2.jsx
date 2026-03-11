@@ -1429,7 +1429,24 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(userTreasureHuntStats.seiEarnUsd, 2)}
                   </span>
                 </div>
-
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/cmcIcon.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    CMC
+                  </span>
+                  <span className="item-name-right">
+                    {" "}
+                    $
+                    {getFormattedNumber(
+                      userTreasureHuntStats.cmcuserEarnUsd,
+                      2,
+                    )}
+                  </span>
+                </div>
                 {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
