@@ -384,7 +384,7 @@ const BetaPassNFT = ({
       userEarned: userTreasureHuntStats.cmcuserEarnUsd,
       eventType: "Explore & Mine",
       eventStartDate: "Mar. 11, 2026",
-      eventEndDate: "Jun. 09, 2026",
+      eventEndDate: "Jul. 09, 2026",
     },
     {
       id: "doge",
