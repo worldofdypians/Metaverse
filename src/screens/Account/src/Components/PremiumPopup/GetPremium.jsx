@@ -2576,7 +2576,7 @@ const GetPremiumPopup = ({
                     )}
                   </div>
                 </div>
-                {/* {isConnected && discountPercentage > 0 && chainId === 56 ? (
+                {isConnected && discountPercentage > 0 && chainId === 56 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
                     {binancePay === false ? (
                       <>
@@ -3219,9 +3219,9 @@ const GetPremiumPopup = ({
                       Switch to Taiko
                     </button>
                   </div>
-                ) : ( */}
+                ) : (
                 <div className="d-flex align-items-center gap-3 justify-content-center w-100">
-                  {/* <>
+                  <>
                       {window.WALLET_TYPE !== "binance" &&
                         binancePay === true && (
                           <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
@@ -3269,7 +3269,7 @@ const GetPremiumPopup = ({
                         >
                           {buttonText}
                         </button>
-                      )} */}
+                      )}
 
                   {binancePay === false && chainId === 169 && (
                     <>
@@ -3359,7 +3359,7 @@ const GetPremiumPopup = ({
                     </>
                   )}
 
-                  {/* {window.WALLET_TYPE === "binance" && (
+                  {window.WALLET_TYPE === "binance" && (
                       <div>
                         <button
                           onClick={() => handlePurchasePremium(coinbase, price)}
@@ -3379,9 +3379,9 @@ const GetPremiumPopup = ({
                           {buttonText}
                         </button>
                       </div>
-                    )} */}
+                    )}
                 </div>
-                {/* )} */}
+                 )} 
 
                 {chainId === 1482601649 && isConnected && (
                   <div className="gotoNebula-wrapper p-3 mb-3">
@@ -3419,12 +3419,12 @@ const GetPremiumPopup = ({
                     </span>
                   )}
 
-                  {isConnected && coinbase && chainId !== 169 && (
+                  {/* {isConnected && coinbase && chainId !== 169 && (
                     <span className="text-warning">
                       Premium is only available on Manta Network. Please switch
                       to Manta to continue.
                     </span>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
