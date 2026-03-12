@@ -170,6 +170,9 @@ const GetPremiumPopup = ({
       functionName: "getEstimatedTokenSubscriptionAmount",
       args,
       chain: chainId ?? 1,
+    }).catch((e) => {
+      console.error(e);
+      return 100;
     });
   };
 
@@ -2686,7 +2689,6 @@ const GetPremiumPopup = ({
                     ) : binancePay === true &&
                       window.WALLET_TYPE !== "binance" ? (
                       <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-                     
                         <div
                           className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                         ></div>
@@ -2828,7 +2830,6 @@ const GetPremiumPopup = ({
                     ) : binancePay === true &&
                       window.WALLET_TYPE !== "binance" ? (
                       <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-                
                         <div
                           className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                         ></div>
@@ -2970,7 +2971,6 @@ const GetPremiumPopup = ({
                     ) : binancePay === true &&
                       window.WALLET_TYPE !== "binance" ? (
                       <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-              
                         <div
                           className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                         ></div>
@@ -3112,7 +3112,6 @@ const GetPremiumPopup = ({
                     ) : binancePay === true &&
                       window.WALLET_TYPE !== "binance" ? (
                       <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-                      
                         <div
                           className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                         ></div>
@@ -3220,12 +3219,11 @@ const GetPremiumPopup = ({
                     </button>
                   </div>
                 ) : (
-                <div className="d-flex align-items-center gap-3 justify-content-center w-100">
-                  <>
+                  <div className="d-flex align-items-center gap-3 justify-content-center w-100">
+                    <>
                       {window.WALLET_TYPE !== "binance" &&
                         binancePay === true && (
                           <div className="w-100 relative bg-black/40 backdrop-blur-sm rounded-2xl p-2 bordertw border-white/20 hover:border-white/40 transition-all duration-500  h-fit overflow-hidden">
-            
                             <div
                               className={`absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 rounded-2xl`}
                             ></div>
@@ -3271,39 +3269,81 @@ const GetPremiumPopup = ({
                         </button>
                       )}
 
-                  {binancePay === false && chainId === 169 && (
-                    <>
-                      <button
-                        className={`btn ${
-                          approveStatus === "fail" || !isEOA || !coinbase
-                            ? "stake-wod-btn-inactive px-4"
-                            : isApproved
-                              ? "d-none"
+                    {binancePay === false && chainId === 169 && (
+                      <>
+                        <button
+                          className={`btn ${
+                            approveStatus === "fail" || !isEOA || !coinbase
+                              ? "stake-wod-btn-inactive px-4"
+                              : isApproved
+                                ? "d-none"
+                                : "explore-btn px-3 py-2"
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !isEOA ||
+                            !coinbase ||
+                            isApproved
+                              ? true
+                              : false
+                          }
+                          onClick={(e) => handleApprove(e)}
+                        >
+                          {loadspinner === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "deposit" ||
+                            approveStatus === "approveAmount" ||
+                            approveStatus === "failsubscribe" ||
+                            approveStatus === "successsubscribe") ? (
+                            <>Approve token</>
+                          ) : loadspinner === false &&
+                            approveStatus === "fail" ? (
+                            "Failed"
+                          ) : (
+                            <div className="d-flex align-items-center gap-2">
+                              Processing
+                              <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                  height: "1rem",
+                                  width: "1rem",
+                                }}
+                              ></div>{" "}
+                            </div>
+                          )}
+                        </button>
+
+                        <button
+                          className={`btn ${
+                            isApproved === false || !isEOA
+                              ? "stake-wod-btn-inactive px-4 d-none"
                               : "explore-btn px-3 py-2"
-                        }`}
-                        disabled={
-                          approveStatus === "fail" ||
-                          !isEOA ||
-                          !coinbase ||
-                          isApproved
-                            ? true
-                            : false
-                        }
-                        onClick={(e) => handleApprove(e)}
-                      >
-                        {loadspinner === false &&
-                        (approveStatus === "initial" ||
-                          approveStatus === "deposit" ||
-                          approveStatus === "approveAmount" ||
-                          approveStatus === "failsubscribe" ||
-                          approveStatus === "successsubscribe") ? (
-                          <>Approve token</>
-                        ) : loadspinner === false &&
-                          approveStatus === "fail" ? (
-                          "Failed"
-                        ) : (
-                          <div className="d-flex align-items-center gap-2">
-                            Processing
+                          }`}
+                          disabled={
+                            approveStatus === "fail" ||
+                            !coinbase ||
+                            !isApproved ||
+                            !isEOA
+                              ? true
+                              : false
+                          }
+                          onClick={() => {
+                            handleSubscribe();
+                          }}
+                        >
+                          {loadspinnerSub === false &&
+                          (approveStatus === "initial" ||
+                            approveStatus === "fail" ||
+                            approveStatus === "deposit") ? (
+                            <>Buy</>
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "successsubscribe" ? (
+                            "Success"
+                          ) : loadspinnerSub === false &&
+                            approveStatus === "failsubscribe" ? (
+                            "Failed"
+                          ) : (
                             <div
                               className="spinner-border "
                               role="status"
@@ -3311,55 +3351,13 @@ const GetPremiumPopup = ({
                                 height: "1rem",
                                 width: "1rem",
                               }}
-                            ></div>{" "}
-                          </div>
-                        )}
-                      </button>
+                            ></div>
+                          )}
+                        </button>
+                      </>
+                    )}
 
-                      <button
-                        className={`btn ${
-                          isApproved === false || !isEOA
-                            ? "stake-wod-btn-inactive px-4 d-none"
-                            : "explore-btn px-3 py-2"
-                        }`}
-                        disabled={
-                          approveStatus === "fail" ||
-                          !coinbase ||
-                          !isApproved ||
-                          !isEOA
-                            ? true
-                            : false
-                        }
-                        onClick={() => {
-                          handleSubscribe();
-                        }}
-                      >
-                        {loadspinnerSub === false &&
-                        (approveStatus === "initial" ||
-                          approveStatus === "fail" ||
-                          approveStatus === "deposit") ? (
-                          <>Buy</>
-                        ) : loadspinnerSub === false &&
-                          approveStatus === "successsubscribe" ? (
-                          "Success"
-                        ) : loadspinnerSub === false &&
-                          approveStatus === "failsubscribe" ? (
-                          "Failed"
-                        ) : (
-                          <div
-                            className="spinner-border "
-                            role="status"
-                            style={{
-                              height: "1rem",
-                              width: "1rem",
-                            }}
-                          ></div>
-                        )}
-                      </button>
-                    </>
-                  )}
-
-                  {window.WALLET_TYPE === "binance" && (
+                    {window.WALLET_TYPE === "binance" && (
                       <div>
                         <button
                           onClick={() => handlePurchasePremium(coinbase, price)}
@@ -3380,8 +3378,8 @@ const GetPremiumPopup = ({
                         </button>
                       </div>
                     )}
-                </div>
-                 )} 
+                  </div>
+                )}
 
                 {chainId === 1482601649 && isConnected && (
                   <div className="gotoNebula-wrapper p-3 mb-3">
