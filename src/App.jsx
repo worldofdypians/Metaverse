@@ -1042,7 +1042,56 @@ function AppRoutes() {
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
-
+      {
+      title: "CMC",
+      logo: "https://cdn.worldofdypians.com/wod/cmcIcon.svg",
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Mar 11, 2026",
+      userEarnUsd: user.userStats.cmcuserEarnUsd,
+      userEarnCrypto: user.userStats.cmcuserEarnETH,
+      userEarnPoints: user.userStats.cmcuserPoints,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingCmc.webp",
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Live",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: cmcLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        eventDate: "Mar 11, 2026",
+        learnMore:
+          "",
+        detailsText: `To participate in the event, players are required to&nbsp;
+                  <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
+                  CoinMarketCap Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the
+                  CoinMarketCap area, players not only stand a chance to secure
+                  daily rewards in BNB, but also earn points for their placement
+                  on the global leaderboard. Remember to log in to the game
+                  daily and venture into the CoinMarketCap area to uncover
+                  hidden treasures.`,
+        about: `CoinMarketCap provides cryptocurrency market cap rankings, charts,
+            and more. We tracks capitalization of various cryptocurrencies by
+            listing prices, available supply (amount of coins that is currently
+            in circulation), trade volume over last 24 hours, or market
+            capitalizations. CoinMarketCap was founded in May 2013 by Brandon
+            Chez in Long Island City, Queens, New York.`,
+        twitterLink: "https://twitter.com/CoinMarketCap",
+        telegramLink: "https://t.me/CoinMarketCapAnnouncements",
+        websiteLink: "https://coinmarketcap.com/",
+        thumbImage: "https://cdn.worldofdypians.com/wod/cmcPopupImage.png",
+      },
+    },
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
@@ -2348,56 +2397,7 @@ function AppRoutes() {
         activeTab: "dypiusv2",
       },
     },
-        {
-      title: "CMC",
-      logo: "https://cdn.worldofdypians.com/wod/cmcIcon.svg",
-      eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Mar 11, 2026",
-      userEarnUsd: user.userStats.cmcuserEarnUsd,
-      userEarnCrypto: user.userStats.cmcuserEarnETH,
-      userEarnPoints: user.userStats.cmcuserPoints,
-      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingCmc.webp",
-      popupInfo: {
-        title: "CoinMarketCap",
-        chain: "BNB Chain",
-        linkState: "coinmarketcap",
-        rewards: "BNB",
-        status: "Live",
-        id: "event8",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: cmcLastDay,
-        minRewards: "1",
-        maxRewards: "100",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        eventDate: "Mar 11, 2026",
-        learnMore:
-          "",
-        detailsText: `To participate in the event, players are required to&nbsp;
-                  <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
-                  CoinMarketCap Beta Pass NFT from the World of Dypians Shop. By
-                  engaging in the game on a daily basis and exploring the
-                  CoinMarketCap area, players not only stand a chance to secure
-                  daily rewards in BNB, but also earn points for their placement
-                  on the global leaderboard. Remember to log in to the game
-                  daily and venture into the CoinMarketCap area to uncover
-                  hidden treasures.`,
-        about: `CoinMarketCap provides cryptocurrency market cap rankings, charts,
-            and more. We tracks capitalization of various cryptocurrencies by
-            listing prices, available supply (amount of coins that is currently
-            in circulation), trade volume over last 24 hours, or market
-            capitalizations. CoinMarketCap was founded in May 2013 by Brandon
-            Chez in Long Island City, Queens, New York.`,
-        twitterLink: "https://twitter.com/CoinMarketCap",
-        telegramLink: "https://t.me/CoinMarketCapAnnouncements",
-        websiteLink: "https://coinmarketcap.com/",
-        thumbImage: "https://cdn.worldofdypians.com/wod/cmcPopupImage.png",
-      },
-    },
+  
     {
       title: "CMC",
       logo: "https://cdn.worldofdypians.com/wod/cmcIcon.svg",

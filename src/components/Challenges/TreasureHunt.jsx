@@ -52,10 +52,29 @@ const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
       {slicedEvents.map((item, index) => {
         return (
           <div
-            className="new-treasure-hunt-wrapper gap-lg-4 p-3 p-lg-0 upcoming-mint-wrapper2 d-flex align-items-center justify-content-lg-start justify-content-between"
+            className="new-treasure-hunt-wrapper gap-lg-4 p-3 p-lg-0 upcoming-mint-wrapper2 d-flex align-items-center justify-content-lg-start justify-content-between position-relative"
             key={index}
             onClick={() => onEventClick(item)}
           >
+            {item.title === "CMC" && (
+              <div className="cmc-diamond-tag position-absolute d-flex align-items-center justify-content-center gap-1">
+              <div className="w-100 h-100 position-relative">
+                  <div className="d-flex align-items center justify-content-between gap-2">
+                    <div className="d-flex flex-column align-items-center gap-1 p-2">
+                       <img
+                    src={"https://cdn.worldofdypians.com/wod/cmcLarge.svg"}
+                    className="cmc-large-logo"
+                    alt=""
+                  />
+                  <span className="cmc-diamonds">Diamonds</span>
+                    </div>
+                  
+                </div>
+              </div>
+
+                </div>
+  
+            )}
             <div className="ps-lg-2 d-flex align-items-center gap-3">
               <img src={item.logo} height={36} width={36} alt="" />
               <div className="d-flex flex-column gap-2 position-relative">
