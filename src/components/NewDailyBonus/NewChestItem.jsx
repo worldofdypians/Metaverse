@@ -23,6 +23,7 @@ const NewChestItem = ({
   address,
   email,
   rewardTypes,
+  isBnbStandardSpecial,
   chestId,
   chestIndex,
   open,
@@ -37,7 +38,8 @@ const NewChestItem = ({
   coinbase,
 
   openKickstarter,
-  closeDaily,username
+  closeDaily,
+  username,
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -56,19 +58,22 @@ const NewChestItem = ({
     "purpleCrystal",
   ];
 
-
-      const updateRewardApis = async(data)=>{
-        const result = await axios.post('https://api.worldofdypians.com/api/post-event', data).catch((e)=>{console.error(e)})
-        if(result && result.status === 200) {
-          console.log(result)
-        }
-      }
+  const updateRewardApis = async (data) => {
+    const result = await axios
+      .post("https://api.worldofdypians.com/api/post-event", data)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      console.log(result);
+    }
+  };
 
   const getUserRewardsByChest2 = async (
     userEmail,
     txHash,
     chestId,
-    chainText
+    chainText,
   ) => {
     const userData = {
       transactionHash: txHash,
@@ -87,7 +92,7 @@ const NewChestItem = ({
       const result = await axios
         .post(
           "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          userData_bnb
+          userData_bnb,
         )
         .catch((e) => {
           onLoadingChest(false);
@@ -105,7 +110,7 @@ const NewChestItem = ({
       if (result && result.status === 200) {
         onClaimRewards(result.data);
         setIsChestOpen(true);
-  if (
+        if (
           result.data.rewards.find((item) => {
             return item.rewardType === "Money";
           }) !== undefined
@@ -119,7 +124,7 @@ const NewChestItem = ({
           };
           updateRewardApis(data);
         }
-         if (
+        if (
           result.data.rewards.find((item) => {
             return item.rewardType === "Points" && item.reward >= 7950;
           }) !== undefined
@@ -142,7 +147,7 @@ const NewChestItem = ({
       const result = await axios
         .post(
           "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          userData
+          userData,
         )
         .catch((e) => {
           onLoadingChest(false);
@@ -175,7 +180,7 @@ const NewChestItem = ({
     userEmail,
     txHash,
     chestId,
-    chainText
+    chainText,
   ) => {
     const userData = {
       transactionHash: txHash,
@@ -194,7 +199,7 @@ const NewChestItem = ({
       const result = await axios
         .post(
           "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          userData_bnb
+          userData_bnb,
         )
         .catch((e) => {
           if (
@@ -224,8 +229,8 @@ const NewChestItem = ({
         //   handleSecondTask(coinbase);
         // }
         onClaimRewards(result.data);
-        
-         if (
+
+        if (
           result.data.rewards.find((item) => {
             return item.rewardType === "Money";
           }) !== undefined
@@ -239,9 +244,9 @@ const NewChestItem = ({
           };
           updateRewardApis(data);
         }
-         if (
+        if (
           result.data.rewards.find((item) => {
-            return item.rewardType === "Points" && item.reward >= 7950;;
+            return item.rewardType === "Points" && item.reward >= 7950;
           }) !== undefined
         ) {
           const data = {
@@ -263,7 +268,7 @@ const NewChestItem = ({
       const result = await axios
         .post(
           "https://worldofdypiansdailybonus.azurewebsites.net/api/CollectChest",
-          userData
+          userData,
         )
         .catch((e) => {
           if (
@@ -316,7 +321,7 @@ const NewChestItem = ({
     email,
     txHash,
     chestIndex,
-    chainText
+    chainText,
   ) => {
     if (window.WALLET_TYPE !== "matchId") {
       const txResult = getTransaction(wagmiClient, {
@@ -333,7 +338,7 @@ const NewChestItem = ({
             () => {
               handleCheckIfTxExists(txHash);
             },
-            count === 9 ? 5000 : 2000
+            count === 9 ? 5000 : 2000,
           );
           return () => clearTimeout(timer);
         } else {
@@ -349,7 +354,7 @@ const NewChestItem = ({
         }
       }
       count = count + 1;
-    }  
+    }
   };
 
   const handleThirdTask = async (wallet) => {
@@ -466,8 +471,6 @@ const NewChestItem = ({
           ? "openPremiumChest"
           : "openChest";
 
-     
-
       // Default: use wagmi connected wallet via viem
       const account = getAccount(wagmiClient);
 
@@ -487,20 +490,21 @@ const NewChestItem = ({
         account: account?.address, // optional, connector will provide
         chainId,
       });
-      
+
       let receipt;
       const maxRetries = 5;
       for (let i = 0; i < maxRetries; i++) {
-        receipt = await wagmiWaitForTransactionReceipt(wagmiClient, { hash: txHash }).catch(
-          () => null
-        );
+        receipt = await wagmiWaitForTransactionReceipt(wagmiClient, {
+          hash: txHash,
+        }).catch(() => null);
         if (receipt) break;
         // wait 2 seconds before retry
         await new Promise((res) => setTimeout(res, 2000));
       }
-      
-      if (!receipt) throw new Error("Failed to get transaction receipt after retries");
-      
+
+      if (!receipt)
+        throw new Error("Failed to get transaction receipt after retries");
+
       console.log("Transaction confirmed in block:", receipt.blockNumber);
 
       if (receipt) {
@@ -508,7 +512,7 @@ const NewChestItem = ({
           email,
           txHash,
           chestIndex - 1,
-          contractConfig.chainText
+          contractConfig.chainText,
         );
       }
 
@@ -517,7 +521,7 @@ const NewChestItem = ({
       // Fallback to legacy paths below if unified flow fails (keeps backward compatibility)
       console.error(
         "Unified wagmi/viem flow failed, falling back",
-        unifiedError
+        unifiedError,
       );
       window.alertify.error(unifiedError?.message);
       onChestStatus("error");
@@ -576,10 +580,10 @@ const NewChestItem = ({
             open && chestId === 99 && chain === "bnb"
               ? "new-chest-item-open-premium"
               : open && chestId === 99 && chain === "taiko"
-              ? "new-chest-item-open-premium-taiko"
-              : open
-              ? "new-chest-item-open"
-              : ""
+                ? "new-chest-item-open-premium-taiko"
+                : open
+                  ? "new-chest-item-open"
+                  : ""
           }  ${
             isActive === chestId &&
             isActiveIndex === chestIndex &&
@@ -613,10 +617,10 @@ const NewChestItem = ({
                 chestId === 99 && chain === "bnb"
                   ? "premium-chest-item-img"
                   : chestId === 99 && chain === "taiko"
-                  ? "premium-chest-item-img-taiko"
-                  : chain !== "skale"
-                  ? "new-chest-item-img"
-                  : "new-chest-item-img-skale"
+                    ? "premium-chest-item-img-taiko"
+                    : chain !== "skale"
+                      ? "new-chest-item-img"
+                      : "new-chest-item-img-skale"
               } ${
                 loading
                   ? chain === "skale"
@@ -630,16 +634,18 @@ const NewChestItem = ({
                       open ? "premiumChestOpenFront" : "premiumChest"
                     }.png`
                   : chestId === 99 && chain === "taiko"
-                  ? `https://cdn.worldofdypians.com/wod/${
-                      open ? "premiumChestOpenFrontTaiko2" : "premiumChestTaiko"
-                    }.png`
-                  : chain !== "skale"
-                  ? `https://cdn.worldofdypians.com/wod/${
-                      open ? image + "open" : image
-                    }.png`
-                  : `https://cdn.worldofdypians.com/wod/${
-                      open ? chestIndex + "openskale" : chestIndex + "skale"
-                    }.png`
+                    ? `https://cdn.worldofdypians.com/wod/${
+                        open
+                          ? "premiumChestOpenFrontTaiko2"
+                          : "premiumChestTaiko"
+                      }.png`
+                    : chain !== "skale"
+                      ? `https://cdn.worldofdypians.com/wod/${
+                          open ? image + "open" : image
+                        }.png`
+                      : `https://cdn.worldofdypians.com/wod/${
+                          open ? chestIndex + "openskale" : chestIndex + "skale"
+                        }.png`
               }
               alt=""
               style={{
@@ -695,7 +701,15 @@ const NewChestItem = ({
         </div>
       ) : (
         <div
-          className={` ${open ? "new-chest-item-open" : ""}  ${
+          className={` ${
+            isBnbStandardSpecial
+              ? open
+                ? "new-chest-item-open-bnb-special"
+                : "new-chest-item-bnb-special"
+              : open
+                ? "new-chest-item-open"
+                : ""
+          }  ${
             isActive === chestId &&
             isActiveIndex === chestIndex &&
             "chest-item-active"
