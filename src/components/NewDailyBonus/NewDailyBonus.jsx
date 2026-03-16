@@ -996,7 +996,7 @@ const NewDailyBonus = ({
 
   const boughtCaws = (chestId, chestIndex, val1, val2) => {
     const filteredResult = openedChests.find(
-      (el) => el.chestId === chestId && allChests.indexOf(el) === chestIndex
+      (el) => el.chestId === chestId && allChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestId);
     setIsActiveIndex(chestIndex);
@@ -1016,7 +1016,7 @@ const NewDailyBonus = ({
 
   const showSingleRewardData = (chestID, chestIndex) => {
     const filteredResult = openedChests.find(
-      (el) => el.chestId === chestID && allChests.indexOf(el) === chestIndex
+      (el) => el.chestId === chestID && allChests.indexOf(el) === chestIndex,
     );
 
     setIsActive(chestID);
@@ -1254,7 +1254,7 @@ const NewDailyBonus = ({
   const showSingleRewardDataSkale = (chestID, chestIndex) => {
     const filteredResult = openedSkaleChests.find(
       (el) =>
-        el.chestId === chestID && allSkaleChests.indexOf(el) === chestIndex
+        el.chestId === chestID && allSkaleChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -1334,7 +1334,8 @@ const NewDailyBonus = ({
 
   const showSingleRewardDataCore = (chestID, chestIndex) => {
     const filteredResult = openedCoreChests.find(
-      (el) => el.chestId === chestID && allCoreChests.indexOf(el) === chestIndex
+      (el) =>
+        el.chestId === chestID && allCoreChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -1415,7 +1416,7 @@ const NewDailyBonus = ({
   const showSingleRewardDataViction = (chestID, chestIndex) => {
     const filteredResult = openedVictionChests.find(
       (el) =>
-        el.chestId === chestID && allVictionChests.indexOf(el) === chestIndex
+        el.chestId === chestID && allVictionChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -1496,7 +1497,7 @@ const NewDailyBonus = ({
   const showSingleRewardDataManta = (chestID, chestIndex) => {
     const filteredResult = openedMantaChests.find(
       (el) =>
-        el.chestId === chestID && allMantaChests.indexOf(el) === chestIndex
+        el.chestId === chestID && allMantaChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -1576,7 +1577,8 @@ const NewDailyBonus = ({
 
   const showSingleRewardDataBase = (chestID, chestIndex) => {
     const filteredResult = openedBaseChests.find(
-      (el) => el.chestId === chestID && allBaseChests.indexOf(el) === chestIndex
+      (el) =>
+        el.chestId === chestID && allBaseChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -1657,7 +1659,7 @@ const NewDailyBonus = ({
   const showSingleRewardDataTaiko = (chestID, chestIndex) => {
     const filteredResult = openedTaikoChests.find(
       (el) =>
-        el.chestId === chestID && allTaikoChests.indexOf(el) === chestIndex
+        el.chestId === chestID && allTaikoChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -1737,7 +1739,7 @@ const NewDailyBonus = ({
   const showSingleRewardDataVanar = (chestID, chestIndex) => {
     const filteredResult = openedVanarChests.find(
       (el) =>
-        el.chestId === chestID && allVanarChests.indexOf(el) === chestIndex
+        el.chestId === chestID && allVanarChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -1897,7 +1899,7 @@ const NewDailyBonus = ({
 
   const showSingleRewardDataSei = (chestID, chestIndex) => {
     const filteredResult = openedSeiChests.find(
-      (el) => el.chestId === chestID && allSeiChests.indexOf(el) === chestIndex
+      (el) => el.chestId === chestID && allSeiChests.indexOf(el) === chestIndex,
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -3059,25 +3061,25 @@ const NewDailyBonus = ({
                     chain === "bnb"
                       ? totalPoints
                       : chain === "core"
-                      ? totalCorePoints
-                      : chain === "viction"
-                      ? totalVictionPoints
-                      : chain === "manta"
-                      ? totalMantaPoints
-                      : chain === "base"
-                      ? totalBasePoints
-                      : chain === "taiko"
-                      ? totalTaikoPoints
-                      : chain === "vanar"
-                      ? totalVanarPoints
-                      : // : chain === "matchain"
-                      // ? totalMatPoints
-                      chain === "sei"
-                      ? totalSeiPoints
-                      : // : chain === "taraxa"
-                        // ? totalTaraxaPoints
-                        totalSkalePoints,
-                    0
+                        ? totalCorePoints
+                        : chain === "viction"
+                          ? totalVictionPoints
+                          : chain === "manta"
+                            ? totalMantaPoints
+                            : chain === "base"
+                              ? totalBasePoints
+                              : chain === "taiko"
+                                ? totalTaikoPoints
+                                : chain === "vanar"
+                                  ? totalVanarPoints
+                                  : // : chain === "matchain"
+                                    // ? totalMatPoints
+                                    chain === "sei"
+                                    ? totalSeiPoints
+                                    : // : chain === "taraxa"
+                                      // ? totalTaraxaPoints
+                                      totalSkalePoints,
+                    0,
                   )}{" "}
                 </h6>
                 <span className="new-total-points-type d-none d-lg-flex mb-0">
@@ -3088,25 +3090,25 @@ const NewDailyBonus = ({
                     chain === "bnb"
                       ? totalStars
                       : chain === "core"
-                      ? totalCoreStars
-                      : chain === "viction"
-                      ? totalVictionStars
-                      : chain === "manta"
-                      ? totalMantaStars
-                      : chain === "base"
-                      ? totalBaseStars
-                      : chain === "taiko"
-                      ? totalTaikoStars
-                      : chain === "vanar"
-                      ? totalVanarStars
-                      : // : chain === "matchain"
-                      // ? totalMatStars
-                      chain === "sei"
-                      ? totalSeiStars
-                      : // : chain === "taraxa"
-                        // ? totalTaraxaStars
-                        totalSkaleStars,
-                    0
+                        ? totalCoreStars
+                        : chain === "viction"
+                          ? totalVictionStars
+                          : chain === "manta"
+                            ? totalMantaStars
+                            : chain === "base"
+                              ? totalBaseStars
+                              : chain === "taiko"
+                                ? totalTaikoStars
+                                : chain === "vanar"
+                                  ? totalVanarStars
+                                  : // : chain === "matchain"
+                                    // ? totalMatStars
+                                    chain === "sei"
+                                    ? totalSeiStars
+                                    : // : chain === "taraxa"
+                                      // ? totalTaraxaStars
+                                      totalSkaleStars,
+                    0,
                   )}{" "}
                 </h6>
                 <span className="new-total-points-type d-none d-lg-flex mb-0">
@@ -3120,25 +3122,25 @@ const NewDailyBonus = ({
                     chain === "bnb"
                       ? totalUsd
                       : chain === "core"
-                      ? totalCoreUsd
-                      : chain === "viction"
-                      ? totalVictionUsd
-                      : chain === "manta"
-                      ? totalMantaUsd
-                      : chain === "base"
-                      ? totalBaseUsd
-                      : chain === "taiko"
-                      ? totalTaikoUsd
-                      : chain === "vanar"
-                      ? totalVanarUsd
-                      : // : chain === "matchain"
-                      // ? totalMatUsd
-                      chain === "sei"
-                      ? totalSeiUsd
-                      : // : chain === "taraxa"
-                        // ? totalTaraxaUsd
-                        totalSkaleUsd,
-                    2
+                        ? totalCoreUsd
+                        : chain === "viction"
+                          ? totalVictionUsd
+                          : chain === "manta"
+                            ? totalMantaUsd
+                            : chain === "base"
+                              ? totalBaseUsd
+                              : chain === "taiko"
+                                ? totalTaikoUsd
+                                : chain === "vanar"
+                                  ? totalVanarUsd
+                                  : // : chain === "matchain"
+                                    // ? totalMatUsd
+                                    chain === "sei"
+                                    ? totalSeiUsd
+                                    : // : chain === "taraxa"
+                                      // ? totalTaraxaUsd
+                                      totalSkaleUsd,
+                    2,
                   )}{" "}
                 </h6>
                 <span className="new-total-points-type d-none d-lg-flex  mb-0">
@@ -3162,6 +3164,22 @@ const NewDailyBonus = ({
                             chain === "bnb" && "chain-item-active"
                           } w-100`}
                         >
+                          <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
                           <img
                             src={"https://cdn.worldofdypians.com/wod/bnbBg.png"}
                             className={`chain-img ${
@@ -4403,6 +4421,22 @@ const NewDailyBonus = ({
                             chain === "bnb" && "chain-item-active"
                           } w-auto`}
                         >
+                          <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
                           <img
                             src={"https://cdn.worldofdypians.com/wod/bnbBg.png"}
                             className={`chain-img ${
@@ -5134,853 +5168,995 @@ const NewDailyBonus = ({
                                 />
                               ))
                           : chain === "core"
-                          ? allCoreChests && allCoreChests.length > 0
-                            ? allCoreChests.map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  image={coreImages[index]}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onCoreChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataCore(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  image={coreImages[index]}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onCoreChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataCore(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                          : chain === "manta"
-                          ? allMantaChests && allMantaChests.length > 0
-                            ? allMantaChests.map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  image={mantaImages[index]}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onMantaChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataManta(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  image={mantaImages[index]}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onMantaChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataManta(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                          : chain === "base"
-                          ? allBaseChests && allBaseChests.length > 0
-                            ? allBaseChests.map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  image={baseImages[index]}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onBaseChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataBase(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  image={mantaImages[index]}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onMantaChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataManta(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                          : chain === "taiko"
-                          ? allTaikoChests && allTaikoChests.length > 0
-                            ? allTaikoChests.map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  image={taikoImages[index]}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onTaikoChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataTaiko(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  image={taikoImages[index]}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onTaikoChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataTaiko(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                          : chain === "vanar"
-                          ? allVanarChests && allVanarChests.length > 0
-                            ? allVanarChests.map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  image={taikoImages[index]} //RETURN HERE
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    console.log("vanar", value);
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onVanarChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataVanar(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  image={taikoImages[index]}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onVanarChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataVanar(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                          : chain === "sei"
-                          ? allSeiChests && allSeiChests.length > 0
-                            ? allSeiChests.map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  image={seiImages[index]}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onSeiChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataSei(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  image={seiImages[index]}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onSeiChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataSei(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                          : chain === "viction"
-                          ? allVictionChests && allVictionChests.length > 0
-                            ? allVictionChests.map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  image={victionImages[index]}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onVictionChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataViction(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                            : window.range(0, 19).map((item, index) => (
-                                <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  item={item}
-                                  username={username}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  image={victionImages[index]}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onVictionChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataViction(value, value2);
-                                    setIsActive(value);
-                                    // setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={
-                                    index + 1 <= 10 ? "standard" : "premium"
-                                  }
-                                  chestId={item.chestId}
-                                  chestIndex={index + 1}
-                                  open={item.opened}
-                                  disableBtn={true}
-                                  isActive={isActive}
-                                  openChest={() => {
-                                    console.log("test");
-                                  }}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
-                              ))
-                          : chain === "skale" &&
-                            allSkaleChests &&
-                            allSkaleChests.length > 0
-                          ? allSkaleChests.map((item, index) => (
-                              <NewChestItem
-                                closeDaily={onclose}
-                                openKickstarter={openKickstarter}
-                                coinbase={coinbase}
-                                claimingChest={claimingChest}
-                                setClaimingChest={setClaimingChest}
-                                buyNftPopup={buyNftPopup}
-                                chainId={chainId}
-                                chain={chain}
-                                key={index}
-                                item={item}
-                                username={username}
-                                image={skaleImages[index]}
-                                // openChest={openChest}
-                                selectedChest={selectedChest}
-                                isPremium={isPremium}
-                                onClaimRewards={(value) => {
-                                  setLiveRewardData(value);
-                                  onSkaleChestClaimed();
-                                  showLiveRewardDataSkale(value);
-                                  setIsActive(item.chestId);
-                                  setIsActiveIndex(index + 1);
-                                }}
-                                handleShowRewards={(value, value2) => {
-                                  showSingleRewardDataSkale(value, value2);
-                                  setIsActive(value);
-                                  setIsActiveIndex(index + 1);
-                                }}
-                                onLoadingChest={(value) => {
-                                  // setDisable(value);
-                                }}
-                                onChestStatus={(val) => {
-                                  setMessage(val);
-                                }}
-                                address={address}
-                                email={email}
-                                rewardTypes={item.chestType?.toLowerCase()}
-                                chestId={item.chestId}
-                                chestIndex={index + 1}
-                                open={item.isOpened}
-                                disableBtn={disable}
-                                isActive={isActive}
-                                isActiveIndex={isActiveIndex}
-                                dummypremiumChests={
-                                  dummypremiumChests[index - 10]?.closedImg
-                                }
-                              />
-                            ))
-                          : window.range(0, 19).map((item, index) => (
-                              <NewChestItem
-                                closeDaily={onclose}
-                                openKickstarter={openKickstarter}
-                                coinbase={coinbase}
-                                claimingChest={claimingChest}
-                                setClaimingChest={setClaimingChest}
-                                buyNftPopup={buyNftPopup}
-                                chainId={chainId}
-                                chain={chain}
-                                key={index}
-                                item={item}
-                                username={username}
-                                image={skaleImages[index]}
-                                selectedChest={selectedChest}
-                                isPremium={isPremium}
-                                onClaimRewards={(value) => {
-                                  // setRewardData(value);
-                                  setLiveRewardData(value);
-                                  onSkaleChestClaimed();
-                                  showLiveRewardData(value);
-                                  setIsActive(item.chestId);
-                                  // setIsActiveIndex(index + 1);
-                                }}
-                                handleShowRewards={(value, value2) => {
-                                  showSingleRewardData(value, value2);
-                                  setIsActive(value);
-                                  // setIsActiveIndex(index + 1);
-                                }}
-                                onLoadingChest={(value) => {
-                                  // setDisable(value);
-                                }}
-                                onChestStatus={(val) => {
-                                  setMessage(val);
-                                }}
-                                address={address}
-                                email={email}
-                                rewardTypes={
-                                  index + 1 <= 10 ? "standard" : "premium"
-                                }
-                                chestId={item.chestId}
-                                chestIndex={index + 1}
-                                open={item.opened}
-                                disableBtn={true}
-                                isActive={isActive}
-                                openChest={() => {
-                                  console.log("test");
-                                }}
-                                dummypremiumChests={
-                                  dummypremiumChests[index - 10]?.closedImg
-                                }
-                              />
-                            ))}
+                            ? allCoreChests && allCoreChests.length > 0
+                              ? allCoreChests.map((item, index) => (
+                                  <NewChestItem
+                                    closeDaily={onclose}
+                                    openKickstarter={openKickstarter}
+                                    coinbase={coinbase}
+                                    claimingChest={claimingChest}
+                                    setClaimingChest={setClaimingChest}
+                                    buyNftPopup={buyNftPopup}
+                                    chainId={chainId}
+                                    image={coreImages[index]}
+                                    chain={chain}
+                                    key={index}
+                                    item={item}
+                                    username={username}
+                                    // openChest={openChest}
+                                    selectedChest={selectedChest}
+                                    isPremium={isPremium}
+                                    onClaimRewards={(value) => {
+                                      // setRewardData(value);
+                                      setLiveRewardData(value);
+                                      onCoreChestClaimed();
+                                      showLiveRewardData(value);
+                                      setIsActive(item.chestId);
+                                      setIsActiveIndex(index + 1);
+                                    }}
+                                    handleShowRewards={(value, value2) => {
+                                      showSingleRewardDataCore(value, value2);
+                                      setIsActive(value);
+                                      setIsActiveIndex(index + 1);
+                                    }}
+                                    onLoadingChest={(value) => {
+                                      // setDisable(value);
+                                    }}
+                                    onChestStatus={(val) => {
+                                      setMessage(val);
+                                    }}
+                                    address={address}
+                                    email={email}
+                                    rewardTypes={item.chestType?.toLowerCase()}
+                                    chestId={item.chestId}
+                                    chestIndex={index + 1}
+                                    open={item.isOpened}
+                                    disableBtn={disable}
+                                    isActive={isActive}
+                                    isActiveIndex={isActiveIndex}
+                                    dummypremiumChests={
+                                      dummypremiumChests[index - 10]?.closedImg
+                                    }
+                                  />
+                                ))
+                              : window.range(0, 19).map((item, index) => (
+                                  <NewChestItem
+                                    closeDaily={onclose}
+                                    openKickstarter={openKickstarter}
+                                    coinbase={coinbase}
+                                    claimingChest={claimingChest}
+                                    setClaimingChest={setClaimingChest}
+                                    buyNftPopup={buyNftPopup}
+                                    chainId={chainId}
+                                    chain={chain}
+                                    key={index}
+                                    item={item}
+                                    username={username}
+                                    image={coreImages[index]}
+                                    // openChest={openChest}
+                                    selectedChest={selectedChest}
+                                    isPremium={isPremium}
+                                    onClaimRewards={(value) => {
+                                      // setRewardData(value);
+                                      setLiveRewardData(value);
+                                      onCoreChestClaimed();
+                                      showLiveRewardData(value);
+                                      setIsActive(item.chestId);
+                                      // setIsActiveIndex(index + 1);
+                                    }}
+                                    handleShowRewards={(value, value2) => {
+                                      showSingleRewardDataCore(value, value2);
+                                      setIsActive(value);
+                                      // setIsActiveIndex(index + 1);
+                                    }}
+                                    onLoadingChest={(value) => {
+                                      // setDisable(value);
+                                    }}
+                                    onChestStatus={(val) => {
+                                      setMessage(val);
+                                    }}
+                                    address={address}
+                                    email={email}
+                                    rewardTypes={
+                                      index + 1 <= 10 ? "standard" : "premium"
+                                    }
+                                    chestId={item.chestId}
+                                    chestIndex={index + 1}
+                                    open={item.opened}
+                                    disableBtn={true}
+                                    isActive={isActive}
+                                    openChest={() => {
+                                      console.log("test");
+                                    }}
+                                    dummypremiumChests={
+                                      dummypremiumChests[index - 10]?.closedImg
+                                    }
+                                  />
+                                ))
+                            : chain === "manta"
+                              ? allMantaChests && allMantaChests.length > 0
+                                ? allMantaChests.map((item, index) => (
+                                    <NewChestItem
+                                      closeDaily={onclose}
+                                      openKickstarter={openKickstarter}
+                                      coinbase={coinbase}
+                                      claimingChest={claimingChest}
+                                      setClaimingChest={setClaimingChest}
+                                      buyNftPopup={buyNftPopup}
+                                      chainId={chainId}
+                                      image={mantaImages[index]}
+                                      chain={chain}
+                                      key={index}
+                                      item={item}
+                                      username={username}
+                                      // openChest={openChest}
+                                      selectedChest={selectedChest}
+                                      isPremium={isPremium}
+                                      onClaimRewards={(value) => {
+                                        // setRewardData(value);
+                                        setLiveRewardData(value);
+                                        onMantaChestClaimed();
+                                        showLiveRewardData(value);
+                                        setIsActive(item.chestId);
+                                        setIsActiveIndex(index + 1);
+                                      }}
+                                      handleShowRewards={(value, value2) => {
+                                        showSingleRewardDataManta(
+                                          value,
+                                          value2,
+                                        );
+                                        setIsActive(value);
+                                        setIsActiveIndex(index + 1);
+                                      }}
+                                      onLoadingChest={(value) => {
+                                        // setDisable(value);
+                                      }}
+                                      onChestStatus={(val) => {
+                                        setMessage(val);
+                                      }}
+                                      address={address}
+                                      email={email}
+                                      rewardTypes={item.chestType?.toLowerCase()}
+                                      chestId={item.chestId}
+                                      chestIndex={index + 1}
+                                      open={item.isOpened}
+                                      disableBtn={disable}
+                                      isActive={isActive}
+                                      isActiveIndex={isActiveIndex}
+                                      dummypremiumChests={
+                                        dummypremiumChests[index - 10]
+                                          ?.closedImg
+                                      }
+                                    />
+                                  ))
+                                : window.range(0, 19).map((item, index) => (
+                                    <NewChestItem
+                                      closeDaily={onclose}
+                                      openKickstarter={openKickstarter}
+                                      coinbase={coinbase}
+                                      claimingChest={claimingChest}
+                                      setClaimingChest={setClaimingChest}
+                                      buyNftPopup={buyNftPopup}
+                                      chainId={chainId}
+                                      chain={chain}
+                                      key={index}
+                                      item={item}
+                                      username={username}
+                                      image={mantaImages[index]}
+                                      // openChest={openChest}
+                                      selectedChest={selectedChest}
+                                      isPremium={isPremium}
+                                      onClaimRewards={(value) => {
+                                        // setRewardData(value);
+                                        setLiveRewardData(value);
+                                        onMantaChestClaimed();
+                                        showLiveRewardData(value);
+                                        setIsActive(item.chestId);
+                                        // setIsActiveIndex(index + 1);
+                                      }}
+                                      handleShowRewards={(value, value2) => {
+                                        showSingleRewardDataManta(
+                                          value,
+                                          value2,
+                                        );
+                                        setIsActive(value);
+                                        // setIsActiveIndex(index + 1);
+                                      }}
+                                      onLoadingChest={(value) => {
+                                        // setDisable(value);
+                                      }}
+                                      onChestStatus={(val) => {
+                                        setMessage(val);
+                                      }}
+                                      address={address}
+                                      email={email}
+                                      rewardTypes={
+                                        index + 1 <= 10 ? "standard" : "premium"
+                                      }
+                                      chestId={item.chestId}
+                                      chestIndex={index + 1}
+                                      open={item.opened}
+                                      disableBtn={true}
+                                      isActive={isActive}
+                                      openChest={() => {
+                                        console.log("test");
+                                      }}
+                                      dummypremiumChests={
+                                        dummypremiumChests[index - 10]
+                                          ?.closedImg
+                                      }
+                                    />
+                                  ))
+                              : chain === "base"
+                                ? allBaseChests && allBaseChests.length > 0
+                                  ? allBaseChests.map((item, index) => (
+                                      <NewChestItem
+                                        closeDaily={onclose}
+                                        openKickstarter={openKickstarter}
+                                        coinbase={coinbase}
+                                        claimingChest={claimingChest}
+                                        setClaimingChest={setClaimingChest}
+                                        buyNftPopup={buyNftPopup}
+                                        chainId={chainId}
+                                        image={baseImages[index]}
+                                        chain={chain}
+                                        key={index}
+                                        item={item}
+                                        username={username}
+                                        // openChest={openChest}
+                                        selectedChest={selectedChest}
+                                        isPremium={isPremium}
+                                        onClaimRewards={(value) => {
+                                          // setRewardData(value);
+                                          setLiveRewardData(value);
+                                          onBaseChestClaimed();
+                                          showLiveRewardData(value);
+                                          setIsActive(item.chestId);
+                                          setIsActiveIndex(index + 1);
+                                        }}
+                                        handleShowRewards={(value, value2) => {
+                                          showSingleRewardDataBase(
+                                            value,
+                                            value2,
+                                          );
+                                          setIsActive(value);
+                                          setIsActiveIndex(index + 1);
+                                        }}
+                                        onLoadingChest={(value) => {
+                                          // setDisable(value);
+                                        }}
+                                        onChestStatus={(val) => {
+                                          setMessage(val);
+                                        }}
+                                        address={address}
+                                        email={email}
+                                        rewardTypes={item.chestType?.toLowerCase()}
+                                        chestId={item.chestId}
+                                        chestIndex={index + 1}
+                                        open={item.isOpened}
+                                        disableBtn={disable}
+                                        isActive={isActive}
+                                        isActiveIndex={isActiveIndex}
+                                        dummypremiumChests={
+                                          dummypremiumChests[index - 10]
+                                            ?.closedImg
+                                        }
+                                      />
+                                    ))
+                                  : window.range(0, 19).map((item, index) => (
+                                      <NewChestItem
+                                        closeDaily={onclose}
+                                        openKickstarter={openKickstarter}
+                                        coinbase={coinbase}
+                                        claimingChest={claimingChest}
+                                        setClaimingChest={setClaimingChest}
+                                        buyNftPopup={buyNftPopup}
+                                        chainId={chainId}
+                                        chain={chain}
+                                        key={index}
+                                        item={item}
+                                        username={username}
+                                        image={mantaImages[index]}
+                                        // openChest={openChest}
+                                        selectedChest={selectedChest}
+                                        isPremium={isPremium}
+                                        onClaimRewards={(value) => {
+                                          // setRewardData(value);
+                                          setLiveRewardData(value);
+                                          onMantaChestClaimed();
+                                          showLiveRewardData(value);
+                                          setIsActive(item.chestId);
+                                          // setIsActiveIndex(index + 1);
+                                        }}
+                                        handleShowRewards={(value, value2) => {
+                                          showSingleRewardDataManta(
+                                            value,
+                                            value2,
+                                          );
+                                          setIsActive(value);
+                                          // setIsActiveIndex(index + 1);
+                                        }}
+                                        onLoadingChest={(value) => {
+                                          // setDisable(value);
+                                        }}
+                                        onChestStatus={(val) => {
+                                          setMessage(val);
+                                        }}
+                                        address={address}
+                                        email={email}
+                                        rewardTypes={
+                                          index + 1 <= 10
+                                            ? "standard"
+                                            : "premium"
+                                        }
+                                        chestId={item.chestId}
+                                        chestIndex={index + 1}
+                                        open={item.opened}
+                                        disableBtn={true}
+                                        isActive={isActive}
+                                        openChest={() => {
+                                          console.log("test");
+                                        }}
+                                        dummypremiumChests={
+                                          dummypremiumChests[index - 10]
+                                            ?.closedImg
+                                        }
+                                      />
+                                    ))
+                                : chain === "taiko"
+                                  ? allTaikoChests && allTaikoChests.length > 0
+                                    ? allTaikoChests.map((item, index) => (
+                                        <NewChestItem
+                                          closeDaily={onclose}
+                                          openKickstarter={openKickstarter}
+                                          coinbase={coinbase}
+                                          claimingChest={claimingChest}
+                                          setClaimingChest={setClaimingChest}
+                                          buyNftPopup={buyNftPopup}
+                                          chainId={chainId}
+                                          image={taikoImages[index]}
+                                          chain={chain}
+                                          key={index}
+                                          item={item}
+                                          username={username}
+                                          // openChest={openChest}
+                                          selectedChest={selectedChest}
+                                          isPremium={isPremium}
+                                          onClaimRewards={(value) => {
+                                            // setRewardData(value);
+                                            setLiveRewardData(value);
+                                            onTaikoChestClaimed();
+                                            showLiveRewardData(value);
+                                            setIsActive(item.chestId);
+                                            setIsActiveIndex(index + 1);
+                                          }}
+                                          handleShowRewards={(
+                                            value,
+                                            value2,
+                                          ) => {
+                                            showSingleRewardDataTaiko(
+                                              value,
+                                              value2,
+                                            );
+                                            setIsActive(value);
+                                            setIsActiveIndex(index + 1);
+                                          }}
+                                          onLoadingChest={(value) => {
+                                            // setDisable(value);
+                                          }}
+                                          onChestStatus={(val) => {
+                                            setMessage(val);
+                                          }}
+                                          address={address}
+                                          email={email}
+                                          rewardTypes={item.chestType?.toLowerCase()}
+                                          chestId={item.chestId}
+                                          chestIndex={index + 1}
+                                          open={item.isOpened}
+                                          disableBtn={disable}
+                                          isActive={isActive}
+                                          isActiveIndex={isActiveIndex}
+                                          dummypremiumChests={
+                                            dummypremiumChests[index - 10]
+                                              ?.closedImg
+                                          }
+                                        />
+                                      ))
+                                    : window.range(0, 19).map((item, index) => (
+                                        <NewChestItem
+                                          closeDaily={onclose}
+                                          openKickstarter={openKickstarter}
+                                          coinbase={coinbase}
+                                          claimingChest={claimingChest}
+                                          setClaimingChest={setClaimingChest}
+                                          buyNftPopup={buyNftPopup}
+                                          chainId={chainId}
+                                          chain={chain}
+                                          key={index}
+                                          item={item}
+                                          username={username}
+                                          image={taikoImages[index]}
+                                          // openChest={openChest}
+                                          selectedChest={selectedChest}
+                                          isPremium={isPremium}
+                                          onClaimRewards={(value) => {
+                                            // setRewardData(value);
+                                            setLiveRewardData(value);
+                                            onTaikoChestClaimed();
+                                            showLiveRewardData(value);
+                                            setIsActive(item.chestId);
+                                            // setIsActiveIndex(index + 1);
+                                          }}
+                                          handleShowRewards={(
+                                            value,
+                                            value2,
+                                          ) => {
+                                            showSingleRewardDataTaiko(
+                                              value,
+                                              value2,
+                                            );
+                                            setIsActive(value);
+                                            // setIsActiveIndex(index + 1);
+                                          }}
+                                          onLoadingChest={(value) => {
+                                            // setDisable(value);
+                                          }}
+                                          onChestStatus={(val) => {
+                                            setMessage(val);
+                                          }}
+                                          address={address}
+                                          email={email}
+                                          rewardTypes={
+                                            index + 1 <= 10
+                                              ? "standard"
+                                              : "premium"
+                                          }
+                                          chestId={item.chestId}
+                                          chestIndex={index + 1}
+                                          open={item.opened}
+                                          disableBtn={true}
+                                          isActive={isActive}
+                                          openChest={() => {
+                                            console.log("test");
+                                          }}
+                                          dummypremiumChests={
+                                            dummypremiumChests[index - 10]
+                                              ?.closedImg
+                                          }
+                                        />
+                                      ))
+                                  : chain === "vanar"
+                                    ? allVanarChests &&
+                                      allVanarChests.length > 0
+                                      ? allVanarChests.map((item, index) => (
+                                          <NewChestItem
+                                            closeDaily={onclose}
+                                            openKickstarter={openKickstarter}
+                                            coinbase={coinbase}
+                                            claimingChest={claimingChest}
+                                            setClaimingChest={setClaimingChest}
+                                            buyNftPopup={buyNftPopup}
+                                            chainId={chainId}
+                                            image={taikoImages[index]} //RETURN HERE
+                                            chain={chain}
+                                            key={index}
+                                            item={item}
+                                            username={username}
+                                            // openChest={openChest}
+                                            selectedChest={selectedChest}
+                                            isPremium={isPremium}
+                                            onClaimRewards={(value) => {
+                                              console.log("vanar", value);
+                                              // setRewardData(value);
+                                              setLiveRewardData(value);
+                                              onVanarChestClaimed();
+                                              showLiveRewardData(value);
+                                              setIsActive(item.chestId);
+                                              setIsActiveIndex(index + 1);
+                                            }}
+                                            handleShowRewards={(
+                                              value,
+                                              value2,
+                                            ) => {
+                                              showSingleRewardDataVanar(
+                                                value,
+                                                value2,
+                                              );
+                                              setIsActive(value);
+                                              setIsActiveIndex(index + 1);
+                                            }}
+                                            onLoadingChest={(value) => {
+                                              // setDisable(value);
+                                            }}
+                                            onChestStatus={(val) => {
+                                              setMessage(val);
+                                            }}
+                                            address={address}
+                                            email={email}
+                                            rewardTypes={item.chestType?.toLowerCase()}
+                                            chestId={item.chestId}
+                                            chestIndex={index + 1}
+                                            open={item.isOpened}
+                                            disableBtn={disable}
+                                            isActive={isActive}
+                                            isActiveIndex={isActiveIndex}
+                                            dummypremiumChests={
+                                              dummypremiumChests[index - 10]
+                                                ?.closedImg
+                                            }
+                                          />
+                                        ))
+                                      : window
+                                          .range(0, 19)
+                                          .map((item, index) => (
+                                            <NewChestItem
+                                              closeDaily={onclose}
+                                              openKickstarter={openKickstarter}
+                                              coinbase={coinbase}
+                                              claimingChest={claimingChest}
+                                              setClaimingChest={
+                                                setClaimingChest
+                                              }
+                                              buyNftPopup={buyNftPopup}
+                                              chainId={chainId}
+                                              chain={chain}
+                                              key={index}
+                                              item={item}
+                                              username={username}
+                                              image={taikoImages[index]}
+                                              // openChest={openChest}
+                                              selectedChest={selectedChest}
+                                              isPremium={isPremium}
+                                              onClaimRewards={(value) => {
+                                                // setRewardData(value);
+                                                setLiveRewardData(value);
+                                                onVanarChestClaimed();
+                                                showLiveRewardData(value);
+                                                setIsActive(item.chestId);
+                                                // setIsActiveIndex(index + 1);
+                                              }}
+                                              handleShowRewards={(
+                                                value,
+                                                value2,
+                                              ) => {
+                                                showSingleRewardDataVanar(
+                                                  value,
+                                                  value2,
+                                                );
+                                                setIsActive(value);
+                                                // setIsActiveIndex(index + 1);
+                                              }}
+                                              onLoadingChest={(value) => {
+                                                // setDisable(value);
+                                              }}
+                                              onChestStatus={(val) => {
+                                                setMessage(val);
+                                              }}
+                                              address={address}
+                                              email={email}
+                                              rewardTypes={
+                                                index + 1 <= 10
+                                                  ? "standard"
+                                                  : "premium"
+                                              }
+                                              chestId={item.chestId}
+                                              chestIndex={index + 1}
+                                              open={item.opened}
+                                              disableBtn={true}
+                                              isActive={isActive}
+                                              openChest={() => {
+                                                console.log("test");
+                                              }}
+                                              dummypremiumChests={
+                                                dummypremiumChests[index - 10]
+                                                  ?.closedImg
+                                              }
+                                            />
+                                          ))
+                                    : chain === "sei"
+                                      ? allSeiChests && allSeiChests.length > 0
+                                        ? allSeiChests.map((item, index) => (
+                                            <NewChestItem
+                                              closeDaily={onclose}
+                                              openKickstarter={openKickstarter}
+                                              coinbase={coinbase}
+                                              claimingChest={claimingChest}
+                                              setClaimingChest={
+                                                setClaimingChest
+                                              }
+                                              buyNftPopup={buyNftPopup}
+                                              chainId={chainId}
+                                              image={seiImages[index]}
+                                              chain={chain}
+                                              key={index}
+                                              item={item}
+                                              username={username}
+                                              // openChest={openChest}
+                                              selectedChest={selectedChest}
+                                              isPremium={isPremium}
+                                              onClaimRewards={(value) => {
+                                                // setRewardData(value);
+                                                setLiveRewardData(value);
+                                                onSeiChestClaimed();
+                                                showLiveRewardData(value);
+                                                setIsActive(item.chestId);
+                                                setIsActiveIndex(index + 1);
+                                              }}
+                                              handleShowRewards={(
+                                                value,
+                                                value2,
+                                              ) => {
+                                                showSingleRewardDataSei(
+                                                  value,
+                                                  value2,
+                                                );
+                                                setIsActive(value);
+                                                setIsActiveIndex(index + 1);
+                                              }}
+                                              onLoadingChest={(value) => {
+                                                // setDisable(value);
+                                              }}
+                                              onChestStatus={(val) => {
+                                                setMessage(val);
+                                              }}
+                                              address={address}
+                                              email={email}
+                                              rewardTypes={item.chestType?.toLowerCase()}
+                                              chestId={item.chestId}
+                                              chestIndex={index + 1}
+                                              open={item.isOpened}
+                                              disableBtn={disable}
+                                              isActive={isActive}
+                                              isActiveIndex={isActiveIndex}
+                                              dummypremiumChests={
+                                                dummypremiumChests[index - 10]
+                                                  ?.closedImg
+                                              }
+                                            />
+                                          ))
+                                        : window
+                                            .range(0, 19)
+                                            .map((item, index) => (
+                                              <NewChestItem
+                                                closeDaily={onclose}
+                                                openKickstarter={
+                                                  openKickstarter
+                                                }
+                                                coinbase={coinbase}
+                                                claimingChest={claimingChest}
+                                                setClaimingChest={
+                                                  setClaimingChest
+                                                }
+                                                buyNftPopup={buyNftPopup}
+                                                chainId={chainId}
+                                                chain={chain}
+                                                key={index}
+                                                item={item}
+                                                username={username}
+                                                image={seiImages[index]}
+                                                // openChest={openChest}
+                                                selectedChest={selectedChest}
+                                                isPremium={isPremium}
+                                                onClaimRewards={(value) => {
+                                                  // setRewardData(value);
+                                                  setLiveRewardData(value);
+                                                  onSeiChestClaimed();
+                                                  showLiveRewardData(value);
+                                                  setIsActive(item.chestId);
+                                                  // setIsActiveIndex(index + 1);
+                                                }}
+                                                handleShowRewards={(
+                                                  value,
+                                                  value2,
+                                                ) => {
+                                                  showSingleRewardDataSei(
+                                                    value,
+                                                    value2,
+                                                  );
+                                                  setIsActive(value);
+                                                  // setIsActiveIndex(index + 1);
+                                                }}
+                                                onLoadingChest={(value) => {
+                                                  // setDisable(value);
+                                                }}
+                                                onChestStatus={(val) => {
+                                                  setMessage(val);
+                                                }}
+                                                address={address}
+                                                email={email}
+                                                rewardTypes={
+                                                  index + 1 <= 10
+                                                    ? "standard"
+                                                    : "premium"
+                                                }
+                                                chestId={item.chestId}
+                                                chestIndex={index + 1}
+                                                open={item.opened}
+                                                disableBtn={true}
+                                                isActive={isActive}
+                                                openChest={() => {
+                                                  console.log("test");
+                                                }}
+                                                dummypremiumChests={
+                                                  dummypremiumChests[index - 10]
+                                                    ?.closedImg
+                                                }
+                                              />
+                                            ))
+                                      : chain === "viction"
+                                        ? allVictionChests &&
+                                          allVictionChests.length > 0
+                                          ? allVictionChests.map(
+                                              (item, index) => (
+                                                <NewChestItem
+                                                  closeDaily={onclose}
+                                                  openKickstarter={
+                                                    openKickstarter
+                                                  }
+                                                  coinbase={coinbase}
+                                                  claimingChest={claimingChest}
+                                                  setClaimingChest={
+                                                    setClaimingChest
+                                                  }
+                                                  buyNftPopup={buyNftPopup}
+                                                  chainId={chainId}
+                                                  chain={chain}
+                                                  image={victionImages[index]}
+                                                  key={index}
+                                                  item={item}
+                                                  username={username}
+                                                  // openChest={openChest}
+                                                  selectedChest={selectedChest}
+                                                  isPremium={isPremium}
+                                                  onClaimRewards={(value) => {
+                                                    // setRewardData(value);
+                                                    setLiveRewardData(value);
+                                                    onVictionChestClaimed();
+                                                    showLiveRewardData(value);
+                                                    setIsActive(item.chestId);
+                                                    setIsActiveIndex(index + 1);
+                                                  }}
+                                                  handleShowRewards={(
+                                                    value,
+                                                    value2,
+                                                  ) => {
+                                                    showSingleRewardDataViction(
+                                                      value,
+                                                      value2,
+                                                    );
+                                                    setIsActive(value);
+                                                    setIsActiveIndex(index + 1);
+                                                  }}
+                                                  onLoadingChest={(value) => {
+                                                    // setDisable(value);
+                                                  }}
+                                                  onChestStatus={(val) => {
+                                                    setMessage(val);
+                                                  }}
+                                                  address={address}
+                                                  email={email}
+                                                  rewardTypes={item.chestType?.toLowerCase()}
+                                                  chestId={item.chestId}
+                                                  chestIndex={index + 1}
+                                                  open={item.isOpened}
+                                                  disableBtn={disable}
+                                                  isActive={isActive}
+                                                  isActiveIndex={isActiveIndex}
+                                                  dummypremiumChests={
+                                                    dummypremiumChests[
+                                                      index - 10
+                                                    ]?.closedImg
+                                                  }
+                                                />
+                                              ),
+                                            )
+                                          : window
+                                              .range(0, 19)
+                                              .map((item, index) => (
+                                                <NewChestItem
+                                                  closeDaily={onclose}
+                                                  openKickstarter={
+                                                    openKickstarter
+                                                  }
+                                                  coinbase={coinbase}
+                                                  claimingChest={claimingChest}
+                                                  setClaimingChest={
+                                                    setClaimingChest
+                                                  }
+                                                  buyNftPopup={buyNftPopup}
+                                                  chainId={chainId}
+                                                  chain={chain}
+                                                  key={index}
+                                                  item={item}
+                                                  username={username}
+                                                  // openChest={openChest}
+                                                  selectedChest={selectedChest}
+                                                  image={victionImages[index]}
+                                                  isPremium={isPremium}
+                                                  onClaimRewards={(value) => {
+                                                    // setRewardData(value);
+                                                    setLiveRewardData(value);
+                                                    onVictionChestClaimed();
+                                                    showLiveRewardData(value);
+                                                    setIsActive(item.chestId);
+                                                    // setIsActiveIndex(index + 1);
+                                                  }}
+                                                  handleShowRewards={(
+                                                    value,
+                                                    value2,
+                                                  ) => {
+                                                    showSingleRewardDataViction(
+                                                      value,
+                                                      value2,
+                                                    );
+                                                    setIsActive(value);
+                                                    // setIsActiveIndex(index + 1);
+                                                  }}
+                                                  onLoadingChest={(value) => {
+                                                    // setDisable(value);
+                                                  }}
+                                                  onChestStatus={(val) => {
+                                                    setMessage(val);
+                                                  }}
+                                                  address={address}
+                                                  email={email}
+                                                  rewardTypes={
+                                                    index + 1 <= 10
+                                                      ? "standard"
+                                                      : "premium"
+                                                  }
+                                                  chestId={item.chestId}
+                                                  chestIndex={index + 1}
+                                                  open={item.opened}
+                                                  disableBtn={true}
+                                                  isActive={isActive}
+                                                  openChest={() => {
+                                                    console.log("test");
+                                                  }}
+                                                  dummypremiumChests={
+                                                    dummypremiumChests[
+                                                      index - 10
+                                                    ]?.closedImg
+                                                  }
+                                                />
+                                              ))
+                                        : chain === "skale" &&
+                                            allSkaleChests &&
+                                            allSkaleChests.length > 0
+                                          ? allSkaleChests.map(
+                                              (item, index) => (
+                                                <NewChestItem
+                                                  closeDaily={onclose}
+                                                  openKickstarter={
+                                                    openKickstarter
+                                                  }
+                                                  coinbase={coinbase}
+                                                  claimingChest={claimingChest}
+                                                  setClaimingChest={
+                                                    setClaimingChest
+                                                  }
+                                                  buyNftPopup={buyNftPopup}
+                                                  chainId={chainId}
+                                                  chain={chain}
+                                                  key={index}
+                                                  item={item}
+                                                  username={username}
+                                                  image={skaleImages[index]}
+                                                  // openChest={openChest}
+                                                  selectedChest={selectedChest}
+                                                  isPremium={isPremium}
+                                                  onClaimRewards={(value) => {
+                                                    setLiveRewardData(value);
+                                                    onSkaleChestClaimed();
+                                                    showLiveRewardDataSkale(
+                                                      value,
+                                                    );
+                                                    setIsActive(item.chestId);
+                                                    setIsActiveIndex(index + 1);
+                                                  }}
+                                                  handleShowRewards={(
+                                                    value,
+                                                    value2,
+                                                  ) => {
+                                                    showSingleRewardDataSkale(
+                                                      value,
+                                                      value2,
+                                                    );
+                                                    setIsActive(value);
+                                                    setIsActiveIndex(index + 1);
+                                                  }}
+                                                  onLoadingChest={(value) => {
+                                                    // setDisable(value);
+                                                  }}
+                                                  onChestStatus={(val) => {
+                                                    setMessage(val);
+                                                  }}
+                                                  address={address}
+                                                  email={email}
+                                                  rewardTypes={item.chestType?.toLowerCase()}
+                                                  chestId={item.chestId}
+                                                  chestIndex={index + 1}
+                                                  open={item.isOpened}
+                                                  disableBtn={disable}
+                                                  isActive={isActive}
+                                                  isActiveIndex={isActiveIndex}
+                                                  dummypremiumChests={
+                                                    dummypremiumChests[
+                                                      index - 10
+                                                    ]?.closedImg
+                                                  }
+                                                />
+                                              ),
+                                            )
+                                          : window
+                                              .range(0, 19)
+                                              .map((item, index) => (
+                                                <NewChestItem
+                                                  closeDaily={onclose}
+                                                  openKickstarter={
+                                                    openKickstarter
+                                                  }
+                                                  coinbase={coinbase}
+                                                  claimingChest={claimingChest}
+                                                  setClaimingChest={
+                                                    setClaimingChest
+                                                  }
+                                                  buyNftPopup={buyNftPopup}
+                                                  chainId={chainId}
+                                                  chain={chain}
+                                                  key={index}
+                                                  item={item}
+                                                  username={username}
+                                                  image={skaleImages[index]}
+                                                  selectedChest={selectedChest}
+                                                  isPremium={isPremium}
+                                                  onClaimRewards={(value) => {
+                                                    // setRewardData(value);
+                                                    setLiveRewardData(value);
+                                                    onSkaleChestClaimed();
+                                                    showLiveRewardData(value);
+                                                    setIsActive(item.chestId);
+                                                    // setIsActiveIndex(index + 1);
+                                                  }}
+                                                  handleShowRewards={(
+                                                    value,
+                                                    value2,
+                                                  ) => {
+                                                    showSingleRewardData(
+                                                      value,
+                                                      value2,
+                                                    );
+                                                    setIsActive(value);
+                                                    // setIsActiveIndex(index + 1);
+                                                  }}
+                                                  onLoadingChest={(value) => {
+                                                    // setDisable(value);
+                                                  }}
+                                                  onChestStatus={(val) => {
+                                                    setMessage(val);
+                                                  }}
+                                                  address={address}
+                                                  email={email}
+                                                  rewardTypes={
+                                                    index + 1 <= 10
+                                                      ? "standard"
+                                                      : "premium"
+                                                  }
+                                                  chestId={item.chestId}
+                                                  chestIndex={index + 1}
+                                                  open={item.opened}
+                                                  disableBtn={true}
+                                                  isActive={isActive}
+                                                  openChest={() => {
+                                                    console.log("test");
+                                                  }}
+                                                  dummypremiumChests={
+                                                    dummypremiumChests[
+                                                      index - 10
+                                                    ]?.closedImg
+                                                  }
+                                                />
+                                              ))}
                       </div>
                     </div>
                     <div className="col-12 px-0 mt-0 mt-lg-3 message-height-wrapper h-auto">
@@ -6379,7 +6555,7 @@ const NewDailyBonus = ({
                                           return obj.rewardType === "Money";
                                         }).reward
                                       : 0,
-                                    2
+                                    2,
                                   )}
                                 </span>{" "}
                                 reward will be allocated to you if you become a
@@ -6396,7 +6572,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -6414,7 +6590,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Rewards</span>
@@ -6470,7 +6646,7 @@ const NewDailyBonus = ({
                                           return obj.rewardType === "Money";
                                         }).reward
                                       : 0,
-                                    2
+                                    2,
                                   )}
                                 </span>{" "}
                                 reward will be allocated to you if you get one
@@ -6487,7 +6663,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -6504,7 +6680,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Rewards</span>
@@ -6561,7 +6737,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
 
@@ -6579,7 +6755,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
 
@@ -6615,7 +6791,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -6652,7 +6828,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -6669,7 +6845,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Stars";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Stars</span>
@@ -6832,7 +7008,7 @@ const NewDailyBonus = ({
                                           return obj.rewardType === "Money";
                                         }).reward
                                       : 0,
-                                    2
+                                    2,
                                   )}
                                 </span>{" "}
                                 reward has not been assigned due to incomplete
@@ -6849,7 +7025,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -6865,7 +7041,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Rewards</span>
@@ -6875,7 +7051,7 @@ const NewDailyBonus = ({
                             {winDangerItems
                               .sort(
                                 (a, b) =>
-                                  Number(b.required) - Number(a.required)
+                                  Number(b.required) - Number(a.required),
                               )
                               .map((item, index) =>
                                 item.required ? (
@@ -6921,7 +7097,7 @@ const NewDailyBonus = ({
                                   </HtmlTooltip>
                                 ) : (
                                   <div className="required-item-placeholder"></div>
-                                )
+                                ),
                               )}
                           </div>
                         </div>
@@ -6954,7 +7130,7 @@ const NewDailyBonus = ({
                                           return obj.rewardType === "Money";
                                         }).reward
                                       : 0,
-                                    2
+                                    2,
                                   )}
                                 </span>{" "}
                                 reward has not been assigned due to incomplete
@@ -6971,7 +7147,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -6987,7 +7163,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Stars";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Stars</span>
@@ -7001,7 +7177,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Rewards</span>
@@ -7027,10 +7203,10 @@ const NewDailyBonus = ({
                                           item.type === "PREMIUM"
                                             ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                                ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -7080,7 +7256,7 @@ const NewDailyBonus = ({
                                                     return (
                                                       obj.rewardType === "Money"
                                                     );
-                                                  }
+                                                  },
                                                 ).details
                                               : ""}
                                           </span>
@@ -7097,10 +7273,10 @@ const NewDailyBonus = ({
                                             item.type === "PREMIUM"
                                               ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                               : item.type === "CAWS"
-                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                              : item.type === "LAND"
-                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                                ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                                : item.type === "LAND"
+                                                  ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                  : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                           }
                                           alt=""
                                           width={70}
@@ -7132,7 +7308,7 @@ const NewDailyBonus = ({
                                       rewardData.rewards.find((obj) => {
                                         return obj.rewardType === "Money";
                                       }).requirements.length
-                                  : 0
+                                  : 0,
                               )
                               .map((item, index) => {
                                 return (
@@ -7173,7 +7349,7 @@ const NewDailyBonus = ({
                                           return obj.rewardType === "Money";
                                         }).reward
                                       : 0,
-                                    2
+                                    2,
                                   )}
                                 </span>{" "}
                                 reward has not been assigned due to incomplete
@@ -7190,7 +7366,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -7207,7 +7383,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Stars";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Stars</span>
@@ -7223,7 +7399,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Rewards</span>
@@ -7249,10 +7425,10 @@ const NewDailyBonus = ({
                                           item.type === "PREMIUM"
                                             ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                                ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -7302,7 +7478,7 @@ const NewDailyBonus = ({
                                                     return (
                                                       obj.rewardType === "Money"
                                                     );
-                                                  }
+                                                  },
                                                 ).details
                                               : ""}
                                           </span>
@@ -7319,10 +7495,10 @@ const NewDailyBonus = ({
                                             item.type === "PREMIUM"
                                               ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                               : item.type === "CAWS"
-                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                              : item.type === "LAND"
-                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                                ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                                : item.type === "LAND"
+                                                  ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                  : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                           }
                                           alt=""
                                           width={70}
@@ -7354,7 +7530,7 @@ const NewDailyBonus = ({
                                       rewardData.rewards.find((obj) => {
                                         return obj.rewardType === "Money";
                                       }).requirements.length
-                                  : 0
+                                  : 0,
                               )
                               .map((item, index) => {
                                 return (
@@ -7395,7 +7571,7 @@ const NewDailyBonus = ({
                                           return obj.rewardType === "Money";
                                         }).reward
                                       : 0,
-                                    2
+                                    2,
                                   )}
                                 </span>{" "}
                                 reward has not been assigned due to incomplete
@@ -7412,7 +7588,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -7429,7 +7605,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Rewards</span>
@@ -7455,10 +7631,10 @@ const NewDailyBonus = ({
                                           item.type === "PREMIUM"
                                             ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                                ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -7508,7 +7684,7 @@ const NewDailyBonus = ({
                                                     return (
                                                       obj.rewardType === "Money"
                                                     );
-                                                  }
+                                                  },
                                                 ).details
                                               : ""}
                                           </span>
@@ -7525,10 +7701,10 @@ const NewDailyBonus = ({
                                             item.type === "PREMIUM"
                                               ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                               : item.type === "CAWS"
-                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                              : item.type === "LAND"
-                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                                ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                                : item.type === "LAND"
+                                                  ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                  : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                           }
                                           alt=""
                                           width={70}
@@ -7560,7 +7736,7 @@ const NewDailyBonus = ({
                                       rewardData.rewards.find((obj) => {
                                         return obj.rewardType === "Money";
                                       }).requirements.length
-                                  : 0
+                                  : 0,
                               )
                               .map((item, index) => {
                                 return (
@@ -7601,7 +7777,7 @@ const NewDailyBonus = ({
                                           return obj.rewardType === "Money";
                                         }).reward
                                       : 0,
-                                    2
+                                    2,
                                   )}
                                 </span>{" "}
                                 reward has not been assigned due to incomplete
@@ -7618,7 +7794,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -7635,7 +7811,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Rewards</span>
@@ -7661,10 +7837,10 @@ const NewDailyBonus = ({
                                           item.type === "PREMIUM"
                                             ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                                ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -7714,7 +7890,7 @@ const NewDailyBonus = ({
                                                     return (
                                                       obj.rewardType === "Money"
                                                     );
-                                                  }
+                                                  },
                                                 ).details
                                               : ""}
                                           </span>
@@ -7731,10 +7907,10 @@ const NewDailyBonus = ({
                                             item.type === "PREMIUM"
                                               ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                               : item.type === "CAWS"
-                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                              : item.type === "LAND"
-                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                                ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                                : item.type === "LAND"
+                                                  ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                  : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                           }
                                           alt=""
                                           width={70}
@@ -7766,7 +7942,7 @@ const NewDailyBonus = ({
                                       rewardData.rewards.find((obj) => {
                                         return obj.rewardType === "Money";
                                       }).requirements.length
-                                  : 0
+                                  : 0,
                               )
                               .map((item, index) => {
                                 return (
@@ -7807,7 +7983,7 @@ const NewDailyBonus = ({
                                           return obj.rewardType === "Money";
                                         }).reward
                                       : 0,
-                                    2
+                                    2,
                                   )}
                                 </span>{" "}
                                 reward has not been assigned due to incomplete
@@ -7824,7 +8000,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -7841,7 +8017,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Rewards</span>
@@ -7867,10 +8043,10 @@ const NewDailyBonus = ({
                                           item.type === "PREMIUM"
                                             ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                            : item.type === "LAND"
-                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                              : item.type === "LAND"
+                                                ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -7920,7 +8096,7 @@ const NewDailyBonus = ({
                                                     return (
                                                       obj.rewardType === "Money"
                                                     );
-                                                  }
+                                                  },
                                                 ).details
                                               : ""}
                                           </span>
@@ -7937,10 +8113,10 @@ const NewDailyBonus = ({
                                             item.type === "PREMIUM"
                                               ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                               : item.type === "CAWS"
-                                              ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
-                                              : item.type === "LAND"
-                                              ? "https://cdn.worldofdypians.com/wod/wodRound.png"
-                                              : "https://cdn.worldofdypians.com/wod/dypius.svg"
+                                                ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
+                                                : item.type === "LAND"
+                                                  ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                                  : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                           }
                                           alt=""
                                           width={70}
@@ -7972,7 +8148,7 @@ const NewDailyBonus = ({
                                       rewardData.rewards.find((obj) => {
                                         return obj.rewardType === "Money";
                                       }).requirements.length
-                                  : 0
+                                  : 0,
                               )
                               .map((item, index) => {
                                 return (
@@ -8016,7 +8192,7 @@ const NewDailyBonus = ({
                                           return obj.rewardType === "Money";
                                         }).reward
                                       : 0,
-                                    2
+                                    2,
                                   )}
                                 </span>{" "}
                                 reward will be allocated to you if you get one
@@ -8033,7 +8209,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Points";
                                       }).reward
                                     : 0,
-                                  0
+                                  0,
                                 )}
                               </h6>
                               <span className="win-amount-desc">
@@ -8050,7 +8226,7 @@ const NewDailyBonus = ({
                                         return obj.rewardType === "Money";
                                       }).reward
                                     : 0,
-                                  2
+                                  2,
                                 )}
                               </h6>
                               <span className="win-amount-desc">Rewards</span>
@@ -8170,18 +8346,18 @@ const NewDailyBonus = ({
                             ? "brightness(1)"
                             : "brightness(0.5)"
                           : (rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return obj.rewardType === item.title;
-                              })) ||
-                            (rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return (
-                                  obj.rewardType !== item.title &&
-                                  message === "needPremium"
-                                );
-                              }))
-                          ? "brightness(1)"
-                          : "brightness(0.5)",
+                                rewardData.rewards?.find((obj) => {
+                                  return obj.rewardType === item.title;
+                                })) ||
+                              (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType !== item.title &&
+                                    message === "needPremium"
+                                  );
+                                }))
+                            ? "brightness(1)"
+                            : "brightness(0.5)",
                       border:
                         item.title2 !== "needPremium"
                           ? (rewardData &&
@@ -8207,18 +8383,18 @@ const NewDailyBonus = ({
                             ? "1px solid #F2C624"
                             : " 1px solid #4D4F77"
                           : (rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return obj.rewardType === item.title;
-                              })) ||
-                            (rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return (
-                                  obj.rewardType !== item.title &&
-                                  message === "needPremium"
-                                );
-                              }))
-                          ? "1px solid #F2C624"
-                          : " 1px solid #4D4F77",
+                                rewardData.rewards?.find((obj) => {
+                                  return obj.rewardType === item.title;
+                                })) ||
+                              (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType !== item.title &&
+                                    message === "needPremium"
+                                  );
+                                }))
+                            ? "1px solid #F2C624"
+                            : " 1px solid #4D4F77",
                     }}
                   >
                     <img
@@ -8250,18 +8426,18 @@ const NewDailyBonus = ({
                               ? "1px solid #F2C624"
                               : " 1px solid #4D4F77"
                             : (rewardData &&
-                                rewardData.rewards?.find((obj) => {
-                                  return obj.rewardType === item.title;
-                                })) ||
-                              (rewardData &&
-                                rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType !== item.title &&
-                                    message === "needPremium"
-                                  );
-                                }))
-                            ? "1px solid #F2C624"
-                            : " 1px solid #4D4F77",
+                                  rewardData.rewards?.find((obj) => {
+                                    return obj.rewardType === item.title;
+                                  })) ||
+                                (rewardData &&
+                                  rewardData.rewards?.find((obj) => {
+                                    return (
+                                      obj.rewardType !== item.title &&
+                                      message === "needPremium"
+                                    );
+                                  }))
+                              ? "1px solid #F2C624"
+                              : " 1px solid #4D4F77",
                       }}
                       width={30}
                       height={30}
@@ -8361,32 +8537,32 @@ const NewDailyBonus = ({
                             })
                               ? "#F2C624"
                               : rewardData &&
-                                rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType === "Stars" &&
-                                    obj.rewardType === item.title
-                                  );
-                                })
-                              ? "#F2C624"
-                              : item.title2 !== "needPremium"
-                              ? rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType === item.title &&
-                                    (obj.status !== "Unclaimed" ||
-                                      obj.status !== "Unclaimable")
-                                  );
-                                }) && message !== "needPremium"
+                                  rewardData.rewards?.find((obj) => {
+                                    return (
+                                      obj.rewardType === "Stars" &&
+                                      obj.rewardType === item.title
+                                    );
+                                  })
                                 ? "#F2C624"
-                                : "#fff"
-                              : rewardData.rewards?.find((obj) => {
-                                  return (
-                                    obj.rewardType === item.title &&
-                                    (obj.status !== "Unclaimed" ||
-                                      obj.status !== "Unclaimable")
-                                  );
-                                }) && message === "needPremium"
-                              ? "#F2C624"
-                              : "#fff",
+                                : item.title2 !== "needPremium"
+                                  ? rewardData.rewards?.find((obj) => {
+                                      return (
+                                        obj.rewardType === item.title &&
+                                        (obj.status !== "Unclaimed" ||
+                                          obj.status !== "Unclaimable")
+                                      );
+                                    }) && message !== "needPremium"
+                                    ? "#F2C624"
+                                    : "#fff"
+                                  : rewardData.rewards?.find((obj) => {
+                                        return (
+                                          obj.rewardType === item.title &&
+                                          (obj.status !== "Unclaimed" ||
+                                            obj.status !== "Unclaimable")
+                                        );
+                                      }) && message === "needPremium"
+                                    ? "#F2C624"
+                                    : "#fff",
                         }}
                       >
                         {item.amount}
@@ -8680,41 +8856,44 @@ const NewDailyBonus = ({
               chain === "bnb"
                 ? showSingleRewardData(rewardData.chestId, isActiveIndex - 1)
                 : chain === "core"
-                ? showSingleRewardDataCore(
-                    rewardData.chestId,
-                    isActiveIndex - 1
-                  )
-                : chain === "manta"
-                ? showSingleRewardDataManta(
-                    rewardData.chestId,
-                    isActiveIndex - 1
-                  )
-                : chain === "taiko"
-                ? showSingleRewardDataTaiko(
-                    rewardData.chestId,
-                    isActiveIndex - 1
-                  )
-                : chain === "vanar"
-                ? showSingleRewardDataVanar(
-                    rewardData.chestId,
-                    isActiveIndex - 1
-                  )
-                : chain === "viction"
-                ? showSingleRewardDataViction(
-                    rewardData.chestId,
-                    isActiveIndex - 1
-                  )
-                : chain === "base"
-                ? showSingleRewardDataBase(
-                    rewardData.chestId,
-                    isActiveIndex - 1
-                  )
-                : chain === "sei"
-                ? showSingleRewardDataSei(rewardData.chestId, isActiveIndex - 1)
-                : showSingleRewardDataSkale(
-                    rewardData.chestId,
-                    isActiveIndex - 1
-                  );
+                  ? showSingleRewardDataCore(
+                      rewardData.chestId,
+                      isActiveIndex - 1,
+                    )
+                  : chain === "manta"
+                    ? showSingleRewardDataManta(
+                        rewardData.chestId,
+                        isActiveIndex - 1,
+                      )
+                    : chain === "taiko"
+                      ? showSingleRewardDataTaiko(
+                          rewardData.chestId,
+                          isActiveIndex - 1,
+                        )
+                      : chain === "vanar"
+                        ? showSingleRewardDataVanar(
+                            rewardData.chestId,
+                            isActiveIndex - 1,
+                          )
+                        : chain === "viction"
+                          ? showSingleRewardDataViction(
+                              rewardData.chestId,
+                              isActiveIndex - 1,
+                            )
+                          : chain === "base"
+                            ? showSingleRewardDataBase(
+                                rewardData.chestId,
+                                isActiveIndex - 1,
+                              )
+                            : chain === "sei"
+                              ? showSingleRewardDataSei(
+                                  rewardData.chestId,
+                                  isActiveIndex - 1,
+                                )
+                              : showSingleRewardDataSkale(
+                                  rewardData.chestId,
+                                  isActiveIndex - 1,
+                                );
             }, 2000);
             return () => clearTimeout(timer);
           }}
