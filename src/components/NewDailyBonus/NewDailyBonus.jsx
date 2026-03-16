@@ -5063,8 +5063,25 @@ const NewDailyBonus = ({
                       <div className="new-chests-grid">
                         {chain === "bnb"
                           ? allChests && allChests.length > 0
-                            ? allChests.map((item, index) => (
-                                <NewChestItem
+                            ? (() => {
+                                const standardChests =
+                                  allChests?.filter(
+                                    (c) =>
+                                      c.chestType?.toLowerCase() === "standard"
+                                  ) || [];
+                                const remainingStandardChests =
+                                  standardChests.filter(
+                                    (c) => c.chestId !== 99
+                                  );
+                                const specialStandardChestIds =
+                                  remainingStandardChests
+                                    .filter((_, idx) =>
+                                      [1, 4, 6].includes(idx)
+                                    )
+                                    .map((c) => c.chestId);
+
+                                return allChests.map((item, index) => (
+                                  <NewChestItem
                                   closeDaily={onclose}
                                   openKickstarter={openKickstarter}
                                   coinbase={coinbase}
@@ -5103,6 +5120,15 @@ const NewDailyBonus = ({
                                   email={email}
                                   rewardTypes={item.chestType?.toLowerCase()}
                                   chestId={item.chestId}
+                                  isBnbStandardSpecial={
+                                    chain === "bnb" &&
+                                    item.chestType?.toLowerCase() ===
+                                      "standard" &&
+                                    item.chestId !== 99 &&
+                                    specialStandardChestIds.includes(
+                                      item.chestId
+                                    )
+                                  }
                                   chestIndex={index + 1}
                                   open={item.isOpened}
                                   disableBtn={disable}
@@ -5112,7 +5138,8 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                 />
-                              ))
+                                ));
+                              })()
                             : window.range(0, 19).map((item, index) => (
                                 <NewChestItem
                                   closeDaily={onclose}

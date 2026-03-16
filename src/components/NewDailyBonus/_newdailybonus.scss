@@ -434,6 +434,49 @@
   cursor: pointer;
   transition: all 0.25s;
 }
+
+.new-chest-item-bnb-special {
+  position: relative;
+  border-radius: 20px;
+  border: 2px solid #e9e27e;
+  background: linear-gradient(135deg,
+      #483c22 0%,
+      #67612c 34.54%,
+      #67572c 66.84%,
+      #403d1d 100%);
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.25s;
+
+    .new-claim-chest-btn {
+    border: 1px solid #e9e27e;
+    background: linear-gradient(92deg,
+        #cdb900 0%,
+        #d6a400 33.5%,
+        #d6b600 68%,
+        #cdb900 100%);
+    color: #022722;
+  }
+  
+} 
+
+.new-chest-item-bnb-special:hover {
+  border: 2px solid #e9e27e !important;
+  filter: drop-shadow(0 0 6px #cda700) !important;
+
+  .new-claim-chest-btn {
+    color: #552400 !important;
+    border: 2px solid #ae5604 !important;
+    background: linear-gradient(92deg,
+        #cd8c00 0%,
+        #d67900 33.5%,
+        #d67900 68%,
+        #cd8c00 100%) !important;
+  }
+}
+
+
 .premium-chest-item {
   position: relative;
   border-radius: 20px;
@@ -642,6 +685,27 @@
         #bb3104 100%) !important;
   }
 }
+
+.new-chest-item-open-bnb-special {
+  background-image: url("https://cdn.worldofdypians.com/wod/chestShine.png") !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 2px solid #826400 !important;
+   background-position: center;
+  background-blend-mode: luminosity;
+  background-color: #826f00;
+
+  .new-claim-chest-btn {
+    color: #552400 !important;
+    border: 2px solid #826f00 !important;
+    background: linear-gradient(92deg,
+        #bb6604 0%,
+        #ffb503 33.5%,
+        #ffb503 68%,
+        #bb5c04 100%) !important;
+  }
+}
+
 .new-chest-item-open-premium {
   background-image: url("https://cdn.worldofdypians.com/wod/chestShine.png") !important;
   background-repeat: no-repeat;
