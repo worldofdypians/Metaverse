@@ -3,6 +3,8 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink } from "react-router-dom";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import './_myprofile.scss'
+
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -122,6 +124,49 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
             )}
           </div>
         </div>
+        {dummyEvent.title === "CMC" && (
+          <a 
+          href="https://coinmarketcap.com/account/rewards/"
+          target="_blank"
+          rel="noreferrer"
+          className="cmc-diamond-event mb-2 d-flex w-100 align-items-center justify-content-between">
+            <div className="d-flex flex-column gap-2 p-2">
+              <img
+                src={"https://cdn.worldofdypians.com/wod/cmcLarge.svg"}
+                className="cmc-diamond-logo"
+                alt=""
+              />
+              <span className="diamond-event-title">
+                10,000 CMC Beta Pass NFTs
+              </span>
+           
+            </div>
+              <div className="d-flex align-items-center gap-2">
+                
+               <button className="cmc-diamond-btn px-2 py-1 d-flex align-items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 23 23"
+                  fill="none"
+                >
+                  <path
+                    d="M22.9919 11.5V11.4786V11.4573C22.9702 5.14909 17.8 0 11.496 0C5.15935 0 0 5.14909 0 11.5C0 17.8295 5.15935 23 11.496 23C14.4201 23 17.1707 21.9104 19.3082 19.918C19.7368 19.5174 19.7639 18.8658 19.3462 18.4491C18.961 18.0272 18.2991 18.0005 17.876 18.3797C17.876 18.3797 17.876 18.3797 17.8543 18.4011C16.1399 20.0035 13.8234 20.9222 11.4471 20.9222C8.66401 20.9222 6.17385 19.7204 4.44865 17.8028L9.36386 10.0525V13.6419C9.36386 15.3618 10.042 15.912 10.6117 16.0722C11.1813 16.2325 12.033 16.1096 12.9662 14.6728L15.6571 10.373C15.7493 10.2448 15.8198 10.1006 15.9121 10.0151V12.1944C15.9121 13.7915 16.5739 15.0948 17.7024 15.7144C18.7169 16.2966 20.0081 16.2218 21.0714 15.5862C22.3843 14.7315 23.0841 13.2573 22.9919 11.5ZM20.0081 13.7487C19.6012 13.9998 19.1238 14.0372 18.7603 13.8395C18.3046 13.5671 18.0387 12.9689 18.0387 12.1516V9.63052C18.0387 8.42871 17.5613 7.55806 16.7475 7.32838C15.3641 6.92778 14.3225 8.59963 13.9319 9.22991L11.496 13.0811V8.33256C11.4634 7.24292 11.1108 6.60195 10.4326 6.40432C9.97691 6.27613 9.30418 6.33488 8.64231 7.31236L3.19001 15.9066C2.45761 14.5446 2.08327 13.0383 2.08327 11.4947C2.08327 6.30818 6.32033 2.08848 11.496 2.08848C16.677 2.08848 20.9086 6.30818 20.9086 11.4947V11.516V11.5374C20.952 12.5523 20.6374 13.3481 20.0081 13.7487Z"
+                    fill="#3861FB"
+                  />
+                </svg>
+                Get now
+              </button>
+            <img
+              src={"https://cdn.worldofdypians.com/wod/diamondHand.svg"}
+              className="cmc-diamond-hand d-none d-lg-flex"
+              alt=""
+             
+            />
+              </div>
+          </a>
+        )}
         <div className="d-flex align-items-center justify-content-between mb-3">
           <h6 className="how-it-works mb-0">How it works?</h6>
           {dummyEvent.popupInfo.status === "Live" &&

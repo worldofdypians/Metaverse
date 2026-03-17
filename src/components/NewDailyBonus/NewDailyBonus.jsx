@@ -5069,16 +5069,28 @@ const NewDailyBonus = ({
                                     (c) =>
                                       c.chestType?.toLowerCase() === "standard"
                                   ) || [];
+
                                 const remainingStandardChests =
                                   standardChests.filter(
                                     (c) => c.chestId !== 99
                                   );
-                                const specialStandardChestIds =
-                                  remainingStandardChests
+
+                                const uniqueRemainingStandardChests = [];
+                                const seenStandardChestIds = new Set();
+                                remainingStandardChests.forEach((c) => {
+                                  if (!seenStandardChestIds.has(c.chestId)) {
+                                    seenStandardChestIds.add(c.chestId);
+                                    uniqueRemainingStandardChests.push(c);
+                                  }
+                                });
+
+                                const specialStandardChestIds = new Set(
+                                  uniqueRemainingStandardChests
                                     .filter((_, idx) =>
                                       [1, 4, 6].includes(idx)
                                     )
-                                    .map((c) => c.chestId);
+                                    .map((c) => c.chestId)
+                                );
 
                                 return allChests.map((item, index) => (
                                   <NewChestItem
@@ -5125,9 +5137,7 @@ const NewDailyBonus = ({
                                     item.chestType?.toLowerCase() ===
                                       "standard" &&
                                     item.chestId !== 99 &&
-                                    specialStandardChestIds.includes(
-                                      item.chestId
-                                    )
+                                    specialStandardChestIds.has(item.chestId)
                                   }
                                   chestIndex={index + 1}
                                   open={item.isOpened}

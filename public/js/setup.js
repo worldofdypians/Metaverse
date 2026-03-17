@@ -365,18 +365,18 @@ window.config = {
       symbol: "USDT",
       decimals: 6,
     },
-    // "0xb73603C5d87fA094B7314C74ACE2e64D165016fb": {
-    //   symbol: "USDC",
-    //   decimals: 6,
-    // },
-    // "0x0Dc808adcE2099A9F62AA87D9670745AbA741746": {
-    //   symbol: "WETH",
-    //   decimals: 18,
-    // },
-    // "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5": {
-    //   symbol: "MANTA",
-    //   decimals: 18,
-    // },
+    "0xb73603C5d87fA094B7314C74ACE2e64D165016fb": {
+      symbol: "USDC",
+      decimals: 6,
+    },
+    "0x0Dc808adcE2099A9F62AA87D9670745AbA741746": {
+      symbol: "WETH",
+      decimals: 18,
+    },
+    "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5": {
+      symbol: "MANTA",
+      decimals: 18,
+    },
   },
 
   subscriptiontaiko_tokens: {

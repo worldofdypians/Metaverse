@@ -1418,3 +1418,42 @@
   font-weight: 600;
   line-height: normal;
 }
+
+.cmc-diamond-event{
+border-radius: 12px;
+background: #3861FB;
+}
+
+.diamond-event-title{
+color: #FFF;
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.cmc-diamond-btn{
+border-radius: 8px;
+background: #FFF;
+color: #3861FB;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+width: fit-content;
+position: relative;
+left: 30px;
+@media screen and (max-width: 786px) {
+  left: -10px;
+}
+
+}
+
+.cmc-diamond-logo{
+  width: 100px;
+}
+
+.cmc-diamond-hand{
+  position: relative;
+  right: -2px;
+}
