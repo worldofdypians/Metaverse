@@ -1828,11 +1828,15 @@ const GetPremiumPopup = ({
                       </h6>
                     )}
                   </div>
-                  <img
-                    src={"https://cdn.worldofdypians.com/wod/mantaBackers.svg"}
-                    alt=""
-                    className="manta-premium-badge"
-                  />
+                  {discountPercentageManta > 0 && isConnected && (
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/mantaBackers.svg"
+                      }
+                      alt=""
+                      className="manta-premium-badge"
+                    />
+                  )}
                 </div>
                 <img
                   src={"https://cdn.worldofdypians.com/wod/premiumIcon.webp"}
@@ -2596,7 +2600,7 @@ const GetPremiumPopup = ({
                             !coinbase ||
                             isApproved ||
                             !isEOA ||
-                            chainId !== 169
+                            chainId !== 56
                           }
                           onClick={(e) => handleApprove(e)}
                         >
@@ -2638,8 +2642,8 @@ const GetPremiumPopup = ({
                               ? "stake-wod-btn-inactive px-4 d-none"
                               : "explore-btn px-3 py-2"
                           }`}
-                          disabled={chainId !== 169}
-                          onClick={() => chainId === 169 && handleSubscribe()}
+                          disabled={chainId !== 56}
+                          onClick={() => chainId === 56 && handleSubscribe()}
                         >
                           {loadspinnerSub === false &&
                           (approveStatus === "initial" ||
