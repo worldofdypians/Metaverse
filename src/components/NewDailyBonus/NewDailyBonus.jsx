@@ -5067,12 +5067,12 @@ const NewDailyBonus = ({
                                 const standardChests =
                                   allChests?.filter(
                                     (c) =>
-                                      c.chestType?.toLowerCase() === "standard"
+                                      c.chestType?.toLowerCase() === "standard",
                                   ) || [];
 
                                 const remainingStandardChests =
                                   standardChests.filter(
-                                    (c) => c.chestId !== 99
+                                    (c) => c.chestId !== 99,
                                   );
 
                                 const uniqueRemainingStandardChests = [];
@@ -5086,68 +5086,92 @@ const NewDailyBonus = ({
 
                                 const specialStandardChestIds = new Set(
                                   uniqueRemainingStandardChests
-                                    .filter((_, idx) =>
-                                      [1, 4, 6].includes(idx)
-                                    )
-                                    .map((c) => c.chestId)
+                                    .filter((_, idx) => [4, 6].includes(idx))
+                                    .map((c) => c.chestId),
                                 );
+
+                                const firstSpecialStandardIndexByChestId =
+                                  new Map();
+                                allChests.forEach((c, idx) => {
+                                  const isStandard =
+                                    c.chestType?.toLowerCase() === "standard";
+                                  if (
+                                    isStandard &&
+                                    c.chestId !== 99 &&
+                                    specialStandardChestIds.has(c.chestId) &&
+                                    !firstSpecialStandardIndexByChestId.has(
+                                      c.chestId,
+                                    )
+                                  ) {
+                                    firstSpecialStandardIndexByChestId.set(
+                                      c.chestId,
+                                      idx,
+                                    );
+                                  }
+                                });
 
                                 return allChests.map((item, index) => (
                                   <NewChestItem
-                                  closeDaily={onclose}
-                                  openKickstarter={openKickstarter}
-                                  coinbase={coinbase}
-                                  claimingChest={claimingChest}
-                                  setClaimingChest={setClaimingChest}
-                                  buyNftPopup={buyNftPopup}
-                                  chainId={chainId}
-                                  chain={chain}
-                                  key={index}
-                                  username={username}
-                                  item={item}
-                                  image={bnbImages[index]}
-                                  // openChest={openChest}
-                                  selectedChest={selectedChest}
-                                  isPremium={isPremium}
-                                  onClaimRewards={(value) => {
-                                    // setRewardData(value);
-                                    setLiveRewardData(value);
-                                    onChestClaimed();
-                                    showLiveRewardData(value);
-                                    setIsActive(item.chestId);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  handleShowRewards={(value, value2) => {
-                                    showSingleRewardData(value, value2);
-                                    setIsActive(value);
-                                    setIsActiveIndex(index + 1);
-                                  }}
-                                  onLoadingChest={(value) => {
-                                    // setDisable(value);
-                                  }}
-                                  onChestStatus={(val) => {
-                                    setMessage(val);
-                                  }}
-                                  address={address}
-                                  email={email}
-                                  rewardTypes={item.chestType?.toLowerCase()}
-                                  chestId={item.chestId}
-                                  isBnbStandardSpecial={
-                                    chain === "bnb" &&
-                                    item.chestType?.toLowerCase() ===
-                                      "standard" &&
-                                    item.chestId !== 99 &&
-                                    specialStandardChestIds.has(item.chestId)
-                                  }
-                                  chestIndex={index + 1}
-                                  open={item.isOpened}
-                                  disableBtn={disable}
-                                  isActive={isActive}
-                                  isActiveIndex={isActiveIndex}
-                                  dummypremiumChests={
-                                    dummypremiumChests[index - 10]?.closedImg
-                                  }
-                                />
+                                    closeDaily={onclose}
+                                    openKickstarter={openKickstarter}
+                                    coinbase={coinbase}
+                                    claimingChest={claimingChest}
+                                    setClaimingChest={setClaimingChest}
+                                    buyNftPopup={buyNftPopup}
+                                    chainId={chainId}
+                                    chain={chain}
+                                    key={index}
+                                    username={username}
+                                    item={item}
+                                    image={bnbImages[index]}
+                                    // openChest={openChest}
+                                    selectedChest={selectedChest}
+                                    isPremium={isPremium}
+                                    onClaimRewards={(value) => {
+                                      // setRewardData(value);
+                                      setLiveRewardData(value);
+                                      onChestClaimed();
+                                      showLiveRewardData(value);
+                                      setIsActive(item.chestId);
+                                      setIsActiveIndex(index + 1);
+                                    }}
+                                    handleShowRewards={(value, value2) => {
+                                      showSingleRewardData(value, value2);
+                                      setIsActive(value);
+                                      setIsActiveIndex(index + 1);
+                                    }}
+                                    onLoadingChest={(value) => {
+                                      // setDisable(value);
+                                    }}
+                                    onChestStatus={(val) => {
+                                      setMessage(val);
+                                    }}
+                                    address={address}
+                                    email={email}
+                                    rewardTypes={item.chestType?.toLowerCase()}
+                                    chestId={item.chestId}
+                                    isBnbStandardSpecial={
+                                      chain === "bnb" &&
+                                      item.chestType?.toLowerCase() ===
+                                        "standard" &&
+                                      item.chestId !== 99 &&
+                                      specialStandardChestIds.has(
+                                        item.chestId,
+                                      ) &&
+                                      index ===
+                                        firstSpecialStandardIndexByChestId.get(
+                                          item.chestId,
+                                        )
+                                    }
+                                    chestIndex={index + 1}
+                                    open={item.isOpened}
+                                    disableBtn={disable}
+                                    isActive={isActive}
+                                    isActiveIndex={isActiveIndex}
+                                    dummypremiumChests={
+                                      dummypremiumChests[index - 10]?.closedImg
+                                    }
+                                  />
                                 ));
                               })()
                             : window.range(0, 19).map((item, index) => (
