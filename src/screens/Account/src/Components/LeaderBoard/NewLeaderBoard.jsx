@@ -792,7 +792,7 @@ const NewLeaderBoard = ({
                           className="mb-0 text-center"
                           style={{ fontSize: 14 }}
                         >
-                          The points and stars will be live soon{" "}
+                          The points will be live soon{" "}
                         </h6>
                       </div>
                     ) : (
