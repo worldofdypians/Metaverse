@@ -4767,10 +4767,10 @@ function Dashboard({
         type: "stars",
         rewards: vanarStars,
         previous_rewards: vanarStars,
-        activeData: dailyRecordsVanar,
+        activeData: [],
         previousData: prevDataVanar,
-        player_data: userDataVanar,
-        is_active: activePlayerVanar,
+        player_data: {},
+        is_active: true,
         loading: loadingVanar,
       },
     ]);
@@ -4813,10 +4813,10 @@ function Dashboard({
         type: "stars",
         rewards: taikoStars,
         previous_rewards: taikoStars,
-        activeData: dailyRecordsCore,
+        activeData: [],
         previousData: prevDataCore,
-        player_data: userDataCore,
-        is_active: activePlayerCore,
+        player_data: {},
+        is_active: true,
         loading: loadingCore,
       },
     ]);
@@ -4882,10 +4882,10 @@ function Dashboard({
         type: "stars",
         rewards: taikoStars,
         previous_rewards: taikoStars,
-        activeData: dailyRecordsSei,
+        activeData: [],
         previousData: prevDataSei,
-        player_data: userDataSei,
-        is_active: activePlayerSei,
+        player_data: {},
+        is_active: true,
         loading: loadingSei,
       },
     ]);
@@ -5016,7 +5016,7 @@ function Dashboard({
       // }
     } else if (chain === "vanar") {
       // if (dailyRecordsVanar.length === 0) {
-      fetchDailyRecordsVanar();
+      // fetchDailyRecordsVanar();
       // }
     }
     // else if (chain === "matchain") {
@@ -5026,7 +5026,7 @@ function Dashboard({
     // }
     else if (chain === "sei") {
       // if (dailyRecordsSei.length === 0) {
-      fetchDailyRecordsSei();
+      // fetchDailyRecordsSei();
       // }
     }
     // else if (chain === "taraxa") {
@@ -5044,7 +5044,7 @@ function Dashboard({
       // }
     } else if (chain === "core") {
       // if (dailyRecordsCore.length === 0) {
-      fetchDailyRecordsCore();
+      // fetchDailyRecordsCore();
       // }
     } else if (chain === "viction") {
       // if (dailyRecordsViction.length === 0) {
