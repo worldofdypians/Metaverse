@@ -553,8 +553,10 @@ const GetPremiumPopup = ({
     ] = await Promise.all([
       readContract(wagmiClient, {
         ...bnbSubscription,
-        functionName: "nftDiscounts",
-        args: [nftBnb.address],
+        // functionName: "nftDiscounts",
+        // args: [nftBnb.address],
+        functionName: "discountPercentageGlobal",
+        args: [],
       }).catch(() => undefined),
       readContract(wagmiClient, {
         ...victionSubscription,
@@ -624,12 +626,11 @@ const GetPremiumPopup = ({
         functionName: "tokenOfOwnerByIndex",
         args: [wallet, 0],
       }).catch(() => 0);
-
+    if (discount) setdiscountPercentage(parseInt(discount));
     if (result && parseInt(result) > 0) {
       const tokenId = await getFirstTokenId(nftBnb);
       if (nftObject) {
         setnftDiscountObject(nftObject);
-        if (discount) setdiscountPercentage(parseInt(discount));
       }
       setnftPremium_tokenId(tokenId);
       setnftPremium_total(parseInt(result));
@@ -1786,6 +1787,11 @@ const GetPremiumPopup = ({
                         On Manta, limited-time 70% discount (3 days)
                       </span>
                     )}
+                    {discountPercentage > 0 && isConnected && (
+                      <span className="subscription-chain mb-0">
+                        Valid until March 30, 2026
+                      </span>
+                    )}
                     {(nftPremium_total > 0 ||
                       nftPremium_totalViction > 0 ||
                       nftPremium_totalVanar > 0 ||
@@ -1833,6 +1839,13 @@ const GetPremiumPopup = ({
                       src={
                         "https://cdn.worldofdypians.com/wod/mantaBackers.svg"
                       }
+                      alt=""
+                      className="manta-premium-badge"
+                    />
+                  )}
+                  {discountPercentage > 0 && isConnected && (
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/bnbBackers.svg"}
                       alt=""
                       className="manta-premium-badge"
                     />
