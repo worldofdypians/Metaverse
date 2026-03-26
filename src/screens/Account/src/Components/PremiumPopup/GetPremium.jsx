@@ -542,6 +542,7 @@ const GetPremiumPopup = ({
     ]);
 
     const [
+      bnbDiscount,
       nftObject,
       nftObject_viction,
       nftObject_vanar,
@@ -557,6 +558,11 @@ const GetPremiumPopup = ({
         // args: [nftBnb.address],
         functionName: "discountPercentageGlobal",
         args: [],
+      }).catch(() => undefined),
+      readContract(wagmiClient, {
+        ...bnbSubscription,
+        functionName: "nftDiscounts",
+        args: [nftBnb.address],
       }).catch(() => undefined),
       readContract(wagmiClient, {
         ...victionSubscription,
@@ -611,6 +617,7 @@ const GetPremiumPopup = ({
       return 0;
     };
 
+    const discount_bnb = extractDiscount(bnbDiscount);
     const discount = extractDiscount(nftObject);
     const discount_viction = extractDiscount(nftObject_viction);
     const discount_vanar = extractDiscount(nftObject_vanar);
@@ -626,14 +633,17 @@ const GetPremiumPopup = ({
         functionName: "tokenOfOwnerByIndex",
         args: [wallet, 0],
       }).catch(() => 0);
-    if (discount) setdiscountPercentage(parseInt(discount));
+
     if (result && parseInt(result) > 0) {
       const tokenId = await getFirstTokenId(nftBnb);
       if (nftObject) {
         setnftDiscountObject(nftObject);
       }
+      if (discount) setdiscountPercentage(parseInt(discount));
       setnftPremium_tokenId(tokenId);
       setnftPremium_total(parseInt(result));
+    } else if (discount_bnb) {
+      setdiscountPercentage(parseInt(discount_bnb));
     } else if (result_viction && parseInt(result_viction) > 0) {
       const tokenId = await getFirstTokenId(nftViction);
       if (nftObject_viction) {
@@ -1723,33 +1733,33 @@ const GetPremiumPopup = ({
                         <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
                           Valid until:{" "}
                           {new Date(
-                            nftPremium_total > 0
-                              ? nftDiscountObject.expiration * 1000
+                            Number(nftPremium_total) > 0
+                              ? Number(nftDiscountObject[2]) * 1000
                               : nftPremium_totalTaiko > 0
-                                ? nftDiscountObjectTaiko.expiration * 1000
+                                ? Number(nftDiscountObjectTaiko[2]) * 1000
                                 : // : nftPremium_totalMat > 0
                                   // ? nftDiscountObjectMat.expiration * 1000
                                   nftPremium_totalVanar > 0
-                                  ? nftDiscountObjectVanar.expiration * 1000
+                                  ? Number(nftDiscountObjectVanar[2]) * 1000
                                   : // : nftPremium_totalTaraxa > 0
                                     // ? nftDiscountObjectTaraxa.expiration * 1000
-                                    nftDiscountObjectViction.expiration * 1000,
+                                    Number(nftDiscountObjectViction[2]) * 1000,
                           )
                             .toDateString()
                             .slice(
                               3,
                               new Date(
                                 nftPremium_total > 0
-                                  ? nftDiscountObject.expiration * 1000
+                                  ? Number(nftDiscountObject[2]) * 1000
                                   : nftPremium_totalTaiko > 0
-                                    ? nftDiscountObjectTaiko.expiration * 1000
+                                    ? Number(nftDiscountObjectTaiko[2]) * 1000
                                     : // : nftPremium_totalMat > 0
                                       // ? nftDiscountObjectMat.expiration * 1000
                                       nftPremium_totalVanar > 0
-                                      ? nftDiscountObjectVanar.expiration * 1000
+                                      ? Number(nftDiscountObjectVanar[2]) * 1000
                                       : // : nftPremium_totalTaraxa > 0
                                         // ? nftDiscountObjectTaraxa.expiration * 1000
-                                        nftDiscountObjectViction.expiration *
+                                        Number(nftDiscountObjectViction[2]) *
                                         1000,
                               ).toDateString().length,
                             )}
@@ -1787,11 +1797,13 @@ const GetPremiumPopup = ({
                         On Manta, limited-time 70% discount (3 days)
                       </span>
                     )}
-                    {discountPercentage > 0 && isConnected && (
-                      <span className="subscription-chain mb-0">
-                        Valid until March 30, 2026
-                      </span>
-                    )}
+                    {discountPercentage > 0 &&
+                      isConnected &&
+                      nftPremium_total === 0 && (
+                        <span className="subscription-chain mb-0">
+                          Valid until March 30, 2026
+                        </span>
+                      )}
                     {(nftPremium_total > 0 ||
                       nftPremium_totalViction > 0 ||
                       nftPremium_totalVanar > 0 ||
@@ -1802,32 +1814,32 @@ const GetPremiumPopup = ({
                         Valid until:{" "}
                         {new Date(
                           nftPremium_total > 0
-                            ? nftDiscountObject.expiration * 1000
+                            ? Number(nftDiscountObject[2]) * 1000
                             : nftPremium_totalTaiko > 0
-                              ? nftDiscountObjectTaiko.expiration * 1000
+                              ? Number(nftDiscountObjectTaiko[2]) * 1000
                               : // : nftPremium_totalMat > 0
                                 // ? nftDiscountObjectMat.expiration * 1000
                                 nftPremium_totalVanar > 0
-                                ? nftDiscountObjectVanar.expiration * 1000
+                                ? Number(nftDiscountObjectVanar[2]) * 1000
                                 : // : nftPremium_totalTaraxa > 0
                                   // ? nftDiscountObjectTaraxa.expiration * 1000
-                                  nftDiscountObjectViction.expiration * 1000,
+                                  Number(nftDiscountObjectViction[2]) * 1000,
                         )
                           .toDateString()
                           .slice(
                             3,
                             new Date(
                               nftPremium_total > 0
-                                ? nftDiscountObject.expiration * 1000
+                                ? Number(nftDiscountObject[2]) * 1000
                                 : nftPremium_totalTaiko > 0
-                                  ? nftDiscountObjectTaiko.expiration * 1000
+                                  ? Number(nftDiscountObjectTaiko[2]) * 1000
                                   : // : nftPremium_totalMat > 0
                                     // ? nftDiscountObjectMat.expiration * 1000
                                     nftPremium_totalVanar > 0
-                                    ? nftDiscountObjectVanar.expiration * 1000
+                                    ? Number(nftDiscountObjectVanar[2]) * 1000
                                     : // : nftPremium_totalTaraxa > 0
                                       // ? nftDiscountObjectTaraxa.expiration * 1000
-                                      nftDiscountObjectViction.expiration *
+                                      Number(nftDiscountObjectViction[2]) *
                                       1000,
                             ).toDateString().length,
                           )}
