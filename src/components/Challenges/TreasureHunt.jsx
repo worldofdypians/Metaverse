@@ -56,7 +56,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
             key={index}
             onClick={() => onEventClick(item)}
           >
-            {item.title === "CMC" && (
+            {/* {item.title === "CMC" && (
               <div className="cmc-diamond-tag position-absolute d-flex align-items-center justify-content-center gap-1">
               <div className="w-100 h-100 position-relative">
                   <div className="d-flex align-items center justify-content-between gap-2">
@@ -74,7 +74,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
 
                 </div>
   
-            )}
+            )} */}
             <div className="ps-lg-2 d-flex align-items-center gap-3">
               <img src={item.logo} height={36} width={36} alt="" />
               <div className="d-flex flex-column gap-2 position-relative">

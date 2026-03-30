@@ -124,7 +124,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
             )}
           </div>
         </div>
-        {dummyEvent.title === "CMC" && (
+        {/* {dummyEvent.title === "CMC" && (
           <a 
           href="https://coinmarketcap.com/account/rewards/"
           target="_blank"
@@ -166,7 +166,7 @@ const EventsPopup = ({ onClose, dummyEvent }) => {
             />
               </div>
           </a>
-        )}
+        )} */}
         <div className="d-flex align-items-center justify-content-between mb-3">
           <h6 className="how-it-works mb-0">How it works?</h6>
           {dummyEvent.popupInfo.status === "Live" &&
