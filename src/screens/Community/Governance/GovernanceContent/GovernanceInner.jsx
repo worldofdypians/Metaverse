@@ -333,6 +333,52 @@ const GovernanceInner = ({
     }
   };
 
+  const displayProposal = () => {
+    return (
+      <div className="d-flex flex-column gap-4">
+        <div>
+          <h3>WOD Buyback & Value Alignment</h3>
+        </div>
+        <div className="flex flex-column gap-2">
+          <h4>Summary</h4>
+          <span>
+            We believe $WOD is significantly undervalued compared to the project
+            and company fundamentals.
+          </span>
+        </div>
+        <div className="flex flex-column gap-2">
+          <span>Company valuation: $50M</span>
+          <span>Token FDV: $11M</span>
+          <span>Reserve: 120M+ WOD accumulated</span>
+        </div>
+        <div className="flex flex-column gap-2">
+          <h4>Proposal Direction</h4>
+          <span>
+            Exploring a future $WOD buyback at a premium price, aligned with the
+            company’s $50M equity valuation.
+          </span>{" "}
+        </div>
+        <span>This would be considered after the equity round.</span>
+        <h4>Why?</h4>
+        <div className="flex flex-column gap-2">
+          <span>Align token value with real fundamentals</span>
+          <span>Strengthen long-term confidence</span>
+          <span>Reward long-term holders</span>
+          <span>Governance</span>
+          <span>This is a 3-day vote.</span>
+          <span>Community feedback will determine the next steps.</span>
+        </div>
+        <div className="flex flex-column gap-2">
+          <h4>Note</h4>
+          <span>
+            No immediate changes. This is a directional proposal for future
+            implementation.
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Governance";
@@ -371,8 +417,8 @@ const GovernanceInner = ({
                     Description
                   </span>
                   <span className="single-proposal-content-txt">
-                    {currentProposal?.description
-}
+                    {/* {currentProposal?.description} */}
+                    {currentProposal?.proposalId === 1 ? displayProposal() : ""}
                   </span>
                 </div>
                 <div className="proposal-right-col col-lg-5 p-lg-3">
