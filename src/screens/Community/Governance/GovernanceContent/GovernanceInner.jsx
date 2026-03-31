@@ -340,7 +340,7 @@ const GovernanceInner = ({
           <h3>WOD Buyback & Value Alignment</h3>
         </div>
         <div className="flex flex-column gap-2">
-          <h5>Summary</h5>
+          <h4>Summary</h4>
           <span>
             We believe $WOD is significantly undervalued compared to the project
             and company fundamentals.
@@ -350,14 +350,16 @@ const GovernanceInner = ({
           <span>Company valuation: $50M</span>
           <span>Token FDV: $11M</span>
           <span>Reserve: 120M+ WOD accumulated</span>
-          <span>Proposal Direction</span>
         </div>
-        <span>
-          Exploring a future $WOD buyback at a premium price, aligned with the
-          company’s $50M equity valuation.
-        </span>
+        <div className="flex flex-column gap-2">
+          <h4>Proposal Direction</h4>
+          <span>
+            Exploring a future $WOD buyback at a premium price, aligned with the
+            company’s $50M equity valuation.
+          </span>{" "}
+        </div>
         <span>This would be considered after the equity round.</span>
-        <h5>Why?</h5>
+        <h4>Why?</h4>
         <div className="flex flex-column gap-2">
           <span>Align token value with real fundamentals</span>
           <span>Strengthen long-term confidence</span>
@@ -367,7 +369,7 @@ const GovernanceInner = ({
           <span>Community feedback will determine the next steps.</span>
         </div>
         <div className="flex flex-column gap-2">
-          <h5>Note</h5>
+          <h4>Note</h4>
           <span>
             No immediate changes. This is a directional proposal for future
             implementation.
