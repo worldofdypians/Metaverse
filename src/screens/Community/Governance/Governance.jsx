@@ -3,7 +3,11 @@ import "./_governance.scss";
 import GovernanceContent from "./GovernanceContent/GovernanceContent";
 import GovernanceHero from "./GovernanceHero/GovernanceHero";
 import CreateProposal from "./CreateProposal/CreateProposal";
-import { readContract, writeContract, waitForTransactionReceipt } from "@wagmi/core";
+import {
+  readContract,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { wagmiClient } from "../../../wagmiConnectors";
 
 const Governance = ({
@@ -15,7 +19,6 @@ const Governance = ({
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
   handleConnection,
-
 }) => {
   const [createProposalPopup, setCreateProposalPopup] = useState(false);
   const [minWodBalanceForProposal, setminWodBalanceForProposal] = useState(0);
@@ -70,7 +73,7 @@ const Governance = ({
           functionName: "lastIndex",
           args: [],
           chainId: 56,
-        })
+        }),
       );
 
       let newProposals = [];
@@ -99,18 +102,30 @@ const Governance = ({
             3: "Special Offer",
             4: "Feature Request",
             5: "General",
-          }[action] || "";
+          }[item[1]] || "";
 
         return {
-          ...item,
+          // ...item,
           subject: actionText,
+
+          description: item[9],
           expired: today.getTime() > Number(proposalStartTime) ? true : false,
+          proposalId: Number(item[0]),
+          optionOneVotes: Number(item[2]),
+          optionTwoVotes: Number(item[3]),
+          stakingPool: item[4],
+          newGovernance: item[5],
+          proposalStartTime: Number(item[6]),
+          isProposalExecuted: item[7],
+          newQuorum: item[8],
+          newMinBalance: Number(item[10]),
         };
       });
 
       newProposals2 = [...newnewProposalsFinal].sort(function (a, b) {
-        return a._proposalStartTime - b._proposalStartTime;
+        return a.proposalStartTime - b.proposalStartTime;
       });
+      // console.log(newProposals2);
       setallProposals(newProposals2);
       settotalProposals(total_proposals);
     } catch (e) {
@@ -132,33 +147,33 @@ const Governance = ({
     }
 
     try {
-   
-        const hash = await writeContract(wagmiClient, {
-          address: window.config.governance_address,
-          abi: window.GOVERNANCE_ABI,
-          functionName: "proposeText",
-          args: [desc],
-        });
+      const hash = await writeContract(wagmiClient, {
+        address: window.config.governance_address,
+        abi: window.GOVERNANCE_ABI,
+        functionName: "proposeText",
+        args: [desc],
+      });
 
-        const receipt = await waitForTransactionReceipt(wagmiClient, {
-          hash: hash,
-        });
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
 
-        if (receipt) {
-          setgovLoading(false);
-          setgovStatus("success");
-          refreshProposals();
-          setTimeout(() => {
-            setgovStatus("initial");
-            setCreateProposalPopup(false);
-          }, 3000);
-        }
-       
+      if (receipt) {
+        setgovLoading(false);
+        setgovStatus("success");
+        refreshProposals();
+        setTimeout(() => {
+          setgovStatus("initial");
+          setCreateProposalPopup(false);
+        }, 3000);
+      }
     } catch (e) {
       console.error("Error submitting proposal:", e);
       setgovLoading(false);
       setgovStatus("error");
-      window.alertify.error(e?.message || e?.shortMessage || "Proposal submission failed");
+      window.alertify.error(
+        e?.message || e?.shortMessage || "Proposal submission failed",
+      );
       setTimeout(() => {
         setgovStatus("initial");
       }, 5000);

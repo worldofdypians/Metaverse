@@ -6,7 +6,11 @@ import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 
 import { switchNetworkWagmi } from "../../../../utils/wagmiSwitchChain";
 import { Checkbox } from "@mui/material";
-import { readContract, writeContract, waitForTransactionReceipt } from "@wagmi/core";
+import {
+  readContract,
+  writeContract,
+  waitForTransactionReceipt,
+} from "@wagmi/core";
 import { wagmiClient } from "../../../../wagmiConnectors";
 
 const GovernanceInner = ({
@@ -38,23 +42,23 @@ const GovernanceInner = ({
   const { BigNumber, reward_token_wod } = window;
 
   const totalVotes =
-    Number(currentProposal?._optionOneVotes) +
-    Number(currentProposal?._optionTwoVotes);
+    Number(currentProposal?.optionOneVotes) +
+    Number(currentProposal?.optionTwoVotes);
   const optionone_percentage =
-    (Number(currentProposal?._optionOneVotes) /
+    (Number(currentProposal?.optionOneVotes) /
       (totalVotes === 0 ? 1 : totalVotes)) *
     100;
 
   const optiontwo_percentage =
-    (Number(currentProposal?._optionTwoVotes) /
+    (Number(currentProposal?.optionTwoVotes) /
       (totalVotes === 0 ? 1 : totalVotes)) *
     100;
 
-  const purchaseDate = currentProposal?._proposalStartTime
-    ? new Date(currentProposal?._proposalStartTime * 1000)
+  const purchaseDate = currentProposal?.proposalStartTime
+    ? new Date(currentProposal?.proposalStartTime * 1000)
     : new Date();
   const endDate = new Date(
-    purchaseDate.getTime() + window.config.vote_duration_in_seconds * 1e3
+    purchaseDate.getTime() + window.config.vote_duration_in_seconds * 1e3,
   );
 
   const handleSetMaxWithdraw = async (e) => {
@@ -84,8 +88,9 @@ const GovernanceInner = ({
 
   const switchNetwork = async (hexChainId, chain) => {
     // Extract chainId from hex or use chain number directly
-    const chainId = typeof chain === 'number' ? chain : parseInt(hexChainId, 16);
-    
+    const chainId =
+      typeof chain === "number" ? chain : parseInt(hexChainId, 16);
+
     try {
       await switchNetworkWagmi(chainId, chain, {
         handleSwitchNetwork,
@@ -109,14 +114,39 @@ const GovernanceInner = ({
           args: [_proposalId],
           chainId: 56,
         });
-
+        // console.log("Proposal details:", p);
         const proposalStartTime =
-          p._proposalStartTime * 1e3 +
-          window.config.vote_duration_in_seconds * 1e3;
+          Number(p[6]) * 1e3 + window.config.vote_duration_in_seconds * 1e3;
 
-        p.expired = today.getTime() > Number(proposalStartTime) ? true : false;
-        setCurrentProposal(p);
-        return p;
+        let actionText =
+          {
+            0: "New Game Events",
+            1: "Revamp Events",
+            2: "New Bundles",
+            3: "Special Offer",
+            4: "Feature Request",
+            5: "General",
+          }[p[1]] || "";
+
+        const finalProposal = {
+          // ...item,
+          subject: actionText,
+          description: p[9],
+          expired: today.getTime() > Number(proposalStartTime) ? true : false,
+          proposalId: Number(p[0]),
+          optionOneVotes: Number(p[2]),
+          optionTwoVotes: Number(p[3]),
+          stakingPool: p[4],
+          newGovernance: p[5],
+          proposalStartTime: Number(p[6]),
+          isProposalExecuted: p[7],
+          newQuorum: p[8],
+          newMinBalance: Number(p[10]),
+        };
+        // console.log("finalProposals:", finalProposal);
+
+        setCurrentProposal(finalProposal);
+        return finalProposal;
       } catch (e) {
         console.error("Error getting proposal:", e);
       }
@@ -149,24 +179,22 @@ const GovernanceInner = ({
       const { BigNumber, reward_token_wod } = window;
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
- 
-   
-        const hash = await writeContract(wagmiClient, {
-          address: reward_token_wod._address,
-          abi: window.TOKEN_ABI,
-          functionName: "approve",
-          args: [window.config.governance_address, amount],
-        });
 
-        const receipt = await waitForTransactionReceipt(wagmiClient, {
-          hash: hash,
-        });
+      const hash = await writeContract(wagmiClient, {
+        address: reward_token_wod._address,
+        abi: window.TOKEN_ABI,
+        functionName: "approve",
+        args: [window.config.governance_address, amount],
+      });
 
-        if (receipt) {
-          setdepositLoading(false);
-          setdepositStatus("deposit");
-        }
-   
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
+
+      if (receipt) {
+        setdepositLoading(false);
+        setdepositStatus("deposit");
+      }
     } catch (e) {
       console.error("Error approving:", e);
       setdepositLoading(false);
@@ -184,15 +212,13 @@ const GovernanceInner = ({
       const { BigNumber, reward_token_wod } = window;
       let result;
 
-      
-        result = await readContract(wagmiClient, {
-          address: reward_token_wod._address,
-          abi: window.TOKEN_ABI,
-          functionName: "allowance",
-          args: [coinbase, window.config.governance_address],
-          chainId: 56,
-        });
-     
+      result = await readContract(wagmiClient, {
+        address: reward_token_wod._address,
+        abi: window.TOKEN_ABI,
+        functionName: "allowance",
+        args: [coinbase, window.config.governance_address],
+        chainId: 56,
+      });
 
       let result_formatted = new BigNumber(result || 0).div(1e18).toFixed(6);
 
@@ -218,25 +244,22 @@ const GovernanceInner = ({
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
 
-      
-     
-        const hash = await writeContract(wagmiClient, {
-          address: window.config.governance_address,
-          abi: window.GOVERNANCE_ABI,
-          functionName: "addVotes",
-          args: [proposalId, option, amount],
-        });
+      const hash = await writeContract(wagmiClient, {
+        address: window.config.governance_address,
+        abi: window.GOVERNANCE_ABI,
+        functionName: "addVotes",
+        args: [proposalId, option, amount],
+      });
 
-        const receipt = await waitForTransactionReceipt(wagmiClient, {
-          hash: hash,
-        });
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
 
-        if (receipt) {
-          setdepositLoading(false);
-          setdepositStatus("success");
-          getuserInfo();
-        }
-      
+      if (receipt) {
+        setdepositLoading(false);
+        setdepositStatus("success");
+        getuserInfo();
+      }
     } catch (e) {
       console.error("Error adding vote:", e);
       setdepositLoading(false);
@@ -257,30 +280,29 @@ const GovernanceInner = ({
       let amount = withdrawAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
 
-      
-      
-        const hash = await writeContract(wagmiClient, {
-          address: window.config.governance_address,
-          abi: window.GOVERNANCE_ABI,
-          functionName: "removeVotes",
-          args: [proposalId, amount],
-        });
+      const hash = await writeContract(wagmiClient, {
+        address: window.config.governance_address,
+        abi: window.GOVERNANCE_ABI,
+        functionName: "removeVotes",
+        args: [proposalId, amount],
+      });
 
-        const receipt = await waitForTransactionReceipt(wagmiClient, {
-          hash: hash,
-        });
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
 
-        if (receipt) {
-          setwithdrawLoading(false);
-          setwithdrawStatus("success");
-          getuserInfo();
-        }
-      
+      if (receipt) {
+        setwithdrawLoading(false);
+        setwithdrawStatus("success");
+        getuserInfo();
+      }
     } catch (e) {
       console.error("Error removing vote:", e);
       setwithdrawLoading(false);
       setwithdrawStatus("error");
-      window.alertify.error(e?.message || e?.shortMessage || "Remove vote failed");
+      window.alertify.error(
+        e?.message || e?.shortMessage || "Remove vote failed",
+      );
       setTimeout(() => {
         setwithdrawLoading(false);
         setwithdrawStatus("initial");
@@ -291,23 +313,20 @@ const GovernanceInner = ({
 
   const handleClaim = async () => {
     try {
-      
-    
-        const hash = await writeContract(wagmiClient, {
-          address: window.config.governance_address,
-          abi: window.GOVERNANCE_ABI,
-          functionName: "withdrawAllTokens",
-          args: [],
-        });
+      const hash = await writeContract(wagmiClient, {
+        address: window.config.governance_address,
+        abi: window.GOVERNANCE_ABI,
+        functionName: "withdrawAllTokens",
+        args: [],
+      });
 
-        const receipt = await waitForTransactionReceipt(wagmiClient, {
-          hash: hash,
-        });
+      const receipt = await waitForTransactionReceipt(wagmiClient, {
+        hash: hash,
+      });
 
-        if (receipt) {
-          refreshBalance();
-        }
-      
+      if (receipt) {
+        refreshBalance();
+      }
     } catch (e) {
       console.error("Error claiming tokens:", e);
       window.alertify.error(e?.message || e?.shortMessage || "Claim failed");
@@ -329,7 +348,7 @@ const GovernanceInner = ({
 
   return (
     <div className="container-fluid mt-5 pt-5">
-      <div className="d-flex flex-column gap-4 justify-content-center align-items-center">
+      <div className="d-flex flex-column mt-5 gap-4 justify-content-center align-items-center">
         <div className="custom-container">
           <NavLink
             to="/governance"
@@ -352,7 +371,8 @@ const GovernanceInner = ({
                     Description
                   </span>
                   <span className="single-proposal-content-txt">
-                    {currentProposal?._proposalText}
+                    {currentProposal?.description
+}
                   </span>
                 </div>
                 <div className="proposal-right-col col-lg-5 p-lg-3">
@@ -385,8 +405,8 @@ const GovernanceInner = ({
                             <span className="gov-gray-text">Votes</span>
                             <span className="gov-white-text">
                               {getFormattedNumber(
-                                currentProposal?._optionOneVotes / 1e18,
-                                6
+                                currentProposal?.optionOneVotes / 1e18,
+                                6,
                               )}{" "}
                               WOD
                             </span>
@@ -416,8 +436,8 @@ const GovernanceInner = ({
                             <span className="gov-gray-text">Votes</span>
                             <span className="gov-white-text">
                               {getFormattedNumber(
-                                currentProposal?._optionTwoVotes / 1e18,
-                                6
+                                currentProposal?.optionTwoVotes / 1e18,
+                                6,
                               )}{" "}
                               WOD
                             </span>
@@ -580,22 +600,22 @@ const GovernanceInner = ({
                                 depositStatus === "success"
                                   ? "action-btn"
                                   : (depositStatus === "error" ||
-                                      chainId !== 56) &&
-                                    isConnected
-                                  ? "fail-button-gov"
-                                  : null
+                                        chainId !== 56) &&
+                                      isConnected
+                                    ? "fail-button-gov"
+                                    : null
                               } d-flex justify-content-center align-items-center gap-2`}
                               onClick={() => {
                                 !isConnected
                                   ? handleConnection()
                                   : isConnected && chainId !== 56
-                                  ? switchNetwork("0x38", 56)
-                                  : depositStatus === "deposit"
-                                  ? handleAddVote(proposalId, selectOption)
-                                  : depositStatus === "initial" &&
-                                    depositAmount !== ""
-                                  ? handleApprove()
-                                  : console.log("");
+                                    ? switchNetwork("0x38", 56)
+                                    : depositStatus === "deposit"
+                                      ? handleAddVote(proposalId, selectOption)
+                                      : depositStatus === "initial" &&
+                                          depositAmount !== ""
+                                        ? handleApprove()
+                                        : console.log("");
                               }}
                             >
                               {!isConnected ? (
