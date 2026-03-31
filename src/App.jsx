@@ -1042,7 +1042,7 @@ function AppRoutes() {
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
-      {
+    {
       title: "CMC",
       logo: "https://cdn.worldofdypians.com/wod/cmcIcon.svg",
       eventStatus: "Live",
@@ -1069,8 +1069,7 @@ function AppRoutes() {
         minPoints: "5,000",
         maxPoints: "50,000",
         eventDate: "Mar 11, 2026",
-        learnMore:
-          "",
+        learnMore: "",
         detailsText: `To participate in the event, players are required to&nbsp;
                   <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
                   CoinMarketCap Beta Pass NFT from the World of Dypians Shop. By
@@ -2397,7 +2396,7 @@ function AppRoutes() {
         activeTab: "dypiusv2",
       },
     },
-  
+
     {
       title: "CMC",
       logo: "https://cdn.worldofdypians.com/wod/cmcIcon.svg",
@@ -4476,7 +4475,7 @@ function AppRoutes() {
           }
 
           if (cmcEvent && cmcEvent[0]) {
-              if (cmcEvent[0].reward.earn.totalPoints > 0) {
+            if (cmcEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
             }
             const points = cmcEvent[0].reward.earn.totalPoints;
@@ -5269,6 +5268,7 @@ function AppRoutes() {
           !location.pathname.includes("forgotPassword") &&
           !location.pathname.includes("wod-okxwallet") &&
           !location.pathname.includes("keep-building") &&
+          !location.pathname.includes("governance") &&
           !location.pathname.includes("liquidity-catalyst") &&
           orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header

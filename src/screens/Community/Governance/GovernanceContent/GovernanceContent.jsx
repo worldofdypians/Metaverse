@@ -25,7 +25,7 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                   })
                   .map((item, index) => {
                     return (
-                      <NavLink to={`proposal/${item._proposalId}`}>
+                      <NavLink to={`proposal/${item.proposalId}`}>
                         <div
                           className="active-proposals-inner-wrapper w-100 py-3 px-3 "
                           key={index}
@@ -34,16 +34,17 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                             <div className="d-flex align-items-center gap-4 flex-column flex-lg-row flex-md-row">
                               <div className="d-flex flex-column gap-2">
                                 <span className="active-proposals-features">
-                                  WoD Proposal #{item._proposalId}
+                                  WoD Proposal #{item.proposalId} -{" "}
+                                  {item.subject}
                                 </span>
                                 <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
                                   <div className="d-flex align-items-center gap-2">
                                     <span className="gov-gray-text">Votes</span>
                                     <span className="gov-white-text">
                                       {getFormattedNumber(
-                                        Number(item._optionOneVotes / 1e18) +
-                                          Number(item._optionTwoVotes / 1e18),
-                                        6
+                                        Number(item.optionOneVotes / 1e18) +
+                                          Number(item.optionTwoVotes / 1e18),
+                                        6,
                                       )}
                                     </span>
                                   </div>
@@ -54,11 +55,11 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                                     <span className="gov-white-text">
                                       {moment
                                         .duration(
-                                          item._proposalStartTime * 1e3 +
+                                          item.proposalStartTime * 1e3 +
                                             window.config
                                               .vote_duration_in_seconds *
                                               1e3 -
-                                            Date.now()
+                                            Date.now(),
                                         )
                                         .humanize(true)}
                                     </span>
@@ -112,10 +113,7 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                     })
                     .map((item, index) => {
                       return (
-                        <NavLink
-                          to={`proposal/${item._proposalId}`}
-                          key={index}
-                        >
+                        <NavLink to={`proposal/${item.proposalId}`} key={index}>
                           <div className="past-proposals-item p-3">
                             <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center justify-content-between gap-2">
                               <div className="d-flex flex-column gap-2">
@@ -133,9 +131,9 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                                     <span className="gov-gray-text">Votes</span>
                                     <span className="gov-white-text">
                                       {getFormattedNumber(
-                                        Number(item._optionOneVotes / 1e18) +
-                                          Number(item._optionTwoVotes / 1e18),
-                                        6
+                                        Number(item.optionOneVotes / 1e18) +
+                                          Number(item.optionTwoVotes / 1e18),
+                                        6,
                                       )}
                                     </span>
                                   </div>
@@ -146,11 +144,11 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                                     <span className="gov-white-text">
                                       {moment
                                         .duration(
-                                          item._proposalStartTime * 1e3 +
+                                          item.proposalStartTime * 1e3 +
                                             window.config
                                               .vote_duration_in_seconds *
                                               1e3 -
-                                            Date.now()
+                                            Date.now(),
                                         )
                                         .humanize(true)}
                                     </span>
