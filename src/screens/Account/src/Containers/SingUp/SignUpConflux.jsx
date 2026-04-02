@@ -85,7 +85,7 @@ function SignUpConflux({
   };
 
   const resendCode = async () => {
-    await resendSignUpCode(username).catch((err) => {
+    await resendSignUpCode({ username }).catch((err) => {
       seterrorMsg(err?.message);
     });
   };

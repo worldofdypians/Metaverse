@@ -6642,7 +6642,7 @@ export default function App() {
 
   const AccountAppContent = () => {
     const { isLoading, isAuthenticated, playerId, email } = useAuth();
-    console.log(isLoading, isAuthenticated, playerId, email);
+    
     useEffect(() => {
       if (!isLoading || !isAuthenticated || !playerId) {
         setFireAppContent(false);
@@ -6652,7 +6652,7 @@ export default function App() {
     if (isLoading) {
       return <LandingScreen />;
     }
-
+   
     if (isAuthenticated) {
       if (!playerId) {
         return (
