@@ -69,7 +69,7 @@ const NewsModal = ({
             <div className="d-flex gap-3">
               <a
                 className="resp-sharing-button__link"
-                href={`https://twitter.com/intent/tweet/?text=${title}&url=${`https://www.worldofdypians.com/news/${newsId}/${title.replace(
+                href={`https://x.com/intent/tweet/?text=${title}&url=${`https://www.worldofdypians.com/news/${newsId}/${title.replace(
                   /\s/g,
                   "-"
                 )}`}`}

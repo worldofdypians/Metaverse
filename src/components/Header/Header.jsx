@@ -494,7 +494,7 @@ const Header = ({
                     <hr className="header-divider my-0" />
                     <div className="d-flex align-items-center justify-content-between px-2 mb-2">
                       <a
-                        href="https://twitter.com/worldofdypians"
+                        href="https://x.com/worldofdypians"
                         target="_blank"
                         rel="noreferrer"
                       >

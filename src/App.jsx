@@ -1085,7 +1085,7 @@ function AppRoutes() {
             in circulation), trade volume over last 24 hours, or market
             capitalizations. CoinMarketCap was founded in May 2013 by Brandon
             Chez in Long Island City, Queens, New York.`,
-        twitterLink: "https://twitter.com/CoinMarketCap",
+        twitterLink: "https://x.com/CoinMarketCap",
         telegramLink: "https://t.me/CoinMarketCapAnnouncements",
         websiteLink: "https://coinmarketcap.com/",
         thumbImage: "https://cdn.worldofdypians.com/wod/cmcPopupImage.png",
@@ -1469,7 +1469,7 @@ function AppRoutes() {
         and scalability you need to power your dapps.Base is an easy way for decentralized
         apps to leverage Coinbase's products and distribution. Seamless Coinbase integrations,
         easy fiat onramps, and access to the $130B assets on platform in the Coinbase ecosystem.`,
-        twitterLink: "https://twitter.com/buildonbase",
+        twitterLink: "https://x.com/buildonbase",
         telegramLink: "https://base.org/discord",
         websiteLink: "https://base.org/",
         thumbImage:
@@ -1745,7 +1745,7 @@ function AppRoutes() {
         about: `Immutable is a global leader in gaming on a mission to bring
             digital ownership to every player by making it safe and easy to
             build great web3 games.`,
-        twitterLink: "https://twitter.com/Immutable",
+        twitterLink: "https://x.com/Immutable",
         telegramLink: "https://discord.gg/CYsjMdctsP",
         websiteLink: "https://www.immutable.com/",
         thumbImage: "https://cdn.worldofdypians.com/wod/immutableThumb.png",
@@ -1800,7 +1800,7 @@ function AppRoutes() {
             embracing multiple ideas and communities. The opposite of a
             winner-take-all mentality - Core is focused instead on platform
             growth and driving the global adoption of blockchain technology.`,
-        twitterLink: "https://twitter.com/Coredao_Org",
+        twitterLink: "https://x.com/Coredao_Org",
         telegramLink: "https://t.me/CoreDAOTelegram",
         websiteLink: "https://coredao.org/",
         thumbImage: "https://cdn.worldofdypians.com/wod/coreThumb.png",
@@ -1853,7 +1853,7 @@ function AppRoutes() {
             embracing multiple ideas and communities. The opposite of a
             winner-take-all mentality - Core is focused instead on platform
             growth and driving the global adoption of blockchain technology.`,
-        twitterLink: "https://twitter.com/Coredao_Org",
+        twitterLink: "https://x.com/Coredao_Org",
         telegramLink: "https://t.me/CoreDAOTelegram",
         websiteLink: "https://coredao.org/",
         thumbImage: "https://cdn.worldofdypians.com/wod/coreThumb.png",
@@ -2227,7 +2227,7 @@ function AppRoutes() {
             zero-gas transactions through the innovative TRC25 token standard,
             alongside speed, security, and scalability, all contributing to a
             more secure and open world.`,
-        twitterLink: "https://viction.link/twitter",
+        twitterLink: "https://viction.link/x",
         telegramLink: "https://viction.link/telegram",
         websiteLink: "https://www.viction.xyz/",
         thumbImage: "https://cdn.worldofdypians.com/wod/victionThumb.png",
@@ -2341,7 +2341,7 @@ function AppRoutes() {
             and zero-cost minting. This empowers developers to swiftly deploy
             their own configurable EVM blockchains without compromising on
             speed, security, or decentralization.`,
-        twitterLink: "https://twitter.com/SkaleNetwork",
+        twitterLink: "https://x.com/SkaleNetwork",
         telegramLink: "https://t.me/skaleofficial",
         websiteLink: "https://skale.space/",
         thumbImage: "https://cdn.worldofdypians.com/wod/skalePopupImage.png",
@@ -2389,7 +2389,7 @@ function AppRoutes() {
             cater to both beginners and advanced users in the crypto space
             including Earn solutions, analytical tools, NFTs, Metaverse and
             more!`,
-        twitterLink: "https://twitter.com/dypius",
+        twitterLink: "https://x.com/dypius",
         telegramLink: "https://t.me/worldofdypians",
         websiteLink: "https://www.dypius.com/",
         thumbImage: "https://cdn.worldofdypians.com/wod/dypiuspopup2.png",
@@ -2441,7 +2441,7 @@ function AppRoutes() {
             in circulation), trade volume over last 24 hours, or market
             capitalizations. CoinMarketCap was founded in May 2013 by Brandon
             Chez in Long Island City, Queens, New York.`,
-        twitterLink: "https://twitter.com/CoinMarketCap",
+        twitterLink: "https://x.com/CoinMarketCap",
         telegramLink: "https://t.me/CoinMarketCapAnnouncements",
         websiteLink: "https://coinmarketcap.com/",
         thumbImage: "https://cdn.worldofdypians.com/wod/cmcPopupImage.png",
@@ -2503,7 +2503,7 @@ function AppRoutes() {
             highly secure decentralised system of storing information as a
             public ledger that is maintained by a network of computers called
             nodes.`,
-        twitterLink: "https://twitter.com/dogecoin",
+        twitterLink: "https://x.com/dogecoin",
         telegramLink: "https://discord.gg/dogecoin",
         websiteLink: "https://dogecoin.com/",
         thumbImage: "https://cdn.worldofdypians.com/wod/dogePopupImage.png",
@@ -2547,7 +2547,7 @@ function AppRoutes() {
             cater to both beginners and advanced users in the crypto space
             including Earn solutions, analytical tools, NFTs, Metaverse and
             more!`,
-        twitterLink: "https://twitter.com/dypius",
+        twitterLink: "https://x.com/dypius",
         telegramLink: "https://t.me/worldofdypians",
         websiteLink: "https://www.dypius.com/",
         thumbImage: "https://cdn.worldofdypians.com/wod/dypEventImage.png",
@@ -2596,7 +2596,7 @@ function AppRoutes() {
             been audited to show 100% proof of reserves. Gate.io operates in
             most countries across the world, and is always committed to
             complying with the applicable laws where it operates.`,
-        twitterLink: "https://twitter.com/gate_io",
+        twitterLink: "https://x.com/gate_io",
         telegramLink: "https://t.me/gateio_en",
         websiteLink: "https://www.gate.io/",
         thumbImage: "https://cdn.worldofdypians.com/wod/gatePopupImage.png",
@@ -2644,7 +2644,7 @@ function AppRoutes() {
             diverse multi-chain ecosystem, fostering seamless global
             connectivity for creators, communities, and markets across different
             borders and protocols.`,
-        twitterLink: "https://twitter.com/Conflux_Network",
+        twitterLink: "https://x.com/Conflux_Network",
         telegramLink: "https://t.me/Conflux_English",
         websiteLink: "https://confluxnetwork.org/",
         thumbImage: "https://cdn.worldofdypians.com/wod/eventPopupImage.png",
