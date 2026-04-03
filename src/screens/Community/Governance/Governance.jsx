@@ -91,8 +91,7 @@ const Governance = ({
       const newnewProposalsFinal = newProposals.map((item) => {
         let action = item._proposalAction;
         const proposalStartTime =
-          item._proposalStartTime * 1e3 +
-          window.config.vote_duration_in_seconds * 1e3;
+          Number(item[6]) * 1e3 + window.config.vote_duration_in_seconds * 1e3;
 
         let actionText =
           {
@@ -109,7 +108,7 @@ const Governance = ({
           subject: actionText,
 
           description: item[9],
-          expired: today.getTime() > Number(proposalStartTime) ? true : false,
+          expired: Number(proposalStartTime) < today.getTime() ? true : false,
           proposalId: Number(item[0]),
           optionOneVotes: Number(item[2]),
           optionTwoVotes: Number(item[3]),

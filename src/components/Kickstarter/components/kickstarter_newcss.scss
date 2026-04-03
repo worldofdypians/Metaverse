@@ -2765,7 +2765,7 @@
   }
 
   .border-white\/20 {
-    border-color: #fff3;
+    border-color: #fff3 !important;
   }
 
   @supports (color: color-mix(in lab, red, red)) {
