@@ -5,8 +5,8 @@ import { Link, Navigate } from "react-router-dom";
 import { Button, Input } from "../../Components";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import classes from "./Login.module.css";
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 function Login({ onSuccessLogin }) {
   const {
@@ -24,17 +24,19 @@ function Login({ onSuccessLogin }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const login = async () => {
-    await LoginGlobal(username, password)
-      .then(() => {
+    try {
+      const result = await LoginGlobal(username, password);
+      if (result?.success) {
         onSuccessLogin();
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const resendCode = async () => {
-    await resendSignUpCode(username).catch((err) => {
+  const resendCode = async (email) => {
+    if (!username?.trim()) return;
+    await resendSignUpCode({ username: username.trim() }).catch((err) => {
       setLoginValues((prev) => {
         return {
           ...prev,
@@ -98,12 +100,14 @@ function Login({ onSuccessLogin }) {
         // After successful verification, login the user
         if (username && password) {
           try {
-            await LoginGlobal(username, password);
-            setLoginValues((prev) => ({
-              ...prev,
-              code: undefined,
-            }));
-            onSuccessLogin();
+            const loginResult = await LoginGlobal(username, password);
+            if (loginResult?.success) {
+              setLoginValues((prev) => ({
+                ...prev,
+                code: undefined,
+              }));
+              onSuccessLogin();
+            }
           } catch (error) {
             setLoginValues((prev) => ({
               ...prev,
@@ -168,26 +172,31 @@ function Login({ onSuccessLogin }) {
         inputType="email"
       />
       <div className="position-relative">
-      <Input
-        style={{
-          marginBottom: 48,
-        }}
-        inputType={showPassword ? "text" : "password"}
-        placeHolder="Password"
-        value={password}
-        onChange={setPassword}
-      />
-      <div
-        style={{
-          position: "absolute",
-          right: 10,
-          top: 18,
-          cursor: "pointer",
-        }}
-        onClick={() => setShowPassword((prev) => !prev)}
-      >
-        {showPassword ? <VisibilityOffIcon style={{color: 'wheat'}}/> : <RemoveRedEyeIcon style={{color: 'wheat'}} />}
-      </div></div>
+        <Input
+          style={{
+            marginBottom: 48,
+          }}
+          inputType={showPassword ? "text" : "password"}
+          placeHolder="Password"
+          value={password}
+          onChange={setPassword}
+        />
+        <div
+          style={{
+            position: "absolute",
+            right: 10,
+            top: 18,
+            cursor: "pointer",
+          }}
+          onClick={() => setShowPassword((prev) => !prev)}
+        >
+          {showPassword ? (
+            <VisibilityOffIcon style={{ color: "wheat" }} />
+          ) : (
+            <RemoveRedEyeIcon style={{ color: "wheat" }} />
+          )}
+        </div>
+      </div>
       <Button
         disabled={disabled}
         style={{ margin: "auto" }}

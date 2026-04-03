@@ -30,7 +30,7 @@ const EarnContent = ({
   wodBalance,
   userPools,
   onSuccessfulStake,
- 
+
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   bnbUSDPrice,
@@ -52,7 +52,7 @@ const EarnContent = ({
   // Handle hiding details
   const onHideDetailsClick = (item) => {
     setselectedPool((prevSelected) =>
-      prevSelected.filter((selectedItem) => selectedItem.id !== item.id)
+      prevSelected.filter((selectedItem) => selectedItem.id !== item.id),
     );
   };
 
@@ -441,19 +441,19 @@ const EarnContent = ({
                             item.tokenURL
                               ? item.tokenURL
                               : item.pair_name === "WoD + CAWS"
-                              ? ["caws", "wod"]
-                              : item.pair_name === "Genesis Land"
-                              ? ["wod"]
-                              : [item.pair_name?.toLowerCase()]
+                                ? ["caws", "wod"]
+                                : item.pair_name === "Genesis Land"
+                                  ? ["wod"]
+                                  : [item.pair_name?.toLowerCase()]
                           }
                           availableQuota={
                             item.type === "token"
                               ? item.poolCap - item.totalDeposited
                               : item.expired === "Yes"
-                              ? "--"
-                              : item.pair_name === "Genesis Land"
-                              ? 100 - totalStakesLandPremium
-                              : 200 - totalStakesCawsPremium
+                                ? "--"
+                                : item.pair_name === "Genesis Land"
+                                  ? 100 - totalStakesLandPremium
+                                  : 200 - totalStakesCawsPremium
                           }
                           onShowDetailsClick={() => {
                             onShowDetailsClick(item);
@@ -506,13 +506,14 @@ const EarnContent = ({
                             index === 0)
                             ? "accHeaderBorderBnb"
                             : isHover === index ||
-                              selectedPool.find((obj) => {
-                                return (
-                                  obj.id.toLowerCase() === item.id.toLowerCase()
-                                );
-                              }) !== undefined
-                            ? "accHeaderBorder"
-                            : "accHeaderBorder2"
+                                selectedPool.find((obj) => {
+                                  return (
+                                    obj.id.toLowerCase() ===
+                                    item.id.toLowerCase()
+                                  );
+                                }) !== undefined
+                              ? "accHeaderBorder"
+                              : "accHeaderBorder2"
                         } px-0 py-0 text-white position-relative`}
                         style={{
                           background: expired ? "#403E6B" : "#242556",
@@ -703,9 +704,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-                              
-                              
-                              
                               handleSwitchChainGateWallet={
                                 handleSwitchChainGateWallet
                               }
@@ -743,9 +741,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-                              
-                              
-                              
                               handleSwitchChainGateWallet={
                                 handleSwitchChainGateWallet
                               }
@@ -784,9 +779,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-                              
-                              
-                              
                               handleSwitchChainGateWallet={
                                 handleSwitchChainGateWallet
                               }
@@ -824,9 +816,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-                              
-                              
-                              
                               handleSwitchChainGateWallet={
                                 handleSwitchChainGateWallet
                               }
@@ -853,7 +842,7 @@ const EarnContent = ({
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
                               handleConnection={onConnectWallet}
-                              expired={false}
+                              expired={true}
                               staking={window.constant_staking_wod8}
                               apr={item.apy_percent}
                               expiration_time={"23 March 2026"}
@@ -864,9 +853,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-                              
-                              
-                              
                               handleSwitchChainGateWallet={
                                 handleSwitchChainGateWallet
                               }
@@ -904,9 +890,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-                              
-                              
-                              
                               handleSwitchChainGateWallet={
                                 handleSwitchChainGateWallet
                               }
@@ -945,9 +928,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-                              
-                              
-                              
                               handleSwitchChainGateWallet={
                                 handleSwitchChainGateWallet
                               }
@@ -985,9 +965,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-                              
-                              
-                              
                               handleSwitchChainGateWallet={
                                 handleSwitchChainGateWallet
                               }

@@ -58,11 +58,14 @@ function SingUp() {
       const emailForLogin = username || signupUsername;
       if (emailForLogin && password) {
         try {
-          await LoginGlobal(emailForLogin, password);
-          setLoginValues((prev) => ({
-            ...prev,
-            signupUsername: undefined, // Clear stored username
-          }));
+          const loginResult = await LoginGlobal(emailForLogin, password);
+          if (loginResult?.success) {
+            setLoginValues((prev) => ({
+              ...prev,
+              signupUsername: undefined, // Clear stored username
+            }));
+          }
+          setIsVerifying(false);
         } catch (error) {
           setIsVerifying(false);
           setLoginValues((prev) => ({

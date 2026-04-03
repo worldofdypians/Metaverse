@@ -48,7 +48,7 @@ function SingUpBNB({
 
   const resendCode = async () => {
     console.log("resend code");
-    await resendSignUpCode(username).catch((err) => {
+    await resendSignUpCode({ username }).catch((err) => {
       setLoginValues((prev) => {
         return {
           ...prev,

@@ -71,14 +71,28 @@ function AuthProvider({ children }) {
       //     isLoading: false,
       //   });
       const user = await signIn({ username, password });
+      if (
+        user?.isSignedIn === false &&
+        user?.nextStep?.signInStep === "CONFIRM_SIGN_UP"
+      ) {
+        setLoginValues((prev) => ({
+          ...prev,
+          isLoginIn: false,
+          loginError: "",
+          code: "UserNotConfirmedException",
+        }));
+        return { success: false };
+      }
+
       await getAuthenticatedUser(user);
       setLoginValues((prev) => ({
         ...prev,
         isLoginIn: false,
         code: undefined,
       }));
+      return { success: true };
     } catch (error) {
-      // console.log(error, error.code, error.name, error.message);
+      console.log(error, error.code, error.name, error.message);
       setAuth({
         isAuthenticated: false,
         isLoading: false,
@@ -91,11 +105,14 @@ function AuthProvider({ children }) {
         roles: [],
         token: undefined,
       });
-      if (error?.code === "UserNotConfirmedException") {
+      const isUserNotConfirmed =
+        error?.code === "UserNotConfirmedException" ||
+        error?.name === "UserNotConfirmedException";
+      if (isUserNotConfirmed) {
         setLoginValues({
           isLoginIn: false,
           loginError: "",
-          code: error?.code,
+          code: "UserNotConfirmedException",
         });
       } else if (
         error?.name === "ForbiddenException" &&
@@ -115,6 +132,7 @@ function AuthProvider({ children }) {
           code: error?.code,
         });
       }
+      return { success: false };
     }
   };
 
