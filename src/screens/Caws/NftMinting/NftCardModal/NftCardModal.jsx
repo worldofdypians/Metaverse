@@ -90,7 +90,7 @@ const NftCardModal = ({
             </div>
             <a
               onClick={() => onShareClick(nftItem)}
-              href={`https://twitter.com/intent/tweet/?text=Check out my recently minted ${encodeURIComponent(
+              href={`https://x.com/intent/tweet/?text=Check out my recently minted ${encodeURIComponent(
                 nftItem?.name
               )} NFT on&url=${link}`}
               className="share-link"

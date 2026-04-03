@@ -140,7 +140,7 @@ Metaverse/
 ## 🔗 Official Links
 
 - Website: https://worldofdypians.com
-- X: https://twitter.com/worldofdypians
+- X: https://x.com/worldofdypians
 - Discord: https://discord.gg/worldofdypians
 
 ---

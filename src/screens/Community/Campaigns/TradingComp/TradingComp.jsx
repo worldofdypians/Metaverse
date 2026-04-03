@@ -63,7 +63,7 @@ const TradingComp = ({ coinbase, isConnected }) => {
 
   // const postToTwitter = () => {
   //   const tweetText = encodeURIComponent("Check out this cool app! 🚀");
-  //   const tweetUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
+  //   const tweetUrl = `https://x.com/intent/tweet?text=${tweetText}`;
   //   window.open(tweetUrl, "_blank");
   // };
 

@@ -103,7 +103,7 @@ const Kickstarter = ({
       socials: [
         {
           Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-          label: "Twitter",
+          label: "X",
           color: "#1DA1F2",
           link: "https://x.com/BNBChain",
         },
@@ -141,7 +141,7 @@ const Kickstarter = ({
       socials: [
         {
           Icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
-          label: "Twitter",
+          label: "X",
           color: "#1DA1F2",
           link: "https://x.com/BNBChain",
         },

@@ -32,7 +32,7 @@ const Footer = () => {
   const socials = [
     {
       icon: "twitterFooter",
-      link: "https://twitter.com/worldofdypians",
+      link: "https://x.com/worldofdypians",
     },
 
     {
