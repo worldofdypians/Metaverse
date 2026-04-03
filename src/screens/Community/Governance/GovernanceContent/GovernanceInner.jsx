@@ -36,6 +36,7 @@ const GovernanceInner = ({
   const [withdrawLoading, setwithdrawLoading] = useState(false);
   const [withdrawStatus, setwithdrawStatus] = useState("initial");
   const [selectOption, setselectOption] = useState("0");
+  const [totalDepositedTokens, settotalDepositedTokens] = useState("0");
 
   const today = new Date();
 
@@ -165,6 +166,16 @@ const GovernanceInner = ({
         });
         const balanceFormatted = Number(balance) / 1e18;
         setmyDepositedTokens(balanceFormatted);
+
+        const depositedTokens = await readContract(wagmiClient, {
+          address: window.config.governance_address,
+          abi: window.GOVERNANCE_ABI,
+          functionName: "totalDepositedTokens",
+          args: [coinbase],
+          chainId: 56,
+        });
+        const depositedTokensFormatted = Number(depositedTokens) / 1e18;
+        settotalDepositedTokens(depositedTokensFormatted);
       } catch (e) {
         console.error("Error getting user info:", e);
         setmyDepositedTokens(0);
@@ -325,6 +336,7 @@ const GovernanceInner = ({
       });
 
       if (receipt) {
+        getuserInfo();
         refreshBalance();
       }
     } catch (e) {
@@ -701,7 +713,9 @@ const GovernanceInner = ({
                         <div className="d-flex flex-wrap gap-2 align-items-center justify-content-between">
                           <div className="d-flex flex-column w-100 gap-2">
                             <span className="single-proposal-description-green">
-                              Remove Vote
+                              {totalDepositedTokens > 0
+                                ? "Remove Vote"
+                                : "Total Voted"}
                             </span>
                             <div className="d-flex flex-column">
                               <span className="my-votes-amount">
@@ -739,38 +753,40 @@ const GovernanceInner = ({
                                   </button>
                                 </div>
                               )}
-                              <button
-                                className="btn-withdraw-gov px-2 px-lg-5 py-2"
-                                onClick={() => {
-                                  currentProposal?.expired
-                                    ? handleClaim()
-                                    : handleRemoveVote();
-                                }}
-                              >
-                                {withdrawLoading ? (
-                                  <div
-                                    className="spinner-border spinner-border-sm text-light"
-                                    role="status"
-                                  >
-                                    <span className="visually-hidden">
-                                      Loading...
-                                    </span>
-                                  </div>
-                                ) : withdrawStatus === "initial" ? (
-                                  <>
-                                    {currentProposal.expired === false
-                                      ? `Remove`
-                                      : "Withdraw"}
-                                  </>
-                                ) : withdrawStatus === "success" ? (
-                                  <>Success</>
-                                ) : (
-                                  <>
-                                    {/* <img src={failMark} alt="" /> */}
-                                    Failed
-                                  </>
-                                )}
-                              </button>
+                              {totalDepositedTokens > 0 && (
+                                <button
+                                  className="btn-withdraw-gov px-2 px-lg-5 py-2"
+                                  onClick={() => {
+                                    currentProposal?.expired
+                                      ? handleClaim()
+                                      : handleRemoveVote();
+                                  }}
+                                >
+                                  {withdrawLoading ? (
+                                    <div
+                                      className="spinner-border spinner-border-sm text-light"
+                                      role="status"
+                                    >
+                                      <span className="visually-hidden">
+                                        Loading...
+                                      </span>
+                                    </div>
+                                  ) : withdrawStatus === "initial" ? (
+                                    <>
+                                      {currentProposal.expired === false
+                                        ? `Remove`
+                                        : "Withdraw"}
+                                    </>
+                                  ) : withdrawStatus === "success" ? (
+                                    <>Success</>
+                                  ) : (
+                                    <>
+                                      {/* <img src={failMark} alt="" /> */}
+                                      Failed
+                                    </>
+                                  )}
+                                </button>
+                              )}
                             </div>
                           </div>
                         </div>
