@@ -3298,7 +3298,7 @@ const GetPremiumPopup = ({
                         </button>
                       )}
 
-                    {binancePay === false && chainId === 169 && (
+                    {binancePay === false && (
                       <>
                         <button
                           className={`btn ${
