@@ -1390,14 +1390,19 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                      src={"https://cdn.worldofdypians.com/wod/cmcIcon.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
-                    BNB Chain
+                    CMC
                   </span>
                   <span className="item-name-right">
-                    ${getFormattedNumber(userTreasureHuntStats.bnbEarnUsd, 2)}
+                    {" "}
+                    $
+                    {getFormattedNumber(
+                      userTreasureHuntStats.cmcuserEarnUsd,
+                      2,
+                    )}
                   </span>
                 </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1429,24 +1434,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(userTreasureHuntStats.seiEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex gap-2 align-items-center justify-content-between">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={"https://cdn.worldofdypians.com/wod/cmcIcon.svg"}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    CMC
-                  </span>
-                  <span className="item-name-right">
-                    {" "}
-                    $
-                    {getFormattedNumber(
-                      userTreasureHuntStats.cmcuserEarnUsd,
-                      2,
-                    )}
-                  </span>
-                </div>
+
                 {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1627,6 +1615,19 @@ const MyRewardsPopupNew = ({
               </div>
 
               <div className="d-flex flex-column gap-2">
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    BNB Chain
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(userTreasureHuntStats.bnbEarnUsd, 2)}
+                  </span>
+                </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img

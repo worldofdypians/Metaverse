@@ -65,7 +65,7 @@ const BetaPassNFT = ({
       areaImage: undefined,
       cardClassName: "bnb-mint-bg",
       wrapperClassName: "bnb-eventwrapper",
-      treasureHuntStatus: "Live",
+      treasureHuntStatus: "Expired",
       rewardsTitle: "$50,000 in BNB rewards",
       rewardType: "BNB",
       userEarned: userTreasureHuntStats.bnbEarnUsd,
