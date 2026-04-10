@@ -1094,7 +1094,7 @@ function AppRoutes() {
     {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$50,000 in BNB Rewards",
       rewardAmount: "$50,000",
       myEarnings: 0.0,
@@ -1116,7 +1116,7 @@ function AppRoutes() {
         chain: "BNB Chain",
         linkState: "bnb",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event20",
         eventType: "Explore & Mine",
         totalRewards: "$50,000 in BNB Rewards",
@@ -4152,9 +4152,9 @@ function AppRoutes() {
             });
           }
           if (bnbEvent && bnbEvent[0]) {
-            if (bnbEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (bnbEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /

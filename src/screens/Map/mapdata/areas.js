@@ -34,11 +34,11 @@ const chainAreas = [
         image: "https://cdn.worldofdypians.com/wod/royaltyChestInfo.png",
         link: "/account#royalty-chest",
       },
-      {
-        title: "Treasure Hunt",
-        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
-        link: "/account/challenges/treasure-hunt",
-      },
+      // {
+      //   title: "Treasure Hunt",
+      //   image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
+      //   link: "/account/challenges/treasure-hunt",
+      // },
     ],
     pastEvents: [
       {
