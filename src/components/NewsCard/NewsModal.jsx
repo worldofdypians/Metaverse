@@ -23,23 +23,21 @@ const NewsModal = ({
   const [arrow, setArrow] = useState(false);
 
   useEffect(() => {
-    if (elementRef.current.clientHeight !== 0) {
-      setHeight(elementRef.current.clientHeight);
-    }
     window.scrollTo(0, 0);
-  }, [newsId, content, elementRef.current?.clientHeight]);
+    const el = elementRef.current;
+    if (!el) return;
 
-  const backArrow = document.getElementById("backButton");
+    const updateHeight = () => {
+      if (el.clientHeight !== 0) {
+        setHeight(el.clientHeight);
+      }
+    };
 
-  const setArrowWhite = () => {
-    setArrow(true);
-  };
-  const setArrowBlack = () => {
-    setArrow(false);
-  };
-
-  backArrow?.addEventListener("mouseenter", setArrowWhite);
-  backArrow?.addEventListener("mouseleave", setArrowBlack);
+    updateHeight();
+    const ro = new ResizeObserver(updateHeight);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [newsId, content]);
 
   return (
     <div className="newsModal-wrapper d-flex flex-column flex-xxl-row flex-lg-row gap-3 mb-5">
@@ -48,8 +46,10 @@ const NewsModal = ({
           <div className="d-flex align-items-center gap-2 justify-content-between">
             <button
               className="btn go-back-btn d-flex align-items-center gap-2"
-              id="backButton"
+              type="button"
               onClick={onModalClose}
+              onMouseEnter={() => setArrow(true)}
+              onMouseLeave={() => setArrow(false)}
             >
               <img
                 src={arrow === false ? "https://cdn.worldofdypians.com/wod/goBackArrowBlack.svg" : "https://cdn.worldofdypians.com/wod/goBackArrow.svg"}
