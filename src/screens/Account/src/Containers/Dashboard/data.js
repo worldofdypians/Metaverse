@@ -61,10 +61,12 @@ export const bannedEmails = [
   "cullpwend0@gmail.com",
   "ssamat61@gmail.com",
   "tz8u0@airsworld.net",
+  "jokongscholar4@gmail.com",
+  "joffdevilish13@gmail.com",
 ];
 
 export const suspicousEmails = [
-  ""
+  "jokongscholar5@gmail.com"
 ]
 
 export const placeholderplayerData = [
