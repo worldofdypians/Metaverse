@@ -11,6 +11,8 @@ import {
   DollarSign,
   Wallet,
   Check,
+  WalletCards,
+  BadgeDollarSign
 } from "lucide-react";
 import DisclaimerModal from "./components/DisclaimerModal";
 import UserPositionModal from "./components/UserPositionModal";
@@ -164,7 +166,7 @@ const LiquidityComp = ({
   const [totalAprPercent, setTotalAprPercent] = useState(0);
   const [feesUsd24Percent, setfeesUsd24Percent] = useState(0);
 
-  const BONUS_POOL_USDT = 6908;
+  const BONUS_POOL_USDT = 250000;
   const MIN_DEPOSIT = 100;
   const MAX_POOL = 2500000;
   const selectedToken = STABLECOINS.find((t) => t.symbol === selectedSymbol);
@@ -883,9 +885,29 @@ const LiquidityComp = ({
                         <span className="text-xs">Bonus Rewards</span>
                       </div>
                       <div className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                        ${getFormattedNumber(BONUS_POOL_USDT, 0)} USDT
+                        ${abbreviateNumber(BONUS_POOL_USDT,0)} USDT
                       </div>
                       <div className="text-xs text-slate-400">Season Pool</div>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-3">
+                      <div className="flex items-center gap-2 text-cyan-400 mb-1">
+                        <WalletCards className="w-4 h-4" />
+                        <span className="text-xs">Current Pool Status</span>
+                      </div>
+                      <div className="text-xl font-bold text-white">
+                        ${getFormattedNumber(totalDeposited, 2)} USDT
+                      </div>
+                      <div className="text-xs text-slate-400">Currently deposited</div>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-3">
+                      <div className="flex items-center gap-2 text-cyan-400 mb-1">
+                        <BadgeDollarSign className="w-4 h-4" />
+                        <span className="text-xs">Current Bonus Rewards</span>
+                      </div>
+                      <div className="text-xl font-bold text-white">
+                        ${getFormattedNumber(totalDeposited/10, 2)} USDT
+                      </div>
+                      <div className="text-xs text-slate-400">Based on Current Pool Status</div>
                     </div>
                   </div>
                   {/* Key features */}
@@ -1340,7 +1362,7 @@ const LiquidityComp = ({
                         className={` ${
                           claimFilter !== "claimed" && totalAvailableToClaim > 0
                             ? "max-h-48"
-                            : "max-h-64"
+                            : "max-h-84"
                         } space-y-2 overflow-y-auto pe-2`}
                       >
                         {filteredClaims.length === 0 ? (
