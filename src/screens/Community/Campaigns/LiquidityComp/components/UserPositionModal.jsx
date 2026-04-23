@@ -18,6 +18,12 @@ const UserPositionModal = ({ onClose }) => {
 
         <div className="p-6 space-y-4">
           {/* Impermanent Loss */}
+          <p className="text-xs text-slate-300 leading-relaxed mb-0">
+            If the pool does not reach minimum maturity thresholds(e.g.,
+            $500,000 TVL), the WOD team reserves the right to adjust the total
+            reward pool amount at our sole discretion. This ensures sustainable
+            reward distribution aligned with actual participation levels.
+          </p>
           <div className="">
             <div className="flex items-start gap-3">
               <div>

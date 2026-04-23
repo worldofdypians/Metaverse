@@ -164,7 +164,7 @@ const LiquidityComp = ({
   const [totalAprPercent, setTotalAprPercent] = useState(0);
   const [feesUsd24Percent, setfeesUsd24Percent] = useState(0);
 
-  const BONUS_POOL_USDT = 250000;
+  const BONUS_POOL_USDT = 6908;
   const MIN_DEPOSIT = 100;
   const MAX_POOL = 2500000;
   const selectedToken = STABLECOINS.find((t) => t.symbol === selectedSymbol);
@@ -883,7 +883,7 @@ const LiquidityComp = ({
                         <span className="text-xs">Bonus Rewards</span>
                       </div>
                       <div className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                        ${abbreviateNumber(BONUS_POOL_USDT, 0)} USDT
+                        ${getFormattedNumber(BONUS_POOL_USDT, 0)} USDT
                       </div>
                       <div className="text-xs text-slate-400">Season Pool</div>
                     </div>
