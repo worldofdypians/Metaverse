@@ -15,7 +15,7 @@ const Campaigns = ({ coinbase }) => {
   const dummyBanner = [
     {
       title: "Liquidity Catalyst: Earn From the $250k Reward Pool",
-      status: "Live",
+      status: "Expired",
       start_date: "Jan 23, 2026",
       end_date: "Apr 23, 2026",
       image: "https://cdn.worldofdypians.com/wod/liquidityBanner.jpg",

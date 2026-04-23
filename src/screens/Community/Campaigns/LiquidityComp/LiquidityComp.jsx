@@ -12,7 +12,7 @@ import {
   Wallet,
   Check,
   WalletCards,
-  BadgeDollarSign
+  BadgeDollarSign,
 } from "lucide-react";
 import DisclaimerModal from "./components/DisclaimerModal";
 import UserPositionModal from "./components/UserPositionModal";
@@ -32,12 +32,16 @@ import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import { switchNetworkWagmi } from "../../../../utils/wagmiSwitchChain";
 import { abbreviateNumber } from "js-abbreviation-number";
 
-const renderer = ({ days, hours }) => {
+const renderer = ({ days, hours, completed }) => {
   return (
     <div className="d-flex">
-      <div className="text-2xl font-bold text-white">
-        {days}d {hours}h
-      </div>
+      {completed ? (
+        <span className="text-2xl font-bold text-white">Season Ended</span>
+      ) : (
+        <div className="text-2xl font-bold text-white">
+          {days}d {hours}h
+        </div>
+      )}
     </div>
   );
 };
@@ -105,7 +109,7 @@ const LiquidityComp = ({
   const [showUserPosition, setShowUserPosition] = useState(false);
 
   const [totalDeposited, setTotalDeposited] = useState(0);
-  const [activeTab, setActiveTab] = useState("deposit");
+  const [activeTab, setActiveTab] = useState("claim");
   const [claimFilter, setClaimFilter] = useState("available");
   const [totalUserDeposited, setTotalUserDeposited] = useState(0);
   const [userScore, setUserScore] = useState(0);
@@ -860,9 +864,7 @@ const LiquidityComp = ({
                       {seasonEnd && (
                         <Countdown renderer={renderer} date={seasonEnd} />
                       )}
-                      <div className="text-xs text-slate-400">
-                        Until Season Ends
-                      </div>
+                      <div className="text-xs text-slate-400">Season Ended</div>
                     </div>
 
                     <div className="bg-white/5 rounded-lg p-3">
@@ -885,7 +887,7 @@ const LiquidityComp = ({
                         <span className="text-xs">Bonus Rewards</span>
                       </div>
                       <div className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-                        ${abbreviateNumber(BONUS_POOL_USDT,0)} USDT
+                        ${abbreviateNumber(BONUS_POOL_USDT, 0)} USDT
                       </div>
                       <div className="text-xs text-slate-400">Season Pool</div>
                     </div>
@@ -897,7 +899,9 @@ const LiquidityComp = ({
                       <div className="text-xl font-bold text-white">
                         ${getFormattedNumber(totalDeposited, 2)} USDT
                       </div>
-                      <div className="text-xs text-slate-400">Currently deposited</div>
+                      <div className="text-xs text-slate-400">
+                        Currently deposited
+                      </div>
                     </div>
                     <div className="bg-white/5 rounded-lg p-3">
                       <div className="flex items-center gap-2 text-cyan-400 mb-1">
@@ -905,9 +909,11 @@ const LiquidityComp = ({
                         <span className="text-xs">Current Bonus Rewards</span>
                       </div>
                       <div className="text-xl font-bold text-white">
-                        ${getFormattedNumber(totalDeposited/10, 2)} USDT
+                        ${getFormattedNumber(totalDeposited / 10, 2)} USDT
                       </div>
-                      <div className="text-xs text-slate-400">Based on Current Pool Status</div>
+                      <div className="text-xs text-slate-400">
+                        Based on Current Pool Status
+                      </div>
                     </div>
                   </div>
                   {/* Key features */}
@@ -1021,20 +1027,10 @@ const LiquidityComp = ({
                   </div>
                 </div>
 
-                {/* Deposit/Claim Tabs */}
+                {/* Claim Bonus / Withdraw / Claim Weekly Tabs */}
                 <div className="h-100 bg-gradient-to-br from-slate-900/80 to-slate-800/50 bordertw border-cyan-500/30 rounded-2xl p-6 backdrop-blur-xl">
                   {/* Tabs */}
                   <div className="flex gap-2 mb-4">
-                    <button
-                      onClick={() => setActiveTab("deposit")}
-                      className={`flex-1 py-2 px-4 rounded-lg font-semibold text-xs transition-all ${
-                        activeTab === "deposit"
-                          ? "bg-gradient-to-r from-blue-500/20 to-cyan-500/20 bordertw border-blue-400/30 text-white shadow-lg shadow-blue-500/30"
-                          : "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10"
-                      }`}
-                    >
-                      Deposit
-                    </button>
                     <button
                       onClick={() => setActiveTab("claim")}
                       className={`flex-1 py-2 px-4 rounded-lg font-semibold text-xs transition-all ${
@@ -1043,201 +1039,65 @@ const LiquidityComp = ({
                           : "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10"
                       }`}
                     >
-                      Claim Weekly
+                      Claim
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("withdraw")}
+                      className={`flex-1 py-2 px-4 rounded-lg font-semibold text-xs transition-all ${
+                        activeTab === "withdraw"
+                          ? "bg-gradient-to-r from-blue-500/20 to-cyan-500/20 bordertw border-blue-400/30 text-white shadow-lg shadow-blue-500/30"
+                          : "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10"
+                      }`}
+                    >
+                      Withdraw
                     </button>
                   </div>
 
-                  {/* Deposit Tab */}
-                  {activeTab === "deposit" && (
+                  {/* Withdraw Principal Tab */}
+                  {activeTab === "withdraw" && (
                     <>
-                      {/* Token selection */}
-                      <div className="mb-3">
-                        <label className="text-xs text-slate-400 mb-2 block">
-                          Select Token
-                        </label>
-                        <div className="relative">
-                          <button
-                            onClick={() => setShowTokenSelect(!showTokenSelect)}
-                            className="w-full bg-slate-800/50 bordertw border-white/10 rounded-lg p-3 flex items-center justify-between hover:border-cyan-500/30 transition-colors"
-                          >
-                            <div className="flex items-center gap-2">
-                              <img
-                                src={`https://cdn.worldofdypians.com/wod/${selectedToken.icon}`}
-                                alt=""
-                                className="w-8 h-8"
-                              />
-                              <div className="text-left">
-                                <div className="text-white font-semibold text-xs">
-                                  {selectedToken.symbol}
-                                </div>
-                                <div className="text-xs text-slate-400">
-                                  {selectedToken.name}
-                                </div>
-                              </div>
-                            </div>
-                            <ChevronDown
-                              className={`w-4 h-4 text-slate-400 transition-transform ${
-                                showTokenSelect ? "rotate-180" : ""
-                              }`}
-                            />
-                          </button>
-
-                          {showTokenSelect && (
-                            <OutsideClickHandler
-                              onOutsideClick={() => {
-                                setShowTokenSelect(false);
-                              }}
-                            >
-                              <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 bordertw border-white/10 rounded-lg shadow-xl max-h-49 overflow-y-auto">
-                                {STABLECOINS.map((token) => (
-                                  <button
-                                    key={token.symbol}
-                                    onClick={() => {
-                                      // setSelectedToken(token);
-                                      setSelectedSymbol(token.symbol);
-                                      setShowTokenSelect(false);
-                                    }}
-                                    className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-colors"
-                                  >
-                                    <div className="flex items-center gap-2">
-                                      {/* <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-xs">
-                                      {token.symbol[0]}
-                                    </div> */}
-                                      <img
-                                        src={`https://cdn.worldofdypians.com/wod/${token.icon}`}
-                                        alt=""
-                                        className="w-7 h-7"
-                                      />
-                                      <div className="text-left">
-                                        <div className="text-white font-semibold text-xs">
-                                          {token.symbol}
-                                        </div>
-                                        <div className="text-xs text-slate-400">
-                                          {token.name}
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="text-right">
-                                      <div className="text-xs text-end text-slate-400">
-                                        Balance
-                                      </div>
-                                      <div className="text-white font-semibold text-xs">
-                                        {getFormattedNumber(token.balance, 4)}
-                                      </div>
-                                    </div>
-                                  </button>
-                                ))}
-                              </div>
-                            </OutsideClickHandler>
-                          )}
+                      <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 bordertw border-cyan-500/30 rounded-lg p-4 mb-3">
+                        <div className="flex items-center gap-2 text-cyan-400 mb-2">
+                          <Wallet className="w-4 h-4" />
+                          <span className="text-xs font-semibold">
+                            Withdrawable Principal
+                          </span>
+                        </div>
+                        <div className="text-3xl font-bold text-white">
+                          {getFormattedNumber(withdrawAmount, 4)} USDT
+                        </div>
+                        <div className="text-xs text-slate-400 mt-1">
+                          Total principal returned to your wallet
                         </div>
                       </div>
 
-                      {/* Amount input */}
-                      <div className="mb-3">
-                        <label className="text-xs text-slate-400 mb-2 d-flex items-center w-100 justify-between">
-                          <span>Amount</span>
-                          <span className="text-xs">
-                            Balance:{" "}
-                            {getFormattedNumber(selectedToken.balance, 6)}
-                          </span>
-                        </label>
-                        <div className="bg-slate-800/50 bordertw border-white/10 rounded-lg p-3 focus-within:border-cyan-500/30 transition-colors">
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="text"
-                              value={amount}
-                              onChange={(e) => {
-                                setAmount(e.target.value);
-                                checkTokenApproval(e.target.value);
-                                calculateScore(e.target.value);
-                              }}
-                              max={maxPoolRemaining}
-                              placeholder="Min 100 USDT"
-                              className="flex-1 bg-transparent text-white text-xl font-semibold outline-none"
-                              maxLength={7}
-                              min={1}
-                            />
-                            <button
-                              onClick={() =>
-                                setAmount(
-                                  Math.min(
-                                    Number(selectedToken.balance || 0),
-                                    maxPoolRemaining,
-                                  ).toString(),
-                                )
-                              }
-                              className="px-3 py-1 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 rounded text-xs font-semibold transition-colors"
-                            >
-                              MAX
-                            </button>
-                          </div>
-                        </div>
-                        <div className="d-flex py-2 align-items-center gap-2 justify-content-end">
-                          <span
-                            className="bal-smallTxt text-slate-400"
-                            style={{ fontSize: 12 }}
-                          >
-                            Minimum deposit amount is $100.
-                          </span>
-                        </div>
+                      <div className="bg-slate-800/40 bordertw border-white/10 rounded-lg p-3 mb-3 text-xs text-slate-300">
+                        The campaign has ended. You will be able to withdraw your full
+                        principal deposit soon.
                       </div>
 
-                      {/* Estimated rewards */}
-                      <div className="bg-gradient-to-br d-flex align-items-center justify-content-between from-yellow-500/10 to-orange-500/10 bordertw border-yellow-500/20 rounded-lg px-3 py-2 mb-3">
-                        <div className="text-sm text-yellow-400 mb-0">
-                          Estimated Rewards (USDT)
-                        </div>
-                        <div className="d-flex align-items-center gap-3">
-                          <div>
-                            <div className="text-xs text-slate-400">
-                              From LP Fees
-                            </div>
-                            <div className="text-lg font-bold text-white">
-                              ${getFormattedNumber(calculatedLPBonus, 2)}
-                            </div>
-                          </div>
-                          <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent font-bold text-lg">
-                            +
-                          </span>
-                          <div>
-                            <div className="text-xs text-slate-400">
-                              From Bonus
-                            </div>
-                            <div className="text-lg font-bold text-white">
-                              ${getFormattedNumber(calculatedFinalBonus, 2)}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Deposit button */}
                       {isConnected && coinbase && chainId === 56 && (
                         <button
-                          onClick={() => {
-                            depositStatus === "deposit"
-                              ? handleDeposit()
-                              : depositStatus === "initial" &&
-                                  amount !== "" &&
-                                  isEOA
-                                ? handleApproveToken()
-                                : console.log("");
-                          }}
+                          onClick={handleWithdrawPrincipal}
                           disabled={
-                            !amount ||
-                            parseFloat(amount) === 0 ||
-                            isAmountInvalid
+                            !(
+                              Date.now() >= Number(seasonEnd) &&
+                              Number(withdrawAmount) > 0
+                            ) || withdrawLoading
                           }
                           className={`${
-                            depositStatus === "initial" ||
-                            depositStatus === "deposit"
+                            withdrawStatus === "initial" &&
+                            Number(withdrawAmount) > 0
                               ? "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
-                              : depositStatus === "success"
-                                ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
-                                : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
+                              : withdrawStatus === "initial" &&
+                                  Number(withdrawAmount) === 0
+                                ? "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10 cursor-not-allowed"
+                                : withdrawStatus === "success"
+                                  ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
+                                  : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
                           } w-full py-2 text-lg disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold`}
                         >
-                          {depositLoading ? (
+                          {withdrawLoading ? (
                             <div
                               className="spinner-border spinner-border-sm text-light"
                               role="status"
@@ -1246,13 +1106,9 @@ const LiquidityComp = ({
                                 Loading...
                               </span>
                             </div>
-                          ) : depositStatus === "initial" ? (
-                            <>Approve</>
-                          ) : depositStatus === "deposit" ? (
-                            <>Deposit</>
-                          ) : depositStatus === "success" ? (
+                          ) : withdrawStatus === "success" ? (
                             <>Success</>
-                          ) : (
+                          ) : withdrawStatus === "failed" ? (
                             <>
                               <img
                                 src={
@@ -1262,6 +1118,8 @@ const LiquidityComp = ({
                               />
                               Failed
                             </>
+                          ) : (
+                            <>Withdraw</>
                           )}
                         </button>
                       )}
@@ -1281,131 +1139,191 @@ const LiquidityComp = ({
                           Switch to BNB Chain
                         </button>
                       )}
+                      {errorMsg4 && (
+                        <div className="mt-2 text-xs text-red-400 text-center">
+                          {errorMsg4}
+                        </div>
+                      )}
                     </>
                   )}
 
-                  {/* Claim Tab */}
+                  {/* Claim Tab (Bonus + Weekly History) */}
                   {activeTab === "claim" && (
                     <>
-                      {/* Claim filters */}
-                      <div className="flex gap-2 mb-4">
-                        {["available", "claimed"].map((filter) => (
-                          <button
-                            key={filter}
-                            onClick={() => setClaimFilter(filter)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                              claimFilter === filter
-                                ? "bg-cyan-500/20 text-cyan-400 bordertw border-cyan-500/30"
-                                : "bg-white/5 text-slate-400 hover:bg-white/10"
-                            }`}
-                          >
-                            {filter.charAt(0).toUpperCase() + filter.slice(1)}
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Available to claim summary */}
-                      {claimFilter !== "claimed" &&
-                        totalAvailableToClaim > 0 && (
-                          <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 bordertw border-green-500/30 rounded-lg p-3 mb-3">
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <div className="text-xs text-slate-300 mb-1">
-                                  Total Available
-                                </div>
-                                <div className="text-xl font-bold text-green-400">
-                                  {totalAvailableToClaim.toFixed(2)} USDT
-                                </div>
-                              </div>
-                              <button
-                                onClick={handleClaim}
-                                className={`${
-                                  claimStatus === "initial" ||
-                                  claimStatus === "claim"
-                                    ? "bg-gradient-to-r from-green-600 to-emerald-500"
+                      {/* Claim LP Rewards section */}
+                      {/* <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 bordertw border-green-500/30 rounded-lg p-4 mb-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <div className="flex items-center gap-2 text-green-400 mb-2">
+                              <DollarSign className="w-4 h-4" />
+                              <span className="text-xs font-semibold">
+                                Total LP Rewards
+                              </span>
+                            </div>
+                            <div className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                              {getFormattedNumber(claimLPAmount, 4)} USDT
+                            </div>
+                            <div className="text-xs text-slate-400 mt-1">
+                              Available from weekly LP rewards
+                            </div>
+                          </div>
+                          {isConnected && coinbase && chainId === 56 && (
+                            <button
+                              onClick={handleClaim}
+                              disabled={
+                                Number(claimLPAmount) <= 0 || claimLoading
+                              }
+                              className={`${
+                                claimStatus === "initial" &&
+                                Number(claimLPAmount) > 0
+                                  ? "bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+                                  : claimStatus === "initial" &&
+                                      Number(claimLPAmount) === 0
+                                    ? "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10 cursor-not-allowed"
                                     : claimStatus === "success"
                                       ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
                                       : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
-                                } px-4 py-2  hover:from-green-700 hover:to-emerald-600 text-white rounded-lg text-xs font-semibold transition-all shadow-lg shadow-green-500/30`}
-                              >
-                                {claimLoading ? (
-                                  <div
-                                    className="spinner-border spinner-border-sm text-light"
-                                    role="status"
-                                  >
-                                    <span className="visually-hidden">
-                                      Loading...
-                                    </span>
-                                  </div>
-                                ) : claimStatus === "failed" ? (
-                                  <>
-                                    <img
-                                      src={
-                                        "https://cdn.worldofdypians.com/wod/failMark.svg"
-                                      }
-                                      alt=""
-                                    />
-                                    Failed
-                                  </>
-                                ) : claimStatus === "success" ? (
-                                  <>Success</>
-                                ) : (
-                                  <>Claim</>
-                                )}
-                              </button>
-                            </div>
+                              } px-4 py-2 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg text-xs font-semibold transition-all shadow-lg shadow-green-500/30`}
+                            >
+                              {claimLoading ? (
+                                <div
+                                  className="spinner-border spinner-border-sm text-light"
+                                  role="status"
+                                >
+                                  <span className="visually-hidden">
+                                    Loading...
+                                  </span>
+                                </div>
+                              ) : claimStatus === "success" ? (
+                                <>Success</>
+                              ) : claimStatus === "failed" ? (
+                                <>
+                                  <img
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/failMark.svg"
+                                    }
+                                    alt=""
+                                  />
+                                  Failed
+                                </>
+                              ) : (
+                                <>Claim</>
+                              )}
+                            </button>
+                          )}
+                          {!isConnected && !coinbase && (
+                            <button
+                              onClick={handleConnection}
+                              className="px-4 py-2 bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600 text-white rounded-lg text-xs font-semibold transition-all shadow-lg shadow-blue-500/30"
+                            >
+                              Connect Wallet
+                            </button>
+                          )}
+                          {isConnected && coinbase && chainId !== 56 && (
+                            <button
+                              onClick={handleBNBPool}
+                              className="px-4 py-2 bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500 text-white rounded-lg text-xs font-semibold transition-all shadow-lg"
+                            >
+                              Switch Network
+                            </button>
+                          )}
+                        </div>
+                        {errorMsg2 && (
+                          <div className="mt-2 text-xs text-red-400">
+                            {errorMsg2}
                           </div>
                         )}
+                      </div>
+                      <div className="bg-slate-800/40 bordertw border-white/10 rounded-lg p-3 mb-3 text-xs text-slate-300">
+                        The campaign has ended. You will be able to claim your
+                        bonus rewards soon.
+                      </div> */}
 
-                      {/* Claims list */}
-                      <div
-                        className={` ${
-                          claimFilter !== "claimed" && totalAvailableToClaim > 0
-                            ? "max-h-48"
-                            : "max-h-84"
-                        } space-y-2 overflow-y-auto pe-2`}
-                      >
-                        {filteredClaims.length === 0 ? (
-                          <div className="text-center py-8 text-slate-400 text-xs">
-                            You have no rewards claimed.
-                          </div>
-                        ) : (
-                          filteredClaims.map((claim) => (
-                            <div
-                              key={claim.week}
-                              className="bg-slate-800/50 bordertw border-white/10 rounded-lg p-3 flex items-center justify-between hover:border-cyan-500/30 transition-colors"
-                              style={
-                                claim.dimmed
-                                  ? { filter: "brightness(0.5)" }
-                                  : undefined
-                              }
-                            >
-                              <div>
-                                <div className="text-white font-semibold text-xs">
-                                  {claim.week}
-                                </div>
-                                <div className="text-xs text-slate-400">
-                                  {claim.date}
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-3">
-                                <div className="text-right">
-                                  <div className="text-white font-bold">
-                                    {claim.amount.toFixed(2)}
-                                  </div>
-                                  <div className="text-xs text-slate-400 text-end">
-                                    USDT
-                                  </div>
-                                </div>
-                                {claim.status === "available" ? null : ( //   </button> //     Claim //   > //     className="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-lg text-xs font-semibold transition-all" //     onClick={() => handleClaim(claim.week)} //   <button
-                                  <div className="px-3 py-1.5 bg-green-500/20 text-green-400 rounded-lg text-xs font-semibold flex items-center gap-1">
-                                    <Check className="w-3 h-3" />
-                                    Claimed
-                                  </div>
-                                )}
-                              </div>
+                      {/* Claim Bonus section */}
+                      <div className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 bordertw border-yellow-500/30 rounded-lg p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <div className="flex items-center gap-2 text-yellow-400 mb-2">
+                              <Trophy className="w-4 h-4" />
+                              <span className="text-xs font-semibold">
+                                Final Bonus Rewards
+                              </span>
                             </div>
-                          ))
+                            <div className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                              {getFormattedNumber(claimBonusAmount, 4)} USDT
+                            </div>
+                            <div className="text-xs text-slate-400 mt-1">
+                              Available from the season bonus rewards pool
+                            </div>
+                          </div>
+                          {isConnected && coinbase && chainId === 56 && (
+                            <button
+                              onClick={handleClaimBonus}
+                              disabled={
+                                !(
+                                  Date.now() >= Number(seasonEnd) &&
+                                  Number(claimBonusAmount) > 0
+                                ) || claimBonusLoading
+                              }
+                              className={`${
+                                claimBonusStatus === "initial" &&
+                                Number(claimBonusAmount) > 0
+                                  ? "bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-600 hover:to-orange-600"
+                                  : claimBonusStatus === "initial" &&
+                                      Number(claimBonusAmount) === 0
+                                    ? "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10 cursor-not-allowed"
+                                    : claimBonusStatus === "success"
+                                      ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
+                                      : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
+                              } px-4 py-2 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg text-xs font-semibold transition-all shadow-lg shadow-yellow-500/30`}
+                            >
+                              {claimBonusLoading ? (
+                                <div
+                                  className="spinner-border spinner-border-sm text-light"
+                                  role="status"
+                                >
+                                  <span className="visually-hidden">
+                                    Loading...
+                                  </span>
+                                </div>
+                              ) : claimBonusStatus === "success" ? (
+                                <>Success</>
+                              ) : claimBonusStatus === "failed" ? (
+                                <>
+                                  <img
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/failMark.svg"
+                                    }
+                                    alt=""
+                                  />
+                                  Failed
+                                </>
+                              ) : (
+                                <>Claim</>
+                              )}
+                            </button>
+                          )}
+                          {!isConnected && !coinbase && (
+                            <button
+                              onClick={handleConnection}
+                              className="px-4 py-2 bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600 text-white rounded-lg text-xs font-semibold transition-all shadow-lg shadow-blue-500/30"
+                            >
+                              Connect Wallet
+                            </button>
+                          )}
+                          {isConnected && coinbase && chainId !== 56 && (
+                            <button
+                              onClick={handleBNBPool}
+                              className="px-4 py-2 bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500 text-white rounded-lg text-xs font-semibold transition-all shadow-lg"
+                            >
+                              Switch Network
+                            </button>
+                          )}
+                        </div>
+                        {errorMsg3 && (
+                          <div className="mt-2 text-xs text-red-400">
+                            {errorMsg3}
+                          </div>
                         )}
                       </div>
                     </>
@@ -1417,8 +1335,8 @@ const LiquidityComp = ({
             {/* Footer note */}
             <div className="mt-4 text-center">
               <p className="text-xs text-slate-400">
-                By depositing, you acknowledge all risks and agree to the terms.
-                •{" "}
+                By participating, you acknowledge all risks and agree to the
+                terms. •{" "}
                 <span
                   className="text-decoration-underline cursor-pointer"
                   onClick={() => {
