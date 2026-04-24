@@ -63,6 +63,7 @@ export const bannedEmails = [
   "tz8u0@airsworld.net",
   "jokongscholar4@gmail.com",
   "joffdevilish13@gmail.com",
+  "pantheraleonardo@gmail.com",
 ];
 
 export const suspicousEmails = [
