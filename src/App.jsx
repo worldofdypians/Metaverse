@@ -1862,7 +1862,7 @@ function AppRoutes() {
     {
       title: "SEI",
       logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "SEI",
       rewardAmount: "$10,000",
       location: [-0.06734488843929015, 0.08361518383026124],
@@ -1875,15 +1875,15 @@ function AppRoutes() {
       eventType: "Explore & Mine",
       eventDate: "Dec 22, 2025",
       backgroundImage: "https://cdn.worldofdypians.com/wod/seiBg.webp",
-      userEarnUsd: user.userStats.seiEarnUsd,
-      userEarnCrypto: user.userStats.seiEarnToken,
-      userEarnPoints: user.userStats.seiEarnPoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       popupInfo: {
         title: "SEI",
         chain: "Sei Network",
         linkState: "sei",
         rewards: "SEI",
-        status: "Live",
+        status: "Expired",
         id: "event13",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in SEI Rewards",
@@ -4349,9 +4349,9 @@ function AppRoutes() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            if (seiEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (seiEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
