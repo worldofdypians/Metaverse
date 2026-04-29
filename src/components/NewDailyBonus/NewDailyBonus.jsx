@@ -3164,7 +3164,7 @@ const NewDailyBonus = ({
                             chain === "bnb" && "chain-item-active"
                           } w-100`}
                         >
-                          <HtmlTooltipGift
+                          {/* <HtmlTooltipGift
                             placement="top"
                             title={
                               <span className="card-eth-chain-text">
@@ -3179,7 +3179,7 @@ const NewDailyBonus = ({
                               alt=""
                               className="position-absolute manta-gift"
                             />
-                          </HtmlTooltipGift>
+                          </HtmlTooltipGift> */}
                           <img
                             src={"https://cdn.worldofdypians.com/wod/bnbBg.png"}
                             className={`chain-img ${
@@ -4421,7 +4421,7 @@ const NewDailyBonus = ({
                             chain === "bnb" && "chain-item-active"
                           } w-auto`}
                         >
-                          <HtmlTooltipGift
+                          {/* <HtmlTooltipGift
                             placement="top"
                             title={
                               <span className="card-eth-chain-text">
@@ -4436,7 +4436,7 @@ const NewDailyBonus = ({
                               alt=""
                               className="position-absolute manta-gift"
                             />
-                          </HtmlTooltipGift>
+                          </HtmlTooltipGift> */}
                           <img
                             src={"https://cdn.worldofdypians.com/wod/bnbBg.png"}
                             className={`chain-img ${
@@ -5086,7 +5086,7 @@ const NewDailyBonus = ({
 
                                 const specialStandardChestIds = new Set(
                                   uniqueRemainingStandardChests
-                                    .filter((_, idx) => [6].includes(idx))
+                                    .filter((_, idx) => [].includes(idx))
                                     .map((c) => c.chestId),
                                 );
 
