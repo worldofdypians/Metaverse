@@ -4882,10 +4882,10 @@ function Dashboard({
         type: "stars",
         rewards: taikoStars,
         previous_rewards: taikoStars,
-        activeData: dailyRecordsSei,
+        activeData: [],
         previousData: prevDataSei,
-        player_data: userDataSei,
-        is_active: activePlayerSei,
+        player_data: {},
+        is_active: true,
         loading: loadingSei,
       },
     ]);
@@ -5026,7 +5026,7 @@ function Dashboard({
     // }
     else if (chain === "sei") {
       // if (dailyRecordsSei.length === 0) {
-      fetchDailyRecordsSei();
+      // fetchDailyRecordsSei();
       // }
     }
     // else if (chain === "taraxa") {
