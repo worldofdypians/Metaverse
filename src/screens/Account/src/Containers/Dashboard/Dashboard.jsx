@@ -1995,11 +1995,11 @@ function Dashboard({
     setDailyRecordsSei(leaderboard);
     fillRecordsSei(leaderboard);
 
-    const version = parseInt(data?.version);
-    await fetchPreviousWinnersSei(
-      Number.isNaN(version) ? 0 : version,
-      forceRefresh,
-    );
+    // const version = parseInt(data?.version);
+    // await fetchPreviousWinnersSei(
+    //   Number.isNaN(version) ? 0 : version,
+    //   forceRefresh,
+    // );
 
     if (userId) {
       await fetchDailyRecordsAroundPlayerSei(forceRefresh);
@@ -4882,10 +4882,10 @@ function Dashboard({
         type: "stars",
         rewards: taikoStars,
         previous_rewards: taikoStars,
-        activeData: [],
+        activeData: dailyRecordsSei,
         previousData: prevDataSei,
-        player_data: {},
-        is_active: true,
+        player_data: userDataSei,
+        is_active: activePlayerSei,
         loading: loadingSei,
       },
     ]);
@@ -5026,7 +5026,7 @@ function Dashboard({
     // }
     else if (chain === "sei") {
       // if (dailyRecordsSei.length === 0) {
-      // fetchDailyRecordsSei();
+      fetchDailyRecordsSei();
       // }
     }
     // else if (chain === "taraxa") {
