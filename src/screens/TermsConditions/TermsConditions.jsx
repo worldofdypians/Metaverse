@@ -639,6 +639,35 @@ const TermsConditions = () => {
                 not yet distributed or granted may be withheld or forfeited
                 without liability to the Company.
               </p>
+              <p className="text-white m-0">
+                3.10. In-Game Activity Requirement for Reward Eligibility.
+              </p>
+              <p className="text-white m-0">
+                To be eligible to receive any rewards, incentives,
+                distributions, or benefits offered through the Services or any
+                Program, you must maintain active participation in the Game
+                itself, in addition to any website or platform account activity.
+                Mere registration or login through the Website, without
+                corresponding in-Game activity, shall not be sufficient to
+                qualify for any such rewards or benefits.
+              </p>
+              <p className="text-white m-0">
+                For the purposes of this Section, "active in-Game participation"
+                means logging into the Game client and engaging in gameplay
+                activities within the time period specified by the Company in
+                connection with the applicable reward or Program. The Company
+                reserves the right to define, modify, and assess the minimum
+                activity thresholds required for eligibility at its sole
+                discretion, and to verify such activity through its internal
+                systems and monitoring tools.
+              </p>
+              <p className="text-white m-0">
+                Users who fail to meet the in-Game activity requirement during
+                the applicable eligibility period may be disqualified from
+                receiving rewards without prior notice. The Company shall have
+                no liability for any forfeiture of rewards resulting from a
+                user's failure to satisfy this requirement.
+              </p>
               <p className="text-white m-0">4. OWNERSHIP AND CONTENT</p>
               <p className="text-white m-0">
                 4.1. Ownership of the Services. The Services, including their
