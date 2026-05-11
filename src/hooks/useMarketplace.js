@@ -1,7 +1,6 @@
 import {
   useReadContract,
   useWaitForTransactionReceipt,
-  useAccount,
 } from "wagmi";
 import { parseEther, formatEther, encodeFunctionData } from "viem";
 import { useState, useCallback } from "react";

@@ -32,6 +32,7 @@ import {
   disconnect,
   getAccount,
   getBytecode,
+  getChainId,
   watchAccount,
   watchConnections,
 } from "@wagmi/core";
@@ -432,10 +433,14 @@ function WalletSync() {
 
       switch (account.status) {
         case "connected":
-          if (account.address && account.chainId) {
+          if (account.address) {
+            const resolvedChainId =
+              account.chainId ?? getChainId(wagmiClient);
             console.log("✅ Wallet connected:", account.address);
             dispatch(setAddress(account.address));
-            dispatch(setChainId(account.chainId));
+            if (resolvedChainId != null) {
+              dispatch(setChainId(resolvedChainId));
+            }
             dispatch(setIsConnected(true));
             setWalletModal(false);
           }
@@ -492,12 +497,21 @@ function WalletSync() {
 
           console.log("✅ Active connection:", activeConnection.connector.name);
           dispatch(setAddress(activeConnection.accounts[0]));
-          dispatch(setChainId(activeConnection.chainId));
+          dispatch(
+            setChainId(
+              activeConnection.chainId ?? getChainId(wagmiClient),
+            ),
+          );
           dispatch(setIsConnected(true));
           setWalletModal(false);
-          // Set wallet type based on connector
+          // Set wallet type based on connector (Binance uses WalletConnect)
           if (activeConnection.connector.type === "binanceWallet") {
             window.WALLET_TYPE = "binance";
+            setWalletType("binance");
+          } else if (
+            activeConnection.connector.name === "WalletConnect" &&
+            window.WALLET_TYPE === "binance"
+          ) {
             setWalletType("binance");
           } else {
             window.WALLET_TYPE = activeConnection.connector.type;
@@ -544,7 +558,8 @@ function WalletSync() {
 function AppRoutes() {
   const { email, logout: logoutAuth } = useAuth();
   const dispatch = useDispatch();
-  const { connect, error } = useConnect();
+  const connectMutation = useConnect();
+  const { error } = connectMutation;
   const chainId = useChainId();
   const [verifyWallet, { data: dataVerify }] = useMutation(VERIFY_WALLET);
   const [generateNonce, { data: dataNonce }] = useMutation(GENERATE_NONCE);
@@ -702,6 +717,11 @@ function AppRoutes() {
   let isConnected = useSelector(walletConnectedSelector);
   let networkId = useSelector(walletChainIdSelector);
   let isPremium = useSelector(isPremiumSelector);
+
+  useEffect(() => {
+    if (!isConnected || !coinbase) return;
+    refetchPlayer();
+  }, [isConnected, coinbase, refetchPlayer]);
 
   const getCawsSold = async () => {
     const allSold = latest20BoughtNFTS;
@@ -1091,7 +1111,7 @@ function AppRoutes() {
         thumbImage: "https://cdn.worldofdypians.com/wod/cmcPopupImage.png",
       },
     },
-        {
+    {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
       eventStatus: "Live",
@@ -3194,6 +3214,10 @@ function AppRoutes() {
         for (let i = 0; i < result.length; i++)
           stakenft.push(parseInt(result[i]));
         return stakenft;
+      })
+      .catch((e) => {
+        console.error(e);
+        return [];
       });
 
     return myStakes;
@@ -4034,7 +4058,7 @@ function AppRoutes() {
       c.name.toLowerCase().includes(option.toLowerCase()),
     );
     if (connector) {
-      connect({ connector, chainId });
+      connectMutation.mutate({ connector, chainId });
       window.WALLET_TYPE = option.walletType;
       setWalletType(option.walletType);
     }
@@ -6702,7 +6726,7 @@ export default function App() {
 
   const AccountAppContent = () => {
     const { isLoading, isAuthenticated, playerId, email } = useAuth();
-    
+
     useEffect(() => {
       if (!isLoading || !isAuthenticated || !playerId) {
         setFireAppContent(false);
@@ -6712,7 +6736,7 @@ export default function App() {
     if (isLoading) {
       return <LandingScreen />;
     }
-   
+
     if (isAuthenticated) {
       if (!playerId) {
         return (

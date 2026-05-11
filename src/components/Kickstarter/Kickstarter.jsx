@@ -642,7 +642,6 @@ const Kickstarter = ({
         handleSwitchNetwork,
         handleSwitchChainGateWallet: null,
         handleSwitchChainBinanceWallet: null,
-        network_matchain: chain,
         coinbase,
       });
     } catch (error) {

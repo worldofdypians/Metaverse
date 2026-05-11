@@ -43,7 +43,7 @@ const MarketMint = ({
   cawsArray,
   calculateCaws,
   timepieceMetadata,
-  nftCreated,network_matchain
+  nftCreated
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -556,7 +556,6 @@ const MarketMint = ({
         handleSwitchNetwork,
         handleSwitchChainGateWallet,
         handleSwitchChainBinanceWallet,
-        network_matchain,
         coinbase,
       });
     } catch (error) {

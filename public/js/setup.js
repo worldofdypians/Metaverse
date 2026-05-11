@@ -5170,39 +5170,6 @@ async function getMyNFTs(address, type = "") {
     });
 
     return tokens;
-  } else if (type === "taraxa") {
-    contract = new window.taraxaWeb3.eth.Contract(
-      window.TARAXA_NFT_ABI,
-      window.config.nft_taraxa_address,
-    );
-    const events = await contract
-      .getPastEvents("Transfer", {
-        filter: { to: address },
-        fromBlock: 0,
-        toBlock: "latest",
-      })
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    const tokens_result =
-      events.length > 0 ? [events[0]?.returnValues.tokenId] : [];
-    const tokens = tokens_result.map((item) => {
-      return {
-        type: "taraxa",
-        isOwner: true,
-        isListed: false,
-        isStaked: false,
-        chain: 841,
-        nftAddress: window.config.nft_taraxa_address,
-        image: `https://cdn.worldofdypians.com/wod/vanar-50.png`,
-        nftName: "Taraxa Beta Pass",
-        nftSymbol: "TXBP",
-        tokenId: item,
-      };
-    });
-    return tokens;
   }
 }
 
@@ -38067,28 +38034,7 @@ async function getEstimatedTokenSubscriptionAmountManta(tokenAddress) {
     .call();
 }
 
-async function getEstimatedTokenSubscriptionAmountTaraxa(
-  tokenAddress,
-  discountPercentage,
-) {
-  const taraxaContract = new window.taraxaWeb3.eth.Contract(
-    window.SUBSCRIPTION_TARAXA_ABI,
-    window.config.subscription_taraxa_address,
-  );
-  console.log(
-    taraxaContract.methods
-      .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
-      .call(),
-  );
-  return await taraxaContract.methods
-    .getEstimatedTokenSubscriptionAmount(tokenAddress, discountPercentage)
-    .call()
-    .catch((e) => {
-      console.log(e);
-      return 100000000;
-    });
-}
-
+ 
 async function getEstimatedTokenSubscriptionAmountCore(tokenAddress) {
   const coreContract = new window.coreWeb3.eth.Contract(
     window.SUBSCRIPTION_CORE_ABI,

@@ -24,9 +24,6 @@ import {
   walletConnect,
   injected,
 } from "wagmi/connectors";
-import { getWagmiConnectorV2 } from "@binance/w3w-wagmi-connector-v2";
-
-const binanceConnector = getWagmiConnectorV2();
 
 export const wagmiClient = createConfig({
   chains: [
@@ -47,14 +44,29 @@ export const wagmiClient = createConfig({
     vanar,
     // taraxa,
   ],
-  autoConnect: true,
   connectors: [
     walletConnect({
-      projectId: "a4f2c3075e5ea8ee42bdfe3c74a29caf"
+      projectId: "a4f2c3075e5ea8ee42bdfe3c74a29caf",
+      metadata: {
+        name: "World of Dypians",
+        description: "World of Dypians",
+        url:
+          typeof window !== "undefined"
+            ? window.location.origin
+            : "https://www.worldofdypians.com",
+        icons:
+          typeof window !== "undefined"
+            ? [`${window.location.origin}/favicon.ico`]
+            : ["https://www.worldofdypians.com/favicon.ico"],
+      },
     }),
     injected(),
-    binanceConnector(),
-    metaMask(),
+    metaMask({
+      dapp: {
+        name: "World of Dypians",
+        url: window.location.origin,
+      },
+    }),
     coinbaseWallet(),
   ],
   transports: {

@@ -2,7 +2,6 @@ import { switchChain as wagmiSwitchChain, getAccount } from "@wagmi/core";
 import { wagmiClient } from "../wagmiConnectors";
 import {
   mainnet,
-  matchain,
   opBNB,
   bsc,
   manta,
@@ -29,7 +28,6 @@ const getChainById = (chainId) => {
     204: opBNB,
     43114: avalanche,
     8453: base,
-    698: matchain,
     1030: confluxESpace,
     1482601649: skaleNebula,
     1116: coreDao,
