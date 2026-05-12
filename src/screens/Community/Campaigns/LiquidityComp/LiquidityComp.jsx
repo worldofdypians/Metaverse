@@ -1081,7 +1081,7 @@ const LiquidityComp = ({
 
                 {/* Season 1 settlement breakdown (API) */}
                 {isConnected && coinbase && (
-                  <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/50 bordertw border-emerald-500/20 rounded-2xl p-4 backdrop-blur-xl">
+                  <div className=" max-h-[300px] overflow-y-auto bg-gradient-to-br from-slate-900/80 to-slate-800/50 bordertw border-emerald-500/20 rounded-2xl p-4 backdrop-blur-xl">
                     <div className="flex items-center justify-between mb-3 gap-2">
                       <span className="text-xs font-bold text-white flex items-center gap-2">
                         <BarChart3 className="w-4 h-4 text-emerald-400" />
@@ -1106,18 +1106,18 @@ const LiquidityComp = ({
 
                     {seasonUserStats && (
                       <>
-                        {seasonUserStats.generated_at?.principal && (
-                          <div className="text-[10px] text-slate-500 mb-3">
+                        {/* {seasonUserStats.generated_at?.principal && (
+                          <div className="text-[10px] text-white mb-3">
                             Principal data as of{" "}
                             {formatUtcDateTime(
                               seasonUserStats.generated_at.principal,
                             )}
                           </div>
-                        )}
+                        )} */}
 
                         {seasonUserStats.principal && (
                           <div className="mb-4">
-                            <div className="text-[11px] font-semibold text-emerald-400/90 mb-2">
+                            <div className="text-[11px] font-semibold text-white mb-2">
                               Principal breakdown
                             </div>
                             <div className="grid grid-cols-2 gap-2 text-xs">
@@ -1171,7 +1171,7 @@ const LiquidityComp = ({
                               </div>
                             </div>
 
-                            <div className="mt-3 bg-slate-800/50 rounded-lg p-3 border border-white/5">
+                            <div className="mt-3 bg-slate-800/50 rounded-lg p-3 bordertw border-white/5">
                               <div className="flex items-start gap-2 text-xs text-slate-300">
                                 <TrendingDown className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                                 <div>
@@ -1312,7 +1312,7 @@ const LiquidityComp = ({
 
                         {seasonUserStats.totals && (
                           <div className="mb-4">
-                            <div className="text-[11px] font-semibold text-cyan-400/90 mb-2">
+                            <div className="text-[11px] font-semibold text-white mb-2">
                               Totals (principal + bonus share)
                             </div>
                             <div className="grid grid-cols-2 gap-2 text-xs">
@@ -1337,8 +1337,8 @@ const LiquidityComp = ({
                                     Number(
                                       seasonUserStats.totals.net_pnl_usdt,
                                     ) >= 0
-                                      ? "font-bold text-emerald-400"
-                                      : "font-bold text-rose-400"
+                                      ? "font-bold text-white"
+                                      : "font-bold text-white"
                                   }
                                 >
                                   {Number(
@@ -1352,7 +1352,7 @@ const LiquidityComp = ({
                                     2,
                                   )}
                                 </div>
-                                <div className="text-[10px] text-slate-500 mt-0.5">
+                                <div className="text-[10px] text-white mt-0.5">
                                   (
                                   {Number(
                                     seasonUserStats.totals.net_pnl_percent,
@@ -1372,11 +1372,11 @@ const LiquidityComp = ({
 
                         {seasonUserStats.bonus && (
                           <div className="mb-4">
-                            <div className="text-[11px] font-semibold text-yellow-400/90 mb-2">
+                            <div className="text-[11px] font-semibold text-yellow-400 mb-2">
                               Bonus pool share
                             </div>
                             <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div className="bg-yellow-500/5 rounded-lg p-2 border border-yellow-500/10">
+                              <div className="bg-yellow-500/5 rounded-lg p-2 bordertw border-yellow-500/10">
                                 <div className="text-slate-400 mb-0.5">
                                   Bonus (USDT)
                                 </div>
@@ -1388,7 +1388,7 @@ const LiquidityComp = ({
                                   )}
                                 </div>
                               </div>
-                              <div className="bg-yellow-500/5 rounded-lg p-2 border border-yellow-500/10">
+                              <div className="bg-yellow-500/5 rounded-lg p-2 bordertw border-yellow-500/10">
                                 <div className="text-slate-400 mb-0.5">
                                   Share / Rank
                                 </div>
@@ -1402,7 +1402,7 @@ const LiquidityComp = ({
                                 </div>
                               </div>
                             </div>
-                            <p className="text-[10px] text-slate-500 mt-2">
+                            <p className="text-[10px] text-slate-400 mt-2">
                               Campaign score is used internally for bonus
                               allocation only.
                             </p>
@@ -1423,20 +1423,20 @@ const LiquidityComp = ({
                                   return (
                                     <div
                                       key={`${d.deposit_index}-${d.timestamp ?? d.date_utc}`}
-                                      className="bg-slate-800/40 rounded-lg p-3 border border-white/5 text-xs"
+                                      className="bg-slate-800/40 rounded-lg p-3 bordertw border-white/5 text-xs"
                                     >
                                       <div className="flex justify-between gap-2 mb-2">
                                         <span className="text-slate-400">
                                           Deposit #{d.deposit_index + 1} ·{" "}
                                           {stableSymbolForToken(d.token)}
                                         </span>
-                                        <span className="text-slate-500">
+                                        <span className="text-slate-400">
                                           {formatUtcDateTime(d.date_utc)}
                                         </span>
                                       </div>
-                                      <div className="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                                      <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                          <span className="text-slate-500">
+                                          <span className="text-slate-400">
                                             Deposited
                                           </span>
                                           <div className="font-semibold text-white">
@@ -1448,7 +1448,7 @@ const LiquidityComp = ({
                                           </div>
                                         </div>
                                         <div>
-                                          <span className="text-slate-500">
+                                          <span className="text-slate-400">
                                             Settlement
                                           </span>
                                           <div className="font-semibold text-cyan-300">
@@ -1460,7 +1460,7 @@ const LiquidityComp = ({
                                           </div>
                                         </div>
                                         <div>
-                                          <span className="text-slate-500">
+                                          <span className="text-slate-400">
                                             Entry WOD price
                                           </span>
                                           <div className="font-semibold text-white">
@@ -1472,7 +1472,7 @@ const LiquidityComp = ({
                                           </div>
                                         </div>
                                         <div>
-                                          <span className="text-slate-500">
+                                          <span className="text-slate-400">
                                             Exit WOD price
                                           </span>
                                           <div className="font-semibold text-white">
@@ -1484,10 +1484,10 @@ const LiquidityComp = ({
                                           </div>
                                         </div>
                                         <div>
-                                          <span className="text-slate-500">
+                                          <span className="text-slate-400">
                                             WOD amount (entry)
                                           </span>
-                                          <div className="font-semibold text-slate-200">
+                                          <div className="font-semibold text-slate-300">
                                             {getFormattedNumber(
                                               d.wod_amount_at_entry,
                                               2,
@@ -1496,23 +1496,23 @@ const LiquidityComp = ({
                                           </div>
                                         </div>
                                         <div>
-                                          <span className="text-slate-500">
+                                          <span className="text-slate-400">
                                             Day / remaining
                                           </span>
-                                          <div className="font-semibold text-slate-200">
+                                          <div className="font-semibold text-slate-300">
                                             {d.day_index ?? "—"} /{" "}
                                             {d.days_remaining ?? "—"} days
                                           </div>
                                         </div>
                                       </div>
                                       <div className="mt-2 pt-2 border-t border-white/10 flex justify-between gap-2">
-                                        <span className="text-slate-500">
+                                        <span className="text-slate-400">
                                           WOD-side vs entry notional
                                         </span>
                                         <span
                                           className={`font-semibold ${
                                             wodLegDelta >= 0
-                                              ? "text-rose-300"
+                                              ? "text-orange-300"
                                               : "text-emerald-300"
                                           }`}
                                         >
@@ -1524,14 +1524,14 @@ const LiquidityComp = ({
                                         </span>
                                       </div>
                                       <div className="mt-1 flex justify-between gap-2">
-                                        <span className="text-slate-500">
+                                        <span className="text-slate-400">
                                           Deposit PnL
                                         </span>
                                         <span
                                           className={
                                             Number(d.pnl_usdt) >= 0
                                               ? "text-emerald-400 font-semibold"
-                                              : "text-rose-400 font-semibold"
+                                              : "text-orange-400 font-semibold"
                                           }
                                         >
                                           {Number(d.pnl_usdt) >= 0 ? "+" : ""}$
@@ -1554,7 +1554,7 @@ const LiquidityComp = ({
                           )}
 
                         {seasonUserStats.pool && (
-                          <div className="mt-4 pt-3 border-t border-white/10 text-[10px] text-slate-500 space-y-1">
+                          <div className="mt-4 pt-3 border-t border-white/10 text-[10px] text-slate-400 space-y-1">
                             <div>
                               Pool snapshot:{" "}
                               {seasonUserStats.pool.users_count ?? "—"} users ·
