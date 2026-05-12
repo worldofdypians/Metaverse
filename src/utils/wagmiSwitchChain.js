@@ -1,4 +1,4 @@
-import { switchChain as wagmiSwitchChain, getAccount } from "@wagmi/core";
+import { switchChain as wagmiSwitchChain, getConnection } from "@wagmi/core";
 import { wagmiClient } from "../wagmiConnectors";
 import {
   mainnet,
@@ -88,7 +88,7 @@ export const switchNetworkWagmi = async (chainId, chain, options = {}) => {
 
   // Default: Use wagmi switchChain for standard wallets (MetaMask, etc.)
   try {
-    const account = getAccount(wagmiClient);
+    const account = getConnection(wagmiClient);
 
     // If already on the correct chain, just update state
     if (account?.chainId === chainId) {

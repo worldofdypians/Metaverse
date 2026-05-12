@@ -5,7 +5,7 @@ import {
   writeContract as wagmiWriteContract,
   waitForTransactionReceipt as wagmiWaitForTransactionReceipt,
   switchChain as wagmiSwitchChain,
-  getAccount,
+  getConnection,
 } from "@wagmi/core";
 import { wagmiClient } from "../../wagmiConnectors";
 import { getTransaction } from "@wagmi/core";
@@ -472,7 +472,7 @@ const NewChestItem = ({
           : "openChest";
 
       // Default: use wagmi connected wallet via viem
-      const account = getAccount(wagmiClient);
+      const account = getConnection(wagmiClient);
 
       if (account?.chainId && account.chainId !== chainId) {
         try {

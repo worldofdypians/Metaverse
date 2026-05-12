@@ -16,7 +16,7 @@ import {
   writeContract as wagmiWriteContract,
   waitForTransactionReceipt as wagmiWaitForTransactionReceipt,
   switchChain as wagmiSwitchChain,
-  getAccount,
+  getConnection,
 } from "@wagmi/core";
 import { wagmiClient } from "../../wagmiConnectors";
 
@@ -550,7 +550,7 @@ const Kickstarter = ({
       // If user is on MatchID wallet, use provided viem walletClient/publicClient
   
       // Default: use wagmi connected wallet via viem
-      const account = getAccount(wagmiClient);
+      const account = getConnection(wagmiClient);
 
       if (account?.chainId && account.chainId !== chainId) {
         try {

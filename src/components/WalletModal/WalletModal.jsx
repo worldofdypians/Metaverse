@@ -1,8 +1,8 @@
 import React from "react";
 import Modal from "../General/Modal";
 import OutsideClickHandler from "react-outside-click-handler";
-import { useConnect, useChainId } from "wagmi";
-import { getAccount, getChainId } from "@wagmi/core";
+import { useConnect } from "wagmi";
+import { getConnection } from "@wagmi/core";
 import { wagmiClient } from "../../wagmiConnectors";
 import "../../screens/Account/src/App.css";
 import { useWallet } from "../../redux/hooks/useWallet";
@@ -120,13 +120,7 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
   const { isPending, variables, error } = connectMutation;
   // const chainId = useChainId();
   const connectors = wagmiClient.connectors;
-  const {
-    setWalletType,
-    setWalletModal,
-    setAddress,
-    setChainId,
-    setIsConnected,
-  } = useWallet();
+  const { setWalletType, setWalletModal } = useWallet();
 
   // Helper to detect SafePal wallet in mobile app browser
   const isSafePalProvider = () => {
@@ -213,24 +207,60 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
       return;
     }
 
-    // Binance Web3 Wallet: WalletConnect modal defaults to ConnectingWalletConnectBasic
-    // when manualWCControl is set (see ModalController.open). After the modal opens,
-    // reset the router to ConnectingWalletConnect with Binance explorer metadata so the
-    // wallet list shows Binance selected (Binance-specific QR / links).
+    // Binance Web3 Wallet:
+    //  - Inside Binance App's DApp browser: use the dedicated injected connector
+    //    that targets window.binancew3w.ethereum (per Binance docs).
+    //  - Anywhere else (desktop browser, mobile browser): use WalletConnect v2,
+    //    which covers the extension/QR/deep-link flows.
+    //
+    // Note: We DO NOT update Redux state (address/chainId/isConnected/walletModal)
+    // here. The WalletSync component in App.jsx subscribes to watchConnection +
+    // watchConnections and is the single source of truth for those updates -
+    // it fires reliably even when the connect() promise is cancelled by AppKit's
+    // modal (which happens in the WC QR flow on desktop). We only:
+    //   1. Tag window.WALLET_TYPE BEFORE connect so WalletSync knows it's Binance.
+    //   2. Trigger the connect.
+    //   3. Surface errors.
     if (option.walletType === "binance") {
+      const isInBinance =
+        typeof window !== "undefined" &&
+        typeof window.binancew3w?.ethereum !== "undefined";
+
+      window.WALLET_TYPE = option.walletType;
+
+      if (isInBinance) {
+        const binanceInjected = connectors.find(
+          (c) => c.id === "wallet.binance.com",
+        );
+
+        if (binanceInjected) {
+          try {
+            await connect(wagmiClient, {
+              connector: binanceInjected,
+              chainId: option.chainId,
+            });
+          } catch (err) {
+            console.error("Binance in-app connection error:", err);
+            window.alertify.error(
+              "Failed to connect Binance Web3 Wallet in-app browser.",
+            );
+          }
+          return;
+        }
+      }
+
       const wcConnector = connectors.find((c) => c.name === "WalletConnect");
       if (!wcConnector) {
         window.alertify.error("WalletConnect connector not found.");
         return;
       }
-      window.WALLET_TYPE = option.walletType;
 
       try {
-        const provider = await wcConnector.getProvider();
         const binanceWallet = await resolveBinanceWalletForAppKit();
-
+        const provider = await wcConnector.getProvider();
         if (binanceWallet && typeof provider?.modal?.open === "function") {
           const originalOpen = provider.modal.open.bind(provider.modal);
+          console.log(originalOpen);
           provider.modal.open = async (openParams) => {
             provider.modal.open = originalOpen;
             await originalOpen(openParams);
@@ -250,21 +280,13 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
         chainId: option.chainId,
       })
         .then(() => {
-          const acc = getAccount(wagmiClient);
-          if (acc.address) {
-            setAddress(acc.address);
-            setChainId(acc.chainId ?? getChainId(wagmiClient));
-            setIsConnected(true);
-          }
-          window.WALLET_TYPE = option.walletType;
-          setWalletType(option.walletType);
           setWalletModal(false);
         })
         .catch((err) => {
-          console.error("Binance Wallet connection error:", err);
-          window.alertify.error(
-            "Failed to connect Binance Wallet via WalletConnect.",
-          );
+          // AppKit's modal often rejects the promise when the user closes it,
+          // even though the underlying WC pairing may have succeeded. WalletSync
+          // will pick up the real connection state - we only log here.
+          console.warn("Binance WalletConnect connect rejected:", err?.message);
         });
 
       return;
@@ -282,8 +304,8 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
 
           if (option.connectorName === "Binance Wallet") {
             setTimeout(() => {
-              console.log(getAccount(wagmiClient));
-              getAccount(wagmiClient);
+              console.log(getConnection(wagmiClient));
+              getConnection(wagmiClient);
             }, 2000);
           }
         })

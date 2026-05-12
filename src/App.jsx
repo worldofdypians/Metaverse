@@ -30,11 +30,12 @@ import { bsc } from "viem/chains";
 import axios from "axios";
 import {
   disconnect,
-  getAccount,
   getBytecode,
   getChainId,
-  watchAccount,
+  getConnection,
+  watchConnection,
   watchConnections,
+  watchConnectors,
 } from "@wagmi/core";
 import {
   writeContract as wagmiWriteContract,
@@ -422,57 +423,58 @@ function WalletSync() {
 
   const { setWalletType, setWalletModal } = useWallet();
 
-  // Watch account changes with cleanup
+  // Watch active connection (wagmi v3: watchConnection; v2 name was watchAccount)
   useEffect(() => {
-    const unwatch = watchAccount(wagmiClient, (account) => {
-      console.log(
-        "👀 WalletSync - Account changed:",
-        account.status,
-        account.address,
-      );
+    const unwatch = watchConnection(wagmiClient, {
+      onChange(connection) {
+        console.log(
+          "👀 WalletSync - Connection changed:",
+          connection.status,
+          connection.address,
+        );
 
-      switch (account.status) {
-        case "connected":
-          if (account.address) {
-            const resolvedChainId =
-              account.chainId ?? getChainId(wagmiClient);
-            console.log("✅ Wallet connected:", account.address);
-            dispatch(setAddress(account.address));
-            if (resolvedChainId != null) {
-              dispatch(setChainId(resolvedChainId));
+        switch (connection.status) {
+          case "connected":
+            if (connection.address) {
+              const resolvedChainId =
+                connection.chainId ?? getChainId(wagmiClient);
+              console.log("✅ Wallet connected:", connection.address);
+              dispatch(setAddress(connection.address));
+              if (resolvedChainId != null) {
+                dispatch(setChainId(resolvedChainId));
+              }
+              dispatch(setIsConnected(true));
+              setWalletModal(false);
             }
-            dispatch(setIsConnected(true));
-            setWalletModal(false);
-          }
-          break;
+            break;
 
-        case "reconnecting":
-          console.log("🔄 Wallet reconnecting... (blocking transactions)");
-          dispatch(setIsConnected(false)); // Block transactions during reconnect
-          break;
+          case "reconnecting":
+            console.log("🔄 Wallet reconnecting... (blocking transactions)");
+            dispatch(setIsConnected(false)); // Block transactions during reconnect
+            break;
 
-        case "connecting":
-          console.log("🔌 Wallet connecting...");
-          dispatch(setIsConnected(false)); // Block transactions while connecting
-          break;
+          case "connecting":
+            console.log("🔌 Wallet connecting...");
+            dispatch(setIsConnected(false)); // Block transactions while connecting
+            break;
 
-        case "disconnected":
-          console.log("⚠️ Wallet disconnected - clearing Redux state");
-          dispatch(setAddress(null));
-          dispatch(setIsConnected(false));
-          window.WALLET_TYPE = null;
-          break;
+          case "disconnected":
+            console.log("⚠️ Wallet disconnected - clearing Redux state");
+            dispatch(setAddress(null));
+            dispatch(setIsConnected(false));
+            window.WALLET_TYPE = null;
+            break;
 
-        default:
-          console.log("⚠️ Wallet disconnected - clearing Redux state");
-          dispatch(setAddress(null));
-          dispatch(setIsConnected(false));
-          window.WALLET_TYPE = null;
-          break;
-      }
+          default:
+            console.log("⚠️ Wallet disconnected - clearing Redux state");
+            dispatch(setAddress(null));
+            dispatch(setIsConnected(false));
+            window.WALLET_TYPE = null;
+            break;
+        }
+      },
     });
 
-    // Cleanup watcher on unmount
     return () => unwatch();
   }, [dispatch, setWalletModal]);
 
@@ -498,24 +500,30 @@ function WalletSync() {
           console.log("✅ Active connection:", activeConnection.connector.name);
           dispatch(setAddress(activeConnection.accounts[0]));
           dispatch(
-            setChainId(
-              activeConnection.chainId ?? getChainId(wagmiClient),
-            ),
+            setChainId(activeConnection.chainId ?? getChainId(wagmiClient)),
           );
           dispatch(setIsConnected(true));
           setWalletModal(false);
-          // Set wallet type based on connector (Binance uses WalletConnect)
-          if (activeConnection.connector.type === "binanceWallet") {
+          // Set wallet type based on connector.
+          // Binance Web3 Wallet can arrive through three paths:
+          //   1. Dedicated injected connector (id: "wallet.binance.com") -
+          //      used when running inside the Binance App's DApp browser.
+          //   2. Legacy "binanceWallet" connector type (kept for safety).
+          //   3. WalletConnect v2 - used for desktop extension / QR code /
+          //      mobile deep-link flows. We rely on window.WALLET_TYPE being
+          //      tagged "binance" by WalletModal BEFORE the connect() call.
+          const c = activeConnection.connector;
+          if (c.id === "wallet.binance.com" || c.type === "binanceWallet") {
             window.WALLET_TYPE = "binance";
             setWalletType("binance");
           } else if (
-            activeConnection.connector.name === "WalletConnect" &&
+            c.name === "WalletConnect" &&
             window.WALLET_TYPE === "binance"
           ) {
             setWalletType("binance");
           } else {
-            window.WALLET_TYPE = activeConnection.connector.type;
-            setWalletType(activeConnection.connector.type);
+            window.WALLET_TYPE = c.type;
+            setWalletType(c.type);
           }
         }
       },
@@ -524,6 +532,146 @@ function WalletSync() {
     // Cleanup watcher on unmount
     return () => unwatch();
   }, [dispatch, setWalletType, setWalletModal]);
+
+  // Workaround for wagmi v3 + WalletConnect v2 + AppKit modal: when the WC
+  // provider establishes a session, the connector emits a `connect` event. But
+  // wagmi's internal `connect` handler in createConfig.js bails out if state is
+  // `connecting` or `reconnecting`, expecting the active `connect()` action's
+  // `await connector.connect(...)` to handle the state transition itself.
+  //
+  // With AppKit's modal in the flow, that await can hang or settle out of order,
+  // leaving wagmi state stuck at `connecting` even though the WC session is live.
+  //
+  // We listen to each connector's `connect` emitter event directly. If wagmi
+  // didn't transition to `connected` itself, we force the state update here.
+  //
+  // NOTE: This module shadows the global `Map` constructor with a React.lazy
+  // route component (see `const Map = React.lazy(...)` above), so we grab the
+  // real Map via globalThis to avoid `Map is not a constructor` errors.
+  useEffect(() => {
+    const NativeMap = globalThis.Map;
+    const subscriptions = new NativeMap();
+
+    const subscribeConnector = (connector) => {
+      if (subscriptions.has(connector.uid)) return;
+      const handler = async (data) => {
+        const state = wagmiClient.state;
+        if (
+          state.status === "connected" &&
+          state.current === connector.uid
+        ) {
+          return;
+        }
+        console.log(
+          "🩹 WalletSync - Forcing connected state from connector emit:",
+          connector.name,
+          data,
+        );
+        wagmiClient.setState((x) => ({
+          ...x,
+          connections: new NativeMap(x.connections).set(connector.uid, {
+            accounts: data.accounts,
+            chainId: data.chainId,
+            connector,
+          }),
+          current: connector.uid,
+          status: "connected",
+        }));
+        if (
+          !connector.emitter.listenerCount("change") &&
+          wagmiClient._internal?.events?.change
+        ) {
+          connector.emitter.on(
+            "change",
+            wagmiClient._internal.events.change,
+          );
+        }
+        if (
+          !connector.emitter.listenerCount("disconnect") &&
+          wagmiClient._internal?.events?.disconnect
+        ) {
+          connector.emitter.on(
+            "disconnect",
+            wagmiClient._internal.events.disconnect,
+          );
+        }
+
+        // The connector's internal connect() flow (which sets up the
+        // EIP-1193 provider listeners and persists state) may not have
+        // completed because of the hung await. We finish that work here so
+        // that `switchChain`, `accountsChanged`, `disconnect`, etc. work
+        // correctly. A flag on the provider prevents double-subscription if
+        // wagmi's connect() does eventually resolve.
+        try {
+          if (typeof connector.getProvider === "function") {
+            const provider = await connector.getProvider();
+            if (provider && !provider.__wodForcedListenersAttached) {
+              provider.__wodForcedListenersAttached = true;
+              if (typeof connector.onAccountsChanged === "function") {
+                provider.on("accountsChanged", (accounts) =>
+                  connector.onAccountsChanged(accounts),
+                );
+              }
+              if (typeof connector.onChainChanged === "function") {
+                provider.on("chainChanged", (chain) =>
+                  connector.onChainChanged(chain),
+                );
+              }
+              if (typeof connector.onDisconnect === "function") {
+                provider.on("disconnect", (err) =>
+                  connector.onDisconnect(err),
+                );
+              }
+              if (typeof connector.onSessionDelete === "function") {
+                provider.on("session_delete", () =>
+                  connector.onSessionDelete(),
+                );
+              }
+            }
+          }
+          if (typeof connector.setRequestedChainsIds === "function") {
+            await connector.setRequestedChainsIds(
+              wagmiClient.chains.map((c) => c.id),
+            );
+          }
+          await wagmiClient.storage?.setItem(
+            "recentConnectorId",
+            connector.id,
+          );
+        } catch (err) {
+          console.warn(
+            "WalletSync - failed to finalize forced connection:",
+            err,
+          );
+        }
+      };
+      connector.emitter.on("connect", handler);
+      subscriptions.set(connector.uid, { connector, handler });
+    };
+
+    wagmiClient.connectors.forEach(subscribeConnector);
+
+    const unwatch = watchConnectors(wagmiClient, {
+      onChange(connectors) {
+        const currentUids = new Set(connectors.map((c) => c.uid));
+        connectors.forEach(subscribeConnector);
+        for (const [uid, { connector, handler }] of subscriptions) {
+          if (!currentUids.has(uid)) {
+            connector.emitter.off("connect", handler);
+            subscriptions.delete(uid);
+          }
+        }
+      },
+    });
+
+    return () => {
+      unwatch();
+      for (const { connector, handler } of subscriptions.values()) {
+        connector.emitter.off("connect", handler);
+      }
+      subscriptions.clear();
+    };
+  }, []);
 
   // Handle window.ethereum events for account/chain changes (backwards compatibility)
   useEffect(() => {
@@ -707,7 +855,7 @@ function AppRoutes() {
 
   const { wallet, setWalletModal, setWalletType, setWalletId } = useWallet();
   // const { disconnect } = useDisconnect();
-  const { connector } = getAccount(wagmiClient);
+  const { connector } = getConnection(wagmiClient);
 
   const walletAddressSelector = (state) => state.wallet.address;
   const walletConnectedSelector = (state) => state.wallet.isConnected;
@@ -857,7 +1005,7 @@ function AppRoutes() {
   };
 
   const fetchSkaleBalance = async () => {
-    const { address, chainId, isConnected } = getAccount(wagmiClient);
+    const { address, chainId, isConnected } = getConnection(wagmiClient);
 
     if (!isConnected || !address) return;
     if (chainId !== 1482601649) return;
@@ -3984,6 +4132,14 @@ function AppRoutes() {
 
   const handleSwitchNetwork = async (targetChainId) => {
     try {
+      // For WalletConnect-based connections (Binance Web3 Wallet via QR,
+      // mobile deep-link, etc.) wagmi.switchChain already routed the
+      // switch through the WC peer. Calling window.ethereum.request here
+      // would re-route the same switch to whichever wallet is injected as
+      // window.ethereum (MetaMask, Brave Wallet, etc.) and pop its UI.
+      const conn = getConnection(wagmiClient);
+      if (conn?.connector?.type === "walletConnect") return;
+
       if (!window?.ethereum) return;
       const hex =
         targetChainId === 1
@@ -5122,7 +5278,7 @@ function AppRoutes() {
     fetchMonthlyPlayers();
     fetchTotalVolume();
     fetchTotalWodHolders();
-    getTotalSupply();
+    // getTotalSupply();
     fetchBSCCoinPrice();
     fetchSocialData();
     let isMounted = true;

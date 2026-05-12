@@ -61,6 +61,23 @@ export const wagmiClient = createConfig({
       },
     }),
     injected(),
+    // Dedicated connector for Binance App's built-in DApp browser.
+    // Only functional when window.binancew3w.ethereum is present (i.e. inside the Binance app).
+    injected({
+      target: () => {
+        if (
+          typeof window !== "undefined" &&
+          typeof window.binancew3w?.ethereum !== "undefined"
+        ) {
+          return {
+            id: "wallet.binance.com",
+            name: "Binance Web3 Wallet",
+            provider: window.binancew3w.ethereum,
+          };
+        }
+        return undefined;
+      },
+    }),
     metaMask({
       dapp: {
         name: "World of Dypians",

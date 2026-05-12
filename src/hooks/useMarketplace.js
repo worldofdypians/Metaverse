@@ -4,7 +4,7 @@ import {
 } from "wagmi";
 import { parseEther, formatEther, encodeFunctionData } from "viem";
 import { useState, useCallback } from "react";
-import { writeContract, getAccount } from "@wagmi/core";
+import { writeContract, getConnection } from "@wagmi/core";
 import { wagmiClient } from "../wagmiConnectors";
 // Marketplace ABI - extracted from setup.js
 const MARKETPLACE_ABI = [
@@ -283,7 +283,7 @@ const ERC20_ABI = [
 ];
 
 export const useMarketplace = () => {
-  const account = getAccount(wagmiClient);
+  const account = getConnection(wagmiClient);
 
   const address = account.address;
   const isConnected = account.isConnected;
@@ -329,7 +329,7 @@ export const useMarketplace = () => {
       tokenAddress = "0x0000000000000000000000000000000000000000"
     ) => {
       try {
-        const accountState = getAccount(wagmiClient);
+        const accountState = getConnection(wagmiClient);
         ensureConnected(
           accountState.status,
           accountState.address,
@@ -372,7 +372,7 @@ export const useMarketplace = () => {
       tokenAddress = "0x0000000000000000000000000000000000000000"
     ) => {
       try {
-        const accountState = getAccount(wagmiClient);
+        const accountState = getConnection(wagmiClient);
         console.log(
           accountState.status,
           accountState.address,
@@ -417,7 +417,7 @@ export const useMarketplace = () => {
       tokenAddress = "0x0000000000000000000000000000000000000000"
     ) => {
       try {
-        const accountState = getAccount(wagmiClient);
+        const accountState = getConnection(wagmiClient);
 
         ensureConnected(
           accountState.status,
@@ -458,7 +458,7 @@ export const useMarketplace = () => {
       tokenAddress = "0x0000000000000000000000000000000000000000"
     ) => {
       try {
-        const accountState = getAccount(wagmiClient);
+        const accountState = getConnection(wagmiClient);
 
         ensureConnected(
           accountState.status,
@@ -502,7 +502,7 @@ export const useMarketplace = () => {
       tokenAddress = "0x0000000000000000000000000000000000000000"
     ) => {
       try {
-        const accountState = getAccount(wagmiClient);
+        const accountState = getConnection(wagmiClient);
 
         ensureConnected(
           accountState.status,
@@ -539,7 +539,7 @@ export const useMarketplace = () => {
   // Cancel Offer
   const cancelOffer = useCallback(async (nftAddress, tokenId, offerIndex) => {
     try {
-      const accountState = getAccount(wagmiClient);
+      const accountState = getConnection(wagmiClient);
 
       ensureConnected(
         accountState.status,
@@ -572,7 +572,7 @@ export const useMarketplace = () => {
       tokenAddress = "0x0000000000000000000000000000000000000000"
     ) => {
       try {
-        const accountState = getAccount(wagmiClient);
+        const accountState = getConnection(wagmiClient);
 
         ensureConnected(
           accountState.status,
@@ -610,7 +610,7 @@ export const useMarketplace = () => {
   // Accept Offer
   const acceptOffer = useCallback(async (nftAddress, tokenId, offerIndex) => {
     try {
-      const accountState = getAccount(wagmiClient);
+      const accountState = getConnection(wagmiClient);
 
       ensureConnected(
         accountState.status,
@@ -635,7 +635,7 @@ export const useMarketplace = () => {
   // Approve NFT for marketplace
   const approveNFT = useCallback(async (nftAddress) => {
     try {
-      const accountState = getAccount(wagmiClient);
+      const accountState = getConnection(wagmiClient);
 
       ensureConnected(
         accountState.status,
@@ -660,7 +660,7 @@ export const useMarketplace = () => {
   // Approve Token (WETH/DYP) for marketplace
   const approveToken = useCallback(async (tokenAddress, amount) => {
     try {
-      const accountState = getAccount(wagmiClient);
+      const accountState = getConnection(wagmiClient);
 
       ensureConnected(
         accountState.status,
