@@ -29,6 +29,11 @@ import { http, createPublicClient } from "viem";
 import { bsc } from "viem/chains";
 import axios from "axios";
 import {
+  clearPersistedSemanticWalletType,
+  getPersistedSemanticWalletType,
+  setPersistedSemanticWalletType,
+} from "./utils/persistedSemanticWalletType.js";
+import {
   disconnect,
   getBytecode,
   getChainId,
@@ -431,6 +436,7 @@ function WalletSync() {
           "👀 WalletSync - Connection changed:",
           connection.status,
           connection.address,
+          connection,
         );
 
         switch (connection.status) {
@@ -463,6 +469,8 @@ function WalletSync() {
             dispatch(setAddress(null));
             dispatch(setIsConnected(false));
             window.WALLET_TYPE = null;
+            clearPersistedSemanticWalletType();
+            setWalletType("");
             break;
 
           default:
@@ -470,13 +478,15 @@ function WalletSync() {
             dispatch(setAddress(null));
             dispatch(setIsConnected(false));
             window.WALLET_TYPE = null;
+            clearPersistedSemanticWalletType();
+            setWalletType("");
             break;
         }
       },
     });
 
     return () => unwatch();
-  }, [dispatch, setWalletModal]);
+  }, [dispatch, setWalletModal, setWalletType]);
 
   // Watch connections to track active connections
   useEffect(() => {
@@ -493,6 +503,8 @@ function WalletSync() {
           dispatch(setAddress(null));
           dispatch(setIsConnected(false));
           window.WALLET_TYPE = null;
+          clearPersistedSemanticWalletType();
+          setWalletType("");
         } else {
           // Get the active connection
           const activeConnection = connections[0];
@@ -504,27 +516,33 @@ function WalletSync() {
           );
           dispatch(setIsConnected(true));
           setWalletModal(false);
-          // Set wallet type based on connector.
-          // Binance Web3 Wallet can arrive through three paths:
-          //   1. Dedicated injected connector (id: "wallet.binance.com") -
-          //      used when running inside the Binance App's DApp browser.
-          //   2. Legacy "binanceWallet" connector type (kept for safety).
-          //   3. WalletConnect v2 - used for desktop extension / QR code /
-          //      mobile deep-link flows. We rely on window.WALLET_TYPE being
-          //      tagged "binance" by WalletModal BEFORE the connect() call.
+          // Set wallet type based on connector + persisted semantic type so
+          // Binance (WalletConnect path) survives a full page reload.
           const c = activeConnection.connector;
+          const persisted = getPersistedSemanticWalletType();
+
+          let semanticType;
           if (c.id === "wallet.binance.com" || c.type === "binanceWallet") {
-            window.WALLET_TYPE = "binance";
-            setWalletType("binance");
-          } else if (
-            c.name === "WalletConnect" &&
-            window.WALLET_TYPE === "binance"
-          ) {
-            setWalletType("binance");
+            semanticType = "binance";
+          } else if (c.name === "WalletConnect") {
+            if (typeof window !== "undefined" && window.WALLET_TYPE === "binance") {
+              semanticType = "binance";
+            } else if (persisted === "binance") {
+              semanticType = "binance";
+            } else if (persisted) {
+              semanticType = persisted;
+            } else {
+              semanticType = "walletconnect";
+            }
           } else {
-            window.WALLET_TYPE = c.type;
-            setWalletType(c.type);
+            semanticType = c.type;
           }
+
+          if (typeof window !== "undefined") {
+            window.WALLET_TYPE = semanticType;
+          }
+          setWalletType(semanticType);
+          setPersistedSemanticWalletType(semanticType);
         }
       },
     });
@@ -556,10 +574,7 @@ function WalletSync() {
       if (subscriptions.has(connector.uid)) return;
       const handler = async (data) => {
         const state = wagmiClient.state;
-        if (
-          state.status === "connected" &&
-          state.current === connector.uid
-        ) {
+        if (state.status === "connected" && state.current === connector.uid) {
           return;
         }
         console.log(
@@ -581,10 +596,7 @@ function WalletSync() {
           !connector.emitter.listenerCount("change") &&
           wagmiClient._internal?.events?.change
         ) {
-          connector.emitter.on(
-            "change",
-            wagmiClient._internal.events.change,
-          );
+          connector.emitter.on("change", wagmiClient._internal.events.change);
         }
         if (
           !connector.emitter.listenerCount("disconnect") &&
@@ -618,9 +630,7 @@ function WalletSync() {
                 );
               }
               if (typeof connector.onDisconnect === "function") {
-                provider.on("disconnect", (err) =>
-                  connector.onDisconnect(err),
-                );
+                provider.on("disconnect", (err) => connector.onDisconnect(err));
               }
               if (typeof connector.onSessionDelete === "function") {
                 provider.on("session_delete", () =>
@@ -634,10 +644,7 @@ function WalletSync() {
               wagmiClient.chains.map((c) => c.id),
             );
           }
-          await wagmiClient.storage?.setItem(
-            "recentConnectorId",
-            connector.id,
-          );
+          await wagmiClient.storage?.setItem("recentConnectorId", connector.id);
         } catch (err) {
           console.warn(
             "WalletSync - failed to finalize forced connection:",
