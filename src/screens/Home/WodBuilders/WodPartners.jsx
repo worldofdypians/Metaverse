@@ -426,9 +426,21 @@ const WodPartners = ({ full }) => {
       name: "Equity Block",
       icon: "euqityblock.png",
     },
-      {
+    {
       name: "Bim Exchange",
       icon: "bimLogo.png",
+    },
+        {
+      name: "AlloX",
+      icon: "allox.svg",
+    },
+    {
+      name: "Mansory",
+      icon: "mansory.png",
+    },
+    {
+      name: "World Mobile",
+      icon: "worldMobile.svg",
     },
   ];
 
@@ -466,14 +478,27 @@ const WodPartners = ({ full }) => {
                   style={{ width: "103px" }}
                 >
                   <div className="partner-logo-container">
-                    <img
-                      src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
-                      alt=""
-                      style={{
-                        width: "60px",
-                        height: "60px",
-                      }}
-                    />
+                    {partner.name === "World Mobile" ||
+                    partner.name === "Mansory" ||
+                    partner.name === "AlloX" ? (
+                      <img
+                        src={require(`../../../assets/${partner.icon}`)}
+                        alt=""
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                        }}
+                      />
+                    ) : (
+                      <img
+                        src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
+                        alt=""
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                        }}
+                      />
+                    )}
                   </div>
                   <h6 className="mb-0 small-partners-title">{partner.name}</h6>
                 </div>
