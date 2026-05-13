@@ -1088,7 +1088,9 @@ const LiquidityComp = ({
                         Season 1 settlement
                       </span>
                       {seasonStatsLoading && (
-                        <span className="text-xs text-slate-400">Updating…</span>
+                        <span className="text-xs text-slate-400">
+                          Updating…
+                        </span>
                       )}
                     </div>
 
@@ -1164,7 +1166,8 @@ const LiquidityComp = ({
                                 <div className="font-bold text-white">
                                   $
                                   {getFormattedNumber(
-                                    seasonUserStats.principal.wod_exit_value_usd,
+                                    seasonUserStats.principal
+                                      .wod_exit_value_usd,
                                     2,
                                   )}
                                 </div>
@@ -1257,7 +1260,8 @@ const LiquidityComp = ({
                                       : "font-bold text-rose-400"
                                   }
                                 >
-                                  {Number(seasonUserStats.principal.pnl_usdt) >= 0
+                                  {Number(seasonUserStats.principal.pnl_usdt) >=
+                                  0
                                     ? "+"
                                     : ""}
                                   $
@@ -1397,8 +1401,7 @@ const LiquidityComp = ({
                                     seasonUserStats.bonus.bonus_share_percent,
                                     2,
                                   )}
-                                  % · #
-                                  {seasonUserStats.bonus.rank ?? "—"}
+                                  % · #{seasonUserStats.bonus.rank ?? "—"}
                                 </div>
                               </div>
                             </div>
@@ -1539,10 +1542,7 @@ const LiquidityComp = ({
                                           {Number(d.pnl_percent) >= 0
                                             ? "+"
                                             : ""}
-                                          {getFormattedNumber(
-                                            d.pnl_percent,
-                                            2,
-                                          )}
+                                          {getFormattedNumber(d.pnl_percent, 2)}
                                           %)
                                         </span>
                                       </div>
@@ -1601,77 +1601,73 @@ const LiquidityComp = ({
                   {/* Withdraw Principal Tab */}
                   {activeTab === "withdraw" && (
                     <>
-                      <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 bordertw border-cyan-500/30 rounded-lg p-4 mb-3">
-                        <div className="flex items-center gap-2 text-cyan-400 mb-2">
-                          <Wallet className="w-4 h-4" />
-                          <span className="text-xs font-semibold">
-                            Withdrawable Principal
-                          </span>
+                      <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 bordertw border-cyan-500/30 rounded-lg p-4 mb-3 flex items-center gap-2 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-2 text-cyan-400 mb-2">
+                            <Wallet className="w-4 h-4" />
+                            <span className="text-xs font-semibold">
+                              Withdrawable Principal
+                            </span>
+                          </div>
+                          <div className="text-3xl font-bold text-white">
+                            {getFormattedNumber(withdrawAmount, 4)} USDT
+                          </div>
+                          <div className="text-xs text-slate-400 mt-1">
+                            Total principal returned to your wallet
+                          </div>
                         </div>
-                        <div className="text-3xl font-bold text-white">
-                          {getFormattedNumber(withdrawAmount, 4)} USDT
-                        </div>
-                        <div className="text-xs text-slate-400 mt-1">
-                          Total principal returned to your wallet
-                        </div>
-                      </div>
-
-                      <div className="bg-slate-800/40 bordertw border-white/10 rounded-lg p-3 mb-3 text-xs text-slate-300">
-                        The campaign has ended. You will be able to withdraw your full
-                        principal deposit soon.
-                      </div>
-
-                      {isConnected && coinbase && chainId === 56 && (
-                        <button
-                          onClick={handleWithdrawPrincipal}
-                          disabled={
-                            !(
-                              Date.now() >= Number(seasonEnd) &&
+                        {isConnected && coinbase && chainId === 56 && (
+                          <button
+                            onClick={handleWithdrawPrincipal}
+                            disabled={
+                              !(
+                                Date.now() >= Number(seasonEnd) &&
+                                Number(withdrawAmount) > 0
+                              ) || withdrawLoading
+                            }
+                            className={`${
+                              withdrawStatus === "initial" &&
                               Number(withdrawAmount) > 0
-                            ) || withdrawLoading
-                          }
-                          className={`${
-                            withdrawStatus === "initial" &&
-                            Number(withdrawAmount) > 0
-                              ? "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
-                              : withdrawStatus === "initial" &&
-                                  Number(withdrawAmount) === 0
-                                ? "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10 cursor-not-allowed"
-                                : withdrawStatus === "success"
-                                  ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
-                                  : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
-                          } w-full py-2 text-lg disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold`}
-                        >
-                          {withdrawLoading ? (
-                            <div
-                              className="spinner-border spinner-border-sm text-light"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                          ) : withdrawStatus === "success" ? (
-                            <>Success</>
-                          ) : withdrawStatus === "failed" ? (
-                            <>
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/failMark.svg"
-                                }
-                                alt=""
-                              />
-                              Failed
-                            </>
-                          ) : (
-                            <>Withdraw</>
-                          )}
-                        </button>
-                      )}
-                      {!isConnected && !coinbase && (
+                                ? "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
+                                : withdrawStatus === "initial" &&
+                                    Number(withdrawAmount) === 0
+                                  ? "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10 cursor-not-allowed"
+                                  : withdrawStatus === "success"
+                                    ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
+                                    : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
+                            }  px-4 py-2 text-lg disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold`}
+                          >
+                            {withdrawLoading ? (
+                              <div
+                                className="spinner-border spinner-border-sm text-light"
+                                role="status"
+                              >
+                                <span className="visually-hidden">
+                                  Loading...
+                                </span>
+                              </div>
+                            ) : withdrawStatus === "success" ? (
+                              <>Success</>
+                            ) : withdrawStatus === "failed" ? (
+                              <>
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/failMark.svg"
+                                  }
+                                  alt=""
+                                />
+                                Failed
+                              </>
+                            ) : (
+                              <>Withdraw</>
+                            )}
+                          </button>
+                        )}
+
+                        {!isConnected && !coinbase && (
                         <button
                           onClick={handleConnection}
-                          className="w-full py-2 text-lg bg-gradient-to-r from-brandBlue to-brandCyan line-height-inherit hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
+                          className="px-4 py-2 text-lg bg-gradient-to-r from-brandBlue to-brandCyan line-height-inherit hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
                         >
                           Connect Wallet
                         </button>
@@ -1679,11 +1675,20 @@ const LiquidityComp = ({
                       {isConnected && coinbase && chainId !== 56 && (
                         <button
                           onClick={handleBNBPool}
-                          className="w-full py-2 text-lg bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
+                          className="px-4 py-2 text-lg bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
                         >
                           Switch to BNB Chain
                         </button>
                       )}
+
+                      </div>
+
+                      <div className="bg-slate-800/40 bordertw border-white/10 rounded-lg p-3 mb-3 text-xs text-slate-300">
+                        The campaign has ended. You will be able to withdraw
+                        your full principal deposit soon.
+                      </div>
+
+                      
                       {errorMsg4 && (
                         <div className="mt-2 text-xs text-red-400 text-center">
                           {errorMsg4}
