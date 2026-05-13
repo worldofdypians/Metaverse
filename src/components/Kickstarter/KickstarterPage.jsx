@@ -440,6 +440,18 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
       name: "Bim Exchange",
       icon: "bimLogo.png",
     },
+    {
+      name: "AlloX",
+      icon: "allox.svg",
+    },
+    {
+      name: "Mansory",
+      icon: "mansory.png",
+    },
+    {
+      name: "World Mobile",
+      icon: "worldMobile.svg",
+    },
   ];
 
   const location = useLocation();

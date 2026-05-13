@@ -66,9 +66,9 @@ const Investors = ({ page }) => {
       link: "https://www.ibcgroup.io/",
     },
     {
-      title: "Easy2Stake",
-      logo: "easy2stakeBackers.svg",
-      link: "https://www.easy2stake.com/",
+      title: "Zerra Ventures",
+      logo: "zerraBackers.svg",
+      link: "https://zerra.ventures/",
     },
     {
       title: "SEI",
@@ -104,11 +104,19 @@ const Investors = ({ page }) => {
               className="investors-item py-2"
               key={index}
             >
-              <img
-                src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
-                className="investors-img"
-                alt=""
-              />
+              {item.title === "Zerra Ventures" ? (
+                <img
+                  src={require(`../../../assets/${item.logo}`)}
+                  className="investors-img"
+                  alt=""
+                />
+              ) : (
+                <img
+                  src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
+                  className="investors-img"
+                  alt=""
+                />
+              )}
             </a>
           ))}
         </div>
