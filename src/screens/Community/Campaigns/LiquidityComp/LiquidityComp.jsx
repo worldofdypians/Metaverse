@@ -13,6 +13,8 @@ import {
   Check,
   WalletCards,
   BadgeDollarSign,
+  TrendingDown,
+  BarChart3,
 } from "lucide-react";
 import DisclaimerModal from "./components/DisclaimerModal";
 import UserPositionModal from "./components/UserPositionModal";
@@ -31,6 +33,21 @@ import { bsc } from "viem/chains";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import { switchNetworkWagmi } from "../../../../utils/wagmiSwitchChain";
 import { abbreviateNumber } from "js-abbreviation-number";
+
+const SEASON1_USER_STATS_BASE =
+  "https://api.worldofdypians.com/api/wod/season1/user-stats";
+
+const formatUtcDateTime = (iso) => {
+  if (!iso) return "—";
+  try {
+    return new Date(iso).toLocaleString(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+  } catch {
+    return String(iso);
+  }
+};
 
 const renderer = ({ days, hours, completed }) => {
   return (
@@ -169,6 +186,9 @@ const LiquidityComp = ({
   const [bonusAprPercent, setBonusAprPercent] = useState(0);
   const [totalAprPercent, setTotalAprPercent] = useState(0);
   const [feesUsd24Percent, setfeesUsd24Percent] = useState(0);
+
+  const [seasonUserStats, setSeasonUserStats] = useState(null);
+  const [seasonStatsLoading, setSeasonStatsLoading] = useState(false);
 
   const BONUS_POOL_USDT = 250000;
   const MIN_DEPOSIT = 100;
@@ -318,6 +338,37 @@ const LiquidityComp = ({
     if (result) {
       setWeeklyClaimsData(result || null);
     }
+  };
+
+  const fetchSeasonUserStats = async (address) => {
+    if (!address) {
+      setSeasonUserStats(null);
+      setSeasonStatsLoading(false);
+      return;
+    }
+    setSeasonStatsLoading(true);
+    try {
+      const res = await fetch(`${SEASON1_USER_STATS_BASE}/${address}`);
+      if (!res.ok) {
+        setSeasonUserStats(null);
+        return;
+      }
+      const data = await res.json();
+      setSeasonUserStats(data && typeof data === "object" ? data : null);
+    } catch (e) {
+      console.error("Error fetching Season 1 user stats:", e);
+      setSeasonUserStats(null);
+    } finally {
+      setSeasonStatsLoading(false);
+    }
+  };
+
+  const stableSymbolForToken = (tokenAddress) => {
+    if (!tokenAddress) return "—";
+    const match = STABLECOINS.find(
+      (t) => t.address.toLowerCase() === String(tokenAddress).toLowerCase(),
+    );
+    return match?.symbol ?? "Stable";
   };
 
   const checkTokenApproval = async (amount) => {
@@ -795,6 +846,7 @@ const LiquidityComp = ({
     getTokenBalance();
     getAllInfo();
     fetchWeeklyClaimedData(coinbase);
+    fetchSeasonUserStats(coinbase);
   }, [coinbase]);
 
   return (
@@ -1027,6 +1079,499 @@ const LiquidityComp = ({
                   </div>
                 </div>
 
+                {/* Season 1 settlement breakdown (API) */}
+                {isConnected && coinbase && (
+                  <div className=" max-h-[300px] overflow-y-auto bg-gradient-to-br from-slate-900/80 to-slate-800/50 bordertw border-emerald-500/20 rounded-2xl p-4 backdrop-blur-xl">
+                    <div className="flex items-center justify-between mb-3 gap-2">
+                      <span className="text-xs font-bold text-white flex items-center gap-2">
+                        <BarChart3 className="w-4 h-4 text-emerald-400" />
+                        Season 1 settlement
+                      </span>
+                      {seasonStatsLoading && (
+                        <span className="text-xs text-slate-400">
+                          Updating…
+                        </span>
+                      )}
+                    </div>
+
+                    {seasonStatsLoading && !seasonUserStats && (
+                      <div className="text-xs text-slate-400 py-2">
+                        Loading settlement breakdown…
+                      </div>
+                    )}
+
+                    {!seasonStatsLoading && !seasonUserStats && (
+                      <div className="text-xs text-slate-400 py-2">
+                        No Season 1 settlement data found for this wallet.
+                      </div>
+                    )}
+
+                    {seasonUserStats && (
+                      <>
+                        {/* {seasonUserStats.generated_at?.principal && (
+                          <div className="text-[10px] text-white mb-3">
+                            Principal data as of{" "}
+                            {formatUtcDateTime(
+                              seasonUserStats.generated_at.principal,
+                            )}
+                          </div>
+                        )} */}
+
+                        {seasonUserStats.principal && (
+                          <div className="mb-4">
+                            <div className="text-[11px] font-semibold text-white mb-2">
+                              Principal breakdown
+                            </div>
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div className="bg-white/5 rounded-lg p-2">
+                                <div className="text-slate-400 mb-0.5">
+                                  Deposited (USD)
+                                </div>
+                                <div className="font-bold text-white">
+                                  $
+                                  {getFormattedNumber(
+                                    seasonUserStats.principal.deposited_usd,
+                                    2,
+                                  )}
+                                </div>
+                              </div>
+                              <div className="bg-white/5 rounded-lg p-2">
+                                <div className="text-slate-400 mb-0.5">
+                                  Settlement (USDT)
+                                </div>
+                                <div className="font-bold text-cyan-300">
+                                  $
+                                  {getFormattedNumber(
+                                    seasonUserStats.principal.settlement_usdt,
+                                    2,
+                                  )}
+                                </div>
+                              </div>
+                              <div className="bg-white/5 rounded-lg p-2">
+                                <div className="text-slate-400 mb-0.5">
+                                  Stable leg (USD)
+                                </div>
+                                <div className="font-bold text-white">
+                                  $
+                                  {getFormattedNumber(
+                                    seasonUserStats.principal.stable_side_usd,
+                                    2,
+                                  )}
+                                </div>
+                              </div>
+                              <div className="bg-white/5 rounded-lg p-2">
+                                <div className="text-slate-400 mb-0.5">
+                                  WOD leg at exit (USD)
+                                </div>
+                                <div className="font-bold text-white">
+                                  $
+                                  {getFormattedNumber(
+                                    seasonUserStats.principal
+                                      .wod_exit_value_usd,
+                                    2,
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="mt-3 bg-slate-800/50 rounded-lg p-3 bordertw border-white/5">
+                              <div className="flex items-start gap-2 text-xs text-slate-300">
+                                <TrendingDown className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                                <div>
+                                  <span className="text-slate-400">
+                                    WOD-side vs entry notional (pool IL and
+                                    price move):{" "}
+                                  </span>
+                                  <span
+                                    className={`font-semibold ${
+                                      Number(
+                                        seasonUserStats.principal
+                                          .wod_entry_side_usd ?? 0,
+                                      ) -
+                                        Number(
+                                          seasonUserStats.principal
+                                            .wod_exit_value_usd ?? 0,
+                                        ) >=
+                                      0
+                                        ? "text-rose-300"
+                                        : "text-emerald-300"
+                                    }`}
+                                  >
+                                    {Number(
+                                      seasonUserStats.principal
+                                        .wod_entry_side_usd ?? 0,
+                                    ) -
+                                      Number(
+                                        seasonUserStats.principal
+                                          .wod_exit_value_usd ?? 0,
+                                      ) >=
+                                    0
+                                      ? "−"
+                                      : "+"}
+                                    $
+                                    {getFormattedNumber(
+                                      Math.abs(
+                                        Number(
+                                          seasonUserStats.principal
+                                            .wod_entry_side_usd ?? 0,
+                                        ) -
+                                          Number(
+                                            seasonUserStats.principal
+                                              .wod_exit_value_usd ?? 0,
+                                          ),
+                                      ),
+                                      2,
+                                    )}
+                                  </span>
+                                  <span className="text-slate-500">
+                                    {" "}
+                                    (entry notional{" "}
+                                    <span className="text-slate-400">
+                                      $
+                                      {getFormattedNumber(
+                                        seasonUserStats.principal
+                                          .wod_entry_side_usd,
+                                        2,
+                                      )}
+                                    </span>{" "}
+                                    → exit value{" "}
+                                    <span className="text-slate-400">
+                                      $
+                                      {getFormattedNumber(
+                                        seasonUserStats.principal
+                                          .wod_exit_value_usd,
+                                        2,
+                                      )}
+                                    </span>
+                                    )
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="mt-2 pt-2 border-t border-white/10 flex flex-wrap justify-between gap-2 text-xs">
+                                <span className="text-slate-400">
+                                  Principal PnL
+                                </span>
+                                <span
+                                  className={
+                                    Number(
+                                      seasonUserStats.principal.pnl_usdt,
+                                    ) >= 0
+                                      ? "font-bold text-emerald-400"
+                                      : "font-bold text-rose-400"
+                                  }
+                                >
+                                  {Number(seasonUserStats.principal.pnl_usdt) >=
+                                  0
+                                    ? "+"
+                                    : ""}
+                                  $
+                                  {getFormattedNumber(
+                                    seasonUserStats.principal.pnl_usdt,
+                                    2,
+                                  )}{" "}
+                                  (
+                                  {Number(
+                                    seasonUserStats.principal.pnl_percent,
+                                  ) >= 0
+                                    ? "+"
+                                    : ""}
+                                  {getFormattedNumber(
+                                    seasonUserStats.principal.pnl_percent,
+                                    2,
+                                  )}
+                                  %)
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {(seasonUserStats.exit_date_utc ||
+                          seasonUserStats.exit_wod_price != null) && (
+                          <div className="flex flex-wrap gap-3 mb-4 text-[11px] text-slate-400">
+                            {seasonUserStats.exit_date_utc && (
+                              <span>
+                                Exit date:{" "}
+                                <span className="text-slate-200">
+                                  {formatUtcDateTime(
+                                    seasonUserStats.exit_date_utc,
+                                  )}
+                                </span>
+                              </span>
+                            )}
+                            {seasonUserStats.exit_wod_price != null && (
+                              <span>
+                                Pool exit WOD price:{" "}
+                                <span className="text-slate-200">
+                                  $
+                                  {getFormattedNumber(
+                                    seasonUserStats.exit_wod_price,
+                                    6,
+                                  )}
+                                </span>
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        {seasonUserStats.totals && (
+                          <div className="mb-4">
+                            <div className="text-[11px] font-semibold text-white mb-2">
+                              Totals (principal + bonus share)
+                            </div>
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div className="bg-white/5 rounded-lg p-2">
+                                <div className="text-slate-400 mb-0.5">
+                                  Total payout (USDT)
+                                </div>
+                                <div className="font-bold text-white">
+                                  $
+                                  {getFormattedNumber(
+                                    seasonUserStats.totals.total_payout_usdt,
+                                    2,
+                                  )}
+                                </div>
+                              </div>
+                              <div className="bg-white/5 rounded-lg p-2">
+                                <div className="text-slate-400 mb-0.5">
+                                  Net PnL
+                                </div>
+                                <div
+                                  className={
+                                    Number(
+                                      seasonUserStats.totals.net_pnl_usdt,
+                                    ) >= 0
+                                      ? "font-bold text-white"
+                                      : "font-bold text-white"
+                                  }
+                                >
+                                  {Number(
+                                    seasonUserStats.totals.net_pnl_usdt,
+                                  ) >= 0
+                                    ? "+"
+                                    : ""}
+                                  $
+                                  {getFormattedNumber(
+                                    seasonUserStats.totals.net_pnl_usdt,
+                                    2,
+                                  )}
+                                </div>
+                                <div className="text-[10px] text-white mt-0.5">
+                                  (
+                                  {Number(
+                                    seasonUserStats.totals.net_pnl_percent,
+                                  ) >= 0
+                                    ? "+"
+                                    : ""}
+                                  {getFormattedNumber(
+                                    seasonUserStats.totals.net_pnl_percent,
+                                    2,
+                                  )}
+                                  %)
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {seasonUserStats.bonus && (
+                          <div className="mb-4">
+                            <div className="text-[11px] font-semibold text-yellow-400 mb-2">
+                              Bonus pool share
+                            </div>
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div className="bg-yellow-500/5 rounded-lg p-2 bordertw border-yellow-500/10">
+                                <div className="text-slate-400 mb-0.5">
+                                  Bonus (USDT)
+                                </div>
+                                <div className="font-bold text-yellow-300">
+                                  $
+                                  {getFormattedNumber(
+                                    seasonUserStats.bonus.bonus_usdt,
+                                    2,
+                                  )}
+                                </div>
+                              </div>
+                              <div className="bg-yellow-500/5 rounded-lg p-2 bordertw border-yellow-500/10">
+                                <div className="text-slate-400 mb-0.5">
+                                  Share / Rank
+                                </div>
+                                <div className="font-bold text-white">
+                                  {getFormattedNumber(
+                                    seasonUserStats.bonus.bonus_share_percent,
+                                    2,
+                                  )}
+                                  % · #{seasonUserStats.bonus.rank ?? "—"}
+                                </div>
+                              </div>
+                            </div>
+                            <p className="text-[10px] text-slate-400 mt-2">
+                              Campaign score is used internally for bonus
+                              allocation only.
+                            </p>
+                          </div>
+                        )}
+
+                        {Array.isArray(seasonUserStats.deposits) &&
+                          seasonUserStats.deposits.length > 0 && (
+                            <div>
+                              <div className="text-[11px] font-semibold text-slate-300 mb-2">
+                                Per deposit
+                              </div>
+                              <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
+                                {seasonUserStats.deposits.map((d) => {
+                                  const wodLegDelta =
+                                    Number(d.wod_entry_side_usd ?? 0) -
+                                    Number(d.wod_exit_value_usd ?? 0);
+                                  return (
+                                    <div
+                                      key={`${d.deposit_index}-${d.timestamp ?? d.date_utc}`}
+                                      className="bg-slate-800/40 rounded-lg p-3 bordertw border-white/5 text-xs"
+                                    >
+                                      <div className="flex justify-between gap-2 mb-2">
+                                        <span className="text-slate-400">
+                                          Deposit #{d.deposit_index + 1} ·{" "}
+                                          {stableSymbolForToken(d.token)}
+                                        </span>
+                                        <span className="text-slate-400">
+                                          {formatUtcDateTime(d.date_utc)}
+                                        </span>
+                                      </div>
+                                      <div className="grid grid-cols-2 gap-2">
+                                        <div>
+                                          <span className="text-slate-400">
+                                            Deposited
+                                          </span>
+                                          <div className="font-semibold text-white">
+                                            $
+                                            {getFormattedNumber(
+                                              d.deposited_usd,
+                                              2,
+                                            )}
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <span className="text-slate-400">
+                                            Settlement
+                                          </span>
+                                          <div className="font-semibold text-cyan-300">
+                                            $
+                                            {getFormattedNumber(
+                                              d.settlement_usdt,
+                                              2,
+                                            )}
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <span className="text-slate-400">
+                                            Entry WOD price
+                                          </span>
+                                          <div className="font-semibold text-white">
+                                            $
+                                            {getFormattedNumber(
+                                              d.entry_wod_price,
+                                              6,
+                                            )}
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <span className="text-slate-400">
+                                            Exit WOD price
+                                          </span>
+                                          <div className="font-semibold text-white">
+                                            $
+                                            {getFormattedNumber(
+                                              d.exit_wod_price,
+                                              6,
+                                            )}
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <span className="text-slate-400">
+                                            WOD amount (entry)
+                                          </span>
+                                          <div className="font-semibold text-slate-300">
+                                            {getFormattedNumber(
+                                              d.wod_amount_at_entry,
+                                              2,
+                                            )}{" "}
+                                            WOD
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <span className="text-slate-400">
+                                            Day / remaining
+                                          </span>
+                                          <div className="font-semibold text-slate-300">
+                                            {d.day_index ?? "—"} /{" "}
+                                            {d.days_remaining ?? "—"} days
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 pt-2 border-t border-white/10 flex justify-between gap-2">
+                                        <span className="text-slate-400">
+                                          WOD-side vs entry notional
+                                        </span>
+                                        <span
+                                          className={`font-semibold ${
+                                            wodLegDelta >= 0
+                                              ? "text-orange-300"
+                                              : "text-emerald-300"
+                                          }`}
+                                        >
+                                          {wodLegDelta >= 0 ? "−" : "+"}$
+                                          {getFormattedNumber(
+                                            Math.abs(wodLegDelta),
+                                            2,
+                                          )}
+                                        </span>
+                                      </div>
+                                      <div className="mt-1 flex justify-between gap-2">
+                                        <span className="text-slate-400">
+                                          Deposit PnL
+                                        </span>
+                                        <span
+                                          className={
+                                            Number(d.pnl_usdt) >= 0
+                                              ? "text-emerald-400 font-semibold"
+                                              : "text-orange-400 font-semibold"
+                                          }
+                                        >
+                                          {Number(d.pnl_usdt) >= 0 ? "+" : ""}$
+                                          {getFormattedNumber(d.pnl_usdt, 2)} (
+                                          {Number(d.pnl_percent) >= 0
+                                            ? "+"
+                                            : ""}
+                                          {getFormattedNumber(d.pnl_percent, 2)}
+                                          %)
+                                        </span>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+
+                        {seasonUserStats.pool && (
+                          <div className="mt-4 pt-3 border-t border-white/10 text-[10px] text-slate-400 space-y-1">
+                            <div>
+                              Pool snapshot:{" "}
+                              {seasonUserStats.pool.users_count ?? "—"} users ·
+                              bonus pool $
+                              {getFormattedNumber(
+                                seasonUserStats.pool.bonus_pool_usdt,
+                                0,
+                              )}{" "}
+                              USDT
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
+
                 {/* Claim Bonus / Withdraw / Claim Weekly Tabs */}
                 <div className="h-100 bg-gradient-to-br from-slate-900/80 to-slate-800/50 bordertw border-cyan-500/30 rounded-2xl p-6 backdrop-blur-xl">
                   {/* Tabs */}
@@ -1056,77 +1601,73 @@ const LiquidityComp = ({
                   {/* Withdraw Principal Tab */}
                   {activeTab === "withdraw" && (
                     <>
-                      <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 bordertw border-cyan-500/30 rounded-lg p-4 mb-3">
-                        <div className="flex items-center gap-2 text-cyan-400 mb-2">
-                          <Wallet className="w-4 h-4" />
-                          <span className="text-xs font-semibold">
-                            Withdrawable Principal
-                          </span>
+                      <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 bordertw border-cyan-500/30 rounded-lg p-4 mb-3 flex items-center gap-2 justify-between">
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-2 text-cyan-400 mb-2">
+                            <Wallet className="w-4 h-4" />
+                            <span className="text-xs font-semibold">
+                              Withdrawable Principal
+                            </span>
+                          </div>
+                          <div className="text-3xl font-bold text-white">
+                            {getFormattedNumber(withdrawAmount, 4)} USDT
+                          </div>
+                          <div className="text-xs text-slate-400 mt-1">
+                            Total principal returned to your wallet
+                          </div>
                         </div>
-                        <div className="text-3xl font-bold text-white">
-                          {getFormattedNumber(withdrawAmount, 4)} USDT
-                        </div>
-                        <div className="text-xs text-slate-400 mt-1">
-                          Total principal returned to your wallet
-                        </div>
-                      </div>
-
-                      <div className="bg-slate-800/40 bordertw border-white/10 rounded-lg p-3 mb-3 text-xs text-slate-300">
-                        The campaign has ended. You will be able to withdraw your full
-                        principal deposit soon.
-                      </div>
-
-                      {isConnected && coinbase && chainId === 56 && (
-                        <button
-                          onClick={handleWithdrawPrincipal}
-                          disabled={
-                            !(
-                              Date.now() >= Number(seasonEnd) &&
+                        {isConnected && coinbase && chainId === 56 && (
+                          <button
+                            onClick={handleWithdrawPrincipal}
+                            disabled={
+                              !(
+                                Date.now() >= Number(seasonEnd) &&
+                                Number(withdrawAmount) > 0
+                              ) || withdrawLoading
+                            }
+                            className={`${
+                              withdrawStatus === "initial" &&
                               Number(withdrawAmount) > 0
-                            ) || withdrawLoading
-                          }
-                          className={`${
-                            withdrawStatus === "initial" &&
-                            Number(withdrawAmount) > 0
-                              ? "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
-                              : withdrawStatus === "initial" &&
-                                  Number(withdrawAmount) === 0
-                                ? "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10 cursor-not-allowed"
-                                : withdrawStatus === "success"
-                                  ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
-                                  : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
-                          } w-full py-2 text-lg disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold`}
-                        >
-                          {withdrawLoading ? (
-                            <div
-                              className="spinner-border spinner-border-sm text-light"
-                              role="status"
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                          ) : withdrawStatus === "success" ? (
-                            <>Success</>
-                          ) : withdrawStatus === "failed" ? (
-                            <>
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/failMark.svg"
-                                }
-                                alt=""
-                              />
-                              Failed
-                            </>
-                          ) : (
-                            <>Withdraw</>
-                          )}
-                        </button>
-                      )}
-                      {!isConnected && !coinbase && (
+                                ? "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600"
+                                : withdrawStatus === "initial" &&
+                                    Number(withdrawAmount) === 0
+                                  ? "bg-white/5 text-slate-400 bordertw border-white/10 hover:bg-white/10 cursor-not-allowed"
+                                  : withdrawStatus === "success"
+                                    ? "bg-gradient-to-r from-brandBlue to-brandCyan hover:from-blue-700 hover:to-cyan-600"
+                                    : "d-flex align-items-center gap-2 justify-content-center bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500"
+                            }  px-4 py-2 text-lg disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold`}
+                          >
+                            {withdrawLoading ? (
+                              <div
+                                className="spinner-border spinner-border-sm text-light"
+                                role="status"
+                              >
+                                <span className="visually-hidden">
+                                  Loading...
+                                </span>
+                              </div>
+                            ) : withdrawStatus === "success" ? (
+                              <>Success</>
+                            ) : withdrawStatus === "failed" ? (
+                              <>
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/failMark.svg"
+                                  }
+                                  alt=""
+                                />
+                                Failed
+                              </>
+                            ) : (
+                              <>Withdraw</>
+                            )}
+                          </button>
+                        )}
+
+                        {!isConnected && !coinbase && (
                         <button
                           onClick={handleConnection}
-                          className="w-full py-2 text-lg bg-gradient-to-r from-brandBlue to-brandCyan line-height-inherit hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
+                          className="px-4 py-2 text-lg bg-gradient-to-r from-brandBlue to-brandCyan line-height-inherit hover:from-blue-700 hover:to-cyan-600 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
                         >
                           Connect Wallet
                         </button>
@@ -1134,11 +1675,20 @@ const LiquidityComp = ({
                       {isConnected && coinbase && chainId !== 56 && (
                         <button
                           onClick={handleBNBPool}
-                          className="w-full py-2 text-lg bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
+                          className="px-4 py-2 text-lg bg-gradient-to-r from-amber-800 to-amber-1000 hover:from-orange-400 hover:to-orange-500 disabled:from-slate-700 disabled:to-slate-700 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 font-semibold"
                         >
                           Switch to BNB Chain
                         </button>
                       )}
+
+                      </div>
+
+                      <div className="bg-slate-800/40 bordertw border-white/10 rounded-lg p-3 mb-3 text-xs text-slate-300">
+                        The campaign has ended. You will be able to withdraw
+                        your full principal deposit soon.
+                      </div>
+
+                      
                       {errorMsg4 && (
                         <div className="mt-2 text-xs text-red-400 text-center">
                           {errorMsg4}

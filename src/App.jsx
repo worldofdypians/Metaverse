@@ -4729,9 +4729,9 @@ function AppRoutes() {
       setUserNFTs({ myNFTSBNB: NFTS ?? [] });
     });
 
-    getMyNFTS(wallet, "opbnb").then((NFTS) =>
-      setUserNFTs({ myNFTSOpBNB: NFTS ?? [] }),
-    );
+    // getMyNFTS(wallet, "opbnb").then((NFTS) =>
+    //   setUserNFTs({ myNFTSOpBNB: NFTS ?? [] }),
+    // );
 
     getMyNFTS(wallet, "landbnb").then((NFTS) =>
       setUserNFTs({ myNFTSLandBNB: NFTS ?? [] }),
