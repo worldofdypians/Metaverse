@@ -547,9 +547,21 @@ const NewBuilders = () => {
       name: "Equity Block",
       icon: "euqityblock.png",
     },
-      {
+    {
       name: "Bim Exchange",
       icon: "bimLogo.png",
+    },
+        {
+      name: "AlloX",
+      icon: "allox.svg",
+    },
+    {
+      name: "Mansory",
+      icon: "mansory.png",
+    },
+    {
+      name: "World Mobile",
+      icon: "worldMobile.svg",
     },
   ];
   return (
@@ -566,13 +578,25 @@ const NewBuilders = () => {
                   key={index}
                   className={`d-flex flex-column align-items-center gap-2`}
                 >
-                  <img
-                    src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
-                    width={45}
-                    height={45}
-                    alt=""
-                  />
+                  {item.name === "World Mobile" ||
+                  item.name === "Mansory" ||
+                  item.name === "AlloX" ? (
+                    <img
+                      src={require(`../../../assets/${item.icon}`)}
+                      width={45}
+                      height={45}
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
+                      width={45}
+                      height={45}
+                      alt=""
+                    />
+                  )}
 
+              
                   <span
                     className={`new-builder-title mb-0`}
                     style={{ fontWeight: "400" }}
