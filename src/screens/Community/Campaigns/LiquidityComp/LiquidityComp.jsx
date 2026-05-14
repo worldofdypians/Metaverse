@@ -1553,7 +1553,7 @@ const LiquidityComp = ({
                             </div>
                           )}
 
-                        {seasonUserStats.pool && (
+                        {/* {seasonUserStats.pool && (
                           <div className="mt-4 pt-3 border-t border-white/10 text-[10px] text-slate-400 space-y-1">
                             <div>
                               Pool snapshot:{" "}
@@ -1566,7 +1566,7 @@ const LiquidityComp = ({
                               USDT
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </>
                     )}
                   </div>
