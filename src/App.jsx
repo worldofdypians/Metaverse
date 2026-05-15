@@ -1091,7 +1091,7 @@ function AppRoutes() {
         thumbImage: "https://cdn.worldofdypians.com/wod/cmcPopupImage.png",
       },
     },
-        {
+    {
       title: "BNB Chain",
       logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
       eventStatus: "Live",
@@ -3440,6 +3440,27 @@ function AppRoutes() {
           console.error(e);
         });
 
+      const totaldesposited_wod9 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod9._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const totaldesposited_wod10 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod10._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const totaldesposited_wod11 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod11._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
       const totaldesposited_wod4_formatted = new window.BigNumber(
         totaldesposited_wod4,
       )
@@ -3465,6 +3486,24 @@ function AppRoutes() {
         .toFixed(6);
       const totaldesposited_wod8_formatted = new window.BigNumber(
         totaldesposited_wod8,
+      )
+        .div(1e18)
+        .toFixed(6);
+
+      const totaldesposited_wod9_formatted = new window.BigNumber(
+        totaldesposited_wod9,
+      )
+        .div(1e18)
+        .toFixed(6);
+
+      const totaldesposited_wod10_formatted = new window.BigNumber(
+        totaldesposited_wod10,
+      )
+        .div(1e18)
+        .toFixed(6);
+
+      const totaldesposited_wod11_formatted = new window.BigNumber(
+        totaldesposited_wod11,
       )
         .div(1e18)
         .toFixed(6);
@@ -3509,6 +3548,21 @@ function AppRoutes() {
           id: "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600",
           poolCap: 6500000,
           totaldeposited: totaldesposited_wod8_formatted,
+        },
+        {
+          id: "0x5E709a904Ca822F4060B8bF9fcfCb076f64632c5",
+          poolCap: 10000000,
+          totaldeposited: totaldesposited_wod9_formatted,
+        },
+        {
+          id: "0xE44280080aA7aB673b1d580e0A7AdD457557841d",
+          poolCap: 10000000,
+          totaldeposited: totaldesposited_wod10_formatted,
+        },
+        {
+          id: "0x73E44A2105ee1cC265935ce147616B798C704Af0",
+          poolCap: 10000000,
+          totaldeposited: totaldesposited_wod11_formatted,
         },
       ];
 
@@ -6702,7 +6756,7 @@ export default function App() {
 
   const AccountAppContent = () => {
     const { isLoading, isAuthenticated, playerId, email } = useAuth();
-    
+
     useEffect(() => {
       if (!isLoading || !isAuthenticated || !playerId) {
         setFireAppContent(false);
@@ -6712,7 +6766,7 @@ export default function App() {
     if (isLoading) {
       return <LandingScreen />;
     }
-   
+
     if (isAuthenticated) {
       if (!playerId) {
         return (
