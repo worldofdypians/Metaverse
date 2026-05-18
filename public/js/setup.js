@@ -464,6 +464,9 @@ window.config = {
   constant_staking_wod6_address: "0xC5432cbf613aaE8626bC4301f29e6eE8e3d2a1b3",
   constant_staking_wod7_address: "0x6A4057d68C10f450e306F191728ffa926E6c30F0",
   constant_staking_wod8_address: "0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600",
+  constant_staking_wod9_address: "0x5E709a904Ca822F4060B8bF9fcfCb076f64632c5",
+  constant_staking_wod10_address: "0xE44280080aA7aB673b1d580e0A7AdD457557841d",
+  constant_staking_wod11_address: "0x73E44A2105ee1cC265935ce147616B798C704Af0",
 
   reward_token_wod_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
   reward_token_wod_test_address: "0x810C42A71358dc1e0Ecc32815DadD90c586AfD1c",
@@ -513,6 +516,9 @@ window.CONSTANT_STAKING_WOD5_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD6_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD7_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD8_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD9_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD10_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD11_ABI = window.CONSTANT_STAKING_WOD_ABI;
 
 async function getMaxFee() {
   let maxPriorityFeePerGas = new BigNumber(10000000000).toFixed(0) * 1;
@@ -720,6 +726,17 @@ window.constant_staking_wod7 = new CONSTANT_STAKING_WOD(
 
 window.constant_staking_wod8 = new CONSTANT_STAKING_WOD(
   "CONSTANT_STAKING_WOD8",
+);
+
+window.constant_staking_wod9 = new CONSTANT_STAKING_WOD(
+  "CONSTANT_STAKING_WOD9",
+);
+
+window.constant_staking_wod10 = new CONSTANT_STAKING_WOD(
+  "CONSTANT_STAKING_WOD10",
+);
+window.constant_staking_wod11 = new CONSTANT_STAKING_WOD(
+  "CONSTANT_STAKING_WOD11",
 );
 
 /**
@@ -38229,7 +38246,10 @@ Object.keys(window.config)
       k.startsWith("constant_staking_wod5") ||
       k.startsWith("constant_staking_wod6") ||
       k.startsWith("constant_staking_wod7") ||
-      k.startsWith("constant_staking_wod8"),
+      k.startsWith("constant_staking_wod8") ||
+      k.startsWith("constant_staking_wod9") ||
+      k.startsWith("constant_staking_wod10") ||
+      k.startsWith("constant_staking_wod11"),
   )
   .forEach((k) => {
     window[k.replace("_address", "_ABI").toUpperCase()] = k.startsWith("token_")
@@ -38258,5 +38278,11 @@ Object.keys(window.config)
                             ? window.CONSTANT_STAKING_WOD_ABI
                             : k.startsWith("constant_staking_wod8")
                               ? window.CONSTANT_STAKING_WOD_ABI
-                              : window.TOKEN_ABI;
+                              : k.startsWith("constant_staking_wod9")
+                                ? window.CONSTANT_STAKING_WOD_ABI
+                                : k.startsWith("constant_staking_wod10")
+                                  ? window.CONSTANT_STAKING_WOD_ABI
+                                  : k.startsWith("constant_staking_wod11")
+                                    ? window.CONSTANT_STAKING_WOD_ABI
+                                    : window.TOKEN_ABI;
   });

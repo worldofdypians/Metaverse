@@ -902,6 +902,117 @@ const EarnContent = ({
                         )}
 
                         {item?.id ===
+                          "0x5E709a904Ca822F4060B8bF9fcfCb076f64632c5" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              isEOA={isEOA}
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod9}
+                              apr={item.apy_percent}
+                              expiration_time={"15 May 2027"}
+                              poolCap={item.poolCap}
+                              start_date={"15 May 2026"}
+                              fee={item.performancefee}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id ===
+                          "0xE44280080aA7aB673b1d580e0A7AdD457557841d" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              isEOA={isEOA}
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod10}
+                              apr={item.apy_percent}
+                              expiration_time={"15 May 2027"}
+                              poolCap={item.poolCap}
+                              start_date={"15 May 2026"}
+                              fee={item.performancefee}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id ===
+                          "0x73E44A2105ee1cC265935ce147616B798C704Af0" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              isEOA={isEOA}
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod11}
+                              apr={item.apy_percent}
+                              expiration_time={"15 May 2027"}
+                              poolCap={item.poolCap}
+                              start_date={"15 May 2026"}
+                              fee={item.performancefee}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+                              handleSwitchChainGateWallet={
+                                handleSwitchChainGateWallet
+                              }
+                              handleSwitchChainBinanceWallet={
+                                handleSwitchChainBinanceWallet
+                              }
+                              bnbUSDPrice={bnbUSDPrice}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id ===
                           "0x0675B497f52a0426874151c1e3267801fAA15C18" && (
                           <div
                             onClick={() => {

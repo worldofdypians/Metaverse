@@ -49,6 +49,21 @@ const formatUtcDateTime = (iso) => {
   }
 };
 
+/** API sometimes returns `datetime_utc` as `"YYYY-MM-DD HH:mm:ss"` (no `T`). */
+const formatClaimsUtcDateTime = (value) => {
+  if (!value) return "—";
+  const s = String(value);
+  if (s.includes("T")) return formatUtcDateTime(s);
+  try {
+    return new Date(s.replace(" ", "T") + "Z").toLocaleString(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+  } catch {
+    return s;
+  }
+};
+
 const renderer = ({ days, hours, completed }) => {
   return (
     <div className="d-flex">
@@ -1314,15 +1329,269 @@ const LiquidityComp = ({
                           </div>
                         )}
 
-                        {seasonUserStats.totals && (
+                        {(seasonUserStats.claims ||
+                          seasonUserStats.lp_rewards) && (
                           <div className="mb-4">
-                            <div className="text-[11px] font-semibold text-white mb-2">
-                              Totals (principal + bonus share)
+                            <div className="text-[11px] font-semibold text-emerald-400 mb-2">
+                              Claims & weekly LP rewards
                             </div>
                             <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div className="bg-emerald-500/5 rounded-lg p-2 bordertw border-emerald-500/15">
+                                <div className="text-slate-400 mb-0.5">
+                                  LP fees claimed (USDT)
+                                </div>
+                                <div className="font-bold text-emerald-300">
+                                  $
+                                  {getFormattedNumber(
+                                    Number(
+                                      seasonUserStats.claims
+                                        ?.lp_fees_claimed_usdt ??
+                                        seasonUserStats.lp_rewards
+                                          ?.claimed_usdt ??
+                                        0,
+                                    ),
+                                    2,
+                                  )}
+                                </div>
+                                {seasonUserStats.lp_rewards?.claims_count !=
+                                  null && (
+                                  <div className="text-[10px] text-slate-500 mt-0.5">
+                                    {seasonUserStats.lp_rewards.claims_count}{" "}
+                                    claim
+                                    {Number(
+                                      seasonUserStats.lp_rewards.claims_count,
+                                    ) === 1
+                                      ? ""
+                                      : "s"}
+                                  </div>
+                                )}
+                              </div>
                               <div className="bg-white/5 rounded-lg p-2">
                                 <div className="text-slate-400 mb-0.5">
-                                  Total payout (USDT)
+                                  Total claimed / withdrawn (USDT)
+                                </div>
+                                <div className="font-bold text-white">
+                                  $
+                                  {getFormattedNumber(
+                                    Number(
+                                      seasonUserStats.claims != null
+                                        ? (seasonUserStats.claims
+                                            .total_claimed_and_withdrawn_usdt ??
+                                          0)
+                                        : (seasonUserStats.lp_rewards
+                                            ?.claimed_usdt ?? 0),
+                                    ),
+                                    2,
+                                  )}
+                                </div>
+                              </div>
+                              <div className="bg-white/5 rounded-lg p-2">
+                                <div className="text-slate-400 mb-0.5">
+                                  Bonus claimed (USDT)
+                                </div>
+                                <div className="font-bold text-yellow-200">
+                                  $
+                                  {getFormattedNumber(
+                                    Number(
+                                      seasonUserStats.claims
+                                        ?.bonus_claimed_usdt ?? 0,
+                                    ),
+                                    2,
+                                  )}
+                                </div>
+                              </div>
+                              <div className="bg-white/5 rounded-lg p-2">
+                                <div className="text-slate-400 mb-0.5">
+                                  Principal withdrawn (USDT)
+                                </div>
+                                <div className="font-bold text-cyan-200">
+                                  $
+                                  {getFormattedNumber(
+                                    Number(
+                                      seasonUserStats.claims
+                                        ?.principal_withdrawn_usdt ?? 0,
+                                    ),
+                                    2,
+                                  )}
+                                </div>
+                              </div>
+                              {Number(
+                                seasonUserStats.claims
+                                  ?.emergency_principal_withdrawn_usdt ?? 0,
+                              ) > 0 && (
+                                <div className="bg-white/5 rounded-lg p-2 col-span-2">
+                                  <div className="text-slate-400 mb-0.5">
+                                    Emergency principal withdrawn (USDT)
+                                  </div>
+                                  <div className="font-bold text-orange-300">
+                                    $
+                                    {getFormattedNumber(
+                                      Number(
+                                        seasonUserStats.claims
+                                          ?.emergency_principal_withdrawn_usdt ??
+                                          0,
+                                      ),
+                                      2,
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                            {seasonUserStats.lp_rewards?.rank != null && (
+                              <div className="text-[10px] text-slate-400 mt-2">
+                                LP rewards leaderboard rank: #
+                                {seasonUserStats.lp_rewards.rank}
+                              </div>
+                            )}
+                            {Array.isArray(seasonUserStats.lp_rewards?.claims) &&
+                              seasonUserStats.lp_rewards.claims.length > 0 && (
+                                <div className="mt-3 pt-2 border-t border-white/10">
+                                  <div className="text-[10px] font-semibold text-slate-400 mb-2">
+                                    LP fee claim history
+                                  </div>
+                                  <div className="space-y-2 max-h-44 overflow-y-auto pr-1 text-[10px]">
+                                    {seasonUserStats.lp_rewards.claims.map(
+                                      (c, idx) => (
+                                        <div
+                                          key={
+                                            c.tx_hash ??
+                                            `${c.block_number}-${idx}`
+                                          }
+                                          className="flex flex-wrap items-baseline justify-between gap-2 bg-slate-800/40 rounded-md px-2 py-1.5"
+                                        >
+                                          <div className="text-slate-300 min-w-0">
+                                            <span className="text-emerald-400 font-semibold">
+                                              $
+                                              {getFormattedNumber(
+                                                Number(c.amount_usdt ?? 0),
+                                                4,
+                                              )}
+                                            </span>
+                                            <span className="text-slate-500 mx-1">
+                                              ·
+                                            </span>
+                                            <span className="text-slate-400">
+                                              {formatClaimsUtcDateTime(
+                                                c.datetime_utc,
+                                              )}
+                                            </span>
+                                          </div>
+                                          {c.tx_hash && (
+                                            <a
+                                              href={`https://bscscan.com/tx/${c.tx_hash}`}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="text-cyan-400 hover:text-cyan-300 shrink-0"
+                                            >
+                                              Tx
+                                            </a>
+                                          )}
+                                        </div>
+                                      ),
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                          </div>
+                        )}
+
+                        {seasonUserStats.totals && (
+                          <div className="mb-4">
+                            <div className="text-[11px] font-semibold text-white mb-1">
+                              Totals
+                            </div>
+                            <p className="text-[10px] text-slate-400 mb-2 leading-snug">
+                              Pending total is pending principal plus pending
+                              bonus. Total payout is that amount plus LP fees
+                              already claimed. Realized (USDT) is LP fees
+                              claimed to date.
+                            </p>
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              {seasonUserStats.totals.deposited_usd != null && (
+                                <div className="bg-white/5 rounded-lg p-2">
+                                  <div className="text-slate-400 mb-0.5">
+                                    Deposited (USD)
+                                  </div>
+                                  <div className="font-bold text-white">
+                                    $
+                                    {getFormattedNumber(
+                                      seasonUserStats.totals.deposited_usd,
+                                      2,
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                              {(seasonUserStats.totals.realized_usdt != null ||
+                                seasonUserStats.lp_rewards?.claimed_usdt !=
+                                  null) && (
+                                <div className="bg-emerald-500/5 rounded-lg p-2 bordertw border-emerald-500/15">
+                                  <div className="text-slate-400 mb-0.5">
+                                    Realized — LP fees (USDT)
+                                  </div>
+                                  <div className="font-bold text-emerald-300">
+                                    $
+                                    {getFormattedNumber(
+                                      Number(
+                                        seasonUserStats.totals
+                                          .realized_usdt ??
+                                          seasonUserStats.lp_rewards
+                                            ?.claimed_usdt ??
+                                          0,
+                                      ),
+                                      2,
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                              {seasonUserStats.totals.pending_principal_usdt !=
+                                null && (
+                                <div className="bg-white/5 rounded-lg p-2">
+                                  <div className="text-slate-400 mb-0.5">
+                                    Pending principal (USDT)
+                                  </div>
+                                  <div className="font-bold text-cyan-200">
+                                    $
+                                    {getFormattedNumber(
+                                      seasonUserStats.totals
+                                        .pending_principal_usdt,
+                                      2,
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                              {seasonUserStats.totals.pending_bonus_usdt !=
+                                null && (
+                                <div className="bg-white/5 rounded-lg p-2">
+                                  <div className="text-slate-400 mb-0.5">
+                                    Pending bonus (USDT)
+                                  </div>
+                                  <div className="font-bold text-yellow-200">
+                                    $
+                                    {getFormattedNumber(
+                                      seasonUserStats.totals.pending_bonus_usdt,
+                                      2,
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                              {seasonUserStats.totals.pending_total_usdt !=
+                                null && (
+                                <div className="bg-white/5 rounded-lg p-2 col-span-2">
+                                  <div className="text-slate-400 mb-0.5">
+                                    Pending total — principal + bonus (USDT)
+                                  </div>
+                                  <div className="font-bold text-white">
+                                    $
+                                    {getFormattedNumber(
+                                      seasonUserStats.totals.pending_total_usdt,
+                                      2,
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                              <div className="bg-white/5 rounded-lg p-2 col-span-2">
+                                <div className="text-slate-400 mb-0.5">
+                                  Total payout — pending + LP fees (USDT)
                                 </div>
                                 <div className="font-bold text-white">
                                   $
@@ -1336,15 +1605,7 @@ const LiquidityComp = ({
                                 <div className="text-slate-400 mb-0.5">
                                   Net PnL
                                 </div>
-                                <div
-                                  className={
-                                    Number(
-                                      seasonUserStats.totals.net_pnl_usdt,
-                                    ) >= 0
-                                      ? "font-bold text-white"
-                                      : "font-bold text-white"
-                                  }
-                                >
+                                <div className="font-bold text-white">
                                   {Number(
                                     seasonUserStats.totals.net_pnl_usdt,
                                   ) >= 0
@@ -1370,6 +1631,43 @@ const LiquidityComp = ({
                                   %)
                                 </div>
                               </div>
+                              {seasonUserStats.totals.net_pnl_excl_lp_usdt !=
+                                null && (
+                                <div className="bg-white/5 rounded-lg p-2">
+                                  <div className="text-slate-400 mb-0.5">
+                                    Net PnL excl. LP
+                                  </div>
+                                  <div className="font-bold text-white">
+                                    {Number(
+                                      seasonUserStats.totals
+                                        .net_pnl_excl_lp_usdt,
+                                    ) >= 0
+                                      ? "+"
+                                      : ""}
+                                    $
+                                    {getFormattedNumber(
+                                      seasonUserStats.totals
+                                        .net_pnl_excl_lp_usdt,
+                                      2,
+                                    )}
+                                  </div>
+                                  <div className="text-[10px] text-white mt-0.5">
+                                    (
+                                    {Number(
+                                      seasonUserStats.totals
+                                        .net_pnl_excl_lp_percent,
+                                    ) >= 0
+                                      ? "+"
+                                      : ""}
+                                    {getFormattedNumber(
+                                      seasonUserStats.totals
+                                        .net_pnl_excl_lp_percent,
+                                      2,
+                                    )}
+                                    %)
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           </div>
                         )}
