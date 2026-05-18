@@ -2714,7 +2714,7 @@ function AppRoutes() {
     {
       title: "Vanar",
       logo: "https://cdn.worldofdypians.com/wod/vanar.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$10,000 in VANRY Rewards",
       location: [-0.06784377896887378, 0.0839531421661377],
       myEarnings: 0.0,
@@ -2726,15 +2726,15 @@ function AppRoutes() {
       infoType: "Treasure Hunt",
       backgroundImage: "https://cdn.worldofdypians.com/wod/vanarEventBg.webp",
       image: "vanarArea.webp",
-      userEarnUsd: user.userStats.vanarEarnUsd,
-      userEarnCrypto: user.userStats.vanarEarnToken,
-      userEarnPoints: user.userStats.vanarPoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       popupInfo: {
         title: "Vanar",
         chain: "Vanar Network",
         linkState: "vanar",
         rewards: "VANRY",
-        status: "Live",
+        status: "Expired",
         id: "event2",
         eventType: "Explore & Mine",
         totalRewards: "$10,000 in VANRY Rewards",
@@ -3551,17 +3551,17 @@ function AppRoutes() {
         },
         {
           id: "0x5E709a904Ca822F4060B8bF9fcfCb076f64632c5",
-          poolCap: 10000000,
+          poolCap: 15000000,
           totaldeposited: totaldesposited_wod9_formatted,
         },
         {
           id: "0xE44280080aA7aB673b1d580e0A7AdD457557841d",
-          poolCap: 10000000,
+          poolCap: 15000000,
           totaldeposited: totaldesposited_wod10_formatted,
         },
         {
           id: "0x73E44A2105ee1cC265935ce147616B798C704Af0",
-          poolCap: 10000000,
+          poolCap: 15000000,
           totaldeposited: totaldesposited_wod11_formatted,
         },
       ];
@@ -3632,7 +3632,56 @@ function AppRoutes() {
       localStorage.setItem("tvl", Number(tvl) + Number(resultWodTokenTVL));
       setnftTvl(Number(tvl) + Number(resultWodTokenTVL));
       setnftPools([...resultCaws2, ...resultLand2, ...resultCawsLand2]);
-
+      // const testTokenPools = [
+      //   {
+      //     id: "0x5E709a904Ca822F4060B8bF9fcfCb076f64632c5",
+      //     apy_percent: 20,
+      //     tvl_usd: 166151.569223695,
+      //     link_logo: "https://www.dypius.com/logo192.png",
+      //     link_pair: "",
+      //     pool_name: "WOD Constant Staking BNB",
+      //     pair_name: "WOD",
+      //     return_types: "WOD",
+      //     lock_time: "60 days",
+      //     expired: "No",
+      //     new_pool: "Yes",
+      //     apy_performancefee: 20,
+      //     performancefee: 0,
+      //     tokenURL: ["wodToken"],
+      //   },
+      //   {
+      //     id: "0xE44280080aA7aB673b1d580e0A7AdD457557841d",
+      //     apy_percent: 25,
+      //     tvl_usd: 64426.4386456096,
+      //     link_logo: "https://www.dypius.com/logo192.png",
+      //     link_pair: "",
+      //     pool_name: "WOD Constant Staking BNB",
+      //     pair_name: "WOD",
+      //     return_types: "WOD",
+      //     lock_time: "90 days",
+      //     expired: "No",
+      //     new_pool: "Yes",
+      //     apy_performancefee: 25,
+      //     performancefee: 0,
+      //     tokenURL: ["wodToken"],
+      //   },
+      //   {
+      //     id: "0x73E44A2105ee1cC265935ce147616B798C704Af0",
+      //     apy_percent: 30,
+      //     tvl_usd: 0.165539679044672,
+      //     link_logo: "https://www.dypius.com/logo192.png",
+      //     link_pair: "",
+      //     pool_name: "WOD Constant Staking BNB",
+      //     pair_name: "WOD",
+      //     return_types: "WOD",
+      //     lock_time: "120 days",
+      //     expired: "No",
+      //     new_pool: "Yes",
+      //     apy_performancefee: 30,
+      //     performancefee: 0,
+      //     tokenURL: ["wodToken"],
+      //   },
+      // ];
       settokenPools(resultWodToken2);
     }
   };
@@ -4480,9 +4529,9 @@ function AppRoutes() {
           }
 
           if (vanarEvent && vanarEvent[0]) {
-            if (vanarEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (vanarEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
 
             const userEarnedusd =
               vanarEvent[0].reward.earn.total /
