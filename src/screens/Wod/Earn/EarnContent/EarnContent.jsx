@@ -426,7 +426,7 @@ const EarnContent = ({
                         }}
                       >
                         <TopPoolsCard
-                          tag={index === 0 && "exclusive"}
+                          // tag={index === 0 && "exclusive"}
                           chain={chainId}
                           top_pick={false}
                           tokenName={item.pair_name}
