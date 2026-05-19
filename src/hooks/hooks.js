@@ -251,8 +251,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [OPBNBPARAMS]
               : chainID === "0x2105"
               ? [BASEPARAMS]
-              : chainID === "0x2ba"
-              ? [MATPARAMS]
+              
               : chainID === "0x406"
               ? [CONFLUXPARAMS]
               : chainID === "0x585eb4b1"

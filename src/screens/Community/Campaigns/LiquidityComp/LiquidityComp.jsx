@@ -26,7 +26,6 @@ import {
   readContract,
   writeContract,
   waitForTransactionReceipt,
-  getAccount,
 } from "@wagmi/core";
 import { wagmiClient } from "../../../../wagmiConnectors";
 import { bsc } from "viem/chains";

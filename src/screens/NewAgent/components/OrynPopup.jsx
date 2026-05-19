@@ -40,7 +40,6 @@ const OrynPopup = ({
   getWithdrawTimer,
   unlockLoading,
   unlockStatus,
-  network_matchain,
   isEOA,
 }) => {
   const benefits = [

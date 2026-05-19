@@ -39,7 +39,6 @@ const Header = ({
   username,
   loginListener,
   onSyncClick,
-  network_matchain,
   coinbase,
 }) => {
   // const loadAndNavigate = useRouteLoader();
@@ -135,7 +134,6 @@ const Header = ({
         handleSwitchNetwork,
         handleSwitchChainGateWallet,
         handleSwitchChainBinanceWallet,
-        network_matchain,
         coinbase,
       });
     } catch (error) {

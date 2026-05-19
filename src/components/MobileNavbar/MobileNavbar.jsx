@@ -27,7 +27,6 @@ const MobileNavbar = ({
   email,
   username,
   isConnected,
-  network_matchain,
   onLogout,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
@@ -97,7 +96,6 @@ const MobileNavbar = ({
         handleSwitchNetwork,
         handleSwitchChainGateWallet,
         handleSwitchChainBinanceWallet,
-        network_matchain,
         coinbase,
       });
     } catch (error) {
@@ -245,8 +243,7 @@ const MobileNavbar = ({
                         ? "Manta"
                         : chainState === "taiko"
                         ? "Taiko"
-                        : chainState === "mat"
-                        ? "Matchain"
+                        
                         : chainState === "sei"
                         ? "Sei"
                         : "Unsupported"}
