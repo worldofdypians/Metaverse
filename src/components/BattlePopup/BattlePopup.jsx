@@ -19,7 +19,7 @@ import {
   waitForTransactionReceipt as wagmiWaitForTransactionReceipt,
   switchChain as wagmiSwitchChain,
   readContract as wagmiReadContract,
-  getAccount,
+  getConnection,
 } from "@wagmi/core";
 import { wagmiClient } from "../../wagmiConnectors";
 import { bsc } from "wagmi/chains";
@@ -123,7 +123,7 @@ const BattlePopup = ({
 
   const writeOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-      const account = getAccount(wagmiClient);
+      const account = getConnection(wagmiClient);
       if (account?.chainId && chainId && account.chainId !== chainId) {
         try {
           await wagmiSwitchChain(wagmiClient, { chainId });
@@ -724,7 +724,7 @@ const BattlePopup = ({
       const functionName = "strike";
 
       // Default: use wagmi connected wallet via viem
-      const account = getAccount(wagmiClient);
+      const account = getConnection(wagmiClient);
 
       if (account?.chainId && account.chainId !== chainId) {
         try {

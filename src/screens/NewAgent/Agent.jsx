@@ -30,7 +30,6 @@ const Agent = ({
   chainId,
   handleSwitchNetwork,
   checkPremiumOryn,
-  network_matchain,
 }) => {
   let { reward_token_wod, BigNumber } = window;
   const [playAudio, setPlayAudio] = useState(false);
@@ -484,7 +483,6 @@ const Agent = ({
             getWithdrawTimer={getWithdrawTimer}
             unlockLoading={unlockLoading}
             unlockStatus={unlockStatus}
-            network_matchain={network_matchain}
             isEOA={isEOA}
           />
         </OutsideClickHandler>

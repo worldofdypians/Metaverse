@@ -19,7 +19,7 @@ import {
   writeContract as wagmiWriteContract,
   waitForTransactionReceipt as wagmiWaitForTransactionReceipt,
   switchChain as wagmiSwitchChain,
-  getAccount,
+  getConnection,
 } from "@wagmi/core";
 import { wagmiClient } from "../../wagmiConnectors";
 
@@ -85,7 +85,7 @@ const GoldenPassPopup = ({
     try {
   
 
-      const account = getAccount(wagmiClient);
+      const account = getConnection(wagmiClient);
       if (account?.chainId && chainId && account.chainId !== chainId) {
         try {
           await wagmiSwitchChain(wagmiClient, { chainId });

@@ -1,12 +1,45 @@
 import React from "react";
 import Modal from "../General/Modal";
 import OutsideClickHandler from "react-outside-click-handler";
-import { useConnect, useChainId } from "wagmi";
-import { getAccount } from "@wagmi/core";
+import { useConnect } from "wagmi";
+import { getConnection } from "@wagmi/core";
 import { wagmiClient } from "../../wagmiConnectors";
 import "../../screens/Account/src/App.css";
 import { useWallet } from "../../redux/hooks/useWallet";
 import { connect } from "@wagmi/core";
+import {
+  ApiController,
+  ChainController,
+  RouterController,
+} from "@reown/appkit-controllers";
+
+const BINANCE_WC_EXPLORER_ID =
+  "8a0ee50d1f22f6651afcae7eb4253e52a3310b90b0f0bad28ada4ebe5d7ae0b8";
+
+async function resolveBinanceWalletForAppKit() {
+  try {
+    await ApiController.searchWallet({ search: "Binance" });
+    const fromSearch =
+      ApiController.state.search?.find(
+        (w) => w.id === BINANCE_WC_EXPLORER_ID,
+      ) ||
+      ApiController.state.search?.find((w) =>
+        (w.name || "").toLowerCase().includes("binance"),
+      );
+    if (fromSearch) return fromSearch;
+
+    const chains = ChainController.getRequestedCaipNetworkIds().join(",");
+    const { data } = await ApiController.fetchWallets({
+      page: 1,
+      entries: 20,
+      include: [BINANCE_WC_EXPLORER_ID],
+      chains,
+    });
+    return data?.find((w) => w.id === BINANCE_WC_EXPLORER_ID) ?? data?.[0];
+  } catch {
+    return null;
+  }
+}
 const WALLET_OPTIONS = [
   // Top Wallets
   {
@@ -83,7 +116,8 @@ const WALLET_OPTIONS = [
 ];
 
 const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
-  const { isLoading, pendingConnector, error } = useConnect();
+  const connectMutation = useConnect();
+  const { isPending, variables, error } = connectMutation;
   // const chainId = useChainId();
   const connectors = wagmiClient.connectors;
   const { setWalletType, setWalletModal } = useWallet();
@@ -124,7 +158,7 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
           (c) =>
             c.type === "injected" ||
             c.id === "injected" ||
-            c.name.toLowerCase().includes("injected")
+            c.name.toLowerCase().includes("injected"),
         );
 
         if (injectedConnector) {
@@ -143,7 +177,7 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
       const connector = connectors.find(
         (c) =>
           c.name.toLowerCase().includes(option.name.toLowerCase()) ||
-          c.name.toLowerCase().includes("safepal")
+          c.name.toLowerCase().includes("safepal"),
       );
 
       if (connector) {
@@ -156,7 +190,7 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
             .catch((err) => {
               console.error("SafePal connection error:", err);
               window.alertify.error(
-                "Failed to connect SafePal wallet. Please make sure SafePal is installed and unlocked."
+                "Failed to connect SafePal wallet. Please make sure SafePal is installed and unlocked.",
               );
             });
         } catch (err) {
@@ -168,20 +202,98 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
       // If still not found, show error
       window.alertify.error(
         option.name +
-          " not found! Please make sure SafePal is installed and the wallet is unlocked."
+          " not found! Please make sure SafePal is installed and the wallet is unlocked.",
       );
       return;
     }
 
-    // For Binance Wallet, use WalletConnect with BSC chain
-    // if (option.connectorName === "Binance Wallet") {
-    //   const connector = connectors.find((c) => c.name === "Binance Wallet");
-    //   if (connector) connect({ connector, chainId: option.chainId });
-    //   return;
-    // }
+    // Binance Web3 Wallet:
+    //  - Inside Binance App's DApp browser: use the dedicated injected connector
+    //    that targets window.binancew3w.ethereum (per Binance docs).
+    //  - Anywhere else (desktop browser, mobile browser): use WalletConnect v2,
+    //    which covers the extension/QR/deep-link flows.
+    //
+    // Note: We DO NOT update Redux state (address/chainId/isConnected/walletModal)
+    // here. The WalletSync component in App.jsx subscribes to watchConnection +
+    // watchConnections and is the single source of truth for those updates -
+    // it fires reliably even when the connect() promise is cancelled by AppKit's
+    // modal (which happens in the WC QR flow on desktop). We only:
+    //   1. Tag window.WALLET_TYPE BEFORE connect so WalletSync knows it's Binance.
+    //   2. Trigger the connect.
+    //   3. Surface errors.
+    if (option.walletType === "binance") {
+      const isInBinance =
+        typeof window !== "undefined" &&
+        typeof window.binancew3w?.ethereum !== "undefined";
+
+      window.WALLET_TYPE = option.walletType;
+
+      if (isInBinance) {
+        const binanceInjected = connectors.find(
+          (c) => c.id === "wallet.binance.com",
+        );
+
+        if (binanceInjected) {
+          try {
+            await connect(wagmiClient, {
+              connector: binanceInjected,
+              chainId: option.chainId,
+            });
+          } catch (err) {
+            console.error("Binance in-app connection error:", err);
+            window.alertify.error(
+              "Failed to connect Binance Web3 Wallet in-app browser.",
+            );
+          }
+          return;
+        }
+      }
+
+      const wcConnector = connectors.find((c) => c.name === "WalletConnect");
+      if (!wcConnector) {
+        window.alertify.error("WalletConnect connector not found.");
+        return;
+      }
+
+      try {
+        const binanceWallet = await resolveBinanceWalletForAppKit();
+        const provider = await wcConnector.getProvider();
+        if (binanceWallet && typeof provider?.modal?.open === "function") {
+          const originalOpen = provider.modal.open.bind(provider.modal);
+          console.log(originalOpen);
+          provider.modal.open = async (openParams) => {
+            provider.modal.open = originalOpen;
+            await originalOpen(openParams);
+            queueMicrotask(() => {
+              RouterController.reset("ConnectingWalletConnect", {
+                wallet: binanceWallet,
+              });
+            });
+          };
+        }
+      } catch {
+        // proceed with normal WalletConnect flow on any failure
+      }
+
+      connect(wagmiClient, {
+        connector: wcConnector,
+        chainId: option.chainId,
+      })
+        .then(() => {
+          setWalletModal(false);
+        })
+        .catch((err) => {
+          // AppKit's modal often rejects the promise when the user closes it,
+          // even though the underlying WC pairing may have succeeded. WalletSync
+          // will pick up the real connection state - we only log here.
+          console.warn("Binance WalletConnect connect rejected:", err?.message);
+        });
+
+      return;
+    }
     // Default: match by name
     const connector = connectors.find((c) =>
-      c.name.toLowerCase().includes(option.name.toLowerCase())
+      c.name.toLowerCase().includes(option.name.toLowerCase()),
     );
     console.log("connector", connector);
     if (connector && connector.name !== "WalletConnect") {
@@ -192,8 +304,8 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
 
           if (option.connectorName === "Binance Wallet") {
             setTimeout(() => {
-              console.log(getAccount(wagmiClient));
-              getAccount(wagmiClient);
+              console.log(getConnection(wagmiClient));
+              getConnection(wagmiClient);
             }, 2000);
           }
         })
@@ -214,14 +326,14 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
           .catch((err) => {
             console.error("WalletConnect connection error:", err);
             window.alertify.error(
-              "Failed to connect via WalletConnect. Please try again."
+              "Failed to connect via WalletConnect. Please try again.",
             );
           });
       }
     } else {
       window.alertify.error(
         option.name +
-          " not found! Please add the browser extension or use mobile app wallet."
+          " not found! Please add the browser extension or use mobile app wallet.",
       );
     }
   };
@@ -246,7 +358,10 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
                       className="walletbutton"
                       onClick={() => connectWallet(option)}
                       disabled={
-                        isLoading && pendingConnector?.name === option.name
+                        isPending &&
+                        variables?.connector?.name
+                          ?.toLowerCase()
+                          ?.includes(option.name.toLowerCase())
                       }
                     >
                       <div className="justify-content-between d-flex flex-column-reverse w-100 align-items-center">
@@ -260,7 +375,7 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
                         />
                       </div>
                     </button>
-                  )
+                  ),
                 )}
               </div>
               <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl p-2 bordertw border-cyan-400/30">
@@ -292,7 +407,10 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
                       className="walletbutton"
                       onClick={() => connectWallet(option)}
                       disabled={
-                        isLoading && pendingConnector?.name === option.name
+                        isPending &&
+                        variables?.connector?.name
+                          ?.toLowerCase()
+                          ?.includes(option.name.toLowerCase())
                       }
                     >
                       <div className="justify-content-between d-flex flex-column-reverse w-100 align-items-center">
@@ -306,7 +424,7 @@ const WalletModal = ({ handleClose, show, handleConnectionPassport }) => {
                         />
                       </div>
                     </button>
-                  )
+                  ),
                 )}
               </div>
               {error && (
