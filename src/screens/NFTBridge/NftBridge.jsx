@@ -22,7 +22,7 @@ const NFTBridge = ({
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   binanceWallet,
-  binanceW3WProvider,network_matchain
+  binanceW3WProvider
 }) => {
   const windowSize = useWindowSize();
   const [filterTitle, setFilterTitle] = useState("");

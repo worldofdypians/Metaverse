@@ -12,7 +12,7 @@ import {
   readContract,
   writeContract,
   waitForTransactionReceipt,
-  getAccount,
+  getConnection,
 } from "@wagmi/core";
 import { wagmiClient } from "../../../../../wagmiConnectors.js";
 
@@ -41,7 +41,7 @@ const GetPremiumPopup = ({
   if (statusPrime === "idle") buttonText = "Activate";
 
   // Derive wallet capabilities from wagmi/viem (no window.WALLET_TYPE)
-  const wagmiAccount = getAccount(wagmiClient);
+  const wagmiAccount = getConnection(wagmiClient);
   const activeConnectorName =
     wagmiAccount?.connector?.name?.toLowerCase?.() || "";
   const isBinanceWallet = activeConnectorName.includes("binance");

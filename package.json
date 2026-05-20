@@ -6,11 +6,12 @@
     "@apollo/client": "^3.8.7",
     "@aws-amplify/auth": "^6.16.0",
     "@aws-amplify/ui-react": "^4.6.4",
-    "@binance/w3w-wagmi-connector-v2": "^1.2.9",
+    "@coinbase/wallet-sdk": "^4.3.7",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.8.1",
     "@fancyapps/ui": "^5.0.36",
     "@floating-ui/react-dom": "^2.1.2",
+    "@metamask/connect-evm": "1.0.0",
     "@mui/icons-material": "^6.1.1",
     "@mui/lab": "^5.0.0-alpha.122",
     "@mui/material": "^5.1.1",
@@ -28,8 +29,12 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/three": "0.152.1",
+    "@wagmi/core": "3",
+    "@reown/appkit-controllers": "1.8.17-wc-circular-dependencies-fix.0",
+    "@walletconnect/ethereum-provider": "^2.23.9",
     "@web3-name-sdk/core": "^0.4.1",
     "@web3-name-sdk/register": "^0.0.1-beta.1",
+    "accounts": "~0.8.1",
     "aws-amplify": "^6.15.7",
     "axios": "^1.2.1",
     "base-64": "^1.0.0",
@@ -50,7 +55,6 @@
     "lucide-react": "^0.562.0",
     "moment": "^2.29.4",
     "motion": "^12.23.12",
-    "node-sass": "^9.0.0",
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
     "prop-types": "^15.8.1",
@@ -83,8 +87,8 @@
     "styled-components": "^5.3.6",
     "three": "0.153.0",
     "typewriter-effect": "^2.21.0",
-    "viem": "^2.38.0",
-    "wagmi": "^2.17.5",
+    "viem": "^2.48.11",
+    "wagmi": "3",
     "web-vitals": "^2.1.4"
   },
   "browser": {
@@ -109,7 +113,7 @@
     }
   },
   "resolutions": {
-    "viem": "^2.23.12",
+    "viem": "^2.48.11",
     "openapi-fetch": "0.13.5"
   },
   "browserslist": {
