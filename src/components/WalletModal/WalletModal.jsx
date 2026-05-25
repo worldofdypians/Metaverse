@@ -44,7 +44,7 @@ const WALLET_OPTIONS = [
   // Top Wallets
   {
     name: "MetaMask",
-    icon: "https://cdn.worldofdypians.com/wod/metamaskConnect.svg",
+    icon: "https://cdn.worldofdypians.com/wod/newMetamask.svg",
     type: "top",
     walletType: "metamask",
   },

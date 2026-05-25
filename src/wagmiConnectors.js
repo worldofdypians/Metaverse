@@ -1,5 +1,6 @@
 import { createConfig, http } from "wagmi";
 import { fallback } from "viem";
+import "@metamask/connect-evm";
 import {
   mainnet,
   // matchain,
@@ -45,6 +46,15 @@ export const wagmiClient = createConfig({
     // taraxa,
   ],
   connectors: [
+    metaMask({
+      dapp: {
+        name: "World of Dypians",
+        url:
+          typeof window !== "undefined"
+            ? window.location.origin
+            : "https://www.worldofdypians.com",
+      },
+    }),
     walletConnect({
       projectId: "a4f2c3075e5ea8ee42bdfe3c74a29caf",
       metadata: {
@@ -76,12 +86,6 @@ export const wagmiClient = createConfig({
           };
         }
         return undefined;
-      },
-    }),
-    metaMask({
-      dapp: {
-        name: "World of Dypians",
-        url: window.location.origin,
       },
     }),
     coinbaseWallet(),
