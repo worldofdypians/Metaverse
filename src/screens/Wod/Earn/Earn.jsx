@@ -19,7 +19,7 @@ const Earn = ({
   tokenPools,
   userPools,
   onSuccessfulStake,
- 
+
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   bnbUSDPrice,
@@ -77,14 +77,14 @@ const Earn = ({
   const handleSetPools = (poolFilter, isExpired) => {
     if (poolFilter === "All") {
       const allPools = [...tokenPools, ...nftPools];
-      const bnbPool = tokenPools.filter((item)=>{return item.id === '0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600'})
+
       if (isExpired === false) {
         let poolsActive = allPools
           .filter((item) => {
-            return item.expired === "No" && item.id !== '0xE91944cB7fd18Fec0fD6e5eC0Ff3d9a88f5C1600';
+            return item.expired === "No";
           })
           .sort((a, b) => Number(b.apy_percent) - Number(a.apy_percent));
-        setStakingPools([...bnbPool, ...poolsActive]);
+        setStakingPools(poolsActive);
       } else if (isExpired === true) {
         let nftPoolsExpired = nftPools.filter((item) => {
           return item.expired === "Yes";
