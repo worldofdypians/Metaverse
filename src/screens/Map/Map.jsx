@@ -111,7 +111,7 @@ const Map = ({ treasureHuntEvents }) => {
   const memoizedSecondParcel = useMemo(() => secondParcel, [secondParcel]);
 
   const museumLocation = {
-    title: "Cryptiroum",
+    title: "Cryptorium",
     special: true,
     type: "museum",
     location: [-0.06801544022518818, 0.08683919906616212],
