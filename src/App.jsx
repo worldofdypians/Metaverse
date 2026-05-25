@@ -5440,7 +5440,7 @@ function AppRoutes() {
     fetchMonthlyPlayers();
     fetchTotalVolume();
     fetchTotalWodHolders();
-    // getTotalSupply();
+    getTotalSupply();
     fetchBSCCoinPrice();
     fetchSocialData();
     let isMounted = true;
