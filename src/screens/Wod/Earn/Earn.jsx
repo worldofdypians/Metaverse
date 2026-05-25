@@ -5,6 +5,17 @@ import EarnContent from "./EarnContent/EarnContent";
 import axios from "axios";
 // import useWindowSize from "../../../hooks/useWindowSize";
 
+const sortPoolsByNewAndApy = (pools) => {
+  const apyAsc = (a, b) => Number(a.apy_percent) - Number(b.apy_percent);
+  const newPools = pools
+    .filter((item) => item.new_pool === "Yes")
+    .sort(apyAsc);
+  const regularPools = pools
+    .filter((item) => item.new_pool === "No")
+    .sort(apyAsc);
+  return [...newPools, ...regularPools];
+};
+
 const Earn = ({
   isEOA,
   isConnected,
@@ -79,11 +90,9 @@ const Earn = ({
       const allPools = [...tokenPools, ...nftPools];
 
       if (isExpired === false) {
-        let poolsActive = allPools
-          .filter((item) => {
-            return item.expired === "No";
-          })
-          .sort((a, b) => Number(b.apy_percent) - Number(a.apy_percent));
+        let poolsActive = sortPoolsByNewAndApy(
+          allPools.filter((item) => item.expired === "No")
+        );
         setStakingPools(poolsActive);
       } else if (isExpired === true) {
         let nftPoolsExpired = nftPools.filter((item) => {
@@ -96,7 +105,7 @@ const Earn = ({
       }
     } else if (poolFilter === "WOD") {
       if (isExpired === false) {
-        setStakingPools(tokenPools);
+        setStakingPools(sortPoolsByNewAndApy(tokenPools));
       } else if (isExpired === true) {
         setStakingPools([]);
       }
