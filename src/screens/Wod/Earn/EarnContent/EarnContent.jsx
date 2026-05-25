@@ -497,15 +497,16 @@ const EarnContent = ({
                     >
                       <div
                         className={`${
-                          (isHover === index && index === 0) ||
-                          (selectedPool.find((obj) => {
-                            return (
-                              obj.id.toLowerCase() === item.id.toLowerCase()
-                            );
-                          }) !== undefined &&
-                            index === 0)
-                            ? "accHeaderBorderBnb"
-                            : isHover === index ||
+                          // (isHover === index && index === 0) ||
+                          // (selectedPool.find((obj) => {
+                          //   return (
+                          //     obj.id.toLowerCase() === item.id.toLowerCase()
+                          //   );
+                          // }) !== undefined &&
+                          //   index === 0)
+                          //   ? "accHeaderBorderBnb"
+                          //   : 
+                            isHover === index ||
                                 selectedPool.find((obj) => {
                                   return (
                                     obj.id.toLowerCase() ===
