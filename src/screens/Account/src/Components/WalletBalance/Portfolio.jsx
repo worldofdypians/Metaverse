@@ -184,19 +184,19 @@ const Portfolio = ({
       if (filter === "caws") {
         setRecentListingsFilter("caws");
         let cawsFilter = favoriteItems.filter(
-          (item) => item.nftAddress === window.config.nft_caws_address
+          (item) => item.nftAddress === window.config.nft_caws_address,
         );
         setfavItemsFiltered(cawsFilter);
       } else if (filter === "land") {
         setRecentListingsFilter("land");
         let wodFilter = favoriteItems.filter(
-          (item) => item.nftAddress === window.config.nft_land_address
+          (item) => item.nftAddress === window.config.nft_land_address,
         );
         setfavItemsFiltered(wodFilter);
       } else if (filter === "timepiece") {
         setRecentListingsFilter("timepiece");
         let timepieceFilter = favoriteItems.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address
+          (item) => item.nftAddress === window.config.nft_timepiece_address,
         );
         setfavItemsFiltered(timepieceFilter);
       } else if (filter === "all") {
@@ -210,19 +210,19 @@ const Portfolio = ({
         let cawsFilter = listedItems.filter(
           (item) =>
             item.nftAddress === window.config.nft_caws_address ||
-            item.nftAddress === window.config.nft_cawsold_address
+            item.nftAddress === window.config.nft_cawsold_address,
         );
         setlistedItemsFiltered(cawsFilter);
       } else if (filter === "land") {
         setRecentListingsFilter("land");
         let wodFilter = listedItems.filter(
-          (item) => item.nftAddress === window.config.nft_land_address
+          (item) => item.nftAddress === window.config.nft_land_address,
         );
         setlistedItemsFiltered(wodFilter);
       } else if (filter === "timepiece") {
         setRecentListingsFilter("timepiece");
         let timepieceFilter = listedItems.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address
+          (item) => item.nftAddress === window.config.nft_timepiece_address,
         );
         setlistedItemsFiltered(timepieceFilter);
       } else if (filter === "all") {
@@ -244,19 +244,19 @@ const Portfolio = ({
         setRecentListingsFilter("land");
         setRecentListingsFilter("land");
         let timepieceFilter = myOffers.filter(
-          (item) => item.nftAddress === window.config.nft_land_address
+          (item) => item.nftAddress === window.config.nft_land_address,
         );
         setmyOffersFiltered(timepieceFilter);
       } else if (filter === "caws") {
         setRecentListingsFilter("caws");
         let cawsFilter = myOffers.filter(
-          (item) => item.nftAddress === window.config.nft_caws_address
+          (item) => item.nftAddress === window.config.nft_caws_address,
         );
         setmyOffersFiltered(cawsFilter);
       } else if (filter === "timepiece") {
         setRecentListingsFilter("timepiece");
         let timepieceFilter = myOffers.filter(
-          (item) => item.nftAddress === window.config.nft_timepiece_address
+          (item) => item.nftAddress === window.config.nft_timepiece_address,
         );
         setmyOffersFiltered(timepieceFilter);
       } else if (filter === "all") {
@@ -368,8 +368,8 @@ const Portfolio = ({
       setmyNftsOffer(recievedOffers);
       const filteredCollected = Object.fromEntries(
         Object.entries(userCollectedNFTS).filter(
-          ([key, value]) => Array.isArray(value) && value.length > 0
-        )
+          ([key, value]) => Array.isArray(value) && value.length > 0,
+        ),
       );
       const allItems = Object.values(filteredCollected)
         .filter((arr) => Array.isArray(arr) && arr.length > 0)
@@ -396,7 +396,7 @@ const Portfolio = ({
       });
       const data = await response.json();
       console.log(
-        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`
+        `Updated view count for NFT ${tokenId} at address ${nftAddress}: ${data.count}`,
       );
     } catch (error) {
       console.error("Error updating view count:", error);
@@ -423,11 +423,11 @@ const Portfolio = ({
     if (userId) {
       const result = await axios.post(
         `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
       setRecords(result.data.data.leaderboard);
       var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
+        (item) => item.displayName === username,
       );
 
       setUserRank(testArray[0].position);
@@ -444,11 +444,11 @@ const Portfolio = ({
     if (userId) {
       const result = await axios.post(
         `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-        data
+        data,
       );
 
       var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
+        (item) => item.displayName === username,
       );
 
       setGenesisRank(testArray[0].position);
@@ -465,19 +465,19 @@ const Portfolio = ({
       setcollectedItemsFiltered(collectedItems);
     } else if (filter1 === "land" && filter2 === "all") {
       let wodFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_land_address
+        (item) => item.nftAddress === window.config.nft_land_address,
       );
 
       let wodFilterbnb = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_land_bnb_address
+        (item) => item.nftAddress === window.config.nft_land_bnb_address,
       );
 
       let wodFilteravax = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_land_avax_address
+        (item) => item.nftAddress === window.config.nft_land_avax_address,
       );
 
       let wodFilterbase = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_wod_base_address
+        (item) => item.nftAddress === window.config.nft_wod_base_address,
       );
 
       const allcawsArray = [
@@ -489,72 +489,72 @@ const Portfolio = ({
       setcollectedItemsFiltered(allcawsArray);
     } else if (filter1 === "betapass" && filter2 === "all") {
       let coingeckoFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_coingecko_address
+        (item) => item.nftAddress === window.config.nft_coingecko_address,
       );
       let kucoinFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_kucoin_address
+        (item) => item.nftAddress === window.config.nft_kucoin_address,
       );
       let vanarFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_vanar_address
+        (item) => item.nftAddress === window.config.nft_vanar_address,
       );
       let gateFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_gate_address
+        (item) => item.nftAddress === window.config.nft_gate_address,
       );
       let dogeFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_doge_address
+        (item) => item.nftAddress === window.config.nft_doge_address,
       );
       let cmcFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_cmc_address
+        (item) => item.nftAddress === window.config.nft_cmc_address,
       );
       let confluxFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_conflux_address
+        (item) => item.nftAddress === window.config.nft_conflux_address,
       );
       let baseFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_base_address
+        (item) => item.nftAddress === window.config.nft_base_address,
       );
 
       let skaleFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_skale_address
+        (item) => item.nftAddress === window.config.nft_skale_address,
       );
 
       let bnbFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_bnb_address
+        (item) => item.nftAddress === window.config.nft_bnb_address,
       );
 
       let opbnbFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_opbnb_address
+        (item) => item.nftAddress === window.config.nft_opbnb_address,
       );
 
       let coreFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_core_address
+        (item) => item.nftAddress === window.config.nft_core_address,
       );
 
       let victionFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_viction_address
+        (item) => item.nftAddress === window.config.nft_viction_address,
       );
 
       let immutableFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_immutable_address
+        (item) => item.nftAddress === window.config.nft_immutable_address,
       );
 
       let multiversFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_multivers_address
+        (item) => item.nftAddress === window.config.nft_multivers_address,
       );
 
       let mantaFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_manta_address
+        (item) => item.nftAddress === window.config.nft_manta_address,
       );
 
       let taikoFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_taiko_address
+        (item) => item.nftAddress === window.config.nft_taiko_address,
       );
 
       let cookie3Filter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_cookie3_address
+        (item) => item.nftAddress === window.config.nft_cookie3_address,
       );
 
       let seiFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_sei_address
+        (item) => item.nftAddress === window.config.nft_sei_address,
       );
 
       // let matFilter = collectedItems.filter(
@@ -566,7 +566,7 @@ const Portfolio = ({
       // );
 
       let bnb5yaFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_bnb5ya_address
+        (item) => item.nftAddress === window.config.nft_bnb5ya_address,
       );
 
       let teaFilter = collectedItems.filter(
@@ -574,7 +574,7 @@ const Portfolio = ({
           item.nftAddress === window.config.nft_teabnb_address ||
           item.nftAddress === window.config.nft_teaopbnb_address ||
           item.nftAddress === window.config.nft_teabase_address ||
-          item.nftAddress === window.config.nft_teasei_address
+          item.nftAddress === window.config.nft_teasei_address,
       );
 
       const allBetapassArray = [
@@ -605,24 +605,24 @@ const Portfolio = ({
       setcollectedItemsFiltered(allBetapassArray);
     } else if (filter1 === "timepiece" && filter2 === "all") {
       let timepieceFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_timepiece_address
+        (item) => item.nftAddress === window.config.nft_timepiece_address,
       );
       setcollectedItemsFiltered(timepieceFilter);
     } else if (filter1 === "caws" && filter2 === "all") {
       let cawsFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_caws_address
+        (item) => item.nftAddress === window.config.nft_caws_address,
       );
 
       let cawsFilterbnb = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_caws_bnb_address
+        (item) => item.nftAddress === window.config.nft_caws_bnb_address,
       );
 
       let cawsFilteravax = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_caws_avax_address
+        (item) => item.nftAddress === window.config.nft_caws_avax_address,
       );
 
       let cawsFilterbase = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_caws_base_address
+        (item) => item.nftAddress === window.config.nft_caws_base_address,
       );
 
       const allcawsArray = [
@@ -635,7 +635,7 @@ const Portfolio = ({
       setcollectedItemsFiltered(allcawsArray);
     } else if (filter1 === "all" && filter2 === "to list") {
       let nftFilter = collectedItems.filter(
-        (item) => item.isListed === false && item.isStaked === false
+        (item) => item.isListed === false && item.isStaked === false,
       );
 
       setcollectedItemsFiltered(nftFilter);
@@ -647,7 +647,7 @@ const Portfolio = ({
       setcollectedItemsFiltered([]);
     } else if (filter1 === "all" && filter2 === "listed") {
       let nftFilter = collectedItems.filter(
-        (item) => item.isListed === true && item.isStaked === false
+        (item) => item.isListed === true && item.isStaked === false,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "betapass" && filter2 === "listed") {
@@ -662,12 +662,12 @@ const Portfolio = ({
         (item) =>
           item.nftAddress === window.config.nft_land_address &&
           item.isListed === false &&
-          item.isStaked === false
+          item.isStaked === false,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "land" && filter2 === "has offers") {
       let nftFilter = myNftsOffer.filter(
-        (item) => item.nftAddress === window.config.nft_land_address
+        (item) => item.nftAddress === window.config.nft_land_address,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "land" && filter2 === "listed") {
@@ -675,7 +675,7 @@ const Portfolio = ({
         (item) =>
           item.nftAddress === window.config.nft_land_address &&
           item.isListed === true &&
-          item.isStaked === false
+          item.isStaked === false,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "land" && filter2 === "in stake") {
@@ -683,7 +683,7 @@ const Portfolio = ({
         (item) =>
           item.nftAddress === window.config.nft_land_address &&
           item.isListed === false &&
-          item.isStaked === true
+          item.isStaked === true,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "caws" && filter2 === "to list") {
@@ -691,12 +691,12 @@ const Portfolio = ({
         (item) =>
           item.nftAddress === window.config.nft_caws_address &&
           item.isListed === false &&
-          item.isStaked === false
+          item.isStaked === false,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "caws" && filter2 === "has offers") {
       let nftFilter = myNftsOffer.filter(
-        (item) => item.nftAddress === window.config.nft_caws_address
+        (item) => item.nftAddress === window.config.nft_caws_address,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "caws" && filter2 === "listed") {
@@ -704,7 +704,7 @@ const Portfolio = ({
         (item) =>
           item.nftAddress === window.config.nft_caws_address &&
           item.isListed === true &&
-          item.isStaked === false
+          item.isStaked === false,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "caws" && filter2 === "in stake") {
@@ -712,7 +712,7 @@ const Portfolio = ({
         (item) =>
           item.nftAddress === window.config.nft_caws_address &&
           item.isListed === false &&
-          item.isStaked === true
+          item.isStaked === true,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "timepiece" && filter2 === "to list") {
@@ -720,12 +720,12 @@ const Portfolio = ({
         (item) =>
           item.nftAddress === window.config.nft_timepiece_address &&
           item.isListed === false &&
-          item.isStaked === false
+          item.isStaked === false,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "timepiece" && filter2 === "has offers") {
       let nftFilter = myNftsOffer.filter(
-        (item) => item.nftAddress === window.config.nft_timepiece_address
+        (item) => item.nftAddress === window.config.nft_timepiece_address,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "timepiece" && filter2 === "listed") {
@@ -733,7 +733,7 @@ const Portfolio = ({
         (item) =>
           item.nftAddress === window.config.nft_timepiece_address &&
           item.isListed === true &&
-          item.isStaked === false
+          item.isStaked === false,
       );
       setcollectedItemsFiltered(nftFilter);
     } else if (filter1 === "timepiece" && filter2 === "in stake") {
@@ -741,7 +741,7 @@ const Portfolio = ({
         (item) =>
           item.nftAddress === window.config.nft_timepiece_address &&
           item.isListed === false &&
-          item.isStaked === true
+          item.isStaked === true,
       );
       setcollectedItemsFiltered(nftFilter);
     }
@@ -800,12 +800,11 @@ const Portfolio = ({
       return { ...item, date: new Date(item.date) };
     });
 
-    const sortedAnnouncementsNews = announcementsDatedNews.sort(function (
-      a,
-      b
-    ) {
-      return b.date - a.date;
-    });
+    const sortedAnnouncementsNews = announcementsDatedNews.sort(
+      function (a, b) {
+        return b.date - a.date;
+      },
+    );
 
     setAnnouncementsNews(sortedAnnouncementsNews[0]);
   };
@@ -1141,9 +1140,9 @@ const Portfolio = ({
                             item.nftAddress === window.config.nft_caws_address
                               ? "caws"
                               : item.nftAddress ===
-                                window.config.nft_land_address
-                              ? "land"
-                              : "timepiece",
+                                  window.config.nft_land_address
+                                ? "land"
+                                : "timepiece",
                           isOwner:
                             isVerified && email
                               ? item.buyer
@@ -1178,15 +1177,15 @@ const Portfolio = ({
                                   window.config.nft_caws_avax_address
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                   : item.nftAddress ===
-                                      window.config.nft_land_address ||
-                                    item.nftAddress ===
-                                      window.config.nft_land_bnb_address ||
-                                    item.nftAddress ===
-                                      window.config.nft_land_base_address ||
-                                    item.nftAddress ===
-                                      window.config.nft_land_avax_address
-                                  ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
-                                  : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                        window.config.nft_land_address ||
+                                      item.nftAddress ===
+                                        window.config.nft_land_bnb_address ||
+                                      item.nftAddress ===
+                                        window.config.nft_land_base_address ||
+                                      item.nftAddress ===
+                                        window.config.nft_land_avax_address
+                                    ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                    : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
                               className="account-card-img"
@@ -1205,15 +1204,15 @@ const Portfolio = ({
                                   window.config.nft_caws_avax_address
                                   ? "CAWS"
                                   : item.nftAddress ===
-                                      window.config.nft_land_address ||
-                                    item.nftAddress ===
-                                      window.config.nft_land_bnb_address ||
-                                    item.nftAddress ===
-                                      window.config.nft_land_base_address ||
-                                    item.nftAddress ===
-                                      window.config.nft_land_avax_address
-                                  ? "Genesis Land"
-                                  : "CAWS Timepiece"}{" "}
+                                        window.config.nft_land_address ||
+                                      item.nftAddress ===
+                                        window.config.nft_land_bnb_address ||
+                                      item.nftAddress ===
+                                        window.config.nft_land_base_address ||
+                                      item.nftAddress ===
+                                        window.config.nft_land_avax_address
+                                    ? "Genesis Land"
+                                    : "CAWS Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
                               {/* <span className="account-nft-type">
@@ -1281,8 +1280,8 @@ const Portfolio = ({
                                 item.type === "caws"
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                   : item.type === "land"
-                                  ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
-                                  : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                    ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                    : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
                               className="account-card-img"
@@ -1292,8 +1291,8 @@ const Portfolio = ({
                                 {item.type === "caws"
                                   ? "CAWS"
                                   : item.type === "land"
-                                  ? "Genesis Land"
-                                  : "CAWS Timepiece"}{" "}
+                                    ? "Genesis Land"
+                                    : "CAWS Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
                             </div>
@@ -1417,7 +1416,7 @@ const Portfolio = ({
                             <img
                               src={`https://mint.worldofdypians.com/thumbs50/${item.name?.slice(
                                 1,
-                                landStaked[index].name?.length
+                                landStaked[index].name?.length,
                               )}.png`}
                               alt=""
                               className="account-card-img"
@@ -1449,7 +1448,7 @@ const Portfolio = ({
                                   index
                                 ].name?.slice(
                                   1,
-                                  myWodWodStakes[index].name?.length
+                                  myWodWodStakes[index].name?.length,
                                 )}.png`}
                                 alt=""
                                 className="account-card-img"
@@ -1457,7 +1456,7 @@ const Portfolio = ({
                               <img
                                 src={`https://mint.dyp.finance/thumbs50/${item.name?.slice(
                                   6,
-                                  item.name?.length
+                                  item.name?.length,
                                 )}.png`}
                                 alt=""
                                 className="account-card-img"
@@ -1526,8 +1525,8 @@ const Portfolio = ({
                                 item.type === "caws"
                                   ? `https://mint.dyp.finance/thumbs50/${item.tokenId}.png`
                                   : item.type === "land"
-                                  ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
-                                  : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                    ? `https://mint.worldofdypians.com/thumbs50/${item.tokenId}.png`
+                                    : `https://timepiece.worldofdypians.com/thumbs50/${item.tokenId}.png`
                               }
                               alt=""
                               className="account-card-img"
@@ -1537,8 +1536,8 @@ const Portfolio = ({
                                 {item.type === "caws"
                                   ? "CAWS"
                                   : item.type === "land"
-                                  ? "Genesis Land"
-                                  : "CAWS Timepiece"}{" "}
+                                    ? "Genesis Land"
+                                    : "CAWS Timepiece"}{" "}
                                 #{item.tokenId}
                               </h6>
                               {/* <span className="account-nft-type">
@@ -2126,8 +2125,8 @@ const Portfolio = ({
                                   nft.type === "caws"
                                     ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                     : nft.type === "land"
-                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                    : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                      ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                      : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
                                 className="account-card-img"
@@ -2137,8 +2136,8 @@ const Portfolio = ({
                                   {nft.type === "caws"
                                     ? "CAWS"
                                     : nft.type === "land"
-                                    ? "Genesis Land"
-                                    : "CAWS Timepiece"}{" "}
+                                      ? "Genesis Land"
+                                      : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
                               </div>
@@ -2195,90 +2194,118 @@ const Portfolio = ({
                                     window.config.nft_caws_avax_address
                                     ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
-                                        window.config.nft_land_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_land_bnb_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_land_base_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_land_avax_address
-                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_gate_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_conflux_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_base_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_doge_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
-                                    : nft.nftAddress ===
-                                        window.config.nft_teabnb_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_teaopbnb_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_teabase_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_teasei_address
-                                    ? `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`
-                                    : nft.nftAddress ===
-                                      window.config.nft_skale_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_bnb_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_opbnb_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_cmc_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_core_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_viction_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_kucoin_address
-                                    ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_vanar_address
-                                    ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_immutable_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_multivers_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_manta_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_taiko_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
-                                    : // : nft.nftAddress ===
-                                    //   window.config.nft_mat_address
-                                    // ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
-                                    nft.nftAddress ===
-                                      window.config.nft_cookie3_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_sei_address
-                                    ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
-                                    : nft.nftAddress ===
-                                      window.config.nft_coingecko_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
-                                    : // : nft.nftAddress ===
-                                    //   window.config.nft_taraxa_address
-                                    // ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
-                                    nft.nftAddress ===
-                                      window.config.nft_bnb5ya_address
-                                    ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
-                                    : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                          window.config.nft_land_address ||
+                                        nft.nftAddress ===
+                                          window.config.nft_land_bnb_address ||
+                                        nft.nftAddress ===
+                                          window.config.nft_land_base_address ||
+                                        nft.nftAddress ===
+                                          window.config.nft_land_avax_address
+                                      ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                      : nft.nftAddress ===
+                                          window.config.nft_gate_address
+                                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate50.png`
+                                        : nft.nftAddress ===
+                                            window.config.nft_conflux_address
+                                          ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+50px.png`
+                                          : nft.nftAddress ===
+                                              window.config.nft_base_address
+                                            ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
+                                            : nft.nftAddress ===
+                                                window.config.nft_doge_address
+                                              ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+50x50.png`
+                                              : nft.nftAddress ===
+                                                    window.config
+                                                      .nft_teabnb_address ||
+                                                  nft.nftAddress ===
+                                                    window.config
+                                                      .nft_teaopbnb_address ||
+                                                  nft.nftAddress ===
+                                                    window.config
+                                                      .nft_teabase_address ||
+                                                  nft.nftAddress ===
+                                                    window.config
+                                                      .nft_teasei_address
+                                                ? `https://cdn.worldofdypians.com/wod/tea-fi-nft-50.webp`
+                                                : nft.nftAddress ===
+                                                    window.config
+                                                      .nft_skale_address
+                                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+50x50.png`
+                                                  : nft.nftAddress ===
+                                                      window.config
+                                                        .nft_bnb_address
+                                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
+                                                    : nft.nftAddress ===
+                                                        window.config
+                                                          .nft_opbnb_address
+                                                      ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
+                                                      : nft.nftAddress ===
+                                                          window.config
+                                                            .nft_cmc_address
+                                                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+50x50px.png`
+                                                        : nft.nftAddress ===
+                                                            window.config
+                                                              .nft_core_address
+                                                          ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
+                                                          : nft.nftAddress ===
+                                                              window.config
+                                                                .nft_viction_address
+                                                            ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
+                                                            : nft.nftAddress ===
+                                                                window.config
+                                                                  .nft_kucoin_address
+                                                              ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
+                                                              : nft.nftAddress ===
+                                                                  window.config
+                                                                    .nft_vanar_address
+                                                                ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
+                                                                : nft.nftAddress ===
+                                                                    window
+                                                                      .config
+                                                                      .nft_immutable_address
+                                                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
+                                                                  : nft.nftAddress ===
+                                                                      window
+                                                                        .config
+                                                                        .nft_multivers_address
+                                                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
+                                                                    : nft.nftAddress ===
+                                                                        window
+                                                                          .config
+                                                                          .nft_manta_address
+                                                                      ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
+                                                                      : nft.nftAddress ===
+                                                                          window
+                                                                            .config
+                                                                            .nft_taiko_address
+                                                                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                                                        : // : nft.nftAddress ===
+                                                                          //   window.config.nft_mat_address
+                                                                          // ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
+                                                                          nft.nftAddress ===
+                                                                            window
+                                                                              .config
+                                                                              .nft_cookie3_address
+                                                                          ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
+                                                                          : nft.nftAddress ===
+                                                                              window
+                                                                                .config
+                                                                                .nft_sei_address
+                                                                            ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
+                                                                            : nft.nftAddress ===
+                                                                                window
+                                                                                  .config
+                                                                                  .nft_coingecko_address
+                                                                              ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
+                                                                              : // : nft.nftAddress ===
+                                                                                //   window.config.nft_taraxa_address
+                                                                                // ? `https://cdn.worldofdypians.com/wod/taraxa-nft-50.png`
+                                                                                nft.nftAddress ===
+                                                                                  window
+                                                                                    .config
+                                                                                    .nft_bnb5ya_address
+                                                                                ? `https://cdn.worldofdypians.com/wod/5ya-50.png`
+                                                                                : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
                                 className="account-card-img"
@@ -2297,90 +2324,117 @@ const Portfolio = ({
                                     window.config.nft_caws_avax_address
                                     ? "CAWS"
                                     : nft.nftAddress ===
-                                        window.config.nft_land_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_land_bnb_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_land_base_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_land_avax_address
-                                    ? "Genesis Land"
-                                    : nft.nftAddress ===
-                                      window.config.nft_coingecko_address
-                                    ? "CGBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_gate_address
-                                    ? "GTBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_conflux_address
-                                    ? "CFBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_base_address
-                                    ? "BSBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_doge_address
-                                    ? "DCBP"
-                                    : nft.nftAddress ===
-                                        window.config.nft_teabnb_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_teaopbnb_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_teabase_address ||
-                                      nft.nftAddress ===
-                                        window.config.nft_teasei_address
-                                    ? "TFBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_skale_address
-                                    ? "SKBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_bnb_address
-                                    ? "BNBBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_opbnb_address
-                                    ? "opBNBBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_cmc_address
-                                    ? "CMCBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_core_address
-                                    ? "COBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_viction_address
-                                    ? "VCBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_kucoin_address
-                                    ? "KCBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_vanar_address
-                                    ? "VNBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_immutable_address
-                                    ? "IMXBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_multivers_address
-                                    ? "MXBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_manta_address
-                                    ? "MNBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_taiko_address
-                                    ? "TKBP"
-                                    : // : nft.nftAddress ===
-                                    //   window.config.nft_mat_address
-                                    // ? "MCBP"
-                                    nft.nftAddress ===
-                                      window.config.nft_cookie3_address
-                                    ? "CKBP"
-                                    : nft.nftAddress ===
-                                      window.config.nft_sei_address
-                                    ? "SEBP"
-                                    : // : nft.nftAddress ===
-                                    //   window.config.nft_taraxa_address
-                                    // ? "TXBP"
-                                    nft.nftAddress ===
-                                      window.config.nft_bnb5ya_address
-                                    ? "5YABP"
-                                    : "CAWS Timepiece"}{" "}
+                                          window.config.nft_land_address ||
+                                        nft.nftAddress ===
+                                          window.config.nft_land_bnb_address ||
+                                        nft.nftAddress ===
+                                          window.config.nft_land_base_address ||
+                                        nft.nftAddress ===
+                                          window.config.nft_land_avax_address
+                                      ? "Genesis Land"
+                                      : nft.nftAddress ===
+                                          window.config.nft_coingecko_address
+                                        ? "CGBP"
+                                        : nft.nftAddress ===
+                                            window.config.nft_gate_address
+                                          ? "GTBP"
+                                          : nft.nftAddress ===
+                                              window.config.nft_conflux_address
+                                            ? "CFBP"
+                                            : nft.nftAddress ===
+                                                window.config.nft_base_address
+                                              ? "BSBP"
+                                              : nft.nftAddress ===
+                                                  window.config.nft_doge_address
+                                                ? "DCBP"
+                                                : nft.nftAddress ===
+                                                      window.config
+                                                        .nft_teabnb_address ||
+                                                    nft.nftAddress ===
+                                                      window.config
+                                                        .nft_teaopbnb_address ||
+                                                    nft.nftAddress ===
+                                                      window.config
+                                                        .nft_teabase_address ||
+                                                    nft.nftAddress ===
+                                                      window.config
+                                                        .nft_teasei_address
+                                                  ? "TFBP"
+                                                  : nft.nftAddress ===
+                                                      window.config
+                                                        .nft_skale_address
+                                                    ? "SKBP"
+                                                    : nft.nftAddress ===
+                                                        window.config
+                                                          .nft_bnb_address
+                                                      ? "BNBBP"
+                                                      : nft.nftAddress ===
+                                                          window.config
+                                                            .nft_opbnb_address
+                                                        ? "opBNBBP"
+                                                        : nft.nftAddress ===
+                                                            window.config
+                                                              .nft_cmc_address
+                                                          ? "CMCBP"
+                                                          : nft.nftAddress ===
+                                                              window.config
+                                                                .nft_core_address
+                                                            ? "COBP"
+                                                            : nft.nftAddress ===
+                                                                window.config
+                                                                  .nft_viction_address
+                                                              ? "VCBP"
+                                                              : nft.nftAddress ===
+                                                                  window.config
+                                                                    .nft_kucoin_address
+                                                                ? "KCBP"
+                                                                : nft.nftAddress ===
+                                                                    window
+                                                                      .config
+                                                                      .nft_vanar_address
+                                                                  ? "VNBP"
+                                                                  : nft.nftAddress ===
+                                                                      window
+                                                                        .config
+                                                                        .nft_immutable_address
+                                                                    ? "IMXBP"
+                                                                    : nft.nftAddress ===
+                                                                        window
+                                                                          .config
+                                                                          .nft_multivers_address
+                                                                      ? "MXBP"
+                                                                      : nft.nftAddress ===
+                                                                          window
+                                                                            .config
+                                                                            .nft_manta_address
+                                                                        ? "MNBP"
+                                                                        : nft.nftAddress ===
+                                                                            window
+                                                                              .config
+                                                                              .nft_taiko_address
+                                                                          ? "TKBP"
+                                                                          : // : nft.nftAddress ===
+                                                                            //   window.config.nft_mat_address
+                                                                            // ? "MCBP"
+                                                                            nft.nftAddress ===
+                                                                              window
+                                                                                .config
+                                                                                .nft_cookie3_address
+                                                                            ? "CKBP"
+                                                                            : nft.nftAddress ===
+                                                                                window
+                                                                                  .config
+                                                                                  .nft_sei_address
+                                                                              ? "SEBP"
+                                                                              : // : nft.nftAddress ===
+                                                                                //   window.config.nft_taraxa_address
+                                                                                // ? "TXBP"
+                                                                                nft.nftAddress ===
+                                                                                  window
+                                                                                    .config
+                                                                                    .nft_bnb5ya_address
+                                                                                ? "5YABP"
+                                                                                : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address
                                     ? ""
@@ -2432,13 +2486,13 @@ const Portfolio = ({
                           state={{
                             nft: nft,
                             type:
-                              nft.type ??
-                              nft.nftAddress === window.config.nft_caws_address
+                              (nft.type ??
+                              nft.nftAddress === window.config.nft_caws_address)
                                 ? "caws"
                                 : nft.nftAddress ===
-                                  window.config.nft_land_address
-                                ? "land"
-                                : "timepiece",
+                                    window.config.nft_land_address
+                                  ? "land"
+                                  : "timepiece",
                             // isOwner:
                             //   isVerified && email
                             //     ? nft.buyer
@@ -2474,9 +2528,9 @@ const Portfolio = ({
                                     window.config.nft_caws_address
                                     ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
                                     : nft.nftAddress ===
-                                      window.config.nft_land_address
-                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                    : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                        window.config.nft_land_address
+                                      ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
+                                      : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
                                 }
                                 alt=""
                                 className="account-card-img"
@@ -2489,9 +2543,9 @@ const Portfolio = ({
                                     window.config.nft_caws_address
                                     ? "CAWS"
                                     : nft.nftAddress ===
-                                      window.config.nft_land_address
-                                    ? "Genesis Land"
-                                    : "CAWS Timepiece"}{" "}
+                                        window.config.nft_land_address
+                                      ? "Genesis Land"
+                                      : "CAWS Timepiece"}{" "}
                                   #{nft.tokenId}
                                 </h6>
                                 {/* <span className="account-nft-type">
@@ -2572,53 +2626,55 @@ const Portfolio = ({
                           </NavLink>
                         ))
                     : recentListingsFilter === "land"
-                    ? landStaked &&
-                      landStaked.length > 0 &&
-                      landStaked.map((nft, index) => (
-                        <NavLink
-                          to={`/staking`}
-                          style={{ textDecoration: "none" }}
-                          key={index}
-                          className="col-12 col-lg-6 col-xxl-4 mb-3"
-                        >
-                          <div className="">
-                            <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                              <div className="d-flex">
-                                <img
-                                  src={nft.image}
-                                  alt=""
-                                  className="account-card-img"
-                                />
-                              </div>
-                              <div className="d-flex flex-column align-items-center justify-content-center">
-                                <h6 className="account-nft-title">
-                                  Land {nft.name}
-                                </h6>
-                                {/* <span className="account-nft-type">
+                      ? landStaked &&
+                        landStaked.length > 0 &&
+                        landStaked.map((nft, index) => (
+                          <NavLink
+                            to={`/staking`}
+                            style={{ textDecoration: "none" }}
+                            key={index}
+                            className="col-12 col-lg-6 col-xxl-4 mb-3"
+                          >
+                            <div className="">
+                              <div className="account-nft-card w-100 d-flex align-items-center gap-3">
+                                <div className="d-flex">
+                                  <img
+                                    src={nft.image}
+                                    alt=""
+                                    className="account-card-img"
+                                  />
+                                </div>
+                                <div className="d-flex flex-column align-items-center justify-content-center">
+                                  <h6 className="account-nft-title">
+                                    Land {nft.name}
+                                  </h6>
+                                  {/* <span className="account-nft-type">
                               Genesis Land
                             </span> */}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </NavLink>
-                      ))
-                    : nftItems &&
-                      nftItems.length > 0 &&
-                      nftItems.map((nft, index) => (
-                        <NavLink
-                          to={`/staking`}
-                          style={{ textDecoration: "none" }}
-                          className="col-12 col-lg-6 col-xxl-4 mb-3"
-                          key={index}
-                        >
-                          <CawsWodItem
-                            cawsImg={nft?.name.includes("CAWS") && nft?.image}
-                            wodImg={myWodWodStakes[index]?.image ?? nft?.image}
-                            cawsName={nft?.name.includes("CAWS") && nft?.name}
-                            wodName={myWodWodStakes[index]?.name ?? nft?.name}
-                          />
-                        </NavLink>
-                      ))}
+                          </NavLink>
+                        ))
+                      : nftItems &&
+                        nftItems.length > 0 &&
+                        nftItems.map((nft, index) => (
+                          <NavLink
+                            to={`/staking`}
+                            style={{ textDecoration: "none" }}
+                            className="col-12 col-lg-6 col-xxl-4 mb-3"
+                            key={index}
+                          >
+                            <CawsWodItem
+                              cawsImg={nft?.name.includes("CAWS") && nft?.image}
+                              wodImg={
+                                myWodWodStakes[index]?.image ?? nft?.image
+                              }
+                              cawsName={nft?.name.includes("CAWS") && nft?.name}
+                              wodName={myWodWodStakes[index]?.name ?? nft?.name}
+                            />
+                          </NavLink>
+                        ))}
                 </div>
                 <div className="col-12 d-flex justify-content-center">
                   <Pagination
