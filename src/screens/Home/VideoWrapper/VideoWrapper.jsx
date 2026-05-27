@@ -9,6 +9,16 @@ import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard
 import BuyWodCard from "../../../components/BuyWodCard/BuyWodCard";
 import { motion } from "motion/react";
 import "./binancetw.scss";
+import Countdown from "react-countdown";
+
+const renderer = ({ hours, minutes }) => {
+  return (
+    <span>
+      {hours < 10 ? "0" + hours : hours}H:
+      {minutes < 10 ? "0" + minutes : minutes}M
+    </span>
+  );
+};
 
 const VideoWrapper = ({
   handleRegister,
@@ -327,6 +337,8 @@ const VideoWrapper = ({
     }
   }, []);
 
+  let tradingTime = new Date("2026-05-28T12:00:00.000+02:00");
+
   return (
     <>
       <div className="video-wrapper binance-alpha-wrapper-mobile position-relative h-100">
@@ -334,9 +346,9 @@ const VideoWrapper = ({
           className="row gap-4 gap-lg-0"
          
         > */}
-        <div className="video-second-wrapper">
+        <div className="h-100">
           <NavLink
-            className="absolute d-none d-lg-block left-4 top-32 z-5"
+            className="absolute d-none d-lg-block left-4 top-24 z-5"
             to="/keep-building"
           >
             <div className="group relative">
@@ -431,6 +443,163 @@ const VideoWrapper = ({
                 alt=""
               />
             </div> */}
+
+            <div className="relative flex items-center justify-center z-5">
+              <motion.div
+                // initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                // animate={{ opacity: 1, scale: 1, y: 0 }}
+                // transition={{ duration: 0.8, ease: "easeOut" }}
+                className="text-center w-fit h-fit mx-auto px-6"
+              >
+                {/* Compact Announcement Card */}
+                <motion.div
+                  className="rounded-xl py-6 px-10 shadow-2xl relative overflow-hidden backdrop-blur-sm"
+                  style={{
+                    background: "#181A20",
+                    border: "1px solid rgba(243, 186, 47, 0.4)",
+                  }}
+                  // initial={{ rotateX: 20 }}
+                  // animate={{ rotateX: 0 }}
+                  // transition={{ duration: 0.8, ease: "easeOut" }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  {/* Animated background pattern */}
+                  <motion.div
+                    className="absolute inset-0 rounded-xl"
+                    style={{
+                      background:
+                        "linear-gradient(45deg, transparent 30%, rgba(243, 186, 47, 0.1) 50%, transparent 70%)",
+                    }}
+                    animate={{
+                      x: ["-100%", "100%"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear",
+                      repeatDelay: 2,
+                    }}
+                  />
+
+                  {/* Floating particles overlay */}
+                  <motion.div
+                    className="absolute inset-0 opacity-15"
+                    animate={{
+                      backgroundPosition: ["0% 0%", "100% 100%"],
+                    }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    style={{
+                      backgroundImage: `radial-gradient(circle, rgba(243, 186, 47, 0.8) 1px, transparent 1px)`,
+                      backgroundSize: "25px 25px",
+                    }}
+                  />
+
+                  {/* Binance Logo */}
+                  <motion.div
+                    className="flex justify-center mb-3 relative z-5"
+                    initial={{ y: -10, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                  >
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.05, 1],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      className="bg-white/10 backdrop-blur-sm rounded-lg p-3 bordertw border-white/20 shadow-lg"
+                    >
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/binance-us-logo.png"
+                        }
+                        alt="Binance"
+                        className="h-6 w-auto opacity-90 filter brightness-110"
+                      />
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Compact Title */}
+                  <motion.h4
+                    className="text-2xl md:text-3xl font-bold text-white mb-3 relative z-5 drop-shadow-lg"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                  >
+                    WOD Trading Time
+                  </motion.h4>
+
+                  {/* Single Action Button */}
+                  <motion.div
+                    className="flex justify-center relative z-5"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7, duration: 0.6 }}
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span
+                        className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"
+                        style={{
+                          background: "#F3BA2F",
+                          color: "#181A20",
+                          border: "2px solid rgba(243, 186, 47, 0.5)",
+                        }}
+                      >
+                        <Countdown date={tradingTime} renderer={renderer} />
+                        {/* <img
+                          src="https://cdn.worldofdypians.com/wod/link-trade2.svg"
+                          className="ps-3"
+                        /> */}
+                      </span>
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Enhanced corner animations */}
+                  {/* <motion.div
+                    className="absolute top-3 right-3 w-8 h-8 border-2 border-white/50 rounded-full relative z-6"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 12,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                  <motion.div
+                    className="absolute bottom-3 left-3 w-6 h-6 border-2 border-yellow-200/50 rounded-full relative z-6"
+                    animate={{ rotate: -360 }}
+                    transition={{
+                      duration: 10,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  /> */}
+
+                  {/* Additional glow effects */}
+                  <motion.div
+                    className="absolute top-1/2 left-1/2 w-32 h-32 bg-yellow-400/20 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.3, 0.6, 0.3],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+                </motion.div>
+              </motion.div>
+            </div>
           </div>
           {windowSize.width < 992 && (
             <div
