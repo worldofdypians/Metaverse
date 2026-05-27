@@ -337,7 +337,7 @@ const VideoWrapper = ({
     }
   }, []);
 
-  let tradingTime = new Date("2026-05-28T12:00:00.000+02:00");
+  let tradingTime = new Date("2026-05-28T13:00:00.000+02:00");
 
   return (
     <>
