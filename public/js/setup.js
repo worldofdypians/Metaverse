@@ -112,7 +112,7 @@ window.config = {
   bsc_endpoint: "https://bsc-dataseed.bnbchain.org",
   bsc_testnet_endpoint: "https://bsc-testnet-rpc.publicnode.com",
 
-  manta_endpoint: "https://pacific-rpc.manta.network/http",
+  manta_endpoint: "https://1rpc.io/manta",
   taiko_endpoint: "https://rpc.mainnet.taiko.xyz",
   taraxa_endpoint: "https://rpc.mainnet.taraxa.io",
 

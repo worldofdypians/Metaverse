@@ -5126,9 +5126,9 @@ function AppRoutes() {
       setUserNFTs({ myMantaNfts: NFTS ?? [] }),
     );
 
-    getMyNFTS(wallet, "taiko").then((NFTS) =>
-      setUserNFTs({ myTaikoNfts: NFTS ?? [] }),
-    );
+    // getMyNFTS(wallet, "taiko").then((NFTS) =>
+    //   setUserNFTs({ myTaikoNfts: NFTS ?? [] }),
+    // );
 
     // getMyNFTS(wallet, "mat").then((NFTS) =>
     //   setUserNFTs({ myMatNfts: NFTS ?? [] })

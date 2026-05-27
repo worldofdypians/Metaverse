@@ -85,7 +85,7 @@ const VideoWrapper = ({
     {
       title: "PancakeSwap",
       logo: "pancakeSwapBuyWod.svg",
-      link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
+      link: "https://pancakeswap.finance/info/v3/pairs/0xcf39e58ed4decc9ef7bdb2f9335602dc22be99b4",
     },
     // {
     //   title: "THENA",
@@ -431,7 +431,6 @@ const VideoWrapper = ({
                 alt=""
               />
             </div> */}
- 
           </div>
           {windowSize.width < 992 && (
             <div

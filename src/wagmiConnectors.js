@@ -92,10 +92,12 @@ export const wagmiClient = createConfig({
   ],
   transports: {
     [bsc.id]: http(),
-    [mainnet.id]: http(),
+    [mainnet.id]: fallback([
+      http("https://mainnet.infura.io/v3/04ee2486b5344943b461abeb58fbffaf"),
+    ]),
     // [matchain.id]: http(),
     [opBNB.id]: http(),
-    [manta.id]: http("https://pacific-rpc.manta.network/http"),
+    [manta.id]: http("https://1rpc.io/manta"),
     [taiko.id]: fallback([
       http("https://rpc.mainnet.taiko.xyz"),
       http("https://rpc.ankr.com/taiko"),
@@ -121,7 +123,7 @@ export const wagmiClient = createConfig({
       http("https://avalanche.publicnode.com"),
     ]),
     [skaleNebula.id]: http(
-      "https://mainnet.skalenodes.com/v1/green-giddy-denebola"
+      "https://mainnet.skalenodes.com/v1/green-giddy-denebola",
     ),
     [immutableZkEvm.id]: http("https://rpc.immutable.com"),
     [confluxESpace.id]: http("https://evm.confluxrpc.com"),

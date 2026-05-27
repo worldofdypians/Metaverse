@@ -178,7 +178,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       symbol: "ETH", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: ["https://pacific-rpc.manta.network/http"],
+    rpcUrls: ["https://1rpc.io/manta"],
     blockExplorerUrls: ["https://pacific-explorer.manta.network/"],
   };
 
