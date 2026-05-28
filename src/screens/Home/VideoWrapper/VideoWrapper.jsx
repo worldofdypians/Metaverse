@@ -548,7 +548,7 @@ const VideoWrapper = ({
                       whileTap={{ scale: 0.95 }}
                     >
                       <span
-                        className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"
+                        className="font-bold  rounded-md text-sm px-4 py-1 shadow-xl flex items-center space-x-2"
                         style={{
                           background: "#F3BA2F",
                           color: "#181A20",
