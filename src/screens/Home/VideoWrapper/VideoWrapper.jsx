@@ -50,7 +50,7 @@ const VideoWrapper = ({
     {
       title: "Binance US",
       logo: "binanceUsLogo.png",
-      link: "https://www.binance.us/spot-trade/wod_usdtp",
+      link: "https://www.binance.us/spot-trade/wod_usdt",
     },
     {
       title: "Kucoin",
@@ -541,7 +541,7 @@ const VideoWrapper = ({
                       whileTap={{ scale: 0.95 }}
                     >
                       <a
-                        href="https://www.binance.us/spot-trade/wod_usdtp"
+                        href="https://www.binance.us/spot-trade/wod_usdt"
                         target="_blank"
                         rel="noreferrer"
                         className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"
