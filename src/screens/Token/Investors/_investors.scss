@@ -49,6 +49,9 @@
 .exchange-grid-image{
   width: 140px;
   height: 32px;
+      @media screen and (max-width: 500px) {
+ scale: 1 !important;
+  }
 }
 
 .new-investors-grid {

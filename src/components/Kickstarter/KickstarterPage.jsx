@@ -23,6 +23,10 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
       icon: "binance-alpha.png",
     },
     {
+      name: "Binance US",
+      icon: "binanceUsLogo.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
     },
@@ -458,7 +462,7 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
 
   const scrollToElement = () => {
     const element = document.getElementById(
-      location.hash.slice(1, location.hash.length)
+      location.hash.slice(1, location.hash.length),
     );
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });

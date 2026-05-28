@@ -15,6 +15,10 @@ const NewBuilders = () => {
       icon: "binance-alpha.png",
     },
     {
+      name: "Binance US",
+      icon: "binanceUsLogo.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
       banner: "trustwalletBanner.webp",
@@ -551,7 +555,7 @@ const NewBuilders = () => {
       name: "Bim Exchange",
       icon: "bimLogo.png",
     },
-        {
+    {
       name: "AlloX",
       icon: "allox.svg",
     },
@@ -596,7 +600,6 @@ const NewBuilders = () => {
                     />
                   )}
 
-              
                   <span
                     className={`new-builder-title mb-0`}
                     style={{ fontWeight: "400" }}
