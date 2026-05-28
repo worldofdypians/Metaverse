@@ -10,6 +10,11 @@ const MainHero = ({ scrollInto }) => {
       link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
     },
     {
+      title: "Binance US",
+      logo: "binance-us-logo.png",
+      link: "https://www.binance.us/spot-trade/wod_usdt",
+    },
+    {
       title: "Kucoin",
       logo: "kucoin.svg",
       link: "https://www.kucoin.com/trade/WOD-USDT",
@@ -224,9 +229,13 @@ const MainHero = ({ scrollInto }) => {
                     className={` exchange-grid-image ${
                       (index === 0 ||
                         item.title === "KCEX" ||
-                        item.title === "HiBt") &&
+                        item.title === "HiBt" ||
+                        item.title === "Binance US") &&
                       "h-auto"
                     }`}
+                    style={{
+                      scale: item.title === "Binance US" ? "1.253" : "1",
+                    }}
                     alt=""
                   />
                 </a>

@@ -9,16 +9,6 @@ import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard
 import BuyWodCard from "../../../components/BuyWodCard/BuyWodCard";
 import { motion } from "motion/react";
 import "./binancetw.scss";
-import Countdown from "react-countdown";
-
-const renderer = ({ hours, minutes }) => {
-  return (
-    <span>
-      {hours < 10 ? "0" + hours : hours}H:
-      {minutes < 10 ? "0" + minutes : minutes}M
-    </span>
-  );
-};
 
 const VideoWrapper = ({
   handleRegister,
@@ -56,6 +46,11 @@ const VideoWrapper = ({
       title: "Binance Alpha",
       logo: "binance-alpha.png",
       link: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
+    },
+    {
+      title: "Binance US",
+      logo: "binanceUsLogo.png",
+      link: "https://www.binance.us/spot-trade/wod_usdtp",
     },
     {
       title: "Kucoin",
@@ -337,8 +332,6 @@ const VideoWrapper = ({
     }
   }, []);
 
-  let tradingTime = new Date("2026-05-28T13:00:00.000+02:00");
-
   return (
     <>
       <div className="video-wrapper binance-alpha-wrapper-mobile position-relative h-100">
@@ -533,7 +526,7 @@ const VideoWrapper = ({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6 }}
                   >
-                    WOD Trading Time
+                    WOD on Binance US
                   </motion.h4>
 
                   {/* Single Action Button */}
@@ -547,20 +540,23 @@ const VideoWrapper = ({
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <span
-                        className="font-bold  rounded-md text-sm px-4 py-1 shadow-xl flex items-center space-x-2"
+                      <a
+                        href="https://www.binance.us/spot-trade/wod_usdtp"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-bold  rounded-md text-sm px-3 py-1 shadow-xl flex items-center space-x-2"
                         style={{
                           background: "#F3BA2F",
                           color: "#181A20",
                           border: "2px solid rgba(243, 186, 47, 0.5)",
                         }}
                       >
-                        <Countdown date={tradingTime} renderer={renderer} />
-                        {/* <img
+                        Trade Now
+                        <img
                           src="https://cdn.worldofdypians.com/wod/link-trade2.svg"
                           className="ps-3"
-                        /> */}
-                      </span>
+                        />
+                      </a>
                     </motion.div>
                   </motion.div>
 

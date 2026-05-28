@@ -839,6 +839,11 @@ const Portfolio = ({
       href: "https://www.binance.com/en/alpha/bsc/0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
       img: "https://cdn.worldofdypians.com/wod/binance-alpha.png",
     },
+        {
+      name: "Binance US",
+      img: "https://cdn.worldofdypians.com/wod/binanceUsLogo.png",
+      href: "https://www.binance.us/spot-trade/wod_usdt",
+    },
     {
       name: "KuCoin",
       href: "https://www.kucoin.com/trade/WOD-USDT",

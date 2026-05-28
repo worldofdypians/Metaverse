@@ -13,6 +13,10 @@ const WodPartners = ({ full }) => {
       icon: "binance-alpha.png",
     },
     {
+      name: "Binance US",
+      icon: "binanceUsLogo.png",
+    },
+    {
       name: "Trust Wallet",
       icon: "trustWalletLogo.svg",
     },
@@ -430,7 +434,7 @@ const WodPartners = ({ full }) => {
       name: "Bim Exchange",
       icon: "bimLogo.png",
     },
-        {
+    {
       name: "AlloX",
       icon: "allox.svg",
     },
