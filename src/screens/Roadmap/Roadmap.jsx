@@ -797,45 +797,41 @@ const Roadmap = () => {
       image: "quarterOneImage",
       content: [
         {
+          title: "New Exchange Listings",
+          desc: "WOD listed on CoinDCX, the largest crypto exchange in India, and BIM Exchange, expanding global market access and trading liquidity across new markets.",
+          completed: true,
+        },
+        {
+          title: "Grok AI Integration",
+          desc: "Grok integrated into World of Dypians as a real-time AI layer powering NPC interactions, player guidance, and in-game education across the entire world.",
+          completed: true,
+        },
+        {
           title: "Single Strike Launch",
-          desc: "A daily opportunity for players to fight the Dark Lord with heroes and earn rewards.",
-          completed: false,
+          desc: "New daily boss challenge launched on BNB Chain where players get one attempt per day to defeat the Dark Lord and earn Stars, Points, and WOD.",
+          completed: true,
         },
         {
-          title: "Liquidity Campaign",
-          desc: "Execute a liquidity initiative focused on improving market depth, stability, and accessibility.",
-          completed: false,
+          title: "Liquidity Catalyst Campaign",
+          desc: "Season 1 launched with a $250,000 USDT reward pool and over 8,500% initial APR, driving significant liquidity to the WOD ecosystem on PancakeSwap.",
+          completed: true,
         },
         {
-          title: "Strategic Fund Launch",
-          desc: "Establish a strategic fund to support long term development, ecosystem expansion, and innovation.",
-          completed: false,
+          title: "CoinMarketCap Partnership",
+          desc: "Major campaign launched giving CMC Diamond holders access to free Prime Subscriptions worth $100.",
+          completed: true,
         },
         {
-          title: "Prediction Market Launch",
-          desc: "Introduce an in game prediction market connected to market dynamics, gameplay events, and ecosystem activity.",
-          completed: false,
-        },
-        {
-          title: "Grok Integration",
-          desc: "Integration of Grok to enhance NPC interactions, deliver smarter in game responses, and create more dynamic experiences.",
-          completed: false,
-        },
-        {
-          title: "Expanding WOD Markets",
-          desc: "Expand WOD market presence through new listings and ecosystem growth, increasing accessibility and liquidity.",
-          completed: false,
-        },
-        {
-          title: "New Chain Expansion",
-          desc: "Continue multi chain integrations to support broader accessibility and onboarding",
-          completed: false,
+          title: "Daily Bonus Upgrade",
+          desc: "Major Ultra Boost launched on BNB Chain with 3 chests totalling 210,000 stars available to claim daily.",
+          completed: true,
         },
         {
           title: "Partnership Development",
-          desc: "Collaborate with strategic partners to introduce new features, integrations, and ecosystem opportunities.",
-          completed: false,
+          desc: "Expand partnerships to support feature development and ecosystem growth.",
+          completed: true,
         },
+      
       ],
     },
     {
@@ -843,52 +839,38 @@ const Roadmap = () => {
       image: "quarterTwoImage",
       content: [
         {
-          title: "Gameplay Optimization",
-          desc: "Improve performance, balance, and overall gameplay experience across core systems.",
-          completed: false,
+          title: "Governance Buyback Proposal",
+          desc: "First governance proposal passed unanimously at 100% YES, committing the project to buy back WOD at a premium to market price using the reserve.",
+          completed: true,
         },
 
         {
-          title: "Player Migration",
-          desc: "Migration to a scalable upgraded platform and system to support long term growth and stability.",
-          completed: false,
+          title: "Game Release v0.5.5",
+          desc: "Major update shipped on Epic Games with overall performance optimizations.",
+          completed: true,
         },
         {
-          title: "Improving Tracking Rewards",
-          desc: "Upgrade reward tracking with automated reward distribution and improved visibility of earned rewards.",
-          completed: false,
+          title: "New Game Events",
+          desc: "Three new Great Collection events featuring AlloX, World Mobile, and Mansory.",
+          completed: true,
         },
         {
-          title: "UI and UX Enhancements",
-          desc: "Refine interface design to deliver smoother navigation and improved player usability.",
-          completed: false,
+          title: "New Staking Pools",
+          desc: "Dedicated staking pools launched with up to 30% APR and daily BNB rewards for long-term WOD holders.",
+          completed: true,
         },
 
         {
-          title: "Player Account Revamp",
-          desc: "Redesign player accounts to improve profile management, progression visibility, and connected features.",
-          completed: false,
-        },
-        {
-          title: "New Heroes Introduction",
-          desc: "Introduction of new hero classes and races with expanded skins to increase gameplay diversity and personalization.",
-          completed: false,
-        },
-        {
-          title: "Improve Point System",
-          desc: "Enhancement of the point system to improve fairness, clarity, and engagement across activities.",
-          completed: false,
-        },
-        {
-          title: "Non EVM Chain Support",
-          desc: "Expansion of infrastructure to support non EVM blockchains and broaden ecosystem accessibility.",
-          completed: false,
+          title: "Binance US Listing",
+          desc: "WOD listed on the most regulated crypto exchange in the United States.",
+          completed: true,
         },
         {
           title: "Partnership Development",
           desc: "Expand partnerships to support feature development and ecosystem growth.",
-          completed: false,
+          completed: true,
         },
+      
       ],
     },
     {
