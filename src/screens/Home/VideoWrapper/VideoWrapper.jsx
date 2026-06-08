@@ -133,16 +133,16 @@ const VideoWrapper = ({
       logo: "coinrabbit.png",
       link: "https://coinrabbit.io/exchange/",
     },
-    {
-      title: "HiBt",
-      logo: "hibt.png",
-      link: "https://hibt.com/trade/WOD-USDT",
-    },
-    {
-      title: "Phemex",
-      logo: "phemex.png",
-      link: "https://phemex.com/trade/WOD-USDT",
-    },
+    // {
+    //   title: "HiBt",
+    //   logo: "hibt.png",
+    //   link: "https://hibt.com/trade/WOD-USDT",
+    // },
+    // {
+    //   title: "Phemex",
+    //   logo: "phemex.png",
+    //   link: "https://phemex.com/trade/WOD-USDT",
+    // },
     {
       title: "ChangeNOW",
       logo: "changeNow.webp",
@@ -168,16 +168,16 @@ const VideoWrapper = ({
       logo: "bvoxBuyWod.png",
       link: "https://www.bvox.com/exchange/WOD/USDT",
     },
-    {
-      title: "Bitkan",
-      logo: "bitkanBuyWod.png",
-      link: "https://bitkan.com/trade/WOD-USDT",
-    },
-    {
-      title: "Tothemoon",
-      logo: "tothemoonBuyWod.png",
-      link: "https://tothemoon.com/trading/WOD_USDT",
-    },
+    // {
+    //   title: "Bitkan",
+    //   logo: "bitkanBuyWod.png",
+    //   link: "https://bitkan.com/trade/WOD-USDT",
+    // },
+    // {
+    //   title: "Tothemoon",
+    //   logo: "tothemoonBuyWod.png",
+    //   link: "https://tothemoon.com/trading/WOD_USDT",
+    // },
     {
       title: "OpenOcean",
       logo: "openoceanBuyWod.png",
@@ -194,11 +194,11 @@ const VideoWrapper = ({
       link: "https://www.biconomy.com/exchange/WOD_USDT",
     },
 
-    {
-      title: "SwissBorg",
-      link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
-      logo: "swissborg.svg",
-    },
+    // {
+    //   title: "SwissBorg",
+    //   link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
+    //   logo: "swissborg.svg",
+    // },
     {
       title: "LetsExchange",
       logo: "letsexchangeLogo.svg",

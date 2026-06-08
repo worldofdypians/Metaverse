@@ -363,14 +363,14 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
       name: "Vameon",
       icon: "vameon.svg",
     },
-    {
-      name: "Phemex",
-      icon: "phemex.png",
-    },
-    {
-      name: "HiBt",
-      icon: "hibt.png",
-    },
+    // {
+    //   name: "Phemex",
+    //   icon: "phemex.png",
+    // },
+    // {
+    //   name: "HiBt",
+    //   icon: "hibt.png",
+    // },
     {
       name: "KCEX",
       icon: "kcex.png",
@@ -407,14 +407,14 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
       name: "BVOX",
       icon: "bvoxBuyWod.png",
     },
-    {
-      name: "Bitkan",
-      icon: "bitkanBuyWod.png",
-    },
-    {
-      name: "Tothemoon",
-      icon: "tothemoonBuyWod.png",
-    },
+    // {
+    //   name: "Bitkan",
+    //   icon: "bitkanBuyWod.png",
+    // },
+    // {
+    //   name: "Tothemoon",
+    //   icon: "tothemoonBuyWod.png",
+    // },
     {
       name: "OpenOcean",
       icon: "openoceanBuyWod.png",
@@ -428,10 +428,10 @@ const KickstarterPage = ({ monthlyPlayers, totalVolumeNew, wodHolders }) => {
       icon: "biconomy.png",
     },
 
-    {
-      name: "SwissBorg",
-      icon: "swissborg.svg",
-    },
+    // {
+    //   name: "SwissBorg",
+    //   icon: "swissborg.svg",
+    // },
     {
       name: "LetsExchange",
       icon: "letsexchangeLogo.svg",
