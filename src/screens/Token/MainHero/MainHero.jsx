@@ -86,16 +86,16 @@ const MainHero = ({ scrollInto }) => {
       logo: "kcex-exchange.png",
       link: "https://www.kcex.com/exchange/WOD_USDT",
     },
-    {
-      title: "HiBt",
-      logo: "hibt-exchange-white.png",
-      link: "https://hibt.com/trade/WOD-USDT",
-    },
-    {
-      title: "Phemex",
-      logo: "phemex-exchange.png",
-      link: "https://phemex.com/trade/WOD-USDT",
-    },
+    // {
+    //   title: "HiBt",
+    //   logo: "hibt-exchange-white.png",
+    //   link: "https://hibt.com/trade/WOD-USDT",
+    // },
+    // {
+    //   title: "Phemex",
+    //   logo: "phemex-exchange.png",
+    //   link: "https://phemex.com/trade/WOD-USDT",
+    // },
 
     {
       title: "ChangeNOW",
@@ -128,16 +128,16 @@ const MainHero = ({ scrollInto }) => {
       logo: "bvox-exchange.png",
       link: "https://www.bvox.com/exchange/WOD/USDT",
     },
-    {
-      title: "Bitkan",
-      logo: "bitkan-exchange.png",
-      link: "https://bitkan.com/trade/WOD-USDT",
-    },
-    {
-      title: "Tothemoon",
-      logo: "tothemoon-exchange.png",
-      link: "https://tothemoon.com/trading/WOD_USDT",
-    },
+    // {
+    //   title: "Bitkan",
+    //   logo: "bitkan-exchange.png",
+    //   link: "https://bitkan.com/trade/WOD-USDT",
+    // },
+    // {
+    //   title: "Tothemoon",
+    //   logo: "tothemoon-exchange.png",
+    //   link: "https://tothemoon.com/trading/WOD_USDT",
+    // },
     {
       title: "OpenOcean",
       logo: "openocean-exchange.png",
@@ -153,11 +153,11 @@ const MainHero = ({ scrollInto }) => {
       logo: "biconomy-exchange.png",
       link: "https://www.biconomy.com/exchange/WOD_USDT",
     },
-    {
-      title: "SwissBorg",
-      logo: "swissborg-exchange.svg",
-      link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
-    },
+    // {
+    //   title: "SwissBorg",
+    //   logo: "swissborg-exchange.svg",
+    //   link: "https://swissborg.com/crypto-market/coins/world-of-dypians",
+    // },
     {
       title: "LetsExchange",
       logo: "letsExchange.svg",

@@ -920,16 +920,16 @@ const Portfolio = ({
       href: "https://coinrabbit.io/exchange/",
       img: "https://cdn.worldofdypians.com/wod/coinrabbit.png",
     },
-    {
-      name: "HiBt",
-      href: "https://hibt.com/trade/WOD-USDT",
-      img: "https://cdn.worldofdypians.com/wod/hibt.png",
-    },
-    {
-      name: "Phemex",
-      href: "https://phemex.com/trade/WOD-USDT",
-      img: "https://cdn.worldofdypians.com/wod/phemex.png",
-    },
+    // {
+    //   name: "HiBt",
+    //   href: "https://hibt.com/trade/WOD-USDT",
+    //   img: "https://cdn.worldofdypians.com/wod/hibt.png",
+    // },
+    // {
+    //   name: "Phemex",
+    //   href: "https://phemex.com/trade/WOD-USDT",
+    //   img: "https://cdn.worldofdypians.com/wod/phemex.png",
+    // },
     {
       name: "ChangeNOW",
       href: "https://changenow.io/currencies/world-of-dypians",
@@ -955,16 +955,16 @@ const Portfolio = ({
       href: "https://www.bvox.com/exchange/WOD/USDT",
       img: "https://cdn.worldofdypians.com/wod/bvoxBuyWod.png",
     },
-    {
-      name: "Bitkan",
-      href: "https://bitkan.com/trade/WOD-USDT",
-      img: "https://cdn.worldofdypians.com/wod/bitkanBuyWod.png",
-    },
-    {
-      name: "Tothemoon",
-      href: "https://tothemoon.com/trading/WOD_USDT",
-      img: "https://cdn.worldofdypians.com/wod/tothemoonBuyWod.png",
-    },
+    // {
+    //   name: "Bitkan",
+    //   href: "https://bitkan.com/trade/WOD-USDT",
+    //   img: "https://cdn.worldofdypians.com/wod/bitkanBuyWod.png",
+    // },
+    // {
+    //   name: "Tothemoon",
+    //   href: "https://tothemoon.com/trading/WOD_USDT",
+    //   img: "https://cdn.worldofdypians.com/wod/tothemoonBuyWod.png",
+    // },
     {
       name: "OpenOcean",
       href: "https://app.openocean.finance/swap/bsc/BNB/WOD_0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8",
@@ -981,11 +981,11 @@ const Portfolio = ({
       img: "https://cdn.worldofdypians.com/wod/biconomy.png",
     },
 
-    {
-      name: "SwissBorg",
-      href: "https://swissborg.com/crypto-market/coins/world-of-dypians",
-      img: "https://cdn.worldofdypians.com/wod/swissborg.svg",
-    },
+    // {
+    //   name: "SwissBorg",
+    //   href: "https://swissborg.com/crypto-market/coins/world-of-dypians",
+    //   img: "https://cdn.worldofdypians.com/wod/swissborg.svg",
+    // },
     {
       name: "LetsExchange",
       img: "https://cdn.worldofdypians.com/wod/letsexchangeLogo.svg",
