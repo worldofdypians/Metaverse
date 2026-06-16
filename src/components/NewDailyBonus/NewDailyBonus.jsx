@@ -5086,7 +5086,7 @@ const NewDailyBonus = ({
 
                                 const specialStandardChestIds = new Set(
                                   uniqueRemainingStandardChests
-                                    .filter((_, idx) => [1, 5, 7].includes(idx))
+                                    .filter((_, idx) => [1, 5].includes(idx))
                                     .map((c) => c.chestId),
                                 );
 
