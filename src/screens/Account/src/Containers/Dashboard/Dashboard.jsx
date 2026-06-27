@@ -4767,10 +4767,10 @@ function Dashboard({
         type: "stars",
         rewards: vanarStars,
         previous_rewards: vanarStars,
-        activeData: [],
-        previousData: [],
-        player_data: {},
-        is_active: true,
+        activeData: dailyRecordsVanar,
+        previousData: prevDataVanar,
+        player_data: userDataVanar,
+        is_active: activePlayerVanar,
         loading: loadingVanar,
       },
     ]);
@@ -5016,7 +5016,7 @@ function Dashboard({
       // }
     } else if (chain === "vanar") {
       // if (dailyRecordsVanar.length === 0) {
-      // fetchDailyRecordsVanar();
+      fetchDailyRecordsVanar();
       // }
     }
     // else if (chain === "matchain") {

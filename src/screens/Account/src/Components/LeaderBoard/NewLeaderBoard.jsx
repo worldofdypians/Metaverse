@@ -773,7 +773,6 @@ const NewLeaderBoard = ({
                         <CircularProgress size={18} />
                       </div>
                     ) : (optionText2 === "sei" && inactiveBoard === true) ||
-                      optionText2 === "vanar" ||
                       optionText2 === "taiko" ? (
                       <div className="coming-soon-position d-flex flex-column align-items-center justify-content-center h-100 blur-lb">
                         <h6
