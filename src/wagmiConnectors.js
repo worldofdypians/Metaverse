@@ -97,7 +97,12 @@ export const wagmiClient = createConfig({
     ]),
     // [matchain.id]: http(),
     [opBNB.id]: http(),
-    [manta.id]: http("https://1rpc.io/manta"),
+    [manta.id]: fallback([
+      http("https://pacific-rpc.manta.network/http"),
+      http("https://manta-pacific.drpc.org"),
+      http("https://r1.pacific.manta.systems/http"),
+      http("https://1rpc.io/manta"),
+    ]),
     [taiko.id]: fallback([
       http("https://rpc.mainnet.taiko.xyz"),
       http("https://rpc.ankr.com/taiko"),
