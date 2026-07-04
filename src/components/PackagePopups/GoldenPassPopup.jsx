@@ -62,12 +62,10 @@ const GoldenPassPopup = ({
   // ----------------------
   // Unified wagmi/viem helpers
   // ----------------------
-  const MIN_APPROVAL = 150000000000000000000n; // 150 WOD with 18 decimals
   const MAX_APPROVE_AMOUNT = 500000000000000000000000000n; // 500,000,000 * 1e18
 
   const readOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-      
       return await wagmiReadContract(wagmiClient, {
         address,
         abi,
@@ -83,8 +81,6 @@ const GoldenPassPopup = ({
 
   const writeOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
-  
-
       const account = getConnection(wagmiClient);
       if (account?.chainId && chainId && account.chainId !== chainId) {
         try {
@@ -124,7 +120,7 @@ const GoldenPassPopup = ({
 
   const [depositState, setDepositState] = useState("initial");
   const [status, setStatus] = useState(
-    "Please make sure you're on BNB Chain and using the wallet address associated to your game profile."
+    "Please make sure you're on BNB Chain and using the wallet address associated to your game profile.",
   );
   const [statusColor, setStatusColor] = useState("#FE7A00");
   const [checkWallet, setCheckWallet] = useState(true);
@@ -182,14 +178,23 @@ const GoldenPassPopup = ({
 
   const checkApproval = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      const allowance = await readOnChain({
-        address: window.config.wod_token_address,
-        abi: window.TOKEN_ABI,
-        functionName: "allowance",
-        args: [wallet, goldenPassAddress],
-      }).catch(() => 0n);
+      const [allowance, requiredAmount] = await Promise.all([
+        readOnChain({
+          address: window.config.wod_token_address,
+          abi: window.TOKEN_ABI,
+          functionName: "allowance",
+          args: [wallet, goldenPassAddress],
+        }).catch(() => 0n),
+        readOnChain({
+          address: golden_pass_address,
+          abi: GOLDEN_PASS_ABI,
+          functionName: "getEstimatedBundleWODAmount",
+          args: [],
+        }).catch(() => 0n),
+      ]);
 
-      if (BigInt(allowance) === 0n || BigInt(allowance) < MIN_APPROVAL) {
+      const required = BigInt(requiredAmount || 0n);
+      if (BigInt(allowance) === 0n || BigInt(allowance) < required) {
         setShowApproval(true);
       } else {
         setShowApproval(false);
@@ -281,7 +286,7 @@ const GoldenPassPopup = ({
       if (binancePay === true && window.WALLET_TYPE !== "binance") {
         setCheckWallet(false);
         setStatus(
-          "Please connect with Binance wallet in order to activate the event."
+          "Please connect with Binance wallet in order to activate the event.",
         );
         setStatusColor("#FE7A00");
       } else if (
@@ -291,7 +296,7 @@ const GoldenPassPopup = ({
       ) {
         setCheckWallet(false);
         setStatus(
-          "Please make sure you're on BNB Chain in order to activate the event."
+          "Please make sure you're on BNB Chain in order to activate the event.",
         );
         setStatusColor("#FE7A00");
       } else if (
@@ -308,7 +313,7 @@ const GoldenPassPopup = ({
       ) {
         setCheckWallet(false);
         setStatus(
-          "Please make sure you're using the wallet address associated to your game profile."
+          "Please make sure you're using the wallet address associated to your game profile.",
         );
         setStatusColor("#FE7A00");
       } else if (!isEOA && isConnected && coinbase) {
@@ -631,7 +636,7 @@ const GoldenPassPopup = ({
                   /> */}
                     <h6 className="event-price-coin mb-0">
                       {getFormattedNumber(
-                        binancePay === false ? goldenPassWodAmount : 50
+                        binancePay === false ? goldenPassWodAmount : 50,
                       )}{" "}
                       {binancePay === false ? "WOD" : "USDT"}
                     </h6>
@@ -969,8 +974,8 @@ const GoldenPassPopup = ({
                       showApproval === true && checkWallet === true
                         ? "stake-wod-btn-inactive d-none"
                         : showApproval === false && checkWallet === true
-                        ? "stake-wod-btn"
-                        : "stake-wod-btn-inactive"
+                          ? "stake-wod-btn"
+                          : "stake-wod-btn-inactive"
                     }  py-2 px-4`}
                     onClick={() => handleDeposit()}
                   >

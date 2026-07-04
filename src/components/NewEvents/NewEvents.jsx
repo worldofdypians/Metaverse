@@ -109,8 +109,44 @@ const NewEvents = ({
   // ----------------------
   // Unified wagmi/viem helpers
   // ----------------------
-  const MIN_APPROVAL = 150000000000000000000n; // 150 WOD with 18 decimals
   const MAX_APPROVE_AMOUNT = 500000000000000000000000000n; // 500,000,000 * 1e18
+
+  const checkBundleAllowance = async ({
+    spenderAddress,
+    bundleContractAddress,
+    bundleAbi,
+    setShowApproval,
+    setBundleState,
+    resetBundleStateOnInsufficient = false,
+  }) => {
+    if (coinbase?.toLowerCase() !== wallet?.toLowerCase()) return;
+
+    const [allowance, requiredAmount] = await Promise.all([
+      readOnChain({
+        address: window.config.wod_token_address,
+        abi: window.TOKEN_ABI,
+        functionName: "allowance",
+        args: [wallet, spenderAddress],
+      }).catch(() => 0n),
+      readOnChain({
+        address: bundleContractAddress,
+        abi: bundleAbi,
+        functionName: "getEstimatedBundleWODAmount",
+        args: [],
+      }).catch(() => 0n),
+    ]);
+
+    const required = BigInt(requiredAmount || 0n);
+    if (BigInt(allowance) === 0n || BigInt(allowance) < required) {
+      setShowApproval(true);
+      if (resetBundleStateOnInsufficient) {
+        setBundleState("initial");
+      }
+    } else {
+      setShowApproval(false);
+      setBundleState("deposit");
+    }
+  };
 
   const readOnChain = async ({ address, abi, functionName, args = [] }) => {
     try {
@@ -471,21 +507,13 @@ const NewEvents = ({
   };
 
   const checkApprovalPuzzle = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      const allowance = await readOnChain({
-        address: window.config.wod_token_address,
-        abi: window.TOKEN_ABI,
-        functionName: "allowance",
-        args: [wallet, puzzle_madness_address],
-      }).catch(() => 0n);
-
-      if (BigInt(allowance) === 0n || BigInt(allowance) < MIN_APPROVAL) {
-        setpuzzleMadnessShowApproval(true);
-      } else {
-        setpuzzleMadnessShowApproval(false);
-        setpuzzleMadnessBundleState("deposit");
-      }
-    }
+    await checkBundleAllowance({
+      spenderAddress: puzzle_madness_address,
+      bundleContractAddress: puzzle_madness_address,
+      bundleAbi: PUZZLE_MADNESS_ABI,
+      setShowApproval: setpuzzleMadnessShowApproval,
+      setBundleState: setpuzzleMadnessBundleState,
+    });
   };
 
   const handleApprovalPuzzle = async (status) => {
@@ -719,21 +747,13 @@ const NewEvents = ({
   };
 
   const checkApprovalDragon = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      const allowance = await readOnChain({
-        address: window.config.wod_token_address,
-        abi: window.TOKEN_ABI,
-        functionName: "allowance",
-        args: [wallet, dragonRuinsAddress],
-      }).catch(() => 0n);
-
-      if (BigInt(allowance) === 0n || BigInt(allowance) < MIN_APPROVAL) {
-        setDragonShowApproval(true);
-      } else {
-        setDragonShowApproval(false);
-        setDragonBundleState("deposit");
-      }
-    }
+    await checkBundleAllowance({
+      spenderAddress: dragonRuinsAddress,
+      bundleContractAddress: dragon_ruins_address,
+      bundleAbi: DRAGON_RUINS_ABI,
+      setShowApproval: setDragonShowApproval,
+      setBundleState: setDragonBundleState,
+    });
   };
 
   const handleApprovalDragon = async (status) => {
@@ -961,21 +981,13 @@ const NewEvents = ({
   };
 
   const checkApprovalBear = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      const allowance = await readOnChain({
-        address: window.config.wod_token_address,
-        abi: window.TOKEN_ABI,
-        functionName: "allowance",
-        args: [wallet, coldBiteAddress],
-      }).catch(() => 0n);
-
-      if (BigInt(allowance) === 0n || BigInt(allowance) < MIN_APPROVAL) {
-        setBearShowApproval(true);
-      } else {
-        setBearShowApproval(false);
-        setBearBundleState("deposit");
-      }
-    }
+    await checkBundleAllowance({
+      spenderAddress: coldBiteAddress,
+      bundleContractAddress: cold_bite_address,
+      bundleAbi: COLD_BITE_ABI,
+      setShowApproval: setBearShowApproval,
+      setBundleState: setBearBundleState,
+    });
   };
 
   const handleApprovalBear = async (status) => {
@@ -1199,22 +1211,14 @@ const NewEvents = ({
   };
 
   const checkApprovalBeast = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      const allowance = await readOnChain({
-        address: window.config.wod_token_address,
-        abi: window.TOKEN_ABI,
-        functionName: "allowance",
-        args: [wallet, furyBeastAddress],
-      }).catch(() => 0n);
-
-      if (BigInt(allowance) === 0n || BigInt(allowance) < MIN_APPROVAL) {
-        setBeastShowApproval(true);
-        setBeastBundleState("initial");
-      } else {
-        setBeastShowApproval(false);
-        setBeastBundleState("deposit");
-      }
-    }
+    await checkBundleAllowance({
+      spenderAddress: furyBeastAddress,
+      bundleContractAddress: fury_beast_address,
+      bundleAbi: FURY_BEAST_ABI,
+      setShowApproval: setBeastShowApproval,
+      setBundleState: setBeastBundleState,
+      resetBundleStateOnInsufficient: true,
+    });
   };
 
   const handleApprovalBeast = async (status) => {
@@ -1441,21 +1445,13 @@ const NewEvents = ({
   };
 
   const checkApprovalEagle = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      const allowance = await readOnChain({
-        address: window.config.wod_token_address,
-        abi: window.TOKEN_ABI,
-        functionName: "allowance",
-        args: [wallet, wingStormAddress],
-      }).catch(() => 0n);
-
-      if (BigInt(allowance) === 0n || BigInt(allowance) < MIN_APPROVAL) {
-        setEagleShowApproval(true);
-      } else {
-        setEagleShowApproval(false);
-        setEagleBundleState("deposit");
-      }
-    }
+    await checkBundleAllowance({
+      spenderAddress: wingStormAddress,
+      bundleContractAddress: wing_storm_address,
+      bundleAbi: WING_STORM_ABI,
+      setShowApproval: setEagleShowApproval,
+      setBundleState: setEagleBundleState,
+    });
   };
 
   const handleApprovalEagle = async (status) => {
@@ -1682,21 +1678,13 @@ const NewEvents = ({
   };
 
   const checkApprovalScorpion = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      const allowance = await readOnChain({
-        address: window.config.wod_token_address,
-        abi: window.TOKEN_ABI,
-        functionName: "allowance",
-        args: [wallet, scorpionKingAddress],
-      }).catch(() => 0n);
-
-      if (BigInt(allowance) === 0n || BigInt(allowance) < MIN_APPROVAL) {
-        setScorpionShowApproval(true);
-      } else {
-        setScorpionShowApproval(false);
-        setScorpionBundleState("deposit");
-      }
-    }
+    await checkBundleAllowance({
+      spenderAddress: scorpionKingAddress,
+      bundleContractAddress: scorpion_king_address,
+      bundleAbi: SCORPION_KING_ABI,
+      setShowApproval: setScorpionShowApproval,
+      setBundleState: setScorpionBundleState,
+    });
   };
 
   const handleApprovalScorpion = async (status) => {
@@ -1923,21 +1911,13 @@ const NewEvents = ({
   };
 
   const checkApprovalCyclops = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      const allowance = await readOnChain({
-        address: window.config.wod_token_address,
-        abi: window.TOKEN_ABI,
-        functionName: "allowance",
-        args: [wallet, stoneEyeAddress],
-      }).catch(() => 0n);
-
-      if (BigInt(allowance) === 0n || BigInt(allowance) < MIN_APPROVAL) {
-        setCyclopsShowApproval(true);
-      } else {
-        setCyclopsShowApproval(false);
-        setCyclopsBundleState("deposit");
-      }
-    }
+    await checkBundleAllowance({
+      spenderAddress: stoneEyeAddress,
+      bundleContractAddress: stone_eye_address,
+      bundleAbi: STONE_EYE_ABI,
+      setShowApproval: setCyclopsShowApproval,
+      setBundleState: setCyclopsBundleState,
+    });
   };
 
   const handleApprovalCyclops = async (status) => {
@@ -2082,7 +2062,7 @@ const NewEvents = ({
 
   useEffect(() => {
     if (
-      (email !== undefined && wallet !== undefined && coinbase !== undefined) ||
+      (email !== undefined && wallet !== undefined && coinbase !== undefined && coinbase.toLowerCase() === wallet.toLowerCase()) ||
       statusbinance === "success"
     ) {
       // Event handler mapping - only call functions for the active event
