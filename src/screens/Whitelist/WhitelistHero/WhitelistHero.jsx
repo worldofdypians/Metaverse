@@ -39,24 +39,24 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       cliffInTimestamp: "1748357606000",
       vesting: "19 Months",
     },
-    {
-      id: "private",
-      title: "Private Round",
-      class: activeRound === "private" ? "privateClassActive" : "privateClass",
-      tokenPrice: "0.0325",
-      cliff: "3 Months",
-      cliffInTimestamp: "1740668006000",
-      vesting: "16 Months",
-    },
-    {
-      id: "kol",
-      title: "KOL Round",
-      class: activeRound === "kol" ? "kolClassActive" : "kolClass",
-      tokenPrice: "0.03825",
-      cliff: "1 Month",
-      cliffInTimestamp: "1735311206000",
-      vesting: "8 Months",
-    },
+    // {
+    //   id: "private",
+    //   title: "Private Round",
+    //   class: activeRound === "private" ? "privateClassActive" : "privateClass",
+    //   tokenPrice: "0.0325",
+    //   cliff: "3 Months",
+    //   cliffInTimestamp: "1740668006000",
+    //   vesting: "16 Months",
+    // },
+    // {
+    //   id: "kol",
+    //   title: "KOL Round",
+    //   class: activeRound === "kol" ? "kolClassActive" : "kolClass",
+    //   tokenPrice: "0.03825",
+    //   cliff: "1 Month",
+    //   cliffInTimestamp: "1735311206000",
+    //   vesting: "8 Months",
+    // },
     {
       id: "advisors",
       title: "Advisors",
@@ -146,7 +146,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "old-30vesting" ||
       type === "old-7vesting"
         ? 1
-        : 4,
+        : 2,
     slidesToScroll: 1,
     autoplay: false,
     initialSlide: 0,
@@ -178,7 +178,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? 1
-              : 4,
+              : 2,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -205,7 +205,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? 1
-              : 4,
+              : 2,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -232,7 +232,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? 1
-              : 3,
+              : 2,
           slidesToScroll: 1,
           initialSlide: 0,
           infinite:
@@ -516,7 +516,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "old-30vesting" ||
                 type === "old-7vesting"
                   ? "otc-wrapper"
-                  : "col-lg-10"
+                  : "col-lg-6"
               } opacitywrapper-release position-relative`}
             >
               <Slider {...settings} ref={betaSlider}>
