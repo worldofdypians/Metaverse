@@ -1220,21 +1220,21 @@ function AppRoutes() {
     {
       title: "CMC",
       logo: "https://cdn.worldofdypians.com/wod/cmcIcon.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Mar 11, 2026",
-      userEarnUsd: user.userStats.cmcuserEarnUsd,
-      userEarnCrypto: user.userStats.cmcuserEarnETH,
-      userEarnPoints: user.userStats.cmcuserPoints,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingCmc.webp",
       popupInfo: {
         title: "CoinMarketCap",
         chain: "BNB Chain",
         linkState: "coinmarketcap",
         rewards: "BNB",
-        status: "Live",
+        status: "Expired",
         id: "event8",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in BNB Rewards",
@@ -4877,9 +4877,9 @@ function AppRoutes() {
           }
 
           if (cmcEvent && cmcEvent[0]) {
-            if (cmcEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
-            }
+            // if (cmcEvent[0].reward.earn.totalPoints > 0) {
+            //   userActiveEvents = userActiveEvents + 1;
+            // }
             const points = cmcEvent[0].reward.earn.totalPoints;
 
             const usdValue =
