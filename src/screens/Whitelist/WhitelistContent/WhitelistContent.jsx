@@ -60,7 +60,8 @@ const WhitelistContent = ({
 
   const [timerFinishedEvanVesting, settimerFinishedEvanVesting] =
     useState(false);
-
+  const [timerFinishedVladVesting, settimerFinishedVladVesting] =
+    useState(false);
   const [timerFinishedOld30Vesting, settimerFinishedOld30Vesting] =
     useState(false);
   const [timerFinishedOld7Vesting, settimerFinishedOld7Vesting] =
@@ -157,6 +158,13 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedEvanVesting(true);
+        }
+      } else if (selectedRound.id == "vlad-vesting") {
+        if (today2.getTime() > cliffTime && cliffTime > 0) {
+          settimerFinishedVladVesting(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedVladVesting(true);
         }
       } else if (selectedRound.id == "old-30vesting") {
         if (today2.getTime() > cliffTime && cliffTime > 0) {
@@ -321,6 +329,7 @@ const WhitelistContent = ({
                   selectedRound?.id == "roundotc-vesting" ||
                   selectedRound?.id == "dypians-vesting" ||
                   selectedRound?.id == "evan-vesting" ||
+                  selectedRound?.id == "vlad-vesting" ||
                   selectedRound?.id == "old-30vesting" ||
                   selectedRound?.id == "old-7vesting"
                     ? "USD"
@@ -348,6 +357,7 @@ const WhitelistContent = ({
                     selectedRound?.id == "roundotc-vesting" ||
                     selectedRound?.id == "dypians-vesting" ||
                     selectedRound?.id == "evan-vesting" ||
+                    selectedRound?.id == "vlad-vesting" ||
                     selectedRound?.id == "old-30vesting" ||
                     selectedRound?.id == "old-7vesting"
                       ? "USD"
@@ -370,12 +380,13 @@ const WhitelistContent = ({
                   selectedRound?.id !== "roundotc-vesting" &&
                   selectedRound?.id !== "dypians-vesting" &&
                   selectedRound?.id !== "evan-vesting" &&
+                  selectedRound?.id !== "vlad-vesting" &&
                   selectedRound?.id !== "old-30vesting" &&
                   selectedRound?.id !== "old-7vesting" && (
                     <div className="d-flex flex-column">
                       <span className="whitelist-upper-txt">
                         {getFormattedNumber(
-                          totalVestedTokens - userClaimedTokens
+                          totalVestedTokens - userClaimedTokens,
                         )}
                       </span>
 
@@ -497,6 +508,17 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedEvanVesting(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "vlad-vesting" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedVladVesting(true);
                           onTimerFinished(true);
                         }}
                       />
@@ -658,10 +680,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                 disabled={
                   canClaim === false ||
@@ -700,10 +722,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                 disabled={
                   canClaim === false ||
@@ -742,10 +764,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                 disabled={
                   canClaim === false ||
@@ -786,10 +808,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -829,10 +851,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -873,10 +895,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -917,10 +939,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -961,10 +983,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1005,10 +1027,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1049,14 +1071,58 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
                     timerFinishedEvanVesting === false ||
+                    Number(wodBalance) === 0 ||
+                    !isEOA
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              chainId === 56 &&
+              selectedRound?.id === "vlad-vesting" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinishedVladVesting === false ||
+                  !isEOA
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
+                }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinishedVladVesting === false ||
                     Number(wodBalance) === 0 ||
                     !isEOA
                       ? true
@@ -1093,10 +1159,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1137,10 +1203,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1181,10 +1247,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1225,10 +1291,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1269,10 +1335,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1312,10 +1378,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1356,10 +1422,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1400,10 +1466,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1444,10 +1510,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||
@@ -1486,10 +1552,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                 disabled={
                   canClaim === false ||
@@ -1530,10 +1596,10 @@ const WhitelistContent = ({
                   !isEOA
                     ? "disabled-btn2"
                     : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                        ? "success-button"
+                        : "connectbtn"
                 }`}
                   disabled={
                     canClaim === false ||

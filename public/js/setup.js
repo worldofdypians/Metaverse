@@ -196,6 +196,7 @@ window.config = {
   roundotc_vesting_address: "0x2a743e768fb02efb66afb9b0236dded09468d5ba",
   dypiansvesting_address: "0x64fba8a80d3204e6bbbbfde45637b8f6fd6e6cf6",
   evanvesting_address: "0x4e0d58213261c6d32ecdc21827ba4e2378f7a523",
+  vladvesting_address: "0xd3f606194f24435ed4d6a36f90a0fae3ffbf4822",
   old30vesting_address: "0x26eb18be24a827ca7427b903fdd6d12913aa6860",
   old7vesting_address: "0xf3589ef463dcb851888b69b80f44dead2015d812",
 

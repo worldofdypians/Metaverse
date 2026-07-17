@@ -525,7 +525,10 @@ function WalletSync() {
           if (c.id === "wallet.binance.com" || c.type === "binanceWallet") {
             semanticType = "binance";
           } else if (c.name === "WalletConnect") {
-            if (typeof window !== "undefined" && window.WALLET_TYPE === "binance") {
+            if (
+              typeof window !== "undefined" &&
+              window.WALLET_TYPE === "binance"
+            ) {
               semanticType = "binance";
             } else if (persisted === "binance") {
               semanticType = "binance";
@@ -5656,6 +5659,7 @@ function AppRoutes() {
           !location.pathname.includes("staking") &&
           !location.pathname.includes("bridge") &&
           !location.pathname.includes("token-claim") &&
+          !location.pathname.includes("vlad-vesting") &&
           !location.pathname.includes("account") &&
           !location.pathname.includes("trading-competition") &&
           !location.pathname.includes("bonus-otc") &&
@@ -5878,6 +5882,26 @@ function AppRoutes() {
               element={
                 <Whitelist
                   type="evan-vesting"
+                  isEOA={isEOA}
+                  chainId={networkId}
+                  isConnected={isConnected}
+                  handleConnection={() => {
+                    setWalletId("connect");
+                    setWalletModal(true);
+                  }}
+                  coinbase={coinbase}
+                  wagmiWalletClient={wagmiWalletClient}
+                  wagmiPublicClient={wagmiPublicClient}
+                />
+              }
+            />
+
+            <Route
+              exact
+              path="/vlad-vesting"
+              element={
+                <Whitelist
+                  type="vlad-vesting"
                   isEOA={isEOA}
                   chainId={networkId}
                   isConnected={isConnected}

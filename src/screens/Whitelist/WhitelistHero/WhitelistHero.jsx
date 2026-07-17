@@ -21,6 +21,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "roundotc-vesting" ||
       type === "dypians-vesting" ||
       type === "evan-vesting" ||
+      type === "vlad-vesting" ||
       type === "old-30vesting" ||
       type === "old-7vesting"
       ? "otc"
@@ -86,6 +87,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
           ? type
@@ -108,6 +110,8 @@ const WhitelistHero = ({ onSelectRound, type }) => {
           ? "2 months"
           : type === "old-7vesting"
           ? "7 days"
+          : type === "vlad-vesting"
+          ? "24 months"
           : type === "evan-vesting" || type === "old-30vesting"
           ? "1 month"
           : type === "special-otc-4" ||
@@ -143,6 +147,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       type === "roundotc-vesting" ||
       type === "dypians-vesting" ||
       type === "evan-vesting" ||
+      type === "vlad-vesting" ||
       type === "old-30vesting" ||
       type === "old-7vesting"
         ? 1
@@ -175,6 +180,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? 1
@@ -202,6 +208,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? 1
@@ -229,6 +236,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? 1
@@ -251,6 +259,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? false
@@ -271,6 +280,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? false
@@ -291,6 +301,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? false
@@ -316,6 +327,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? 1
@@ -338,6 +350,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? false
@@ -358,6 +371,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? false
@@ -378,6 +392,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? false
@@ -406,6 +421,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? false
@@ -426,6 +442,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? false
@@ -446,6 +463,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
             type === "roundotc-vesting" ||
             type === "dypians-vesting" ||
             type === "evan-vesting" ||
+            type === "vlad-vesting" ||
             type === "old-30vesting" ||
             type === "old-7vesting"
               ? false
@@ -472,6 +490,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
         type === "roundotc-vesting" ||
         type === "dypians-vesting" ||
         type === "evan-vesting" ||
+        type === "vlad-vesting" ||
         type === "old-30vesting" ||
         type === "old-7vesting"
         ? otc_data[0]
@@ -513,6 +532,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "roundotc-vesting" ||
                 type === "dypians-vesting" ||
                 type === "evan-vesting" ||
+                type === "vlad-vesting" ||
                 type === "old-30vesting" ||
                 type === "old-7vesting"
                   ? "otc-wrapper"
@@ -535,6 +555,7 @@ const WhitelistHero = ({ onSelectRound, type }) => {
                 type === "roundotc-vesting" ||
                 type === "dypians-vesting" ||
                 type === "evan-vesting" ||
+                type === "vlad-vesting" ||
                 type === "old-30vesting" ||
                 type === "old-7vesting"
                   ? otc_data
