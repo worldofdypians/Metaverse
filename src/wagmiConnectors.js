@@ -16,7 +16,7 @@ import {
   skaleNebula,
   immutableZkEvm,
   confluxESpace,
-  vanar,
+  // vanar,
   // taraxa,
 } from "wagmi/chains";
 import {
@@ -42,7 +42,7 @@ export const wagmiClient = createConfig({
     skaleNebula,
     immutableZkEvm,
     confluxESpace,
-    vanar,
+    // vanar,
     // taraxa,
   ],
   connectors: [
@@ -132,7 +132,7 @@ export const wagmiClient = createConfig({
     ),
     [immutableZkEvm.id]: http("https://rpc.immutable.com"),
     [confluxESpace.id]: http("https://evm.confluxrpc.com"),
-    [vanar.id]: http("https://rpc.vanarchain.com"),
+    // [vanar.id]: http("https://rpc.vanarchain.com"),
     // [taraxa.id]: http(),
   },
 });

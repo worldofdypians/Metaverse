@@ -3354,7 +3354,7 @@ function AppRoutes() {
     fetchCFXPrice();
     fetchTWTPrice();
     fetchVictionPrice();
-    fetchVanarPrice();
+    // fetchVanarPrice();
     fetchEgldPrice();
     fetchImmutablePrice();
     fetchKucoinCoinPrice();
@@ -4105,10 +4105,10 @@ function AppRoutes() {
     const multiversClient = bscClient;
     const mantaClient = makeClient(window.config.manta_endpoint);
     const taikoClient = makeClient(window.config.taiko_endpoint);
-    const matClient = makeClient(window.config.mat_endpoint);
+    // const matClient = makeClient(window.config.mat_endpoint);
     const seiClient = makeClient(window.config.sei_endpoint);
-    const vanarClient = makeClient(window.config.vanar_endpoint);
-    const taraxaClient = makeClient(window.config.taraxa_endpoint);
+    // const vanarClient = makeClient(window.config.vanar_endpoint);
+    // const taraxaClient = makeClient(window.config.taraxa_endpoint);
 
     // Parallel reads with safe fallbacks
     const [
@@ -4127,10 +4127,10 @@ function AppRoutes() {
       mantaresult,
       taikoresult,
       cookieresult,
-      matresult,
+      // matresult,
       seiresult,
-      vanarresult,
-      taraxaResult,
+      // vanarresult,
+      // taraxaResult,
       teaseiResult,
     ] = await Promise.all([
       safeReadTotalSupply(
@@ -4208,26 +4208,26 @@ function AppRoutes() {
         window.config.nft_cookie3_address,
         window.COOKIE3_NFT_ABI,
       ),
-      safeReadTotalSupply(
-        matClient,
-        window.config.nft_mat_address,
-        window.MAT_NFT_ABI,
-      ),
+      // safeReadTotalSupply(
+      //   matClient,
+      //   window.config.nft_mat_address,
+      //   window.MAT_NFT_ABI,
+      // ),
       safeReadTotalSupply(
         seiClient,
         window.config.nft_sei_address,
         window.SEI_NFT_ABI,
       ),
-      safeReadTotalSupply(
-        vanarClient,
-        window.config.nft_vanar_address,
-        window.VANAR_NFT_ABI,
-      ),
-      safeReadTotalSupply(
-        taraxaClient,
-        window.config.nft_taraxa_address,
-        window.TARAXA_NFT_ABI,
-      ),
+      // safeReadTotalSupply(
+      //   vanarClient,
+      //   window.config.nft_vanar_address,
+      //   window.VANAR_NFT_ABI,
+      // ),
+      // safeReadTotalSupply(
+      //   taraxaClient,
+      //   window.config.nft_taraxa_address,
+      //   window.TARAXA_NFT_ABI,
+      // ),
       safeReadTotalSupply(
         seiClient,
         window.config.nft_teasei_address,
@@ -4281,15 +4281,15 @@ function AppRoutes() {
         Number(mantaresult) +
         Number(taikoresult) +
         Number(cookieresult) +
-        Number(matresult) +
+        // Number(matresult) +
         Number(seiresult) +
         Number(kucoinresult) +
-        Number(vanarresult) +
+        // Number(vanarresult) +
         Number(teaBNBResult) +
         Number(teaOPBNBResult) +
         Number(teaBaseResult) +
         Number(teaseiResult) +
-        Number(taraxaResult) +
+        // Number(taraxaResult) +
         Number(bnb_5ya_result) +
         20002,
     );

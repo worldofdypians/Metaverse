@@ -896,11 +896,11 @@ const MyRewardsPopupNew = ({
               style={{ width: 16, height: 16 }}
               alt=""
             />
-            <img
+            {/* <img
               src={"https://cdn.worldofdypians.com/wod/vanar.svg"}
               style={{ width: 16, height: 16 }}
               alt=""
-            />
+            /> */}
             {/* <img
               src={"https://cdn.worldofdypians.com/wod/taraxa.svg"}
               style={{ width: 16, height: 16 }}
@@ -1255,7 +1255,7 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoney.mat, 2)}
                 </span>
               </div> */}
-              <div className="d-flex w-100 justify-content-between gap-2">
+              {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Vanar</span>
                 <span className="item-name-right">
                   $
@@ -1263,7 +1263,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoney.vanar, 2)}
                 </span>
-              </div>
+              </div> */}
 
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>

@@ -494,9 +494,9 @@ const Portfolio = ({
       let kucoinFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_kucoin_address,
       );
-      let vanarFilter = collectedItems.filter(
-        (item) => item.nftAddress === window.config.nft_vanar_address,
-      );
+      // let vanarFilter = collectedItems.filter(
+      //   (item) => item.nftAddress === window.config.nft_vanar_address,
+      // );
       let gateFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_gate_address,
       );
@@ -582,7 +582,7 @@ const Portfolio = ({
         ...teaFilter,
         // ...taraxaFilter,
         ...coingeckoFilter,
-        ...vanarFilter,
+        // ...vanarFilter,
         ...confluxFilter,
         ...gateFilter,
         ...dogeFilter,
@@ -2260,10 +2260,10 @@ const Portfolio = ({
                                                                 window.config
                                                                   .nft_kucoin_address
                                                               ? `https://cdn.worldofdypians.com/wod/kucoin-bp-50.png`
-                                                              : nft.nftAddress ===
-                                                                  window.config
-                                                                    .nft_vanar_address
-                                                                ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
+                                                              // : nft.nftAddress ===
+                                                              //     window.config
+                                                              //       .nft_vanar_address
+                                                              //   ? `https://cdn.worldofdypians.com/wod/vanar-50.png`
                                                                 : nft.nftAddress ===
                                                                     window
                                                                       .config
@@ -2393,11 +2393,11 @@ const Portfolio = ({
                                                                   window.config
                                                                     .nft_kucoin_address
                                                                 ? "KCBP"
-                                                                : nft.nftAddress ===
-                                                                    window
-                                                                      .config
-                                                                      .nft_vanar_address
-                                                                  ? "VNBP"
+                                                                // : nft.nftAddress ===
+                                                                //     window
+                                                                //       .config
+                                                                //       .nft_vanar_address
+                                                                //   ? "VNBP"
                                                                   : nft.nftAddress ===
                                                                       window
                                                                         .config
